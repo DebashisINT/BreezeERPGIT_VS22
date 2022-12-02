@@ -1,0 +1,4 @@
+Page :    http://test/
+Error Message : The view '~/Views/NewCompany/Login.cshtml' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/NewCompany/Login.cshtml
+Inner Message : 
