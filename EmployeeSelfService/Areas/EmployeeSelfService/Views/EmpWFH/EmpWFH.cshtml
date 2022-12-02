@@ -1,0 +1,631 @@
+﻿@{
+    ViewBag.Title = "EmpWFH";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Areas/EmployeeSelfService/Resources/lib/typicons.font/typicons.css" rel="stylesheet" />
+<link href="~/Areas/EmployeeSelfService/Resources/css/fontawesome-all.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var dateSplitDOB = data.userinfo.dateOfBirth.split(" ")[0];
+            var dateSplitJOIN = data.userinfo.emp_dateofJoining.split(" ")[0];
+            var firstLetter = data.userinfo.Name.slice(0, 1).toUpperCase();
+            $(".firstL, .firstLs").text(firstLetter);
+            var rand = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+            var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+            var back = ["#ff0000", "blue", "gray"];
+            //var rand = back[Math.floor(Math.random() * back.length)];
+            $('.firstL').css('background', color);
+            $(".userNameIntro").text(data.userinfo.Name.split(" ")[0]);
+            $(".userName").text(data.userinfo.Name);
+            $(".desg").text(data.userinfo.deg_designation);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#dob").text(dateSplitDOB);
+            $("#dateSplitJOIN").text(dateSplitJOIN);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+        }
+    });
+    // supervisor
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/GetSupervisorName",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({
+            "userID": '@Session["userid"]'
+        }),
+        success: function (data) {
+            console.log("GetSupervisor", data);
+            if (data.length > 0) {
+                $("#superName").val(data[0].spName)
+                $("#superEmail").val(data[0].spEmail)
+                $("#superId").val(data[0].spId);
+            }
+
+        }
+    });
+    function formatDate(date) {
+        var splitDate = date.split("-");
+        var day = splitDate[0],
+            month = splitDate[1],
+            year = splitDate[2]
+
+        return year + "-" + month + "-" + day
+    }
+    function ApplyforWorkFromHome() {
+        var frmDate = $("#WFHSdate").val(),
+            toDate = $("#WFHEdate").val();
+        if (frmDate == "" || toDate == "") {
+            $("#messageSec").text("You must Fill the Dates").css({ "color": "red" })
+            return false;
+        }
+       
+        var WFHReason = $("#WFHReason").val();
+        var frmDate = formatDate($("#WFHSdate").val());
+        var toDate = formatDate($("#WFHEdate").val());
+        var superName = $("#superName").val();
+        var superEmail = $("#superEmail").val();
+        var superId = $("#superId").val();
+        var WFHPlan = $("#WFHPlan").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/LeaveApply/ApplyWFH",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "USER_ID": '@Session["userid"]',
+                "EMP_CODE": '@Session["usercontactID"]',
+                "WFH_REASON": WFHReason,
+                "WFH_STARTDATE": frmDate,
+                "WFH_ENDDATE": toDate,
+                "SUPERVISOR_NAME": superName,
+                "SUPERVISOR_ID": superId,
+                "SUPERVISOR_EMAIL": superEmail,
+                "WORK_PLAN": WFHPlan,
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data.status == 200) {
+                    $("#applyWFH").modal("hide");
+                    getList();
+                    $.confirm({
+                        title: 'Success',
+                        content: 'WFH applied successfully',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                    
+                }
+            }
+        });
+    }
+    //rev Pratik
+
+    function ApplyforWorkFromHomeEdit() {
+        var frmDate = $("#WFHSdateEdit").val(),
+            toDate = $("#WFHEdateEdit").val();
+        if (frmDate == "" || toDate == "") {
+            $("#messageSec").text("You must Fill the Dates").css({ "color": "red" })
+            return false;
+        }
+
+        var WFHReason = $("#WFHReasonEdit").val();
+        var frmDate = formatDate($("#WFHSdateEdit").val());
+        var toDate = formatDate($("#WFHEdateEdit").val());
+        var superName = $("#superNameEdit").val();
+        var superEmail = $("#superEmailEdit").val();
+        var superId = $("#superIdEdit").val();
+        var WFHPlan = $("#WFHPlanEdit").val();
+        var WFH_ID = $("#WFH_ID").text();
+        var ToDaydate = new Date();
+        var dateFrom = new Date(frmDate);
+        var dateTo = new Date(toDate);
+        if (dateFrom > dateTo) {
+            alert("To date should be greater then from date.");
+            return false;
+        }
+        if (ToDaydate >= dateFrom) {
+            alert("From date should be greater then todays date.");
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/LeaveApply/ApplyWFHEdit",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "USER_ID": WFH_ID,
+                "EMP_CODE": '@Session["usercontactID"]',
+                "WFH_REASON": WFHReason,
+                "WFH_STARTDATE": frmDate,
+                "WFH_ENDDATE": toDate,
+                "SUPERVISOR_NAME": superName,
+                "SUPERVISOR_ID": superId,
+                "SUPERVISOR_EMAIL": superEmail,
+                "WORK_PLAN": WFHPlan,
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data.status == 200) {
+                    $("#applyWFHEdit").modal("hide");
+                    getList();
+                    $.confirm({
+                        title: 'Success',
+                        content: 'WFH updated successfully',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+
+                }
+            }
+        });
+    }
+
+    //End of rev Pratik
+    getList();
+    function getList() {
+
+   
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/LeaveApply/GetWFHLIST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log("wfheList", data);
+            //var dt = data.leaveList.sort();
+            var wfheList = "";
+            for (i = 0; i < data.length; i++) {
+                var Sdate =data[i].APPLIED_DATE;
+                var APPLIED_DATE = Sdate.split(" ")[0],
+                    WFH_STARTDATE = data[i].WFH_STARTDATE.split(" ")[0],
+                    WFH_ENDDATE = data[i].WFH_ENDDATE.split(" ")[0];
+                //var a = Sdate.[0];
+                wfheList += "<tr>"
+                wfheList += "<td>" + APPLIED_DATE + "</td>"
+                wfheList += "<td>" + WFH_STARTDATE + "</td>"
+                wfheList += "<td>" + WFH_ENDDATE + "</td>"
+                wfheList += "<td class='text-center'>" + data[i].CURRENT_STATUS + "</td>"
+                //rev Pratik
+                //if (data[i].CURRENT_STATUS != "Approved") {
+                //    wfheList += "<td class='text-center'><i class='lni-trash' style='font-size:18px;color:#de4b4b;display:none'></i></td>"
+                //} else {
+                //    wfheList += "<td class='disabledIcon text-center'><i class='lni-trash' style='font-size:18px;color:#de4b4b;display:none'></i></td>"
+                //}
+                wfheList += "<td class='text-center'>"
+                if (data[i].isDelete == 0) {
+                    //leaveList += "<i class='lni-trash' style='font-size:18px;color:#de4b4b;display:none'></i></td>"
+                } else {
+                    wfheList += "<i class='lni-trash' onClick='makeDeleteReq(" + data[i].ID + ")' style='font-size:18px;color:#de4b4b;'></i>"
+                }
+                if (data[i].isEdit == 0) {
+                    //wfheList += "<i class='lni-trash' style='font-size:18px;color:#de4b4b;display:none'></i></td>"
+                } else {
+                    wfheList += "<a href='#applyWFHEdit' onClick='makeEditReq(" + data[i].ID + ")' class=modal-effect btn btn-az-secondary btn-rounded btn-block' data-toggle='modal' data-effect='effect-sign'><i class='lni-pencil' style='font-size:18px;color:Blue;'></i></a>"
+                }
+
+                wfheList += "</td></tr>"
+                //End of rev Pratik
+            }
+            $("#WFHlist").html(wfheList);
+        }
+    });
+    }
+    //rev Pratik
+
+    function makeDeleteReq(ID) {
+        //alert(ID)
+        $.confirm({
+            title: 'Confirm!',
+            content: 'Are you sure you want to delete',
+            buttons: {
+                confirm: {
+                    text: 'Yes',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "/EmployeeSelfService/Api/LeaveApply/DeleteWFH",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "ID": ID
+                            }),
+                            success: function (data) {
+                                //console.log("DeleteEmpReimbursement", data);
+                                if (data.status == 200) {
+                                    $("#applyRem").modal("hide");
+                                    $.confirm({
+                                        title: 'Success',
+                                        content: 'Deleted successfully',
+                                        icon: 'fa fa-smile-o',
+                                        theme: 'modern',
+                                        closeIcon: true,
+                                        animation: 'scale',
+                                        type: 'blue',
+                                    });
+                                    getList();
+                                }
+
+                            }
+                        });
+                    }
+                },
+                cancel: function () {
+                    // cancel code
+                }
+            }
+        });
+    }
+
+    function makeEditReq(ID) {
+        //alert(ID)
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/UserInfo/getInfobyWFHid",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "UserId": ID
+            }),
+            dataType: "json",
+            asynch: false,
+            success: function (data) {
+
+                console.log(data);
+                $("#applyWFHEdit").modal("show");
+                var dateSplitFrom = data.WFHdetinfo.WFH_STARTDATE.split(" ")[0].split("/").join("-");
+                var dateSplitTo = data.WFHdetinfo.WFH_ENDDATE.split(" ")[0].split("/").join("-");
+                var chunks = dateSplitFrom.split('-');
+                dateSplitFrom = chunks[1] + '-' + chunks[0] + '-' + chunks[2];
+                chunks = dateSplitTo.split('-');
+                dateSplitTo = chunks[1] + '-' + chunks[0] + '-' + chunks[2];
+                //// alert(dateSplitFrom)
+                $("#WFH_ID").text(data.WFHdetinfo.ID);
+                //$("#leaveTypeEdit").val(data.WFHdetinfo.ERPLeave_ID);
+                $("#WFHSdateEdit").val(dateSplitFrom);
+                $("#WFHEdateEdit").val(dateSplitTo);
+                $("#WFHReasonEdit").val(data.WFHdetinfo.WFH_REASON);
+                $("#superNameEdit").val(data.WFHdetinfo.SUPERVISOR_NAME);
+                $("#superEmailEdit").val(data.WFHdetinfo.SUPERVISOR_EMAIL);
+                $("#WFHPlanEdit").val(data.WFHdetinfo.WORK_PLAN);
+            }
+        });
+    }
+
+    //End of rev Pratik
+</script>
+<div class="az-content az-content-profile">
+    <div class="container-fluid mn-ht-100p">
+        <div class="az-content-left az-content-left-profile">
+
+            <div class="az-profile-overview">
+                <div class="az-contact-info-header noborder">
+                    <div class="media">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <div class="media-body">
+                            <h5 class="userName"></h5>
+                            <p class="desg"></p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div>
+
+                <div class="az-profile-bio">
+                    <a href="#applyWFH" class="modal-effect btn btn-az-secondary btn-rounded btn-block" data-toggle="modal" data-effect="effect-sign">Apply Work from Home</a>
+                </div><!-- az-profile-bio -->
+
+                <div class="mg-y-30"></div>
+                <!-- Event Calender -->
+                <div class="card card-dashboard-calendar">
+                    <!-- <h6 class="card-title">Event Calendar</h6> -->
+                    <div class="media az-media-date">
+                        <h1>5</h1>
+                        <div class="media-body">
+                            <p>August 2019</p>
+                            <span>Monday</span>
+                        </div>
+                    </div>
+                    <div class="card-body"><div class="fc-datepicker"></div></div>
+                </div>  <!-- Event Calender End -->
+                <div class="card mg-t-10 ">
+                    <div class="card-body">
+                        <button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-calendar"></i> Work from Home policy</button>
+                    </div>
+                </div>
+            </div><!-- az-profile-overview -->
+
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-profile">
+            <div class="pd-10 pl-4 pd-sm-10 bg-gray-200 wd-xl-75p">
+                <div class="row row-xs">
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY">
+                            <div class="input-group-append selectDateIcon">
+                                <div class="input-group-text">
+                                    <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- col -->
+                    <div class="col-md-5 mg-t-10 mg-md-t-0">
+                        <div class="input-group">
+                            <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY">
+                            <div class="input-group-append selectDateIcon">
+                                <div class="input-group-text">
+                                    <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- col -->
+                    <div class="col-md mg-t-10 mg-md-t-0">
+                        <button class="btn btn-az-primary btn-block">Search</button>
+                    </div><!-- col -->
+                </div><!-- row -->
+            </div>
+            <nav class="nav az-nav-line">
+                <a href="" class="nav-link active" data-toggle="tab">Work From Home Application </a>
+            </nav>
+            <div class="az-profile-body pt-0">
+                <div class="row mg-b-20">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered mg-b-0 table-padded">
+                            <thead>
+                                <tr>
+                                    <th>Application Date</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="WFHlist">
+                               
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- row -->
+
+                <div class="mg-b-20"></div>
+            </div><!-- az-profile-body -->
+           
+        </div><!-- az-content-body -->
+    </div><!-- container -->
+</div><!-- az-content -->
+<!-- Leave Apply Modal -->
+<div id="applyWFH" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title"> Apply Work from Home</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">From Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY" id="WFHSdate">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">To Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY" id="WFHEdate">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Reason</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Textarea" id="WFHReason"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <input type="hidden" id="superId" />
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Name</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="superName" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Email</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="superEmail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Work Plan</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Textarea" id="WFHPlan"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer slick">
+                    <button type="button" class="btn btn-indigo btn-rounded" onclick="ApplyforWorkFromHome()">Submit Application</button>
+                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
+<!-- Edit Leave Apply Modal -->
+<!-- rev Pratik -->
+<div id="applyWFHEdit" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title"> Edit Work from Home</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">From Date</label>
+                                <input type="hidden" id="WFH_ID">
+                                <div class="input-group">
+                                    <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY" id="WFHSdateEdit">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">To Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY" id="WFHEdateEdit">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Reason</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Textarea" id="WFHReasonEdit"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <input type="hidden" id="superId" />
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Name</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="superNameEdit" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Email</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="superEmailEdit" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Work Plan</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Textarea" id="WFHPlanEdit"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer slick">
+                    <button type="button" class="btn btn-indigo btn-rounded" onclick="ApplyforWorkFromHomeEdit()">Submit Application</button>
+                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
+<!-- End of rev Pratik -->
+<script src="~/Areas/EmployeeSelfService/Resources/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/select2/js/select2.min.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/easypiechart.min.js"></script>
+<script>
+    $(function () {
+        'use strict'
+        // Datepicker found in left sidebar of the page
+        var highlightedDays = ['2018-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+        var date = new Date();
+
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            setDate: new Date(),
+            dateFormat: 'dd-mm-yy',
+            beforeShowDay: function (date) {
+                var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                for (var i = 0; i < highlightedDays.length; i++) {
+                    if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                        return [true, 'ui-date-highlighted', ''];
+                    }
+                }
+                return [true];
+            }
+        });
+        $('.fc-datepicker').datepicker('setDate', new Date());
+
+        // showing modal with effect
+        $('.modal-effect').on('click', function (e) {
+            e.preventDefault();
+            var effect = $(this).attr('data-effect');
+            $('#applyLeave').addClass(effect);
+        });
+
+        // hide modal with effect
+        $('#applyLeave').on('hidden.bs.modal', function (e) {
+            $(this).removeClass(function (index, className) {
+                return (className.match(/(^|\s)effect-\S+/g) || []).join(' ');
+            });
+        });
+
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            dateFormat: 'dd/mm/yy',
+            showOtherMonths: true,
+            selectOtherMonths: true,
+        });
+      
+        $('.selectDateIcon').click(function () {
+            $(this).parent('.input-group').find('.fc-datepicker').focus();
+        });
+
+    });
+</script>
+

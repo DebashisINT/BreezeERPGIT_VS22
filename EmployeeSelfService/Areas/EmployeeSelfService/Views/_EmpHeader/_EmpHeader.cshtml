@@ -1,0 +1,49 @@
+﻿<div class="az-header az-header-primary">
+    <div class="container-fluid">
+        <div class="az-header-left">
+            <a href="#" class="az-logo"><img src="~/Areas/EmployeeSelfService/Resources/images/logo.png" style="max-width: 140px;" /></a>
+            <a href="" id="azNavShow" class="az-header-menu-icon d-lg-none"><span></span></a>
+        </div><!-- az-header-left -->
+        <div class="az-header-center">
+            <input type="search" class="form-control" placeholder="Search for anything...">
+            <button class="btn"><i class="fas fa-search"></i></button>
+        </div><!-- az-header-center -->
+        <div class="az-header-right">
+            <div class="dropdown az-header-notification">
+                <a href="" class="new"><i class="typcn typcn-bell"></i></a>
+                <div class="dropdown-menu">
+                    <div class="az-dropdown-header mg-b-20 d-sm-none">
+                        <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                    </div>
+                    <h6 class="az-notification-title">Notifications</h6>
+                    <p class="az-notification-text">Nothing to show</p>
+                   
+                    <div class="dropdown-footer" style="display:none"><a href="">View All Notifications</a></div>
+                </div><!-- dropdown-menu -->
+            </div><!-- az-header-notification -->
+            <div class="dropdown az-profile-menu">
+                <a href="" class="az-img-user"><div class="az-avatar avatar-lg firstLs" style="background: black;"></div></a>
+                <div class="dropdown-menu">
+                    <div class="az-dropdown-header d-sm-none">
+                        <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                    </div>
+                    <div class="az-header-profile">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <h6 class="userName"></h6>
+                        <span class="desg">.Net Developer</span>
+                    </div><!-- az-header-profile -->
+
+                    <a href="" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
+                    <a href="" class="dropdown-item"><i class="typcn typcn-edit"></i> Edit Profile</a>
+                    <!-- <a href="" class="dropdown-item"><i class="typcn typcn-time"></i> Activity Logs</a> -->
+                    <a href="" class="dropdown-item"><i class="typcn typcn-cog-outline"></i> Account Settings</a>
+                    @*rev Pratik*@
+                    <a href="/EmpLogin/SignOff" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Sign Out</a>
+                    @*End of rev Pratik*@
+                </div><!-- dropdown-menu -->
+            </div>
+        </div><!-- az-header-right -->
+    </div><!-- container -->
+</div><!-- az-header -->

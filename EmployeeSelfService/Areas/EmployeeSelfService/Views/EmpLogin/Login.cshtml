@@ -1,0 +1,142 @@
+﻿@model EmployeeSelfService.Areas.EmployeeSelfService.Controllers.LoginClass
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login Portal</title>
+    <link href="~/Areas/EmployeeSelfService/Resources/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/EmployeeSelfService/Resources/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="~/Areas/EmployeeSelfService/Resources/css/loginStyle.css" rel="stylesheet" />
+    <link href="~/Areas/EmployeeSelfService/Resources/css/loginTheme.css" rel="stylesheet" />
+    <script>
+        function loginCall() {
+            $("#msg").html("");
+            $("#load").show();
+            var obj = {}
+            obj.username = $("#userName").val();
+            obj.PassWord = $("#password").val();
+            //DoLogin(obj);
+            $.ajax({
+                type: "POST",
+                url: "/EmployeeSelfService/EmpLogin/DoLogin",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(obj),
+                dataType: "json",
+                success: function (data) {
+                    //console.log(data)
+                    
+                    if (data.rtnText == "Invalid UserID") {
+                        $("#msg").html("Invalid UserID").css({ "color": "red" });
+                        $("#load").hide();
+                       // window.location.href = data.rntUrl;
+                    } else if (data.rtnText == "Invalid Password") {
+                        $("#msg").html("Invalid Password").css({ "color": "red" });
+                        $("#load").hide();
+                    } else if (data.rtnText == "Invalid UserID or Password!") {
+                        $("#msg").html("Invalid UserID or Password!").css({ "color": "red" });
+                        $("#load").hide();
+                    }
+                    else {
+                        $("#msg").html("");
+                        $("#load").hide();
+                        window.location.href = data.rntUrl;
+                    }
+                }
+            });
+        }
+    </script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="form-body" >
+        <div class="website-logo">
+            <a href="">
+                <div class="logo">
+                    <img class="logo-size"  src="~/Areas/EmployeeSelfService/Resources/images/logo.png" />
+                </div>
+            </a>
+        </div>
+        <div class="row">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="loader" id="load"></div>
+                    <div class="form-items">
+                        <h3>Get more things done with Employee platform.</h3>
+                        <p>Don't miss your next opportunity. Sign in to stay updated on your professional world.</p>
+                        <div class="page-links">
+                            <a href="" class="active">Login</a>
+                            <!-- <a href="#">Register</a> -->
+                        </div>
+                        
+                            <div id="msg"></div>
+                            <input class="form-control" id="userName" type="text" name="username" placeholder="User Id" required>
+                            <input class="form-control" id="password" type="password" name="password" placeholder="Password" required>
+                            <div class="form-button">
+                                <button id="submit" type="button" class="ibtn" onclick="loginCall()">Login</button>
+                                
+                            </div>
+                       
+                        <div class="other-links">
+                            <span>Follow us on</span><a href="#"><i class="fab fa-google"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Areas/EmployeeSelfService/Resources/js/jquery.min.js"></script>
+    @*<script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>*@
+    <script>
+        @*function DoLogin()
+        {
+            var user = $("#userName").val();
+            var pass = $("#password").val();
+            var obj = {};
+            obj.username = user;
+            obj.PassWord = pass;
+            if (user == '' || pass == '') {
+                $("#msg").html("You must fill Username and Password").css({ "color": "red" });
+                return false;
+            } else {
+                $("#msg").html("");
+            }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DoLogin", "EmpLogin")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(obj),
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    if (data.rtnText == "success") {
+                        window.location.href = data.rntUrl;
+                    }
+                    else
+                    {
+                        
+                    }
+                    
+
+                }
+                
+           });
+        }*@
+    </script>
+
+</body>
+</html>
+

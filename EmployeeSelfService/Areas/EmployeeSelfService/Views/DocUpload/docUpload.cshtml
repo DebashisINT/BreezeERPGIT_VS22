@@ -1,0 +1,411 @@
+﻿@{
+    ViewBag.Title = "docUpload";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var dateSplitDOB = data.userinfo.dateOfBirth.split(" ")[0];
+            var dateSplitJOIN = data.userinfo.emp_dateofJoining.split(" ")[0];
+            var firstLetter = data.userinfo.Name.slice(0, 1).toUpperCase();
+            $(".firstL, .firstLs").text(firstLetter);
+            var rand = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+            var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+            var back = ["#ff0000", "blue", "gray"];
+            //var rand = back[Math.floor(Math.random() * back.length)];
+            $('.firstL').css('background', color);
+            $(".userNameIntro").text(data.userinfo.Name.split(" ")[0]);
+            $(".userName").text(data.userinfo.Name);
+            $(".desg").text(data.userinfo.deg_designation);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#dob").text(dateSplitDOB);
+            $("#dateSplitJOIN").text(dateSplitJOIN);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+        }
+    });
+   
+    
+    function formatDate(date) {
+        var splitDate = date.split("-");
+        var day = splitDate[0],
+            month = splitDate[1],
+            year = splitDate[2]
+
+        return year + "-" + month + "-" + day
+    }
+    
+
+    
+    function populateMin() {
+        var d = 61;
+        var txt = "";
+        for (i = 0; i < d; i++) {
+            txt +="<option>" + i + "</option>"
+        }
+        $("#TSMin").html(txt);
+    }
+    setTimeout(function () {
+        populateMin();
+    },2000);
+
+
+    function saveFileOne() {
+        var data = new FormData();
+        var file = $('#Leavedoc')[0].files[0];
+        data.append('file', file);
+        data.append('UserID', '@Session["userid"]');
+        myfile = $('#Leavedoc').val();
+        var ext = myfile.split('.').pop();
+        console.log(file);
+        if ($('#Leavedoc')[0].files[0].size > 2097152) {
+            alert("File is too big!");
+            this.value = "";
+            return false;
+        };
+        if (ext == "pdf" || ext == "docx" || ext == "doc") {
+            $.ajax({
+                url: '/EmployeeSelfService/Api/DocUploadApi/SaveLeaveDoc',
+                processData: false,
+                contentType: false,
+                data: data,
+                type: 'POST'
+            }).done(function (result) {
+                console.log(result);
+                if (result.status == 200) {
+                    $.confirm({
+                        title: 'Success',
+                        content: 'File Upload Successful',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                }
+                
+            }).fail(function (a, b, c) { console.log(a, b, c); });
+        } else {
+            $.confirm({
+                title: 'Alert',
+                content: 'Only PDF and DOCX files are allowed',
+                icon: 'fa fa-smile-o',
+                theme: 'modern',
+                closeIcon: true,
+                animation: 'scale',
+                type: 'blue',
+            });
+        }
+        return;
+        
+    }
+
+    function saveFileHealth() {
+        
+        var data = new FormData();
+        var file = $('#Healthdoc')[0].files[0];
+        data.append('file', file);
+        data.append('UserID', '@Session["userid"]');
+        myfile = $('#Healthdoc').val();
+        var ext = myfile.split('.').pop();
+       
+        if ($('#Healthdoc')[0].files[0].size > 2097152) {
+            alert("File is too big!");
+            this.value = "";
+            return false;
+        };
+        if (ext == "pdf" || ext == "docx" || ext == "doc") {
+            console.log(file);
+
+            $.ajax({
+                url: '/EmployeeSelfService/Api/DocUploadApi/SaveHealthDoc',
+                processData: false,
+                contentType: false,
+                data: data,
+                type: 'POST'
+            }).done(function (result) {
+                
+                if (result.status == 200) {
+                    $.confirm({
+                        title: 'Success',
+                        content: 'File Upload Successful',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                }
+
+            }).fail(function (a, b, c) { console.log(a, b, c); });
+        } else {
+            $.confirm({
+                title: 'Alert',
+                content: 'Only PDF and DOCX files are allowed',
+                icon: 'fa fa-smile-o',
+                theme: 'modern',
+                closeIcon: true,
+                animation: 'scale',
+                type: 'blue',
+            });
+        }
+        return;
+
+    }
+
+    function saveFileTravel() {
+        var data = new FormData();
+        var file = $('#Traveldoc')[0].files[0];
+        data.append('file', file);
+        data.append('UserID', '@Session["userid"]');
+        myfile = $('#Traveldoc').val();
+        var ext = myfile.split('.').pop();
+        if ($('#Traveldoc')[0].files[0].size > 2097152) {
+            alert("File is too big!");
+            this.value = "";
+            return false;
+        };
+        if (ext == "pdf" || ext == "docx" || ext == "doc") {
+            $.ajax({
+                url: '/EmployeeSelfService/Api/DocUploadApi/SaveTravelDoc',
+                processData: false,
+                contentType: false,
+                data: data,
+                type: 'POST'
+            }).done(function (result) {
+                console.log(result);
+                if (result.status == 200) {
+                    $.confirm({
+                        title: 'Success',
+                        content: 'File Upload Successful',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                }
+
+            }).fail(function (a, b, c) { console.log(a, b, c); });
+        } else {
+            $.confirm({
+                title: 'Alert',
+                content: 'Only PDF and DOCX files are allowed',
+                icon: 'fa fa-smile-o',
+                theme: 'modern',
+                closeIcon: true,
+                animation: 'scale',
+                type: 'blue',
+            });
+        }
+        return;
+
+    }
+
+    function saveFileCompanyPolicy() {
+        var data = new FormData();
+        var file = $('#Companydoc')[0].files[0];
+        data.append('file', file);
+        data.append('UserID', '@Session["userid"]');
+        myfile = $('#Companydoc').val();
+        var ext = myfile.split('.').pop();
+        if ($('#Companydoc')[0].files[0].size > 2097152) {
+            alert("File is too big!");
+            this.value = "";
+            return false;
+        };
+        if (ext == "pdf" || ext == "docx" || ext == "doc") {
+            $.ajax({
+                url: '/EmployeeSelfService/Api/DocUploadApi/SaveCompanyPolicyDoc',
+                processData: false,
+                contentType: false,
+                data: data,
+                type: 'POST'
+            }).done(function (result) {
+                console.log(result);
+                if (result.status == 200) {
+                    $.confirm({
+                        title: 'Success',
+                        content: 'File Upload Successful',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                }
+
+            }).fail(function (a, b, c) { console.log(a, b, c); });
+        } else {
+            $.confirm({
+                title: 'Alert',
+                content: 'Only PDF and DOCX files are allowed',
+                icon: 'fa fa-smile-o',
+                theme: 'modern',
+                closeIcon: true,
+                animation: 'scale',
+                type: 'blue',
+            });
+        }
+        return;
+    }
+
+    $(document).ready(function () {
+        $("input[type='file']").each(function () {
+            $(this).on("change", function () {
+                var itemSelected = $(this).val();
+                $(this).closest(".row").append("<div class='col-md-12' style='color:green;padding:8px 15px'>" + itemSelected + "</div>")
+                console.log(itemSelected)
+            })
+        })
+    })
+
+    
+</script>
+<div class="az-content az-content-profile">
+    <div class="container-fluid mn-ht-100p">
+        <div class="az-content-left az-content-left-profile">
+
+            <div class="az-profile-overview">
+                <div class="az-contact-info-header noborder">
+                    <div class="media">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <div class="media-body">
+                            <h5 class="userName"></h5>
+                            <p class="desg"></p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div>
+
+
+                <div class="mg-y-30"></div>
+                <!-- Event Calender -->
+                <div class="card card-dashboard-calendar">
+                    <!-- <h6 class="card-title">Event Calendar</h6> -->
+                    <div class="media az-media-date">
+                        <h1>5</h1>
+                        <div class="media-body">
+                            <p>August 2019</p>
+                            <span>Monday</span>
+                        </div>
+                    </div>
+                    <div class="card-body"><div class="fc-datepicker"></div></div>
+                </div>  <!-- Event Calender End -->
+                <div class="card mg-t-10 ">
+                    <div class="card-body">
+                        <button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-calendar"></i> Leave Policy Doc</button>
+                    </div>
+                </div>
+            </div><!-- az-profile-overview -->
+
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-profile">
+            <nav class="nav az-nav-line">
+                <a href="" class="nav-link active" data-toggle="tab">Document Upload for year 2021 </a>
+            </nav>
+            <div class=" docFormArea pl-3 pr-3 mt-2">
+                <div style="color:red; font-weight:600;padding:10px 15px">Only PDF and DOCX files are allowed to upload. Maximum file size must be under 2MB </div>
+                <div class="card p-3">
+                        <div class="row py-2">
+                            <div class="col-md-4">
+                                <label>Select Leave Policy Doc</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="Leavedoc" name="files" accept=".doc, .pdf, .docx,application/msword,">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                            </div>
+                            <input type="hidden" value="123" id="fileType" />
+                            <div class="col-md-4 pt-4"><button type="button" class="btn btn-success btn-rounded" onclick="saveFileOne()">Upload </button></div>
+                        </div>
+                    <div class="row py-2">
+                        <div class="col-md-4">
+                            <label>Select Health Policy Doc</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="Healthdoc" name="files" accept=".doc, .pdf, .docx,application/msword,">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pt-4"><button type="submit" class="btn btn-success btn-rounded" onclick="saveFileHealth()">Upload </button></div>
+                    </div>    
+                    <div class="row py-2">
+                        <div class="col-md-4">
+                            <label>Select Travel Policy Doc</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="Traveldoc" name="files" accept=".doc, .pdf, .docx,application/msword,">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pt-4"><button type="submit" class="btn btn-success btn-rounded">Upload </button></div>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-md-4">
+                            <label>Select Company Policy Doc</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="Companydoc" name="files" accept=".doc, .pdf, .docx,application/msword,">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pt-4"><button type="submit" class="btn btn-success btn-rounded">Upload </button></div>
+                    </div>      
+              </div>
+            </div>
+        </div><!-- az-content-body -->
+    </div><!-- container -->
+</div><!-- az-content -->
+<script src="~/Areas/EmployeeSelfService/Resources/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/select2/js/select2.min.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/easypiechart.min.js"></script>
+<script>
+    $(function () {
+        'use strict'
+        // Datepicker found in left sidebar of the page
+        var highlightedDays = ['2018-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+        var date = new Date();
+
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            setDate: new Date(),
+            dateFormat: 'dd-mm-yy',
+            beforeShowDay: function (date) {
+                var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                for (var i = 0; i < highlightedDays.length; i++) {
+                    if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                        return [true, 'ui-date-highlighted', ''];
+                    }
+                }
+                return [true];
+            }
+        });
+        $('.fc-datepicker').datepicker('setDate', new Date());
+
+        
+
+        
+        
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            dateFormat: 'dd/mm/yy',
+            showOtherMonths: true,
+            selectOtherMonths: true,
+        });
+        
+      
+
+        $('.selectDateIcon').click(function () {
+            $(this).parent('.input-group').find('.fc-datepicker').focus();
+        });
+
+    });
+</script>

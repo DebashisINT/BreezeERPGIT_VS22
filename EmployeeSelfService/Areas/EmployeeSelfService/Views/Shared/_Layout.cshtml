@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Meta -->
+    <meta name="description" content="Employee Portal">
+    <meta name="author" content="Breez">
+
+    <title>Employee Portal</title>
+
+    <!-- vendor css -->
+    <link href="~/Areas/EmployeeSelfService/Resources/lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
+
+    <link href="~/Areas/EmployeeSelfService/Resources/lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+    <!-- or -->
+    <link href="https://cdn.lineicons.com/1.0.1/LineIcons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <!--  CSS -->
+    <link href="~/Areas/EmployeeSelfService/Resources/css/style.css" rel="stylesheet" />
+    <link href="~/Areas/EmployeeSelfService/Resources/css/extra.css" rel="stylesheet" />
+
+    <link href="~/Areas/EmployeeSelfService/Resources/lib/morris.js/morris.css" rel="stylesheet" />
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/jquery/jquery.min.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <link href="~/Areas/EmployeeSelfService/Resources/lib/typicons.font/typicons.css" rel="stylesheet" />
+    <link href="~/Areas/EmployeeSelfService/Resources/css/fontawesome-all.min.css" rel="stylesheet" />
+    <style>
+        .mdtp__wrapper {
+            top:100px
+        }
+    </style>
+</head>
+<body class="az-body az-dashboard-eight">
+    <header id="header" class="clearfix transit">
+        @{
+            Html.RenderAction("_EmpHeader", "_EmpHeader", new { area = "EmployeeSelfService" });
+        }
+    </header>
+    <div class="az-navbar az-navbar-two az-navbar-dashboard-eight">
+        <div class="container-fluid">
+            <div><a href="dashboard.html" class="az-logo"><img src="~/Areas/EmployeeSelfService/Resources/images/logo.png" style="max-width: 140px;" /></a></div>
+            <div class="az-navbar-search">
+                <input type="search" class="form-control" placeholder="Search for schedules and events...">
+                <button class="btn"><i class="fas fa-search "></i></button>
+            </div><!-- az-navbar-search -->
+            @{
+                Html.RenderAction("_EmpMenu", "_EmpMenu", new { area = "EmployeeSelfService" });
+            }
+        </div><!-- container -->
+    </div><!-- az-navbar -->
+    <div class="az-content az-content-dashboard-eight">
+        @RenderBody()
+    </div>
+        
+        <script src="~/Areas/EmployeeSelfService/Resources/lib/raphael/raphael.min.js"></script>
+        <script src="~/Areas/EmployeeSelfService/Resources/lib/morris.js/morris.min.js"></script>
+        <script src="~/Areas/EmployeeSelfService/Resources/js/main.js"></script>
+        
+</body>
+
+</html>
+

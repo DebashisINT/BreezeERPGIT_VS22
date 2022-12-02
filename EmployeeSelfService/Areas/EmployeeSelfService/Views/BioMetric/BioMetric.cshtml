@@ -1,0 +1,467 @@
+﻿@{
+    ViewBag.Title = "BioMetric";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var dateSplitDOB = data.userinfo.dateOfBirth.split(" ")[0];
+            var dateSplitJOIN = data.userinfo.emp_dateofJoining.split(" ")[0];
+            var firstLetter = data.userinfo.Name.slice(0, 1).toUpperCase();
+            $(".firstL, .firstLs").text(firstLetter);
+            var rand = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+            var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+            var back = ["#ff0000", "blue", "gray"];
+            //var rand = back[Math.floor(Math.random() * back.length)];
+            $('.firstL').css('background', color);
+            $(".userNameIntro").text(data.userinfo.Name.split(" ")[0]);
+            $(".userName").text(data.userinfo.Name);
+            $(".desg").text(data.userinfo.deg_designation);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#dob").text(dateSplitDOB);
+            $("#dateSplitJOIN").text(dateSplitJOIN);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/LeaveInfo/getLeaveInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+
+            $("#AvlPL").text(data.leaveinfo.AvlPL);
+            $("#AvlCL").text(data.leaveinfo.AvlCL);
+            $("#ConsumedCL").text(data.leaveinfo.ConsumedCL);
+            $("#ConsumedPL").text(data.leaveinfo.ConsumedPL);
+        }
+    });
+    GetAllLeaves();
+    function GetAllLeaves() {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/GETLeavesofEMP/GETLeavesofEMP",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "UserId": '@Session["userid"]'
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("GETLeavesofEMP", data);
+                var dt = data.leaveList.sort();
+                var leaveList = "";
+                for (i = 0; i < data.leaveList.length; i++) {
+                    var c = data.leaveList[i].CREATED_DATE;
+                    var cSplit = c.split(" ")[0]
+                    var CREATED_DATE = new Date(cSplit).toLocaleDateString();
+
+                    var ls = data.leaveList[i].LEAVE_START_DATE;
+                    var lsSplit = ls.split(" ")[0]
+                    var LEAVE_START_DATE = new Date(lsSplit).toLocaleDateString();
+
+                    var le = data.leaveList[i].LEAVE_END_DATE;
+                    var leSplit = le.split(" ")[0]
+                    var LEAVE_END_DATE = new Date(leSplit).toLocaleDateString();
+
+                    leaveList += "<tr>"
+                    leaveList += "<td>" + data.leaveList[i].LeaveType + "</td>"
+                    leaveList += "<td>" + cSplit + "</td>"
+                    leaveList += "<td>" + lsSplit + "</td>"
+                    leaveList += "<td>" + leSplit + "</td>"
+                    leaveList += "<td>" + data.leaveList[i].CURRENT_STATUS + "</td>"
+                    if (data.leaveList[i].CURRENT_STATUS != "Approved") {
+                        leaveList += "<td><i class='lni-trash' style='font-size:18px;color:#de4b4b'></i></td>"
+                    } else {
+                        leaveList += "<td class='disabledIcon'><i class='lni-trash' style='font-size:18px;color:#de4b4b'></i></td>"
+                    }
+
+                    leaveList += "</tr>"
+                }
+                $("#leaveList").html(leaveList);
+            }
+        });
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/GetLeaveType/GetLeaveType",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        //data: JSON.stringify({}),
+        success: function (data) {
+            console.log("leavetype", data);
+            text = ""
+            for (i = 0; i < data.length; i++) {
+                text += "<option value=' " + data[i].LeaveID + "'>" + data[i].LeaveType + "</option>";
+
+            }
+            $("#leaveType").html(text);
+        }
+    });
+    //alert('@Session["userid"]')
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/GetSupervisor/GetSupervisorName",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({
+            "userID": '@Session["userid"]'
+        }),
+        success: function (data) {
+            console.log("GetSupervisor", data);
+            if (data.length > 0) {
+                $("#superName").val(data[0].spName)
+                $("#superEmail").val(data[0].spEmail)
+                $("#superId").val(data[0].spId);
+            }
+
+        }
+    });
+    function formatDate(date) {
+        var splitDate = date.split("-");
+        var day = splitDate[0],
+            month = splitDate[1],
+            year = splitDate[2]
+
+        return year + "-" + month + "-" + day
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#frmDate").change(function () {
+            var frmDate = $("#frmDate").val();
+            if (frmDate == "") {
+                $("#messageSec").text("You must Fill the Dates").css({ "color": "red" })
+            } else {
+                $("#messageSec").text("");
+            }
+        })
+        $("#toDate").change(function () {
+            var toDate = $("#toDate").val();
+            if (toDate == "") {
+                $("#messageSec").text("You must Fill the Dates").css({ "color": "red" })
+            } else {
+                $("#messageSec").text("");
+            }
+        })
+    })
+    function submitLeaveApplication() {
+        var frmDate = $("#frmDate").val(),
+            toDate = $("#toDate").val();
+        if (frmDate == "" || toDate == "") {
+            $("#messageSec").text("You must Fill the Dates").css({ "color": "red" })
+            return false;
+        }
+        var leaveType = $("#leaveType").val();
+        var leaveReason = $("#leaveReason").val();
+        var frmDate = formatDate($("#frmDate").val());
+        var toDate = formatDate($("#tpDate").val());
+        var superName = $("#superName").val();
+        var superEmail = $("#superEmail").val();
+        var superId = $("#superId").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/LeaveApply/ApplyLeave",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "UserId": '@Session["userid"]',
+                "LeaveType": leaveType ,
+                "LeaveFrom": frmDate,
+                "LeaveTo": toDate,
+                "SupervisorName":superName ,
+                "SupervisorId" : superId,
+                "SupervisorEmail" : superEmail,
+                "LeaveReason": leaveReason,
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data.status == 200) {
+                    $("#applyLeave").modal("hide");
+
+                    $.confirm({
+                        title: 'Success',
+                        content: 'Leave applied successfully',
+                            icon: 'fa fa-smile-o',
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'scale',
+                            type: 'blue',
+                        });
+                    GetAllLeaves()
+                }
+            }
+        });
+    }
+</script>
+<style>
+    span.percent {
+        font-size: 25px;
+    }
+</style>
+<div class="az-content az-content-profile">
+    <div class="container-fluid mn-ht-100p">
+        <div class="az-content-left az-content-left-profile">
+
+            <div class="az-profile-overview">
+                <div class="az-contact-info-header noborder">
+                    <div class="media">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <div class="media-body">
+                            <h5 class="userName"></h5>
+                            <p class="desg"></p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div>
+
+                <div class="az-profile-bio">
+                    <a href="#applyBioMetric" class="modal-effect btn btn-az-secondary btn-rounded btn-block" data-toggle="modal" data-effect="effect-sign">Post Bio-metric Issue</a>
+                </div><!-- az-profile-bio -->
+
+                <div class="mg-y-30"></div>
+                <!-- Event Calender -->
+                <div class="card card-dashboard-calendar">
+                    <!-- <h6 class="card-title">Event Calendar</h6> -->
+                    <div class="media az-media-date">
+                        <h1>5</h1>
+                        <div class="media-body">
+                            <p>August 2019</p>
+                            <span>Monday</span>
+                        </div>
+                    </div>
+                    <div class="card-body"><div class="fc-datepicker"></div></div>
+                </div>  <!-- Event Calender End -->
+                <div class="card mg-t-10 ">
+                    <div class="card-body">
+                        <button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-calendar"></i> Leave Policy Doc</button>
+                    </div>
+                </div>
+            </div><!-- az-profile-overview -->
+
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-profile">
+            <div class="pd-10 pl-4 pd-sm-10 bg-gray-200 wd-xl-75p">
+                <div class="row row-xs">
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY">
+                            <div class="input-group-append selectDateIcon">
+                                <div class="input-group-text">
+                                    <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- col -->
+                    <div class="col-md-5 mg-t-10 mg-md-t-0">
+                        <div class="input-group">
+                            <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY">
+                            <div class="input-group-append selectDateIcon">
+                                <div class="input-group-text">
+                                    <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- col -->
+                    <div class="col-md mg-t-10 mg-md-t-0">
+                        <button class="btn btn-az-primary btn-block">Search</button>
+                    </div><!-- col -->
+                </div><!-- row -->
+            </div>
+            <nav class="nav az-nav-line">
+                <a href="" class="nav-link active" data-toggle="tab">List of Bio-Metric issue Posted </a>
+            </nav>
+            <div class="az-profile-body">
+                <div class="row mg-b-20">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered mg-b-0 table-padded">
+                            <thead>
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Application Date</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaveList"></tbody>
+                        </table>
+                    </div>
+                </div><!-- row -->
+
+                <div class="mg-b-20"></div>
+
+            </div><!-- az-profile-body -->      
+        </div><!-- az-content-body -->
+    </div><!-- container -->
+</div><!-- az-content -->
+<!-- Leave Apply Modal -->
+<div id="applyBioMetric" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Post Bio-Metric Issue</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="messageSec"></div>
+                <div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Leave Type</label>
+                        <div>
+                            <select class="form-control " style="width:100%" id="leaveType"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">From Date</label>
+                                <div class="input-group">
+                                    <input type="text" id="frmDate" class="form-control fc-datepicker" placeholder="DD/MM/YYYY">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">To Date</label>
+                                <div class="input-group">
+                                    <input type="text" id="tpDate" class="form-control fc-datepicker" placeholder="DD/MM/YYYY">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <input type="hidden" id="superId" />
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Name</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="superName" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Email</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="superEmail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Reason</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="" id="leaveReason"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer slick">
+                    <button type="button" class="btn btn-indigo btn-rounded" onclick="submitLeaveApplication()">Submit Application</button>
+                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/select2/js/select2.min.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/easypiechart.min.js"></script>
+    <script>
+        $(function () {
+            'use strict'
+            // Datepicker found in left sidebar of the page
+            var highlightedDays = ['2021-5-10', '2021-5-11', '2021-6-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+            var date = new Date();
+
+            $('#frmDate').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                setDate: new Date(),
+                dateFormat: 'dd-mm-yy',
+                beforeShowDay: function (date) {
+                    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                    for (var i = 0; i < highlightedDays.length; i++) {
+                        if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                            return [true, 'ui-date-highlighted', ''];
+                        }
+                    }
+                    return [true];
+                },
+                onClose: function (selectedDate) {
+                    // Set the minDate of 'to' as the selectedDate of 'from'
+                    $("#tpDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
+            $('#tpDate').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                setDate: new Date(),
+                dateFormat: 'dd-mm-yy',
+                beforeShowDay: function (date) {
+                    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                    for (var i = 0; i < highlightedDays.length; i++) {
+                        if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                            return [true, 'ui-date-highlighted', ''];
+                        }
+                    }
+                    return [true];
+                }
+            });
+            $('.fc-datepicker').datepicker('setDate', new Date());
+
+            // showing modal with effect
+            $('.modal-effect').on('click', function (e) {
+                e.preventDefault();
+                var effect = $(this).attr('data-effect');
+                $('#applyLeave').addClass(effect);
+            });
+
+            // hide modal with effect
+            $('#applyLeave').on('hidden.bs.modal', function (e) {
+                $(this).removeClass(function (index, className) {
+                    return (className.match(/(^|\s)effect-\S+/g) || []).join(' ');
+                });
+            });
+
+            // Datepicker
+            $('.fc-datepicker').datepicker({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+            });
+
+
+            $('.selectDateIcon').click(function () {
+                $(this).parent('.input-group').find('.fc-datepicker').focus();
+            });
+
+        });
+    </script>

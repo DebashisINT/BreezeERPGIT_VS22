@@ -1,0 +1,648 @@
+﻿@{
+    ViewBag.Title = "AttReport";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Areas/EmployeeSelfService/Resources/lib/typicons.font/typicons.css" rel="stylesheet" />
+<link href="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/style.css" rel="stylesheet" />
+<link href="~/Areas/EmployeeSelfService/Resources/js/MdTimePicker/mdtimepicker.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    Date.prototype.yymm = function () {
+        var mm = this.getMonth() + 1; // getMonth() is zero-based
+        var dd = this.getDate();
+
+        return [this.getFullYear().toString().substr(-2),
+                (mm > 9 ? '' : '0') + mm
+        ].join('');
+    };
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, day, month].join('-');
+    }
+    //function fromLocalDate(d) {
+    //    var split = d.split("-");
+    //    var day = split[]
+    //}
+    $(document).ready(function () {
+        $("body").on("click", "#appBioMetric", function () {
+            var d = $(this).data("i");
+            $("#applyBio").modal("show");
+            $("#dateFor").text(d)
+
+        });
+    })
+    function ApplyBio() {
+        var name = $(".userName").text()
+        var d = $("#dateFor").text();
+        var APPLIED_FOR_DATE = formatDate(d),
+            REQ_INTIME = $("#timepickerIn").val(),
+            REQ_OUTTIME = $("#timepickerOut").val(),
+            BioReason = $("#BioReason").val();
+        if (REQ_INTIME == "" || REQ_OUTTIME == "") {
+            $("#messageSec").text("Time Required").css({ "color": "red" })
+            return;
+        }
+        if (BioReason == "" || BioReason == null) {
+            $("#messageSec").text("You must Provide a Reason for Change").css({ "color": "red" })
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/BioMetricApplication/ApplyBiometricIssue",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "EMP_CODE": '@Session["usercontactID"]',
+                "APPLIED_FOR_DATE": APPLIED_FOR_DATE,
+                "REQ_INTIME": REQ_INTIME,
+                "REQ_OUTTIME": REQ_OUTTIME,
+                "BioReason": BioReason
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data.status == 200) {
+                    $("#applyBio").modal("hide");
+                    var emAilHtml = '<!DOCTYPE html><html><head><style>table{font-family:arial,sans-serif;border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;text-align:left;padding:8px}tr:nth-child(even){background-color:#ddd}</style></head><body><table style="border:1px solid #ccc"><tr style="background:blue;color:#fff"><th colspan="2">Biometric Time Issue</tr><tr><td>Name :</td><td>' + '@Session["username"]' + '</td></tr><tr><td>Requested Outtime :</td><td>' + REQ_INTIME + '</td></tr><tr><td>Requested Intime :</td><td>' + REQ_OUTTIME + '</td></tr><tr><td>Date Applied for :</td><td>' + APPLIED_FOR_DATE + '</td></tr><tr><td>Reason for Change :</td><td>' + BioReason + '</td></tr></table></body></html>'
+                    SendEmail(emAilHtml);
+                    $.confirm({
+                        title: 'Success',
+                        content: 'Applied successfully',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                }
+            }
+        });
+    }
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var dateSplitDOB = data.userinfo.dateOfBirth.split(" ")[0];
+            var dateSplitJOIN = data.userinfo.emp_dateofJoining.split(" ")[0];
+            var firstLetter = data.userinfo.Name.slice(0, 1).toUpperCase();
+            $(".firstL, .firstLs").text(firstLetter);
+            var rand = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+            var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+            var back = ["#ff0000", "blue", "gray"];
+            //var rand = back[Math.floor(Math.random() * back.length)];
+            $('.firstL').css('background', color);
+            $(".userNameIntro").text(data.userinfo.Name.split(" ")[0]);
+            $(".userName").text(data.userinfo.Name);
+            $(".desg").text(data.userinfo.deg_designation);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#dob").text(dateSplitDOB);
+            $("#dateSplitJOIN").text(dateSplitJOIN);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#phoneNo").text(data.userinfo.phoneNo);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+            $("#deg_designation").text(data.userinfo.deg_designation);
+        }
+    });
+   
+
+
+
+    function getAttList(YYMM) {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/BioMetricApplication/getAttReport",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "EMP_CODE": '@Session["usercontactID"]',
+                "YYMM": YYMM
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("getAttReport", data);
+                var info = data.attinfo;
+                if (info == null)
+                {
+                    $("#reportGen").html("<tr><td colspan='6'>NO DATA TO DISPLAY</td></tr>");
+
+                } else {
+                    var html = "";
+
+                    for (i = 0; i < info.length; i++) {
+                        html += "<tr>"
+                        html += "<td>" + info[i].DATE + "</td>"
+                        html += "<td class='text-center'>" + info[i].IN_TIME + "</td>"
+                        html += "<td class='text-center'>" + info[i].OUT_TIME + "</td>"
+                        html += "<td class='text-center'>" + info[i].DIFF + "</td>"
+                        html += "<td class='text-center'>" + info[i].TIMESHEET_HOUR + "</td>"
+                        html += "<td class='text-center '><i id='appBioMetric' class='lni lni-pencil-alt' style='font-size:18px;color:blue;cursor:pointer' data-i='" + info[i].DATE + "'></i></td>"
+                        html += "</tr>"
+                    }
+                    $("#reportGen").html(html)
+                }
+
+            }
+        });
+    }
+
+    var date = new Date();
+    var v = date.yymm();
+    getAttList(v);
+
+
+    function onSearch() {
+        var m = $("#month").val();
+        var y = $("#year").val();
+        var yymm = y + m;
+        getAttList(yymm);
+    }
+    function populateYear() {
+        var d = new Date().getFullYear();
+        var txt = "";
+        var s = false;
+        for (i = d - 3; i <= d; i++) {
+
+            if (i == d) {
+                s = true
+            }
+            var stringY = i.toString();
+            var last2 = stringY.slice(2);
+            txt += "<option value='" + last2 + "' selected='" + last2 + "'>" + i + "</option>"
+        }
+        $("#year").html(txt);
+    }
+    setTimeout(function () {
+        var m = ("0" + (new Date().getMonth() + 1)).slice(-2)
+        populateYear();
+        $("#month").val(m).change();
+    }, 1000);
+
+
+
+    function SendEmail(ht) {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/SendEmail/SendEmail",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "ToEmail": "susanta.kundu@indusnet.co.in",
+                "CCEmail": "",
+                "BCCEmail": "",
+                "Subject": "Biometric Issue Awaiting",
+                "EmailBody": ht
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("mail", data);
+
+
+            }
+        });
+    }
+    
+    //SendEmail();
+</script>
+<style>
+    span.percent {
+        font-size: 25px;
+    }
+    .pull-right {
+        float: right;
+    }
+
+    .az-avatar.avatar-xxl {
+        width: 70px;
+        height: 70px;
+        font-size: 36px;
+    }
+
+    .avatar-xxl::after {
+        width: 13px;
+        height: 13px;
+        bottom: 6px;
+        right: 7px;
+        box-shadow: 0 0 0 3px #fff;
+    }
+
+    .userNameIntro {
+        text-transform: capitalize !important;
+    }
+    .hide {
+        display:none;
+    }
+</style>
+<div class="az-content az-content-profile">
+    <div class="container-fluid mn-ht-100p">
+        <div class="az-content-left az-content-left-profile">
+
+            <div class="az-profile-overview">
+                <div class="az-contact-info-header noborder">
+                    <div class="media">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <div class="media-body">
+                            <h5 class="userName"></h5>
+                            <p class="desg"></p>
+                            <button class="btn btn-danger btn-block">Logout</button>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div>
+
+                
+
+                <div class="">
+                    <div class="card card-dashboard-two">
+                        <div class="card-header">
+                            <h6>33.50% <i class="icon ion-md-trending-up tx-success"></i> <small>18.02%</small></h6>
+                            <p>Attendance Rate</p>
+                        </div><!-- card-header -->
+                        <div class="card-body">
+                            <div class="chart-wrapper">
+                                <div id="flotChart1" class="flot-chart"></div>
+                            </div><!-- chart-wrapper -->
+                        </div><!-- card-body -->
+                    </div><!-- card -->
+                </div><!-- col -->
+            </div><!-- az-profile-overview -->
+
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-profile">
+            <div class="pd-10 pl-4 pd-sm-10 bg-gray-200 wd-xl-75p">
+                <div class="row row-xs">
+                    <div class="col-md-5">
+                        <select class="form-control" id="month">
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06" >June</option>
+                            <option value="07">July</option>
+                            <option value="08">Aug</option>
+                            <option value="09">Sep</option>
+                            <option value="10">Oct</option>
+                            <option value="11">Nov</option>
+                            <option value="12">Dec</option>
+
+                        </select>
+                    </div><!-- col -->
+                    <div class="col-md-5 mg-t-10 mg-md-t-0">
+                        <select class="form-control" id="year">
+                            @*<option value="21">2021</option>*@
+                        </select>
+                    </div><!-- col -->
+                    <div class="col-md mg-t-10 mg-md-t-0">
+                        <button class="btn btn-az-primary btn-block" onclick="onSearch()">Search</button>
+                    </div><!-- col -->
+                </div><!-- row -->
+            </div>
+            <div class="pl-4 hide">
+                <div class="card card-body leave-stat-card">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <span id="chartred" class="chart" data-percent="30">
+                                <span class="percent"></span>
+                            </span>
+                            <div><h5>Attendance</h5></div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="chart chartNormal" data-percent="55">
+                                <span class="percent"></span>
+                            </span>
+                            <div><h5>Working Hours</h5></div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="chart chartNormal" data-percent="86">
+                                <span class="percent"></span>
+                            </span>
+                            <div><h5>Timesheet</h5></div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="chart chartNormal" data-percent="100">
+                                <span class="percent"></span>
+                            </span>
+                            <div><h5>Avg. Work</h5></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="az-profile-body">
+                <nav class="nav az-nav-line">
+                    <a href="" class="nav-link active" data-toggle="tab">Attendance Report | Biometric | Timesheet </a>
+                </nav>
+                <div class="row mg-b-20">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mg-b-0 table-padded">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th class="text-center">In-Time</th>
+                                        <th class="text-center">Out-Time</th>
+                                        <th class="text-center">Biometric Hours</th>
+                                        <th class="text-center">Timesheet Hours</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reportGen"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- row -->
+
+                <div class="mg-b-20"></div>
+
+            </div><!-- az-profile-body -->
+            
+        </div><!-- az-content-body -->
+    </div><!-- container -->
+</div><!-- az-content -->
+<!-- Leave Apply Modal -->
+<div id="applyBio" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Request Biometric Time Issue</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="messageSec"></div>
+                <div>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Your Name :</th>
+                            <td><span class="userName"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Date Appliying for :</th>
+                            <td><span id="dateFor"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Designation :</th>
+                            <td><span id="deg_designation"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Employee Code :</th>
+                            <td><span id="empCode"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number :</th>
+                            <td><span id="phoneNo"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Reporting Manager :</th>
+                            <td><span id="reportingManager"></span></td>
+                        </tr>
+                    </table>
+                    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">In Time</label>
+                                <input type="text" class="form-control" id="timepickerIn" />
+
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Out Time</label>
+                                <input type="text" class="form-control" id="timepickerOut" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Reason for change</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Reason in details" id="BioReason"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer slick">
+                    <button type="button" class="btn btn-indigo btn-rounded" onclick="ApplyBio()">Submit Application</button>
+                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/select2/js/select2.min.js"></script>
+    
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/jquery.flot/jquery.flot.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/jquery.flot/jquery.flot.resize.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/jquery.easypiechart.min.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/js/MdTimePicker/mdtimepicker.min.js"></script>
+    <script>
+        var dashData2 = [
+          [0, 27.23664159018842],
+          [1, 29.950034069379143],
+          [2, 29.644830736016026],
+          [3, 25.769612795319304],
+          [4, 25.9672980159902],
+          [5, 29.306231062193945],
+          [6, 31.147632883383046],
+          [7, 27.909654447655207],
+          [8, 28.426864707429758],
+          [9, 25.465005080095395],
+          [10, 23.200993777812627],
+          [11, 18.298423899495088],
+          [12, 14.064190975238525],
+          [13, 12.756500849206802],
+          [14, 11.009698256259721],
+          [15, 13.777021847639084],
+          [16, 9.764516822388899],
+          [17, 12.692252142103655],
+          [18, 10.993546294133743],
+          [19, 12.76637263741139],
+          [20, 13.843200048454541],
+          [21, 12.99710730408541],
+          [22, 13.822031388180491],
+          [23, 10.292515338153533],
+          [24, 5.810285403597657],
+          [25, 7.660875205768917],
+          [26, 8.80933653938396],
+          [27, 5.686812232232839],
+          [28, 5.63261704703088],
+          [29, 6.316648245814662],
+          [30, 4.292790984709081],
+          [31, 3.697685557314916],
+          [32, 5.455501325916567],
+          [33, 6.531394786185377],
+          [34, 8.182002901837398],
+          [35, 10.97985605046474],
+          [36, 7.670515545499569],
+          [37, 9.735460695108053],
+          [38, 10.953255620842702],
+          [39, 9.507118597321119],
+          [40, 5.406694867279592],
+          [41, 4.93085440378951],
+          [42, 0.7194264766862029],
+          [43, 2.3619348017672],
+          [44, 5.584661939154044],
+          [45, 10.081512479626763],
+          [46, 10.688764814852894],
+          [47, 8.312501373210273],
+          [48, 8.453461343329785],
+          [49, 8.544757446852685],
+          [50, 5.845487925639054],
+          [51, 1.5807150114153075],
+          [52, 0.563335804242973],
+          [53, 4.894286843146261],
+          [54, 9.856287534207203],
+          [55, 4.896396641974256],
+          [56, 1.2942099540425414],
+          [57, 5.809421858534812],
+          [58, 1.733415110300613],
+          [59, 5.460384956746324],
+          [60, 5.990998309935479],
+          [61, 7.594177171313888],
+          [62, 10.660329512374963],
+          [63, 5.973124255808589],
+          [64, 3.3313399294306265],
+          [65, 2.9044866902167623],
+          [66, 6.997197180694009],
+          [67, 3.523117772813361],
+          [68, 0.2391695609805211],
+          [69, 7.542664698417907],
+          [70, 9.803040324502735],
+          [71, 13.065087817954282],
+          [72, 13.995144609672131],
+          [73, 9.572683988371006],
+          [74, 6.262408675238298],
+          [75, 6.343448236306536],
+          [76, 6.594421915015488],
+          [77, 2.2274478023982844],
+          [78, 2.917574438953957],
+          [79, 6.405517005560797]
+];
+
+        $(function () {
+            'use strict'
+            // Datepicker found in left sidebar of the page
+            var highlightedDays = ['2018-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+            var date = new Date();
+
+            $('.fc-datepicker').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: 'dd-mm-yy',
+                beforeShowDay: function (date) {
+                    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                    for (var i = 0; i < highlightedDays.length; i++) {
+                        if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                            return [true, 'ui-date-highlighted', ''];
+                        }
+                    }
+                    return [true];
+                }
+            });
+            $('#timepickerIn').mdtimepicker();
+            $('#timepickerOut').mdtimepicker();
+
+            // showing modal with effect
+            $('.modal-effect').on('click', function (e) {
+                e.preventDefault();
+                var effect = $(this).attr('data-effect');
+                $('#applyLeave').addClass(effect);
+            });
+
+            // hide modal with effect
+            $('#applyLeave').on('hidden.bs.modal', function (e) {
+                $(this).removeClass(function (index, className) {
+                    return (className.match(/(^|\s)effect-\S+/g) || []).join(' ');
+                });
+            });
+            $('.select2').select2({
+                placeholder: 'Choose one'
+            });
+            // Datepicker
+            $('.fc-datepicker').datepicker({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+            });
+            $('#chartred').easyPieChart({
+                easing: 'easeOutBounce',
+                barColor: '#fc4d25',
+                lineCap: 'round',
+                lineWidth: 5,
+                scaleColor: false,
+                onStep: function (from, to, percent) {
+                    $(this.el).find('.percent').text(Math.round(percent));
+                }
+            });
+            $('.chartNormal').easyPieChart({
+                easing: 'easeOutBounce',
+                barColor: '#14b998',
+                lineCap: 'round',
+                lineWidth: 5,
+                scaleColor: false,
+                onStep: function (from, to, percent) {
+                    $(this.el).find('.percent').text(Math.round(percent));
+                }
+            });
+            $('#chartred').easyPieChart({
+                easing: 'easeOutBounce',
+                barColor: '#fc4d25',
+                lineCap: 'round',
+                lineWidth: 5,
+                scaleColor: false,
+                onStep: function (from, to, percent) {
+                    $(this.el).find('.percent').text(Math.round(percent));
+                }
+            });
+
+            $('.selectDateIcon').click(function () {
+                $(this).parent('.input-group').find('.fc-datepicker').focus();
+            });
+
+
+            $.plot('#flotChart1', [{
+                data: dashData2,
+                color: '#00cccc'
+            }], {
+                series: {
+                    shadowSize: 0,
+                    lines: {
+                        show: true,
+                        lineWidth: 2,
+                        fill: true,
+                        fillColor: { colors: [{ opacity: 0.2 }, { opacity: 0.2 }] }
+                    }
+                },
+                grid: {
+                    borderWidth: 0,
+                    labelMargin: 0
+                },
+                yaxis: {
+                    show: false,
+                    min: 0,
+                    max: 35
+                },
+                xaxis: {
+                    show: false,
+                    max: 50
+                }
+            });
+        });
+    </script>
+

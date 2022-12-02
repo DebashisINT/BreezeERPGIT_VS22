@@ -1,0 +1,611 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/EmployeeSelfService/Resources/js/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    .pull-right {
+        float: right;
+    }
+    .az-avatar.avatar-xxl {
+        width: 100px;
+        height: 100px;
+        font-size: 56px;
+    }
+    .avatar-xxl::after {
+        width: 13px;
+        height: 13px;
+        bottom: 6px;
+        right: 7px;
+        box-shadow: 0 0 0 3px #fff;
+    }
+    .userNameIntro {
+        text-transform:capitalize !important;
+    }
+    .hide {
+        display:none;
+    }
+    .psDocs>a {
+        display:block;
+        margin:4px 0
+    }
+</style>
+<script>
+
+
+    function GetAllHolidays() {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/GETHOLIDAYS/GetHOLIDAYSLIST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({}),
+            dataType: "json",
+            success: function (data) {
+                console.log("GetHOLIDAYSLIST", data);
+                var h = ""
+                if (data.length > 0) {
+
+                    for (i = 0; i < data.length; i++) {
+                        var STARTDAY = data[i].STARTDAY;
+                        var d = STARTDAY.split(" ")[0];
+                        var date = new Date(d);
+                        const Day = date.getDate();
+                        const month = date.toLocaleString('default', { month: 'short' });
+
+                        h += "<a class='profile-tile-box inline-tile valign-top' href='#'><div>"
+                        h += "<div class='dateicon'>" + Day + "</div>"
+                        h += "<div>" + month + "</div></div>"
+                        h += "<div class='pt-user-name'>" + data[i].HOLIDAY_NAME + "</div></a>"
+                    }
+                } else {
+                    h += "No Upcoming Holidays"
+                }
+                $("#postedHolidays").html(h);
+            }
+        });
+    }
+    GetAllHolidays();
+
+    function ShowTriggers() {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/GetSupervisor/isValidInOut",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "UserId": '@Session["usercontactID"]'
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+
+                var button = "";
+                if (data.length > 0) {
+                    if (data[0].IS_IN == "True" && data[0].IS_OUT == "False") {
+                        //logout button
+                        button = "<button class='btn btn-danger' id='getOut'>Leave Office</button>"
+                    } else if (data[0].IS_IN == "True" && data[0].IS_OUT == "True") {
+                        //nothing
+                        button = ""
+                    } else if (data[0].IS_IN == "False" && data[0].IS_OUT == "False") {
+                        // Login button
+                        button = "<button class='btn btn-success' id='getIn'>Enter Office</button>"
+                    }
+                } else {
+                    button = "<button class='btn btn-success' id='getIn'>Enter Office</button>"
+                }
+
+                $("#logArea").html(button)
+            }
+        });
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var dateSplitDOB = data.userinfo.dateOfBirth.split(" ")[0];
+            var dateSplitJOIN = data.userinfo.emp_dateofJoining.split(" ")[0];
+            var firstLetter = data.userinfo.Name.slice(0, 1).toUpperCase();
+            $(".firstL, .firstLs").text(firstLetter);
+            var rand = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+            var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+            var back = ["#ff0000", "blue", "gray"];
+            //var rand = back[Math.floor(Math.random() * back.length)];
+            $('.firstL').css('background', color);
+            $(".userNameIntro").text(data.userinfo.Name.split(" ")[0]);
+            $(".userName").text(data.userinfo.Name);
+            $(".desg").text(data.userinfo.deg_designation);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#dob").text(dateSplitDOB);
+            $("#dateSplitJOIN").text(dateSplitJOIN);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+            $("#phoneNo").text(data.userinfo.phoneNo);
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/LeaveInfo/getLeaveInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "EMPCODE": '@Session["usercontactID"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log("getLeaveInfo", data);
+            var d = data.LeaveInformation;
+            var clB;
+            var clC;
+            var slB;
+            var slC;
+            for (i = 0; i < d.length ; i++) {
+                var LEAVENAME = d[i].LEAVENAME;
+                if (LEAVENAME == "Privilege Leave") {
+                    $("#AvlPL").text(parseInt(d[i].BALANCE));
+                    $("#ConsumedPL").text(parseInt(d[i].AVAILED));
+                } else if (LEAVENAME == "Casual Leave") {
+                    clB = parseInt(d[i].BALANCE);
+                    clC = parseInt(d[i].AVAILED);
+                } else if (LEAVENAME == "Sick Leave") {
+                    slB = parseInt(d[i].BALANCE);
+                    slC = parseInt(d[i].AVAILED);
+                }
+            }
+            var availableCLSL = clB + slB;
+            var consumedCLSL = clC + slC;
+            $("#AvlCL").text(availableCLSL);
+            $("#ConsumedCL").text(consumedCLSL);
+            //$("#AvlPL").text(data.leaveinfo.AvlPL);
+        }
+    });
+    ShowTriggers()
+    $(document).ready(function () {
+        $('body').on('click', '#getIn', function () {
+            InOff();
+        });
+        $('body').on('click', '#getOut', function () {
+            OutOff()
+        });
+    })
+    function genChart() {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/ReimbursementAPI/GetcHART",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "EMPCODE": '@Session["usercontactID"]'
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("GetcHART", data);
+                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                var dataArr = [];
+
+                for (i = 0; i < data.length; i++) {
+                    var m = data[i].YYMM
+                    var sp = parseFloat(m.slice(-2));
+                    var obj = { month: monthNames[sp], totalW: data[i].Emp_status, present: data[i].NoOfPresent }
+                    dataArr.push(obj)
+                }
+
+                GenMoris(dataArr)
+            }
+        });
+    }
+    genChart()
+    function InOff() {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/LeaveApply/AddInTime",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "UserId": '@Session["userid"]',
+                "EmpId": '@Session["usercontactID"]'
+
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                ShowTriggers();
+            }
+        });
+    }
+    function OutOff() {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/LeaveApply/AddOutTime",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "UserId": '@Session["userid"]',
+                "EmpId": '@Session["usercontactID"]'
+
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                ShowTriggers();
+            }
+        });
+    }
+
+    function getOnLeave() {
+
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/GETLeavesofEMP/GetOnLeaveTOday",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "UserId": '@Session["userid"]'
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("GetOnLeaveTOday", data);
+                if (data.leaveList.length > 0) {
+                    html = "";
+                    for (i = 0; i < data.leaveList.length; i++) {
+                        var fl = data.leaveList[i].user_name
+                        var l = fl.charAt(0)
+                        html += "<a class='profile-tile-box inline-tile' href='#'>"
+                        html += "<div class='az-avatar  avatar-lg' style='background:#333;margin:0 auto'>" + l + "</div><div class='pt-user-name'>" + data.leaveList[i].user_name + "</div>"
+                        html += "</a>"
+                    }
+                    $("#onLeaveToday").html(html);
+                } else {
+                    $("#onLeaveToday").html("<div>Everyone is Working</div>");
+                }
+            }
+        });
+    }
+    getOnLeave();
+</script>
+<script src="../components/navigation.vue.js"></script>
+    <div class="container-fluid d-block">
+        <div class="clearfix">
+            <div class="pull-right" id="logArea"></div>
+            <div style="float:left">
+                <h2 class="az-content-title tx-24 mg-b-5">Hi, welcome back <span class="userNameIntro"></span></h2>
+                <p class="mg-b-20 mg-lg-b-25">Your quick access links are available here.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="row row-sm mg-b-20">
+                    <div class="col-lg-7">
+                        <div class="card card-dashboard-twelve mg-b-20">
+                            <span class="card-pin hide"><i class="fas fa-pencil-alt"></i></span>
+                            <div class="az-contact-info-header noborder">
+                                <div class="card-body">
+                                    <div class="media">
+                                        @*<div class="az-img-user az-img-user-small">
+                                            <img src="~/Areas/EmployeeSelfService/Resources/images/avatar.jpeg" alt="">
+                                        </div>*@
+                                        <div class="az-avatar avatar-xxl firstL" >
+
+                                        </div>
+                                        <div class="media-body">
+                                            <h5><span class="userName"></span></h5>
+                                            <p><span class="desg"></span> &nbsp;&nbsp;&nbsp;  | &nbsp;&nbsp;&nbsp;Emp Code : <span id="empCode"></span> </p>
+
+                                            <div class="row row-sm ">
+                                                <div class="col-6 col-md-4 col-xl">
+                                                    <label class="az-content-label text-black-50">Date of Birth</label>
+                                                    <div id="dob"></div>
+                                                </div>
+                                                <div class="col-6 col-md-4 col-xl">
+                                                    <label class="az-content-label text-black-50">Joining Date</label>
+                                                    <div id="dateSplitJOIN"></div>
+                                                </div>
+                                                <div class="col-6 col-md-4 col-xl">
+                                                    <label class="az-content-label text-black-50">Contact No</label>
+                                                    <div id="phoneNo"></div>
+                                                </div>
+                                            </div>
+                                        </div><!-- media-body -->
+                                    </div><!-- media -->
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <a href="#uploadResume" class="modal-effect btn btn-warning btn-rounded" data-toggle="modal" data-effect="effect-sign"><i class="la la-cloud-upload"></i> Upload Resume</a>
+                                <div class="pull-right pd-t-10">Reporting Manager : <span id="reportingManager"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card card-dashboard-ten bg-purple">
+                                    <h6 class="az-content-label">Available Leaves</h6>
+                                    <div class="card-body">
+                                        <div>
+                                            <h6 id="AvlPL">0</h6>
+                                            <label>Planned Leave</label>
+                                        </div>
+                                        <div>
+                                            <h6 id="AvlCL">0</h6>
+                                            <label>Casual/Sick Leave</label>
+                                        </div>
+                                    </div><!-- card-body -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pd-4"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card card-dashboard-ten bg-primary">
+                                    <h6 class="az-content-label">Total Leave Consumed</h6>
+                                    <div class="card-body">
+                                        <div>
+                                            <h6 id="ConsumedPL">0</h6>
+                                            <label>Planned Leave</label>
+                                        </div>
+                                        <div>
+                                            <h6 id="ConsumedCL">0</h6>
+                                            <label>Casual/Sick Leave</label>
+                                        </div>
+                                    </div><!-- card-body -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row row-sm mg-b-20">
+                    <div class="col-lg-7">
+                        <div class="card card-dashboard-six">
+                            <div class="card-header">
+                                <div>
+                                    <label class="az-content-label">Last SIX months attendance history</label>
+
+                                </div>
+                                <div class="chart-legend">
+                                    <div><span>Total Days Count</span> <span class="bg-teal"></span></div>
+                                    <div><span>Days Attended</span> <span class="bg-indigo"></span></div>
+
+                                </div>
+                            </div><!-- card-header -->
+                            <div id="morrisBar3" class="morris-wrapper-demo"></div>
+                        </div><!-- card -->
+                    </div>
+                    <div class="col-sm-5">
+                        
+                        <div class="card mg-b-20 ">
+                            <label class="az-content-label mg-t-20 pd-l-15">Upcoming Holidays</label>
+                            <div class="card-body">
+                                <div class="profile-tile " id="postedHolidays">
+                                    
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="col-lg-3">
+                <div class="card mg-b-20 ">
+                    <label class="az-content-label mg-t-20 pd-l-15">Important Documents</label>
+                    <div class="card-body psDocs">
+                        
+                        <a href="#"><button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-ambulance"></i> Health Policy Doc</button></a>
+                        <a href="#"><button class="btn btn-light btn-radius btn-block text-left btn-with-icon"><i class="lni lni-train"></i> Travel Policy Doc</button></a>
+                        <a href="/EmployeeSelfService/CommonFolder/LeaveDoc/Service Schedule Module for Orion Pest.pdf" target="_blank" download="Service Schedule Module for Orion Pest.pdf">
+                            <button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-calendar"></i> Leave Policy Doc</button>
+                        </a>
+                        <a href="#"><button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-apartment"></i> Company Policy Doc</button></a>
+
+</div>
+                </div>
+                <div class="card mg-b-20 ">
+                    <label class="az-content-label mg-t-20 pd-l-15">On Leave Today</label>
+                    <div class="card-body">
+                        <div class="profile-tile" id="onLeaveToday">
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card card-dashboard-events" style="display:none">
+                    <div class="card-header">
+                        <h6 class="card-title">November 2018</h6>
+                        <h5 class="card-subtitle">Upcoming Events</h5>
+                    </div><!-- card-header -->
+                    <div class="card-body">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <div class="event-indicator bg-purple"></div>
+                                <label>Aug 29 <span>Tuesday</span></label>
+                                <h6>Townhall Metting Fest</h6>
+                                <p><strong>8AM - 4PM</strong> SDF Building, Saltlake</p>
+
+                                <div class="event-user">
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="">20+ more</a>
+                                </div><!-- az-event-user -->
+                            </div><!-- list-group-item -->
+                            <div class="list-group-item">
+                                <div class="event-indicator bg-primary"></div>
+                                <label>Sep 23 <span>Friday</span></label>
+                                <h6>Townhall Metting Fest</h6>
+                                <p><strong>8AM - 5PM</strong> SDF Building, Saltlake</p>
+
+
+                                <div class="event-user">
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="">20+ more</a>
+                                </div><!-- az-event-user -->
+                            </div><!-- list-group-item -->
+                            <div class="list-group-item">
+                                <div class="event-indicator bg-primary"></div>
+                                <label>Sep 23 <span>Friday</span></label>
+                                <h6>Townhall Metting Fest</h6>
+                                <p><strong>8AM - 5PM</strong> SDF Building, Saltlake</p>
+
+
+                                <div class="event-user">
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="" class="az-img-user"><img src="https://via.placeholder.com/500x500" alt=""></a>
+                                    <a href="">20+ more</a>
+                                </div><!-- az-event-user -->
+                            </div><!-- list-group-item -->
+                        </div><!-- list-group -->
+                    </div><!-- card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Leave Apply Modal -->
+<div id="uploadResume" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Upload Resume</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="messageSec"></div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Select Resume </label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="mResume" name="files" accept=".doc, .pdf, .docx,application/msword,">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer slick">
+                    <button type="button" class="btn btn-indigo btn-rounded" onclick="uploadMR()">Upload</button>
+                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
+
+
+<div id="vueComponent">{{authstatus}}
+    <rating-counter title="dd"></rating-counter>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("input[type='file']").each(function () {
+            $(this).on("change", function () {
+                var itemSelected = $(this).val();
+                $(this).closest(".row").append("<div class='col-md-12' style='color:green;padding:8px 15px'>" + itemSelected + "</div>")
+                console.log(itemSelected)
+            })
+        })
+    })
+    function uploadMR() {
+        var data = new FormData();
+        var file = $('#mResume')[0].files[0];
+        data.append('file', file);
+        data.append('UserID', '@Session["userid"]');
+        myfile = $('#mResume').val();
+        var ext = myfile.split('.').pop();
+        if ($('#mResume')[0].files[0].size > 2097152) {
+            alert("File is too big!");
+            this.value = "";
+            return false;
+        };
+        if (ext == "pdf" || ext == "docx" || ext == "doc") {
+            $.ajax({
+                url: '/EmployeeSelfService/Api/DocUploadApi/SaveResume',
+                processData: false,
+                contentType: false,
+                data: data,
+                type: 'POST'
+            }).done(function (result) {
+                console.log(result);
+                if (result.status == 200) {
+                    $.confirm({
+                        title: 'Success',
+                        content: 'Resume Upload Successful',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                }
+
+            }).fail(function (a, b, c) { console.log(a, b, c); });
+        } else {
+            $.confirm({
+                title: 'Alert',
+                content: 'Only PDF and DOCX files are allowed',
+                icon: 'fa fa-smile-o',
+                theme: 'modern',
+                closeIcon: true,
+                animation: 'scale',
+                type: 'blue',
+            });
+        }
+        return;
+    }
+    function GenMoris(data) {
+        
+        new Morris.Bar({
+            element: 'morrisBar3',
+            data: data,
+            xkey: 'month',
+            ykeys: ['totalW', 'present'],
+            labels: ['Total Days', 'Attended'],
+            barColors: ['#560bd0', '#00cccc'],
+            stacked: true,
+            gridTextSize: 11,
+            hideHover: 'auto',
+            resize: true
+        });
+    }
+    
+
+    
+</script>
+<script>
+    
+    var app = new Vue({
+        el: "#vueComponent",
+        
+        data() {
+              return {
+                authstatus: 'something'
+             }
+        },
+        methods: {
+            async fetchPosts() {
+                var posts = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
+                console.log("posts", posts);
+            }
+        },
+        beforeMount(){
+            this.fetchPosts()
+        }
+    });
+
+</script>
+

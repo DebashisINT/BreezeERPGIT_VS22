@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Payslip";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+<style>
+    span.percent {
+        font-size: 25px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        
+    })
+
+    function getPayslip() {
+        
+        var month = $("#mnthSel").val();
+        year = $("#yrSel").val();;
+        var user = '@Session["usercontactID"]';
+        $.ajax({
+            type: "GET",
+            url: "/EmployeeSelfService/Api/payslipApi/GetFile?year=" + year.slice(-2) + "&month=" + month + "&user=" + user,
+            contentType: "application/json;",
+            dataType: "json",
+           
+            success: function (data) {
+                console.log("paySlip", data);
+                $("#PayslipObj").attr("src", data)
+
+            }
+        });
+        getPayslipPassword();
+    }
+    function getPayslipPassword() {
+
+        var month = $("#mnthSel").val();
+        year = $("#yrSel").val();
+        var YYMM = year.slice(-2) +month;
+        var user = 'E001';
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/payslipApi/PayslipPass",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify({
+                "EmployeeCode": '@Session["usercontactID"]',
+                "YYMM": YYMM
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("paySlip", data);
+                $("#Pass").text(data.Palslip_Password).css({ "font-weight": "600", "color": "red" });
+            }
+        });
+
+    }
+</script>
+<div class="az-content az-content-app">
+    <div class="container">
+        <div class="az-content-left az-content-left-invoice">
+            <div class="az-content-breadcrumb lh-1 mg-b-2">
+                <span>Apps &amp; Pages</span>
+                <span>Payslip</span>
+            </div>
+            <h2 class="az-content-title tx-24 mg-b-25">My Payslips</h2>
+
+            <div id="azInvoiceList" class="az-invoice-list">
+                <div class="paySlipForm p-2">
+                    <label>Select Month</label>
+                    <div class="input-group">
+                        <select class="form-control" id="mnthSel">
+                            <option value="01">Jan</option>
+                            <option value="02">Feb</option>
+                            <option value="03">Mar</option>
+                            <option value="04">Apr</option>
+                            <option value="05">May</option>
+                            <option value="06">Jun</option>
+                            <option value="07">Jul</option>
+                            <option value="08">Aug</option>
+                            <option value="09">Sep</option>
+                            <option value="10">Oct</option>
+                            <option value="11">Nov</option>
+                            <option value="12">Dec</option>
+                        </select>
+                    </div>
+                    <label class="mt-1">Select Year</label>
+                    <div class="input-group">
+                        <select class="form-control" id="yrSel">
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block mt-3" onclick="getPayslip()">Search</button>
+                </div>
+            </div><!-- az-invoice-list -->
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-invoice">
+            <div class="">
+                <div class="card-body">
+                <div id="Pass"></div>
+                    <div >
+                        <embed src=""
+                               type="application/pdf"
+                               frameborder="0"
+                               scrolling="auto"
+                               height="600px"
+                               width="100%" id="PayslipObj"></embed>
+                    </div>
+
+                    <hr class="mg-b-40">
+
+                    <a href="" class="btn btn-primary btn-block">Download Payslip</a>
+
+                </div><!-- card-body -->
+            </div><!-- card -->
+        </div><!-- az-content-body -->
+    </div>
+
+</div>
