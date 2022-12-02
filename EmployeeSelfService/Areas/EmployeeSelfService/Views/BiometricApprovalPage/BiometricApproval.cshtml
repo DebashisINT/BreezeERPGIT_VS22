@@ -1,0 +1,552 @@
+﻿@{
+    ViewBag.Title = "BiometricApproval";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Areas/EmployeeSelfService/Resources/lib/typicons.font/typicons.css" rel="stylesheet" />
+<link href="~/Areas/EmployeeSelfService/Resources/css/fontawesome-all.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<style>
+    .TSHeader {
+        background: #4f4e86 !important;
+        color: #fff;
+        font-weight: bold;
+        font-size: 14px;
+    }
+</style>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var dateSplitDOB = data.userinfo.dateOfBirth.split(" ")[0];
+            var dateSplitJOIN = data.userinfo.emp_dateofJoining.split(" ")[0];
+            var firstLetter = data.userinfo.Name.slice(0, 1).toUpperCase();
+            $(".firstL, .firstLs").text(firstLetter);
+            var rand = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+            var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+            var back = ["#ff0000", "blue", "gray"];
+            //var rand = back[Math.floor(Math.random() * back.length)];
+            $('.firstL').css('background', color);
+            $(".userNameIntro").text(data.userinfo.Name.split(" ")[0]);
+            $(".userName").text(data.userinfo.Name);
+            $(".desg").text(data.userinfo.deg_designation);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#dob").text(dateSplitDOB);
+            $("#dateSplitJOIN").text(dateSplitJOIN);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/BusinessMeetingAPI/GetALLUSERS",
+        contentType: "application/json; charset=utf-8",
+        //Mantis Issue 24411
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        //Mantis Issue 24411
+        dataType: "json",
+        success: function (data) {
+            console.log('GetALLUSERS', data);
+            var txt = "<option value=''>All</option>";
+            for (i = 0; i < data.length; i++) {
+                txt += "<option value='" + data[i].user_contactId + "'>" + data[i].user_name + "</option>"
+            }
+            $("#empDrop").html(txt);
+        }
+    });
+
+
+
+    function formatDate(date) {
+        var splitDate = date.split("-");
+        var day = splitDate[0],
+            month = splitDate[1],
+            year = splitDate[2]
+
+        return year + "-" + month + "-" + day
+    }
+    var appliedUser = []
+    var fetchedData = []
+    function getList(empCode, status) {
+
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/BioMetricApplication/getBiometricIssueList",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                //rev Pratik
+                "ID": '@Session["userid"]', 
+                //End of rev Pratik
+                "EMP_CODE": empCode,
+                "STATUS": status
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("getBiometricIssueList", data);
+                var info = data.attinfo;
+                fetchedData = data.attinfo;
+                if (info == null) {
+                    $("#bioGen").html("<tr><td colspan='6'>NO DATA TO DISPLAY</td></tr>");
+
+                } else {
+                    var html = "";
+
+                    for (i = 0; i < info.length; i++) {
+                        var b = info[i].APPLIED_FOR_DATE;
+                        var c = b.split(" ")[0]
+                        html += "<tr>"
+                        html += "<td><input type='checkbox' name='type' id='c" + info[i].ID + "' value='" + info[i].ID + "'/></td>"
+                        html += "<td class='text-center'>" + info[i].user_name + "</td>"
+                        html += "<td class='text-center'>" + c + "</td>"
+                        html += "<td class='text-center'>" + info[i].INTIME + "</td>"
+                        html += "<td class='text-center'>" + info[i].OUTTIME + "</td>"
+                        //rev Pratik
+                        //html += "<td class='text-center'><span class='badge badge-warning'>PENDING</span></td>"
+                        if (info[i].ISAPPROVED == 'True') {
+                            html += "<td class='text-center'><span class='badge badge-success'>Approved</span></td>"
+                            //html += "<td class='text-center'><span class='badge badge-success'>" + info[i].STATUS + "</span></td>"
+                        }
+                        else if (info[i].ISAPPROVED == 'False') {
+                            html += "<td class='text-center'><span class='badge badge-warning'>Pending</span></td>"
+                        }
+                        else {
+                            html += "<td class='text-center'><span class='badge badge-danger'> Rejected </span></td>"
+                        } 
+                     
+                        html += "<td class='text-center ' href='#BioDetailsView' onClick='makeViewReq(" + info[i].ID + ")'><i id='infoBioMetric' class='lni lni-eye' style='font-size:18px;color:blue;cursor:pointer' data-i='" + info[i].ID + "'></i></td>"
+                        //End of rev Pratik
+                        html += "</tr>"
+                        //var tObj = { "appUser": info[i].user_name, "APPLIED_FOR_DATE": info[i].APPLIED_FOR_DATE, "INTIME": info[i].INTIME, "OUTTIME": info[i].OUTTIME }
+                        //appliedUser.push(tObj)
+                    }
+                    $("#bioGen").html(html);
+
+                }
+            }
+        });
+
+    }
+    //rev Pratik
+    //getList('@Session["usercontactID"]', false);
+    function makeViewReq(ID) {
+        //alert(ID)
+        //var obj = fetchedData.filter(d.ID == ID);
+        //console.log(obj)
+        $("#BioDetailsView").modal("show");
+        fetchedData.filter(function (i) {
+            if (i.ID == ID) {
+                
+                var dateSplitBioDate = i.APPLIED_FOR_DATE.split(" ")[0].split("/").join("-");
+                var dateSplitAppDate = i.APPLIED_DATE.split(" ")[0].split("/").join("-");
+                var chunks = dateSplitBioDate.split('-');
+                dateSplitBioDate = chunks[1] + '-' + chunks[0] + '-' + chunks[2];
+                chunks = dateSplitAppDate.split('-');
+                dateSplitAppDate = chunks[1] + '-' + chunks[0] + '-' + chunks[2];
+                // alert(dateSplitFrom)
+                //$("#leave_id").text(data.leavedetinfo.ID);
+                $("#empName").val(i.user_name);
+                $("#empInTime").val(i.INTIME);
+                $("#empOutTime").val(i.OUTTIME);
+               // alert(dateSplitBioDate)
+                if (dateSplitBioDate == '' || dateSplitBioDate == 'undefined--undefined' || dateSplitBioDate == null) {
+                    $("#BMDate").val("");
+                }
+                else {
+                    $("#BMDate").val(dateSplitBioDate);
+                }
+                if (dateSplitAppDate == '' || dateSplitAppDate == 'undefined--undefined') {
+                    $("#AppDate").val("");
+                }
+                else {
+                    $("#AppDate").val(dateSplitAppDate);
+                }
+                //$("#AppDate").val(dateSplitAppDate);
+                $("#BioReason").val(i.BioReason);
+                //alert(i.ISAPPROVED)
+                if (i.ISAPPROVED == 'True') {
+                    $("#BioStatus").val("Approved");
+                }
+                else {
+                    $("#BioStatus").val("Not Approved");
+                }
+            }
+        })
+    }
+    //End of rev Pratik
+    function populateMin() {
+        var d = 61;
+        var txt = "";
+        for (i = 0; i < d; i++) {
+            txt +="<option>" + i + "</option>"
+        }
+        $("#TSMin").html(txt);
+    }
+    setTimeout(function () {
+        populateMin();
+    },2000);
+    function filterSearch() {
+        var empCode = $("#empDrop").val();
+        var status = $("#BMstatus").val();
+
+        getList(empCode, status);
+    }
+    $(document).ready(function () {
+        $("body").on("click", "#select-all", function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $('#bioGen :checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $('#bioGen :checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+
+        });
+    });
+    function submitApprovalReq() {
+        var ar = [];
+        $("input:checkbox[name=type]:checked").each(function () {
+            ar.push($(this).val());
+        });
+        var strng = ar.toString();
+        console.log("ar", strng);
+        if (strng == "") {
+            alert("You must select First");
+        } else {
+            console.log("you selected ", strng);
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure you want to approve',
+                buttons: {
+                    confirm:  {
+                        text: 'Approve',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "/EmployeeSelfService/Api/BioMetricApplication/ApproveBiometricReq",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    "BIOMETRIC_IDS": strng
+                                }),
+                                dataType: "json",
+                                success: function (data) {
+
+                                    console.log("ApproveBiometricReq", data);
+                                    if (data.status == 200) {
+                                        $.confirm({
+                                            title: 'Success',
+                                            content: 'Approved Successfull',
+                                            icon: 'fa fa-tick',
+                                            theme: 'modern',
+                                            closeIcon: true,
+                                            animation: 'scale',
+                                            type: 'blue',
+                                        });
+                                        getList('@Session["usercontactID"]', false);
+
+                                        console.log("ob", appliedUser);
+                                        //for (i = 0; i <= appliedUser.length; i++) {
+                                        //    var emAilHtml = '<!DOCTYPE html><html><head><style>table{font-family:arial,sans-serif;border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;text-align:left;padding:8px}tr:nth-child(even){background-color:#ddd}</style></head><body><table style="border:1px solid #ccc"><tr style="background:blue;color:#fff"><th colspan="2">Biometric Time Approved</tr><tr><td>Name :</td><td>' + appliedUser[i].appUser + '</td></tr><tr><td>Requested Outtime :</td><td>' + appliedUser[i].REQ_INTIME + '</td></tr><tr><td>Requested Intime :</td><td>' + appliedUser[i].REQ_OUTTIME + '</td></tr><tr><td>Date Applied for :</td><td>' + appliedUser[i].APPLIED_FOR_DATE + '</td></tr></table></body></html>'
+                                        //    //SendEmail()
+                                        //}
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {
+                        // cancel code
+                    }
+                }
+            });
+        }
+    }
+
+    function SendEmail(ht) {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/SendEmail/SendEmail",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "ToEmail": "susanta.kundu@indusnet.co.in",
+                "CCEmail": "",
+                "BCCEmail": "",
+                "Subject": "Biometric Issue Awaiting",
+                "EmailBody": ht
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("mail", data);
+
+
+            }
+        });
+    }
+</script>
+<div class="az-content az-content-profile">
+    <div class="container-fluid mn-ht-100p">
+        <div class="az-content-left az-content-left-profile">
+
+            <div class="az-profile-overview">
+                <div class="az-contact-info-header noborder">
+                    <div class="media">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <div class="media-body">
+                            <h5 class="userName"></h5>
+                            <p class="desg"></p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div>
+
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="/EmployeeSelfService/BiometricApprovalPage/BiometricApproval">Pending Biometric Approval</a></li>
+                    <li class="list-group-item"><a href="/EmployeeSelfService/ApproLeaveApplications/ApproLeaveApplications">Pending Leave Application</a></li>
+                    <li class="list-group-item"><a>Daily Bio-metric Issue</a></li>
+                </ul>
+
+                <div class="mg-y-30"></div>
+                <!-- Event Calender -->
+                <div class="card card-dashboard-calendar">
+                    <!-- <h6 class="card-title">Event Calendar</h6> -->
+                    <div class="media az-media-date">
+                        <h1>5</h1>
+                        <div class="media-body">
+                            <p>August 2019</p>
+                            <span>Monday</span>
+                        </div>
+                    </div>
+                    <div class="card-body"><div class="fc-datepicker"></div></div>
+                </div>  <!-- Event Calender End -->
+                <div class="card mg-t-10 ">
+                    <div class="card-body">
+                        <button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-calendar"></i> Work from Home policy</button>
+                    </div>
+                </div>
+            </div><!-- az-profile-overview -->
+
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-profile">
+            <div class="pd-10 pl-4 pd-sm-10 bg-gray-200 ">
+                <div class="row row-xs">
+                    <div class="col-md-3">
+                         <label>Employee Name</label>
+                         <div>
+                             <select id="empDrop" class="form-control">
+                                 <option>Select</option>
+                             </select>
+                         </div>
+                    </div><!-- col -->
+                    
+                    <div class="col-md-3 mg-t-10 mg-md-t-0">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Status</label>
+                        <div>
+                            <select class="form-control " style="width:100%;margin-top:3px" id="BMstatus">
+                                <option value="0">Waiting for Approval</option>
+                                <option value="1">Approved</option>
+                                <option value="2">Rejected</option>
+                            </select>
+                        </div>
+                    </div><!-- col -->
+                    <div class="col-md-2 mg-t-10 mg-md-t-0">
+                        <button class="btn btn-az-primary btn-block" style="margin-top: 26px" onclick="filterSearch()">Search</button>
+                    </div><!-- col -->
+                </div><!-- row -->
+            </div>
+            <nav class="nav az-nav-line">
+                <a href="" class="nav-link active" data-toggle="tab">Pending Bio-Metric Approval </a>
+                <div class="ml-auto"><button type="button" class="btn btn-success btn-rounded mr-2" onclick="submitApprovalReq()">Approve</button><button class="btn btn-outline-danger btn-rounded ">Reject</button></div>
+            </nav>
+            <div class="az-profile-body pt-0">
+                <div class="row mg-b-20">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered mg-b-0 table-padded">
+                            <thead>
+                                <tr>
+                                    <td><input type="checkbox" id="select-all" /></td>
+                                    <th>Name</th>
+                                    <th class="text-center">Bio Metric Date</th>
+                                    <th class="text-center">Requested In-Time</th>
+                                    <th class="text-center">Requested Out Time</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bioGen">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- row -->
+
+                <div class="mg-b-20"></div>
+            </div><!-- az-profile-body -->
+
+        </div><!-- az-content-body -->
+    </div><!-- container -->
+</div><!-- az-content -->
+<!-- Rev Pratik -->
+<!-- Biometric Apply View Modal -->
+<div id="BioDetailsView" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Biometric Apply View</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="messageSec"></div>
+                <div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Employee Name</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="" type="text" id="empName" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">In Time</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="empInTime" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Out Time</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="empOutTime" readonly="readonly">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Bio Metric Date</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="BMDate" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Applied Date</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="AppDate" readonly="readonly">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Status</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="" type="text" id="BioStatus" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Reason</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="" id="BioReason" readonly="readonly"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
+<!-- End of Rev Pratik -->
+<script src="~/Areas/EmployeeSelfService/Resources/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/select2/js/select2.min.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/easypiechart.min.js"></script>
+<script>
+    $(function () {
+        'use strict'
+        // Datepicker found in left sidebar of the page
+        var highlightedDays = ['2018-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+        var date = new Date();
+
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            setDate: new Date(),
+            dateFormat: 'dd-mm-yy',
+            beforeShowDay: function (date) {
+                var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                for (var i = 0; i < highlightedDays.length; i++) {
+                    if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                        return [true, 'ui-date-highlighted', ''];
+                    }
+                }
+                return [true];
+            }
+        });
+        $('.fc-datepicker').datepicker('setDate', new Date());
+
+        // showing modal with effect
+        $('.modal-effect').on('click', function (e) {
+            e.preventDefault();
+            var effect = $(this).attr('data-effect');
+            $('#applyLeave').addClass(effect);
+        });
+
+        // hide modal with effect
+        $('#applyLeave').on('hidden.bs.modal', function (e) {
+            $(this).removeClass(function (index, className) {
+                return (className.match(/(^|\s)effect-\S+/g) || []).join(' ');
+            });
+        });
+        $('.select2').select2({
+            placeholder: 'Choose one'
+        });
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            dateFormat: 'dd/mm/yy',
+            showOtherMonths: true,
+            selectOtherMonths: true,
+        });
+        $('.chartNormal').easyPieChart({
+            easing: 'easeOutBounce',
+            barColor: '#14b998',
+            lineCap: 'round',
+            lineWidth: 5,
+            scaleColor: false,
+            onStep: function (from, to, percent) {
+                $(this.el).find('.percent').text(Math.round(percent));
+            }
+        });
+        $('#chartred').easyPieChart({
+            easing: 'easeOutBounce',
+            barColor: '#fc4d25',
+            lineCap: 'round',
+            lineWidth: 5,
+            scaleColor: false,
+            onStep: function (from, to, percent) {
+                $(this.el).find('.percent').text(Math.round(percent));
+            }
+        });
+
+        $('.selectDateIcon').click(function () {
+            $(this).parent('.input-group').find('.fc-datepicker').focus();
+        });
+
+    });
+</script>
+
+

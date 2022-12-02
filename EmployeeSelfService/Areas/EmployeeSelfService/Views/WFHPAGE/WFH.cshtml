@@ -1,0 +1,309 @@
+﻿@{
+    ViewBag.Title = "WFH";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Areas/EmployeeSelfService/Resources/lib/typicons.font/typicons.css" rel="stylesheet" />
+<link href="~/Areas/EmployeeSelfService/Resources/css/fontawesome-all.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<style>
+    span.percent {
+        font-size: 25px;
+    }
+</style>
+<div class="az-content az-content-profile">
+    <div class="container-fluid mn-ht-100p">
+        <div class="az-content-left az-content-left-profile">
+
+            <div class="az-profile-overview">
+                <div class="az-contact-info-header noborder">
+                    <div class="media">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <div class="media-body">
+                            <h5 class="userName"></h5>
+                            <p class="desg"></p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div>
+
+                <div class="az-profile-bio">
+                    <a href="#applyWFH" class="modal-effect btn btn-az-secondary btn-rounded btn-block" data-toggle="modal" data-effect="effect-sign">Apply Work from Home</a>
+                </div><!-- az-profile-bio -->
+
+                <div class="mg-y-30"></div>
+                <!-- Event Calender -->
+                <div class="card card-dashboard-calendar">
+                    <!-- <h6 class="card-title">Event Calendar</h6> -->
+                    <div class="media az-media-date">
+                        <h1>5</h1>
+                        <div class="media-body">
+                            <p>August 2019</p>
+                            <span>Monday</span>
+                        </div>
+                    </div>
+                    <div class="card-body"><div class="fc-datepicker"></div></div>
+                </div>  <!-- Event Calender End -->
+                <div class="card mg-t-10 ">
+                    <div class="card-body">
+                        <button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-calendar"></i> Leave Policy Doc</button>
+                    </div>
+                </div>
+            </div><!-- az-profile-overview -->
+
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-profile">
+            <div class="pl-4">
+                <div class="card card-body leave-stat-card">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <span id="chartred" class="chart" data-percent="30">
+                                <span class="percent" id="ConsumedCL">0</span>
+                            </span>
+                            <div><h5>CL/SL Consumed</h5></div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="chart chartNormal" data-percent="55">
+                                <span class="percent" id="AvlCL">0</span>
+                            </span>
+                            <div><h5>CL/SL Balance</h5></div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="chart chartNormal" data-percent="86">
+                                <span class="percent" id="ConsumedPL">0</span>
+                            </span>
+                            <div><h5>PL Consumed</h5></div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="chart chartNormal" data-percent="100">
+                                <span class="percent" id="AvlPL">0</span>
+                            </span>
+                            <div><h5>PL Balance</h5></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="az-profile-body">
+
+                <div class="row mg-b-20">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered mg-b-0 table-padded">
+                            <thead>
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Application Date</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaveList">
+                                <tr>
+                                    <td>Sick Leave</td>
+                                    <td>05.5.2019</td>
+                                    <td>08.5.2019</td>
+                                    <td>10.5.2019</td>
+                                    <td class="text-center"><i class="fa fa-check text-success"></i></td>
+                                    <td class="text-center "><i class="lni-trash" style="font-size:18px;color:#de4b4b"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Planed Leave</td>
+                                    <td>05.5.2019</td>
+                                    <td>08.5.2019</td>
+                                    <td>10.5.2019</td>
+                                    <td class="text-center"><i class="fa fa-check text-success"></i></td>
+                                    <td class="text-center "><i class="lni-trash" style="font-size:18px;color:#de4b4b"></i></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- row -->
+
+                <div class="mg-b-20"></div>
+
+            </div><!-- az-profile-body -->
+            <nav class="nav az-nav-line">
+                <a href="" class="nav-link active" data-toggle="tab">On Leave Today</a>
+            </nav>
+            <div class="az-profile-body">
+                <div class="profile-tile">
+                    <a class="profile-tile-box inline-tile" href="#">
+                        <div class="az-avatar  avatar-lg" style="background:#009933;margin:0 auto">
+                            I
+                        </div>
+                        <div class="pt-user-name">
+                            Indranil Dey
+                        </div>
+                    </a>
+                    <a class="profile-tile-box inline-tile" href="#">
+                        <div class="az-avatar avatar-lg" style="background: #333; margin: 0 auto">
+                            T
+                        </div>
+                        <div class="pt-user-name">
+                            Tanmoy Ghosh
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div><!-- az-content-body -->
+    </div><!-- container -->
+</div><!-- az-content -->
+<!-- Leave Apply Modal -->
+<div id="applyWFH" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Leave Work from Home</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="messageSec"></div>
+                <div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Leave Type</label>
+                        <div>
+                            <select class="form-control " style="width:100%" id="leaveType"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">From Date</label>
+                                <div class="input-group">
+                                    <input type="text" id="frmDate" class="form-control fc-datepicker" placeholder="DD/MM/YYYY">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">To Date</label>
+                                <div class="input-group">
+                                    <input type="text" id="tpDate" class="form-control fc-datepicker" placeholder="DD/MM/YYYY">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <input type="hidden" id="superId" />
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Name</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="superName" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Email</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" type="text" id="superEmail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Reason</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="" id="leaveReason"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer slick">
+                    <button type="button" class="btn btn-indigo btn-rounded" onclick="submitLeaveApplication()">Submit Application</button>
+                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/select2/js/select2.min.js"></script>
+    <script src="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/easypiechart.min.js"></script>
+    <script>
+        $(function () {
+            'use strict'
+            // Datepicker found in left sidebar of the page
+            var highlightedDays = ['2018-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+            var date = new Date();
+
+            $('.fc-datepicker').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                setDate: new Date(),
+                dateFormat: 'dd-mm-yy',
+                beforeShowDay: function (date) {
+                    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                    for (var i = 0; i < highlightedDays.length; i++) {
+                        if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                            return [true, 'ui-date-highlighted', ''];
+                        }
+                    }
+                    return [true];
+                }
+            });
+            $('.fc-datepicker').datepicker('setDate', new Date());
+
+            // showing modal with effect
+            $('.modal-effect').on('click', function (e) {
+                e.preventDefault();
+                var effect = $(this).attr('data-effect');
+                $('#applyLeave').addClass(effect);
+            });
+
+            // hide modal with effect
+            $('#applyLeave').on('hidden.bs.modal', function (e) {
+                $(this).removeClass(function (index, className) {
+                    return (className.match(/(^|\s)effect-\S+/g) || []).join(' ');
+                });
+            });
+            $('.select2').select2({
+                placeholder: 'Choose one'
+            });
+            // Datepicker
+            $('.fc-datepicker').datepicker({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+            });
+            //$('.chartNormal').easyPieChart({
+            //    easing: 'easeOutBounce',
+            //    barColor: '#14b998',
+            //    lineCap: 'round',
+            //    lineWidth: 5,
+            //    scaleColor: false,
+            //    onStep: function (from, to, percent) {
+            //        $(this.el).find('.percent').text(Math.round(percent));
+            //    }
+            //});
+            //$('#chartred').easyPieChart({
+            //    easing: 'easeOutBounce',
+            //    barColor: '#fc4d25',
+            //    lineCap: 'round',
+            //    lineWidth: 5,
+            //    scaleColor: false,
+            //    onStep: function (from, to, percent) {
+            //        $(this.el).find('.percent').text(Math.round(percent));
+            //    }
+            //});
+
+            $('.selectDateIcon').click(function () {
+                $(this).parent('.input-group').find('.fc-datepicker').focus();
+            });
+
+        });
+    </script>
+

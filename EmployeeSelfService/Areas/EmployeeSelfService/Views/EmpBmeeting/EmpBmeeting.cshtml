@@ -1,0 +1,744 @@
+﻿    @{
+    ViewBag.Title = "EmpBmeeting";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Areas/EmployeeSelfService/Resources/lib/typicons.font/typicons.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var dateSplitDOB = data.userinfo.dateOfBirth.split(" ")[0];
+            var dateSplitJOIN = data.userinfo.emp_dateofJoining.split(" ")[0];
+            var firstLetter = data.userinfo.Name.slice(0, 1).toUpperCase();
+            $(".firstL, .firstLs").text(firstLetter);
+            var rand = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+            var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+            var back = ["#ff0000", "blue", "gray"];
+            //var rand = back[Math.floor(Math.random() * back.length)];
+            $('.firstL').css('background', color);
+            $(".userNameIntro").text(data.userinfo.Name.split(" ")[0]);
+            $(".userName").text(data.userinfo.Name);
+            $(".desg").text(data.userinfo.deg_designation);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#dob").text(dateSplitDOB);
+            $("#dateSplitJOIN").text(dateSplitJOIN);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+        }
+    });
+
+    function getList(status, mm, yyyy) {
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/BusinessMeetingAPI/GetBMLIST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "EMP_CODE": '@Session["usercontactID"]',
+                "STATUS": status,
+                "MM": mm,
+                "YYYY": yyyy,
+
+            }),
+            dataType: "json",
+            success: function (data) {
+                console.log("BusinessMeetingAPI", data);
+
+                if (data.length > 0) {
+                    var waitingList = '',
+                        approvedList = '';
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].STATUS == 'Approved') {
+                            var c = data[i].CREATED_DATE;
+                            var CREATED_DATE = c.split(" ")[0];
+                            var d = data[i].FROMDATE;
+                            var FROMDATE = c.split(" ")[0]
+                            var e = data[i].TODATE;
+                            var TODATE = c.split(" ")[0]
+                            approvedList += "<tr>"
+                            approvedList += "<td>" + data[i].VISITIN + "</td>"
+                            approvedList += "<td>" + data[i].CREATED_DATE + "</td>"
+                            //rev Pratik
+                            //approvedList += "<td>" + FROMDATE + "</td>"
+                            //approvedList += "<td>" + TODATE + "</td>"
+                            approvedList += "<td>" + data[i].FROMDATE + "</td>"
+                            approvedList += "<td>" + data[i].TODATE + "</td>"
+                            //End of rev Pratik
+                            approvedList += "<td class='text-center'><i class='fa fa-check text-success'></i></td>"
+                            approvedList += "<td class='text-center'><i class='lni-trash' style='font-size:18px;color:#de4b4b;display:none'></i></td> </tr>"
+                        } else if (data[i].STATUS == 'Rejected') { } else {
+                            var c = data[i].CREATED_DATE;
+                            var CREATED_DATE = c.split(" ")[0];
+                            var d = data[i].FROMDATE;
+                            var FROMDATE = c.split(" ")[0]
+                            var e = data[i].TODATE;
+                            var TODATE = c.split(" ")[0]
+                            waitingList += "<tr>"
+                            waitingList += "<td>" + data[i].VISITIN + "</td>"
+                            waitingList += "<td>" + data[i].CREATED_DATE + "</td>"
+                            //rev Pratik
+                            //waitingList += "<td>" + FROMDATE + "</td>"
+                            //waitingList += "<td>" + TODATE + "</td>"
+                            waitingList += "<td>" + data[i].FROMDATE + "</td>"
+                            waitingList += "<td>" + data[i].TODATE + "</td>"
+                            //End of rev Pratik
+                            waitingList += "<td class='text-center'><i class='fa fa-exclamation-circle text-info'></i></td>"
+                            //rev Pratik
+                            // waitingList += "<td class='text-center'><i class='lni-trash' style='font-size:18px;color:#de4b4b;display:none'></i></td> </tr>"
+
+                            waitingList += "<td class='text-center'>"
+                            if (data[i].isDelete == 0) {
+                                //leaveList += "<i class='lni-trash' style='font-size:18px;color:#de4b4b;display:none'></i></td>"
+                            } else {
+                                waitingList += "<i class='lni-trash' onClick='makeDeleteReq(" + data[i].ID + ")' style='font-size:18px;color:#de4b4b;'></i>"
+                            }
+                            if (data[i].isEdit == 0) {
+                                //wfheList += "<i class='lni-trash' style='font-size:18px;color:#de4b4b;display:none'></i></td>"
+                            } else {
+                                waitingList += "<a href='#applyBMITEdit' onClick='makeEditReq(" + data[i].ID + ")' class=modal-effect btn btn-az-secondary btn-rounded btn-block' data-toggle='modal' data-effect='effect-sign'><i class='lni-pencil' style='font-size:18px;color:Blue;'></i></a>"
+                            }
+
+                            waitingList += "</td></tr>"
+
+                            //End of rev Pratik
+                        }
+                        $("#remWaitTab").html(waitingList);
+                        $("#remAppTab").html(approvedList)
+                    } 
+                } else {
+                    $("#remWaitTab").html("<tr><td colspan='6'>No Data to Display</td></tr>");
+                    $("#remAppTab").html("<tr><td colspan='6'>No Data to Display</td></tr>")
+                }
+            }
+        });
+    }
+    $(document).ready(function () {
+        var dt = new Date();
+        var currentMonth = (dt.getMonth() + 1).toString().padStart(2, "0");
+        $("#BMmonth").val(currentMonth);
+
+
+        var BMStatus = $("#BMStatus").val(),
+            BMmonth = $("#BMmonth").val(),
+            BMyear = $("#BMyear").val();
+        getList(BMStatus, BMmonth, BMyear);
+    })
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/GetSupervisor/GetSupervisorName",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({
+            "userID": '@Session["userid"]'
+        }),
+        success: function (data) {
+            console.log("GetSupervisor", data);
+            if (data.length > 0) {
+                $("#superName").val(data[0].spName)
+                $("#superEmail").val(data[0].spEmail)
+                $("#superNameEdit").val(data[0].spName)
+                $("#superEmailEdit").val(data[0].spEmail)
+                //$("#superId").val(data[0].spId);
+            }
+
+        }
+    });
+
+    function ApplyBM() {
+        var FROMDATE = changeDatetoYYMMDD($("#fromDate").val()),
+            TODATE = changeDatetoYYMMDD($("#toDate").val()),
+            VISITIN = $("#VisitIN").val(),
+            CLIENT_DETAILS = $("#cDetails").val(),
+            AGENDA = $("#agenda").val();
+        if (VISITIN == '') {
+            $("#msgArea").text("please select visit")
+            return;
+        } else if (CLIENT_DETAILS == '') {
+            $("#msgArea").text("please select CLIENT DETAILS")
+            return;
+        } else if (AGENDA == '') {
+            $("#msgArea").text("Agenda is Required")
+            return;
+        }
+       
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/BusinessMeetingAPI/ApplyBM",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "EMP_CODE": '@Session["usercontactID"]',
+                "FROMDATE": FROMDATE,
+                "TODATE": TODATE,
+                "VISITIN": VISITIN,
+                "CLIENT_DETAILS": CLIENT_DETAILS,
+                "AGENDA": AGENDA
+            }),
+            dataType: "json",
+            success: function (data) {
+                //console.log("BusinessMeetingAPI", data);
+                if (data.status == 200) {
+                    //$("#applyLeave").modal("hide");
+                    $("#applyBMIT").modal("hide");
+                    $.confirm({
+                        title: 'Success',
+                        content: 'Applied successfully',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                    filterDataByserach()
+                }
+                
+            }
+        });
+    }
+    function changeDatetoYYMMDD(date) {
+        var d = date.split("-");
+        var day = d[0];
+        var month = d[1]
+        var year = d[2]
+        return year+ '-' + month+ '-' + day
+
+    }
+    function filterDataByserach(){
+        var BMStatus = $("#BMStatus").val(),
+            BMmonth =$("#BMmonth").val(),
+            BMyear = $("#BMyear").val();
+        getList(BMStatus, BMmonth, BMyear);
+    }
+    //rev Pratik
+
+    function makeDeleteReq(ID) {
+        //alert(ID)
+        $.confirm({
+            title: 'Confirm!',
+            content: 'Are you sure you want to delete',
+            buttons: {
+                confirm: {
+                    text: 'Yes',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "/EmployeeSelfService/Api/BusinessMeetingAPI/DeleteBMeeting",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "ID": ID
+                            }),
+                            success: function (data) {
+                                console.log("DeleteEmpReimbursement", data);
+                                if (data.status == 200) {
+                                    $("#applyRem").modal("hide");
+                                    $.confirm({
+                                        title: 'Success',
+                                        content: 'Deleted successfully',
+                                        icon: 'fa fa-smile-o',
+                                        theme: 'modern',
+                                        closeIcon: true,
+                                        animation: 'scale',
+                                        type: 'blue',
+                                    });
+                                    filterDataByserach()
+                                }
+
+                            }
+                        });
+                    }
+                },
+                cancel: function () {
+                    // cancel code
+                }
+            }
+        });
+
+    }
+
+    function makeEditReq(ID) {
+        //alert(ID)
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/UserInfo/getInfobyBMeetingid",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "UserId": ID,
+                "EmpCode": '@Session["usercontactID"]'
+            }),
+            dataType: "json",
+            asynch: false,
+            success: function (data) {
+
+                console.log(data);
+                $("#applyBMITEdit").modal("show");
+                $("#msgAreaEdit").text("");
+                var dateSplitFrom = data.BMeetingdetinfo.FROMDATE.split(" ")[0].split("/").join("-");
+                var dateSplitTo = data.BMeetingdetinfo.TODATE.split(" ")[0].split("/").join("-");
+                var chunks = dateSplitFrom.split('-');
+                dateSplitFrom = chunks[1] + '-' + chunks[0] + '-' + chunks[2];
+                chunks = dateSplitTo.split('-');
+                dateSplitTo = chunks[1] + '-' + chunks[0] + '-' + chunks[2];
+                //// alert(dateSplitFrom)
+                $("#BMeeting_ID").text(data.BMeetingdetinfo.ID);
+                $("#fromDateEdit").val(dateSplitFrom);
+                $("#toDateEdit").val(dateSplitTo);
+                $("#VisitINEdit").val(data.BMeetingdetinfo.VISIT_IN);
+                $("#cDetailsEdit").val(data.BMeetingdetinfo.CLIENT_DETAILS);
+                $("#agendaEdit").val(data.BMeetingdetinfo.AGENDA);
+            }
+        });
+    }
+    function ApplyBMEdit() {
+        var FROMDATE = changeDatetoYYMMDD($("#fromDateEdit").val()),
+            TODATE = changeDatetoYYMMDD($("#toDateEdit").val()),
+            VISITIN = $("#VisitINEdit").val(),
+            CLIENT_DETAILS = $("#cDetailsEdit").val(),
+            AGENDA = $("#agendaEdit").val();
+        
+       
+        var ToDaydate = new Date();
+        var dateFrom = new Date(FROMDATE);
+        var dateTo = new Date(TODATE);
+        //alert(ToDaydate + ' ' + dateFrom)
+        if (dateFrom > dateTo) {
+            alert("To date should be greater then from date.");
+            return false;
+        }
+        if (ToDaydate >= dateFrom) {
+            alert("From date should be greater then todays date.");
+            return false;
+        }
+        if (VISITIN == '') {
+            $("#msgAreaEdit").text("please select visit")
+            return;
+        } else if (CLIENT_DETAILS == '') {
+            $("#msgAreaEdit").text("please select CLIENT DETAILS")
+            return;
+        } else if (AGENDA == '') {
+            $("#msgAreaEdit").text("Agenda is Required")
+            return;
+        }
+        var ID = $("#BMeeting_ID").text();
+       // alert(ID);
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeSelfService/Api/BusinessMeetingAPI/ApplyBMEdit",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "ID": ID,
+                "EMP_CODE": '@Session["usercontactID"]',
+                "FROMDATE": FROMDATE,
+                "TODATE": TODATE,
+                "VISITIN": VISITIN,
+                "CLIENT_DETAILS": CLIENT_DETAILS,
+                "AGENDA": AGENDA
+            }),
+            dataType: "json",
+            success: function (data) {
+                //console.log("BusinessMeetingAPI", data);
+                if (data.status == 200) {
+                    //$("#applyLeave").modal("hide");
+                    $("#msgAreaEdit").text("");
+                    $("#applyBMITEdit").modal("hide");
+                    $.confirm({
+                        title: 'Success',
+                        content: 'Updated successfully',
+                        icon: 'fa fa-smile-o',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                    });
+                    filterDataByserach()
+                }
+
+            }
+        });
+    }
+    //End of rev Pratik
+</script>
+<div class="az-content az-content-profile">
+    <div class="container-fluid mn-ht-100p">
+        <div class="az-content-left az-content-left-profile">
+
+            <div class="az-profile-overview">
+                <div class="az-contact-info-header noborder">
+                    <div class="media">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <div class="media-body">
+                            <h5 class="userName"></h5>
+                            <p class="desg"></p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div>
+
+                <div class="az-profile-bio">
+                    <a href="#applyBMIT" class="modal-effect btn btn-az-secondary btn-rounded btn-block" data-toggle="modal" data-effect="effect-sign">Apply Business Meeting</a>
+                </div><!-- az-profile-bio -->
+
+                <div class="mg-y-30"></div>
+                <!-- Event Calender -->
+                <div class="card card-dashboard-calendar">
+                    <!-- <h6 class="card-title">Event Calendar</h6> -->
+                    <div class="media az-media-date">
+                        <h1>5</h1>
+                        <div class="media-body">
+                            <p>August 2019</p>
+                            <span>Monday</span>
+                        </div>
+                    </div>
+                    <div class="card-body"><div class="fc-datepicker"></div></div>
+                </div>  <!-- Event Calender End -->
+                <div class="card mg-t-10 ">
+                    <div class="card-body">
+                        <button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-calendar"></i> Reimbursement Policy </button>
+                    </div>
+                </div>
+            </div><!-- az-profile-overview -->
+
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-profile">
+            <div class="pd-10 pl-4 pd-sm-10 bg-gray-200 wd-xl-75p">
+                <div class="row row-xs">
+                    <div class="col-md-3 mg-t-10 mg-md-t-0">
+                        <label>Status</label>
+                        <select class="form-control" id="BMStatus">
+                            <option value="">ALL</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Waiting">Waiting</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div><!-- col -->
+                    <div class="col-md-3">
+                        <label>Month</label>
+                        <select class="form-control" id="BMmonth">
+                            <option value="">Select</option>
+                            <option value="01">Jan</option>
+                            <option value="02">Feb</option>
+                            <option value="03">Mar</option>
+                            <option value="04">Apr</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">Aug</option>
+                            <option value="09">Sept</option>
+                            <option value="10">Oct</option>
+                            <option value="11">Nov</option>
+                            <option value="12">Dec</option>
+                        </select>
+                    </div><!-- col -->
+                    <div class="col-md-3 mg-t-10 mg-md-t-0">
+                        <label>Year</label>
+                        <select class="form-control" id="BMyear">
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                        </select>
+                    </div><!-- col -->
+                    <div class="col-md mg-t-10 mg-md-t-0">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-az-primary btn-block" onclick="filterDataByserach()">Search</button>
+                    </div><!-- col -->
+                </div><!-- row -->
+            </div>
+            <nav class="nav az-nav-line">
+                <a href="" class="nav-link active" data-toggle="tab">Awaiting Approval </a>
+            </nav>
+            <div class="az-profile-body pt-0">
+                <div class="row mg-b-20">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered mg-b-0 table-padded">
+                            <thead>
+                                <tr>
+                                    <th>Reimbursement Type</th>
+                                    <th>Application Date</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="remWaitTab"> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- row -->
+
+                <div class="mg-b-20"></div>
+            </div><!-- az-profile-body -->
+            <nav class="nav az-nav-line">
+                <a href="" class="nav-link active" data-toggle="tab">Approved | jan 2021</a>
+            </nav>
+            <div class="az-profile-body pt-0">
+                <div class="row mg-b-20">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered mg-b-0 table-padded">
+                            <thead>
+                                <tr>
+                                    <th>Reimbursement Type</th>
+                                    <th>Application Date</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="remAppTab">
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- row -->
+
+            </div><!-- az-profile-body -->
+        </div><!-- az-content-body -->
+    </div><!-- container -->
+</div><!-- az-content -->
+<!-- Leave Apply Modal -->
+<div id="applyBMIT" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title"> Add Business Meeting</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div id="msgArea" style="color:red"></div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600"> From</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY" id="fromDate">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600"> To</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY" id="toDate">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Name</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" id="superName" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Email</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" id="superEmail" type="text" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Visit in</label>
+                                <div>
+                                    <select class="form-control" style="width:100%" id="VisitIN">
+                                        <option label="Choose one" value="">Select</option>
+                                        <option value="Within City">Within City</option>
+                                        <option value="Outstation">Outstation</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Client Details</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Details" id="cDetails"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Agenda</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Details" id="agenda"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer slick">
+                    <button type="button" class="btn btn-indigo btn-rounded" onclick="ApplyBM()">Submit Application</button>
+                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
+<!-- rev Pratik -->
+<!-- Leave Apply Edit Modal -->
+<div id="applyBMITEdit" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title"> Edit Business Meeting</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div id="msgAreaEdit" style="color:red"></div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600"> From</label>
+                                <input type="hidden" id="BMeeting_ID" />
+                                <div class="input-group">
+                                    <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY" id="fromDateEdit">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600"> To</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control fc-datepicker" placeholder="DD/MM/YYYY" id="toDateEdit">
+                                    <div class="input-group-append selectDateIcon">
+                                        <div class="input-group-text">
+                                            <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Name</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" id="superNameEdit" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Supervisor's Email</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="" id="superEmailEdit" type="text" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Visit in</label>
+                                <div>
+                                    <select class="form-control" style="width:100%" id="VisitINEdit">
+                                        <option label="Choose one" value="">Select</option>
+                                        <option value="Within City">Within City</option>
+                                        <option value="Outstation">Outstation</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Client Details</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Details" id="cDetailsEdit"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Agenda</label>
+                        <div>
+                            <textarea rows="3" class="form-control" placeholder="Details" id="agendaEdit"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer slick">
+                    <button type="button" class="btn btn-indigo btn-rounded" onclick="ApplyBMEdit()">Submit Application</button>
+                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
+<!-- End of rev Pratik -->
+<script src="~/Areas/EmployeeSelfService/Resources/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/select2/js/select2.min.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/easypiechart.min.js"></script>
+<script>
+    $(function () {
+        'use strict'
+        // Datepicker found in left sidebar of the page
+        var highlightedDays = ['2018-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+        var date = new Date();
+
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: 'dd-mm-yy',
+            beforeShowDay: function (date) {
+                var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                for (var i = 0; i < highlightedDays.length; i++) {
+                    if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                        return [true, 'ui-date-highlighted', ''];
+                    }
+                }
+                return [true];
+            }
+        });
+        $('.fc-datepicker').datepicker('setDate', new Date());
+        // showing modal with effect
+        $('.modal-effect').on('click', function (e) {
+            e.preventDefault();
+            var effect = $(this).attr('data-effect');
+            $('#applyBMIT').addClass(effect);
+        });
+
+        // hide modal with effect
+        $('#applyBMIT').on('hidden.bs.modal', function (e) {
+            $(this).removeClass(function (index, className) {
+                return (className.match(/(^|\s)effect-\S+/g) || []).join(' ');
+            });
+        });
+
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            dateFormat: 'dd/mm/yy',
+            showOtherMonths: true,
+            selectOtherMonths: true,
+        });
+        $('.selectDateIcon').click(function () {
+            $(this).parent('.input-group').find('.fc-datepicker').focus();
+        });
+
+    });
+</script>
+
+
+

@@ -1,0 +1,288 @@
+﻿@{
+    ViewBag.Title = "ESS Settings";
+    Layout = "~/Areas/EmployeeSelfService/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getInfo",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "UserId": '@Session["userid"]'
+        }),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var dateSplitDOB = data.userinfo.dateOfBirth.split(" ")[0];
+            var dateSplitJOIN = data.userinfo.emp_dateofJoining.split(" ")[0];
+            var firstLetter = data.userinfo.Name.slice(0, 1).toUpperCase();
+            $(".firstL, .firstLs").text(firstLetter);
+            var rand = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+            var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+            var back = ["#ff0000", "blue", "gray"];
+            //var rand = back[Math.floor(Math.random() * back.length)];
+            $('.firstL').css('background', color);
+            $(".userNameIntro").text(data.userinfo.Name.split(" ")[0]);
+            $(".userName").text(data.userinfo.Name);
+            $(".desg").text(data.userinfo.deg_designation);
+            $("#empCode").text(data.userinfo.empCode);
+            $("#dob").text(dateSplitDOB);
+            $("#dateSplitJOIN").text(dateSplitJOIN);
+            $("#reportingManager").text(data.userinfo.reportingManager);
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "/EmployeeSelfService/Api/UserInfo/getSettingsESS",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({
+            
+        }),
+        success: function (data) {
+            // console.log("GetSupervisor", data);
+            //alert(data.EssInfo)
+            $("#Settings_Id").val(data.EssInfo.ID)
+            $("#DeleteDays").val(data.EssInfo.delete_days)
+            $("#EditDays").val(data.EssInfo.edit_days);
+
+        }
+    });
+
+    function saveSettings() {
+        //alert(ID)
+        var ID = $("#Settings_Id").val();
+        var DeleteDays = $("#DeleteDays").val();
+        var EditDays = $("#EditDays").val();
+        if (DeleteDays == "" || DeleteDays == null) {
+            alert("Please enter delete days.")
+            $("#DeleteDays").focus();
+            return false;
+        }
+        if (EditDays == "" || EditDays == null) {
+            alert("Please enter edit days.")
+            $("#EditDays").focus();
+            return false;
+        }
+        if (ID == "" || ID == null || ID == undefined) {
+            ID = 0;
+        }
+        $.confirm({
+            title: 'Confirm!',
+            content: 'Are you sure you want to Update?',
+            buttons: {
+                confirm: {
+                    text: 'Yes',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "/EmployeeSelfService/Api/UpdateSettingsESS/AddUpdateSettingsEss",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "ID": ID,
+                                "delete_days": DeleteDays,
+                                "edit_days": EditDays
+                            }),
+                            success: function (data) {
+                                //console.log("DeleteEmpReimbursement", data);
+                                if (data.status == 200) {
+                                    $.confirm({
+                                        title: 'Success',
+                                        content: 'Updated successfully',
+                                        icon: 'fa fa-smile-o',
+                                        theme: 'modern',
+                                        closeIcon: true,
+                                        animation: 'scale',
+                                        type: 'blue',
+                                    });
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/EmployeeSelfService/Api/UserInfo/getSettingsESS",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        data: JSON.stringify({
+                                            
+                                        }),
+                                        success: function (data) {
+                                            // console.log("GetSupervisor", data);
+                                            //alert(data.EssInfo.ID)
+                                            $("#Settings_Id").val(data.EssInfo.ID)
+                                            $("#DeleteDays").val(data.EssInfo.delete_days)
+                                            $("#EditDays").val(data.EssInfo.edit_days);
+
+                                        }
+                                    });
+                                }
+
+                            }
+                        });
+                    }
+                },
+                cancel: function () {
+                    // cancel code
+                }
+            }
+        });
+    }
+
+    function formatDate(date) {
+        var splitDate = date.split("-");
+        var day = splitDate[0],
+            month = splitDate[1],
+            year = splitDate[2]
+
+        return year + "-" + month + "-" + day
+    }
+
+
+
+    function populateMin() {
+        var d = 61;
+        var txt = "";
+        for (i = 0; i < d; i++) {
+            txt +="<option>" + i + "</option>"
+        }
+        $("#TSMin").html(txt);
+    }
+    setTimeout(function () {
+        populateMin();
+    },2000);
+
+</script>
+<div class="az-content az-content-profile">
+    <div class="container-fluid mn-ht-100p">
+        <div class="az-content-left az-content-left-profile">
+
+            <div class="az-profile-overview">
+                <div class="az-contact-info-header noborder">
+                    <div class="media">
+                        <div class="az-avatar avatar-xxl firstL">
+
+                        </div>
+                        <div class="media-body">
+                            <h5 class="userName"></h5>
+                            <p class="desg"></p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div>
+
+
+                <div class="mg-y-30"></div>
+                <!-- Event Calender -->
+                <div class="card card-dashboard-calendar">
+                    <!-- <h6 class="card-title">Event Calendar</h6> -->
+                    <div class="media az-media-date">
+                        <h1>5</h1>
+                        <div class="media-body">
+                            <p>August 2019</p>
+                            <span>Monday</span>
+                        </div>
+                    </div>
+                    <div class="card-body"><div class="fc-datepicker"></div></div>
+                </div>  <!-- Event Calender End -->
+                <div class="card mg-t-10 ">
+                    <div class="card-body">
+                        <button class="btn btn-light btn-radius btn-block btn-with-icon"><i class="lni lni-calendar"></i> Leave Policy Doc</button>
+                    </div>
+                </div>
+            </div><!-- az-profile-overview -->
+
+        </div><!-- az-content-left -->
+        <div class="az-content-body az-content-body-profile">
+            <nav class="nav az-nav-line">
+                <a href="" class="nav-link active" data-toggle="tab">ESS Settings </a>
+            </nav>
+            <div class=" docFormArea pl-3 pr-3 mt-2">
+                <div class="form-group">
+                    <div class="row">
+                        <input type="hidden" id="Settings_Id" />
+                        <div class="col-sm-4">
+                            <label class="az-content-label tx-11 tx-medium tx-gray-600">Delete Days</label>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Enter no. of days." type="text" id="DeleteDays" onkeypress="return onlyNumbers(event)" ondrop="return false;" onpaste="return false;">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="az-content-label tx-11 tx-medium tx-gray-600">Edit Days</label>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Enter no. of days." type="text" id="EditDays" onkeypress="return onlyNumbers(event)" ondrop="return false;" onpaste="return false;">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-md-4 pt-4"><button type="button" class="btn btn-success btn-rounded" onclick="saveSettings()">Update </button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- az-content-body -->
+    </div><!-- container -->
+</div><!-- az-content -->
+<script src="~/Areas/EmployeeSelfService/Resources/lib/jquery-ui/ui/widgets/datepicker.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/select2/js/select2.min.js"></script>
+<script src="~/Areas/EmployeeSelfService/Resources/lib/easypiechart/easypiechart.min.js"></script>
+<script>
+    $(function () {
+        'use strict'
+        // Datepicker found in left sidebar of the page
+        var highlightedDays = ['2018-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+        var date = new Date();
+
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            setDate: new Date(),
+            dateFormat: 'dd-mm-yy',
+            beforeShowDay: function (date) {
+                var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                for (var i = 0; i < highlightedDays.length; i++) {
+                    if ($.inArray(y + '-' + (m + 1) + '-' + d, highlightedDays) != -1) {
+                        return [true, 'ui-date-highlighted', ''];
+                    }
+                }
+                return [true];
+            }
+        });
+        $('.fc-datepicker').datepicker('setDate', new Date());
+
+
+
+
+
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            dateFormat: 'dd/mm/yy',
+            showOtherMonths: true,
+            selectOtherMonths: true,
+        });
+
+
+
+        $('.selectDateIcon').click(function () {
+            $(this).parent('.input-group').find('.fc-datepicker').focus();
+        });
+
+    });
+    function onlyNumbers(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode != 8) {
+            if (unicode < 9 || unicode > 9 && unicode < 46 || unicode > 57 || unicode == 47) {
+                if (unicode == 37 || unicode == 38) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return true;
+        }
+    }
+</script>

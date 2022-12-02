@@ -1,0 +1,109 @@
+﻿@*<ul class="nav">
+    <li class="nav-label">Main Menu</li>
+    
+    <li class="nav-item active">
+        <a href="/EmployeeSelfService/EmpDashboard/EmpDashboard" class="nav-link"><i class="icon ion-ios-list-box"></i>Dashboard</a>
+    </li> 
+    <li class="nav-item">
+        <a href="" class="nav-link with-sub"><i class="typcn typcn-edit"></i>Apply Now</a>
+        <nav class="nav-sub">
+            <a href="/EmployeeSelfService/EmpLeave/EmpLeave" class="nav-sub-link">Leave</a>
+            <a href="/EmployeeSelfService/EmpWFH/EmpWFH" class="nav-sub-link">Work from Home</a>
+
+            <a href="/EmployeeSelfService/EmpBmeeting/EmpBmeeting" class="nav-sub-link">Business Meetings</a>
+            <a href="/EmployeeSelfService/EmpReimbursement/EmpReimbursement" class="nav-sub-link">Reimbursment</a>
+        </nav>
+    </li><!-- nav-item -->
+    <li class="nav-item">
+        <a href="" class="nav-link with-sub"><i class="typcn typcn-calendar-outline"></i>Attendance and Timesheet</a>
+        <nav class="nav-sub">
+           
+                <a href="/EmployeeSelfService/AttReport/AttReport" class="nav-sub-link">Attendance Report</a>
+           
+                <a href="/EmployeeSelfService/Timesheet/Timesheet" class="nav-sub-link">Timesheet</a>
+        </nav>
+    </li><!-- nav-item -->
+    <li class="nav-item">
+        <a href="" class="nav-link with-sub"><i class="typcn typcn-tick"></i>Req Approvals</a>
+        <nav class="nav-sub">
+            <a href="/EmployeeSelfService/BiometricApprovalPage/BiometricApproval" class="nav-sub-link">Biometric </a>
+            <a href="/EmployeeSelfService/ApproLeaveApplications/ApproLeaveApplications" class="nav-sub-link">Leave </a>
+            <a href="/EmployeeSelfService/RMAPPROVE/RMAPPROVE" class="nav-sub-link">Reimbursement </a>
+            <a href="/EmployeeSelfService/BMApproval/BMApprove" class="nav-sub-link">Business Meeting </a>
+        </nav>
+    </li><!-- nav-item -->
+
+
+    <li class="nav-item">
+        <a href="/EmployeeSelfService/payslip/payslip" class="nav-link"><i class="typcn typcn-chart-pie-outline"></i>Payslip</a>
+    </li><!-- nav-item -->
+    
+    <li class="nav-item">
+        <a href="/EmployeeSelfService/DocUpload/docUpload" class="nav-link "><i class="typcn typcn typcn-document"></i>Doc Upload</a>
+    </li> <!-- nav-item -->
+   
+    <li class="nav-item">
+        <a href="" class="nav-link "><i class="typcn typcn-group-outline"></i>Help & Support</a>
+    </li><!-- nav-item -->
+</ul>*@
+
+<!-- nav -->
+<ul class="nav">
+        <li class="nav-label">Main Menu</li>
+        @if (ViewBag.CanAddDashboard == true)
+          { <li class="nav-item active">
+            <a href="/EmployeeSelfService/EmpDashboard/EmpDashboard" class="nav-link"><i class="icon ion-ios-list-box"></i>Dashboard</a>
+        </li> }
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub"><i class="typcn typcn-edit"></i>Apply Now</a>
+            <nav class="nav-sub">
+                @if (ViewBag.CanLEAVE == true)
+          {<a href="/EmployeeSelfService/EmpLeave/EmpLeave" class="nav-sub-link">Leave</a>}
+                @if (ViewBag.CanWFH == true)
+          {<a href="/EmployeeSelfService/EmpWFH/EmpWFH" class="nav-sub-link">Work from Home</a>}
+
+                @if (ViewBag.CanBM == true)
+          {<a href="/EmployeeSelfService/EmpBmeeting/EmpBmeeting" class="nav-sub-link">Business Meetings</a>}
+                @if (ViewBag.CanRM == true)
+          {<a href="/EmployeeSelfService/EmpReimbursement/EmpReimbursement" class="nav-sub-link">Reimbursment</a>}
+            </nav>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub"><i class="typcn typcn-calendar-outline"></i>Attendance and Timesheet</a>
+            <nav class="nav-sub">
+                @if (ViewBag.CanATTREPORT == true)
+                {
+                    <a href="/EmployeeSelfService/AttReport/AttReport" class="nav-sub-link">Attendance Report</a>}
+                @if (ViewBag.CanTIMESHEET == true)
+                    {
+                     <a href="/EmployeeSelfService/ESSTimesheet/Timesheet" class="nav-sub-link">Timesheet</a>}
+            </nav>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub"><i class="typcn typcn-tick"></i>Req Approvals</a>
+            <nav class="nav-sub">
+                @if (ViewBag.CanBIOAPPROVAL == true)
+                {<a href="/EmployeeSelfService/BiometricApprovalPage/BiometricApproval" class="nav-sub-link">Biometric Approval </a>}
+                @if (ViewBag.CanLEAVEAPP == true)
+                {<a href="/EmployeeSelfService/ApproLeaveApplications/ApproLeaveApplications" class="nav-sub-link">Leave Approval </a>}
+                @if (ViewBag.CanRMAPP == true)
+                {<a href="/EmployeeSelfService/RMAPPROVE/RMAPPROVE" class="nav-sub-link">Reimbursement Approval </a>}
+                @if (ViewBag.CanBMAPP == true)
+                {<a href="/EmployeeSelfService/BMApproval/BMApprove" class="nav-sub-link">Business Meeting Approval</a> }           
+            </nav>
+        </li><!-- nav-item -->
+
+
+        <li class="nav-item">
+            @if (ViewBag.CanPayslip == true)
+                {<a href="/EmployeeSelfService/payslip/payslip" class="nav-link"><i class="typcn typcn-chart-pie-outline"></i>Payslip</a>}
+        </li><!-- nav-item -->
+
+          @if (ViewBag.CanDocUpload == true)
+          { <li class="nav-item">
+            <a href="/EmployeeSelfService/DocUpload/docUpload" class="nav-link "><i class="typcn typcn typcn-document"></i>Doc Upload</a>
+        </li> }<!-- nav-item -->
+        @if (ViewBag.CanHELP == true){<li class="nav-item">
+            <a href="" class="nav-link "><i class="typcn typcn-group-outline"></i>Help & Support</a>
+        </li>}<!-- nav-item -->
+    </ul><!-- nav -->
