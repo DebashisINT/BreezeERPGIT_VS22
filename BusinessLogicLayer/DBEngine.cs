@@ -7960,9 +7960,14 @@ namespace BusinessLogicLayer
         public void SetFinYearStartandEndDate()
         {
 
+            //Rev Debashis
+            //string[,] data = GetFieldValue(" tbl_trans_LastSegment ",
+            //                    "(select FinYear_StartDate from Master_FinYear where FinYear_Code=ls_LastFinYear) as FinYearStart,(select CONVERT(VARCHAR(30),FinYear_EndDate,101) from Master_FinYear where FinYear_Code=ls_LastFinYear) as FinYearEnd ",
+            //                    " ls_userId='" + HttpContext.Current.Session["userid"].ToString() + "' and ls_lastSegment='" + HttpContext.Current.Session["userlastsegment"].ToString() + "'", 2);
             string[,] data = GetFieldValue(" tbl_trans_LastSegment ",
-                                "(select FinYear_StartDate from Master_FinYear where FinYear_Code=ls_LastFinYear) as FinYearStart,(select CONVERT(VARCHAR(30),FinYear_EndDate,101) from Master_FinYear where FinYear_Code=ls_LastFinYear) as FinYearEnd ",
+                                "(select FinYear_StartDate from Master_FinYear where FinYear_Code=ls_LastFinYear) as FinYearStart,(select FinYear_EndDate from Master_FinYear where FinYear_Code=ls_LastFinYear) as FinYearEnd ",
                                 " ls_userId='" + HttpContext.Current.Session["userid"].ToString() + "' and ls_lastSegment='" + HttpContext.Current.Session["userlastsegment"].ToString() + "'", 2);
+            //End of Rev Debashis
 
             HttpContext.Current.Session["FinYearStart"] = data[0, 0];
             HttpContext.Current.Session["FinYearEnd"] = data[0, 1];
