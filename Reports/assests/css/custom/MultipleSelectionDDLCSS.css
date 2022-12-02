@@ -1,0 +1,31 @@
+﻿.popupMenu {
+visibility:hidden;
+background-color:#FFF;
+opacity:.9;
+filter: alpha(opacity=90);
+overflow-x: hidden;
+overflow-y: scroll;
+height:120px ;
+width:200px;
+border-style:solid;
+border-color:Gray; 
+border-width:1px;
+}
+
+.popupHover {
+background-position:left top;
+background-color:#F5F7F8;
+width:200px !important;
+}
+
+.regularText
+{
+font-family:Verdana;
+font-size:12px;
+}
+
+.ddlMenu 
+{
+width:200px !important;
+
+}
