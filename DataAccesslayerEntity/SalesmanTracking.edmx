@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DevelopmentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Master_shop">
+          <Key>
+            <PropertyRef Name="Shop_ID" />
+          </Key>
+          <Property Name="Shop_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Shop_Code" Type="varchar" MaxLength="80" />
+          <Property Name="Shop_Name" Type="varchar" MaxLength="100" />
+          <Property Name="Address" Type="varchar(max)" />
+          <Property Name="Pincode" Type="varchar" MaxLength="120" />
+          <Property Name="Shop_Lat" Type="varchar(max)" />
+          <Property Name="Shop_Long" Type="varchar(max)" />
+          <Property Name="Shop_City" Type="int" />
+          <Property Name="Shop_Owner" Type="varchar" MaxLength="100" />
+          <Property Name="Shop_WebSite" Type="varchar" MaxLength="100" />
+          <Property Name="Shop_Owner_Email" Type="varchar" MaxLength="300" />
+          <Property Name="Shop_Owner_Contact" Type="varchar" MaxLength="100" />
+          <Property Name="Shop_CreateUser" Type="int" />
+          <Property Name="Shop_CreateTime" Type="datetime" />
+          <Property Name="Shop_ModifyUser" Type="int" />
+          <Property Name="Shop_ModifyTime" Type="datetime" />
+          <Property Name="Shop_Image" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_trans_shopuser">
+          <Key>
+            <PropertyRef Name="VisitId" />
+          </Key>
+          <Property Name="User_Id" Type="bigint" />
+          <Property Name="Shop_Id" Type="bigint" />
+          <Property Name="Lat_visit" Type="varchar(max)" />
+          <Property Name="Long_visit" Type="varchar(max)" />
+          <Property Name="VisitId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="location_name" Type="varchar(max)" />
+          <Property Name="distance_covered" Type="varchar(max)" />
+          <Property Name="SDate" Type="datetime" />
+          <Property Name="Stime" Type="varchar" MaxLength="100" />
+          <Property Name="shops_covered" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Development.dbo.Users' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Users">
+          <Property Name="UserID" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <EntityContainer Name="DevelopmentModelStoreContainer">
+          <EntitySet Name="tbl_Master_shop" EntityType="Self.tbl_Master_shop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_trans_shopuser" EntityType="Self.tbl_trans_shopuser" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DevelopmentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_Master_shop">
+          <Key>
+            <PropertyRef Name="Shop_ID" />
+          </Key>
+          <Property Name="Shop_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Shop_Code" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Shop_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Pincode" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Shop_Lat" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Shop_Long" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Shop_City" Type="Int32" />
+          <Property Name="Shop_Owner" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Shop_WebSite" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Shop_Owner_Email" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Shop_Owner_Contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Shop_CreateUser" Type="Int32" />
+          <Property Name="Shop_CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Shop_ModifyUser" Type="Int32" />
+          <Property Name="Shop_ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="Shop_Image" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_trans_shopuser">
+          <Key>
+            <PropertyRef Name="VisitId" />
+          </Key>
+          <Property Name="User_Id" Type="Int64" />
+          <Property Name="Shop_Id" Type="Int64" />
+          <Property Name="Lat_visit" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Long_visit" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="VisitId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="location_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="distance_covered" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SDate" Type="DateTime" Precision="3" />
+          <Property Name="Stime" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="shops_covered" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="SalesmanTrackingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Master_shop" EntityType="Self.tbl_Master_shop" />
+          <EntitySet Name="tbl_trans_shopuser" EntityType="Self.tbl_trans_shopuser" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DevelopmentModelStoreContainer" CdmEntityContainer="SalesmanTrackingEntities">
+          <EntitySetMapping Name="tbl_Master_shop">
+            <EntityTypeMapping TypeName="DevelopmentModel.tbl_Master_shop">
+              <MappingFragment StoreEntitySet="tbl_Master_shop">
+                <ScalarProperty Name="Shop_ID" ColumnName="Shop_ID" />
+                <ScalarProperty Name="Shop_Code" ColumnName="Shop_Code" />
+                <ScalarProperty Name="Shop_Name" ColumnName="Shop_Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Shop_Lat" ColumnName="Shop_Lat" />
+                <ScalarProperty Name="Shop_Long" ColumnName="Shop_Long" />
+                <ScalarProperty Name="Shop_City" ColumnName="Shop_City" />
+                <ScalarProperty Name="Shop_Owner" ColumnName="Shop_Owner" />
+                <ScalarProperty Name="Shop_WebSite" ColumnName="Shop_WebSite" />
+                <ScalarProperty Name="Shop_Owner_Email" ColumnName="Shop_Owner_Email" />
+                <ScalarProperty Name="Shop_Owner_Contact" ColumnName="Shop_Owner_Contact" />
+                <ScalarProperty Name="Shop_CreateUser" ColumnName="Shop_CreateUser" />
+                <ScalarProperty Name="Shop_CreateTime" ColumnName="Shop_CreateTime" />
+                <ScalarProperty Name="Shop_ModifyUser" ColumnName="Shop_ModifyUser" />
+                <ScalarProperty Name="Shop_ModifyTime" ColumnName="Shop_ModifyTime" />
+                <ScalarProperty Name="Shop_Image" ColumnName="Shop_Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_trans_shopuser">
+            <EntityTypeMapping TypeName="DevelopmentModel.tbl_trans_shopuser">
+              <MappingFragment StoreEntitySet="tbl_trans_shopuser">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Shop_Id" ColumnName="Shop_Id" />
+                <ScalarProperty Name="Lat_visit" ColumnName="Lat_visit" />
+                <ScalarProperty Name="Long_visit" ColumnName="Long_visit" />
+                <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+                <ScalarProperty Name="location_name" ColumnName="location_name" />
+                <ScalarProperty Name="distance_covered" ColumnName="distance_covered" />
+                <ScalarProperty Name="SDate" ColumnName="SDate" />
+                <ScalarProperty Name="Stime" ColumnName="Stime" />
+                <ScalarProperty Name="shops_covered" ColumnName="shops_covered" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
