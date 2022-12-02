@@ -1,0 +1,2245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2954AEFF-5FF7-4AE0-9540-2A44F0DA2D4F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Reports</RootNamespace>
+    <AssemblyName>Reports</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>2924</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\ERP.UI\bin\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\DevExpress.Data.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.DataAccess.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\DevExpress.DataAccess.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v15.1.Core, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <HintPath>..\ERP.UI\bin\DevExpress.Printing.v15.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v15.1.Core, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DevExpress 15.1\Components\Bin\Framework\DevExpress.Web.ASPxThemes.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxTreeList.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DevExpress 15.1\Components\Bin\Framework\DevExpress.Web.ASPxTreeList.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Web.Mvc.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.Mvc5.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\DevExpress.XtraPrinting.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\DevExpress.XtraReports.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v15.1.Web, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\DevExpress.XtraReports.v15.1.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Excel, Version=2.0.1.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="assests\bootstrap\css\bootstrap.css.map" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assests\css\custom\newtheme.css" />
+    <Content Include="assests\css\custom\style.css.bak" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assests\fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="assests\fonts\font-awesome\less\animated.less" />
+    <Content Include="assests\fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="assests\fonts\font-awesome\less\core.less" />
+    <Content Include="assests\fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="assests\fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="assests\fonts\font-awesome\less\icons.less" />
+    <Content Include="assests\fonts\font-awesome\less\larger.less" />
+    <Content Include="assests\fonts\font-awesome\less\list.less" />
+    <Content Include="assests\fonts\font-awesome\less\mixins.less" />
+    <Content Include="assests\fonts\font-awesome\less\path.less" />
+    <Content Include="assests\fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="assests\fonts\font-awesome\less\screen-reader.less" />
+    <Content Include="assests\fonts\font-awesome\less\stacked.less" />
+    <Content Include="assests\fonts\font-awesome\less\variables.less" />
+    <Content Include="assests\fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_core.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_list.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_path.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="assests\images\imagesf05e0981-bd19-497d-b033-8c4ff39debcd.jpg" />
+    <Content Include="assests\images\success22.png" />
+    <Content Include="assests\js\Date\datevalidate.js" />
+    <Content Include="assests\Logo For Label Print\logo2.png" />
+    <Content Include="assests\pluggins\bootstrap-multiselect\bootstrap-multiselect.min.js" />
+    <Content Include="assests\pluggins\bootstrap-multiselect\multiselect.css" />
+    <Content Include="assests\pluggins\datePicker\bootstrap-datepicker.js" />
+    <Content Include="assests\pluggins\datePicker\datepicker.css" />
+    <Content Include="css\images\ui-icons_444444_256x240.png" />
+    <Content Include="css\jquery-ui.css" />
+    <Content Include="OMS\JSFUNCTION\jquery-ui.js" />
+    <Content Include="Reports\GridReports\ABCAnalysis.aspx" />
+    <Content Include="Reports\GridReports\Activity_Conversion.aspx" />
+    <Content Include="Reports\GridReports\AdjustmentDetail_Customer.aspx" />
+    <Content Include="Reports\GridReports\AdjustmentDetail_Vendor.aspx" />
+    <Content Include="Reports\GridReports\AssignedSalesmanDetails.aspx" />
+    <Content Include="Reports\GridReports\AuditTrial_Report.aspx" />
+    <Content Include="Reports\GridReports\BankReconciliationStatement.aspx" />
+    <Content Include="Reports\GridReports\BatchwiseBalance_Detail.aspx" />
+    <Content Include="Reports\GridReports\BatchwiseBalance_Summary.aspx" />
+    <Content Include="Reports\GridReports\BOMRegisterDetails.aspx" />
+    <Content Include="Reports\GridReports\BranchRequisitionStatus.aspx" />
+    <Content Include="Reports\GridReports\BranchWHWiseDetail.aspx" />
+    <Content Include="Reports\GridReports\BranchWHWiseSummary.aspx" />
+    <Content Include="Reports\GridReports\BranchWisePartyOutstanding.aspx" />
+    <Content Include="Reports\GridReports\BranchWiseSalesAnalysis.aspx" />
+    <Content Include="Reports\GridReports\BranchWiseTDSeFile.aspx" />
+    <Content Include="Reports\GridReports\BSGroupWise.aspx" />
+    <Content Include="Reports\GridReports\BSScheduleVI.aspx" />
+    <Content Include="Reports\GridReports\BSStatement.aspx" />
+    <Content Include="Reports\GridReports\BSStatementProject.aspx" />
+    <Content Include="Reports\GridReports\BTIBTO_Register.aspx" />
+    <Content Include="Reports\GridReports\CardBankReport.aspx" />
+    <Content Include="Reports\GridReports\CashBankBookDetail_Subledgerwise.aspx" />
+    <Content Include="Reports\GridReports\CashBankBookRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\CashBankBookSummary.aspx" />
+    <Content Include="Reports\GridReports\CashBankReport.aspx" />
+    <Content Include="Reports\GridReports\CombinedSalePurchaseReport.aspx" />
+    <Content Include="Reports\GridReports\CombineStockTrial.aspx" />
+    <Content Include="Reports\GridReports\ComponentRegister.aspx" />
+    <Content Include="Reports\GridReports\Consolidated-Stock.aspx" />
+    <Content Include="Reports\GridReports\Creditors-Details.aspx" />
+    <Content Include="Reports\GridReports\CRMSummary_Performance_F.aspx" />
+    <Content Include="Reports\GridReports\CSS\SearchPopup.css" />
+    <Content Include="Reports\GridReports\CSS\ServiceRegister.css" />
+    <Content Include="Reports\GridReports\CustomerAgeingDetail.aspx" />
+    <Content Include="Reports\GridReports\CustomerAgeingSummary.aspx" />
+    <Content Include="Reports\GridReports\CustomerAgeingWithDaysInterval.aspx" />
+    <Content Include="Reports\GridReports\CustomerAnalysis.aspx" />
+    <Content Include="Reports\GridReports\CustomerOutstandingDetail.aspx" />
+    <Content Include="Reports\GridReports\CustomerOutstandingSummary.aspx" />
+    <Content Include="Reports\GridReports\CustomerOutstandingVSAgeingAnalysis.aspx" />
+    <Content Include="Reports\GridReports\CustomerRecPayRegister.aspx" />
+    <Content Include="Reports\GridReports\CustomerRecPayRegister_Detail.aspx" />
+    <Content Include="Reports\GridReports\CustomerWiseMonthlySales.aspx" />
+    <Content Include="Reports\GridReports\CustomerWiseSales.aspx" />
+    <Content Include="Reports\GridReports\Customer_Ledger.aspx" />
+    <Content Include="Reports\GridReports\CustomerOutstanding.aspx" />
+    <Content Include="Reports\GridReports\DayBook.aspx" />
+    <Content Include="Reports\GridReports\DebtorsDetailsCR.aspx" />
+    <Content Include="Reports\GridReports\DebtorsDetailsDR.aspx" />
+    <Content Include="Reports\GridReports\DeliverySchedule.aspx" />
+    <Content Include="Reports\GridReports\Demo_Register.aspx" />
+    <Content Include="Reports\GridReports\DSR-Summary.aspx" />
+    <Content Include="Reports\GridReports\DSROnOpportunities.aspx" />
+    <Content Include="Reports\GridReports\EstimateRegisterDetails.aspx" />
+    <Content Include="Reports\GridReports\EstimateRegisterSummary.aspx" />
+    <Content Include="Reports\GridReports\EWayBillRegister.aspx" />
+    <Content Include="Reports\GridReports\ExportDetailsReport.aspx" />
+    <Content Include="Reports\GridReports\FinalReport.aspx" />
+    <Content Include="Reports\GridReports\FinanceCNReport.aspx" />
+    <Content Include="Reports\GridReports\frm_purintaxreg.aspx" />
+    <Content Include="Reports\GridReports\frm_saleouttaxreg.aspx" />
+    <Content Include="Reports\GridReports\GeneralLedgerRegister.aspx" />
+    <Content Include="Reports\GridReports\Gstr-1Report.aspx" />
+    <Content Include="Reports\GridReports\Gstr2Report.aspx" />
+    <Content Include="Reports\GridReports\GSTR_Customerpaymentreceipt.aspx" />
+    <Content Include="Reports\GridReports\GSTR_HSNcodeRate.aspx" />
+    <Content Include="Reports\GridReports\GSTR_PurchaseRegister.aspx" />
+    <Content Include="Reports\GridReports\GSTR_SaleRegister.aspx" />
+    <Content Include="Reports\GridReports\GSTR_Vendorpaymetreceipt.aspx" />
+    <Content Include="Reports\GridReports\GST_RCMStatement.aspx" />
+    <Content Include="Reports\GridReports\InfluencerLedger.aspx" />
+    <Content Include="Reports\GridReports\InfluencerScheme.aspx" />
+    <Content Include="Reports\GridReports\Insurance-Register.aspx" />
+    <Content Include="Reports\GridReports\InterestCalculation.aspx" />
+    <Content Include="Reports\GridReports\InventoryControlWithStockValuation.aspx" />
+    <Content Include="Reports\GridReports\IssueForProductionRegister.aspx" />
+    <Content Include="Reports\GridReports\JournalRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\Jsonparse-Gstr1.aspx" />
+    <Content Include="Reports\GridReports\JsonParse.aspx" />
+    <Content Include="Reports\GridReports\JS\SearchMultiPopup.js" />
+    <Content Include="Reports\GridReports\JS\SearchPopup.js" />
+    <Content Include="Reports\GridReports\JS\ServiceRegister.js" />
+    <Content Include="Reports\GridReports\JS\STBRegisterJS.js" />
+    <Content Include="Reports\GridReports\JS\STBSchemeRegisterJS.js" />
+    <Content Include="Reports\GridReports\LeadActivity.aspx" />
+    <Content Include="Reports\GridReports\LedgerBook.aspx" />
+    <Content Include="Reports\GridReports\LedgerPostingReport.aspx" />
+    <Content Include="Reports\GridReports\GeneralTrialReport.aspx" />
+    <Content Include="Reports\GridReports\ListingOfMaster_Customer.aspx" />
+    <Content Include="Reports\GridReports\ListingOfMaster_Product.aspx" />
+    <Content Include="Reports\GridReports\ListingOfMaster_Transporter.aspx" />
+    <Content Include="Reports\GridReports\ListingOfMaster_Vendor.aspx" />
+    <Content Include="Reports\GridReports\LocationWiseSellableStock.aspx" />
+    <Content Include="Reports\GridReports\MFFGRegisterDetails.aspx" />
+    <Content Include="Reports\GridReports\MFIssueRegisterDetails.aspx" />
+    <Content Include="Reports\GridReports\MFStockReceiptRegister.aspx" />
+    <Content Include="Reports\GridReports\MismatchDetection.aspx" />
+    <Content Include="Reports\GridReports\ModuleWiseDocCount.aspx" />
+    <Content Include="Reports\GridReports\ModuleWiseDocumentCount.aspx" />
+    <Content Include="Reports\GridReports\MultiCompanyStockSummary.aspx" />
+    <Content Include="Reports\GridReports\OrderToDelivery.aspx" />
+    <Content Include="Reports\GridReports\PartyLedger.aspx" />
+    <Content Include="Reports\GridReports\PartyLedgerCustomerWithSegment.aspx" />
+    <Content Include="Reports\GridReports\PartyLedgerPostingReport.aspx" />
+    <Content Include="Reports\GridReports\PartyLedger_Customer.aspx" />
+    <Content Include="Reports\GridReports\PartyLedger_Vendor.aspx" />
+    <Content Include="Reports\GridReports\PartyOutstanding.aspx" />
+    <Content Include="Reports\GridReports\PaymentCollection_Details.aspx" />
+    <Content Include="Reports\GridReports\PendingEstimateRegisterDetails.aspx" />
+    <Content Include="Reports\GridReports\PendingEstimateRegisterSummary.aspx" />
+    <Content Include="Reports\GridReports\PendingProjectPORegister_Details.aspx" />
+    <Content Include="Reports\GridReports\PendingProjectSORegister_Details.aspx" />
+    <Content Include="Reports\GridReports\PendingPurchaseOrderRegister.aspx" />
+    <Content Include="Reports\GridReports\PendingSaleOrderRegister.aspx" />
+    <Content Include="Reports\GridReports\PendingSalesOrderColumnar.aspx" />
+    <Content Include="Reports\GridReports\PendingSalesQuotationColumnar.aspx" />
+    <Content Include="Reports\GridReports\PendingWORegisterDetails.aspx" />
+    <Content Include="Reports\GridReports\PhysicalStockVsStockAvailability.aspx" />
+    <Content Include="Reports\GridReports\PLBSViewer.aspx" />
+    <Content Include="Reports\GridReports\POSOrderOldUnitRegister.aspx" />
+    <Content Include="Reports\GridReports\POSOrderRegister.aspx" />
+    <Content Include="Reports\GridReports\ProductWiseSalesReport.aspx" />
+    <Content Include="Reports\GridReports\ProfitabilitySales.aspx" />
+    <Content Include="Reports\GridReports\ProfitandLossStatement.aspx" />
+    <Content Include="Reports\GridReports\ProfitandLossStatement_Tabular.aspx" />
+    <Content Include="Reports\GridReports\ProjectAccounting.aspx" />
+    <Content Include="Reports\GridReports\ProjectMasterRegister.aspx" />
+    <Content Include="Reports\GridReports\ProjectSummary.aspx" />
+    <Content Include="Reports\GridReports\ProjectWisePaymentCollection.aspx" />
+    <Content Include="Reports\GridReports\ProjectWiseStockValuation.aspx" />
+    <Content Include="Reports\GridReports\PurchaseGRNRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\PurchaseIndentRegister.aspx" />
+    <Content Include="Reports\GridReports\PurchaseOrderRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\PurchaseQuotationRegister.aspx" />
+    <Content Include="Reports\GridReports\PurchaseRegister.aspx" />
+    <Content Include="Reports\GridReports\PurchaseRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\PurchaseReturnRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\SalaryDisbursment.aspx" />
+    <Content Include="Reports\GridReports\SalesAnalysis.aspx" />
+    <Content Include="Reports\GridReports\SalesInquiryRegister.aspx" />
+    <Content Include="Reports\GridReports\SalesmanPerformance.aspx" />
+    <Content Include="Reports\GridReports\SalesOrderRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\SalesProforma_QuotationRegister.aspx" />
+    <Content Include="Reports\GridReports\SalesRegisterReport.aspx" />
+    <Content Include="Reports\GridReports\SalesRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\SalesReturnRegister_Details.aspx" />
+    <Content Include="Reports\GridReports\ScheduleTaskStatus.aspx" />
+    <Content Include="Reports\GridReports\SerialwiseDetails.aspx" />
+    <Content Include="Reports\GridReports\Services\Master.asmx" />
+    <Content Include="Reports\GridReports\SRVMaterialInOutRegisterDetail.aspx" />
+    <Content Include="Reports\GridReports\SRVMaterialInOutRegisterSummary.aspx" />
+    <Content Include="Reports\GridReports\SRVPerformanceStatusDayWise.aspx" />
+    <Content Include="Reports\GridReports\SRVPerformanceStatusDetails.aspx" />
+    <Content Include="Reports\GridReports\SRVPerformanceStatusHourWise.aspx" />
+    <Content Include="Reports\GridReports\SRVServiceRegisterReport.aspx" />
+    <Content Include="Reports\GridReports\SRVTechnicianProductivity.aspx" />
+    <Content Include="Reports\GridReports\SRVWarehouseWiseStockStatusDetail.aspx" />
+    <Content Include="Reports\GridReports\SRVWarehouseWiseStockStatusSummary.aspx" />
+    <Content Include="Reports\GridReports\StatementOfAccount.aspx" />
+    <Content Include="Reports\GridReports\STBReceivingRegister.aspx" />
+    <Content Include="Reports\GridReports\Stbregister.aspx" />
+    <Content Include="Reports\GridReports\STBSchemeRegister.aspx" />
+    <Content Include="Reports\GridReports\StockDayBook.aspx" />
+    <Content Include="Reports\GridReports\StockLedger.aspx" />
+    <Content Include="Reports\GridReports\StockLedgerSummary.aspx" />
+    <Content Include="Reports\GridReports\StockMovement.aspx" />
+    <Content Include="Reports\GridReports\StockPosition.aspx" />
+    <Content Include="Reports\GridReports\StockTrialSummary.aspx" />
+    <Content Include="Reports\GridReports\StockValuation.aspx" />
+    <Content Include="Reports\GridReports\StockValuationWithAgeing.aspx" />
+    <Content Include="Reports\GridReports\Stock_Ageing.aspx" />
+    <Content Include="Reports\GridReports\SubLedgerDetails.aspx" />
+    <Content Include="Reports\GridReports\SubLedgerSummary.aspx" />
+    <Content Include="Reports\GridReports\SubLedgerWisePosting.aspx" />
+    <Content Include="Reports\GridReports\SubLedgerWisePosting_Summary.aspx" />
+    <Content Include="Reports\GridReports\TCSRegister.aspx" />
+    <Content Include="Reports\GridReports\TDSeFile.aspx" />
+    <Content Include="Reports\GridReports\TDS_Report.aspx" />
+    <Content Include="Reports\GridReports\TradingandPLStatement.aspx" />
+    <Content Include="Reports\GridReports\TradingandPLStatementProject.aspx" />
+    <Content Include="Reports\GridReports\Transproter_Ledger.aspx" />
+    <Content Include="Reports\GridReports\TrialBalanceGroupWise.aspx" />
+    <Content Include="Reports\GridReports\TrialOnNetBalance.aspx" />
+    <Content Include="Reports\GridReports\VendorAgeingDetail.aspx" />
+    <Content Include="Reports\GridReports\VendorAgeingSummary.aspx" />
+    <Content Include="Reports\GridReports\VendorAgeingWithDaysInterval.aspx" />
+    <Content Include="Reports\GridReports\VendorAnalysis.aspx" />
+    <Content Include="Reports\GridReports\VendorOutstandingDetail.aspx" />
+    <Content Include="Reports\GridReports\VendorOutstandingSummary.aspx" />
+    <Content Include="Reports\GridReports\VendorRecPayRegister.aspx" />
+    <Content Include="Reports\GridReports\VendorRecPayRegister_Detail.aspx" />
+    <Content Include="Reports\GridReports\VendorWisePurchase.aspx" />
+    <Content Include="Reports\GridReports\Vendor_Ledger.aspx" />
+    <Content Include="Reports\GridReports\ViewLeaveRegister.aspx" />
+    <Content Include="Reports\GridReports\WarehousewiseStockStatus.aspx" />
+    <Content Include="Reports\GridReports\WarehousewiseStockValuation.aspx" />
+    <Content Include="Reports\GridReports\WHWiseStockOutDetail.aspx" />
+    <Content Include="Reports\GridReports\WorkOrderRegisterDetails.aspx" />
+    <Content Include="Reports\Login.aspx" />
+    <Content Include="Reports\ProjectMainPage.aspx" />
+    <Content Include="OMS\MasterPage\ERP.Master" />
+    <Content Include="Master.Master" />
+    <Content Include="packages.config" />
+    <Content Include="Model\ReportSource.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>ReportSource.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\Report Published.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assests\bootstrap\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="assests\bootstrap\css\bootstrap.css" />
+    <Content Include="assests\bootstrap\css\bootstrap.min.css" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assests\bootstrap\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="assests\bootstrap\js\bootstrap.js" />
+    <Content Include="assests\bootstrap\js\bootstrap.min.js" />
+    <Content Include="assests\css\custom\AjaxStyle.css" />
+    <Content Include="assests\css\custom\demos.css" />
+    <Content Include="assests\css\custom\dhtmlgoodies_calendar.css" />
+    <Content Include="assests\css\custom\GenericCss.css" />
+    <Content Include="assests\css\custom\jquery.alerts.css" />
+    <Content Include="assests\css\custom\jquery.confirm.css" />
+    <Content Include="assests\css\custom\jquery.timeentry.css" />
+    <Content Include="assests\css\custom\main.css" />
+    <Content Include="assests\css\custom\menu-bar.css" />
+    <Content Include="assests\css\custom\menu-item.css" />
+    <Content Include="assests\css\custom\MultipleSelectionDDLCSS.css" />
+    <Content Include="assests\css\custom\PageStyle.css" />
+    <Content Include="assests\css\custom\style.css" />
+    <Content Include="assests\css\custom\sumoselect.css" />
+    <Content Include="assests\fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="assests\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assests\fonts\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="assests\images\1.png" />
+    <Content Include="assests\images\10.png" />
+    <Content Include="assests\images\11.png" />
+    <Content Include="assests\images\12.png" />
+    <Content Include="assests\images\13.png" />
+    <Content Include="assests\images\14.png" />
+    <Content Include="assests\images\15.png" />
+    <Content Include="assests\images\16.png" />
+    <Content Include="assests\images\17.png" />
+    <Content Include="assests\images\18.png" />
+    <Content Include="assests\images\19.png" />
+    <Content Include="assests\images\2.png" />
+    <Content Include="assests\images\20.png" />
+    <Content Include="assests\images\21.png" />
+    <Content Include="assests\images\22.png" />
+    <Content Include="assests\images\23.png" />
+    <Content Include="assests\images\24.png" />
+    <Content Include="assests\images\25.png" />
+    <Content Include="assests\images\26.png" />
+    <Content Include="assests\images\27.png" />
+    <Content Include="assests\images\28.png" />
+    <Content Include="assests\images\29.png" />
+    <Content Include="assests\images\3.png" />
+    <Content Include="assests\images\30.png" />
+    <Content Include="assests\images\31.png" />
+    <Content Include="assests\images\32.png" />
+    <Content Include="assests\images\33.png" />
+    <Content Include="assests\images\34.png" />
+    <Content Include="assests\images\35.png" />
+    <Content Include="assests\images\36.png" />
+    <Content Include="assests\images\37.png" />
+    <Content Include="assests\images\38.png" />
+    <Content Include="assests\images\39.png" />
+    <Content Include="assests\images\4.png" />
+    <Content Include="assests\images\40.png" />
+    <Content Include="assests\images\41.png" />
+    <Content Include="assests\images\42.png" />
+    <Content Include="assests\images\43.png" />
+    <Content Include="assests\images\44.png" />
+    <Content Include="assests\images\45.png" />
+    <Content Include="assests\images\46.png" />
+    <Content Include="assests\images\47.png" />
+    <Content Include="assests\images\48.png" />
+    <Content Include="assests\images\49.png" />
+    <Content Include="assests\images\5.png" />
+    <Content Include="assests\images\50.png" />
+    <Content Include="assests\images\51.png" />
+    <Content Include="assests\images\52.png" />
+    <Content Include="assests\images\53.png" />
+    <Content Include="assests\images\54.png" />
+    <Content Include="assests\images\55.png" />
+    <Content Include="assests\images\56.png" />
+    <Content Include="assests\images\6.png" />
+    <Content Include="assests\images\7.png" />
+    <Content Include="assests\images\8.png" />
+    <Content Include="assests\images\9.png" />
+    <Content Include="assests\images\activeState.png" />
+    <Content Include="assests\images\activity.png" />
+    <Content Include="assests\images\add-adress.png" />
+    <Content Include="assests\images\Add.png" />
+    <Content Include="assests\images\addmember.png" />
+    <Content Include="assests\images\addnew.gif" />
+    <Content Include="assests\images\ajax-loader.gif" />
+    <Content Include="assests\images\Animated_Email.gif" />
+    <Content Include="assests\images\arrow2.gif" />
+    <Content Include="assests\images\arrow_down.gif" />
+    <Content Include="assests\images\arrow_down.jpg" />
+    <Content Include="assests\images\arrow_up.gif" />
+    <Content Include="assests\images\arrow_up.jpg" />
+    <Content Include="assests\images\attach.png" />
+    <Content Include="assests\images\attachment.png" />
+    <Content Include="assests\images\av.jpg" />
+    <Content Include="assests\images\back.jpg" />
+    <Content Include="assests\images\back.png" />
+    <Content Include="assests\images\backhead.png" />
+    <Content Include="assests\images\bcktip.png" />
+    <Content Include="assests\images\bcktool.png" />
+    <Content Include="assests\images\bg.jpg" />
+    <Content Include="assests\images\bglogin.jpg" />
+    <Content Include="assests\images\blue.bmp" />
+    <Content Include="assests\images\blue_foward.png" />
+    <Content Include="assests\images\blue_reload.png" />
+    <Content Include="assests\images\blue_rewind.png" />
+    <Content Include="assests\images\blue_save.png" />
+    <Content Include="assests\images\border.png" />
+    <Content Include="assests\images\Box_Black.PNG" />
+    <Content Include="assests\images\Box_Blue.png" />
+    <Content Include="assests\images\Box_Green.png" />
+    <Content Include="assests\images\Box_Red.png" />
+    <Content Include="assests\images\btn-go.gif" />
+    <Content Include="assests\images\btnPinkActive.jpg" />
+    <Content Include="assests\images\calendar.jpg" />
+    <Content Include="assests\images\Cash_BackSearch.jpg" />
+    <Content Include="assests\images\Cash_Home.jpeg" />
+    <Content Include="assests\images\Cash_Search-icon.jpg" />
+    <Content Include="assests\images\Cash_Search-icon.png" />
+    <Content Include="assests\images\change-dark.png" />
+    <Content Include="assests\images\change.png" />
+    <Content Include="assests\images\changeIcon.png" />
+    <Content Include="assests\images\changeP.png" />
+    <Content Include="assests\images\chart_display.gif" />
+    <Content Include="assests\images\close.gif" />
+    <Content Include="assests\images\closePop.png" />
+    <Content Include="assests\images\close_over.gif" />
+    <Content Include="assests\images\cntrlogo_1.jpg" />
+    <Content Include="assests\images\cntrlogo_16.jpg" />
+    <Content Include="assests\images\cntrlogo_17.jpg" />
+    <Content Include="assests\images\cntrlogo_20.jpg" />
+    <Content Include="assests\images\cntrlogo_5.jpg" />
+    <Content Include="assests\images\cntrlogo_6.jpg" />
+    <Content Include="assests\images\contractimages.gif" />
+    <Content Include="assests\images\controls.png" />
+    <Content Include="assests\images\CrIcon.png" />
+    <Content Include="assests\images\crs.png" />
+    <Content Include="assests\images\CurrencyImage1.jpg" />
+    <Content Include="assests\images\Delete.png" />
+    <Content Include="assests\images\disk.gif" />
+    <Content Include="assests\images\doc.png" />
+    <Content Include="assests\images\down.gif" />
+    <Content Include="assests\images\downarrow.png" />
+    <Content Include="assests\images\down_over.gif" />
+    <Content Include="assests\images\down_time.gif" />
+    <Content Include="assests\images\down_time_over.gif" />
+    <Content Include="assests\images\Edit.jpg" />
+    <Content Include="assests\images\Edit.png" />
+    <Content Include="assests\images\EHeaderBack.gif" />
+    <Content Include="assests\images\email.png" />
+    <Content Include="assests\images\endBG.JPG" />
+    <Content Include="assests\images\endlessLoading.gif" />
+    <Content Include="assests\images\endprogressBG.JPG" />
+    <Content Include="assests\images\error.png" />
+    <Content Include="assests\images\exportcsv.gif" />
+    <Content Include="assests\images\exportword.gif" />
+    <Content Include="assests\images\exportxls.gif" />
+    <Content Include="assests\images\feedback.png" />
+    <Content Include="assests\images\file.gif" />
+    <Content Include="assests\images\first.gif" />
+    <Content Include="assests\images\folder.gif" />
+    <Content Include="assests\images\footerbg.jpg" />
+    <Content Include="assests\images\full.jpg" />
+    <Content Include="assests\images\Go.gif" />
+    <Content Include="assests\images\Gradient.jpg" />
+    <Content Include="assests\images\green.bmp" />
+    <Content Include="assests\images\gridhead.gif" />
+    <Content Include="assests\images\headbg.jpg" />
+    <Content Include="assests\images\headerpanel.gif" />
+    <Content Include="assests\images\history.png" />
+    <Content Include="assests\images\icoaccts.gif" />
+    <Content Include="assests\images\icoactivity.gif" />
+    <Content Include="assests\images\icoexport.gif" />
+    <Content Include="assests\images\icohome.gif" />
+    <Content Include="assests\images\icopipe.gif" />
+    <Content Include="assests\images\icoprint.gif" />
+    <Content Include="assests\images\icosearch.gif" />
+    <Content Include="assests\images\icoxls.gif" />
+    <Content Include="assests\images\inactiveState.png" />
+    <Content Include="assests\images\indianrupee.jpg" />
+    <Content Include="assests\images\info-back.png" />
+    <Content Include="assests\images\info.png" />
+    <Content Include="assests\images\JournalEntry.jpeg" />
+    <Content Include="assests\images\l.jpg" />
+    <Content Include="assests\images\left.gif" />
+    <Content Include="assests\images\LeftNav.gif" />
+    <Content Include="assests\images\left_over.gif" />
+    <Content Include="assests\images\lightbox\bg-checker.png" />
+    <Content Include="assests\images\lightbox\box.png" />
+    <Content Include="assests\images\lightbox\bullet.gif" />
+    <Content Include="assests\images\lightbox\close.png" />
+    <Content Include="assests\images\lightbox\donate.png" />
+    <Content Include="assests\images\lightbox\favicon.gif" />
+    <Content Include="assests\images\lightbox\loading.gif" />
+    <Content Include="assests\images\lightbox\next.png" />
+    <Content Include="assests\images\lightbox\prev.png" />
+    <Content Include="assests\images\lightbox\speech-bubbles.png" />
+    <Content Include="assests\images\loader.gif" />
+    <Content Include="assests\images\loading.gif" />
+    <Content Include="assests\images\loading_background.png" />
+    <Content Include="assests\images\login-bg.gif" />
+    <Content Include="assests\images\login-head.gif" />
+    <Content Include="assests\images\login.gif" />
+    <Content Include="assests\images\logo-mini.png" />
+    <Content Include="assests\images\logo.bmp" />
+    <Content Include="assests\images\logo.jpg" />
+    <Content Include="assests\images\logo.png" />
+    <Content Include="assests\images\logo2.jpg" />
+    <Content Include="assests\images\logout.png" />
+    <Content Include="assests\images\logo_test.bmp" />
+    <Content Include="assests\images\lprogressBG.JPG" />
+    <Content Include="assests\images\meeting.png" />
+    <Content Include="assests\images\Members.png" />
+    <Content Include="assests\images\menback.png" />
+    <Content Include="assests\images\menu-bar-gradient.jpg" />
+    <Content Include="assests\images\menu-bar-gradient1.JPG" />
+    <Content Include="assests\images\menu-bar-right-arrow.gif" />
+    <Content Include="assests\images\menu-bar-right-arrow.png" />
+    <Content Include="assests\images\menu_strip_bg.jpg" />
+    <Content Include="assests\images\menu_strip_bg1.JPG" />
+    <Content Include="assests\images\menu_strip_down_arrow.gif" />
+    <Content Include="assests\images\menu_strip_down_arrow.png" />
+    <Content Include="assests\images\menu_strip_separator.gif" />
+    <Content Include="assests\images\New_messag1.gif" />
+    <Content Include="assests\images\next.gif" />
+    <Content Include="assests\images\next_fast.gif" />
+    <Content Include="assests\images\not-verified.png" />
+    <Content Include="assests\images\ok.jpg" />
+    <Content Include="assests\images\onmouse_addnew.gif" />
+    <Content Include="assests\images\onmouse_exportcsv.gif" />
+    <Content Include="assests\images\onmouse_exportword.gif" />
+    <Content Include="assests\images\onmouse_exportxls.gif" />
+    <Content Include="assests\images\onmouse_search.gif" />
+    <Content Include="assests\images\open.gif" />
+    <Content Include="assests\images\PageSize.gif" />
+    <Content Include="assests\images\PDFICON.jpg" />
+    <Content Include="assests\images\pFirst.png" />
+    <Content Include="assests\images\phone_number.png" />
+    <Content Include="assests\images\pLast.png" />
+    <Content Include="assests\images\pNext.png" />
+    <Content Include="assests\images\popuparrow.jpg" />
+    <Content Include="assests\images\pPrev.png" />
+    <Content Include="assests\images\prev.gif" />
+    <Content Include="assests\images\preview.jpg" />
+    <Content Include="assests\images\previous_disabled.gif" />
+    <Content Include="assests\images\previous_fast_disabled.gif" />
+    <Content Include="assests\images\print.gif" />
+    <Content Include="assests\images\print.png" />
+    <Content Include="assests\images\profile1.png" />
+    <Content Include="assests\images\progress.gif" />
+    <Content Include="assests\images\progressBG.JPG" />
+    <Content Include="assests\images\r.jpg" />
+    <Content Include="assests\images\reassign.png" />
+    <Content Include="assests\images\refresh1.jpg" />
+    <Content Include="assests\images\right.gif" />
+    <Content Include="assests\images\rightArrowHand.jpg" />
+    <Content Include="assests\images\RightNav.gif" />
+    <Content Include="assests\images\right_over.gif" />
+    <Content Include="assests\images\rupee.png" />
+    <Content Include="assests\images\sales.png" />
+    <Content Include="assests\images\schedule.png" />
+    <Content Include="assests\images\sdown.JPG" />
+    <Content Include="assests\images\search.gif" />
+    <Content Include="assests\images\show.png" />
+    <Content Include="assests\images\sms.png" />
+    <Content Include="assests\images\snext.JPG" />
+    <Content Include="assests\images\snext1.JPG" />
+    <Content Include="assests\images\subnavhov.gif" />
+    <Content Include="assests\images\subnavlink.gif" />
+    <Content Include="assests\images\success.png" />
+    <Content Include="assests\images\sup.JPG" />
+    <Content Include="assests\images\tip.png" />
+    <Content Include="assests\images\verified.png" />
+    <Content Include="assests\images\viewIcon.png" />
+    <Content Include="assests\images\viewt1.png" />
+    <Content Include="assests\images\warehouse.png" />
+    <Content Include="assests\images\Warning.png" />
+    <Content Include="assests\js\jquery-1.10.2.min.map" />
+    <None Include="assests\js\_references.js" />
+    <Content Include="assests\js\ajax-dynamic-list.js" />
+    <Content Include="assests\js\ajax-dynamic-list1.js" />
+    <Content Include="assests\js\ajax-dynamic-list1_rootfile.js" />
+    <Content Include="assests\js\ajax-dynamic-list1_wofolder.js" />
+    <Content Include="assests\js\ajax-dynamic-list_rootfile.js" />
+    <Content Include="assests\js\ajax-dynamic-list_wofolder.js" />
+    <Content Include="assests\js\ajaxList.js" />
+    <Content Include="assests\js\ajaxList_rootfile.js" />
+    <Content Include="assests\js\ajaxList_wofolder.js" />
+    <Content Include="assests\js\dhtmlgoodies_calendar.js" />
+    <Content Include="assests\js\floating-1.12.js" />
+    <Content Include="assests\js\GenericJScript.js" />
+    <Content Include="assests\js\gen_validatorv31.js" />
+    <Content Include="assests\js\init.js" />
+    <None Include="assests\js\jquery-1.10.2.intellisense.js" />
+    <Content Include="assests\js\jquery-1.10.2.js" />
+    <Content Include="assests\js\jquery-1.10.2.min.js" />
+    <Content Include="assests\js\jquery-1.3.1.js" />
+    <Content Include="assests\js\jquery-1.3.2.js" />
+    <Content Include="assests\js\jquery-1.3.2.min.js" />
+    <Content Include="assests\js\jquery.alerts.js" />
+    <Content Include="assests\js\jquery.colorbox-min.js" />
+    <Content Include="assests\js\jquery.colorbox.js" />
+    <Content Include="assests\js\jquery.confirm.min.js" />
+    <Content Include="assests\js\jquery.meio.mask.js" />
+    <Content Include="assests\js\jquery.min.js" />
+    <Content Include="assests\js\jquery.sumoselect.min.js" />
+    <Content Include="assests\js\jquery.timeentry.js" />
+    <None Include="assests\js\jquery.validate-vsdoc.js" />
+    <Content Include="assests\js\jquery.validate.js" />
+    <Content Include="assests\js\jquery.validate.min.js" />
+    <Content Include="assests\js\jquery.validate.unobtrusive.js" />
+    <Content Include="assests\js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="assests\js\loaddata.js" />
+    <Content Include="assests\js\loaddata1.js" />
+    <Content Include="assests\js\main.js" />
+    <Content Include="assests\js\modalmsg.js" />
+    <Content Include="assests\js\modernizr-2.6.2.js" />
+    <Content Include="assests\js\modernizr-2.8.3-respond-1.4.2.min.js" />
+    <Content Include="assests\js\MultipleSelectionDDLJS.js" />
+    <Content Include="assests\js\PageMethods.js" />
+    <Content Include="assests\js\progress.js" />
+    <Content Include="assests\js\respond.js" />
+    <Content Include="assests\js\respond.min.js" />
+    <Content Include="assests\js\vendor\jquery-1.11.2.min.js" />
+    <Content Include="assests\js\wz_tooltip.js" />
+    <Content Include="assests\logoshort.png" />
+    <Content Include="assests\pluggins\choosen\choosen.min.css" />
+    <Content Include="assests\pluggins\choosen\choosen.min.js" />
+    <Content Include="assests\pluggins\choosen\chosen-sprite.png" />
+    <Content Include="assests\pluggins\choosen\chosen.css" />
+    <Content Include="assests\pluggins\customScroll\customScroll.js" />
+    <Content Include="assests\pluggins\customScroll\custoScroll.css" />
+    <Content Include="assests\pluggins\easyui\easyui.css" />
+    <Content Include="assests\pluggins\easyui\icon.css" />
+    <Content Include="assests\pluggins\easyui\images\tree_icons.png" />
+    <Content Include="assests\pluggins\easyui\jquery.easyui.min.js" />
+    <Content Include="assests\pluggins\jquery.alert\images\help.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\important.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\info.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\title.gif" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.alerts.css" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.alerts.js" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.ui.draggable.js" />
+    <Content Include="Reports\REPXReports\ReportDesignerRepx.aspx" />
+    <Content Include="Reports\REPXReports\RepxReportMain.aspx" />
+    <Content Include="Reports\REPXReports\RepxReportViewer.aspx" />
+    <Content Include="Reports\REPXReports\RepxSetDefaultDesign.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\ExcelFile.cs" />
+    <Compile Include="Model\ReportSource.cs">
+      <DependentUpon>ReportSource.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ReportSource.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportSource.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="OMS\ViewState class\VSPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ABCAnalysis.aspx.cs">
+      <DependentUpon>ABCAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ABCAnalysis.aspx.designer.cs">
+      <DependentUpon>ABCAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Activity_Conversion.aspx.cs">
+      <DependentUpon>Activity_Conversion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Activity_Conversion.aspx.designer.cs">
+      <DependentUpon>Activity_Conversion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\AdjustmentDetail_Customer.aspx.cs">
+      <DependentUpon>AdjustmentDetail_Customer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\AdjustmentDetail_Customer.aspx.designer.cs">
+      <DependentUpon>AdjustmentDetail_Customer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\AdjustmentDetail_Vendor.aspx.cs">
+      <DependentUpon>AdjustmentDetail_Vendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\AdjustmentDetail_Vendor.aspx.designer.cs">
+      <DependentUpon>AdjustmentDetail_Vendor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\AssignedSalesmanDetails.aspx.cs">
+      <DependentUpon>AssignedSalesmanDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\AssignedSalesmanDetails.aspx.designer.cs">
+      <DependentUpon>AssignedSalesmanDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\AuditTrial_Report.aspx.cs">
+      <DependentUpon>AuditTrial_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\AuditTrial_Report.aspx.designer.cs">
+      <DependentUpon>AuditTrial_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BankReconciliationStatement.aspx.cs">
+      <DependentUpon>BankReconciliationStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BankReconciliationStatement.aspx.designer.cs">
+      <DependentUpon>BankReconciliationStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BatchwiseBalance_Detail.aspx.cs">
+      <DependentUpon>BatchwiseBalance_Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BatchwiseBalance_Detail.aspx.designer.cs">
+      <DependentUpon>BatchwiseBalance_Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BatchwiseBalance_Summary.aspx.cs">
+      <DependentUpon>BatchwiseBalance_Summary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BatchwiseBalance_Summary.aspx.designer.cs">
+      <DependentUpon>BatchwiseBalance_Summary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BOMRegisterDetails.aspx.cs">
+      <DependentUpon>BOMRegisterDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BOMRegisterDetails.aspx.designer.cs">
+      <DependentUpon>BOMRegisterDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchRequisitionStatus.aspx.cs">
+      <DependentUpon>BranchRequisitionStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchRequisitionStatus.aspx.designer.cs">
+      <DependentUpon>BranchRequisitionStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWHWiseDetail.aspx.cs">
+      <DependentUpon>BranchWHWiseDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWHWiseDetail.aspx.designer.cs">
+      <DependentUpon>BranchWHWiseDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWHWiseSummary.aspx.cs">
+      <DependentUpon>BranchWHWiseSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWHWiseSummary.aspx.designer.cs">
+      <DependentUpon>BranchWHWiseSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWisePartyOutstanding.aspx.cs">
+      <DependentUpon>BranchWisePartyOutstanding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWisePartyOutstanding.aspx.designer.cs">
+      <DependentUpon>BranchWisePartyOutstanding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWiseSalesAnalysis.aspx.cs">
+      <DependentUpon>BranchWiseSalesAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWiseSalesAnalysis.aspx.designer.cs">
+      <DependentUpon>BranchWiseSalesAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWiseTDSeFile.aspx.cs">
+      <DependentUpon>BranchWiseTDSeFile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BranchWiseTDSeFile.aspx.designer.cs">
+      <DependentUpon>BranchWiseTDSeFile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSGroupWise.aspx.cs">
+      <DependentUpon>BSGroupWise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSGroupWise.aspx.designer.cs">
+      <DependentUpon>BSGroupWise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSScheduleVI.aspx.cs">
+      <DependentUpon>BSScheduleVI.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSScheduleVI.aspx.designer.cs">
+      <DependentUpon>BSScheduleVI.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSStatement.aspx.cs">
+      <DependentUpon>BSStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSStatement.aspx.designer.cs">
+      <DependentUpon>BSStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSStatementProject.aspx.cs">
+      <DependentUpon>BSStatementProject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BSStatementProject.aspx.designer.cs">
+      <DependentUpon>BSStatementProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BTIBTO_Register.aspx.cs">
+      <DependentUpon>BTIBTO_Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BTIBTO_Register.aspx.designer.cs">
+      <DependentUpon>BTIBTO_Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CardBankReport.aspx.cs">
+      <DependentUpon>CardBankReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CardBankReport.aspx.designer.cs">
+      <DependentUpon>CardBankReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CashBankBookDetail_Subledgerwise.aspx.cs">
+      <DependentUpon>CashBankBookDetail_Subledgerwise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CashBankBookDetail_Subledgerwise.aspx.designer.cs">
+      <DependentUpon>CashBankBookDetail_Subledgerwise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CashBankBookRegister_Details.aspx.cs">
+      <DependentUpon>CashBankBookRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CashBankBookRegister_Details.aspx.designer.cs">
+      <DependentUpon>CashBankBookRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CashBankBookSummary.aspx.cs">
+      <DependentUpon>CashBankBookSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CashBankBookSummary.aspx.designer.cs">
+      <DependentUpon>CashBankBookSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CashBankReport.aspx.cs">
+      <DependentUpon>CashBankReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CashBankReport.aspx.designer.cs">
+      <DependentUpon>CashBankReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CombinedSalePurchaseReport.aspx.cs">
+      <DependentUpon>CombinedSalePurchaseReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CombinedSalePurchaseReport.aspx.designer.cs">
+      <DependentUpon>CombinedSalePurchaseReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CombineStockTrial.aspx.cs">
+      <DependentUpon>CombineStockTrial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CombineStockTrial.aspx.designer.cs">
+      <DependentUpon>CombineStockTrial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ComponentRegister.aspx.cs">
+      <DependentUpon>ComponentRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ComponentRegister.aspx.designer.cs">
+      <DependentUpon>ComponentRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Consolidated-Stock.aspx.cs">
+      <DependentUpon>Consolidated-Stock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Consolidated-Stock.aspx.designer.cs">
+      <DependentUpon>Consolidated-Stock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Creditors-Details.aspx.cs">
+      <DependentUpon>Creditors-Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Creditors-Details.aspx.designer.cs">
+      <DependentUpon>Creditors-Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CRMSummary_Performance_F.aspx.cs">
+      <DependentUpon>CRMSummary_Performance_F.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CRMSummary_Performance_F.aspx.designer.cs">
+      <DependentUpon>CRMSummary_Performance_F.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerAgeingDetail.aspx.cs">
+      <DependentUpon>CustomerAgeingDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerAgeingDetail.aspx.designer.cs">
+      <DependentUpon>CustomerAgeingDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerAgeingSummary.aspx.cs">
+      <DependentUpon>CustomerAgeingSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerAgeingSummary.aspx.designer.cs">
+      <DependentUpon>CustomerAgeingSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerAgeingWithDaysInterval.aspx.cs">
+      <DependentUpon>CustomerAgeingWithDaysInterval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerAgeingWithDaysInterval.aspx.designer.cs">
+      <DependentUpon>CustomerAgeingWithDaysInterval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerAnalysis.aspx.cs">
+      <DependentUpon>CustomerAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerAnalysis.aspx.designer.cs">
+      <DependentUpon>CustomerAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerOutstandingDetail.aspx.cs">
+      <DependentUpon>CustomerOutstandingDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerOutstandingDetail.aspx.designer.cs">
+      <DependentUpon>CustomerOutstandingDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerOutstandingSummary.aspx.cs">
+      <DependentUpon>CustomerOutstandingSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerOutstandingSummary.aspx.designer.cs">
+      <DependentUpon>CustomerOutstandingSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerOutstandingVSAgeingAnalysis.aspx.cs">
+      <DependentUpon>CustomerOutstandingVSAgeingAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerOutstandingVSAgeingAnalysis.aspx.designer.cs">
+      <DependentUpon>CustomerOutstandingVSAgeingAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerRecPayRegister.aspx.cs">
+      <DependentUpon>CustomerRecPayRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerRecPayRegister.aspx.designer.cs">
+      <DependentUpon>CustomerRecPayRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerRecPayRegister_Detail.aspx.cs">
+      <DependentUpon>CustomerRecPayRegister_Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerRecPayRegister_Detail.aspx.designer.cs">
+      <DependentUpon>CustomerRecPayRegister_Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerWiseMonthlySales.aspx.cs">
+      <DependentUpon>CustomerWiseMonthlySales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerWiseMonthlySales.aspx.designer.cs">
+      <DependentUpon>CustomerWiseMonthlySales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerWiseSales.aspx.cs">
+      <DependentUpon>CustomerWiseSales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerWiseSales.aspx.designer.cs">
+      <DependentUpon>CustomerWiseSales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Customer_Ledger.aspx.cs">
+      <DependentUpon>Customer_Ledger.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Customer_Ledger.aspx.designer.cs">
+      <DependentUpon>Customer_Ledger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerOutstanding.aspx.cs">
+      <DependentUpon>CustomerOutstanding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\CustomerOutstanding.aspx.designer.cs">
+      <DependentUpon>CustomerOutstanding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\DayBook.aspx.cs">
+      <DependentUpon>DayBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\DayBook.aspx.designer.cs">
+      <DependentUpon>DayBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\DebtorsDetailsCR.aspx.cs">
+      <DependentUpon>DebtorsDetailsCR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\DebtorsDetailsCR.aspx.designer.cs">
+      <DependentUpon>DebtorsDetailsCR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\DebtorsDetailsDR.aspx.cs">
+      <DependentUpon>DebtorsDetailsDR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\DebtorsDetailsDR.aspx.designer.cs">
+      <DependentUpon>DebtorsDetailsDR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\DeliverySchedule.aspx.cs">
+      <DependentUpon>DeliverySchedule.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\DeliverySchedule.aspx.designer.cs">
+      <DependentUpon>DeliverySchedule.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Demo_Register.aspx.cs">
+      <DependentUpon>Demo_Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Demo_Register.aspx.designer.cs">
+      <DependentUpon>Demo_Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\DSR-Summary.aspx.cs">
+      <DependentUpon>DSR-Summary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\DSR-Summary.aspx.designer.cs">
+      <DependentUpon>DSR-Summary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\DSROnOpportunities.aspx.cs">
+      <DependentUpon>DSROnOpportunities.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\DSROnOpportunities.aspx.designer.cs">
+      <DependentUpon>DSROnOpportunities.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\EstimateRegisterDetails.aspx.cs">
+      <DependentUpon>EstimateRegisterDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\EstimateRegisterDetails.aspx.designer.cs">
+      <DependentUpon>EstimateRegisterDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\EstimateRegisterSummary.aspx.cs">
+      <DependentUpon>EstimateRegisterSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\EstimateRegisterSummary.aspx.designer.cs">
+      <DependentUpon>EstimateRegisterSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\EWayBillRegister.aspx.cs">
+      <DependentUpon>EWayBillRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\EWayBillRegister.aspx.designer.cs">
+      <DependentUpon>EWayBillRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ExportDetailsReport.aspx.cs">
+      <DependentUpon>ExportDetailsReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ExportDetailsReport.aspx.designer.cs">
+      <DependentUpon>ExportDetailsReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\FinalReport.aspx.cs">
+      <DependentUpon>FinalReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\FinalReport.aspx.designer.cs">
+      <DependentUpon>FinalReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\FinanceCNReport.aspx.cs">
+      <DependentUpon>FinanceCNReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\FinanceCNReport.aspx.designer.cs">
+      <DependentUpon>FinanceCNReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\frm_purintaxreg.aspx.cs">
+      <DependentUpon>frm_purintaxreg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\frm_purintaxreg.aspx.designer.cs">
+      <DependentUpon>frm_purintaxreg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\frm_saleouttaxreg.aspx.cs">
+      <DependentUpon>frm_saleouttaxreg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\frm_saleouttaxreg.aspx.designer.cs">
+      <DependentUpon>frm_saleouttaxreg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\GeneralLedgerRegister.aspx.cs">
+      <DependentUpon>GeneralLedgerRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\GeneralLedgerRegister.aspx.designer.cs">
+      <DependentUpon>GeneralLedgerRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Gstr-1Report.aspx.cs">
+      <DependentUpon>Gstr-1Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Gstr-1Report.aspx.designer.cs">
+      <DependentUpon>Gstr-1Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Gstr2Report.aspx.cs">
+      <DependentUpon>Gstr2Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Gstr2Report.aspx.designer.cs">
+      <DependentUpon>Gstr2Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_Customerpaymentreceipt.aspx.cs">
+      <DependentUpon>GSTR_Customerpaymentreceipt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_Customerpaymentreceipt.aspx.designer.cs">
+      <DependentUpon>GSTR_Customerpaymentreceipt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_HSNcodeRate.aspx.cs">
+      <DependentUpon>GSTR_HSNcodeRate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_HSNcodeRate.aspx.designer.cs">
+      <DependentUpon>GSTR_HSNcodeRate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_PurchaseRegister.aspx.cs">
+      <DependentUpon>GSTR_PurchaseRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_PurchaseRegister.aspx.designer.cs">
+      <DependentUpon>GSTR_PurchaseRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_SaleRegister.aspx.cs">
+      <DependentUpon>GSTR_SaleRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_SaleRegister.aspx.designer.cs">
+      <DependentUpon>GSTR_SaleRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_Vendorpaymetreceipt.aspx.cs">
+      <DependentUpon>GSTR_Vendorpaymetreceipt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\GSTR_Vendorpaymetreceipt.aspx.designer.cs">
+      <DependentUpon>GSTR_Vendorpaymetreceipt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\GST_RCMStatement.aspx.cs">
+      <DependentUpon>GST_RCMStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\GST_RCMStatement.aspx.designer.cs">
+      <DependentUpon>GST_RCMStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\InfluencerLedger.aspx.cs">
+      <DependentUpon>InfluencerLedger.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\InfluencerLedger.aspx.designer.cs">
+      <DependentUpon>InfluencerLedger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\InfluencerScheme.aspx.cs">
+      <DependentUpon>InfluencerScheme.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\InfluencerScheme.aspx.designer.cs">
+      <DependentUpon>InfluencerScheme.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Insurance-Register.aspx.cs">
+      <DependentUpon>Insurance-Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Insurance-Register.aspx.designer.cs">
+      <DependentUpon>Insurance-Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\InterestCalculation.aspx.cs">
+      <DependentUpon>InterestCalculation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\InterestCalculation.aspx.designer.cs">
+      <DependentUpon>InterestCalculation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\InventoryControlWithStockValuation.aspx.cs">
+      <DependentUpon>InventoryControlWithStockValuation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\InventoryControlWithStockValuation.aspx.designer.cs">
+      <DependentUpon>InventoryControlWithStockValuation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\IssueForProductionRegister.aspx.cs">
+      <DependentUpon>IssueForProductionRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\IssueForProductionRegister.aspx.designer.cs">
+      <DependentUpon>IssueForProductionRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\JournalRegister_Details.aspx.cs">
+      <DependentUpon>JournalRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\JournalRegister_Details.aspx.designer.cs">
+      <DependentUpon>JournalRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Jsonparse-Gstr1.aspx.cs">
+      <DependentUpon>Jsonparse-Gstr1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Jsonparse-Gstr1.aspx.designer.cs">
+      <DependentUpon>Jsonparse-Gstr1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\JsonParse.aspx.cs">
+      <DependentUpon>JsonParse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\JsonParse.aspx.designer.cs">
+      <DependentUpon>JsonParse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\LeadActivity.aspx.cs">
+      <DependentUpon>LeadActivity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\LeadActivity.aspx.designer.cs">
+      <DependentUpon>LeadActivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\LedgerBook.aspx.cs">
+      <DependentUpon>LedgerBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\LedgerBook.aspx.designer.cs">
+      <DependentUpon>LedgerBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\LedgerPostingReport.aspx.cs">
+      <DependentUpon>LedgerPostingReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\LedgerPostingReport.aspx.designer.cs">
+      <DependentUpon>LedgerPostingReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\GeneralTrialReport.aspx.cs">
+      <DependentUpon>GeneralTrialReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\GeneralTrialReport.aspx.designer.cs">
+      <DependentUpon>GeneralTrialReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ListingOfMaster_Customer.aspx.cs">
+      <DependentUpon>ListingOfMaster_Customer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ListingOfMaster_Customer.aspx.designer.cs">
+      <DependentUpon>ListingOfMaster_Customer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ListingOfMaster_Product.aspx.cs">
+      <DependentUpon>ListingOfMaster_Product.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ListingOfMaster_Product.aspx.designer.cs">
+      <DependentUpon>ListingOfMaster_Product.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ListingOfMaster_Transporter.aspx.cs">
+      <DependentUpon>ListingOfMaster_Transporter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ListingOfMaster_Transporter.aspx.designer.cs">
+      <DependentUpon>ListingOfMaster_Transporter.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ListingOfMaster_Vendor.aspx.cs">
+      <DependentUpon>ListingOfMaster_Vendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ListingOfMaster_Vendor.aspx.designer.cs">
+      <DependentUpon>ListingOfMaster_Vendor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\LocationWiseSellableStock.aspx.cs">
+      <DependentUpon>LocationWiseSellableStock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\LocationWiseSellableStock.aspx.designer.cs">
+      <DependentUpon>LocationWiseSellableStock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\MFFGRegisterDetails.aspx.cs">
+      <DependentUpon>MFFGRegisterDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\MFFGRegisterDetails.aspx.designer.cs">
+      <DependentUpon>MFFGRegisterDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\MFIssueRegisterDetails.aspx.cs">
+      <DependentUpon>MFIssueRegisterDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\MFIssueRegisterDetails.aspx.designer.cs">
+      <DependentUpon>MFIssueRegisterDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\MFStockReceiptRegister.aspx.cs">
+      <DependentUpon>MFStockReceiptRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\MFStockReceiptRegister.aspx.designer.cs">
+      <DependentUpon>MFStockReceiptRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\MismatchDetection.aspx.cs">
+      <DependentUpon>MismatchDetection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\MismatchDetection.aspx.designer.cs">
+      <DependentUpon>MismatchDetection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ModuleWiseDocCount.aspx.cs">
+      <DependentUpon>ModuleWiseDocCount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ModuleWiseDocCount.aspx.designer.cs">
+      <DependentUpon>ModuleWiseDocCount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ModuleWiseDocumentCount.aspx.cs">
+      <DependentUpon>ModuleWiseDocumentCount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ModuleWiseDocumentCount.aspx.designer.cs">
+      <DependentUpon>ModuleWiseDocumentCount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\MultiCompanyStockSummary.aspx.cs">
+      <DependentUpon>MultiCompanyStockSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\MultiCompanyStockSummary.aspx.designer.cs">
+      <DependentUpon>MultiCompanyStockSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\OrderToDelivery.aspx.cs">
+      <DependentUpon>OrderToDelivery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\OrderToDelivery.aspx.designer.cs">
+      <DependentUpon>OrderToDelivery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedger.aspx.cs">
+      <DependentUpon>PartyLedger.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedger.aspx.designer.cs">
+      <DependentUpon>PartyLedger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedgerCustomerWithSegment.aspx.cs">
+      <DependentUpon>PartyLedgerCustomerWithSegment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedgerCustomerWithSegment.aspx.designer.cs">
+      <DependentUpon>PartyLedgerCustomerWithSegment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedgerPostingReport.aspx.cs">
+      <DependentUpon>PartyLedgerPostingReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedgerPostingReport.aspx.designer.cs">
+      <DependentUpon>PartyLedgerPostingReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedger_Customer.aspx.cs">
+      <DependentUpon>PartyLedger_Customer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedger_Customer.aspx.designer.cs">
+      <DependentUpon>PartyLedger_Customer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedger_Vendor.aspx.cs">
+      <DependentUpon>PartyLedger_Vendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyLedger_Vendor.aspx.designer.cs">
+      <DependentUpon>PartyLedger_Vendor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyOutstanding.aspx.cs">
+      <DependentUpon>PartyOutstanding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PartyOutstanding.aspx.designer.cs">
+      <DependentUpon>PartyOutstanding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PaymentCollection_Details.aspx.cs">
+      <DependentUpon>PaymentCollection_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PaymentCollection_Details.aspx.designer.cs">
+      <DependentUpon>PaymentCollection_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingEstimateRegisterDetails.aspx.cs">
+      <DependentUpon>PendingEstimateRegisterDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingEstimateRegisterDetails.aspx.designer.cs">
+      <DependentUpon>PendingEstimateRegisterDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingEstimateRegisterSummary.aspx.cs">
+      <DependentUpon>PendingEstimateRegisterSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingEstimateRegisterSummary.aspx.designer.cs">
+      <DependentUpon>PendingEstimateRegisterSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingProjectPORegister_Details.aspx.cs">
+      <DependentUpon>PendingProjectPORegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingProjectPORegister_Details.aspx.designer.cs">
+      <DependentUpon>PendingProjectPORegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingProjectSORegister_Details.aspx.cs">
+      <DependentUpon>PendingProjectSORegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingProjectSORegister_Details.aspx.designer.cs">
+      <DependentUpon>PendingProjectSORegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingPurchaseOrderRegister.aspx.cs">
+      <DependentUpon>PendingPurchaseOrderRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingPurchaseOrderRegister.aspx.designer.cs">
+      <DependentUpon>PendingPurchaseOrderRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingSaleOrderRegister.aspx.cs">
+      <DependentUpon>PendingSaleOrderRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingSaleOrderRegister.aspx.designer.cs">
+      <DependentUpon>PendingSaleOrderRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingSalesOrderColumnar.aspx.cs">
+      <DependentUpon>PendingSalesOrderColumnar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingSalesOrderColumnar.aspx.designer.cs">
+      <DependentUpon>PendingSalesOrderColumnar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingSalesQuotationColumnar.aspx.cs">
+      <DependentUpon>PendingSalesQuotationColumnar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingSalesQuotationColumnar.aspx.designer.cs">
+      <DependentUpon>PendingSalesQuotationColumnar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingWORegisterDetails.aspx.cs">
+      <DependentUpon>PendingWORegisterDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PendingWORegisterDetails.aspx.designer.cs">
+      <DependentUpon>PendingWORegisterDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PhysicalStockVsStockAvailability.aspx.cs">
+      <DependentUpon>PhysicalStockVsStockAvailability.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PhysicalStockVsStockAvailability.aspx.designer.cs">
+      <DependentUpon>PhysicalStockVsStockAvailability.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PLBSViewer.aspx.cs">
+      <DependentUpon>PLBSViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PLBSViewer.aspx.designer.cs">
+      <DependentUpon>PLBSViewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\POSOrderOldUnitRegister.aspx.cs">
+      <DependentUpon>POSOrderOldUnitRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\POSOrderOldUnitRegister.aspx.designer.cs">
+      <DependentUpon>POSOrderOldUnitRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\POSOrderRegister.aspx.cs">
+      <DependentUpon>POSOrderRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\POSOrderRegister.aspx.designer.cs">
+      <DependentUpon>POSOrderRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProductWiseSalesReport.aspx.cs">
+      <DependentUpon>ProductWiseSalesReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProductWiseSalesReport.aspx.designer.cs">
+      <DependentUpon>ProductWiseSalesReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProfitabilitySales.aspx.cs">
+      <DependentUpon>ProfitabilitySales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProfitabilitySales.aspx.designer.cs">
+      <DependentUpon>ProfitabilitySales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProfitandLossStatement.aspx.cs">
+      <DependentUpon>ProfitandLossStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProfitandLossStatement.aspx.designer.cs">
+      <DependentUpon>ProfitandLossStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProfitandLossStatement_Tabular.aspx.cs">
+      <DependentUpon>ProfitandLossStatement_Tabular.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProfitandLossStatement_Tabular.aspx.designer.cs">
+      <DependentUpon>ProfitandLossStatement_Tabular.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectAccounting.aspx.cs">
+      <DependentUpon>ProjectAccounting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectAccounting.aspx.designer.cs">
+      <DependentUpon>ProjectAccounting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectMasterRegister.aspx.cs">
+      <DependentUpon>ProjectMasterRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectMasterRegister.aspx.designer.cs">
+      <DependentUpon>ProjectMasterRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectSummary.aspx.cs">
+      <DependentUpon>ProjectSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectSummary.aspx.designer.cs">
+      <DependentUpon>ProjectSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectWisePaymentCollection.aspx.cs">
+      <DependentUpon>ProjectWisePaymentCollection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectWisePaymentCollection.aspx.designer.cs">
+      <DependentUpon>ProjectWisePaymentCollection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectWiseStockValuation.aspx.cs">
+      <DependentUpon>ProjectWiseStockValuation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ProjectWiseStockValuation.aspx.designer.cs">
+      <DependentUpon>ProjectWiseStockValuation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseGRNRegister_Details.aspx.cs">
+      <DependentUpon>PurchaseGRNRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseGRNRegister_Details.aspx.designer.cs">
+      <DependentUpon>PurchaseGRNRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseIndentRegister.aspx.cs">
+      <DependentUpon>PurchaseIndentRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseIndentRegister.aspx.designer.cs">
+      <DependentUpon>PurchaseIndentRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseOrderRegister_Details.aspx.cs">
+      <DependentUpon>PurchaseOrderRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseOrderRegister_Details.aspx.designer.cs">
+      <DependentUpon>PurchaseOrderRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseQuotationRegister.aspx.cs">
+      <DependentUpon>PurchaseQuotationRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseQuotationRegister.aspx.designer.cs">
+      <DependentUpon>PurchaseQuotationRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseRegister.aspx.cs">
+      <DependentUpon>PurchaseRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseRegister.aspx.designer.cs">
+      <DependentUpon>PurchaseRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseRegister_Details.aspx.cs">
+      <DependentUpon>PurchaseRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseRegister_Details.aspx.designer.cs">
+      <DependentUpon>PurchaseRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseReturnRegister_Details.aspx.cs">
+      <DependentUpon>PurchaseReturnRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\PurchaseReturnRegister_Details.aspx.designer.cs">
+      <DependentUpon>PurchaseReturnRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalaryDisbursment.aspx.cs">
+      <DependentUpon>SalaryDisbursment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalaryDisbursment.aspx.designer.cs">
+      <DependentUpon>SalaryDisbursment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesAnalysis.aspx.cs">
+      <DependentUpon>SalesAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesAnalysis.aspx.designer.cs">
+      <DependentUpon>SalesAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesInquiryRegister.aspx.cs">
+      <DependentUpon>SalesInquiryRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesInquiryRegister.aspx.designer.cs">
+      <DependentUpon>SalesInquiryRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesmanPerformance.aspx.cs">
+      <DependentUpon>SalesmanPerformance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesmanPerformance.aspx.designer.cs">
+      <DependentUpon>SalesmanPerformance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesOrderRegister_Details.aspx.cs">
+      <DependentUpon>SalesOrderRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesOrderRegister_Details.aspx.designer.cs">
+      <DependentUpon>SalesOrderRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesProforma_QuotationRegister.aspx.cs">
+      <DependentUpon>SalesProforma_QuotationRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesProforma_QuotationRegister.aspx.designer.cs">
+      <DependentUpon>SalesProforma_QuotationRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesRegisterReport.aspx.cs">
+      <DependentUpon>SalesRegisterReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesRegisterReport.aspx.designer.cs">
+      <DependentUpon>SalesRegisterReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesRegister_Details.aspx.cs">
+      <DependentUpon>SalesRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesRegister_Details.aspx.designer.cs">
+      <DependentUpon>SalesRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesReturnRegister_Details.aspx.cs">
+      <DependentUpon>SalesReturnRegister_Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SalesReturnRegister_Details.aspx.designer.cs">
+      <DependentUpon>SalesReturnRegister_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ScheduleTaskStatus.aspx.cs">
+      <DependentUpon>ScheduleTaskStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ScheduleTaskStatus.aspx.designer.cs">
+      <DependentUpon>ScheduleTaskStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SerialwiseDetails.aspx.cs">
+      <DependentUpon>SerialwiseDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SerialwiseDetails.aspx.designer.cs">
+      <DependentUpon>SerialwiseDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Services\Master.asmx.cs">
+      <DependentUpon>Master.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVMaterialInOutRegisterDetail.aspx.cs">
+      <DependentUpon>SRVMaterialInOutRegisterDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVMaterialInOutRegisterDetail.aspx.designer.cs">
+      <DependentUpon>SRVMaterialInOutRegisterDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVMaterialInOutRegisterSummary.aspx.cs">
+      <DependentUpon>SRVMaterialInOutRegisterSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVMaterialInOutRegisterSummary.aspx.designer.cs">
+      <DependentUpon>SRVMaterialInOutRegisterSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVPerformanceStatusDayWise.aspx.cs">
+      <DependentUpon>SRVPerformanceStatusDayWise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVPerformanceStatusDayWise.aspx.designer.cs">
+      <DependentUpon>SRVPerformanceStatusDayWise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVPerformanceStatusDetails.aspx.cs">
+      <DependentUpon>SRVPerformanceStatusDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVPerformanceStatusDetails.aspx.designer.cs">
+      <DependentUpon>SRVPerformanceStatusDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVPerformanceStatusHourWise.aspx.cs">
+      <DependentUpon>SRVPerformanceStatusHourWise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVPerformanceStatusHourWise.aspx.designer.cs">
+      <DependentUpon>SRVPerformanceStatusHourWise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVServiceRegisterReport.aspx.cs">
+      <DependentUpon>SRVServiceRegisterReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVServiceRegisterReport.aspx.designer.cs">
+      <DependentUpon>SRVServiceRegisterReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVTechnicianProductivity.aspx.cs">
+      <DependentUpon>SRVTechnicianProductivity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVTechnicianProductivity.aspx.designer.cs">
+      <DependentUpon>SRVTechnicianProductivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVWarehouseWiseStockStatusDetail.aspx.cs">
+      <DependentUpon>SRVWarehouseWiseStockStatusDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVWarehouseWiseStockStatusDetail.aspx.designer.cs">
+      <DependentUpon>SRVWarehouseWiseStockStatusDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVWarehouseWiseStockStatusSummary.aspx.cs">
+      <DependentUpon>SRVWarehouseWiseStockStatusSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SRVWarehouseWiseStockStatusSummary.aspx.designer.cs">
+      <DependentUpon>SRVWarehouseWiseStockStatusSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StatementOfAccount.aspx.cs">
+      <DependentUpon>StatementOfAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StatementOfAccount.aspx.designer.cs">
+      <DependentUpon>StatementOfAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\STBReceivingRegister.aspx.cs">
+      <DependentUpon>STBReceivingRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\STBReceivingRegister.aspx.designer.cs">
+      <DependentUpon>STBReceivingRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Stbregister.aspx.cs">
+      <DependentUpon>Stbregister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Stbregister.aspx.designer.cs">
+      <DependentUpon>Stbregister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\STBSchemeRegister.aspx.cs">
+      <DependentUpon>STBSchemeRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\STBSchemeRegister.aspx.designer.cs">
+      <DependentUpon>STBSchemeRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockDayBook.aspx.cs">
+      <DependentUpon>StockDayBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockDayBook.aspx.designer.cs">
+      <DependentUpon>StockDayBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockLedger.aspx.cs">
+      <DependentUpon>StockLedger.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockLedger.aspx.designer.cs">
+      <DependentUpon>StockLedger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockLedgerSummary.aspx.cs">
+      <DependentUpon>StockLedgerSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockLedgerSummary.aspx.designer.cs">
+      <DependentUpon>StockLedgerSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockMovement.aspx.cs">
+      <DependentUpon>StockMovement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockMovement.aspx.designer.cs">
+      <DependentUpon>StockMovement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockPosition.aspx.cs">
+      <DependentUpon>StockPosition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockPosition.aspx.designer.cs">
+      <DependentUpon>StockPosition.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockTrialSummary.aspx.cs">
+      <DependentUpon>StockTrialSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockTrialSummary.aspx.designer.cs">
+      <DependentUpon>StockTrialSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockValuation.aspx.cs">
+      <DependentUpon>StockValuation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockValuation.aspx.designer.cs">
+      <DependentUpon>StockValuation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockValuationWithAgeing.aspx.cs">
+      <DependentUpon>StockValuationWithAgeing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\StockValuationWithAgeing.aspx.designer.cs">
+      <DependentUpon>StockValuationWithAgeing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Stock_Ageing.aspx.cs">
+      <DependentUpon>Stock_Ageing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Stock_Ageing.aspx.designer.cs">
+      <DependentUpon>Stock_Ageing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SubLedgerDetails.aspx.cs">
+      <DependentUpon>SubLedgerDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SubLedgerDetails.aspx.designer.cs">
+      <DependentUpon>SubLedgerDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SubLedgerSummary.aspx.cs">
+      <DependentUpon>SubLedgerSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SubLedgerSummary.aspx.designer.cs">
+      <DependentUpon>SubLedgerSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SubLedgerWisePosting.aspx.cs">
+      <DependentUpon>SubLedgerWisePosting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SubLedgerWisePosting.aspx.designer.cs">
+      <DependentUpon>SubLedgerWisePosting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\SubLedgerWisePosting_Summary.aspx.cs">
+      <DependentUpon>SubLedgerWisePosting_Summary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\SubLedgerWisePosting_Summary.aspx.designer.cs">
+      <DependentUpon>SubLedgerWisePosting_Summary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\TCSRegister.aspx.cs">
+      <DependentUpon>TCSRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\TCSRegister.aspx.designer.cs">
+      <DependentUpon>TCSRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\TDSeFile.aspx.cs">
+      <DependentUpon>TDSeFile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\TDSeFile.aspx.designer.cs">
+      <DependentUpon>TDSeFile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\TDS_Report.aspx.cs">
+      <DependentUpon>TDS_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\TDS_Report.aspx.designer.cs">
+      <DependentUpon>TDS_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\TradingandPLStatement.aspx.cs">
+      <DependentUpon>TradingandPLStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\TradingandPLStatement.aspx.designer.cs">
+      <DependentUpon>TradingandPLStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\TradingandPLStatementProject.aspx.cs">
+      <DependentUpon>TradingandPLStatementProject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\TradingandPLStatementProject.aspx.designer.cs">
+      <DependentUpon>TradingandPLStatementProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Transproter_Ledger.aspx.cs">
+      <DependentUpon>Transproter_Ledger.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Transproter_Ledger.aspx.designer.cs">
+      <DependentUpon>Transproter_Ledger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\TrialBalanceGroupWise.aspx.cs">
+      <DependentUpon>TrialBalanceGroupWise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\TrialBalanceGroupWise.aspx.designer.cs">
+      <DependentUpon>TrialBalanceGroupWise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\TrialOnNetBalance.aspx.cs">
+      <DependentUpon>TrialOnNetBalance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\TrialOnNetBalance.aspx.designer.cs">
+      <DependentUpon>TrialOnNetBalance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorAgeingDetail.aspx.cs">
+      <DependentUpon>VendorAgeingDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorAgeingDetail.aspx.designer.cs">
+      <DependentUpon>VendorAgeingDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorAgeingSummary.aspx.cs">
+      <DependentUpon>VendorAgeingSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorAgeingSummary.aspx.designer.cs">
+      <DependentUpon>VendorAgeingSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorAgeingWithDaysInterval.aspx.cs">
+      <DependentUpon>VendorAgeingWithDaysInterval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorAgeingWithDaysInterval.aspx.designer.cs">
+      <DependentUpon>VendorAgeingWithDaysInterval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorAnalysis.aspx.cs">
+      <DependentUpon>VendorAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorAnalysis.aspx.designer.cs">
+      <DependentUpon>VendorAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorOutstandingDetail.aspx.cs">
+      <DependentUpon>VendorOutstandingDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorOutstandingDetail.aspx.designer.cs">
+      <DependentUpon>VendorOutstandingDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorOutstandingSummary.aspx.cs">
+      <DependentUpon>VendorOutstandingSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorOutstandingSummary.aspx.designer.cs">
+      <DependentUpon>VendorOutstandingSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorRecPayRegister.aspx.cs">
+      <DependentUpon>VendorRecPayRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorRecPayRegister.aspx.designer.cs">
+      <DependentUpon>VendorRecPayRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorRecPayRegister_Detail.aspx.cs">
+      <DependentUpon>VendorRecPayRegister_Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorRecPayRegister_Detail.aspx.designer.cs">
+      <DependentUpon>VendorRecPayRegister_Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorWisePurchase.aspx.cs">
+      <DependentUpon>VendorWisePurchase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\VendorWisePurchase.aspx.designer.cs">
+      <DependentUpon>VendorWisePurchase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\Vendor_Ledger.aspx.cs">
+      <DependentUpon>Vendor_Ledger.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\Vendor_Ledger.aspx.designer.cs">
+      <DependentUpon>Vendor_Ledger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\ViewLeaveRegister.aspx.cs">
+      <DependentUpon>ViewLeaveRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\ViewLeaveRegister.aspx.designer.cs">
+      <DependentUpon>ViewLeaveRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\WarehousewiseStockStatus.aspx.cs">
+      <DependentUpon>WarehousewiseStockStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\WarehousewiseStockStatus.aspx.designer.cs">
+      <DependentUpon>WarehousewiseStockStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\WarehousewiseStockValuation.aspx.cs">
+      <DependentUpon>WarehousewiseStockValuation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\WarehousewiseStockValuation.aspx.designer.cs">
+      <DependentUpon>WarehousewiseStockValuation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\WHWiseStockOutDetail.aspx.cs">
+      <DependentUpon>WHWiseStockOutDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\WHWiseStockOutDetail.aspx.designer.cs">
+      <DependentUpon>WHWiseStockOutDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\WorkOrderRegisterDetails.aspx.cs">
+      <DependentUpon>WorkOrderRegisterDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\WorkOrderRegisterDetails.aspx.designer.cs">
+      <DependentUpon>WorkOrderRegisterDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ProjectMainPage.aspx.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ProjectMainPage.aspx.designer.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Master.Master.cs">
+      <DependentUpon>Master.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master.Master.designer.cs">
+      <DependentUpon>Master.Master</DependentUpon>
+    </Compile>
+    <Compile Include="OMS\MasterPage\ERP.Master.cs">
+      <DependentUpon>ERP.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OMS\MasterPage\ERP.Master.designer.cs">
+      <DependentUpon>ERP.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\REPXReports\RepxReportMain.aspx.cs">
+      <DependentUpon>RepxReportMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\REPXReports\RepxReportMain.aspx.designer.cs">
+      <DependentUpon>RepxReportMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\REPXReports\RepxSetDefaultDesign.aspx.cs">
+      <DependentUpon>RepxSetDefaultDesign.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\REPXReports\RepxSetDefaultDesign.aspx.designer.cs">
+      <DependentUpon>RepxSetDefaultDesign.aspx</DependentUpon>
+    </Compile>
+    <Content Include="App_Code\clsDropDownList.cs" />
+    <Compile Include="Reports\REPXReports\ReportDesignerRepx.aspx.cs">
+      <DependentUpon>ReportDesignerRepx.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\REPXReports\ReportDesignerRepx.aspx.designer.cs">
+      <DependentUpon>ReportDesignerRepx.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\REPXReports\RepxReportViewer.aspx.cs">
+      <DependentUpon>RepxReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\REPXReports\RepxReportViewer.aspx.designer.cs">
+      <DependentUpon>RepxReportViewer.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CommonFolder\JsonFiles\" />
+    <Folder Include="Javascript\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
+      <Project>{ea505340-6c3f-4a45-8876-61c0c8a17a5f}</Project>
+      <Name>BusinessLogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{e0403ce7-71f7-4d02-85d1-1ee7125c1e75}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityLayer\EntityLayer.csproj">
+      <Project>{d31c544e-8eb6-4a69-b0f2-9c46ff7fc533}</Project>
+      <Name>EntityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UtilityLayer\UtilityLayer.csproj">
+      <Project>{9f45f4c2-a1b9-4aea-9f77-72b9f864b593}</Project>
+      <Name>UtilityLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\ReportSource.dbml.layout">
+      <DependentUpon>ReportSource.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\GridReports\BSReport.resx">
+      <DependentUpon>BSReport.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2924</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2924/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
