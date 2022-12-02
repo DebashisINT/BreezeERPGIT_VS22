@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetSTB">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="stb" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSTBResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSTBResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEntityDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="entity_code" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEntityDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEntityDetailResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBasePack">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="customer" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBasePackResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBasePackResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetSTBSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSTB" />
+  </wsdl:message>
+  <wsdl:message name="GetSTBSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSTBResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEntityDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEntityDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetEntityDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEntityDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBasePackSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBasePack" />
+  </wsdl:message>
+  <wsdl:message name="GetBasePackSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBasePackResponse" />
+  </wsdl:message>
+  <wsdl:portType name="KolWebsiteSoap">
+    <wsdl:operation name="GetSTB">
+      <wsdl:input message="tns:GetSTBSoapIn" />
+      <wsdl:output message="tns:GetSTBSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEntityDetail">
+      <wsdl:input message="tns:GetEntityDetailSoapIn" />
+      <wsdl:output message="tns:GetEntityDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBasePack">
+      <wsdl:input message="tns:GetBasePackSoapIn" />
+      <wsdl:output message="tns:GetBasePackSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="KolWebsiteSoap" type="tns:KolWebsiteSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetSTB">
+      <soap:operation soapAction="http://tempuri.org/GetSTB" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEntityDetail">
+      <soap:operation soapAction="http://tempuri.org/GetEntityDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasePack">
+      <soap:operation soapAction="http://tempuri.org/GetBasePack" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="KolWebsiteSoap12" type="tns:KolWebsiteSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetSTB">
+      <soap12:operation soapAction="http://tempuri.org/GetSTB" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEntityDetail">
+      <soap12:operation soapAction="http://tempuri.org/GetEntityDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasePack">
+      <soap12:operation soapAction="http://tempuri.org/GetBasePack" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="KolWebsite">
+    <wsdl:port name="KolWebsiteSoap" binding="tns:KolWebsiteSoap">
+      <soap:address location="http://182.237.8.37:81/KolWebsite.asmx" />
+    </wsdl:port>
+    <wsdl:port name="KolWebsiteSoap12" binding="tns:KolWebsiteSoap12">
+      <soap12:address location="http://182.237.8.37:81/KolWebsite.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

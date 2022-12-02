@@ -1,0 +1,779 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="ServiceManagement.STBManagement.MoneyReceipt.index" %>
+
+<%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .padTab > tbody > tr > td {
+            padding-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+    <script>
+        function PerformCallToGridBind() {
+            cSelectPanel.PerformCallback('Bindsingledesign');
+            cDocumentsPopup.Hide();
+            return false;
+        }
+        function OnAddButtonClick() {
+            WorkingRoster();
+            if (rosterstatus) {
+                var url = '/STBManagement/MoneyReceipt/ReceiptAdd.aspx?Key=Add';
+                //OnMoreInfoClick(url, "Add New Accout", '920px', '500px', "Y");
+                window.location.href = url;
+            }
+            else {
+                // jAlert("Working period is over. Try in next working period.");
+                $("#divPopHead").removeClass('hide');
+            }
+        }
+        function ClickOnEdit(id) {
+            WorkingRoster();
+            if (rosterstatus) {
+                location.href = "ReceiptAdd.aspx?id=" + id + "&Key=edit";
+            }
+            else {
+                //jAlert("Working period is over. Try in next working period.");
+                $("#divPopHead").removeClass('hide');
+            }
+        }
+
+        function ClickOnView(id) {
+            WorkingRoster();
+            if (rosterstatus) {
+                location.href = "ReceiptAdd.aspx?id=" + id + "&Key=view";
+            }
+            else {
+                // jAlert("Working period is over. Try in next working period.");
+                $("#divPopHead").removeClass('hide');
+            }
+        }
+        function OnClickDelete(val) {
+            WorkingRoster();
+            if (rosterstatus) {
+                jConfirm('Confirm Delete?', 'Alert', function (r) {
+                    if (r) {
+                        $.ajax({
+                            type: "POST",
+                            url: "index.aspx/DeleteMoneyReceipt",
+                            data: JSON.stringify({ MoneyReceipt_ID: val }),
+                            async: false,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (response) {
+                                if (response.d) {
+                                    if (response.d == "true") {
+                                        jAlert("Money Receipt delete sucessfully.");
+                                        var url = 'ReceiptChallanList.aspx';
+                                        cGrdReceiptChallanList.Refresh();
+                                    }
+                                    else if (response.d == "Logout") {
+                                        location.href = "../../OMS/SignOff.aspx";
+                                    }
+                                    else {
+                                        alert(response.d);
+                                    }
+                                }
+                            },
+                            error: function (response) {
+                                console.log(response);
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                // jAlert("Working period is over. Try in next working period.");
+                $("#divPopHead").removeClass('hide');
+            }
+        }
+
+        var HearderId = 0;
+        function onPrintJv(id) {
+            WorkingRoster();
+            if (rosterstatus) {
+                $.ajax({
+                    type: "POST",
+                    url: 'ReceiptAdd.aspx/UpdatePrintCount',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    data: JSON.stringify({ WalletRechargeID: id }),
+                    success: function (response) {
+
+                    },
+                    error: function (response) {
+                        //jAlert(response);
+                    }
+                });
+
+                HearderId = id;
+                cSelectPanel.cpSuccess = "";
+                cDocumentsPopup.Show();
+                CselectOriginal.SetCheckState('UnChecked');
+                CselectDuplicate.SetCheckState('UnChecked');
+                cCmbDesignName.SetSelectedIndex(0);
+                cSelectPanel.PerformCallback('Bindalldesignes');
+                $('#btnOK').focus();
+            }
+            else {
+                //jAlert("Working period is over. Try in next working period.");
+                $("#divPopHead").removeClass('hide');
+            }
+        }
+
+        function cSelectPanelEndCall(s, e) {
+
+            if (cSelectPanel.cpSuccess != "") {
+                var TotDocument = cSelectPanel.cpSuccess.split(',');
+                var reportName = cCmbDesignName.GetValue();
+                var module = 'MoneyReceipt';
+                if (TotDocument.length > 0) {
+                    for (var i = 0; i < TotDocument.length; i++) {
+                        if (TotDocument[i] != "") {
+                            window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + HearderId + '&PrintOption=' + TotDocument[i], '_blank')
+                        }
+                    }
+                }
+            }
+
+            if (cSelectPanel.cpSuccess == "") {
+                if (cSelectPanel.cpChecked != "") {
+                    jAlert('Please check Original For Recipient and proceed.');
+                }
+                CselectOriginal.SetCheckState('UnChecked');
+                CselectDuplicate.SetCheckState('UnChecked');
+                cCmbDesignName.SetSelectedIndex(0);
+            }
+        }
+
+        function OnCancelClick(keyValue, visibleIndex) {
+            WorkingRoster();
+            if (rosterstatus) {
+                $("#<%=hddnKeyValue.ClientID%>").val(keyValue);
+                $("#<%=hddnCancelCloseFlag%>").val('CA');
+                cGrdReceiptChallanList.SetFocusedRowIndex(visibleIndex);
+                jConfirm('Do you want to cancel the Money Receipt ?', 'Confirm Dialog', function (r) {
+                    if (r == true) {
+                        $('#MandatoryRemarksFeedback').attr('style', 'display:none;position: absolute; right: -20px; top: 8px;');
+                        cPopup_Feedback.Show();
+                    }
+                    else {
+                        return false;
+                    }
+                });
+            }
+            else {
+                //jAlert("Working period is over. Try in next working period.");
+                $("#divPopHead").removeClass('hide');
+            }
+        }
+
+        function CallFeedback_save() {
+            var KeyVal = $("#<%=hddnKeyValue.ClientID%>").val();
+            var flag = true;
+            var Remarks = txtFeedback.GetValue();
+            if (Remarks == "" || Remarks == null) {
+                $('#MandatoryRemarksFeedback').attr('style', 'display:block;position: absolute; right: -20px; top: 8px;');
+                flag = false;
+            }
+            else {
+                $('#MandatoryRemarksFeedback').attr('style', 'display:none;position: absolute; right: -20px; top: 8px;');
+                cPopup_Feedback.Hide();
+                CancelMoneyReceipt(KeyVal, Remarks);
+                cGrdReceiptChallanList.Refresh();
+            }
+            return flag;
+        }
+        function CancelMoneyReceipt(keyValue, Reason) {
+
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/CANCELMoneyReceiptOnRequest",
+                data: JSON.stringify({ keyValue: keyValue, Reason: Reason }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    var status = msg.d;
+                    if (status == "1") {
+                        jAlert("Cancellation Requisition is generated successfully.");
+                    }
+                    else if (status == "-1") {
+                        jAlert("Money Receipt is not cancelled.Try again later");
+                    }
+                    else if (status == "-2") {
+                        jAlert("Selected Money Receipt is tagged in other module. Cannot proceed.");
+                    }
+                    else if (status == "-3") {
+                        jAlert("Cancellation Requisition is already generated.");
+                    }
+                    else if (status == "-4") {
+                        jAlert("Money Receipt is already closed. Cannot proceed.");
+                    }
+                }
+            });
+        }
+        <%--function CallClosed_save() {           
+            var KeyVal = $("#<%=hddnKeyValue.ClientID%>").val();
+            var flag = true;            
+            var Remarks = txtClosed.GetValue();
+            if (Remarks == "" || Remarks == null) {
+                $('#MandatoryRemarksFeedback1').attr('style', 'display:block;position: absolute; right: -20px; top: 8px;');
+                flag = false;
+            }
+            else {
+                $('#MandatoryRemarksFeedback1').attr('style', 'display:none;position: absolute; right: -20px; top: 8px;');
+                cPopup_Closed.Hide();
+                ClosedSalesOrder(KeyVal, Remarks);
+                cGrdReceiptChallanList.Refresh();
+            }
+            return flag;
+        }
+        function ClosedSalesOrder(keyValue, Reason) {           
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/ClosedMoneyReceiptOnRequest",
+                data: JSON.stringify({ keyValue: keyValue, Reason: Reason }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {                   
+                    var status = msg.d;
+                    if (status == "1") {
+                        jAlert("Money Receipt is closed successfully.");                       
+                    }
+                    else if (status == "-1") {
+                        jAlert("Money Receipt is not closed.Try again later");
+                    }
+                    else if (status == "-2") {
+                        jAlert("Selected Money Receipt is tagged in other module. Cannot proceed.");
+                    }
+                    else if (status == "-3") {
+                        jAlert("Money Receipt is  already closed.");
+                    }
+                    else if (status == "-4") {
+                        jAlert("Money Receipt is already cancelled. Cannot proceed.");
+                    }
+                    else if (status == "-5") {
+                        jAlert("No balance quantity available for this Money Receipt. Cannot proceed.");
+                    }
+                }
+            });
+        }--%>
+    </script>
+    <script>
+        function updateGridByDate() {
+
+            if (cFormDate.GetDate() == null) {
+                jAlert('Please select from date.', 'Alert', function () { cFormDate.Focus(); });
+            }
+            else if (ctoDate.GetDate() == null) {
+                jAlert('Please select to date.', 'Alert', function () { ctoDate.Focus(); });
+            }
+            else if (ccmbBranchfilter.GetValue() == null) {
+                jAlert('Please select Branch.', 'Alert', function () { ccmbBranchfilter.Focus(); });
+            }
+            else {
+                localStorage.setItem("FromDateSalesOrder", cFormDate.GetDate().format('yyyy-MM-dd'));
+                localStorage.setItem("ToDateSalesOrder", ctoDate.GetDate().format('yyyy-MM-dd'));
+                localStorage.setItem("OrderBranch", ccmbBranchfilter.GetValue());
+                $("#hfFromDate").val(cFormDate.GetDate().format('yyyy-MM-dd'));
+                $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
+                $("#hfBranchID").val(ccmbBranchfilter.GetValue());
+                $("#hfIsFilter").val("Y");
+                cGrdReceiptChallanList.Refresh();
+            }
+        }
+        function gridRowclick(s, e) {
+            $('#GrdReceiptChallan').find('tr').removeClass('rowActive');
+            $('.floatedBtnArea').removeClass('insideGrid');
+            $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+            $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+            setTimeout(function () {
+                var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+                $.each(lists, function (index, value) {
+                    setTimeout(function () {
+                        $(value).css({ 'opacity': '1' });
+                    }, 100);
+                });
+            }, 200);
+        }
+
+
+        function OnclickViewAttachment(obj) {
+            WorkingRoster();
+            if (rosterstatus) {
+                var URL = '../../../OMS/Management/Activities/EntriesDocuments.aspx?idbldng=' + obj + '&type=STBMoneyReceipt';
+                window.location.href = URL;
+            }
+            else {
+                //jAlert("Working period is over. Try in next working period.");
+                $("#divPopHead").removeClass('hide');
+            }
+        }
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                if ($('body').hasClass('mini-navbar')) {
+                    var windowWidth = $(window).width();
+                    var cntWidth = windowWidth - 90;
+                    cGrdReceiptChallanList.SetWidth(cntWidth);
+                } else {
+                    var windowWidth = $(window).width();
+                    var cntWidth = windowWidth - 217;
+                    cGrdReceiptChallanList.SetWidth(cntWidth);
+                }
+            }, 300);
+            $('.navbar-minimalize').click(function () {
+                if ($('body').hasClass('mini-navbar')) {
+                    var windowWidth = $(window).width();
+                    var cntWidth = windowWidth - 217;
+                    cGrdReceiptChallanList.SetWidth(cntWidth);
+                } else {
+                    var windowWidth = $(window).width();
+                    var cntWidth = windowWidth - 90;
+                    cGrdReceiptChallanList.SetWidth(cntWidth);
+                }
+            });
+        })
+
+
+        var rosterstatus = false;
+        function WorkingRoster() {
+            $.ajax({
+                type: "POST",
+                url: 'index.aspx/CheckWorkingRoster',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                data: JSON.stringify({ module_ID: '1' }),
+                success: function (response) {
+                    if (response.d.split('~')[0] == "true") {
+                        rosterstatus = true;
+                    }
+                    else if (response.d.split('~')[0] == "false") {
+                        rosterstatus = false;
+                        $("#spnbegin").text(response.d.split('~')[1]);
+                        $("#spnEnd").text(response.d.split('~')[2]);
+                    }
+                },
+            });
+        }
+
+        function WorkingRosterClick() {
+            $("#divPopHead").addClass('hide');
+        }
+    </script>
+    <style>
+         /* for pop */
+        .popupWraper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .popBox {
+                width: 670px;
+                background: #fff;
+                padding: 35px;
+                text-align: center;
+                min-height: 350px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+                background:#fff url("/assests/images/popupBack.png") no-repeat top left;
+                box-shadow: 0px 14px 14px rgba(0,0,0,0.56);
+        
+            }
+        .popBox  h1, .popBox p{
+            font-family: 'Poppins', sans-serif !important;
+            margin-bottom:20px !important;
+        }
+        .popBox p {
+            font-size: 15px;
+        }
+        .btn-sign {
+            background: #3680fb;
+            color: #fff;
+            padding: 10px 25px;
+            box-shadow: 0px 5px 5px rgba(0,0,0,0.22);
+        }
+
+        .btn-sign:hover {
+            background: #2e71e1;
+            color: #fff;
+           }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="popupWraper hide" id="divPopHead" runat="server">
+        <div class="popBox">
+            <img src="/assests/images/warningAlert.png" class="mBot10" style="width:70px;" />
+            <h1 id="h1heading" class="red">Your Access is Denied</h1>
+            <p id="pParagraph" class="red">
+               You can access this section starting from <span id="spnbegin"></span> upto <span id="spnEnd"></span>
+            </p>
+            <button type="button" class="btn btn-sign" onclick="WorkingRosterClick()">OK</button>
+        </div>
+    </div>
+    <div class="panel-heading clearfix">
+        <div class="panel-title pull-left">
+            <h3>Money Receipt</h3>
+        </div>
+        <table class="padTab pull-right" style="margin-top: 8px;">
+            <tr>
+                <td>
+                    <label>From Date</label></td>
+                <td>&nbsp;</td>
+                <td>
+                    <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
+                        <buttonstyle width="13px">
+                        </buttonstyle>
+                    </dxe:ASPxDateEdit>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    <label>To Date</label>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
+                        <buttonstyle width="13px">
+                        </buttonstyle>
+                    </dxe:ASPxDateEdit>
+                </td>
+                <td>&nbsp;</td>
+                <td>Unit</td>
+                <td>
+                    <dxe:ASPxComboBox ID="cmbBranchfilter" runat="server" ClientInstanceName="ccmbBranchfilter" Width="100%">
+                    </dxe:ASPxComboBox>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="button" value="Show" class="btn btn-primary" onclick="updateGridByDate()" />
+                </td>
+
+            </tr>
+
+        </table>
+    </div>
+    <div class="form_main">
+        <table class="TableMain100" style="width: 100%">
+            <tr>
+                <td style="text-align: left; vertical-align: top">
+                    <table>
+                        <tr>
+                            <td id="ShowFilter">
+                                <% if (rights.CanAdd)
+                                   { %>
+                                <a href="javascript:void(0);" onclick="javascript:OnAddButtonClick();" class="btn btn-success btn-radius">
+                                    <span class="btn-icon"><i class="fa fa-plus"></i></span>Receipt</a>
+                                <%} %>
+                                <% if (rights.CanExport)
+                                   { %>
+                                <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" AutoPostBack="true" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged">
+                                    <asp:ListItem Value="0">Export to</asp:ListItem>
+                                    <asp:ListItem Value="1">PDF</asp:ListItem>
+                                    <asp:ListItem Value="2">XLS</asp:ListItem>
+                                    <asp:ListItem Value="3">RTF</asp:ListItem>
+                                    <asp:ListItem Value="4">CSV</asp:ListItem>
+                                </asp:DropDownList>
+                                <%} %>
+                                <%--<a href="javascript:ShowHideFilter('s');" class="btn btn-primary"><span>Show Filter</span></a>--%>
+                            </td>
+                            <td id="Td1">
+                                <%--<a href="javascript:ShowHideFilter('All');" class="btn btn-primary"><span>All Records</span></a>--%>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="gridcellcenter relative" colspan="2">
+                    <dxe:ASPxGridView ID="GrdReceiptChallan" runat="server" KeyFieldName="MoneyReceipt_ID" AutoGenerateColumns="False" SettingsBehavior-AllowFocusedRow="true"
+                        SettingsPager-Mode="ShowAllRecords" Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="280" Settings-HorizontalScrollBarMode="Auto"
+                        DataSourceID="EntityServerModeDataSource" OnHtmlRowPrepared="AvailableStockgrid_HtmlRowPrepared"
+                        Width="100%" ClientInstanceName="cGrdReceiptChallanList">
+                        <settingssearchpanel visible="True" delay="5000" />
+                        <columns>
+                            
+                            <dxe:GridViewDataTextColumn FieldName="MoneyReceipt_ID" Visible="false" SortOrder="Descending">
+                                <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn Caption="Document No" FieldName="DocumentNumber" FixedStyle="Left"
+                                VisibleIndex="2" Width="200px">
+                                <CellStyle CssClass="gridcellleft" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                             <dxe:GridViewDataTextColumn Caption="Date" Width="150px" FieldName="DocumentDate" VisibleIndex="3" FixedStyle="Left">
+                                <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
+                            </dxe:GridViewDataTextColumn>
+
+                             <dxe:GridViewDataTextColumn Caption="Amount" FieldName="Amount" VisibleIndex="4" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                            <dxe:GridViewDataTextColumn Caption="Location" FieldName="branch_description" VisibleIndex="5" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                              <dxe:GridViewDataTextColumn Caption="Entity Code" FieldName="EntityCode" VisibleIndex="6" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                              <dxe:GridViewDataTextColumn Caption="Network Name" FieldName="NetworkName" VisibleIndex="7" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                              <dxe:GridViewDataTextColumn Caption="Contact Person" FieldName="ContactPerson" VisibleIndex="8" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                               <dxe:GridViewDataTextColumn Caption="Contact Number" FieldName="ContactNo" VisibleIndex="9" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn Caption="Cancel Status" FieldName="CancelStatus" VisibleIndex="10" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                              <dxe:GridViewDataTextColumn Caption="Cancel Reason" FieldName="CancelReason" VisibleIndex="11" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                              <dxe:GridViewDataTextColumn Caption="Reject Reason" FieldName="RejectReason" VisibleIndex="12" Width="200px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+                             <dxe:GridViewDataTextColumn Caption="Print Count" FieldName="PrintCount" VisibleIndex="13" Width="100px">
+                                <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="Create_by" Width="200px" VisibleIndex="14">
+                                <CellStyle CssClass="gridcellleft" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+                              <dxe:GridViewDataTextColumn Caption="Entered On" FieldName="Create_date" Width="200px" VisibleIndex="15">
+                               <%--<PropertiesTextEdit DisplayFormatString="dd-MM-yyyy HH:mm:ss"></PropertiesTextEdit>--%>
+                                     <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+                              <dxe:GridViewDataTextColumn Caption="Updated By" FieldName="Update_by" Width="200px" VisibleIndex="16">
+                                <CellStyle CssClass="gridcellleft" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+                              <dxe:GridViewDataTextColumn Caption="Updated On" FieldName="Update_date" Width="200px" VisibleIndex="17">
+                                <%--<PropertiesTextEdit DisplayFormatString="dd-MM-yyyy HH:mm:ss"></PropertiesTextEdit>--%>
+                                     <CellStyle CssClass="gridcellright" Wrap="true">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                                <Settings AutoFilterCondition="Contains" />
+                            </dxe:GridViewDataTextColumn>
+
+
+                            <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="18" Width="0">
+                                <DataItemTemplate>
+                                    <div class='floatedBtnArea'>
+                                         <% if (rights.CanView)
+                                            { %>
+                                        <a href="javascript:void(0);" onclick="ClickOnView('<%# Container.KeyValue %>')" id="a_viewInvoice" class="" title="">
+                                            <span class='ico editColor'><i class='fa fa-eye' aria-hidden='true'></i></span><span class='hidden-xs'>View</span></a>
+                                        <%} %>
+                                        <% if (rights.CanEdit)
+                                           { %>
+                                        <a href="javascript:void(0);" onclick="ClickOnEdit('<%# Container.KeyValue %>')" id="a_editInvoice"  class="" title="" style='<%#Eval("CancelApproveStatus")%>'>
+                                            <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>
+                                        <%} %>
+                                        <% if (rights.CanDelete)
+                                           { %>
+                                        <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class=""  title="" id="a_delete" style='<%#Eval("CancelApproveStatus")%>'>
+                                            <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>
+                                        <%} %>
+                                           <% if (rights.CanPrint)
+                                              { %>
+                                        <a href="javascript:void(0);" onclick="onPrintJv('<%# Container.KeyValue %>')" class="" title="" id="a_Print">
+                                            <span class='ico printColor'><i class='fa fa-print det' aria-hidden='true'></i></span><span class='hidden-xs'>Print</span></a>
+                                        <%} %>
+                                         <%--<% if (rights.CanAssignTo)
+                                            { %>
+                                         <a href="javascript:void(0);" onclick="AssignJob('<%# Container.KeyValue %>')" class=""  title="" id="a_Assign"  data-toggle='tooltip' data-placement='left'  >
+                                            <span class='ico printColor'><i class='fa fa-user-plus assig' aria-hidden='true'></i>
+                                            </span><span class='hidden-xs'>Assign Technician</span></a>
+                                        <%} %>--%>
+                                         <% if (rights.CanCancel)
+                                            { %>
+                                          <a href="javascript:void(0);" onclick="OnCancelClick('<%# Container.KeyValue %>',<%# Container.VisibleIndex %>)" class="" title="" style='<%#Eval("CancelApproveStatus")%>'>                            
+                                            <span class='ico deleteColor'><i class='fa fa-times' aria-hidden='true'></i></span><span class='hidden-xs'>Cancel </span>
+                                        </a>
+                                        <% } %>
+                                            <% if (rights.CanAddUpdateDocuments)
+                                               { %>
+                                    <a href="javascript:void(0);" onclick="OnclickViewAttachment('<%# Container.KeyValue %>')" class="" title="" style='<%#Eval("CancelApproveStatus")%>'>
+                                        <span class='ico ColorFive'><i class='fa fa-paperclip'></i></span><span class='hidden-xs'>Add/View Attachment</span>
+                                    </a>
+                                    <% } %> 
+                                            <%--<a href="javascript:void(0);" onclick="SendSMS('<%# Container.KeyValue %>')" id="a_SendSMS" class="" title="">
+                                            <span class='ico editColor'><i class='fa fa-envelope' aria-hidden='true'></i></span><span class='hidden-xs'>Send SMS</span></a>--%>
+                                    </div>
+                                </DataItemTemplate>
+                                <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                                <CellStyle HorizontalAlign="Center"></CellStyle>
+                                <HeaderTemplate><span></span></HeaderTemplate>
+                                <EditFormSettings Visible="False"></EditFormSettings>
+                                <Settings AllowAutoFilterTextInputTimer="False" />
+                            </dxe:GridViewDataTextColumn>
+                        </columns>
+                        <settingscontextmenu enabled="true"></settingscontextmenu>
+                        <clientsideevents rowclick="gridRowclick" />
+                        <settingspager numericbuttoncount="10" pagesize="10" showseparators="True" mode="ShowPager">
+                            <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,50,100,150,200" />
+                            <FirstPageButton Visible="True">
+                            </FirstPageButton>
+                            <LastPageButton Visible="True">
+                            </LastPageButton>
+                        </settingspager>
+                        <settings showgrouppanel="True" showstatusbar="Hidden" showhorizontalscrollbar="False" showfilterrow="true" showfilterrowmenu="true" />
+                        <settingsloadingpanel text="Please Wait..." />
+                    </dxe:ASPxGridView>
+                    <dx:LinqServerModeDataSource ID="EntityServerModeDataSource" runat="server" OnSelecting="EntityServerModeDataSource_Selecting"
+                        ContextTypeName="ServicveManagementDataClassesDataContext" TableName="V_STB_MoneyReceiptList" />
+                    <dxe:ASPxGridViewExporter ID="ASPxGridViewExporter1" runat="server">
+                    </dxe:ASPxGridViewExporter>
+                </td>
+            </tr>
+        </table>
+        <dxe:ASPxGridViewExporter ID="exporter" runat="server">
+        </dxe:ASPxGridViewExporter>
+        <asp:SqlDataSource ID="gridStatusDataSource" runat="server"
+            SelectCommand="">
+            <%--  <SelectParameters>
+                <asp:SessionParameter Name="userlist" SessionField="userchildHierarchy" Type="string" />
+            </SelectParameters>--%>
+        </asp:SqlDataSource>
+        <asp:HiddenField ID="hfIsFilter" runat="server" />
+        <asp:HiddenField ID="hfFromDate" runat="server" />
+        <asp:HiddenField ID="hfToDate" runat="server" />
+        <asp:HiddenField ID="hfBranchID" runat="server" />
+        <asp:HiddenField ID="hdnIsUserwiseFilter" runat="server" />
+        <asp:HiddenField ID="hddnKeyValue" runat="server" />
+        <asp:HiddenField ID="hddnCancelCloseFlag" runat="server" />
+
+        <div class="PopUpArea">
+            <dxe:ASPxPopupControl ID="ASPxDocumentsPopup" runat="server" ClientInstanceName="cDocumentsPopup"
+                Width="350px" HeaderText="Select Design(s)" PopupHorizontalAlign="WindowCenter"
+                PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+                Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
+                <contentcollection>
+                <dxe:PopupControlContentControl runat="server">                    
+                    <dxe:ASPxCallbackPanel runat="server" ID="SelectPanel" ClientInstanceName="cSelectPanel" OnCallback="SelectPanel_Callback" ClientSideEvents-EndCallback="cSelectPanelEndCall">
+                        <PanelCollection>
+                            <dxe:PanelContent runat="server">
+
+                                <dxe:ASPxCheckBox ID="selectOriginal" Text="Original For Recipient" runat="server" ToolTip="Select Original"
+                                    ClientInstanceName="CselectOriginal">
+                                </dxe:ASPxCheckBox>
+                                <dxe:ASPxCheckBox ID="selectDuplicate" Text="Duplicate For Recipient" runat="server" ToolTip="Select Duplicate"
+                                    ClientInstanceName="CselectDuplicate">
+                                </dxe:ASPxCheckBox>
+
+                                <dxe:ASPxComboBox ID="CmbDesignName" ClientInstanceName="cCmbDesignName" runat="server" ValueType="System.String" Width="100%" EnableSynchronization="True">
+                                </dxe:ASPxComboBox>
+                                <div class="text-center pTop10">
+                                    <dxe:ASPxButton ID="btnOK" ClientInstanceName="cbtnOK" runat="server" AutoPostBack="False" Text="OK" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                        <ClientSideEvents Click="function(s, e) {return PerformCallToGridBind();}" />
+                                    </dxe:ASPxButton>
+                                </div>
+                            </dxe:PanelContent>
+                        </PanelCollection>
+                    </dxe:ASPxCallbackPanel>
+                </dxe:PopupControlContentControl>
+            </contentcollection>
+            </dxe:ASPxPopupControl>
+        </div>
+
+        <dxe:ASPxPopupControl ID="Popup_Feedback" runat="server" ClientInstanceName="cPopup_Feedback"
+            Width="400px" HeaderText="Reason For Cancel" PopupHorizontalAlign="WindowCenter"
+            BackColor="white" Height="100px" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+            Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
+            <contentcollection>
+                <dxe:PopupControlContentControl runat="server">
+                    <%--<div style="Width:400px;background-color:#FFFFFF;margin:0px;border:1px solid red;">--%>
+                    <div class="Top clearfix">
+
+                        <table style="width:94%">
+                           
+                            <tr><td>Reason<span style="color: red">*</span></td>
+                                <td class="relative">
+                                     <dxe:ASPxMemo ID="txtInstFeedback" runat="server" Width="100%" Height="50px" ClientInstanceName="txtFeedback"></dxe:ASPxMemo>
+                                                                        <span id="MandatoryRemarksFeedback" style="display: none">
+                                        <img id="gridHistory_DXPEForm_efnew_DXEFL_DXEditor1234_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
+                                </td></tr>
+                             
+                            <tr>
+                                <td></td>
+                                <td colspan="2" style="padding-top: 10px;">
+                                    <input id="btnFeedbackSave" class="btn btn-primary" onclick="CallFeedback_save()" type="button" value="Save" />&nbsp;&nbsp;
+                                    <input id="btnFeedbackCancel" class="btn btn-danger" onclick="CancelFeedback_save()" type="button" value="Cancel" />
+                                </td>
+
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+                </dxe:PopupControlContentControl>
+            </contentcollection>
+            <headerstyle backcolor="LightGray" forecolor="Black" />
+
+
+        </dxe:ASPxPopupControl>
+    </div>
+</asp:Content>
