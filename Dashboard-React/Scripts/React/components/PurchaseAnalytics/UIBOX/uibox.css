@@ -1,0 +1,29 @@
+.widget {
+    text-align: center;
+    color: #fff;
+    display:flex;
+    border-radius:3px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom:15px;
+}
+.widget .iconBox {
+    width: 68px;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+}
+.widget .textInbox {
+    text-align: left;
+        flex: 1;
+        padding:10px 20px;
+}
+.wdgLabel {
+    font-size: 16px;
+}
+.wdgNumber {
+    font-size: 21px;
+    font-weight: 400;
+}

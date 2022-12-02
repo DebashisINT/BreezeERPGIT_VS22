@@ -1,0 +1,78 @@
+.BoxTypeGrey {
+    padding: 20px;
+    background: #e8e8e8;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.flex-row {
+    display: flex;
+}
+.align-items-center {
+    align-items: center;
+}
+.itemType {
+    min-width: 150px;
+    width: 14%;
+    min-height: 200px;
+    background: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+.itemType.active {
+    background: #fbffea;
+    box-shadow: 0px 0px 5px 0px rgb(51 50 50 / 12%);
+    transform: scale(1.1) translateY(2px);
+}
+.shwDet {
+    cursor: pointer;
+}
+.valRound {
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    color: #fff;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    font-size: 22px;
+    line-height: 81px;
+}
+.smallmuted, .hdTag {
+    text-transform: uppercase;
+}
+.smallmuted {
+    font-size: 12px;
+}
+.hdTag {
+    font-size: 14px;
+    margin-top: 5px;
+}
+.shadowBox {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.13);
+}
+.shadowBox .bigHeading {
+    padding: 10px 15px;
+    font-size: 16px;
+}
+.styledTble thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+    background: #4f64b1;
+    color: #fff;
+    font-weight: 400;
+}
+.wraped{
+    flex-wrap: wrap;
+}
+.cap {
+    text-transform: capitalize;
+}

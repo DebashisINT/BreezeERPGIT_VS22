@@ -1,0 +1,850 @@
+﻿body{
+      font-family: 'Poppins', sans-serif !important;
+    }
+    .d-flex{
+        display:flex;
+    } 
+    .justify-content-between{
+        justify-content:space-between
+      }
+    .hide {
+      display: none;
+    }
+    .col1 {
+      color: #1d946c;
+      padding: 18px 0 18px 10px;
+      border-left:6px solid #1d946c;
+    }
+    .col1Revert {
+      background: #1d946c;
+      padding: 18px 0;
+      text-align: center;
+      color: #fff;
+      height: 140px;
+      display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+    .col2 {
+      color: #d4481e;
+      padding: 18px 0 18px 10px;
+      border-left:6px solid #d4481e;
+    }
+    .col2Revert {
+      background: #d4481e;
+      padding: 18px 0;
+      text-align: center;
+      color: #fff;
+      height: 140px;
+      display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+    .mtop15 {
+      margin-top: 15px;
+    }
+  
+    #chartdiv,  #chartcosting1, #chartcosting2, #gnatt {
+      width: 100%;
+      height: 350px;
+    }
+    #chartdiv2{
+        height: 280px;
+    }
+    .totalContainer {
+      display: flex;
+      padding: 20px 10px;
+    }
+    .highlighter {
+      background: rgb(26, 65, 192);
+      color: #fff;
+      width: 250px;
+      text-align: center;
+      border-radius: 7px;
+      padding: 15px;
+      margin: -10px 0 -10px 0;
+      align-content: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .highlighter .value {
+      font-size: 32px;
+      font-weight: 500;
+    }
+    .fl-1 {
+      flex: 1;
+    }
+    .dataCont {
+      padding: 20px;
+      display: flex;
+      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.22);
+      border-radius:0  8px 8px 0;
+    }
+    .dataCont div {
+      flex: 1;
+      text-align: center;
+    }
+    .dataCont .value{
+      font-size: 28px;
+    }
+    .dataCont .value.dataColor1{
+      color: #203abf;
+    }
+    .dataCont .value.dataColor2{
+      color: #7a20bf;
+    }
+    .dataCont .value.dataColor3{
+      color: #1c9125;
+    }
+    .dataCont .value.dataColor4{
+      color: #911c6c;
+    }
+    .dataCont .value.dataColor5{
+      color: #444ace;
+    }
+
+    .chartContai {
+      background: #f5f5f5;
+      padding: 15px;
+      margin: 10px;
+      font-size:16px;
+    }
+    ::-webkit-scrollbar
+        {
+            width: 5px;  /* for vertical scrollbars */
+            
+        }
+
+        ::-webkit-scrollbar-track
+        {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb
+        {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+    .heading-highlight {
+        background: #fff;
+        padding: 6px 12px;
+        margin-bottom:8px;
+    }
+    .boxSelection{
+        background: #f3f6fb;
+        padding: 15px;
+        margin: 15px;
+        border: 1px solid #c3cae1;
+        border-radius: 5px;
+    }
+  
+        /*for syled switch*/
+        label[for="d"] {
+            margin:0;
+        }
+        .can-toggle {
+          position: relative;
+        }
+        .can-toggle *, .can-toggle *:before, .can-toggle *:after {
+          box-sizing: border-box;
+        }
+        .can-toggle input[type="checkbox"] {
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        .can-toggle input[type="checkbox"][disabled] ~ label {
+          pointer-events: none;
+        }
+        .can-toggle input[type="checkbox"][disabled] ~ label .can-toggle__switch {
+          opacity: 0.4;
+        }
+        .can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:before {
+          content: attr(data-unchecked);
+          left: 0;
+        }
+        .can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+          content: attr(data-checked);
+        }
+        .can-toggle label {
+          -webkit-user-select: none;
+             -moz-user-select: none;
+              -ms-user-select: none;
+                  user-select: none;
+          position: relative;
+          display: -webkit-box;
+          display: flex;
+          -webkit-box-align: center;
+                  align-items: center;
+        }
+        .can-toggle label .can-toggle__label-text {
+          -webkit-box-flex: 1;
+                  flex: 1;
+          padding-left: 32px;
+        }
+        .can-toggle label .can-toggle__switch {
+          position: relative;
+        }
+        .can-toggle label .can-toggle__switch:before {
+          content: attr(data-checked);
+          position: absolute;
+          top: 0;
+          text-transform: uppercase;
+          text-align: center;
+        }
+        .can-toggle label .can-toggle__switch:after {
+          content: attr(data-unchecked);
+          position: absolute;
+          z-index: 5;
+          text-transform: uppercase;
+          text-align: center;
+          background: white;
+          -webkit-transform: translate3d(0, 0, 0);
+                  transform: translate3d(0, 0, 0);
+        }
+        .can-toggle input[type="checkbox"][disabled] ~ label {
+          color: rgba(119, 119, 119, 0.5);
+        }
+        .can-toggle input[type="checkbox"]:focus ~ label .can-toggle__switch, .can-toggle input[type="checkbox"]:hover ~ label .can-toggle__switch {
+          background-color: #777;
+        }
+        .can-toggle input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+          color: #5e5e5e;
+        }
+        .can-toggle input[type="checkbox"]:hover ~ label {
+          color: #6a6a6a;
+        }
+        .can-toggle input[type="checkbox"]:checked ~ label:hover {
+          color: #55bc49;
+        }
+        .can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch {
+          background-color: #70c767;
+        }
+        .can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+          color: #4fb743;
+        }
+        .can-toggle input[type="checkbox"]:checked:focus ~ label .can-toggle__switch, .can-toggle input[type="checkbox"]:checked:hover ~ label .can-toggle__switch {
+          background-color: #5fc054;
+        }
+        .can-toggle input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+          color: #47a43d;
+        }
+        .can-toggle label .can-toggle__label-text {
+          -webkit-box-flex: 1;
+                  flex: 1;
+        }
+        .can-toggle label .can-toggle__switch {
+          -webkit-transition: background-color 0.3s cubic-bezier(0, 1, 0.5, 1);
+          transition: background-color 0.3s cubic-bezier(0, 1, 0.5, 1);
+          background: #848484;
+        }
+        .can-toggle label .can-toggle__switch:before {
+          color: rgba(255, 255, 255, 0.5);
+        }
+        .can-toggle label .can-toggle__switch:after {
+          -webkit-transition: -webkit-transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+          transition: -webkit-transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+          transition: transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+          transition: transform 0.3s cubic-bezier(0, 1, 0.5, 1), -webkit-transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+          color: #777;
+        }
+        .can-toggle input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+          box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+          -webkit-transform: translate3d(65px, 0, 0);
+                  transform: translate3d(65px, 0, 0);
+        }
+        .can-toggle input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+          box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle label {
+          font-size: 14px;
+        }
+        .can-toggle label .can-toggle__switch {
+          height: 32px;
+          -webkit-box-flex: 0;
+                  flex: 0 0 134px;
+          border-radius: 4px;
+        }
+        .can-toggle label .can-toggle__switch:before {
+          left: 67px;
+          font-size: 12px;
+          line-height: 32px;
+          width: 67px;
+          padding: 0 12px;
+        }
+        .can-toggle label .can-toggle__switch:after {
+          top: 2px;
+          left: 2px;
+          border-radius: 2px;
+          width: 65px;
+          line-height: 28px;
+          font-size: 12px;
+        }
+        .can-toggle label .can-toggle__switch:hover:after {
+          box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.can-toggle--size-small input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle.can-toggle--size-small input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.can-toggle--size-small input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+          -webkit-transform: translate3d(44px, 0, 0);
+                  transform: translate3d(44px, 0, 0);
+        }
+        .can-toggle.can-toggle--size-small input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle.can-toggle--size-small input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.can-toggle--size-small label {
+          font-size: 13px;
+        }
+        .can-toggle.can-toggle--size-small label .can-toggle__switch {
+          height: 28px;
+          -webkit-box-flex: 0;
+                  flex: 0 0 90px;
+          border-radius: 2px;
+        }
+        .can-toggle.can-toggle--size-small label .can-toggle__switch:before {
+          left: 45px;
+          font-size: 10px;
+          line-height: 28px;
+          width: 45px;
+          padding: 0 12px;
+        }
+        .can-toggle.can-toggle--size-small label .can-toggle__switch:after {
+          top: 1px;
+          left: 1px;
+          border-radius: 1px;
+          width: 44px;
+          line-height: 26px;
+          font-size: 10px;
+        }
+        .can-toggle.can-toggle--size-small label .can-toggle__switch:hover:after {
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.can-toggle--size-large input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle.can-toggle--size-large input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.can-toggle--size-large input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+          -webkit-transform: translate3d(78px, 0, 0);
+                  transform: translate3d(78px, 0, 0);
+        }
+        .can-toggle.can-toggle--size-large input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle.can-toggle--size-large input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.can-toggle--size-large label {
+          font-size: 14px;
+        }
+        .can-toggle.can-toggle--size-large label .can-toggle__switch {
+          height: 50px;
+          -webkit-box-flex: 0;
+                  flex: 0 0 160px;
+          border-radius: 4px;
+        }
+        .can-toggle.can-toggle--size-large label .can-toggle__switch:before {
+          left: 80px;
+          font-size: 14px;
+          line-height: 50px;
+          width: 80px;
+          padding: 0 12px;
+        }
+        .can-toggle.can-toggle--size-large label .can-toggle__switch:after {
+          top: 2px;
+          left: 2px;
+          border-radius: 2px;
+          width: 78px;
+          line-height: 46px;
+          font-size: 14px;
+        }
+        .can-toggle.can-toggle--size-large label .can-toggle__switch:hover:after {
+          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"][disabled] ~ label {
+          color: rgba(181, 62, 116, 0.5);
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"]:focus ~ label .can-toggle__switch, .can-toggle.demo-rebrand-1 input[type="checkbox"]:hover ~ label .can-toggle__switch {
+          background-color: #b53e74;
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle.demo-rebrand-1 input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+          color: #8f315c;
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"]:hover ~ label {
+          color: #a23768;
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"]:checked ~ label:hover {
+          color: #39916a;
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"]:checked ~ label .can-toggle__switch {
+          background-color: #44ae7f;
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+          color: #368a65;
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"]:checked:focus ~ label .can-toggle__switch, .can-toggle.demo-rebrand-1 input[type="checkbox"]:checked:hover ~ label .can-toggle__switch {
+          background-color: #3d9c72;
+        }
+        .can-toggle.demo-rebrand-1 input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle.demo-rebrand-1 input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+          color: #2f7757;
+        }
+        .can-toggle.demo-rebrand-1 label .can-toggle__label-text {
+          -webkit-box-flex: 1;
+                  flex: 1;
+        }
+        .can-toggle.demo-rebrand-1 label .can-toggle__switch {
+          -webkit-transition: background-color 0.3s ease-in-out;
+          transition: background-color 0.3s ease-in-out;
+          background: #c14b81;
+        }
+        .can-toggle.demo-rebrand-1 label .can-toggle__switch:before {
+          color: rgba(255, 255, 255, 0.6);
+        }
+        .can-toggle.demo-rebrand-1 label .can-toggle__switch:after {
+          -webkit-transition: -webkit-transform 0.3s ease-in-out;
+          transition: -webkit-transform 0.3s ease-in-out;
+          transition: transform 0.3s ease-in-out;
+          transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+          color: #b53e74;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"][disabled] ~ label {
+          color: rgba(68, 68, 68, 0.5);
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:focus ~ label .can-toggle__switch, .can-toggle.demo-rebrand-2 input[type="checkbox"]:hover ~ label .can-toggle__switch {
+          background-color: #444;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle.demo-rebrand-2 input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+          color: #2b2b2b;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:hover ~ label {
+          color: #373737;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked ~ label:hover {
+          color: #62b125;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked ~ label .can-toggle__switch {
+          background-color: #75d32d;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+          color: #5da924;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked:focus ~ label .can-toggle__switch, .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked:hover ~ label .can-toggle__switch {
+          background-color: #69be28;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+          color: #52941f;
+        }
+        .can-toggle.demo-rebrand-2 label .can-toggle__label-text {
+          -webkit-box-flex: 1;
+                  flex: 1;
+        }
+        .can-toggle.demo-rebrand-2 label .can-toggle__switch {
+          -webkit-transition: background-color 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+          transition: background-color 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+          background: #515151;
+        }
+        .can-toggle.demo-rebrand-2 label .can-toggle__switch:before {
+          color: rgba(255, 255, 255, 0.7);
+        }
+        .can-toggle.demo-rebrand-2 label .can-toggle__switch:after {
+          -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+          transition: -webkit-transform 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+          transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+          transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1), -webkit-transform 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+          color: #444;
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle.demo-rebrand-2 input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+          -webkit-transform: translate3d(58px, 0, 0);
+                  transform: translate3d(58px, 0, 0);
+        }
+        .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle.demo-rebrand-2 input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+        }
+        .can-toggle.demo-rebrand-2 label {
+          font-size: 13px;
+        }
+        .can-toggle.demo-rebrand-2 label .can-toggle__switch {
+          height: 60px;
+          -webkit-box-flex: 0;
+                  flex: 0 0 120px;
+          border-radius: 60px;
+        }
+        .can-toggle.demo-rebrand-2 label .can-toggle__switch:before {
+          left: 60px;
+          font-size: 13px;
+          line-height: 60px;
+          width: 60px;
+          padding: 0 12px;
+        }
+        .can-toggle.demo-rebrand-2 label .can-toggle__switch:after {
+          top: 2px;
+          left: 2px;
+          border-radius: 30px;
+          width: 58px;
+          line-height: 56px;
+          font-size: 13px;
+        }
+        .can-toggle.demo-rebrand-2 label .can-toggle__switch:hover:after {
+          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+        }
+        .bigSelect {
+           min-height: 30px;
+        }
+   
+
+
+        .kpiHeading {
+            font-size:19px;
+            padding:10px 15px;
+            margin: 0 !important;
+    background: #373d86;
+    color: #fff;
+        }
+        .tabluLer {
+            padding:0;
+            width:100%;
+            position:relative;
+        }
+        .tabluLer:before {
+            content: '';
+            width: 100%;
+            height: 1px;
+            background: #f7f7f7;
+            position: absolute;
+            top: 29px;
+            left: 0;
+            z-index: -1;
+        }
+        .tabluLer>li {
+            display:block;
+            float:left;
+            margin-right:50px;
+            text-align:center;
+        }
+        .tabluLer .ic {
+            display: inline-block;
+            width: 55px;
+            height: 55px;
+            
+            border-radius: 50%;
+            background: #f5f3f3;
+            border: 1px solid #ececec;
+                line-height: 57px;
+                color:#333
+        }
+        .tabluLer .ic>i {
+            font-size:20px
+        }
+        .tabluLer>li.active .ic {
+           background: #3fc776;
+        border: 1px solid #4dde87;
+        color: #fff;
+        box-shadow: 0px 3px 2px rgba(0,0,0,0.19);
+        }
+        .tabluLer>li.active>a:focus {
+            text-decoration:none;
+        }
+        .tb_txt{
+            font-family: 'Poppins', sans-serif !important;
+            color:#333;
+            font-weight:500;
+            font-size:15px;
+            padding:8px 0;
+        }
+        .BoxTypeGrey {
+            padding:20px;
+            background:#e8e8e8;
+            border-radius:5px;
+            margin-top:10px;
+        }
+        .shadowBox  {
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0px 3px 4px rgba(0,0,0,0.13);
+        }
+        .shadowBox .bigHeading {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        .flex-row {
+            display: flex; /* or inline-flex */
+            
+        }
+        .flex-item {
+            flex-basis:  1; /* default auto */
+        }
+        .space-between {
+            justify-content: space-between;
+        }
+        .itemType {
+            min-width:150px;
+            width:14%;
+            min-height:200px;
+            background:#fff;
+            padding:10px;
+            box-sizing:border-box;
+            border-radius:4px;
+            text-align:center;
+            display:flex;
+            flex-direction:column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom:20px
+        }
+        .itemTypeChart {
+            min-width:150px;
+            min-height:200px;
+            background:#fff;
+            padding:10px;
+            box-sizing:border-box;
+            border-radius:4px;
+        }
+        .itemTypeChart h4 {
+            padding-left: 15px;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 12px;
+        }
+        .align-items-center {
+            align-items:center
+        }
+        .valRound {
+            margin: 0 auto;
+            width: 80px;
+            height: 80px;
+            background: #565454;
+            color: #fff;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            font-size: 22px;
+            line-height: 81px;
+           
+        }
+        .valRound.c1 {
+            background: #f76d6d;
+        }
+        .valRound.c2 {
+            background: #6e98f5;
+        }
+        .valRound.c3 {
+            background: #44c8cd;
+        }
+        .valRound.c4 {
+            background: #9db53c;
+        }
+        .valRound.c5 {
+            background: #8846c5;
+        }
+        .valRound.c6 {
+            background: #383d82;
+        }
+        .valRound.c7 {
+            background: #f14b2f;
+        }
+        .valRound.c8 {
+            background: #ee0067;
+        }
+        .valRound.c9 {
+            background: #3285ad;
+        }
+        .valRound.c10 {
+            background: #32ad6f;
+        }
+        .valRound.c11 {
+            background: #c4c703;
+        }
+        .showFullInfo {
+                position: absolute;
+                top: -15px;
+                width: 100%;
+                padding: 0 20px;
+                left: 0;
+                background: rgba(56, 42, 42, 0.75);
+                height: 30px;
+                color: #f7f7f7;
+                font-size: 16px;
+                line-height: 33px;
+                border-radius: 4px;
+                visibility:hidden;
+        }
+        .valRound:hover > .showFullInfo {
+            visibility:visible;
+        }
+        .smallmuted, .hdTag {
+            text-transform:uppercase; 
+        }
+        .smallmuted {
+            font-size:12px;
+        }
+        .hdTag {
+           font-size: 14px;
+            margin-top:5px
+        }
+        .vSm {
+            position: absolute;
+    bottom: 5px;
+    right: 8px;
+        }
+        .vSm .fa {
+            color:red
+        }
+        .w18 {
+            width:18% !important;
+        }
+        .w25 {
+            width:23% !important;
+        }
+        .mTop20 {
+            margin-top:20px
+        }
+
+        #chartdivDonut, #chartdivL1, #chartdivL2, #chartdivL3 {
+          width: 100%;
+          height: 200px;
+        }
+        .semiRound {
+            border-radius:10px !important;
+            height:40px !important;
+            line-height: 38px;
+            font-size:24px;
+        }
+        .trans {
+            background:transparent !important;
+        }
+        .backBoxx{
+            background: #fff;
+    padding: 15px;
+    box-sizing: border-box;
+    margin-top: 15px;
+    border-radius: 5px;
+        }
+        .space{
+            padding:8px
+        }
+        .styledTble thead>tr>th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #ddd;
+            background: #4f64b1;
+            color: #fff;
+            font-weight: 400;
+        }
+        .stageIndicator {
+            text-align:center;
+            padding-bottom: 15px;
+            padding:10px 20px;
+        }
+        .stageIndicator ul li {
+            list-style-type:none;
+            display:block;
+            float:left;
+            margin-right:20px;
+            margin-bottom: 10px;
+        }
+        .stageIndicator li>span{
+            display:inline-block;
+        }
+        .stageIndicator li .indi {
+            width: 14px;
+            height: 14px;
+            background:#fff;
+            margin:0 12px;
+            border-radius:4px;
+            vertical-align: middle;
+        }
+        .stageIndicator li .indi.color1 {
+            background:#A35E5E;
+        }
+        .stageIndicator li .indi.color2 {
+            background:#BEC48B;
+        }
+        .stageIndicator li .indi.color3 {
+            background:#6286A3;
+        }
+        .stageIndicator li .indi.color4 {
+            background:#D8F1E2;
+        }
+        .stageIndicator li .indi.color5 {
+            background:#6871DC;
+        }
+        .stageIndicator li .indi.color6 {
+            background:#32C47E;
+        }
+        .stageIndicator li .indi.color7 {
+            background:#474747;
+        }
+@media (max-width: 480px) { 
+    .flex-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .tabluLer>li {
+        display:block;
+        width:100%;
+        text-align: center;
+    }
+    .tabluLer {
+        padding:5px;
+        border:1px solid #eaeaea;
+        border-radius:3px;
+    }
+    .tabluLer:before {
+        display:none;
+    }
+    .shadowBox  {
+        margin-bottom:15px
+    }
+    
+}
+@media (max-width: 480px) { 
+    .w25 {
+        width: 100% !important;
+    }
+    
+}
+
+
+.vBs {
+    margin: 0 auto;
+    margin-bottom: 15px;
+    font-size: 23px;
+    line-height: 71px;
+    border-bottom: 2px dashed #565454;
+    font-weight: 600;
+}
+.vBs.c1 {
+    border-bottom: 2px dashed #f76d6d;
+}
+.vBs.c2 {
+    border-bottom: 2px dashed #6e98f5;
+}
+.vBs.c3 {
+    border-bottom: 2px dashed #44c8cd;
+}
+.vBs.c4 {
+    border-bottom: 2px dashed #9db53c;
+}
+.vBs.c5 {
+    border-bottom: 2px dashed #8846c5;
+}
+.vBs.c6 {
+    border-bottom: 2px dashed #383d82;
+}
+.vBs.c7 {
+    border-bottom: 2px dashed#f14b2f;
+}
+.vBs.c8 {
+    border-bottom: 2px dashed #ee0067;
+}
+.vBs.c9 {
+    border-bottom: 2px dashed #3285ad;
+}
+.vBs.c10 {
+    border-bottom: 2px dashed #32ad6f;
+}
+.vBs.c11 {
+   border-bottom: 2px dashed #c4c703;
+}

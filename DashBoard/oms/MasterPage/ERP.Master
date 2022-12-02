@@ -1,0 +1,1089 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ERP.master.cs" Inherits="ERP.OMS.MasterPage.ERP" %>
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Welcome to BreezeERP</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <%--JAlert Start--%>
+
+
+
+    <script type="text/javascript" src="/assests/js/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        window.jQuery || document.write("<script src='/assests/js/jquery.min.js'><\/script>")
+    </script>
+
+    <link href="/assests/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+
+    <%--JAlert End--%>
+
+    <%--<link href="/assests/css/custom/jquery.alerts.css" rel="stylesheet" />--%>
+    <%--<link href="../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />--%>
+
+    <%--<link rel="stylesheet" href="/assests/bootstrap/css/bootstrap.min.css" />--%>
+    <link rel="stylesheet" href="~/assests/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assests/bootstrap/css/bootstrap-theme.min.css" />
+    <link href="/assests/pluggins/choosen/chosen.css" rel="stylesheet" />
+    <%--<link rel="stylesheet" href="/assests/css/custom/main.css?v=0.1" />--%>
+
+    <link rel="stylesheet" href="/assests/css/custom/newtheme.css?v=0.4" />
+    <link rel="stylesheet" href="/assests/css/custom/PMSStyles.css?v=0.1" />
+    <link rel="stylesheet" type="text/css" href="/assests/fonts/font-awesome/css/font-awesome.min.css" />
+    <link href="/assests/pluggins/customScroll/custoScroll.css" rel="stylesheet" />
+    <link href="/oms/MasterPage/css/MasterPage.css?v=0.2" rel="stylesheet" />
+    <link href="/assests/pluggins/JqueryConfirm/jquery-confirm.min.css" rel="stylesheet" />
+  <%--  <script src="//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script>--%>
+    <%--<script src="../../assests/js/jquery-ui.min.js"></script>--%>
+    <%--<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"></script>--%>
+    <%--<script type="text/javascript">
+
+        window.jQuery || document.write("<script src='/assests/js/jquery-ui.min.js'><\/script>")
+    </script>--%>
+    <script type="text/javascript" src="/assests/js/jquery-ui.min.js"></script>
+    <script src="/assests/pluggins/JqueryConfirm/jquery-confirm.min.js"></script>
+    <script src="/assests/js/slimscroll.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+
+
+            //About section
+            $('#showAbout').click(function () {
+                $(".AboutPop").show();
+            });
+            $('.CrossIconAbout, #CRSAbtButton').click(function () {
+                $(".AboutPop").hide();
+            });
+
+
+            $(".bubble").draggable();
+
+            var isMoving = false;
+            var isdragging = false;
+            var chatMode = false;
+
+            function closeChat() {
+                $(".bubble").css("top", "50%").css("right", "-15px").css("transition", "all 0.5s");
+                $(".chat").addClass("bounceout").removeClass("bouncein");
+                $(".chat").replaceWith($(".chat").clone(true));
+            }
+            function closeChatonSht() {
+                $(".bubble").css("top", "50%").css("right", "-15px").css("transition", "all 0.5s");
+                $(".chat").removeClass("bouncein bounceout");
+
+            }
+
+            $(".bubble").on("click", function () {
+
+                var pos = $(".chat_container").offset();
+
+                if (chatMode) {
+                    closeChat();
+                    chatMode = false;
+                } else {
+                    $(".chat").addClass("bouncein").removeClass("bounceout");
+                    $(".bubble").css("top", (pos.top + 30) + "px").css("left", (pos.left - 70) + "px").css("transition", "all 0.3s");
+                    $(".chat").replaceWith($(".chat").clone(true));
+                    chatMode = true;
+                }
+            });
+
+            $(".bubble").mousedown(function () {
+                isdragging = false;
+            });
+
+            $(".bubble").mousemove(function () {
+                isdragging = true;
+                $(this).css("transition", "all 0s");
+            });
+
+            $(".bubble").mouseup(function (e) {
+                e.preventDefault();
+                var lastY = window.event.clientY;
+                var lastX = window.event.clientX;
+                var swidth = $(window).width();
+
+                if (isdragging) {
+
+                    if (chatMode) {
+                        closeChat();
+                        chatMode = false;
+                    }
+
+                    if (lastX > (swidth / 2)) {
+                        $(this).css("top", lastY).css("left", (swidth - 55) + "px").css("transition", "all 0.4s");
+                    } else {
+                        $(this).css("top", lastY).css("left", "-15px").css("transition", "all 0.4s");
+                    }
+                }
+
+
+            });
+            function favDelete() {
+                alert('delete success');
+            }
+            function menuScrollerInit() {
+                var SideNavHeight = $('.sidenav').height();
+                var LogoutBtnHeight = $('.pwred').outerHeight();
+                var maxMenuH = SideNavHeight - LogoutBtnHeight;
+                //alert(maxMenuH);
+                $('.sidenav > ul').css({ 'max-height': maxMenuH + 'px' });
+            }
+            menuScrollerInit();
+            $(window).resize(function () {
+                menuScrollerInit();
+            });
+
+            $(window).load(function () {
+                if (localStorage.getItem('LCmini-navbarcss')) {
+                    if (localStorage.getItem('LCmini-navbarcss')=="Yes")
+                        $("body").addClass("mini-navbar");
+                    else
+                        $("body").removeClass("mini-navbar");
+                }
+            });
+
+            //$(".sidenav > ul").mCustomScrollbar({
+            //    theme:"minimal-dark"
+            //});
+            // shortcut key show 
+            document.addEventListener("keydown", function (event) {
+
+                //console.log(event);
+                if (event.keyCode == 81 && event.ctrlKey == true) {
+                    document.getElementById("bubblePin").classList.toggle("hide");
+                    if (chatMode) {
+                        chatMode = false;
+                        closeChatonSht();
+                    }
+                }
+
+                var baseurl = window.location.origin;
+
+                if (event.keyCode == 49 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/Customer_Ledger.aspx?&From=Hotkey";
+                    window.open(url);
+
+                }
+                else if (event.keyCode == 50 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/Vendor_Ledger.aspx?&From=Hotkey";
+                    window.open(url);
+
+                }
+                else if (event.keyCode == 51 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/GeneralLedgerRegister.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+                else if (event.keyCode == 52 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/CashBankReport.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+                else if (event.keyCode == 53 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/StockLedger.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+
+            });
+            function quickToggleTilesCalculator() {
+                document.getElementById("bubblePin").classList.toggle("hide");
+                if (chatMode) {
+                    chatMode = false;
+                    closeChatonSht();
+                }
+            }
+        });
+
+    </script>
+
+    <script type="text/javascript" src="/assests/js/modalmsg.js"></script>
+    <script src="/OMS/MasterPage/Js/MasterPage.js?v=0.1" type="text/javascript"></script>
+
+    <%--confierm plugin--%>
+    <script src="/assests/js/jquery.confirm.min.js"></script>
+    <meta name="theme-color" content="#0C78B1" />
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#0C78B1" />
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+    
+    <script>
+        $(document).ready(function () {
+            var WindowHeight = $(window).height();
+            var SetmenuHeight = WindowHeight - 120;
+
+            $('.fixedMenuNew .sidenav > ul').css({ 'max-height': SetmenuHeight });
+            //$('.mini-navbar .fixedMenuNew').mouseover(function () {
+            //    setTimeout(function () {
+            //        $('.fixedMenuNew .sidebar .navfltext').css({ 'width': 'auto', 'opacity': '1', 'display': 'inline-block' })
+            //    }, 1000);
+
+            //});
+            $("#searchOnMenu").focus(function () {
+                $(this).parent().parent('.searchMenuCont').find('.search-result').addClass('show');
+            }).blur(function () {
+                $(this).parent().parent('.searchMenuCont').find('.search-result').removeClass('show')
+            });
+            
+            $('.scrollBarSearhMenu').slimScroll({
+                height: '450px'
+            });
+        });
+        $(window).resize(function () {
+            var WindowHeight = $(window).height();
+            var SetmenuHeight = WindowHeight - 120;
+            $('.fixedMenuNew .sidenav > ul').css({ 'max-height': SetmenuHeight });
+        })
+        $(function(){
+
+            
+
+        });
+        function myMenuFilter() {
+            // Declare variables
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('searchOnMenu');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("clonedMenus");
+            li = ul.getElementsByTagName('li');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            function getTime() {
+                var d = new Date();
+                d.setHours(d.getHours()); // offset from local time
+                var h = (d.getHours() % 12) || 12; // show midnight & noon as 12
+                return (
+                    (h < 10 ? '0' : '') + h +
+                    (d.getMinutes() < 10 ? ':0' : ':') + d.getMinutes() +
+                            // optional seconds display
+                    // ( d.getSeconds() < 10 ? ':0' : ':') + d.getSeconds() + 
+                    (d.getHours() < 12 ? ' AM' : ' PM')
+                );
+
+            }
+
+            var clock = document.getElementById('clock');
+            setInterval(function () { clock.innerHTML = getTime(); }, 1000);
+
+
+            function formatDate(date) {
+                var monthNames = [
+                  "January", "February", "March",
+                  "April", "May", "June", "July",
+                  "August", "September", "October",
+                  "November", "December"
+                ];
+
+                var day = date.getDate();
+                var monthIndex = date.getMonth();
+                var year = date.getFullYear();
+
+                return day + ' ' + monthNames[monthIndex] + ' ' + year;
+            }
+            var dayDate = document.getElementById('dayDate');
+            setInterval(function () { dayDate.innerHTML = formatDate(new Date()); }, 1000);
+        });
+    </script>  
+    <script>
+
+
+        $(document).ready(function () {
+            
+
+            $('.ico').click (function () {
+                $('.ico').addClass('liked');
+            });
+            $('#btnHelpPopupRec').click(function () {
+                $('#panelForQuick, .backdrop').removeClass('off');
+
+            });
+            $('.quickCross').click(function () {
+                $('#panelForQuick, .backdrop').addClass('off');
+                $('.ico').removeClass('liked');
+            });
+            $('#editFav').click(function () {
+                $('#panelForQuick .itm').toggleClass('editable');
+            });
+            $('body').on('click', '#boxedFavData .pathLoader', function () {
+                
+                var Rurl = '/' + $(this).data('url');
+                console.log(Rurl);
+                openMenuFromNav(Rurl)
+            });
+            
+            $('body').on('click', '.delTag', function () {
+                var rUrl = $(this).data('url');
+                var titl = $(this).data('titl');
+                
+
+                $.confirm({
+                    title: 'Warning!',
+                    content: 'Are you sure you want to remove the item from Favourite!',
+                    buttons: {
+                        confirm: function () {
+                            favDelete(rUrl, titl);
+                        },
+                        cancel: function () {
+                            //$.alert('Canceled!');
+                        }
+                    }
+                });
+            });
+            
+
+            if (localStorage.getItem("fv") === null || typeof localStorage.fv === 'undefined') {
+                //...
+                var obj = {};
+                obj.url = ''
+                $.ajax({
+                    type: "POST",
+                    url: "/oms//Management/ProjectMainPage.aspx/GetFav",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(obj),
+                    dataType: "json",
+                    success: function (data) {
+                        var url = window.location.href;
+                        var spUrl = url.split("/")
+                        var a = "";
+                        for (i = 0; i < spUrl.length; i++) {
+                            if (i > 2) {
+                                if (i == spUrl.length - 1) {
+                                    a += spUrl[i] + ""
+                                } else {
+                                    a += spUrl[i] + "/"
+                                }
+
+                            }
+                        }
+                        //console.log(data.d)
+                        var items = data.d;
+                        generateFavitems(items)
+                        for (i = 0 ; i < items.length; i++) {
+                            if (items[i].PAGE_URL == a) {
+                                $('#FavAdd').hide();
+                                
+                            } else {
+                                $('#FavAdd').show()
+
+                            }
+                        }
+                    }
+                });
+            } else {
+                var url = window.location.href;
+                var spUrl = url.split("/")
+                var a = "";
+                for (i = 0; i < spUrl.length; i++) {
+                    if (i > 2) {
+                        if (i == spUrl.length - 1) {
+                            a += spUrl[i] + ""
+                        } else {
+                            a += spUrl[i] + "/"
+                        }
+
+                    }
+                }
+                var items = JSON.parse(localStorage.getItem('fv'))
+                console.log('from storage',items)
+                generateFavitems(items);
+                for (i = 0 ; i < items.length; i++) {
+                    if (items[i].PAGE_URL == a) {
+                        //alert(a)
+                        $('#FavAdd').hide();
+                       
+                    } else {
+                        $('#FavAdd').show()
+                    }
+                }
+            }
+             //Get Fav
+            
+            $('#FavAdd').click(function () {
+
+                var url = window.location.href;
+                var spUrl = url.split("/")
+                var a = "";
+                for (i = 0; i < spUrl.length; i++) {
+                    if (i > 2) {
+                        if (i == spUrl.length - 1) {
+                            a += spUrl[i] + ""
+                        } else {
+                            a += spUrl[i] + "/"
+                        }
+
+                    }
+                }
+                $('#addfavModal').modal('show');
+                var tl = $('.panel-heading> .panel-title>h3').text();
+                $('#titleFav').val(tl);
+                $('#pgLink').val(a).attr('disabled');
+            });
+            
+        });
+        function generateFavitems(items) {
+            var htmlItems = '<div class="flexRow">';
+            for (i = 0; i < items.length; i++) {
+                htmlItems += '<div class="itm redPage" >'
+                htmlItems += '<span class="delTag" data-url="' + items[i].PAGE_URL + '" data-titl="' + items[i].PAGE_TITLE + '"><i class="fa fa-close"></i></span>'
+                htmlItems += '<div class="pathLoader" data-url="' + items[i].PAGE_URL + '"><div class="icn"><i class="fa fa-link"></i></div>'
+                htmlItems += '<div class="tx">' + items[i].PAGE_TITLE + '</div>'
+                htmlItems += ' </div></div>'
+            }
+            htmlItems += '</div>'
+            $('#boxedFavData').html(htmlItems);
+            if (items.length == 10) {
+                $('#FavAdd').hide()
+            } else {
+                $('#FavAdd').show()
+            }
+            localStorage.setItem('fv', JSON.stringify(items))
+
+        }
+        function saveFav(){
+            var url = window.location.href;
+            var spUrl = url.split("/")
+            var a = "";
+            for (i = 0; i < spUrl.length; i++) {
+                if (i > 2) {
+                    if (i == spUrl.length -1)
+                    {
+                        a += spUrl[i] + ""
+                    } else {
+                        a += spUrl[i] + "/"
+                    }
+                    
+                }
+            }
+            var addObj = {};
+            addObj.url = a;
+            addObj.title = $('#titleFav').val();
+            console.log(addObj);
+            $.ajax({
+                type: "POST",
+                url: "/oms/Management/ProjectMainPage.aspx/addFav",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(addObj),
+                dataType: "json",
+                success: function (data) {
+                    var items = data.d;
+
+                    var htmlItems = '<div class="flexRow">';
+                    for (i = 0; i < items.length; i++) {
+                        htmlItems += '<div class="itm redPage" data-url="' + items[i].PAGE_URL + '">'
+                        htmlItems += '<span class="delTag" data-url="' + items[i].PAGE_URL + '" data-titl="' + items[i].PAGE_TITLE + '"><i class="fa fa-close"></i></span>'
+                        htmlItems += '<div class="pathLoader" data-url="' + items[i].PAGE_URL + '"><div class="icn"><i class="fa fa-link"></i></div>'
+                        htmlItems += '<div class="tx">' + items[i].PAGE_TITLE + '</div>'
+                        htmlItems += ' </div></div>'
+                    }
+                    htmlItems += '</div>'
+                    $('#boxedFavData').html(htmlItems);
+                    if (items.length == 10) {
+                        $('#FavAdd').hide()
+                    } else {
+                        $('#FavAdd').show()
+                    }
+                    $('#titleFav').val('')
+                    localStorage.setItem('fv', JSON.stringify(items))
+                    for (i = 0 ; i < items.length; i++) {
+                        if (items[i].PAGE_URL == a) {
+                            $('#FavAdd').hide();
+                            
+                        } else {
+                            $('#FavAdd').show()
+                           
+                        }
+                    }
+                    $('#addfavModal').modal('hide');
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Favourite Added Successfully!',
+                    });
+
+                }
+            });
+        }
+        function favDelete(rUrl, titl) {
+            var url = window.location.href;
+            var spUrl = url.split("/")
+            var a = "";
+            for (i = 0; i < spUrl.length; i++) {
+                if (i > 2) {
+                    if (i == spUrl.length - 1) {
+                        a += spUrl[i] + ""
+                    } else {
+                        a += spUrl[i] + "/"
+                    }
+
+                }
+            }
+            var RObj = {};
+            RObj.url = rUrl;
+            RObj.title = titl;
+            console.log(RObj);
+            $.ajax({
+                type: "POST",
+                url: "/oms/Management/ProjectMainPage.aspx/RemoveFav",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(RObj),
+                dataType: "json",
+                success: function (data) {
+                    var items = data.d;
+
+                    var htmlItems = '<div class="flexRow">';
+                    for (i = 0; i < items.length; i++) {
+                        htmlItems += '<div class="itm redPage" data-url="' + items[i].PAGE_URL + '">'
+                        htmlItems += '<span class="delTag" data-url="' + items[i].PAGE_URL + '" data-titl="' + items[i].PAGE_TITLE + '"><i class="fa fa-close"></i></span>'
+                        htmlItems += '<div class="pathLoader" data-url="' + items[i].PAGE_URL + '"><div class="icn"><i class="fa fa-link"></i></div>'
+                        htmlItems += '<div class="tx">' + items[i].PAGE_TITLE + '</div>'
+                        htmlItems += ' </div></div>'
+                    }
+                    htmlItems += '</div>'
+                    $('#boxedFavData').html(htmlItems);
+                    if (items.length == 10) {
+                        $('#FavAdd').hide()
+                    } else {
+                        $('#FavAdd').show()
+                    }
+                    localStorage.setItem('fv', JSON.stringify(items))
+                    for (i = 0 ; i < items.length; i++) {
+                        if (items[i].PAGE_URL == a) {
+                            $('#FavAdd').hide();
+                        } else {
+                            $('#FavAdd').show()
+                        }
+                    }
+                }
+            });
+        }
+        
+
+    </script>
+    <style>
+        .searchMenuCont {
+            position: relative;
+            padding: 5px;
+            border-bottom: 1px dashed #585858;
+        }
+        #searchOnMenu {
+            background: #484c5a;
+            border: 2px solid #22242f;
+            border-radius: 4px;
+            height: 31px;
+            color:#fff;
+            margin: 0;
+        }
+        .search-result {
+            width:550px;
+            z-index: 20;
+            position: absolute;
+            left: 98%;
+            top: -17px;
+            margin-top: 0.25rem;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s linear 0.2s, opacity 0.2s 0s;
+            z-index: 9999;
+        }
+        .search-result:after{
+            content: "";
+            width: 94%;
+            background: #F9FAFC;
+            box-shadow: 0px 3px 20px #0000000b;
+            height: 100%;
+            position: absolute;
+            border-radius: 0.375rem;
+            margin-left: auto;
+            margin-right: auto;
+            right: 0;
+            left: 0;
+            top:0;
+            margin-top: 6px;
+            z-index:-1;
+        }
+        .search-result.show {
+              transition: visibility 0s linear 0s, opacity 0.2s 0s;
+              visibility: visible;
+              opacity: 1;
+            }
+
+            .search-result.show > .search-result__content {
+              margin-top: -1px;
+            }
+        .search-result .search-result__content {
+            transition: margin-top 0.2s;
+            box-shadow: 0px 3px 20px #0000000b;
+            --bg-opacity: 1;
+            background-color: #fff;
+            background-color: rgba(255, 255, 255, var(--bg-opacity));
+            border-radius: 0.375rem;
+            position: relative;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+            
+        }
+        .search-result .search-result__content .search-result__content__title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size:15px
+        }
+        #clonedMenus{
+            list-style-type:none;
+            padding:0;
+            columns:2;
+        }
+        #clonedMenus i {
+            display:none;
+        }
+        #clonedMenus>li{
+            display:inline-block;
+            width: 100%;
+        }
+         #clonedMenus>li>a{
+                 display: flex;
+            color: #484c5a;
+            padding: 10px 0 10px 38px;
+            position: relative;
+            align-items: center;
+         }
+         .scrollBarSearhMenu {
+             height:60vh;
+             max-height:70vh;
+            overflow-y:auto;
+         }
+         #clonedMenus>li>a:after{
+             content: '\f0c1';
+            font-family: FontAwesome;
+            position: absolute;
+            left: 0;
+           
+            width: 30px;
+            line-height: 30px;
+            height: 30px;
+            display: inline-block;
+            text-align: center;
+            background: #D8F8BC;
+            border-radius: 50%;
+            color: #91c714;
+
+         }
+         #clonedMenus>li.mblue>a:after{
+             background: #D8F8BC;
+             color: #91c714;
+         }
+         #clonedMenus>li.Cpink>a:after{
+             background: #ffb0dc;
+            color: #f32d9b;
+         }
+         #clonedMenus>li.delta>a:after{
+             background: #7bacf5;
+            color: #4b6284;
+         }
+         #clonedMenus>li.alphaE>a:after{
+             background: #ceb0ff;
+             color: #7330e0;
+         }
+         #clonedMenus>li.ramGr>a:after{
+             background: #a3e4e1;
+             color: #0e9c96;
+         }
+         #clonedMenus>li.ieCle>a:after{
+             background: #aad83c;
+             color: #40560c;
+         }
+         #clonedMenus>li.samsoon>a:after{
+                 background: #afa2b7;
+                color: #372244;
+         }
+         #clonedMenus>li.regxs>a:after{
+             background: #ffe3b4;
+             color: #773e0c;
+         }
+         #clonedMenus>li>a:before{
+             background: #ffcecb;
+            color: #a52f28;
+            font-size: 9px;
+            top: 11px;
+         }
+    </style>
+    <script>
+        $(document).ready(function () {
+            
+            $(".sidenav>ul li").each(function (id, elem) {
+                var e = $(elem).clone();
+
+                var classes = ['gogreen', 'mblue', 'Cpink', 'delta', 'alphaE', 'ramGr', 'ieCle', 'samsoon', 'regxs'];
+
+                if (!$(e).children("ul").length) {
+                    var index = Math.floor(Math.random() * classes.length);
+                    var className = classes[index];
+                    $(e).addClass(className);
+                    $('#clonedMenus').append(e);
+                }
+            });
+            
+            
+        });
+        
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body class="" onload="noBack();" onpageshow="if (event.persisted) noBack();">
+    <%--software version details --- 12-12-2016 susanta--%>
+<!-- Modal favourite -->
+<div class="modal fade pmsModal w30" id="addfavModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Add to Favourite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <div class="form-group">
+            <label for="titleFav">Page Link</label>
+            <input type="text" class="form-control" id="pgLink" aria-describedby="emailHelp" placeholder="" />
+        </div>
+        <div class="form-group">
+            <label for="titleFav">Title</label>
+            <input type="text" class="form-control" id="titleFav" aria-describedby="emailHelp" placeholder="" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" onclick="saveFav()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="backdrop off"></div>
+<div id="panelForQuick" class="off">
+    <span class="quickCross"><i class="fa fa-close"></i></span>
+    <div class="qHeading">Favourite List <span class="text-muted" style="font-size: 10px;">(10 MAX)</span></div>
+    <div class="boxedInside" id="boxedFavData">
+        <div >No Favourite Added Yet</div>
+    </div>
+    <div class="footerOption">
+        
+        <div class="submitOption">
+            <button type="button" class="fedit" id="editFav">Remove </button>
+            <button type="button" class="fadd" id="FavAdd">Add to Fav</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Tiles Calculator Part-->
+    <div class="chat_container hide" id="bubblePin">
+        <div class="bubble " title="Tiles Calculator">
+            <%--<img src="../../../assests/images/calculator.png" />--%>
+        </div>
+        <div class="chat">
+            <div class="Calcheader">Tiles <span>Calculator</span></div>
+            <div class="tilesContent">
+                <p>Hi, Your TIles Calculator goes here</p>
+            </div>
+            <div class="textbox clearfix">
+                <button class="btn btn-primary pull-right ">Calculate</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Tiles calculator End -->
+
+    <div class="overlayEf hide"></div>
+    <section id="sftVer" class="hide">
+
+        <div class="insd">
+            <%--<img class="" src="/assests/images/l.jpg" alt="" >--%>
+            <div style="font-size: 20px; font-weight: 500; padding: 9px;">Breeze ERP <span style="color: #ccc; display: block; font-size: 10px;">Version - 1.0</span></div>
+            <div>Software version Area</div>
+            <button class="hide">Upgrade </button>
+        </div>
+        <div style="padding-top: 5px">
+            <a href="" id="cross"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+        </div>
+    </section>
+
+    <form id="form1" class="jpopup" runat="server">
+
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+        </asp:ScriptManager>
+
+        <%--About section--%>
+        <div class="AboutPop">
+            <div class="AboutBox relative">
+                <div class="AboutBoxHeader">About BreezeERP</div>
+
+                <span class="CrossIconAbout"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                <div class="abtContent clearfix">
+                    <div>
+                        <%--<img src="/assests/images/logo.png" style="width: 170px;" class="AbtImage" />--%>
+                        <img src="/assests/images/webP/logo.webp" style="width: 170px;" class="AbtImage" />
+                    </div>
+                    <div class="aboutText">
+                        <p>Version : <b id="lblVersion" runat="server"></b></p>
+                        <p><i class="fa fa-copyright" aria-hidden="true"></i>Copyright 2020 Indus Net Technologies </p>
+                        <p>Application best viewed at 1280 x 720 resolution in Google Chrome <b>59 or above</b> </p>
+                        <button type="button" id="CRSAbtButton">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--About section--%>
+        <div class="fixedMenuNew">
+            <div class="leftLogowrap transit">
+                <dxe:ASPxImage runat="server" ShowLoadingImage="true" ID="bigLogo" CssClass="img-responsive bigLogo"></dxe:ASPxImage>
+                <dxe:ASPxImage runat="server" ShowLoadingImage="true" ID="miniLogo" CssClass="img-responsive miniLogo"></dxe:ASPxImage>
+            </div>
+            <div class="sidebar transit">
+                <div class="searchMenuCont">
+                    <div class="">
+                        <input type="text" id="searchOnMenu" onkeyup="myMenuFilter()" placeholder="Search" autocomplete="off" />
+                    </div>
+                    <div class="search-result">
+                        <div class="search-result__content">
+                            <div class="search-result__content__title">Search in Menus</div>
+                            <div class="scrollBarSearhMenu">
+                                <ul id="clonedMenus"></ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <%--   <nav class="sidenav">
+                    <% ERP.OMS.MVCUtility.RenderAction("Common", "_PartialMenu", new { }); %>
+                    <div class="text-center pwred"> <%=PageFooterTag3 %>  </div>
+                </nav>--%>
+               
+
+            </div>
+            <div class="text-center pwred">
+                <div class="divNav">
+                    <a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx" class="pas" data-toggle="tooltip" title="" data-original-title="change password"><i class="fa fa-key"></i></a>
+                    <a href="/OMS/SignOff.aspx" class="logout" data-toggle="tooltip" title="" data-original-title="logout"><i class="fa fa-power-off"></i></a>
+                </div>
+                <div>Powered by BreezeERP </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+
+
+<div class="modal fade pmsModal w30" id="searchOfMenu" tabindex="-1" role="dialog" aria-labelledby="searchOfMenulabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Recent pages visted</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <ul class="recentLinks">
+             <li><a href=""><i class="fa fa fa-arrow-circle-o-right" aria-hidden="true"></i> Product master</a></li>
+             <li><a href=""><i class="fa fa fa-arrow-circle-o-right" aria-hidden="true"></i> Product master</a></li>
+             <li><a href=""><i class="fa fa fa-arrow-circle-o-right" aria-hidden="true"></i> Product master</a></li>
+         </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="mainWraper">
+            <header id="header" class="clearfix transit">
+
+                <div class="rightNav">
+                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a href="#" class="btn navbar-minimalize"><i class="fa fa-bars"></i></a>
+                            <span class="text">
+                                    <div class="dateTime">
+                                        <span class="" id="dayDate"></span>  |  
+                                        <span id="clock"></span> <span class="text-muted hide"><small>pm</small></span>
+                                    </div>
+                            </span>
+
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right user-dropdown-custom">
+                            <li class="" >
+                                <span id="btnHelpPopupRec" class="HelpMasterClass" data-toggle="tooltip" data-placement="bottom" title="Open Favourite" style="padding-top: 5px;">
+                                    <%--<div class="heart"></div>--%>
+                                    <svg class="ico" width="30" height="30" viewBox="0 0 24 24">
+                                        <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
+                                    </svg>
+                                </span>
+                            </li>
+                            <li>
+                                <span id="btnHelpPopup" style="display: none" onclick="ShowHelpPopup()" class="HelpMasterClass" data-toggle="tooltip" data-placement="bottom" title="Help">
+                                    <i class="fa fa-question-circle"></i>
+                                </span>
+                            </li>
+
+
+                            <li>
+
+
+
+
+                                <div class="aaadv" style="margin-right: 10px; max-width: 700px; height: 50px; display: block;">
+                                    <table>
+                                        <tr>
+
+                                            <td>
+                                                <div class="cmpName">
+                                                    <asp:Label ID="lblSCompName" runat="server"></asp:Label>
+                                                </div>
+                                                <div class="cmpYear">
+                                                    FY :
+                                                <asp:Label ID="lblFinYear" runat="server"></asp:Label>
+                                                    <span style="margin-left: 7px; margin-right: 7px;">|</span>
+                                                    <asp:Label ID="lblCurrency" runat="server"></asp:Label>
+                                                </div>
+
+
+                                            </td>
+
+
+
+                                        </tr>
+                                    </table>
+                                </div>
+                                <%--</a>--%>
+
+                           
+
+
+
+                            </li>
+                            <li class="dropdown usr">
+                                <a class="dropdown-toggle user" data-toggle="dropdown" href="#" aria-expanded="true" style="padding: 9px 15px 6px 0px;">
+                                    <div class="avtarHolder" style="margin-right: 24px; margin-top: 3px; border-radius: 0 !important;">
+                                        <img id="imgpp" src="/assests/images/webP/profile1.webp" runat="server" /> <%--src="/assests/images/profile1.png"--%>
+                                    </div>
+                                    <span class="label hidden-xs">Welcome,
+                                    <asp:Label runat="server" ID="LogedUser"></asp:Label>
+                                        <i class="fa fa-caret-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu userAccsess">
+                                    <li class="loginDetails">
+                                        <div><b>LAST LOGIN</b></div>
+                                        <div class="val"><span class="lstLoginDate"><asp:Label ID="lbllastlogindate" runat="server"></asp:Label></span>, <span class="lstLoginTime"><asp:Label ID="lbllastlogintime" runat="server"></asp:Label></span> </div>
+                                    </li>
+                                    <li><a href="/OMS/Management/WhatsNewAddEdit.aspx" target="_blank">
+                                        <img src="/assests/images/webP/dropIcons/Whtnew.webp" class="iconSubMenu" />
+                                        <span>What's New</span></a></li>
+                                    <li class=""><a href="#" id="showAbout">
+                                        <img src="/assests/images/webP/dropIcons/abt.webp" class="iconSubMenu" />
+                                        <span>About </span></a></li>
+                                    <li><a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx">
+                                        <img src="/assests/images/webP/dropIcons/chngpass.webp" class="iconSubMenu" />
+                                        <span>Change Password</span></a></li>
+                                    <li class="noBod logout"><a href="/OMS/SignOff.aspx">
+                                        <img src="/assests/images/webP/dropIcons/logout.webp" class="iconSubMenu" />
+                                        <span>Logout</span></a></li> 
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+                <!-- <div class="rightNav">
+            
+                
+
+          <div class="searhHead">
+            <a href="" class="btn navbarMinialize"><i class="icon-bars"></i></a>
+            <form class="srcfield"><span class="text">Global Search</span></form>
+          </div>
+        </div> -->
+
+            </header>
+            <section class="rightSide transit clearfix" style="min-height: 415px;">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </section>
+        </div>
+        <asp:HiddenField ID="hiddnversion" runat="server" ClientIDMode="Static" />
+
+        <%--<asp:Label ID="lbltext" runat="server"></asp:Label>--%>
+        <dxe:ASPxPopupControl ID="ASPXPopupControl11" runat="server" ContentUrl="../management/frm_selectCompFinYrSett.aspx?id=1"
+            CloseAction="CloseButton" Top="120" Left="500" ClientInstanceName="popup11"
+            Width="450px" HeaderText="Financial Year" AllowResize="false" ContentStyle-Wrap="True" ResizingMode="Live" Modal="true">
+            <ContentCollection>
+                <dxe:PopupControlContentControl runat="server">
+                </dxe:PopupControlContentControl>
+            </ContentCollection>
+            <HeaderStyle BackColor="Blue" Font-Bold="True" ForeColor="White" />
+        </dxe:ASPxPopupControl>
+
+
+        <script type="text/javascript" src="/assests/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assests/js/main.js"></script>
+    </form>
+    <script type="text/javascript" src="/assests/js/init.js"></script>
+    <script type="text/javascript" src="/assests/js/ajax-dynamic-list.js"></script>
+    <script src="/assests/pluggins/customScroll/customScroll.js"></script>
+
+    <script type="text/javascript">
+
+        //if (typeof (grid) !== 'undefined') grid.PerformCallback();
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+    <%--Help Popup Div Started Here--%>
+
+    <div id="HelpDivid" class="helpDivClass" style="display: none">
+        <span class="close-it pull-right" onclick="CloseHelpPopup()"><i class="fa fa-close"></i></span>
+        <div id="helptextpart"></div>
+        <div>
+            <ul class="listInfo">
+                <li><a href="https://www.icai.org/new_post.html?post_id=1527&c_id=270" target="_blank"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Reference to Accounting Standard</a></li>
+                <li><a href="https://www.gst.gov.in/" target="_blank"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Reference to GST</a></li>
+                <li><a href="https://www.incometaxindia.gov.in/Pages/default.aspx" target="_blank"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Reference to Income Tax</a></li>
+                <li><a href="https://www.rbi.org.in/scripts/banklinks.aspx" target="_blank"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Reference to All Banks</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <%--Help Popup Div End Here--%>
+</body>
+
+</html>

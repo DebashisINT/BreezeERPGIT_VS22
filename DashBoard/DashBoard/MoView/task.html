@@ -1,0 +1,578 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css" integrity="sha256-DBYdrj7BxKM3slMeqBVWX2otx7x4eqoHRJCsSDJ0Nxw=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" />
+
+    <link href="assets/css/jquery.btnswitch.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    
+</head>
+<body class="with-chart">
+    
+    <div class="body-wraper">
+        <header class="p-3">
+            <div class="d-flex  align-items-center">
+                <div class="pr-3">
+                    <a href="index.html" class="backLink"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+                <div class="title">Task List </div>
+                <div class="ml-auto d-flex align-items-center">
+                    <div class="pr-3 showChart hide"><i class="fas fa-chart-bar"></i></div>
+                    <div class="dropdown user-dropdown hide">
+                        <a class="btn btn-link p-0" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar"></div>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"> <i class="fas fa-info-circle"></i> What's new</a>
+                            <a class="dropdown-item" href="#"><i class="far fa-question-circle"></i> About</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="content-wrap ">
+            <div class="p-2">
+                <div class="tasknav pt-2">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="tnav-item active" onclick="showAll()">
+                                    <span class="tbadge"><span id="allCount"></span></span>
+                                    <span class="t-title">All</span>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="tnav-item " onclick="showComplete()">
+                                    <span class="tbadge complete"><span id="completeCount"></span></span>
+                                    <span class="t-title">Completed</span>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="tnav-item" onclick="showPending()">
+                                    <span class="tbadge pending"><span id="pendingCount"></span></span>
+                                    <span class="t-title">Pending</span>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="tnav-item" onclick="showOverDue()">
+                                    <span class="tbadge overdue"><span id="overDueCount"></span></span>
+                                    <span class="t-title">Overdue</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                </div>
+            </div>
+
+            <section>
+                <div class="task-wraper px-2" id="generateTask">
+                    <!--<div class="task-item d-flex">
+                        <div class="t-indicator d-flex p-4 alert-warning align-items-center">P</div>
+                        <div class="flex-grow-1 p-2 task-content">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <div class="task-title">Inventory MIS</div>
+                                    <div class=" my-1">Avg sales to maintain stock levels last done when - To put new products also</div>
+                                </div>
+                                <div class="task-activity px-1">
+                                    <div class="forAction">
+                                        <label class="switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="task-foter pt-2 small">
+                                <div class="d-flex">
+                                    <div class="mr-3">
+                                        <div>Due Date</div>
+                                        <div><b>30.11.2019</b></div>
+                                    </div>
+                                    <div class="mr-3">
+                                        <div>Completed by</div>
+                                        <div></div>
+                                    </div>
+                                    <div>
+                                        <div>Completed on</div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>--> 
+                </div>
+            </section>
+        </section>
+    </div>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js" integrity="sha256-4sETKhh3aSyi6NRiA+qunPaTawqSMDQca/xLWu27Hg4=" crossorigin="anonymous"></script>
+    <script src="assets/js/jquery.btnswitch.js"></script>
+    
+    <script type="text/javascript"> 
+        function createTodoList(data) {
+            //console.log(data.length);
+            var mainDta = data;
+            //console.log(mainDta);
+            var tureCount = $.grep(mainDta, function (e) { return e.ISCOMPLETED == true });
+            var falseCount = $.grep(mainDta, function (e) { return e.ISCOMPLETED == false && e.WARNING == false });
+            var overdueCount = $.grep(mainDta, function (e) { return e.WARNING == true });
+
+
+            $('#completeCount').html(tureCount.length);
+            $('#pendingCount').html(falseCount.length);
+            $('#overDueCount').html(overdueCount.length);
+            $('#allCount').html(mainDta.length);
+
+            var toDoItem = ""
+
+            for (var i = 0; i < mainDta.length; i++) {
+                toDoItem += "<div class='task-item d-flex'>"
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoItem += "<div class='t-indicator d-flex p-4 alert-success align-items-center'>C</div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == true) {
+                    toDoItem += "<div class='t-indicator d-flex p-4 alert-danger align-items-center'>D</div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == false) {
+                    toDoItem += "<div class='t-indicator d-flex p-4 alert-warning align-items-center'>P</div>"
+                }
+
+                toDoItem += "<div class='flex-grow-1 p-2 task-content'><div class='d-flex'><div class='flex-grow-1'>"
+
+                toDoItem += "<div class='task-title'>" + mainDta[i]['TASK_SUBJECT'] + "</div>"
+                toDoItem += "<div class='my-1'>" + mainDta[i]['TASK_DESCRIPTION'] + "</div></div>"
+
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoItem += "<div class='task-activity px-1'><div class='forAction'><label class='switch'><input type='checkbox' onclick='completeTask(" + mainDta[i]['SCHEDULE_id'] + ",this);' id='checkMeOut" + mainDta[i]['SCHEDULE_id'] + "' checked><span class='slider round'></span></label></div></div>"
+                } else {
+                    toDoItem += "<div class='task-activity px-1'><div class='forAction'><label class='switch'><input type='checkbox' onclick='completeTask(" + mainDta[i]['SCHEDULE_id'] + ",this);' id='checkMeOut" + mainDta[i]['SCHEDULE_id'] + "'><span class='slider round'></span></label></div></div>"
+                }
+
+                toDoItem += "</div><div class='task-foter pt-2 small'><div class='d-flex'>"
+
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoItem += "<div class='mr-3'><div>Due On</div><div><b>" + mainDta[i]['TASK_DUEDATEFor'] + "</b></div></div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == true) {
+                    toDoItem += "<div class='mr-3'><div>Due On</div><div><b class='text-danger'>" + mainDta[i]['TASK_DUEDATEFor'] + "</b></div></div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == false) {
+                    toDoItem += "<div class='mr-3'><div>Due On</div><div><b>" + mainDta[i]['TASK_DUEDATEFor'] + "</b></div></div>"
+                }
+
+                
+
+
+                //if (mainDta[i]['TASK_PRIORITY'] == "High") {
+                //    toDoItem += "<div class='hd'>Priority</div><div class='data cHigh'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                //} else if (mainDta[i]['TASK_PRIORITY'] == 'Low') {
+                //    toDoItem += "<div class='hd'>Priority</div><div class='data cLow'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                //} else if (mainDta[i]['TASK_PRIORITY'] == 'Normal') {
+                //    toDoItem += "<div class='hd'>Priority</div><div class='data cNormal'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                //}
+                if (mainDta[i]['CompletedBy'] == "") {
+                    toDoItem += "<div class='mr-3'><div>Completed by</div><div>&nbsp; </div></div>"
+                } else {
+                    toDoItem += "<div class='mr-3'><div>Completed by</div><div>" + mainDta[i]['CompletedBy'] + "</div></div>"
+                }
+
+                //toDoItem += "<div class='hd'>Completed by</div><div class='data'>" + mainDta[i]['CompletedBy'] + "</div></li><li>"
+                if (mainDta[i]['completedon'] == null) {
+                    toDoItem += "<div class='mr-3'><div>Completed on</div><div>&nbsp; </div></div>"
+                } else {
+                    toDoItem += "<div class='mr-3'><div>Completed on</div><div>" + mainDta[i]['completedonFor'] + "</div></div> </div></div></div></div>"
+                }
+                toDoItem += "</div></div></div></div>"
+            }
+            $('#generateTask').html(toDoItem);
+
+        }
+        function generateFilter(mainDta) {
+            //console.log(DATA);
+            var toDoFilterItem = ""
+
+            for (var i = 0; i < mainDta.length; i++) {
+                toDoFilterItem += "<div class='task-item d-flex'>"
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoFilterItem += "<div class='t-indicator d-flex p-4 alert-success align-items-center'>C</div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == true) {
+                    toDoFilterItem += "<div class='t-indicator d-flex p-4 alert-danger align-items-center'>D</div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == false) {
+                    toDoFilterItem += "<div class='t-indicator d-flex p-4 alert-warning align-items-center'>P</div>"
+                }
+
+                toDoFilterItem += "<div class='flex-grow-1 p-2 task-content'><div class='d-flex'><div class='flex-grow-1'>"
+
+                toDoFilterItem += "<div class='task-title'>" + mainDta[i]['TASK_SUBJECT'] + "</div>"
+                toDoFilterItem += "<div class='my-1'>" + mainDta[i]['TASK_DESCRIPTION'] + "</div></div>"
+
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoFilterItem += "<div class='task-activity px-1'><div class='forAction'><label class='switch'><input type='checkbox' onclick='completeTask(" + mainDta[i]['SCHEDULE_id'] + ",this);' id='checkMeOut" + mainDta[i]['SCHEDULE_id'] + "' checked><span class='slider round'></span></label></div></div>"
+                } else {
+                    toDoFilterItem += "<div class='task-activity px-1'><div class='forAction'><label class='switch'><input type='checkbox' onclick='completeTask(" + mainDta[i]['SCHEDULE_id'] + ",this);' id='checkMeOut" + mainDta[i]['SCHEDULE_id'] + "'><span class='slider round'></span></label></div></div>"
+                }
+
+                toDoFilterItem += "</div><div class='task-foter pt-2 small'><div class='d-flex'>"
+
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoFilterItem += "<div class='mr-3'><div>Due On</div><div><b>" + mainDta[i]['TASK_DUEDATEFor'] + "</b></div></div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == true) {
+                    toDoFilterItem += "<div class='mr-3'><div>Due On</div><div><b class='text-danger'>" + mainDta[i]['TASK_DUEDATEFor'] + "</b></div></div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == false) {
+                    toDoFilterItem += "<div class='mr-3'><div>Due On</div><div><b>" + mainDta[i]['TASK_DUEDATEFor'] + "</b></div></div>"
+                }
+
+
+
+
+                //if (mainDta[i]['TASK_PRIORITY'] == "High") {
+                //    toDoFilterItem += "<div class='hd'>Priority</div><div class='data cHigh'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                //} else if (mainDta[i]['TASK_PRIORITY'] == 'Low') {
+                //    toDoFilterItem += "<div class='hd'>Priority</div><div class='data cLow'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                //} else if (mainDta[i]['TASK_PRIORITY'] == 'Normal') {
+                //    toDoFilterItem += "<div class='hd'>Priority</div><div class='data cNormal'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                //}
+                if (mainDta[i]['CompletedBy'] == "") {
+                    toDoFilterItem += "<div class='mr-3'><div>Completed by</div><div>&nbsp; </div></div>"
+                } else {
+                    toDoFilterItem += "<div class='mr-3'><div>Completed by</div><div>" + mainDta[i]['CompletedBy'] + "</div></div>"
+                }
+
+                //toDoFilterItem += "<div class='hd'>Completed by</div><div class='data'>" + mainDta[i]['CompletedBy'] + "</div></li><li>"
+                if (mainDta[i]['completedon'] == null) {
+                    toDoFilterItem += "<div class='mr-3'><div>Completed on</div><div>&nbsp; </div></div>"
+                } else {
+                    toDoFilterItem += "<div class='mr-3'><div>Completed on</div><div>" + mainDta[i]['completedonFor'] + "</div></div> </div></div></div></div>"
+                }
+                toDoFilterItem += "</div></div></div></div>"
+            }
+            $('#generateTask').html(toDoFilterItem);
+        }
+
+
+        function showComplete() {
+            
+            var todoObj = {};
+            todoObj.userid = '';
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/TodoData",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(todoObj),
+                dataType: "json",
+                success: function (data) {
+                    // watchlistDataLoop(data.d);
+                    var mainDta = data.d;
+                    var tureCount = $.grep(mainDta, function (e) { return e.ISCOMPLETED == true });
+                    
+                    generateFilter(tureCount);
+
+                    //filterTodoList(data.d);
+                }
+            });
+        }
+        function showPending() {
+            
+            var todoObj = {};
+            todoObj.userid = '378';
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/TodoData",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(todoObj),
+                dataType: "json",
+                success: function (data) {
+
+                    // watchlistDataLoop(data.d);
+                    var PendingData = data.d;
+                    //console.log(PendingData)
+                    var falseCount = $.grep(PendingData, function (e) { return e.ISCOMPLETED == false && e.WARNING == false });
+
+                    generateFilter(falseCount);
+
+                    //filterTodoList(data.d);
+                }
+            });
+        }
+        function showOverDue() {
+           
+            var todoObj = {};
+            todoObj.userid = '378';
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/TodoData",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(todoObj),
+                dataType: "json",
+                success: function (data) {
+                    // watchlistDataLoop(data.d);
+                    var OverDueData = data.d;
+
+                    var overdueCount = $.grep(OverDueData, function (e) { return e.WARNING == true });
+                    generateFilter(overdueCount);
+
+                    //filterTodoList(data.d);
+                }
+            });
+        }
+        function showAll() {
+            var todoObj = {};
+            todoObj.userid = '378';
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/TodoData",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(todoObj),
+                dataType: "json",
+                success: function (data) {
+                    // watchlistDataLoop(data.d);
+                    createTodoList(data.d);
+                }
+            });
+        }
+
+        function completeTask(id, s) {
+            if ($(s).is(':checked')) {
+                $.confirm({
+                    title: 'Do you want to Complete this task!',
+                    content: '',
+                    icon: 'fa fa-question',
+                    theme: 'material',
+                    closeIcon: true,
+                    animation: 'scale',
+                    type: 'orange',
+                    buttons: {
+                        btnClass: 'btn-purple',
+                        confirm: function () {
+                            var taskEdit = {};
+                            taskEdit.taskId = id;
+                            taskEdit.Status = "0";
+                            $.ajax({
+                                type: "POST",
+                                url: "../service/general.asmx/UpdateTask",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(taskEdit),
+                                dataType: "json",
+                                success: function (data) {
+                                    function createCalender(data) {
+                                        var evt = [];
+
+                                        for (var i = 0; i < data.length; i++) {
+
+                                            var obj = {};
+                                            obj.title = data[i].TASK_SUBJECT;
+                                            obj.start = data[i].TASK_DUEDATE;
+                                            obj.description = data[i].TASK_DESCRIPTION;
+                                            evt.push(obj);
+
+
+
+                                        }
+                                    }
+
+                                    var todoObj = {};
+                                    todoObj.userid = '378';
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "../service/general.asmx/TodoData",
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify(todoObj),
+                                        dataType: "json",
+                                        success: function (data) {
+                                            // watchlistDataLoop(data.d);
+                                            createTodoList(data.d);
+                                            createCalender(data.d);
+                                        }
+                                    });
+
+
+                                }
+                            });
+                        },
+                        cancel: function () {
+                            //$.alert('Canceled!');
+                            $(s).filter(':checkbox').prop('checked', false);
+                        }
+                    }
+                });
+
+            } else {
+                $.confirm({
+                    title: 'Do you want to Re-open this task!',
+                    content: '',
+                    icon: 'fa fa-question',
+                    theme: 'material',
+                    closeIcon: true,
+                    animation: 'scale',
+                    type: 'orange',
+                    buttons: {
+                        
+                        confirm: function () {
+                            var taskEdit = {};
+                            taskEdit.taskId = id;
+                            taskEdit.Status = "1";
+                            $.ajax({
+                                type: "POST",
+                                url: "../service/general.asmx/UpdateTask",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(taskEdit),
+                                dataType: "json",
+                                success: function (data) {
+                                    function createCalender(data) {
+                                        var evt = [];
+
+                                        for (var i = 0; i < data.length; i++) {
+
+                                            var obj = {};
+                                            obj.title = data[i].TASK_SUBJECT;
+                                            obj.start = data[i].TASK_DUEDATE;
+                                            obj.description = data[i].TASK_DESCRIPTION;
+                                            evt.push(obj);
+
+
+
+                                        }
+                                        console.log(evt);
+
+                                    }
+
+                                    var todoObj = {};
+                                    todoObj.userid = '';
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "../service/general.asmx/TodoData",
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify(todoObj),
+                                        dataType: "json",
+                                        success: function (data) {
+                                            // watchlistDataLoop(data.d);
+                                            createTodoList(data.d);
+                                            createCalender(data.d);
+                                        }
+                                    });
+                                }
+                            });
+                        },
+                        cancel: function () {
+                            //$.alert('Canceled!');
+                            $(s).filter(':checkbox').prop('checked', true);
+                        }
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            /* Browser fullscreen experience on double click */
+
+            if (self == top) {
+                $('body').on('dblclick', function (e) {
+                    if (!document.fullscreenElement && // alternative standard method
+                        !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
+                        if (document.documentElement.requestFullscreen) {
+                            document.documentElement.requestFullscreen();
+                        } else if (document.documentElement.msRequestFullscreen) {
+                            document.documentElement.msRequestFullscreen();
+                        } else if (document.documentElement.mozRequestFullScreen) {
+                            document.documentElement.mozRequestFullScreen();
+                        } else if (document.documentElement.webkitRequestFullscreen) {
+                            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                        }
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        }
+                    }
+                });
+            } else {
+            }
+            // getting all task on loading
+            var todoObj = {};
+            todoObj.userid = '';
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/TodoData",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(todoObj),
+                dataType: "json",
+                success: function (data) {
+                    // watchlistDataLoop(data.d);
+                    createTodoList(data.d);
+                }
+            });
+
+
+            $('.tnav-item').on('click', function () {
+                $('.tnav-item').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            //swiper slider for tnav
+            var swiper = new Swiper('.swiper-container', {
+                slidesPerView: 'auto',
+                centeredSlides: false,
+                pagination: false,
+                spaceBetween: 7,
+                slidesPerViewFit: false,
+                roundLengths: 'false'
+            });
+
+
+
+            $('.switcher').btnSwitch({
+                Theme: 'Light'
+            });
+
+            // show chart on icon click
+            $('.showChart').click(function () {
+
+                var classChek = $(this).attr('class');
+
+                if ($(this).hasClass('activechart')) {
+                    $('.chartSec').addClass('hide');
+                    $('.tableInfo').removeClass('hide');
+                    console.log('hide chart');
+                    $(this).removeClass('activechart');
+                } else {
+                    $(this).addClass('activechart');
+                    $('.tableInfo').addClass('hide');
+                    $('.chartSec').removeClass('hide');
+                }
+            })
+            //end
+
+            $('#refreshData').on('click', function () {
+                LoadCustomer();
+                $('#exampleModal').modal('hide');
+            })
+
+        });
+        
+        $(function() { 
+            var toggle = document.querySelector('.toggle input')   
+            $('[data-toggle="tooltip"]').tooltip()  
+        });
+    </script>
+    
+</body>
+</html>

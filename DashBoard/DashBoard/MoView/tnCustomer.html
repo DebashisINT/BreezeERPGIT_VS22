@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    
+</head>
+<body id="test" class="with-chart">
+    <nav class="d-flex flex-column">
+        <div class="logo-wrap"><a href="index.html"><img src="assets/images/logo.png" title="logo" /></a></div>
+        <div class="menuArea flex-grow-1">
+            <ul class="main-nav">
+                <li><a href=""><span><i class="fas fa-home"></i></span> Dashboard</a></li>
+                <li><a href=""><span><i class="fas fa-bezier-curve"></i></span> Transaction</a></li>
+                <li><a href=""><span><i class="fab fa-buffer"></i></span> Project Management</a></li>
+                <li><a href=""><span><i class="fas fa-industry"></i></span> Manufacturing</a></li>
+                <li><a href=""><span><i class="fas fa-user-tie"></i></span> Payroll</a></li>
+                <li><a href=""><span><i class="fas fa-briefcase"></i></span> CRM Master</a></li>
+            </ul>
+        </div>
+        <div class="">
+            <div class="d-flex justify-content-center align-item-center calltoAction">
+                <div><a href="" class="actionBtn key" data-toggle="tooltip" data-placement="top" title="Change Password"><i class="fas fa-key"></i></a></div>
+                <div><a href="" class="actionBtn logout" data-toggle="tooltip" data-placement="top" title="Logout"><i class="fas fa-power-off"></i></a></div>
+            </div>
+        </div> 
+    </nav>
+    <div class="body-wraper">
+        <header class="p-3">
+            <div class="d-flex  align-items-center">
+                <div class="pr-3">
+                    <a href="index.html" class="backLink"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+                <div class="title">Top 10 Customer</div>
+                <div class="ml-auto d-flex align-items-center">
+                    <div class="pr-3 showChart"><i class="fas fa-chart-bar"></i></div>
+                    <div class="dropdown user-dropdown hide">
+                        <a class="btn btn-link p-0" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar"></div>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"> <i class="fas fa-info-circle"></i> What's new</a>
+                            <a class="dropdown-item" href="#"><i class="far fa-question-circle"></i> About</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="content-wrap pb-4">
+            <div class="">
+                <div class="topInfo d-flex align-items-center  p-3 pl-2">
+                    <div class="mr-auto col-xs-12  col-sm-3 col-md-3 col-lg-3 d-flex align-items-center nogutter"><span class="">Search record for</span></div>
+                    <div class=""><i class="fas fa-search" data-toggle="modal" data-target="#exampleModal"></i></div>
+                </div>
+            </div>
+            <div class="tableInfo">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col" class="text-right">Amount (RS)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="displayCustomer"></tbody>
+                </table>
+            </div>
+            <div class="chartSec hide col-lg-4">
+                <canvas id="myChart" height="400px" class="chartCanvas"></canvas>
+            </div>
+        </section>
+        <footer class="footer-fixed">
+            <table class="table table-striped mb-0">
+                <tfoot>
+                    <tr>
+                        <td><b>Total Sales</b></td>
+                        <td class="text-right"><span id="totalSalesvalue">0.00</span></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </footer>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="input-group calwrap">
+                                <input type="text" class="form-control datepicker" id="FromDate" readonly>
+                                <div class="input-group-append calToggleicon">
+                                    <span class="input-group-text "><i class="fas fa-calendar-week"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12  mb-3">
+                            <div class="input-group calwrap">
+                                <input type="text" class="form-control  datepicker" id="toDate" readonly>
+                                <div class="input-group-append calToggleicon">
+                                    <span class="input-group-text "><i class="fas fa-calendar-week"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-sm" id="refreshData"><i class="fas fa-search"></i> Show</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+
+
+    <script>
+     
+        
+   
+        $(document).ready(function () {
+            /* Browser fullscreen experience on double click */
+
+            if (self == top) {
+                $('body').on('dblclick', function (e) {
+                    if (!document.fullscreenElement && // alternative standard method
+                        !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
+                        if (document.documentElement.requestFullscreen) {
+                            document.documentElement.requestFullscreen();
+                        } else if (document.documentElement.msRequestFullscreen) {
+                            document.documentElement.msRequestFullscreen();
+                        } else if (document.documentElement.mozRequestFullScreen) {
+                            document.documentElement.mozRequestFullScreen();
+                        } else if (document.documentElement.webkitRequestFullscreen) {
+                            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                        }
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        }
+                    }
+                });
+            } else {
+            }
+            // show chart on icon click
+            $('.showChart').click(function () {
+
+                var classChek = $(this).attr('class');
+
+                if ($(this).hasClass('activechart')) {
+                    $('.chartSec').addClass('hide');
+                    $('.tableInfo').removeClass('hide');
+                    console.log('hide chart');
+                } else {
+                    $(this).addClass('activechart');
+                    $('.tableInfo').addClass('hide');
+                    $('.chartSec').removeClass('hide');
+                }
+            });
+            //end
+
+
+            var toggle = document.querySelector('.toggle input')
+             $('.toggler').on('click', function(e){
+                 e.preventDefault();
+                toggle.checked = !toggle.checked;
+                //toggle.prop("checked", !toggle.prop("checked"));
+                $('body').toggleClass('navactive');
+             });
+             var date = new Date();
+                var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+             $('#toDate').datepicker({
+                    viewMode: 'months',
+                    format: 'MM, yyyy',
+                    todayHighlight: true,
+                    autoclose: true
+                   
+             });
+             $('#FromDate').datepicker({
+                 viewMode: 'months',
+                 format: 'MM, yyyy',
+                 todayHighlight: true,
+                 autoclose: true,
+                 setDate: new Date() - 30
+             });
+                        
+            $( '#toDate').datepicker( 'setDate', today );
+            
+            $('.calToggleicon').click(function(){
+                $(this).parent('.calwrap').find('.datepicker').datepicker().focus();
+            });
+            var d = new Date();
+            d.setDate(-30);
+            $('#FromDate').datepicker('setDate', d);
+            
+
+                
+            function LoadCustomer() {
+                var OtherDetails = {}
+                OtherDetails.FromDtae = $('#FromDate').data('datepicker').getFormattedDate('yyyy-mm-dd');
+                OtherDetails.toDate = $('#toDate').data('datepicker').getFormattedDate('yyyy-mm-dd');
+               // console.log(OtherDetails);
+                $.ajax({
+                    type: "POST",
+                    url: "../Sales/SalesDb.aspx/GetTopNCustomer",
+                    data: JSON.stringify(OtherDetails),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        // data 
+                        data = msg.d;
+                        //console.log(data);
+                        var table = '';
+                        for (i = 0; i < data.length; i++) {
+                            //var row = '<tr><td>' + data[i].Name + '</td><td style="text-align:right">' + data[i].AmtVal + '</td></tr>'
+                            table += '<tr><td>' + data[i].Name + '</td><td style="text-align:right">' + data[i].AmtVal + '</td></tr>'
+                            
+                        }
+                        $('#displayCustomer').html(table);
+
+                        var DataFilterd = data.filter(function (i) {
+                            return i.AmtVal != 0.00;
+                        });
+
+                        var dataSalesmanChartVal = [],
+                            dataSalesmanChartName = [];
+                        for (i = 0; i < DataFilterd.length; i++) {
+                            dataSalesmanChartVal.push(DataFilterd[i].AmtVal); // creating array for chart value;
+                            dataSalesmanChartName.push(DataFilterd[i].Name); // creating array for chart value;
+                        }
+                        // Chart options
+                        Chart.defaults.global.legend.display = false;
+                        Chart.defaults.global.tooltips.enabled = false;
+                        var ctx = document.getElementById("myChart");
+
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            labels: {
+                                display: false
+                            },
+                            data: {
+                                labels: dataSalesmanChartName,
+                                datasets: [{
+                                    label: '# of Total Sales',
+                                    data: dataSalesmanChartVal,
+                                    backgroundColor: 'rgba(124, 124, 245, 0.9)',
+                                    borderColor: 'rgba(124, 124, 245, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    xAxes: [{
+                                        ticks: {
+                                            maxRotation: 90,
+                                            minRotation: 80
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "../Sales/SalesDb.aspx/GetSalesBalance",
+                    data: JSON.stringify(OtherDetails),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $('#totalSalesvalue').text(data.d.TotalSale).css({ 'font-weight': 'bold' });
+                    }
+                });
+            }
+            LoadCustomer();
+            $('#refreshData').on('click', function () {
+                LoadCustomer();
+                $('#exampleModal').modal('hide');
+            })
+
+        });
+        
+        $(function() { 
+            var toggle = document.querySelector('.toggle input')   
+            $('[data-toggle="tooltip"]').tooltip()  
+            //Enable swiping...
+            // $("body").swipe( {
+            //     //Generic swipe handler for all directions
+            //     swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+                    
+            //         if(direction == 'right') {
+            //             $('body').addClass('navactive');
+            //             toggle.checked = !toggle.checked;
+            //         }else if(direction == 'left'){
+            //             $('body').removeClass('navactive');
+            //             toggle.checked = !toggle.checked;
+            //         }
+            //     },
+            //     swipeStatus:function(event, phase, direction, distance, fingerCount) {
+            //         if ( phase == "move" || phase == "start" ) {
+            //             var $target = event.target.nodeName;
+            //             console.log($target);
+            //             if( $target.toLowerCase() === 'input' ) {
+            //                 return false;
+            //                 $(this).datepicker().focus();
+            //             }else{
+            //                 $('input').blur();
+            //             }
+            //         }
+            //     },
+            //     //Default is 75px, set to 0 for demo so any distance triggers swipe
+            //     threshold:0
+            // });
+
+            
+        });
+    </script>
+    
+</body>
+</html>

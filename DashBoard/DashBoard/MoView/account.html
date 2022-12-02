@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    
+</head>
+<body id="test" class="with-chart">
+    <!--Select branch Popup-->
+    <div class="modal fade" id="SelectBranch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <p class="text-info">Data will be refreshed by Branch wise</p>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Select Branch</label>
+                                <select class="form-control" id="branchSelect">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-sm" id="refreshData"> OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Select branch modal End-->
+
+    <div class="body-wraper">
+        <header class="p-3">
+            <div class="d-flex  align-items-center">
+                <div class="pr-3">
+                    <a href="index.html" class="backLink"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+                <div class="title">Accounts Info</div>
+                <div class="ml-auto d-flex align-items-center">
+                    <div class="pr-3" data-toggle="modal" data-target="#SelectBranch">Select Branch <i class="fas fa-arrow-alt-circle-right"></i></div>
+                    <div class="dropdown user-dropdown hide">
+                        <a class="btn btn-link p-0" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar"></div>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"> <i class="fas fa-info-circle"></i> What's new</a>
+                            <a class="dropdown-item" href="#"><i class="far fa-question-circle"></i> About</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="content-wrap pb-4">
+            <div class="tabs-wraper px-2 pt-2">
+                <ul class="nav nav-tabs primary-tab" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#balance" role="tab" aria-controls="home" aria-selected="true">Balance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#expense" role="tab" aria-controls="profile" aria-selected="false">Expense</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="contact" aria-selected="false">Payments</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tableInfo">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="balance" role="tabpanel" aria-labelledby="balance-tab">
+                        <div class="col-12 mt-3">
+                            <div class="card radius-50 card-light-blue p-4 text-center mb-3">
+                               <h5>Bank Balance</h5>
+                                <div class="text-warning-dark">As On Today</div>
+                                <div class="mt-3 mb-3">
+                                    <select class="form-control  w-auto m-auto bg-transparent " id="bankID"></select>
+                                </div>
+                                <div>
+                                    <span class="text-warning-dark">RS</span>
+                                    <span class="mainAmount" id="balanceAmount">125950.00 Dr</span> 
+                                </div>
+                                <div>Closing Balance</div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <small class="text-info">
+                                All the Data are displayed Branch-wise
+                                by default <b>All</b> Branches are selected
+                                you can change Branch-wise from upper right corner to filter for a single Branch
+                            </small> 
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            
+                            <div><b >Selected Branch Name</b></div>
+                            <h6 class="text-warning-dark" id="currentBranch" data-toggle="modal" data-target="#SelectBranch">All</h6>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="expense" role="tabpanel" aria-labelledby="expense-tab">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Expense  Name</th>
+                                    <th scope="col" class="text-right">Amount (RS)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expenseTable"></tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+                        <div class="p-2 paymentList" id="RencentPaymentTbl">
+                            <!--payments data goes here-->
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+            <div class="chartSec hide col-lg-4">
+                <canvas id="myChart" height="400px" class="chartCanvas"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+
+
+    <script>
+     
+        
+   
+        $(document).ready(function () {
+            /* Browser fullscreen experience on double click */
+
+            if (self == top) {
+                $('body').on('dblclick', function (e) {
+                    if (!document.fullscreenElement && // alternative standard method
+                        !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
+                        if (document.documentElement.requestFullscreen) {
+                            document.documentElement.requestFullscreen();
+                        } else if (document.documentElement.msRequestFullscreen) {
+                            document.documentElement.msRequestFullscreen();
+                        } else if (document.documentElement.mozRequestFullScreen) {
+                            document.documentElement.mozRequestFullScreen();
+                        } else if (document.documentElement.webkitRequestFullscreen) {
+                            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                        }
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        }
+                    }
+                });
+            } else {
+            }
+
+
+            $('#refreshData').on('click', function () {
+                var bran = document.getElementById("branchSelect");
+                var branID = bran.options[bran.selectedIndex].value;
+                // bank id
+                var e = document.getElementById("bankID");
+                var strUser = e.options[e.selectedIndex].value;
+                
+                var bankAmountObj = {};
+                bankAmountObj.BRANCHID = branID;
+                RefreshDASHbOARD(branID);
+                //fetchDashboardAccountDetails(branID);
+                //  fetchDashboardRecentPayments(branID);
+                $('#SelectBranch').modal('hide');
+                $('#currentBranch').text(bran.options[bran.selectedIndex].text);
+            });
+
+        });
+        // Creating List item for Bank select box
+        function createBankList(data) {
+            
+            var eTable = ""
+            for (var i = 0; i < data.length; i++) {
+                eTable += "<option value=' " + data[i]['ID'] + " '>" + data[i]['NAME'] + "</option>";
+            }
+            eTable += "";
+            //console.log(eTable);
+            $('#bankID').html(eTable);
+        }
+        function createBranchList(data) {
+            //console.log(data);
+            var eTable = ""
+            for (var i = 0; i < data.length; i++) {
+                eTable += "<option value=' " + data[i]['ID'] + " '>" + data[i]['NAME'] + "</option>";
+            }
+            eTable += "";
+            $('#branchSelect').html(eTable);
+            //RefreshDASHbOARD($("#branchSelect").val());
+        }
+        // create payments section
+        function createTableForRecentPayment(data) {
+            //console.log(data);
+            if (data.length) {
+                var eTable = ""
+                for (var i = 0; i < data.length; i++) {
+
+
+                    eTable += "<div class='payment-item card'><div class='p-3'>";
+                    eTable += "<h6>" + data[i]['CUSTNAME'] + "</h6>";
+                    eTable += "<div class='d-flex'><div class='mr-4'><div>Invoice No.</div><div class='small text-muted'>" + data[i]['DOCNO'] + "</div></div>";
+                    eTable += "<div><div>Date Paid</div><div class='small text-muted'>" + data[i]['DATE_PAID'] + "</div></div></div></div>";
+                    eTable += "<div class='payment-item-footer'><div><b>Amount Paid</b></div><div class='ml-auto'><span class='text-warning-dark'>RS. </span><b>" + data[i]['AMOUNT'] + "</b></div></div>";
+                    eTable += "</div>";
+                }
+                eTable += "";
+                $('#RencentPaymentTbl').html(eTable);
+            } else {
+                $('#RencentPaymentTbl').html("<div class='payment-item card'><div class='p-3'><b>No Data Available</b></div></div>");
+            }
+        }
+
+        // Expense data for this month
+        function createExpenseData(data) {
+           // console.log(data);
+            if (data.length) {
+                
+                var table = '';
+                for (i = 0; i < data.length; i++) {
+                    //var row = '<tr><td>' + data[i].Name + '</td><td style="text-align:right">' + data[i].AmtVal + '</td></tr>'
+                    table += '<tr><td>' + data[i]['mainAccountName'] + '</td><td style="text-align:right">' + data[i]['balance'] + '</td></tr>'
+
+                }
+                table += '';
+                
+                $('#expenseTable').html(table);
+            } else {
+                $('#expenseTable').html("<tr><td colspan='2' style='text-align: center;padding: 20px 0;color: #6b7ae4;font-size: 16px;'><b>No Data Available</b></td></tr>");
+            }
+        }
+
+
+        $(function() { 
+            $('[data-toggle="tooltip"]').tooltip();
+            var branID = '';
+            // getting branc id
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/GetBranch",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(),
+                dataType: "json",
+                success: function (data) {
+                    createBranchList(data.d)
+                    //console.log(data);
+                    var bran = document.getElementById("branchSelect");
+                    var branID = bran.options[bran.selectedIndex].value;
+                    //console.log(branID);
+                }
+            });
+
+            // payments items data 
+            var rpobj = {};
+            rpobj.BRANCHID = branID;
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/DashboardRecentPayments",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(rpobj),
+                dataType: "json",
+                success: function (data) {
+                    createTableForRecentPayment(data.d)
+                    //console.log(data);
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/DashboardAccDetails",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(rpobj),
+                dataType: "json",
+                success: function (msg) {
+                    createExpenseData(msg.d)
+                }
+            });
+            
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/GetMainAccount",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(),
+                dataType: "json",
+                success: function (data) {
+                    createBankList(data.d)
+                    //console.log(data);
+                    var e = document.getElementById("bankID");
+                    var strUser = e.options[e.selectedIndex].value;
+                    
+                    var bankAmountObj = {};
+                    bankAmountObj.BRANCHID = branID;
+                    bankAmountObj.BANKID = strUser;
+                    //console.log(bankAmountObj);
+                    $.ajax({
+                        type: "POST",
+                        url: "../service/general.asmx/getBankAmount",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(bankAmountObj),
+                        dataType: "json",
+                        success: function (data) {
+                            //createBankList(data.d)
+                            //console.log(data.d);
+                            $('#balanceAmount').text(data.d);
+                            //var bal = data.d[0].BALANCE;
+
+
+                        }
+                    });
+                }
+            });
+            // on bank dropdown change refresh amount
+            $("#bankID").change(function () {
+                var e = document.getElementById("bankID");
+                var strUser = e.options[e.selectedIndex].value;
+                //console.log(strUser);
+                var bran = document.getElementById("branchSelect");
+                var branID = bran.options[bran.selectedIndex].value;
+                var bankAmountObj = {};
+                bankAmountObj.BRANCHID = branID;
+                bankAmountObj.BANKID = strUser;
+
+                $.ajax({
+                    type: "POST",
+                    url: "../service/general.asmx/getBankAmount",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(bankAmountObj),
+                    dataType: "json",
+                    success: function (data) {
+                        //createBankList(data.d)
+                        //console.log(data.d);
+
+
+
+                        $('#balanceAmount').text(data.d);
+                        //var bal = data.d[0].BALANCE;
+
+
+                    }
+                });
+            });
+            //makeFullscreen();
+            // fullscreen
+           
+            
+        });
+        
+        
+        function makeFullscreen() {
+            if (!document.fullscreenElement && // alternative standard method
+                    !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+        }
+        function RefreshDASHbOARD(branID) {
+
+            var rpobj = {};
+            rpobj.BRANCHID = branID;
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/DashboardRecentPayments",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(rpobj),
+                dataType: "json",
+                success: function (data) {
+                    createTableForRecentPayment(data.d)
+                    //console.log(data);
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/DashboardAccDetails",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(rpobj),
+                dataType: "json",
+                success: function (msg) {
+                    createExpenseData(msg.d)
+                }
+            });
+            // get the value of select box bank 
+
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/GetMainAccount",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(),
+                dataType: "json",
+                success: function (data) {
+                    createBankList(data.d)
+                    //console.log(data);
+                    var e = document.getElementById("bankID");
+                    var strUser = e.options[e.selectedIndex].value;
+                    //console.log(strUser);
+
+                    var bankAmountObj = {};
+                    bankAmountObj.BRANCHID = branID;
+                    bankAmountObj.BANKID = strUser;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../service/general.asmx/getBankAmount",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(bankAmountObj),
+                        dataType: "json",
+                        success: function (data) {
+
+                           $('#balanceAmount').text(data.d);
+
+                        }
+                    });
+                }
+            });
+        }
+        window.scrollTo(0, 1);
+
+    </script>
+    
+</body>
+</html>

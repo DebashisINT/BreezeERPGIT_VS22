@@ -1,0 +1,210 @@
+﻿ ul.nopad {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        ul.nopad > li {
+            display: inline-block;
+            min-width: 18.4%;
+        }
+
+            ul.nopad > li:not(:last-child) {
+                margin-right: 1%;
+            }
+
+    .colorBox {
+        background: #4f4e94;
+        color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .colorBox.c1 {
+            background: #309b60;
+        }
+
+        .colorBox.c2 {
+            background: #3798c5;
+        }
+
+        .colorBox.c3 {
+            background: #e68929;
+        }
+
+        .colorBox.c4 {
+            background: #882626;
+        }
+
+    .infoWrp {
+        padding: 12px 15px;
+        position: relative;
+    }
+
+        .infoWrp > .nums {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .infoWrp > .txts {
+            font-size: 80%;
+        }
+
+    .mrLinks {
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.34);
+        padding: 5px 10px;
+        font-size: 80%;
+    }
+
+        .mrLinks > .fa {
+            float: right;
+            margin-top: 4px;
+        }
+
+    .fltd {
+        position: absolute;
+        right: 20px;
+        top: 12px;
+        font-size: 44px !important;
+        color: rgba(0, 0, 0, 0.54);
+    }
+
+    .box-holder {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        border-top: 4px solid rgb(13, 105, 67);
+        background: #fff;
+        -webkit-transition: all 0.2s ease-in;
+        -moz-transition: all 0.2s ease-in;
+        transition: all 0.2s ease-in;
+    }
+        .box-holder.full-screen, .box-full.full-screen {
+            position: fixed;
+            top: 5vh;
+            height: 90vh;
+            width: 90%;
+            background: #fff;
+            left: 5%;
+            box-shadow: 0 0 5px rgba(0,0,0,0.35);
+            z-index: 99;
+            border-top: 4px solid rgb(13, 105, 67);
+            border-radius: 5px;
+            padding: 20px;
+            border-radius: 5px;
+        }
+    .chartHolder{
+        height:300px;
+    }
+    .box-holder.full-screen .chartHolder, .box-full.full-screen .chartHolder {
+        height: 70vh !important;
+    }
+    .toggleFullScreen {
+        top: 29px;
+        position: absolute;
+        right: 35px;
+        font-size: 14px;
+        display: block;
+        z-index: 5;
+        cursor: pointer;
+    }
+    .box-holder.full-screen .toggleFullScreen {
+
+        right: 25px;
+        top: 19px;
+
+    }   
+            
+    .box-holder .hdd-rp {
+        font-size: 15px;
+        font-weight: 600;
+        padding: 8px 15px;
+    }
+
+    .box-holder .bxd-cont {
+        padding: 15px;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .table .thead-light th {
+        color: #495057;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+    .badge {
+        font-weight: 500;
+        font-size: 12px;
+    }
+
+    .badge-warning {
+        color: #212529;
+        background-color: #ffc107;
+    }
+
+    .badge-success {
+        color: #fff;
+        background-color: #28a745;
+    }
+
+    .badge-danger {
+        color: #fff;
+        background-color: #dc3545;
+    }
+
+    #chartdiv {
+        width: 100%;
+        height: 450px;
+    }
+
+    .mTop10 {
+        margin-top: 10px;
+    }
+
+    .pignose-calendar {
+        width: 100%;
+        max-width: 100% !important;
+    }
+
+    .pignose-calendar .pignose-calendar-top,
+    .pignose-calendar {
+        box-shadow: none !important;
+    }
+    .tbleChoosedate {
+        float: right;
+        margin-right: 15px;
+        font-size:14px;
+    }
+    .tbleChoosedate >tbody>tr>td:not(:last-child) {
+        padding-right:15px;
+    }
+    .dateWidth {
+        max-width:140px;
+    }
+    .chartHolder{
+        border:1px solid #ccc
+    }
+    .usrTabl {
+        width:100%;
+    }
+    .usrTabl>thead>tr>th {
+        background:#3798c5;
+        color:#fff;
+        padding:8px 5px;
+    }
+    .usrTabl > tbody > tr > td {
+        padding:5px;
+    }
+        .usrTabl > tbody > tr:nth-child(even) > td {
+            background: #f1f1f1;
+        }
+    .nCheck {
+        font-size: 18px;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }

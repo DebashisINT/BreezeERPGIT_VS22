@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    .dashboardContainer {
+        background-color: rgb(235 242 245);
+        margin-left: 167px;
+        font-family: 'Poppins', sans-serif;
+    }
+    .mainWraper + div svg {
+        display:none;
+    }
+    /*#header {
+        margin-left: 190px;
+    }
+    .pwred {
+        display:none;
+    }
+    .sidenav > ul > li > a > i {
+        color: #a2b3c7 !important;
+    }
+    .sidebar {
+        background: #21264e;
+        width: 190px;
+        
+    }
+    .sidenav ul > li > a {
+        background: #21264e;
+        font-family: 'Poppins', sans-serif !important;
+    }
+    .sidenav ul > li .dropdown-menu {
+        background: #1c2042;
+    }
+    .sidenav ul .seclevel {
+        background: #1c2042;
+    }
+    .sidenav ul > li .dropdown-menu.thrdlevel {
+        background: #14172f;
+    }
+    .dropdown-menu.thrdlevel li ul {
+        background: #14172f !important;
+    }
+    .sidenav ul .seclevel li:hover > a, .sidenav ul .seclevel li.active a {
+        background: #14172f;
+    }
+    .sidenav > ul > li > a {
+        border-bottom: 1px dashed #383e6b;
+        padding: 15px 9px 8px 10px;
+    }
+    .leftLogowrap, .fixedMenuNew {
+        width: 190px;
+    }
+    .fixedMenuNew .leftLogowrap {
+        height: 56px;
+        max-width: 100%;
+    }
+    .fixedMenuNew .leftLogowrap > img {
+        max-width: 96% !important;
+    }
+    .sidenav ul > li a:hover, .sidenav ul > li a.active:hover {
+        text-decoration: none;
+        background: #0e1531;
+    }
+    .sidenav > ul > li:hover > a {
+        background-color: #090f27;
+    }
+    .sidenav ul > li a.active, .sidenav ul > li a.active:hover {
+        background: #0d101d;
+        color: #e8e8e8;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }*/
+</style>
+<script>
+    $(function () {
+        $('.rightSide').addClass('dashboardContainer');
+    })
+</script>
+<div id="root"></div>
+
+@section scripts {
+    <script src="~/Scripts/React/dist/bundle.js"></script>
+}
+

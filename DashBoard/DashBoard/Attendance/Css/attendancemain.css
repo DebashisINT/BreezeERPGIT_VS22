@@ -1,0 +1,137 @@
+﻿.bodyBg {
+        background: #dcd9d4;
+        }
+
+ .scroller {
+           max-height:82vh;
+           overflow-y:auto;
+           overflow-x:hidden;
+        }
+::-webkit-scrollbar
+{
+    width: 5px;  /* for vertical scrollbars */
+            
+}
+
+::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: rgba(0, 0, 0, 0.5);
+}
+.f14 {
+    font-size: 14px;
+}
+.effWidgetCnt {
+    padding-top:16px;
+    padding-bottom:20px;
+}
+.flexConatiner {
+    display:flex;
+    
+    justify-content:center;
+    flex-flow: row wrap;
+}
+.flexItem {
+    background:#fff;
+    width:18%;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+.flexItem .icon{
+    display: flex;
+    float: left;
+    width: 75px;
+    height: 75px;
+    background: rgba(0,0,0,0.32);
+    /* text-align: center; */
+    /* vertical-align: middle; */
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 28px;
+}
+
+.flexItem .number{
+        font-size: 30px;
+    margin-top: 2px;
+}
+.flexItem .icon + div {
+    padding-top:5px;
+    padding-left:86px;
+    font-family: 'Poppins', sans-serif;
+    color:#fff;
+}
+.flexItem:nth-child(3){
+    background:#FD970F;
+}
+.flexItem:nth-child(2){
+    background:#4BA64F;
+}
+.flexItem:nth-child(4){
+    background:#E94541;
+}
+.flexItem:nth-child(1){
+    background:#1DC0D4;
+}
+.flexItem:nth-child(5){
+    background:#6D78AD;
+}
+
+.PanelMainDiv {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 9px;
+    margin-bottom:30px;
+}
+
+#performanceChrtDiv {
+     background-color:#e2dfdf;
+}
+
+
+
+.bottomdiv {
+        position: fixed;
+    width: 100%;
+    min-height: 25px;
+    background: #1f8da0;
+    bottom: 0px;
+}
+
+
+.amcharts-chart-div>svg + a {
+    display:none !important;
+}
+
+
+
+.latecomeerclass { 
+    width:100%;
+     
+}
+.latecomeerclass > thead > tr > th {
+background:#465b9d;
+color:#fff;
+font-weight:600;
+}
+
+
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+
+.centrtext {
+    text-align: center
+}

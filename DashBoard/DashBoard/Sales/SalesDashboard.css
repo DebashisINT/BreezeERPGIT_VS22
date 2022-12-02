@@ -1,0 +1,667 @@
+﻿
+     .closeBtn a {
+        font-size: 14px;
+        /* padding: 8px; */
+        color: #e55656;
+        background: #e35353;
+        color: #fff !important;
+        width: 23px;
+        height: 23px;
+        display: inline-block;
+        text-align: center;
+        line-height: 25px;
+        border-radius: 50%;
+        margin-top: 12px;
+    }
+
+
+        #CustomNewNotify {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #54749d;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            top: 230px;
+            font-size: 17px;
+        }
+
+        .amcharts-chart-div > svg + a {
+            display: none !important;
+        }
+
+        #CustomNewNotify.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 5.5s;
+            animation: fadein 0.5s, fadeout 0.5s 5.5s;
+        }
+
+        @-webkit-keyframes fadein {
+            from {
+                top: 0;
+                opacity: 0;
+            }
+
+            to {
+                top: 230px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadein {
+            from {
+                top: 0;
+                opacity: 0;
+            }
+
+            to {
+                top: 230px;
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeout {
+            from {
+                top: 230px;
+                opacity: 1;
+            }
+
+            to {
+                top: 0;
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                top: 230px;
+                opacity: 1;
+            }
+
+            to {
+                top: 0;
+                opacity: 0;
+            }
+        }
+
+
+        .fullscreen {
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #dfe8f1;
+            -webkit-transition: all 1.5s ease;
+            transition: all 1.5s ease;
+        }
+    
+        .DisableClass {
+            background: #28303c !important;
+            cursor: default !important;
+            -ms-transform: scale(.9);
+            /* -webkit-transform: scale(.9); */
+            /* transform: scale(.9); */
+            /* z-index: 9999; */
+            color: #dcdcdc !important;
+            animation: 5s shake infinite alternate;
+            width: 103%;
+        }
+
+
+        .popover-content {
+            color: #333;
+        }
+
+        .popover-content {
+            width: 450px !important;
+            color: #4869a7;
+            font-size: 12px;
+        }
+
+        .popover {
+            max-width: 450px !important;
+        }
+
+        .hdBoder {
+            border-bottom: 1px solid #848792;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .colWraper {
+            padding: 5px 5px 5px 5px;
+            border: 1px solid #2c4182;
+            margin-bottom: 5px;
+            background: #efefef;
+            min-height: 428px; /*405px;*/
+        }
+
+        .mcus {
+            margin: 12px 0;
+        }
+
+            .mcus > tbody > tr > td {
+                padding-bottom: 5px;
+                padding-right: 15px;
+            }
+
+        .diverh {
+            font-size: 14px;
+            background: #54749d;
+            color: #fff;
+            padding: 5px 10px;
+            margin-bottom: 1px;
+        }
+
+        .white, .white:hover, .white:focus, .white:active {
+            color: #fff;
+            font-size: 30px;
+        }
+
+        .pad5 {
+            padding: 5px;
+        }
+
+        .trSpan {
+            transform: translateY(-5px);
+            position: relative;
+            display: block;
+        }
+
+        .panelClass {
+            margin-bottom: 31px;
+            top: 50px;
+            display: none;
+            opacity: 0;
+        }
+
+        .serverMsg {
+            color: maroon;
+            font-size: 22px;
+        }
+
+        .firstCell {
+            text-align: center;
+            padding: 0;
+        }
+
+        .besidepart {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .excelIco {
+            height: 25px;
+            margin-top: -8px;
+        }
+
+        .widget {
+            height: 66px;
+            text-align: center;
+            padding: 20px 0;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+            .widget.c1 {
+                background: #C08410;
+            }
+
+            .widget.c2 {
+                background: #2C469B;
+            }
+
+
+            .widget.c3 {
+                background: #468847;
+            }
+
+
+            .widget.c4 {
+                background: #2FABD9;
+            }
+
+
+            .widget.c5 {
+                background: #009c19;
+            }
+
+
+            .widget.c6 {
+                background: #965a89;
+            }
+
+            .widget.c7 {
+                background: #e84c0e;
+            }
+
+
+            .widget.c8 {
+                background: #0BA127;
+            }
+
+
+            .widget.c9 {
+                background: #4869a7;
+            }
+
+        .HeaderStyleCRM {
+            color: #111e4e;
+            font-size: 22px;
+            margin-top: 13px !important;
+        }
+
+        .scroller {
+            max-height: 82vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px; /* for vertical scrollbars */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+
+        .arrowPointer {
+            color: green;
+            padding-left: 5px;
+            /*animation: ArrowleftRight 5s infinite;*/
+        }
+
+
+        @-webkit-keyframes ArrowleftRight {
+            0% {
+                transform: translateX(10px);
+            }
+
+            25% {
+                transform: translateX(0px);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+
+            75% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(10px);
+            }
+        }
+
+        @keyframes ArrowleftRight {
+            0% {
+                transform: translateX(10px);
+            }
+
+            25% {
+                transform: translateX(0px);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+
+            75% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(10px);
+            }
+        }
+
+
+        .glow {
+             animation-name: glowText;
+    animation-duration: 2s;
+    animation-iteration-count:infinite; 
+        }
+
+        @-webkit-keyframes glowText {
+            0% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.0);
+            }
+            10% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.2);
+            }
+            20% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.4);
+            }
+            30% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.6);
+            }
+            40% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.8);
+            }
+            50% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,1);
+            }
+            60% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.8);
+            }
+            70% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.6);
+            }
+
+             80% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.4);
+            }
+
+              90% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.2);
+            }
+               100% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.0);
+            }
+
+            
+        }
+
+          @keyframes glowText {
+          0% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.0);
+            }
+            10% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.2);
+            }
+            20% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.4);
+            }
+            30% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.6);
+            }
+            40% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.8);
+            }
+            50% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,1);
+            }
+            60% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.8);
+            }
+            70% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.6);
+            }
+
+             80% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.4);
+            }
+
+              90% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.2);
+            }
+               100% {
+            text-shadow: 0px 3px 5px rgb(25, 25, 25,.0);
+            }
+
+            
+        }
+
+
+
+
+
+        .scroller {
+            padding-bottom: 10px;
+        }
+
+            .scroller > div > .col-md-12 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+
+        .card {
+            background: #fff;
+            background: #f1f1f1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 10px 15px;
+            border-bottom: 1px solid #485c5f;
+            background: #485c5f;
+            color: white;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card.full {
+            height: 100%;
+        }
+
+            .card.full .card-body {
+                height: 100%;
+            }
+
+        .fullscreen {
+            padding: 0;
+        }
+
+        .inrColor {
+            color: #00ff0a;
+        }
+
+        .flLeftTbl {
+            margin: 8px 0 0 20px;
+        }
+
+            .flLeftTbl > tbody > tr > td {
+                padding-right: 15px;
+                vertical-align: middle;
+            }
+
+        .squareLegend {
+            height: 10px;
+            width: 10px;
+            display: inline-block;
+            /*background: #fdd400;*/
+        }
+
+        .legrndBlock {
+            text-align: center;
+            padding-bottom: 15px;
+        }
+
+        .chartmsg {
+            font-size: 20px;
+            text-align: center;
+            color: maroon;
+        }
+        
+        .horizontalTabs {
+            width:100%;
+            display:block;
+            border-bottom:1px solid #ccc;
+            margin-bottom:15px;
+        }
+        .horizontalTabs >li{
+            float:left;
+            display:block;
+        }
+        .nav.horizontalTabs >li>a:hover,
+        .nav.horizontalTabs >li>a.active:hover,
+        .nav.horizontalTabs >li>a:focus,
+        .nav.horizontalTabs >li>a:focus:hover{
+            background-color:transparent !important;
+            color:#2d2626 !important;
+            
+        }
+        .nav.horizontalTabs >li>a.active{
+            border-bottom:4px solid #5f7bd4;
+            color:#5f7bd4;
+        }
+
+
+        /* Styling Checkbox Starts */
+            .salesAmt {
+                font-size:18px;
+                margin-right:12px;
+            }
+            .checkbox-label {
+                display: inline-block;
+                position: relative;
+                margin: auto;
+                cursor: pointer;
+                font-size: 22px;
+                line-height: 24px;
+                height: 24px;
+                width: 24px;
+                clear: both;
+            }
+
+            .checkbox-label input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+            .checkbox-label .checkbox-custom {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                height: 20px;
+                width: 20px;
+                background-color: transparent;
+                border-radius: 5px;
+                transition: all 0.3s ease-out;
+                -webkit-transition: all 0.3s ease-out;
+                -moz-transition: all 0.3s ease-out;
+                -ms-transition: all 0.3s ease-out;
+                -o-transition: all 0.3s ease-out;
+                border: 2px solid #FFFFFF;
+            }
+
+
+            .checkbox-label input:checked ~ .checkbox-custom {
+                background-color: #FFFFFF;
+                border-radius: 5px;
+                -webkit-transform: rotate(0deg) scale(1);
+                -ms-transform: rotate(0deg) scale(1);
+                transform: rotate(0deg) scale(1);
+                opacity:1;
+                border: 2px solid #FFFFFF;
+            }
+
+
+            .checkbox-label .checkbox-custom::after {
+                position: absolute;
+                content: "";
+                left: 12px;
+                top: 12px;
+                height: 0px;
+                width: 0px;
+                border-radius: 5px;
+                border: solid #009BFF;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(0deg) scale(0);
+                -ms-transform: rotate(0deg) scale(0);
+                transform: rotate(0deg) scale(0);
+                opacity:1;
+                transition: all 0.3s ease-out;
+                -webkit-transition: all 0.3s ease-out;
+                -moz-transition: all 0.3s ease-out;
+                -ms-transition: all 0.3s ease-out;
+                -o-transition: all 0.3s ease-out;
+            }
+
+
+            .checkbox-label input:checked ~ .checkbox-custom::after {
+              -webkit-transform: rotate(45deg) scale(1);
+              -ms-transform: rotate(45deg) scale(1);
+              transform: rotate(45deg) scale(1);
+              opacity:1;
+              left: 5px;
+              top: 1px;
+              width: 6px;
+              height: 12px;
+              border: solid #009BFF;
+              border-width: 0 2px 2px 0;
+              background-color: transparent;
+              border-radius: 0;
+            }
+
+
+
+            /* For Ripple Effect */
+            .checkbox-label .checkbox-custom::before {
+                position: absolute;
+                content: "";
+                left: 10px;
+                top: 10px;
+                width: 0px;
+                height: 0px;
+                border-radius: 5px;
+                border: 2px solid #FFFFFF;
+                -webkit-transform: scale(0);
+                -ms-transform: scale(0);
+                transform: scale(0);    
+            }
+
+            .checkbox-label input:checked ~ .checkbox-custom::before {
+                left: -3px;
+                top: -3px;
+                width: 24px;
+                height: 24px;
+                border-radius: 5px;
+                -webkit-transform: scale(3);
+                -ms-transform: scale(3);
+                transform: scale(3);
+                opacity:0;
+                z-index: 999;
+                transition: all 0.3s ease-out;
+                -webkit-transition: all 0.3s ease-out;
+                -moz-transition: all 0.3s ease-out;
+                -ms-transition: all 0.3s ease-out;
+                -o-transition: all 0.3s ease-out;
+            }
+            .mtop3 {
+                margin-top:3px;
+            }
+   
+    .swiper-container {
+      width: 97%;
+      height: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: auto;
+    }
+  

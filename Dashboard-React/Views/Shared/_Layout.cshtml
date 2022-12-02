@@ -1,0 +1,1085 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+ 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/assests/bootstrap/css/MasterPage.css" rel="stylesheet" />
+    <link href="~/assests/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/assests/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/assests/pluggins/customScroll/custoScroll.css" rel="stylesheet" />
+    <link href="~/assests/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="~/assests/css/custom/main.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="/assests/css/custom/newtheme.css" />
+    <link rel="stylesheet" href="/assests/css/custom/PMSStyles.css" />
+    <link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+
+    <script src="~/assests/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='~/assests/js/jquery.min.js'><\/script>")
+    </script>
+
+    <script type="text/javascript" src="~/assests/js/jquery-ui.min.js"></script>
+
+    @*<script type="text/javascript">
+        window.jQuery || document.write("<script src='~/assests/js/jquery-ui.min.js'><\/script>")
+        </script>*@
+
+    @*<script src="~/assests/js/init.js"></script>
+        <script src="~/assests/js/ajax-dynamic-list.js"></script>*@
+
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+    <link href="~/assests/pluggins/JqueryConfirm/jquery-confirm.min.css" rel="stylesheet" />
+    <script src="~/assests/js/modalmsg.js"></script>
+    <script src="~/assests/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assests/pluggins/JqueryConfirm/jquery-confirm.min.js"></script>
+    <script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="~/assests/js/main.js"></script>
+    <script src="~/assests/js/MasterPage.js"></script>
+    <style>
+        .HelpMasterClass {
+            font-size: 24px;
+            display: inline-block;
+            margin: 16px;
+            color: white;
+            cursor: pointer;
+        }
+        /* Calculator part */
+        .chat_container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            right: 0;
+            left: 0;
+            width: 60%;
+            height: 70%;
+            z-index: 9999;
+        }
+
+            .chat_container .chat {
+                position: absolute;
+                width: 93%;
+                height: 98%;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                left: 0;
+                right: 0;
+                background: white;
+                border-radius: 10px;
+                transform: scale(0);
+                box-shadow: 0 5px 60px 10px rgba(0, 0, 0, 0.12);
+            }
+
+                .chat_container .chat::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-left: 15px solid rgba(0, 0, 0, 0);
+                    border-bottom: 15px solid rgba(0, 0, 0, 0);
+                    border-top: 15px solid rgba(0, 0, 0, 0);
+                    border-right: 15px solid white;
+                    left: -25px;
+                    top: 7px;
+                }
+
+                .chat_container .chat .textbox {
+                    position: absolute;
+                    width: 100%;
+                    height: 50px;
+                    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.07);
+                    bottom: 0;
+                }
+
+                    .chat_container .chat .textbox .input {
+                        width: 82%;
+                        height: 35px;
+                        display: block;
+                        position: relative;
+                        float: left;
+                        margin-left: 10px;
+                        border: none;
+                        padding: 3px;
+                        border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+                    }
+
+                    .chat_container .chat .textbox .send {
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        width: 50px;
+                        height: 50px;
+                        text-align: center;
+                        line-height: 50px;
+                        font-size: 40px;
+                        color: #1E88E5;
+                    }
+
+        .bubble {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            position: fixed;
+            top: 50%;
+            right: -15px;
+            text-align: center;
+            box-shadow: 0 0px 20px rgba(0, 0, 0, 0.19), 0 0px 6px rgba(0, 0, 0, 0.23);
+            background: white;
+            background-size: cover;
+            cursor: pointer;
+        }
+
+            .bubble > img {
+                max-width: 38px;
+                margin: 15px 0 7px 1px;
+            }
+
+            .bubble:hover {
+                transition: all 0.3s;
+                transform: scale(1.1);
+            }
+
+        .bubble__span {
+            position: absolute;
+            left: 70px;
+            background: #333;
+            border-radius: 10px;
+            padding: 5px;
+            color: white;
+            font-family: "Roboto";
+            opacity: 0;
+        }
+
+        .bubble:active {
+            transform: scale(1.2);
+            transition: all 0.3s;
+        }
+
+        .chat-thread {
+            padding: 20px;
+            margin: 10px;
+            list-style: none;
+            overflow-x: hidden;
+        }
+
+            .chat-thread li {
+                position: relative;
+                clear: both;
+                display: inline-block;
+                padding: 10px 20px 10px 15px;
+                margin-bottom: 10px;
+                font-family: "Roboto";
+                font: 14px;
+                border-radius: 25px;
+            }
+
+            .chat-thread .message-mit {
+                background: #1E88E5;
+                float: right;
+                color: white;
+            }
+
+            .chat-thread .message-dest {
+                background: #CFD8DC;
+                float: left;
+            }
+
+            .chat-thread .loading .material-icons {
+                color: rgba(200, 200, 200, 0.8);
+                font-size: 8px;
+                padding: 1px;
+                margin-bottom: 5px;
+            }
+
+                .chat-thread .loading .material-icons:nth-child(1) {
+                    animation: writing 1.2s infinite alternate;
+                }
+
+                .chat-thread .loading .material-icons:nth-child(2) {
+                    animation: writing 1.2s infinite 0.2s alternate;
+                }
+
+                .chat-thread .loading .material-icons:nth-child(3) {
+                    animation: writing 1.2s infinite 0.3s alternate;
+                }
+
+        .bouncein {
+            animation: bounce 0.4s ease-out forwards 0.2s;
+        }
+
+        .bounceout {
+            animation: bounce 0.25s ease-out forwards reverse;
+        }
+
+
+        .Calcheader {
+            font-size: 18px;
+            padding: 15px 25px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+            .Calcheader > span {
+                font-weight: 300;
+                color: #0083c9;
+            }
+
+        .tilesContent {
+            padding: 15px 25px;
+        }
+
+        .textbox {
+            padding: 10px 15px;
+        }
+
+        .AboutPop {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.62);
+            display: none;
+            z-index: 55;
+        }
+
+        .AboutBox {
+            width: 400px;
+            margin: auto;
+            background: #fff;
+            margin-top: 152px;
+            padding: 6px 15px 15px 15px;
+            border-radius: 4px;
+            border: 3px solid #309dff;
+            box-shadow: 0px 0px 0px 1px #094780;
+        }
+
+        .AbtImage {
+            -webkit-transform: translateX(-17px);
+            -moz-transform: translateX(-17px);
+            -o-transform: translateX(-17px);
+            transform: translateX(-17px);
+            margin-bottom: 14px;
+        }
+
+        .abtContent {
+            padding: 20px 0 0 0;
+        }
+
+        .AboutPop .CrossIconAbout {
+            position: absolute;
+            right: 7px;
+            top: 4px;
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+            .AboutPop .CrossIconAbout:hover {
+                color: #094e8c;
+            }
+
+        #CRSAbtButton {
+            border: 1px solid #ccc;
+            background: #e6e6e6;
+            padding: 4px 14px;
+            float: right;
+        }
+
+            #CRSAbtButton:hover {
+                border: 1px solid #adabab;
+                background: #d2d2d2;
+            }
+
+        .AboutBoxHeader {
+            font-size: 16px;
+            border-bottom: 1px solid #f1eded;
+            padding-bottom: 5px;
+        }
+        /*End of Calculator*/
+        /*Menu design changes*/
+        .fixedMenuNew {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            background: #272b3c;
+            width: 167px;
+            z-index: 55;
+            -webkit-transition: all 0.3s ease-in;
+            -moz-transition: all 0.3s ease-in;
+            transition: all 0.3s ease-in;
+        }
+
+        .mini-navbar .fixedMenuNew {
+            width: 51px;
+        }
+
+        #header {
+            margin-left: 167px;
+        }
+
+        .mini-navbar #header {
+            margin-left: 50px;
+        }
+
+        .fixedMenuNew .leftLogowrap {
+            height: 60px;
+            float: none !important;
+        }
+        /*.fixedMenuNew .sidebar {
+            position:static;
+        }*/
+
+        /*hover on mini*/
+        .mini-navbar .fixedMenuNew:hover .sidebar {
+            width: 167px !important;
+        }
+
+            .mini-navbar .fixedMenuNew:hover .sidebar .navfltext {
+                width: auto;
+                opacity: 1;
+                display: inline-block;
+            }
+
+        .mini-navbar .fixedMenuNew:hover .bigLogo {
+            display: block;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .miniLogo {
+            display: none;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav li > a {
+            font-size: inherit;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .leftLogowrap {
+            width: 100%;
+        }
+
+        .mini-navbar .fixedMenuNew:hover {
+            width: 167px;
+        }
+
+        .mini-navbar .sidebar .navfltext {
+            display: none;
+            width: 0px;
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-in;
+            -moz-transition: all 0.3s ease-in;
+            transition: all 0.3s ease-in;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav > ul > li > a .dpvsl {
+            display: block;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .pwred {
+            display: block;
+        }
+
+        .fixedMenuNew .sidenav > ul > li:last-child {
+            margin-bottom: 20px;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav ul li {
+            font-size: 12px;
+        }
+
+        .mini-navbar #header {
+            width: calc(100% - 50px);
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            //About section
+            $('#showAbout').click(function () {
+                $(".AboutPop").show();
+            });
+            $('.CrossIconAbout, #CRSAbtButton').click(function () {
+                $(".AboutPop").hide();
+            });
+
+
+            //alert('@Convert.ToString(HttpContext.Current.Session["biglogo"])');
+
+            var WindowHeight = $(window).height();
+            var SetmenuHeight = WindowHeight - 120;
+
+            $('.fixedMenuNew .sidenav > ul').css({ 'max-height': SetmenuHeight });
+            //$('.mini-navbar .fixedMenuNew').mouseover(function () {
+            //    setTimeout(function () {
+            //        $('.fixedMenuNew .sidebar .navfltext').css({ 'width': 'auto', 'opacity': '1', 'display': 'inline-block' })
+            //    }, 1000);
+
+            //});
+        });
+        $(window).resize(function () {
+            var WindowHeight = $(window).height();
+            var SetmenuHeight = WindowHeight - 120;
+            $('.fixedMenuNew .sidenav > ul').css({ 'max-height': SetmenuHeight });
+        })
+
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            function getTime() {
+                var d = new Date();
+                d.setHours(d.getHours()); // offset from local time
+                var h = (d.getHours() % 12) || 12; // show midnight & noon as 12
+                return (
+                    (h < 10 ? '0' : '') + h +
+                    (d.getMinutes() < 10 ? ':0' : ':') + d.getMinutes() +
+                            // optional seconds display
+                    // ( d.getSeconds() < 10 ? ':0' : ':') + d.getSeconds() +
+                    (d.getHours() < 12 ? ' AM' : ' PM')
+                );
+
+            }
+
+            var clock = document.getElementById('clock');
+            setInterval(function () { clock.innerHTML = getTime(); }, 1000);
+
+
+            function formatDate(date) {
+                var monthNames = [
+                  "January", "February", "March",
+                  "April", "May", "June", "July",
+                  "August", "September", "October",
+                  "November", "December"
+                ];
+
+                var day = date.getDate();
+                var monthIndex = date.getMonth();
+                var year = date.getFullYear();
+
+                return day + ' ' + monthNames[monthIndex] + ' ' + year;
+            }
+            var dayDate = document.getElementById('dayDate');
+            setInterval(function () { dayDate.innerHTML = formatDate(new Date()); }, 1000);
+        });
+    </script>
+    <style>
+        span.text {
+            display: inline-block;
+        }
+
+        .dateTime {
+            background: #144a77;
+            border-radius: 5px;
+            padding: 5px 15px;
+            font-size: 14px;
+            margin: 14px 0;
+            color: #fff;
+        }
+
+        ul.recentLinks {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+            ul.recentLinks > li > a {
+                margin-bottom: 8px;
+                display: inline-block;
+                text-decoration: underline;
+                /* padding-bottom: 5px; */
+                padding: 5px 10px;
+                background: #fff;
+                border-radius: 4px;
+                box-shadow: 0 0 5px rgba(0,0,0,0.23);
+                width: 100%;
+            }
+        /*user access dropdown change*/
+        .navbar-top-links li .dropdown-menu.userAccsess {
+            background: #fff;
+            border-radius: 0;
+            color: #333;
+            padding: 0;
+            width: 240px !important;
+        }
+
+            .navbar-top-links li .dropdown-menu.userAccsess > li > a {
+                color: #333;
+                display: block;
+                padding: 6px 10px;
+            }
+
+            .navbar-top-links li .dropdown-menu.userAccsess > li.logout {
+                border-top: 1px solid #f1efef;
+            }
+
+            .navbar-top-links li .dropdown-menu.userAccsess > li .iconSubMenu {
+                max-width: 20px;
+                margin-right: 6px;
+            }
+
+            .navbar-top-links li .dropdown-menu.userAccsess > li.loginDetails {
+                padding: 10px 10px;
+                border-bottom: 1px dashed #ece9e9;
+                font-size: 10px;
+            }
+
+                .navbar-top-links li .dropdown-menu.userAccsess > li.loginDetails .val {
+                    font-size: 12px;
+                }
+
+        .avtarHolder > img {
+            border-radius: 50%;
+        }
+        /*quick links*/
+        .backdrop {
+            z-index: 10;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.5);
+        }
+
+            .backdrop.off {
+                display: none;
+            }
+
+        #panelForQuick {
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 300px;
+            background: #fff;
+            z-index: 15;
+            padding: 25px;
+            box-sizing: border-box;
+            box-shadow: 0 -10px 5px rgba(0,0,0,0.23);
+            -webkit-transition: all 0.2s ease;
+            transition: all 0.2s ease;
+        }
+
+            #panelForQuick.off {
+                right: -300px;
+            }
+
+        .qHeading {
+            font-size: 15px;
+            border-bottom: 2px solid #efefef;
+            padding: 0px 0 7px 0;
+            margin-bottom: 12px;
+        }
+
+        .flexRow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+            .flexRow .itm:first-child {
+                margin-right: 10px;
+            }
+
+            .flexRow .itm {
+                background: #ececec;
+                text-align: center;
+                padding: 15px 0;
+                border-radius: 5px;
+                min-height: 100px;
+                width: 46%;
+                margin-bottom: 10px;
+                position: relative;
+            }
+
+                .flexRow .itm:hover {
+                    cursor: pointer;
+                    background: #E7E7E7;
+                }
+
+                .flexRow .itm .tx {
+                    text-transform: uppercase;
+                    font-size: 11px;
+                    font-weight: 500;
+                    margin-top: 10px;
+                }
+
+                .flexRow .itm .icn {
+                    display: inline-block;
+                    margin: 0 auto;
+                    background: #33b8ea;
+                    width: 40px;
+                    height: 40px;
+                    font-size: 22px;
+                    color: #fff;
+                    border-radius: 50%;
+                    line-height: 41px;
+                }
+
+                .flexRow .itm:first-child .icn {
+                    background: #6833ea;
+                }
+
+                .flexRow .itm:nth-child(2) .icn {
+                    background: #d428cf;
+                }
+
+                .flexRow .itm:nth-child(3) .icn {
+                    background: #829c19;
+                }
+
+                .flexRow .itm:nth-child(4) .icn {
+                    background: #e8701b;
+                }
+
+                .flexRow .itm:nth-child(5) .icn {
+                    background: #24bf4d;
+                }
+
+                .flexRow .itm:nth-child(6) .icn {
+                    background: #24bf4d;
+                }
+
+                .flexRow .itm:nth-child(7) .icn {
+                    background: #24bf4d;
+                }
+
+                .flexRow .itm:nth-child(8) .icn {
+                    background: #24bf4d;
+                }
+
+                .flexRow .itm:nth-child(9) .icn {
+                    background: #24bf4d;
+                }
+
+                .flexRow .itm:nth-child(10) .icn {
+                    background: #24bf4d;
+                }
+
+        .quickCross {
+            position: absolute;
+            right: 26px;
+            top: 27px;
+            color: #e83321;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .boxedInside {
+            height: 78vh;
+            overflow-y: auto;
+        }
+
+        .footerOption {
+            position: absolute;
+            bottom: 0;
+            background: #fff;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            left: 0;
+        }
+
+            .footerOption > .formArea {
+                display: none;
+            }
+
+            .footerOption button {
+                border: 2px solid #d0d4d3;
+                padding: 5px 15px;
+                background: #f5f7f6eb;
+                border-radius: 26px;
+                width: 48%;
+            }
+
+                .footerOption button.fadd:hover, .footerOption button.fadd.active:hover, .footerOption button.fadd.active:hover {
+                    border: 2px solid #2c9c96;
+                    background: #35a9a3;
+                    color: #fff;
+                    font-weight: 500;
+                }
+
+                .footerOption button.fadd:hover, .footerOption button.fadd.active:hover, .footerOption button.fadd.active:hover {
+                    border: 2px solid #6b3bde;
+                    background: #6b3bde;
+                    color: #fff;
+                    font-weight: 500;
+                }
+
+        .delTag {
+            position: absolute;
+            right: 0;
+            top: 5px;
+            right: 5px;
+            color: #ffffff;
+            width: 15px;
+            height: 15px;
+            background: #ff6262;
+            border-radius: 50%;
+            font-size: 9px;
+            text-align: center;
+            line-height: 14px;
+            display: none;
+        }
+
+        .itm.editable .delTag {
+            display: block;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('.bigLogo').attr('src') == '' || $('.bigLogo').attr('src') == 'unknown') {
+                $('.bigLogo, .miniLogo').attr('src', '/assests/images/logo.png')
+            }
+        });
+    </script>
+    <script>
+
+
+        $(document).ready(function () {
+            $('#btnHelpPopupRec').click(function () {
+                $('#panelForQuick, .backdrop').removeClass('off');
+            });
+            $('.quickCross').click(function () {
+                $('#panelForQuick, .backdrop').addClass('off');
+            });
+            $('#editFav').click(function () {
+                $('#panelForQuick .itm').toggleClass('editable');
+            });
+            $('body').on('click', '#boxedFavData .pathLoader', function () {
+
+                var Rurl = '/' + $(this).data('url');
+                console.log(Rurl);
+                openMenuFromNav(Rurl)
+            });
+            $('body').on('click', '.delTag', function () {
+                var rUrl = $(this).data('url');
+                var titl = $(this).data('titl');
+
+
+                $.confirm({
+                    title: 'Warning!',
+                    content: 'Are you sure you want to remove the item from Favourite!',
+                    buttons: {
+                        confirm: function () {
+                            favDelete(rUrl, titl);
+                        },
+                        cancel: function () {
+                            //$.alert('Canceled!');
+                        }
+                    }
+                });
+            });
+
+
+            if (localStorage.getItem("fv") === null || typeof localStorage.fv === 'undefined') {
+                //...
+                var obj = {};
+                obj.url = ''
+                $.ajax({
+                    type: "POST",
+                    url: "/oms//Management/ProjectMainPage.aspx/GetFav",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(obj),
+                    dataType: "json",
+                    success: function (data) {
+                        var url = window.location.href;
+                        var spUrl = url.split("/")
+                        var a = "";
+                        for (i = 0; i < spUrl.length; i++) {
+                            if (i > 2) {
+                                if (i == spUrl.length - 1) {
+                                    a += spUrl[i] + ""
+                                } else {
+                                    a += spUrl[i] + "/"
+                                }
+
+                            }
+                        }
+                        //console.log(data.d)
+                        var items = data.d;
+                        generateFavitems(items)
+                        for (i = 0 ; i < items.length; i++) {
+                            if (items[i].PAGE_URL == a) {
+                                $('#FavAdd').hide()
+                            } else {
+                                $('#FavAdd').show()
+                            }
+                        }
+                    }
+                });
+            } else {
+                var url = window.location.href;
+                var spUrl = url.split("/")
+                var a = "";
+                for (i = 0; i < spUrl.length; i++) {
+                    if (i > 2) {
+                        if (i == spUrl.length - 1) {
+                            a += spUrl[i] + ""
+                        } else {
+                            a += spUrl[i] + "/"
+                        }
+
+                    }
+                }
+                var items = JSON.parse(localStorage.getItem('fv'))
+                console.log('from storage', items)
+                generateFavitems(items);
+                for (i = 0 ; i < items.length; i++) {
+                    if (items[i].PAGE_URL == a) {
+                        //alert(a)
+                        $('#FavAdd').hide();
+                    } else {
+                        $('#FavAdd').show()
+                    }
+                }
+            }
+            //Get Fav
+
+            $('#FavAdd').click(function () {
+
+                var url = window.location.href;
+                var spUrl = url.split("/")
+                var a = "";
+                for (i = 0; i < spUrl.length; i++) {
+                    if (i > 2) {
+                        if (i == spUrl.length - 1) {
+                            a += spUrl[i] + ""
+                        } else {
+                            a += spUrl[i] + "/"
+                        }
+
+                    }
+                }
+                $('#addfavModal').modal('show');
+                var tl = $('.panel-heading> .panel-title>h3').text();
+                $('#titleFav').val(tl);
+                $('#pgLink').val(a).attr('disabled');
+            });
+
+        });
+        function generateFavitems(items) {
+            var htmlItems = '<div class="flexRow">';
+            for (i = 0; i < items.length; i++) {
+                htmlItems += '<div class="itm redPage" >'
+                htmlItems += '<span class="delTag" data-url="' + items[i].PAGE_URL + '" data-titl="' + items[i].PAGE_TITLE + '"><i class="fa fa-close"></i></span>'
+                htmlItems += '<div class="pathLoader" data-url="' + items[i].PAGE_URL + '"><div class="icn"><i class="fa fa-link"></i></div>'
+                htmlItems += '<div class="tx">' + items[i].PAGE_TITLE + '</div>'
+                htmlItems += ' </div></div>'
+            }
+            htmlItems += '</div>'
+            $('#boxedFavData').html(htmlItems);
+            if (items.length == 10) {
+                $('#FavAdd').hide()
+            } else {
+                $('#FavAdd').show()
+            }
+            localStorage.setItem('fv', JSON.stringify(items))
+
+        }
+        function saveFav() {
+            var url = window.location.href;
+            var spUrl = url.split("/")
+            var a = "";
+            for (i = 0; i < spUrl.length; i++) {
+                if (i > 2) {
+                    if (i == spUrl.length - 1) {
+                        a += spUrl[i] + ""
+                    } else {
+                        a += spUrl[i] + "/"
+                    }
+
+                }
+            }
+            var addObj = {};
+            addObj.url = a;
+            addObj.title = $('#titleFav').val();
+            console.log(addObj);
+            $.ajax({
+                type: "POST",
+                url: "/oms/Management/ProjectMainPage.aspx/addFav",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(addObj),
+                dataType: "json",
+                success: function (data) {
+                    var items = data.d;
+
+                    var htmlItems = '<div class="flexRow">';
+                    for (i = 0; i < items.length; i++) {
+                        htmlItems += '<div class="itm redPage" data-url="' + items[i].PAGE_URL + '">'
+                        htmlItems += '<span class="delTag" data-url="' + items[i].PAGE_URL + '" data-titl="' + items[i].PAGE_TITLE + '"><i class="fa fa-close"></i></span>'
+                        htmlItems += '<div class="pathLoader" data-url="' + items[i].PAGE_URL + '"><div class="icn"><i class="fa fa-link"></i></div>'
+                        htmlItems += '<div class="tx">' + items[i].PAGE_TITLE + '</div>'
+                        htmlItems += ' </div></div>'
+                    }
+                    htmlItems += '</div>'
+                    $('#boxedFavData').html(htmlItems);
+                    if (items.length == 10) {
+                        $('#FavAdd').hide()
+                    } else {
+                        $('#FavAdd').show()
+                    }
+                    $('#titleFav').val('')
+                    localStorage.setItem('fv', JSON.stringify(items))
+                    for (i = 0 ; i < items.length; i++) {
+                        if (items[i].PAGE_URL == a) {
+                            $('#FavAdd').hide()
+                        } else {
+                            $('#FavAdd').show()
+                        }
+                    }
+                    $('#addfavModal').modal('hide');
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Favourite Added Successfully!',
+                    });
+
+                }
+            });
+        }
+        function favDelete(rUrl, titl) {
+            var url = window.location.href;
+            var spUrl = url.split("/")
+            var a = "";
+            for (i = 0; i < spUrl.length; i++) {
+                if (i > 2) {
+                    if (i == spUrl.length - 1) {
+                        a += spUrl[i] + ""
+                    } else {
+                        a += spUrl[i] + "/"
+                    }
+
+                }
+            }
+            var RObj = {};
+            RObj.url = rUrl;
+            RObj.title = titl;
+            console.log(RObj);
+            $.ajax({
+                type: "POST",
+                url: "/oms/Management/ProjectMainPage.aspx/RemoveFav",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(RObj),
+                dataType: "json",
+                success: function (data) {
+                    var items = data.d;
+
+                    var htmlItems = '<div class="flexRow">';
+                    for (i = 0; i < items.length; i++) {
+                        htmlItems += '<div class="itm redPage" data-url="' + items[i].PAGE_URL + '">'
+                        htmlItems += '<span class="delTag" data-url="' + items[i].PAGE_URL + '" data-titl="' + items[i].PAGE_TITLE + '"><i class="fa fa-close"></i></span>'
+                        htmlItems += '<div class="pathLoader" data-url="' + items[i].PAGE_URL + '"><div class="icn"><i class="fa fa-link"></i></div>'
+                        htmlItems += '<div class="tx">' + items[i].PAGE_TITLE + '</div>'
+                        htmlItems += ' </div></div>'
+                    }
+                    htmlItems += '</div>'
+                    $('#boxedFavData').html(htmlItems);
+                    if (items.length == 10) {
+                        $('#FavAdd').hide()
+                    } else {
+                        $('#FavAdd').show()
+                    }
+                    localStorage.setItem('fv', JSON.stringify(items))
+                    for (i = 0 ; i < items.length; i++) {
+                        if (items[i].PAGE_URL == a) {
+                            $('#FavAdd').hide()
+                        } else {
+                            $('#FavAdd').show()
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+
+</head>
+<body>
+
+    @*--About section--*@
+    <div class="AboutPop">
+        <div class="AboutBox relative">
+            <div class="AboutBoxHeader">About BreezeERP</div>
+
+            <span class="CrossIconAbout"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            <div class="abtContent clearfix">
+                <div><img src="/assests/images/logo.png" style="width: 170px;" class="AbtImage" /></div>
+                <div class="aboutText">
+                    <p>Version : </p>
+                    <p><i class="fa fa-copyright" aria-hidden="true"></i> Copyright 2020 Indus Net Technologies </p>
+                    <p>Application best viewed at 1280 x 720 resolution in Google Chrome <b>59 or above</b> </p>
+                    <button type="button" id="CRSAbtButton">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*--About section--*@
+
+    <div class="fixedMenuNew">
+        <div style="padding:4px">
+            <div class="leftLogowrap transit" style="border-radius:4px">
+
+                @*Images*@
+                <img src='@Convert.ToString(HttpContext.Current.Session["CompanyBigLogoUrl"])' class="img-responsive bigLogo" align="middle" />
+                <img src='@Convert.ToString(HttpContext.Current.Session["CompanySmallLogoUrl"])' class="img-responsive miniLogo" align="middle" />
+
+            </div>
+        </div>
+        <div class="sidebar transit">
+            <nav class="sidenav">
+                @{
+                    Html.RenderAction("_PartialMenu", "DashboardMaster");
+                }
+            </nav>
+        </div>
+        <div class="text-center pwred">
+            <div class="divNav">
+                <a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx" class="pas" data-toggle="tooltip" title="" data-original-title="change password"><i class="fa fa-key"></i></a>
+                <a href="/OMS/SignOff.aspx" class="logout" data-toggle="tooltip" title="" data-original-title="logout"><i class="fa fa-power-off"></i></a>
+            </div>
+            <div>Powered by BreezeERP </div>
+        </div>
+    </div>
+    <div class="mainWraper">
+        <header id="header" class="clearfix transit">
+            @{
+                Html.RenderAction("_PartialHeaderLayout", "DashboardMaster");
+            }
+        </header>
+
+        <section class="rightSide transit clearfix" style="min-height: 415px;">
+            @RenderBody()
+            @RenderSection("Scripts", required: true)
+        </section>
+        <script src="~/assests/pluggins/customScroll/customScroll.js"></script>
+    </div>
+
+
+    @*<header id="header" class="clearfix transit">
+        @{
+            Html.RenderAction("_PartialHeaderLayout", "DashboardMaster");
+        }
+    </header>
+    <div class="mainWraper">
+        <div class="sidebar transit">
+            <nav class="sidenav">
+                @{
+                    Html.RenderAction("_PartialMenu", "DashboardMaster");
+                }
+            </nav>
+        </div>
+        <section class="rightSide transit clearfix" style="min-height: 415px;">
+            @RenderBody()
+            @RenderSection("Scripts", required: true)
+            <script src="~/assests/pluggins/customScroll/customScroll.js" rel="stylesheet"></script>
+        </section>
+        
+    </div>*@
+    
+</body>
+</html>

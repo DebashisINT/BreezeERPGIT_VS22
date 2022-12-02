@@ -1,0 +1,46 @@
+.detailsAcnchor span {
+    cursor: pointer !important;
+}
+.noPadding-modal .ant-modal-body {
+    padding: 0 !important;
+}
+.ant-tabs-nav-list {
+    padding-bottom: 4px;
+}
+.ant-tabs-nav-list> .ant-tabs-tab {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.ant-tabs-nav-list> .ant-tabs-tab:hover {
+    background: #efefef;
+    color: #484848;
+}
+.ant-tabs-nav-list> .ant-tabs-tab.ant-tabs-tab-active {
+    background: #ffdfa5;
+}
+.ant-tabs-nav-list> .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #424446;
+}
+.chartBtn {
+    position: absolute;
+    right: 28px;
+    bottom: 0;
+    border: 1px solid #414374;
+    padding: 3px 10px;
+    border-radius: 19px;
+    cursor: pointer;
+}
+.chartHeader {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #7f4f88;
+}
+.chartClose{
+    position: absolute;
+    right: 32px;
+    top: 10px;
+    font-size: 26px;
+    color: #e24c34;
+    cursor: pointer;
+}

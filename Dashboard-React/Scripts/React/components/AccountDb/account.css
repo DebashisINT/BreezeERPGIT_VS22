@@ -1,0 +1,30 @@
+.optionHolder {
+    max-width: 200px;
+}
+.backInfo .inr {
+    color: #d68b28;
+    font-size: 18px;
+}
+#balanceAmount {
+    font-size: 25px;
+    margin-left: 6px;
+    font-weight: 700;
+    color: #544e4e;
+}
+#mixedChart {
+    min-height: 300px;
+}
+.BorderTopNone>tbody>tr:first-child>td{
+    border-top: none;
+}
+.slickProgress {
+    margin: 0;
+    height: 10px;
+    width: 120px;
+}
+.shPercent {
+    position: absolute;
+    right: 5px;
+    top: 9px;
+    font-size: 10px;
+}

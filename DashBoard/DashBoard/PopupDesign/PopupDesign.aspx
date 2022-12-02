@@ -1,0 +1,2782 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PopupDesign.aspx.cs" Inherits="DashBoard.DashBoard.PopupDesign.WebForm1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Popup</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/main.css" rel="stylesheet" />
+    <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../css/SearchPopup.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    
+    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+    <script src="../Js/bootstrap.min.js"></script>
+    <link href="../css/newtheme.css" rel="stylesheet" />
+
+
+    <link href="../Js/styles.css" rel="stylesheet" />
+    <script src="../Js/apexcharts.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/driver.js/dist/driver.min.css" />
+    <script src="https://unpkg.com/driver.js/dist/driver.min.js"></script>
+
+    <style>
+        #CustomNewNotify {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #ff1f1f;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            right: 5%;
+            bottom: 30px;
+            font-size: 17px;
+            border: 5px solid #ff1f1f;
+            box-shadow: 3px 4px rgba(0,0,0,0.5);
+            color: #fff;
+        }
+
+            #CustomNewNotify.show {
+                visibility: visible;
+                -webkit-animation: fadeinAlert 0.5s, fadeoutAlert 0.5s 15.5s;
+                animation: fadeinAlert 0.5s, fadeoutAlert 0.5s 15.5s;
+            }
+
+        @-webkit-keyframes fadeinAlert {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeinAlert {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeoutAlert {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeoutAlert {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+
+
+
+
+        .alert-message-success {
+            background-color: #F4FDF0;
+            border-color: #3C763D;
+        }
+
+            .alert-message-success h4 {
+                color: #3C763D;
+            }
+
+        .alert-message {
+            margin: 20px 0;
+            padding-left: 5px;
+            margin-bottom: 10px;
+        }
+
+            .alert-message h4 {
+                margin-top: 0;
+                margin-bottom: 8px;
+                BORDER-BOTTOM: 2PX SOLID #f3f3f3;
+                padding-bottom: 13px;
+            }
+
+            .alert-message p:last-child {
+                margin-bottom: 0;
+            }
+
+
+
+        .wdgLabel {
+            padding-top: 13px;
+            font-size: 27px;
+        }
+
+        .wdgNumber {
+            font-size: 33px;
+            font-weight: 600;
+        }
+
+        .widget {
+            height: 120px;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 10px;
+            color: #fff;
+            /*cursor: pointer;*/
+            border-radius: 10px;
+            -webkit-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+            position: relative;
+        }
+
+            .widget > label {
+                position: absolute;
+                width: 100%;
+                left: 0;
+            }
+
+            .widget:hover {
+                -webkit-transform: scale(1.05) translateY(-5px);
+                transform: scale(1.05) translateY(-5px);
+                box-shadow: 0px 10px 15px rgba(0,0,0,0.15);
+            }
+
+            .widget.c1 {
+                background: #468847;
+            }
+
+            .widget.c2 {
+                background: #99470A;
+            }
+
+            .widget.c3 {
+                background: #0a8c99;
+            }
+
+            .widget.c4 {
+                background: #BDA326;
+            }
+
+            .widget.c5 {
+                background: #265FBD;
+            }
+
+        .MakeRound {
+            -webkit-transform: rotateY(150deg); /* Safari */
+            transform: rotateX(360deg); /* Standard syntax */
+            -webkit-transition: all 2s ease;
+            transition: all 2s ease;
+        }
+
+        .zoom {
+            transition: transform .2s;
+            margin: 0 auto;
+            /*cursor: pointer;*/
+        }
+
+            .zoom:hover {
+                -ms-transform: scale(1.02);
+                -webkit-transform: scale(0.5);
+                transform: scale(1.05);
+                z-index: 9999;
+                animation: 5s shake infinite alternate;
+            }
+
+        .wdgLabel:hover {
+        }
+
+
+        @keyframes shake {
+            0% {
+                transform: skewX(-15deg);
+            }
+
+            5% {
+                transform: skewX(15deg);
+            }
+
+            10% {
+                transform: skewX(-15deg);
+            }
+
+            15% {
+                transform: skewX(15deg);
+            }
+
+            20% {
+                transform: skewX(0deg);
+            }
+
+            100% {
+                transform: skewX(0deg);
+            }
+        }
+
+        .cont {
+            padding: 15px;
+            padding-top: 0;
+            border: 1px solid #d8d8d8;
+            border-radius: 11px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
+            position: relative;
+            /* margin: 15px 15px 15px 15px; */
+            margin-top: 15px;
+        }
+
+        .comntLink {
+            display: block;
+            text-align: right;
+        }
+
+        .commentSecOld {
+            margin-left: 59px;
+            line-height: 4px;
+            padding: 5px 15px 15px 10px;
+            border: 1px solid #dedede;
+            z-index: 9;
+            position: relative;
+            padding-bottom: 2px;
+            background: #f6fbfa;
+        }
+
+            .commentSecOld > h5 {
+                margin-top: 4px;
+            }
+
+            .commentSecOld:before {
+                content: '';
+                width: 0;
+                height: 0;
+                border-top: 10px solid transparent;
+                border-bottom: 17px solid transparent;
+                border-right: 9px solid rgba(183, 183, 183, 0.5);
+                position: absolute;
+                left: -9px;
+            }
+
+        commentSecOld > h5 {
+            margin-bottom: 12px;
+        }
+
+        .comntList {
+            padding: 0;
+            padding: 0;
+            padding-top: 12px;
+            border-top: 2px solid #f3f3f3;
+        }
+
+            .comntList li {
+                list-style-type: none;
+                margin-bottom: 15px;
+            }
+
+
+        .comntList1 {
+            padding: 0;
+            padding: 0;
+            padding-top: 12px;
+            border-top: 2px solid #f3f3f3;
+        }
+
+            .comntList1 li {
+                list-style-type: none;
+                margin-bottom: 15px;
+            }
+
+
+        .iconHolder {
+            font-size: 25px;
+            width: 45px;
+            height: 49px;
+            border: 1px solid #ccc;
+            text-align: center;
+            border-radius: 50%;
+            display: inline-block;
+            line-height: 44px;
+            overflow: hidden;
+        }
+
+        .CommentaddBox {
+            border-radius: 6px;
+        }
+
+        .msgbody {
+            line-height: 20px;
+        }
+
+        .loadallcmt {
+            /*cursor: pointer;*/
+            color: #080877;
+        }
+
+        .timeClass {
+            font-size: 11px;
+            font-weight: 100;
+            padding-left: 10px;
+            color: #918fa0;
+        }
+
+        #allcmt {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .mcomntsHeader {
+            font-size: 15px;
+            padding-left: 5px;
+        }
+
+        .divDashboard > img {
+            max-width: 100%;
+        }
+        #watchDataTbl {
+            border-bottom:1px solid #ccc;
+        }
+        #watchDataTbl_length, #watchDataTbl_filter {
+            display:none;
+        }
+        #watchDataTbl>thead>tr>th {
+            background: #8d9af5;
+            color: #fff; 
+        }
+        #watchDataTbl_paginate span>a {
+            padding: 0.2em 0.5em !important;
+        }
+        #watchDataTbl_paginate span>a.current {
+                
+                background: #8d9af5;
+                color: #fff !important;
+                border-color: #8d9af5;
+        }
+
+        .colorPending {
+            color: #FF9800;
+        }
+        .colorComplete {
+             color: #57bf4c;
+        }
+        
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.panelAnchor', function () {
+                $('#panelRight').toggleClass('open');
+                //if( $('#panelRight').hasClass('open') ){
+                //    $('body').append('<div class="overlay"></div>');
+                //}else{
+                //    $('.overlay').remove();
+                //}
+            });
+
+            var driver = new Driver();
+
+            // Define the steps for introduction
+            //driver.defineSteps([
+            //  {
+            //      element: '#branchSelect',
+            //      popover: {
+            //          className: 'first-step-popover-class',
+            //          title: 'Guide tour',
+            //          description: 'You can choose branch from there. Upon choosing only the selected branch data will be shown throughout the page otherwise all branches will be selected by default',
+            //          position: 'left'
+            //      }
+            //  },
+            //  {
+            //      element: '#Expensethismonth',
+            //      popover: {
+            //          title: 'Title on Popover',
+            //          description: 'Body of the popover',
+            //          position: 'bottom'
+            //      }
+            //  },
+            //  {
+            //      element: '#bankBalance',
+            //      popover: {
+            //          title: 'Title on Popover',
+            //          description: 'Body of the popover',
+            //          position: 'bottom'
+            //      }
+            //  },
+            //]);
+
+            //// Start the introduction
+            //driver.start();
+        });
+        function theFunction() {
+            //$("#Dashboard_Div").addClass("hide");
+            $("#fullpageDiv").removeClass("hide");
+        }
+</script>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:200,300,400,500,600|Montserrat:300,400,500,600,700|Open+Sans+Condensed:300,700|Open+Sans:300,400,600,700" rel="stylesheet" />
+<style>
+     .scroller {
+           max-height:82vh;
+           overflow-y:auto;
+           overflow-x:hidden;
+        }
+::-webkit-scrollbar
+{
+    width: 5px;  /* for vertical scrollbars */
+            
+}
+
+::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: rgba(0, 0, 0, 0.5);
+}
+    .mr0 {
+        margin-right: 0 !important;
+    }
+
+    .widgetBox {
+        position: relative;
+        margin-top: 20px;
+    }
+
+    .numCnt {
+        padding: 15px 25px;
+    }
+
+    .widgetBox .numCnt .number {
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .widgetBox .numCnt .text {
+        font-size: 15px;
+        color: #fff;
+    }
+
+    .widgetBox h4 {
+        padding: 10px 25px;
+        background: #398b9e;
+        color: #fff;
+    }
+
+    .widgetBox.one {
+        background: #4bacc3;
+    }
+
+    .widgetBox.two {
+        background: #4bc3ae;
+    }
+
+    .widgetBox.three {
+        background: #b6c72f;
+    }
+
+    .widgetBox.four {
+        background: #e47b5b;
+    }
+
+    .widgetBox.two h4 {
+        background: #36a995;
+    }
+
+    .widgetBox.three h4 {
+        background: #9ead26;
+    }
+
+    .widgetBox.four h4 {
+        background: #ce6646;
+    }
+
+    .widgetBox .fa {
+        position: absolute;
+        font-size: 43px;
+        color: rgba(53, 50, 50, 0.5);
+        top: 18px;
+        right: 18px;
+    }
+
+    .boxForChart {
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        background: #fff;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.06);
+        margin-top: 5px;
+        padding: 8px 0;
+    }
+
+    .SelectChart {
+        width: 200px !important;
+        max-width: 200px;
+        margin: 8px 0;
+    }
+
+    .cngView {
+        margin-right: 15px;
+        padding-top: 7px;
+    }
+
+    .refine-btn {
+        position: absolute;
+        right: 50px;
+        top: 15px;
+    }
+
+    .mTop23 {
+        margin-top: 23px;
+    }
+
+    .mBottom22 {
+        margin-bottom: 22px;
+    }
+
+    .activeW {
+        /*background: #bbc8ec !important;*/
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        transform: scale(1.1);
+        z-index: 8;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.9);
+    }
+
+    .dateT {
+        margin-top: 8px;
+    }
+
+        .dateT > tbody > tr > td:first-child {
+            font-size: 16px;
+            padding-right: 15px;
+        }
+
+    .ltri {
+        display: inline-block;
+        background: #64c7ab;
+        padding: 3px 8px;
+        border-radius: 4px;
+        position: relative;
+        color: #fff;
+    }
+
+        .ltri:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 11px solid transparent;
+            border-bottom: 11px solid transparent;
+            border-left: 12px solid #64c7ab;
+            position: absolute;
+            right: -7px;
+        }
+
+    #lblDate {
+        font-size: 17px;
+    }
+
+    .rightSide {
+        background: rgb(239, 244, 247) !important;
+    }
+
+    .ClasicStyle {
+        width: 100%;
+    }
+
+        .ClasicStyle > thead > tr > th {
+                    background: #8d9af5;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 5px 5px;
+    border: 1px solid #8d9af5;
+    color: #fff;
+        }
+
+        .ClasicStyle > tbody > tr > td {
+            border: 1px solid #b3b9bd;
+    font-size: 14px;
+    padding: 5px 5px;
+        }
+
+
+    .mTop15 {
+        margin-top: 15px;
+    }
+
+    #mixedChart {
+        width: 100%;
+        height: 150px;
+    }
+
+    .d-flex {
+        display: -ms-flexbox !important;
+        display: flex !important;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+   
+    .mr20 {
+        margin-right: 20px;
+    }
+
+    
+
+    a.infoButton {
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #2245c7;
+        font-family: 'Montserrat', sans-serif !important;
+    }
+
+    .boxWidget {
+        padding: 12px;
+        background: #fff;
+        border-radius: 1px;
+        margin-bottom: 8px;
+        font-size: 15px;
+        /*cursor: pointer;*/
+        position: relative;
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+
+        .boxWidget:before {
+            top: 44px;
+            content: '';
+            width: 60%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            position: absolute;
+            /* z-index: -1; */
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            left: -25px;
+            border-radius: 10px;
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+        }
+
+        .boxWidget.noContent:before {
+            display: none;
+        }
+
+        .boxWidget:hover {
+            opacity: 0.9;
+            /*box-shadow: 0px 0px 38px rgba(187, 187, 187, 0.4);*/
+            /*transform: scale(1.06);*/
+        }
+
+            .boxWidget:hover::before {
+                -webkit-transform: rotate(58deg) scale(1.2);
+                transform: rotate(58deg) scale(1.2);
+            }
+
+    
+    .heightFull {
+        height: 100%;
+    }
+
+    .Widgheading {
+        font-size: 16px;
+        margin-bottom: 10px !important;
+        font-weight: 700;
+        font-family: 'Open Sans', sans-serif !important;
+        letter-spacing: -1px;
+    }
+
+    .mainLabel {
+            font-size: 16px;
+            /* letter-spacing: -1px; */
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif !important;
+            border-bottom: 1px solid #c7c7c7;
+            padding-bottom: 16px;
+            font-weight: 600;
+            color: #9a9ea0;
+    }
+
+    .subLabel {
+        font-size: 9px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .wdgContent {
+        padding: 0px 0 0 0;
+    }
+
+    .WdgLetter {
+        font-size: 36px;
+        color: inherit;
+        font-family: 'Open Sans Condensed', sans-serif !important;
+        font-weight: bold;
+    }
+
+    .showD {
+        font-size: 9px;
+        display: block;
+        text-align: right;
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .pad30 {
+        padding-top: 50px;
+    }
+
+    #panelRight {
+        width: 300px;
+        position: fixed;
+        border-left: 4px solid #398b9e;
+        right: -295px;
+        height: calc(100vh - 60px);
+        top: 60px;
+        background: #fff;
+        z-index: 99;
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+
+        #panelRight.open {
+            right: 0px;
+        }
+
+    .panelAnchor {
+        position: absolute;
+        left: -50px;
+        background: #398b9e;
+        color: #fff;
+        height: 50px;
+        top: 60px;
+        width: 50px;
+        font-size: 22px;
+        text-align: center;
+        /* line-height: 30px; */
+        display: inline-block;
+        padding-top: 10px;
+    }
+
+        .panelAnchor:hover {
+            background: #2fa0ec;
+            box-shadow: 0px 0px 5px rgba(0,0,0,0.04);
+            cursor: pointer;
+        }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.5);
+    }
+
+    #accordion .Widgheading {
+        cursor: pointer;
+    }
+
+    .Widgheading > a, .Widgheading > a:focus, .Widgheading > a:active {
+        color: #777;
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+    .mr8 {
+        margin-right: 8px;
+    }
+
+    #pie1, #pie2, #pie3 {
+        margin-top: 25px;
+    }
+
+    .pl-0 {
+        padding-left: 0;
+    }
+
+
+
+    /*dashboard grid*/
+    /*#griddashboard .dxgvHeader_PlasticBlue, #griddashboard .dxgvHeader_PlasticBlue table {
+        color: #333 !important;
+    }*/
+    #griddashboard .dxgvHeader_PlasticBlue {
+        cursor: pointer;
+        white-space: nowrap;
+        padding: 7px 6px;
+        border-top: none;
+        border: none;
+        background: #fff;
+        overflow: hidden;
+        font-weight: normal;
+        text-align: left;
+        font-family: 'Montserrat', sans-serif !important;
+    }
+
+    /*#griddashboard_DXFooterRow {
+        display: none;
+    }*/
+
+    #griddashboard.dxgvControl_PlasticBlue, #griddashboard.dxgvDisabled_PlasticBlue {
+        border-top: none !important;
+        border: none !important;
+        font: 10px 'Montserrat', sans-serif !important;
+        background-color: none !important;
+        color: #000000;
+        cursor: default;
+    }
+
+    #griddashboard .dxgvTable_PlasticBlue {
+        background-color: none !important;
+        border-width: 0;
+        border-collapse: separate !important;
+        overflow: hidden;
+    }
+
+    #griddashboard .dxgvFilterRow_PlasticBlue td.dxgv, #griddashboard .dxgvPagerBottomPanel_PlasticBlue {
+        padding: 6px 4px;
+        background: #fff;
+    }
+
+    #griddashboard .dxgvEditFormDisplayRow_PlasticBlue td.dxgv,
+    #griddashboard .dxgvDataRow_PlasticBlue td.dxgv,
+    #griddashboard .dxgvDataRowAlt_PlasticBlue td.dxgv,
+    #griddashboard .dxgvSelectedRow_PlasticBlue td.dxgv,
+    #griddashboard .dxgvFocusedRow_PlasticBlue td.dxgv {
+        padding: 6px 6px 7px;
+    }
+
+    #griddashboard .dxtc-link, .dxgvHeader_PlasticBlue td {
+        font-size: 12px !important;
+        font-weight: 500;
+    }
+
+    .closerCss, .closeAc, .closeAcDetails, .closer, .closeAcDetails2 {
+        position: absolute;
+        right: 2px;
+        top: 0px;
+    }
+
+
+    .col1 {
+        background: #7a9eef;
+        background-image: -webkit-linear-gradient(45deg,#7a9eef,#33b3a1);
+        background-image: linear-gradient(45deg,#7a9eef,#33b3a1);
+        background-repeat: repeat-x;
+    }
+
+    .col2 {
+        background: #F79187;
+        background-image: -webkit-linear-gradient(45deg,#9b3cb7,#ff396f);
+        background-image: linear-gradient(45deg,#9b3cb7,#ff396f);
+        background-repeat: repeat-x;
+    }
+
+    .col3 {
+        background: #7D7D7D;
+        background-image: -webkit-linear-gradient(45deg,#9b3cb7,#ff396f);
+        background-image: linear-gradient(45deg,#454046,#9220e8);
+        background-repeat: repeat-x;
+    }
+
+    .col4 {
+        background: #23C398;
+        background-image: -webkit-linear-gradient(45deg,#23C398,#d0c034);
+        background-image: linear-gradient(45deg,#23C398,#d0c034);
+        background-repeat: repeat-x;
+    }
+
+    .col5 {
+        background: #c0ca8b;
+        color: #fff;
+    }
+
+    .col6 {
+        background: #7d845d;
+        color: #fff;
+    }
+
+    .col7 {
+        background: #aed08e;
+        color: #fff;
+    }
+
+
+
+
+    .colorType3L {
+        background: #6986a5;
+        color: #fff;
+    }
+
+    .colorType3D {
+        background: #415B76;
+        color: #fff;
+    }
+
+    .colorType4L {
+        background: #B376BD;
+        color: #fff;
+    }
+
+    .colorType4D {
+        background: #8D5596;
+        color: #fff;
+    }
+
+    .text-white {
+        color: #fff;
+    }
+
+    .noShaded:before {
+        display: none;
+    }
+
+    #griddashboard_DXMainTable > tbody > tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #griddashboard_DXMainTable > tbody > tr > td.dxgvHeader_PlasticBlue {
+        background-color: #23c398;
+        color: #fff !important;
+    }
+
+
+    #griddashboarddetails_DXMainTable > tbody > tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #griddashboarddetails_DXMainTable > tbody > tr > td.dxgvHeader_PlasticBlue {
+        background-color: #23c398;
+        color: #fff !important;
+    }
+
+
+    #gridsalesman_DXMainTable > tbody > tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #gridsalesman_DXMainTable > tbody > tr > td.dxgvHeader_PlasticBlue {
+        background-color: #23c398 !important;
+        color: #fff !important;
+    }
+
+    #gridsummarydashboard_DXMainTable > tbody > tr > td.dxgvHeader_PlasticBlue {
+        background-color: #23c398;
+        color: #fff !important;
+    }
+
+    .shadow {
+        /*box-shadow: 0 5px 5px 0 rgba(6, 28, 54, .091) !important;*/
+        box-shadow: 0px 0px 10px rgba(70, 68, 68, 0.3);
+    }
+
+    .acCont {
+        padding: 4px 5px 0 5px;
+        border-bottom: 1px solid #efefef;
+        margin-top: 4px;
+    }
+
+        .acCont:first-child {
+            margin-top: 5px;
+        }
+
+    .Actholder .text {
+        margin-left: 45px;
+    }
+
+        .Actholder .text > div {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .Actholder .text > p {
+            font-size: 11px;
+        }
+
+    .avatar {
+        width: 3rem;
+        height: 3rem;
+        line-height: 2rem;
+        display: inline-block;
+        background: #505050 no-repeat center/cover;
+        position: relative;
+        text-align: center;
+        color: #fff;
+        font-weight: 400;
+        vertical-align: bottom;
+        font-size: .875rem;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-radius: 50% !important;
+        float: left;
+    }
+
+    .mapContainer {
+        border: 4px solid #FFF;
+        box-shadow: 0px 0px 10px rgba(70, 68, 68, 0.3);
+    }
+
+    .cred {
+        color: red;
+    }
+
+    .cgreen {
+        color: #33CC66;
+    }
+
+    .greenTrack {
+        color: #034C31;
+    }
+
+    .blink_me {
+        animation: blinker 1s linear infinite;
+    }
+
+    .lds-ellipsis {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 25px;
+    }
+
+        .lds-ellipsis div {
+            position: absolute;
+            top: 11px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #97e292;
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+
+            .lds-ellipsis div:nth-child(1) {
+                left: 6px;
+                animation: lds-ellipsis1 0.6s infinite;
+            }
+
+            .lds-ellipsis div:nth-child(2) {
+                left: 6px;
+                animation: lds-ellipsis2 0.6s infinite;
+            }
+
+            .lds-ellipsis div:nth-child(3) {
+                left: 26px;
+                animation: lds-ellipsis2 0.6s infinite;
+            }
+
+            .lds-ellipsis div:nth-child(4) {
+                left: 45px;
+                animation: lds-ellipsis3 0.6s infinite;
+            }
+
+    .text-bold {
+        font-weight: bold;
+    }
+
+    .min115 {
+        min-height: 115px;
+    }
+
+    @@keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .mtop20 {
+        margin-top: 20px;
+    }
+
+    .dxgvFooter_PlasticBlue {
+        display: none;
+    }
+
+    #directions_panel {
+        background-color: #FFFFFF;
+        max-height: 394px;
+        overflow-y: auto;
+        padding: 15px;
+    }
+
+    .pdleft0 {
+        padding-left: 0;
+    }
+
+    .pdright0 {
+        padding-right: 0;
+    }
+
+    .dxgvHeader_PlasticBlue {
+        border: none !important;
+        background: #4dcba0 !important;
+    }
+
+    .btn-excel {
+        float: right;
+        margin-right: 38px;
+        margin-top: -4px;
+    }
+
+    .btn-prime {
+        float: right;
+        margin-right: 20px;
+        margin-top: -4px;
+        background: #6ac270;
+        color: #fff;
+        font-size: 14px;
+        padding: 4px 10px;
+        display: none;
+    }
+
+        .btn-prime:hover {
+            background: #5db362;
+        }
+
+    .clstyle {
+        background: #f73e2c;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        color: #fff;
+        border-radius: 50%;
+        line-height: 24px;
+        top: -5px;
+        -webkit-transition: all 0.3s ease-in;
+        transition: all 0.3s ease-in;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+        .clstyle:hover {
+            background: #e63827;
+            transform: scale(1.1);
+        }
+
+    .maxisize {
+        max-width: 380px;
+    }
+
+    #directionname {
+        font-size: 14px;
+        background: #fff;
+        padding: 8px 15px 0 15px;
+        margin: 0 !important;
+    }
+
+    .mapShowlist {
+        float: right;
+        font-size: 14px;
+    }
+
+    .separate-left {
+        border-left: 1px solid #ccc;
+    }
+
+    #gridsummarydashboard, #griddashboard {
+        width: 100% !important;
+    }
+
+    .multiselect-container.dropdown-menu {
+        right: 0 !important;
+        left: auto;
+        min-width: 340px;
+    }
+
+    .multiselect-container > li > a {
+        padding: 5px 0;
+    }
+
+        .multiselect-container > li > a input[type="checkbox"] {
+            transform: translateY(3px);
+        }
+
+    .multiselect-container > li.active > a {
+        background: transparent !important;
+        color: #333;
+    }
+
+        .multiselect-container > li > a:hover, .multiselect-container > li.active > a:hover {
+            background: #f3f3f3 !important;
+            color: #333 !important;
+            padding: 5px 0;
+        }
+
+    .multiselect-item.multiselect-filter {
+        padding-bottom: 6px;
+        border-bottom: 1px solid #ccc;
+    }
+
+        .multiselect-item.multiselect-filter .form-control.multiselect-search {
+            height: 32px;
+        }
+
+        .multiselect-item.multiselect-filter .input-group-addon {
+            background: #41a8f1;
+            color: #fff;
+            border-color: #41a8f1;
+        }
+
+    .input-group-btn .multiselect-clear-filter {
+        background: #f98181;
+        color: #fffefe;
+        /* box-shadow: none; */
+        text-shadow: none;
+        border-color: #f96a6a;
+        padding: 5px 10px 4px 10px;
+    }
+
+    .multiselect.dropdown-toggle {
+        background: #fff;
+        border-radius: 0;
+    }
+
+
+    /*i con tab*/
+    .iconicTabs {
+        padding-bottom: 13px;
+        border-bottom: 1px dashed #ccc;
+        padding-top: 11px;
+        margin-bottom: 0;
+        padding-left: 0;
+    }
+
+        .iconicTabs li {
+            display: inline-block;
+            list-style-type: none;
+            position: relative;
+        }
+
+            .iconicTabs li > .tabitems {
+                text-align: center;
+                vertical-align: middle;
+                margin-right: 15px;
+                background: #e3e7e8;
+                border: 1px solid #ccc;
+                padding: 0 10px 5px 10px;
+                border-radius: 5px;
+                padding: 10px 25px;
+                color: #8a8a8a;
+            }
+
+            .iconicTabs li.active > .tabitems {
+                background: #272b3c;
+                color: #fff;
+                border-color: #272b3c;
+            }
+
+    .iconicTabsWrap > .tab-content {
+        background: #fff;
+        padding: 25px 20px;
+    }
+
+    .iconicTabs > .tabitems .tabText {
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif !important;
+    }
+
+    .iconicTabs li.active > a:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #272b3c;
+        position: absolute;
+        bottom: -19px;
+        left: 50%;
+        transform: translateX(-70%);
+    }
+
+    .iconicTabs li > a:focus {
+        text-decoration: none;
+    }
+
+
+
+
+    /*svg tabs */
+    /*****************************/
+    /* Shape */
+    /*****************************/
+
+    .tabs {
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+        width: 100%;
+        font-weight: 300;
+        font-size: 1.25em;
+    }
+
+        /* Nav */
+        .tabs nav {
+            text-align: center;
+        }
+
+            .tabs nav ul {
+                position: relative;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: -ms-flex;
+                display: flex;
+                margin: 0 auto;
+                padding: 0;
+                /*max-width: 1200px;*/
+                list-style: none;
+                -ms-box-orient: horizontal;
+                -ms-box-pack: center;
+                -webkit-flex-flow: row wrap;
+                -moz-flex-flow: row wrap;
+                -ms-flex-flow: row wrap;
+                flex-flow: row wrap;
+                /*-webkit-justify-content: center;
+                -moz-justify-content: center;
+                -ms-justify-content: center;
+                justify-content: center;*/
+            }
+
+                .tabs nav ul li {
+                    position: relative;
+                    z-index: 1;
+                    display: block;
+                    margin: 0;
+                    text-align: center;
+                    /*-webkit-flex: 1;
+                    -moz-flex: 1;
+                    -ms-flex: 1;
+                    flex: 1;*/
+                }
+
+            .tabs nav a {
+                position: relative;
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                line-height: 2.1;
+            }
+
+                .tabs nav a span {
+                    vertical-align: middle;
+                    font-size: 0.75em;
+                }
+
+            .tabs nav li.active a {
+                color: #74777b;
+            }
+
+            .tabs nav a:focus {
+                outline: none;
+            }
+
+    /* Icons */
+    .icon::before {
+        z-index: 10;
+        display: inline-block;
+        margin: 0 0.4em 0 0;
+        vertical-align: middle;
+        text-transform: none;
+        font-weight: normal;
+        font-variant: normal;
+        font-size: 1.3em;
+        font-family: 'stroke7pixeden';
+        line-height: 1;
+        speak: none;
+        -webkit-backface-visibility: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .icon-upload::before {
+        content: "\e68a";
+    }
+
+    .icon-tools::before {
+        content: "\e60a";
+    }
+
+    .icon-plane::before {
+        content: "\e625";
+    }
+
+    .icon-joy::before {
+        content: "\e6a4";
+    }
+
+    .icon-plug::before {
+        content: "\e69a";
+    }
+
+    .icon-home::before {
+        content: "\e648";
+    }
+
+    .icon-gift::before {
+        content: "\e652";
+    }
+
+    .icon-display::before {
+        content: "\e65e";
+    }
+
+    .icon-date::before {
+        content: "\e660";
+    }
+
+    .icon-config::before {
+        content: "\e666";
+    }
+
+    .icon-coffee::before {
+        content: "\e669";
+    }
+
+    .icon-camera::before {
+        content: "\e66f";
+    }
+
+    .icon-box::before {
+        content: "\e674";
+    }
+
+    /* Content */
+    .content-wrap {
+        position: relative;
+    }
+
+        .content-wrap section {
+            display: none;
+            margin: 0 auto;
+            padding: 1em;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+            .content-wrap section.content-current {
+                display: block;
+            }
+
+            .content-wrap section p {
+                margin: 0;
+                padding: 0.75em 0;
+                color: rgba(40,44,42,0.05);
+                font-weight: 900;
+                font-size: 4em;
+                line-height: 1;
+            }
+
+    /* Fallback */
+    .no-js .content-wrap section {
+        display: block;
+        padding-bottom: 2em;
+        border-bottom: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .no-flexbox nav ul {
+        display: block;
+    }
+
+        .no-flexbox nav ul li {
+            min-width: 15%;
+            display: inline-block;
+        }
+
+
+
+
+
+
+
+
+
+    .tabs-style-shape nav ul li {
+        margin: 0 3em;
+    }
+
+        .tabs-style-shape nav ul li:first-child {
+            margin-left: 0;
+        }
+
+        .tabs-style-shape nav ul li.active {
+            z-index: 100;
+        }
+
+    .tabs-style-shape nav li a {
+        overflow: visible;
+        margin: 0 -3em 0 0;
+        padding: 0;
+        color: #fff;
+        font-weight: 500;
+    }
+
+    .tabs-style-shape nav li:first-child a span {
+        padding-left: 2em;
+        border-radius: 30px 0 0 0;
+    }
+
+    .tabs-style-shape nav li:last-child a span {
+        padding-right: 2em;
+        border-radius: 0 30px 0 0;
+    }
+
+    .tabs-style-shape nav li a svg {
+        position: absolute;
+        left: 100%;
+        margin: 0;
+        width: 3em;
+        height: 100%;
+        fill: #bdc2c9;
+    }
+
+        .tabs-style-shape nav li a svg:nth-child(2),
+        .tabs-style-shape nav li:last-child a svg {
+            right: 100%;
+            left: auto;
+            -webkit-transform: scale3d(-1,1,1);
+            transform: scale3d(-1,1,1);
+        }
+
+    .tabs-style-shape nav li a span {
+        display: block;
+        overflow: hidden;
+        padding: 0.32em 0;
+        background-color: #bdc2c9;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 16px;
+    }
+
+    .tabs-style-shape nav li a:hover span {
+        background-color: #2CC185;
+    }
+
+    .tabs-style-shape nav li a:hover svg {
+        fill: #2CC185;
+    }
+
+    /* Make only shape clickable */
+    .tabs-style-shape nav li a svg {
+        pointer-events: none;
+    }
+
+        .tabs-style-shape nav li a svg use {
+            pointer-events: auto;
+        }
+
+    .tabs-style-shape nav li.active a span,
+    .tabs-style-shape nav li.active a svg {
+        -webkit-transition: none;
+        transition: none;
+    }
+
+    .tabs-style-shape nav li.active a span {
+        background: #fff;
+    }
+
+    .tabs-style-shape nav li.active a svg {
+        fill: #fff;
+    }
+
+    .tabs-style-shape .content-wrap {
+        background: #fff;
+    }
+
+    .tabs-style-shape .tab-content {
+        background: #fff;
+        padding: 20px;
+    }
+
+    .only-bordered {
+        border: 1px solid #ccc;
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+        .only-bordered > tbody > tr > td {
+            border-top: none;
+            padding: 2px 8px;
+            font-size: 14px;
+        }
+
+    #epTable .progress {
+        margin: 3px 0;
+        height: 10px;
+        border-radius: 0;
+    }
+
+    .ptb0 {
+        padding-top: 0 !important;
+    }
+
+    .containerPad {
+        padding: 15px;
+        background: #f1f5f9;
+    }
+</style>
+
+
+    <style>
+        .closeBtn {
+            font-size: 27px;
+        }
+        #forTable {
+                height: 160px;
+            overflow-y: auto;
+            border: 1px solid #cacaca;
+            margin-top: 11px;
+        }
+        #forTable>table{
+            margin:0;
+        }
+        .shPercent {
+            position: absolute;
+            right: 5px;
+            top: 9px;
+            font-size: 10px;
+        }
+        .watchScroller {
+            max-height:270px;
+            overflow-y:auto;
+        }
+        .acWatchHd {
+                padding: 4px 15px 15px 15px;
+            border-bottom: 1px solid #e8e8e8;
+            margin-bottom: 12px !important;
+        }
+        .watchTbl>thead>tr>th{
+            padding:4px 8px;
+            font-weight:600;
+            color:#b3b3b3;
+            text-transform:capitalize;
+        }
+        .watchTbl>tbody>tr>td {
+            padding:8px 8px;
+       
+            text-transform:capitalize;
+            
+        }
+        .watchTbl>tbody>tr>td.weight {
+            font-weight:700;
+        }
+        .watchTbl>tbody>tr>td.wtchHd{
+            color: #86cae4;
+            font-weight: 500;
+        }
+        .branSelector {
+                padding: 10px 0 0 0;
+        }
+        .branSelector>table>tbody>tr>td:first-child{
+            padding-right:15px;
+        }
+        .branSelector select {
+            width:150px;
+        }
+        .inr{
+            color:#f9be76;
+        }
+        .jconfirm-title {
+             font-size: 14px !important;
+             color: #232121;
+        }
+        .todolistWraper .todolistItem .todoInfo .data.red {
+            color:red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script>
+        function reloadParent() {
+            parent.document.location.href = '/oms/management/projectmainpage.aspx'
+        }
+        $(document).ready(function () {
+            function createCalender(data) {
+                var evt = [];
+                
+                for (var i = 0; i < data.length; i++) {
+
+                    var obj = {};
+                    obj.title = data[i].TASK_SUBJECT;
+                    obj.start = data[i].TASK_DUEDATE;
+                    obj.description = data[i].TASK_DESCRIPTION;
+                    evt.push(obj);
+       
+
+                    
+                }
+                console.log(evt);
+                
+                $('#EventCal').fullCalendar({
+                    themeSystem: 'bootstrap3',
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,listMonth'
+                    },
+                    weekNumbers: true,
+                    eventLimit: true,
+                    events: evt,
+                    eventRender: function (event, element) {
+                        element.qtip({
+                            content: event.description,
+                            position: {
+                                my: 'top left',  // Position my top left...
+                                at: 'left bottom', // at the bottom right of...
+                            }
+                        });
+                    }
+                });
+            }
+            
+            var todoObj = {};
+            todoObj.userid = '378';
+            $.ajax({
+                type: "POST",
+                url: "../service/general.asmx/TodoData",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(todoObj),
+                dataType: "json",
+                success: function (data) {
+                    // watchlistDataLoop(data.d);
+                    createTodoList(data.d);
+                    createCalender(data.d);
+                }
+            });
+
+            
+               
+        });
+
+        function resizer() {
+            var calParentSize = $('#calParentSize').height();
+
+        }
+        function completeTask(id,s) {
+            //alert(id);
+            //if ($(this).attr(':checked')) {
+            //    alert('You Un-Checked it');
+            //} else {
+            //    alert('You have Checked it');
+            //}
+
+
+            if ($(s).is(':checked')) {
+                $.confirm({
+                    title: 'Do you want to Complete this task!',
+                    content: '',
+                    buttons: {
+                        confirm: function () {
+                            var taskEdit = {};
+                            taskEdit.taskId = id;
+                            taskEdit.Status = "0";
+                            $.ajax({
+                                type: "POST",
+                                url: "../service/general.asmx/UpdateTask",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(taskEdit),
+                                dataType: "json",
+                                success: function (data) {
+                                    function createCalender(data) {
+                                        var evt = [];
+
+                                        for (var i = 0; i < data.length; i++) {
+
+                                            var obj = {};
+                                            obj.title = data[i].TASK_SUBJECT;
+                                            obj.start = data[i].TASK_DUEDATE;
+                                            obj.description = data[i].TASK_DESCRIPTION;
+                                            evt.push(obj);
+
+
+
+                                        }
+                                        console.log(evt);
+
+                                        $('#EventCal').fullCalendar({
+                                            themeSystem: 'bootstrap3',
+                                            header: {
+                                                left: 'prev,next today',
+                                                center: 'title',
+                                                right: 'month,listMonth'
+                                            },
+                                            weekNumbers: true,
+                                            eventLimit: true,
+                                            events: evt,
+                                            eventRender: function (event, element) {
+                                                element.qtip({
+                                                    content: event.description,
+                                                    position: {
+                                                        my: 'top left',  // Position my top left...
+                                                        at: 'left bottom', // at the bottom right of...
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+
+                                    var todoObj = {};
+                                    todoObj.userid = '378';
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "../service/general.asmx/TodoData",
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify(todoObj),
+                                        dataType: "json",
+                                        success: function (data) {
+                                            // watchlistDataLoop(data.d);
+                                            createTodoList(data.d);
+                                            createCalender(data.d);
+                                        }
+                                    });
+
+
+                                }
+                            });
+                        },
+                        cancel: function () {
+                            //$.alert('Canceled!');
+                            $(s).filter(':checkbox').prop('checked', false);
+                        }   
+                    }
+                });
+
+            } else {
+                $.confirm({
+                    title: 'Do you want to Uncomplete this task!',
+                    content: '',
+                    buttons: {
+                        confirm: function () {
+                            var taskEdit = {};
+                            taskEdit.taskId = id;
+                            taskEdit.Status = "1";
+                            $.ajax({
+                                type: "POST",
+                                url: "../service/general.asmx/UpdateTask",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(taskEdit),
+                                dataType: "json",
+                                success: function (data) {
+                                    function createCalender(data) {
+                                        var evt = [];
+
+                                        for (var i = 0; i < data.length; i++) {
+
+                                            var obj = {};
+                                            obj.title = data[i].TASK_SUBJECT;
+                                            obj.start = data[i].TASK_DUEDATE;
+                                            obj.description = data[i].TASK_DESCRIPTION;
+                                            evt.push(obj);
+
+
+
+                                        }
+                                        console.log(evt);
+
+                                        $('#EventCal').fullCalendar({
+                                            themeSystem: 'bootstrap3',
+                                            header: {
+                                                left: 'prev,next today',
+                                                center: 'title',
+                                                right: 'month,listMonth'
+                                            },
+                                            weekNumbers: true,
+                                            eventLimit: true,
+                                            events: evt,
+                                            eventRender: function (event, element) {
+                                                element.qtip({
+                                                    content: event.description,
+                                                    position: {
+                                                        my: 'top left',  // Position my top left...
+                                                        at: 'left bottom', // at the bottom right of...
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+
+                                    var todoObj = {};
+                                    todoObj.userid = '378';
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "../service/general.asmx/TodoData",
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify(todoObj),
+                                        dataType: "json",
+                                        success: function (data) {
+                                            // watchlistDataLoop(data.d);
+                                            createTodoList(data.d);
+                                            createCalender(data.d);
+                                        }
+                                    });
+
+
+                                }
+                            });
+                        },
+                        cancel: function () {
+                            //$.alert('Canceled!');
+                            $(s).filter(':checkbox').prop('checked', true);
+                        }   
+                    }
+                });
+            }
+
+            //if ($(this).attr(':checked')) {
+                //$.confirm({
+                //    title: 'Do you want to Uncomplete this task!',
+                //    content: 'Simple confirm!',
+                //    buttons: {
+                //        confirm: function () {
+                //            var taskEdit = {};
+                //            taskEdit.taskId = id;
+                //            $.ajax({
+                //                type: "POST",
+                //                url: "../service/general.asmx/UpdateTask",
+                //                contentType: "application/json; charset=utf-8",
+                //                data: JSON.stringify(taskEdit),
+                //                dataType: "json",
+                //                success: function (data) {
+                //                    function createCalender(data) {
+                //                        var evt = [];
+
+                //                        for (var i = 0; i < data.length; i++) {
+
+                //                            var obj = {};
+                //                            obj.title = data[i].TASK_SUBJECT;
+                //                            obj.start = data[i].TASK_DUEDATE;
+                //                            obj.description = data[i].TASK_DESCRIPTION;
+                //                            evt.push(obj);
+
+
+
+                //                        }
+                //                        console.log(evt);
+
+                //                        $('#EventCal').fullCalendar({
+                //                            themeSystem: 'bootstrap3',
+                //                            header: {
+                //                                left: 'prev,next today',
+                //                                center: 'title',
+                //                                right: 'month,listMonth'
+                //                            },
+                //                            weekNumbers: true,
+                //                            eventLimit: true,
+                //                            events: evt,
+                //                            eventRender: function (event, element) {
+                //                                element.qtip({
+                //                                    content: event.description,
+                //                                    position: {
+                //                                        my: 'top left',  // Position my top left...
+                //                                        at: 'left bottom', // at the bottom right of...
+                //                                    }
+                //                                });
+                //                            }
+                //                        });
+                //                    }
+
+                //                    var todoObj = {};
+                //                    todoObj.userid = '378';
+                //                    $.ajax({
+                //                        type: "POST",
+                //                        url: "../service/general.asmx/TodoData",
+                //                        contentType: "application/json; charset=utf-8",
+                //                        data: JSON.stringify(todoObj),
+                //                        dataType: "json",
+                //                        success: function (data) {
+                //                            // watchlistDataLoop(data.d);
+                //                            createTodoList(data.d);
+                //                            createCalender(data.d);
+                //                        }
+                //                    });
+
+
+                //                }
+                //            });
+                //        },
+                //        cancel: function () {
+                //            //$.alert('Canceled!');
+                //        }   
+                //    }
+                //});
+            //} else {
+                //$.confirm({
+                //    title: 'Do you want to Complete this task!',
+                //    content: 'Simple confirm!',
+                //    buttons: {
+                //        confirm: function () {
+                //            var taskEdit = {};
+                //            taskEdit.taskId = id;
+                //            $.ajax({
+                //                type: "POST",
+                //                url: "../service/general.asmx/UpdateTask",
+                //                contentType: "application/json; charset=utf-8",
+                //                data: JSON.stringify(taskEdit),
+                //                dataType: "json",
+                //                success: function (data) {
+                //                    function createCalender(data) {
+                //                        var evt = [];
+
+                //                        for (var i = 0; i < data.length; i++) {
+
+                //                            var obj = {};
+                //                            obj.title = data[i].TASK_SUBJECT;
+                //                            obj.start = data[i].TASK_DUEDATE;
+                //                            obj.description = data[i].TASK_DESCRIPTION;
+                //                            evt.push(obj);
+
+
+
+                //                        }
+                //                        console.log(evt);
+
+                //                        $('#EventCal').fullCalendar({
+                //                            themeSystem: 'bootstrap3',
+                //                            header: {
+                //                                left: 'prev,next today',
+                //                                center: 'title',
+                //                                right: 'month,listMonth'
+                //                            },
+                //                            weekNumbers: true,
+                //                            eventLimit: true,
+                //                            events: evt,
+                //                            eventRender: function (event, element) {
+                //                                element.qtip({
+                //                                    content: event.description,
+                //                                    position: {
+                //                                        my: 'top left',  // Position my top left...
+                //                                        at: 'left bottom', // at the bottom right of...
+                //                                    }
+                //                                });
+                //                            }
+                //                        });
+                //                    }
+
+                //                    var todoObj = {};
+                //                    todoObj.userid = '378';
+                //                    $.ajax({
+                //                        type: "POST",
+                //                        url: "../service/general.asmx/TodoData",
+                //                        contentType: "application/json; charset=utf-8",
+                //                        data: JSON.stringify(todoObj),
+                //                        dataType: "json",
+                //                        success: function (data) {
+                //                            // watchlistDataLoop(data.d);
+                //                            createTodoList(data.d);
+                //                            createCalender(data.d);
+                //                        }
+                //                    });
+
+
+                //                }
+                //            });
+                //        },
+                //        cancel: function () {
+                //            //$.alert('Canceled!');
+                //        }
+                //    }
+                //});
+
+           // }
+            
+        }
+
+        //function abc(id) {
+        //    //alert(id);
+        //    if ($(this).attr(':checked')) {
+        //        $(this).filter(':checkbox').prop('checked', true);
+        //    } else {
+        //        $(this).filter(':checkbox').prop('checked', true);
+
+        //    }
+        //}
+
+        function createTodoList(data) {
+            //console.log(data.length);
+            var mainDta = data;
+            console.log(mainDta);
+            var tureCount = $.grep(mainDta, function (e) { return e.ISCOMPLETED == true });
+            var falseCount = $.grep(mainDta, function (e) { return e.ISCOMPLETED == false });
+            var overdueCount = $.grep(mainDta, function (e) { return e.WARNING == true });
+            $('#completeCount').html(tureCount.length);
+            $('#pendingCount').html(falseCount.length);
+            $('#overDueCount').html(overdueCount.length);
+
+            var toDoItem = ""
+
+            for (var i = 0; i < mainDta.length; i++) {
+                toDoItem += "<div class='todolistItem clearfix'><div class='forIconStatus'>"
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoItem += "<img src='../images/EV1.png' />"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == true) {
+                    toDoItem += "<img src='../images/EV2.png' />"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == false) {
+                    toDoItem += "<img src='../images/EV3.png' />"
+                }
+
+                toDoItem += "</div><div class='forContent'><div class='col-sm-12'><div class='row'>"
+
+                toDoItem += "<h5 class='TodoSub col-sm-12'>" + mainDta[i]['TASK_SUBJECT'] + "</h5>"
+                toDoItem += "<p class='col-sm-12'>" + mainDta[i]['TASK_DESCRIPTION'] + "</p>"
+
+                toDoItem += " </div></div><div class='col-sm-12'><div><ul class='todoInfo'><li>"
+
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoItem += "<div class='hd'>Due on</div><div class='data'>" + mainDta[i]['TASK_DUEDATEFor'] + "</div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == true) {
+                    toDoItem += "<div class='hd'>Due on</div><div class='data red'>" + mainDta[i]['TASK_DUEDATEFor'] + "</div>"
+                } else if (mainDta[i]['ISCOMPLETED'] == false && mainDta[i]['WARNING'] == false) {
+                    toDoItem += "<div class='hd'>Due on</div><div class='data'>" + mainDta[i]['TASK_DUEDATEFor'] + "</div>"
+                }
+
+                
+
+                toDoItem += "</li><li>"
+                if (mainDta[i]['TASK_PRIORITY'] == "High") {
+                    toDoItem += "<div class='hd'>Priority</div><div class='data cHigh'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                } else if (mainDta[i]['TASK_PRIORITY'] == 'Low') {
+                    toDoItem += "<div class='hd'>Priority</div><div class='data cLow'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                } else if (mainDta[i]['TASK_PRIORITY'] == 'Normal') {
+                    toDoItem += "<div class='hd'>Priority</div><div class='data cNormal'>" + mainDta[i]['TASK_PRIORITY'] + "</div></li><li>"
+                }
+                if (mainDta[i]['CompletedBy'] == "") {
+                    toDoItem += "<div class='hd'>Completed by</div><div class='data'>&nbsp; </div></li><li>"
+                } else {
+                    toDoItem += "<div class='hd'>Completed by</div><div class='data'>" + mainDta[i]['CompletedBy'] + "</div></li><li>"
+                }
+
+                //toDoItem += "<div class='hd'>Completed by</div><div class='data'>" + mainDta[i]['CompletedBy'] + "</div></li><li>"
+                if (mainDta[i]['completedon'] == null) {
+                    toDoItem += "<div class='hd'>Completed on</div><div class='data'>&nbsp;</div></li></ul></div></div></div>"
+                } else {
+                    toDoItem += "<div class='hd'>Completed on</div><div class='data'>" + mainDta[i]['completedonFor'] + "</div></li></ul></div></div></div>"
+                }
+                
+
+
+                if (mainDta[i]['ISCOMPLETED'] == true) {
+                    toDoItem += "<div class='forAction'><label class='switch'><input type='checkbox' onclick='completeTask(" + mainDta[i]['SCHEDULE_id'] + ",this);' id='checkMeOut" + mainDta[i]['SCHEDULE_id'] + "' checked><span class='slider round'></span></label></div></div>"
+                } else {
+                    toDoItem += "<div class='forAction'><label class='switch'><input type='checkbox' onclick='completeTask(" + mainDta[i]['SCHEDULE_id'] + ",this);' id='checkMeOut" + mainDta[i]['SCHEDULE_id'] + "'><span class='slider round'></span></label></div></div>"
+                }
+                
+
+            }
+            $('#todolistWraper').html(toDoItem);
+
+        }
+
+        
+        
+
+        
+
+</script>
+
+  <%--  <link href="../Js/tempuststyle.css" rel="stylesheet" />
+    <script src="../Js/tempust.js"></script>--%>
+    <style>
+        #tempust .tempust {
+            width:100%;
+            font-size:18px !important;
+            background-color: #fff; 
+        }
+        .tempust .header:after, .tempust .dates:after {
+           content: " "; /* Older browser do not support empty content */
+           visibility: hidden;
+           display: block;
+           height: 0;
+           clear: both;
+        }
+        .tempust .header>select {
+                border: 1px solid #e8e5e5;
+                font-size: 16px;
+                border-radius: 4px;
+                height: 38px !important;
+                padding-left: 8px !important;
+        }
+        .tempust .header>select.year {
+            float:left;
+            width:20%;
+        }
+        .tempust .header>select.month {
+            width:30%;
+            float:right;
+            text-transform:uppercase;
+        }
+        #tempust .tempust .weekday{
+            text-transform:uppercase;
+            background: #c6e4e4;
+        }
+        .tempust .day[data-event]::before {
+                border-color: transparent #9f29dc transparent transparent;
+        }
+        .tempust .event{
+            padding: 0;
+            font-size: 15px;
+        }
+        #tempust .tempust .event >div:nth-child(even){
+                background: #6eb4fb;
+                padding: 5px 15px;
+        }
+        #tempust .tempust .event >div:nth-child(odd){
+            background: #92c794;
+            padding: 5px 15px;
+        }
+
+        .fc-header-toolbar>.fc-left {
+            display:none;
+        }
+        .fc-header-toolbar>.fc-center{
+            float:left;
+            padding-top: 10px;
+        }
+        .fc-header-toolbar>.fc-center>h2{
+                 font-size: 19px;
+                color: #a8a8ad;
+         }
+        .fc-header-toolbar>.fc-right .btn-group {
+                   margin-top: 7px;
+           }
+        .fc-day-header, .fc-week-number {
+            padding:8px !important;
+        }
+        .fc-day-header.fc-mon{
+            background: #8d9af5;
+            border-color: #8d9af5;
+            color: #fff;
+        }
+        .fc-day-header.fc-tue{
+                background: #7d8be8;
+                border-color: #7d8be8;
+                color: #fff;
+        }
+        .fc-day-header.fc-wed{
+           background: #727fda;
+           border-color: #727fda;
+            color: #fff;
+        }
+        .fc-day-header.fc-thu{
+                background: #6976d2;
+                border-color: #6976d2;
+                color: #fff;
+        }
+        .fc-day-header.fc-fri{
+                background: #5a67c3;
+                border-color: #5a67c3;
+                color: #fff;
+        }
+        .fc-day-header.fc-sat{
+                background: #ffbfa7;
+                border-color: #ffbfa7;
+                color: #fff;
+        }
+        .fc-day-header.fc-sun{
+           background: #ff8759;
+           border-color: #ff8759;
+            color: #fff;
+        }
+        .reloadParent {
+                font-size: 24px;
+        }
+        .advanceSearchWatch {
+            
+            padding: 4px 0 4px 8px;
+            position:relative;
+        }
+        .advanceSearchWatch  .fa {
+            color: #7886e6;
+        }
+        .moreSearchWatchlist {
+            position: absolute;
+            width: 250px;
+            background: #fff;
+            padding: 15px;
+            z-index: 5;
+            right: 0;
+            top: 30px;
+            box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+        }
+        .moreSearchWatchlist label {
+            margin-left:0 !important;
+        }
+        .moreSearchWatchlist>input {
+            margin-bottom:11px !important;
+        }
+        input[type="number"]{
+            display: block;
+            width: 100%;
+            height: 23px;
+            padding: 3px 3px;
+            font-size: 13px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #b8b8b8;
+            border-radius: 0;
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            margin-bottom: 5px;
+            margin-right: 1px;
+            outline: none;
+        }
+        .todolistItem .forIconStatus {
+            width: 54px;
+            float: left;
+            padding-top: 13px;
+        }
+        .todolistItem .forContent {
+               float: left;
+                
+                width: 80%;
+        }
+        .todolistItem .forAction {
+            float: right;
+            width: 60px;
+            padding-top: 10px;
+        }
+        .todolistWraper {
+            max-height:78vh;
+            min-height:78vh;
+            overflow-y:auto;
+        }
+        .todolistWraper .todolistItem{
+            padding:0px 15px;
+            border-bottom: 1px solid #c3c1c1;
+        }
+        .todolistWraper .todolistItem:nth-child(odd){
+            background:#f8f8f8;
+        }
+        .todolistWraper .todolistItem .forContent .TodoSub {
+            color:#3c4979;
+            font-size:14px;
+            font-weight: 500 !important;
+            margin-top: 15px;
+            margin-bottom: 0px;
+        }
+        .todolistWraper .todolistItem .forContent p{
+            font-size:13px;
+            padding-top: 7px;
+        }
+        .todolistWraper .todolistItem .todoInfo {
+            padding: 0;
+            list-style-type: none;
+           
+        }
+        .todolistWraper .todolistItem .todoInfo>li {
+            display:inline-block;
+            margin-right:45px;
+        }
+        .todolistWraper .todolistItem .todoInfo .hd {
+                font-size: 12px;
+                color: #1f1e1e;
+                font-weight: 500 !important;
+        }
+        .todolistWraper .todolistItem .todoInfo .data {
+            font-size: 11px;
+            font-weight: 500;
+            color: #065ad9;
+            margin-top: 6px;
+        }
+        .cHigh {
+            color:#f5402d !important;
+        }
+        .cNormal {
+            color:#57bf4c !important;
+        }
+        .cLow {
+            color:#f9c852 !important;
+        }
+
+        .switch {
+              position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 29px;
+        }
+
+        .switch input { 
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor:pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+
+        .slider:before {
+                  position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+          background-color: #57bf4c;
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px #57bf4c;
+        }
+
+        input:checked + .slider:before {
+          -webkit-transform: translateX(16px);
+          -ms-transform: translateX(16px);
+          transform: translateX(16px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+
+        .slider.round:before {
+          border-radius: 50%;
+        }
+        .countLbl {
+           display: inline-block;
+            background: #f5f5f5;
+            margin-right: 15px;
+            padding: 6px 8px;
+            border-radius: 15px;
+        }
+        .cntlblM {
+             margin-left:100px;
+        }
+        .countLbl>span {
+                display: inline-block;
+                padding: 2px;
+                
+                min-width: 22px;
+                border-radius: 50%;
+                text-align: center;
+        }
+        .countLbl>span.success{
+            background: #57bf4c;
+                color: #fff;
+        }
+        .countLbl>span.pending{
+            background: #FF9800;
+            color: #fff;
+        }
+        .countLbl>span.overDue{
+          
+            background: #ff2514;
+            color: #fff;
+        }
+
+
+
+       .fc-header-toolbar {
+           margin-bottom:0;
+       }
+    </style>
+
+
+    
+    <link href="../css/fullcalendar.min.css" rel="stylesheet" />
+    <link href="../css/jquery.qtip.min.css" rel="stylesheet" />
+    <script src="../Js/moment.min.js"></script>
+    
+    
+    
+    <script src="../Js/fullcalendar.min.js"></script>
+    <script src="../Js/jquery.qtip.min.js"></script>
+        
+    <script type="text/javascript">
+
+       
+
+
+        $(document).ready(function () {
+
+           
+            
+        });
+        
+        
+    </script>
+    <style>
+        .noBorderTbl {
+            margin:15px 0;
+            width:100%;
+        }
+        .noBorderTbl>tbody>tr>td {
+            padding:8px 0;
+        }
+        .modal-dialog.modal-sm {
+            width:650px;
+        }
+        .darkLabel {
+                color: #191717;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+       <div class="panel-heading clearfix ">
+           <div class="col-md-12">
+                <div class="panel-title pull-left ">
+                    <h3 >Popup </h3>
+                </div>
+               <div class="pull-right" >
+                    <table>
+                        <tr>
+                            <td><a href="#" onclick="reloadParent()" class="reloadParent"><i class="fa fa-times"></i></a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+       <div class="form_main">
+           <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Open Modal</button>
+           <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal2">Open Modal</button>
+       </div>
+         
+
+    </form>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <div class=" clearfix">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label class="darkLabel">Numbering Scheme</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Document No</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Date</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Unit</label>
+                        <input type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-12">
+                    
+                     <table class="noBorderTbl">
+                         <tr>
+                             <td class="darkLabel">Warhouse Name</td>
+                             <td><input type="text" /></td>
+                         </tr>
+                         <tr>
+                             <td class="darkLabel" >Select Product</td>
+                             <td><input type="text" /></td>
+                         </tr>
+                         <tr>
+                             <td class="darkLabel">Stock in hand</td>
+                             <td><input type="text" /></td>
+
+                         </tr>
+                         <tr>
+                             <td class="darkLabel">Enter adjustment Qty</td>
+                             <td><input type="text" /></td>
+                         </tr>
+                         <tr>
+                             <td class="darkLabel">Total stock in hand</td>
+                             <td><input type="text" /></td>
+                         </tr>
+                         <tr>
+                             <td colspan="2">
+                                 <label class="darkLabel">Total stock in hand</label>
+                                 <input type="text" />
+
+                             </td>
+                        
+                         </tr>
+                     </table>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-3">
+                        <label class="darkLabel">Numbering Scheme</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Document No</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Date</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Unit</label>
+                        <input type="text" />
+                    </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+    <!-- Modal 2-->
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <div class=" clearfix">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label class="darkLabel">Numbering Scheme</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Document No</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Date</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Unit</label>
+                        <input type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-12">
+                    
+                     <table class="noBorderTbl">
+                         <tr>
+                             <td class="darkLabel">Warhouse Name</td>
+                             <td><input type="text" /></td>
+                         </tr>
+                         <tr>
+                             <td class="darkLabel" >Select Product</td>
+                             <td><input type="text" /></td>
+                         </tr>
+                         <tr>
+                             <td class="darkLabel">Stock in hand</td>
+                             <td><input type="text" /></td>
+
+                         </tr>
+                         <tr>
+                             <td class="darkLabel">Enter adjustment Qty</td>
+                             <td><input type="text" /></td>
+                         </tr>
+                         <tr>
+                             <td class="darkLabel">Total stock in hand</td>
+                             <td><input type="text" /></td>
+                         </tr>
+                         <tr>
+                             <td colspan="2">
+                                 <label class="darkLabel">Total stock in hand</label>
+                                 <input type="text" />
+
+                             </td>
+                        
+                         </tr>
+                     </table>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-3">
+                        <label class="darkLabel">Numbering Scheme</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Document No</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Date</label>
+                        <input type="text" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="darkLabel">Unit</label>
+                        <input type="text" />
+                    </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+</body>
+</html>
