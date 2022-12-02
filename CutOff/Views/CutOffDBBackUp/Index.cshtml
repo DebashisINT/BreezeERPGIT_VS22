@@ -1,0 +1,175 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+</style>
+<script>
+    function OnNextButtonClickTwo() {
+        debugger;
+        var obj = {};       
+        $.ajax({
+            type: "POST",           
+            url: "@Url.Action("CutOffBackUp", "CutOffDBBackUp")",
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                //jAlert(response);
+                document.getElementById("btnStep3").style.display = "inline-block";
+                document.getElementById("btnNext").style.display = "none";
+                document.getElementById("dvBack").style.display = "inline-block";
+                $('#dvBack').html(response);
+                //LoadingPanel.Hide();
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+    //function btnCancelClick() {
+    //    //window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+    //    window.location.href = "/CutOffDBBackUp/Index";
+    //}
+    function RedirectToStepthree() {
+        // window.location.href = "/YearEnding/CutOffStepThree?cutoffDate=" + $("#hdnCutoffDate").val() + "&backup=" + $("#hdnBackup").val() + "&Dbname=" + txtDbName.GetText() + "&AuditDbname=" + txtAuditDbName.GetText();
+        window.location.href = "/CutOffDBBackUp/CutOffDBCreate";
+        @*window.location.href = '@Url.Action("CutOffDBBac", "Home")';*@
+    }
+    function NextProcess() {
+        debugger;
+        var StrData = {};
+        var data = {
+            "StrData": $("#ddlDataBase option:selected").val()
+        };
+        $.ajax({   
+            type: "POST",
+            dataType: "JSON",
+            //data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            url: "@Url.Action("StartDbCreate", "CutOffDBBackUp")",
+            success: function (response) {
+                console.log(response);
+                //jAlert(response);
+                document.getElementById("btnNext").style.display = "none";
+                document.getElementById("dvBack").style.display = "none";
+                document.getElementById("btnStep3").style.display = "none";
+                //document.getElementById("btnstartdbCreation").style.display = "none";
+                if(response=="1")
+                {
+                    //window.location.href = "/CutOffDBBackUp/CreateRestoreBackUp";
+                    window.location.href = "/CutOffDBBackUp/ResoteDB";
+                }
+                else
+                {
+                    window.location.href = "/CutOffDBBackUp/Index";
+                }
+            },
+        error: function (response) {
+            jAlert("Please try again later");
+        }
+    });
+    }
+</script>
+
+<div class="flexContainer" id="dvStep2">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending CutOff</h3>
+        <div class="bordered">
+            <table width="70%">
+                @*<tr>
+                    <td>
+                        <label>Cut Off Date</label>
+                    </td>
+                    <td>
+                        @Html.DevExpress().DateEdit(
+                     settings =>
+                     {
+                         settings.Name = "CutOffDate_dt";
+                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                         settings.Width = Unit.Percentage(100);
+                         //settings.Date = Convert.ToDateTime(@Model.OrderDate);
+                         settings.Properties.UseMaskBehavior = true;
+
+                     }
+                     ).GetHtml()
+                    </td>
+                </tr>*@
+                <tr>
+                    <td>
+                        <label></label>
+                    </td>
+                    <td>
+                        @Html.DevExpress().Button(
+
+                        settings =>
+                        {
+                            settings.Name = "btnNext";
+                            settings.ClientSideEvents.Click = "OnNextButtonClickTwo";
+                            settings.Text = "Start CutOFF";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-warning";
+                            settings.UseSubmitBehavior = false;
+                        }).GetHtml()
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label></label>
+                    </td>
+                    <td>
+                        <div id="dvBack" style="display:none;"></div>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <div class="text-right mtop-2">
+                @*<button style="display:none;" id="btnStep3" class="btn btn-primary" onclick="RedirectToStepthree();">OK</button>*@
+                <button style="display:none;" id="btnStep3" class="btn btn-primary" onclick="NextProcess();">OK</button>
+                @*<button class="btn btn-danger" onclick="btnCancelClick();">Cancel</button>*@
+            </div>
+        </div>
+
+    </div>
+    @*<input type="hidden" id="hdnCutoffDate" value="@ViewData["cutoffDate"]" />
+    <input type="hidden" id="hdnBackup" value="@ViewData["backup"]" />*@
+
+</div>
+

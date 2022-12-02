@@ -1,0 +1,76 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "KeyPersonGridLookup";
+    settings.CallbackRouteValues = new { Action = "GetKeyPersonList", Controller = "CRMLeads" };
+    settings.KeyFieldName = "guid";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
+    settings.SettingsBehavior.AllowSort = false;
+    settings.CommandColumn.Visible = false;
+    //settings.CommandColumn.Visible = true;
+    //settings.CommandColumn.ShowSelectCheckbox = true;
+    //settings.SettingsBehavior.AllowSelectSingleRowOnly = true;
+    //  settings.ClientSideEvents.SelectionChanged = "SelectionChanged";
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Name";
+        x.Caption = "Name";
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.ReadOnly = true;
+        //x.Settings.AllowSort = false;
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Designation";
+        x.Caption = "Designation";
+        x.ReadOnly = true;
+        //x.VisibleIndex = 7;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        //x.Settings.AllowSort = false;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "PhoneNumber";
+        x.Caption = "PhoneNumber";
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+    });
+
+    settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "guid";
+        x.Caption = "";
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
+        x.FilterCellStyle.CssClass = "hide";
+        //x.Visible = false;
+        x.Settings.AllowAutoFilter = DefaultBoolean.False;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+    });
+
+
+
+}).Bind(Model).GetHtml()
+
+
+
+

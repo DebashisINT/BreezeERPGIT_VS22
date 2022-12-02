@@ -1,0 +1,37 @@
+﻿@model CRM.Models.EnquiriesDet
+
+
+<div class="">
+    <input type="hidden" id="hdnUserid" />
+
+    <div class="row">
+
+        <div class="myAssignTarget" id="myAssignTargetpopup">
+            <div class="clearfix">
+                <div class="clear"></div>
+                <div class="col-lg-11">
+                    <label class="mTop10"><b>Feedback</b><span style="color:red">*</span></label>
+                    <input type="text" class="form-control text-left shd" id="idReopenFeedback" value='@Model.ReopenFeedback' />
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+        </div>
+        <div class="clear "></div>
+
+        <div class=" col-md-12 pad15">
+
+            <div class="">
+                <button type="button" class="btn btn-primary" id="btnSaveReopenEnquiry" onclick="SaveReopenEnquiry();">Save</button>
+                <button type="button" class="btn btn-danger" onclick="CancelReopenEnquiry();">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="hdnselectedEnquirisList" value="@Model.selectedEnquirisList" />
+
+
+

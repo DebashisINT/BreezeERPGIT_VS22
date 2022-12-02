@@ -1,0 +1,98 @@
+﻿@using System.Web.UI.WebControls
+@{
+    ViewBag.Title = "NewDBCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+</style>
+<div id="dvStep3" class="flexContainer">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending CuOff DB Creation</h3>
+        <div class="bordered">
+            <table width="70%">
+                <tr>
+                    <td>
+                        <label>Cut Off Date :</label>
+                    </td>
+                    <td>
+                        <label>@ViewBag.CutoffDate</label>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Select DataBase To Create DB :</label>
+                    </td>
+                    <td>
+                        <label id="ddlDataBase"></label>
+                    </td>
+                </tr>
+                <tr style="display:none;">
+                    <td>
+                        <label>Backup Done :</label>
+                    </td>
+                    <td>
+                        <label id="lblDone">Done</label>
+                        <label id="lblEsc"> || </label>
+                        <label id="lblNotDone">Not Done</label>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <div class="text-right mtop-2">
+                <button class="btn btn-primary" id="btnstartdbCreation" onclick="LoadDB();">Load</button>
+                <button style="display:none;" class="btn btn-primary" id="btnStep4">Exit</button>
+                <button class="btn btn-danger hide">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function LoadDB()
+    {
+        debugger;
+        $.ajax({                
+            url: "@Url.Action("Filldatabase", "CutOffDBBackUp")",
+            type: "GET",
+        dataType: "JSON",
+        success: function (response) {
+            console.log(response);
+            jAlert(response);
+        },
+        error: function (response) {
+            jAlert("Please try again later");
+        }
+    });
+  }
+</script>

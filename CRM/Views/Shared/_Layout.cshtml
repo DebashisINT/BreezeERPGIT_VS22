@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.DevExpress().GetStyleSheets(
+           new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+           new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
+         new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList },
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet },
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit },
+         //   new StyleSheet { ExtensionSuite = ExtensionSuite.SpellChecker }
+    )
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/assests/bootstrap/css/MasterPage.css" rel="stylesheet" />
+    <link href="~/assests/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/assests/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/assests/pluggins/customScroll/custoScroll.css" rel="stylesheet" />
+    <link href="~/assests/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assests/css/custom/main.css" rel="stylesheet" />
+    <link href="~/assests/css/custom/newtheme.css" rel="stylesheet" />
+    <link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
+    @Html.DevExpress().GetScripts(
+          new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        //    new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
+        new Script { ExtensionSuite = ExtensionSuite.GridView },
+        //    new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+          new Script { ExtensionSuite = ExtensionSuite.Editors }
+        //    new Script { ExtensionSuite = ExtensionSuite.Chart },
+        //    new Script { ExtensionSuite = ExtensionSuite.Report },
+        //    new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+        //    new Script { ExtensionSuite = ExtensionSuite.TreeList },
+        //    new Script { ExtensionSuite = ExtensionSuite.Spreadsheet },
+        //    new Script { ExtensionSuite = ExtensionSuite.RichEdit },
+        //    new Script { ExtensionSuite = ExtensionSuite.SpellChecker }
+    )
+
+    @*<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>*@
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='~/assests/js/jquery.min.js'><\/script>")
+    </script>
+
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"></script>
+
+    @*<script type="text/javascript">
+        window.jQuery || document.write("<script src='~/assests/js/jquery-ui.min.js'><\/script>")
+        </script>*@
+
+    @*<script src="~/assests/js/init.js"></script>
+        <script src="~/assests/js/ajax-dynamic-list.js"></script>*@
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/assests/js/modalmsg.js"></script>
+    @*<script src="~/assests/bootstrap/js/bootstrap.min.js"></script> *@
+    <script src="~/assests/js/main.js"></script>
+    <script src="~/assests/js/MasterPage.js"></script>
+
+    <style>
+        .navbar {
+            z-index: 99 !important;
+        }
+    </style>
+
+</head>
+<body>
+    <header id="header" class="clearfix transit">
+        @{
+            Html.RenderAction("_PartialHeaderLayout", "CRMMaster");
+        }
+    </header>
+    <div class="mainWraper">
+        <div class="sidebar transit">
+            <nav class="sidenav">
+                @{
+                    Html.RenderAction("_PartialMenu", "CRMMaster");
+                }
+            </nav>
+        </div>
+        <section class="rightSide transit clearfix" style="min-height: 415px;">
+            @RenderBody()
+        </section>
+        <script src="~/assests/pluggins/customScroll/customScroll.js" rel="stylesheet"></script>
+    </div>
+</body>
+</html>

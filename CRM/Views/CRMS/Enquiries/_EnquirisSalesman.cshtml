@@ -1,0 +1,211 @@
+﻿
+@model CRM.Models.EnquiriesSalesmanFeedback
+
+<div class="">
+    <input type="hidden" id="hdnUserid" />
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="myAssignTarget" id="myAssignTargetpopup">
+
+                <li class="mainCircle">
+                    <div class="heading">Source</div>
+                    <div id="lblsource" class="Num">@Model.source</div>
+                </li>
+                <li class="mainCircle">
+                    <div class="heading">Industry</div>
+                    <div id="lblIndustry" class="Num">@Model.Industry</div>
+                </li>
+                <li class="mainCircle">
+                    <div class="heading">Misc Comments</div>
+                    <div id="lblMiscComments" class="Num">@Model.Misc_comments</div>
+                </li>
+                <li class="mainCircle">
+                    <div class="heading">Priority</div>
+                    <div id="lblPriorityName" class="Num">@Model.priorityName</div>
+                </li>
+                <li class="mainCircle">
+                    <div class="heading">Existing Customer</div>
+                    <div id="lblExistingCust" class="Num">@Model.checkedcustomer</div>
+                </li>
+            </ul>
+            <hr />
+
+        </div>
+
+        <div class="myAssignTarget" id="myAssignTargetpopup">
+            <div class="clearfix">
+                <div class="col-lg-4">
+                    <label class="mTop10"><b>Product Required and Quantity</b></label>
+                    <input type="text" class="form-control text-left shd" id="idproductrequired"  value="@Model.enq_prodreq" />
+                </div>
+                <div class="col-lg-4">
+                    <label class="mTop10"><b>Feedback</b></label>
+                    <input type="text" class="form-control text-left shd" id="idfeedback" value="@Model.feedback" />
+                </div>
+                
+                <div class="col-lg-4">
+                    <label class="mTop10"><b>Final Industry</b></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbFinalIndustry";
+                        settings.Properties.TextField = "Industry_Name";
+                        settings.Properties.ValueField = "Industry_Id";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Width = 208;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (Model.Final_IndustryId != 0)
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Value = Model.Final_IndustryId;
+                            }
+                        };
+                    }).BindList(Model.listIndustry).GetHtml()
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="col-lg-4">
+                    <label class="mTop10"><b>Activities</b></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbActivities";
+                        settings.Properties.TextField = "Name";
+                        settings.Properties.ValueField = "Id";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(string);
+                        settings.Width = 208;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (Model.usefullid !="")
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Value = Model.usefullid;
+                            }
+                        };
+                    }).BindList(Model.isusefull).GetHtml()
+                    </div>
+                </div>
+                
+                
+                   
+                    <div class="col-md-4">
+                        <label class="mTop10"><b>Last Contact Date</b></label>
+                        <div>
+                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dt_LastContact";
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Width = 208;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Enabled = false;
+                                                settings.Date = Convert.ToDateTime(@Model.last_contactdate);
+                                                settings.Properties.ClientSideEvents.DateChanged = "ChnageNextDate";
+                                            }
+                                ).GetHtml()
+                            <span id="Mandatoryfrm_dt_LastContact" style="display: none" class="validclass">
+                                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="mTop10"><b>Next Contact Date</b></label>
+                        <div>
+                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dt_NextContact";
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Width = 208;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Date = Convert.ToDateTime(@Model.next_contactdate);
+                                                if (@Model.last_contactdate == Convert.ToDateTime("1/1/0001 12:00:00 AM"))
+                                                {
+                                                    settings.Properties.MinDate = DateTime.Today;
+                                                    settings.Properties.MaxDate = Convert.ToDateTime(@Model.next_contactdate);
+                                                }
+                                                else
+                                                {
+                                                    settings.Properties.MinDate = @Model.last_contactdate;
+                                                    settings.Properties.MaxDate = @Model.last_contactdate.AddDays(15);
+                                                }
+                                                
+                                            }
+                                ).GetHtml()
+
+                            <span id="Mandatoryfrm_dt_NextContact" style="display: none" class="validclass">
+                                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-lg-4">
+                        <label class="mTop10"><b>Contacted By</b></label>
+                        @*<input type="text" class="form-control text-left shd" id="idContractedby" value=@Model.Contractedby />*@
+
+                        <div>
+                            @Html.DevExpress().ComboBox(
+                                settings =>
+                                {
+                                    settings.Name = "cmbSalesman";
+                                    settings.Properties.TextField = "Name";
+                                    settings.Properties.ValueField = "ID";
+                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                    settings.Properties.ValueType = typeof(int);
+                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                    settings.SelectedIndex = 0;
+                                    settings.Width = 208;
+                                    settings.PreRender = (sender, e) =>
+                                    {
+                                        if (Model.Contractedby != 0)
+                                        {
+                                            ASPxComboBox com = (ASPxComboBox)sender;
+                                            com.Value = Model.Contractedby;
+                                        }
+                                    };
+                                }).BindList(Model.listsalesman).GetHtml()
+                        </div>
+
+
+                    </div>
+                    <div class="col-lg-6">
+                        @*<a onclick="ShowHistorySaleman('@Model.Unique_ID');" style="cursor:pointer;">Show history</a>*@
+                        @*<button type="button" id=btnshowhistory"" class="btn btn-primary" onclick="ShowHistorySaleman(Model.Unique_ID);"></button>*@
+                    </div>
+               
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <div class=" col-md-12 pad15">
+
+            <div class="">
+
+                <button type="button" class="btn btn-primary" id="btnSaveSalesman" onclick="OKSavedSaleman();">Save</button>
+                <button type="button" class="btn btn-danger" onclick="CancelSaleman();">Cancel</button>
+                <button type="button" id="btnShowHistory" class="btn btn-info" onclick="ShowHistorySaleman('@Model.Unique_ID');">Show History</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="hdnsalesmanuniqueid" value="@Model.Unique_ID" />
+

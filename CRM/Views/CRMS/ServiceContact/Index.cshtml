@@ -1,0 +1,1012 @@
+﻿@model CRM.Models.crmLeads
+
+@{
+    ViewBag.Title = "Service Contract";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<script src="~/assests/js/CRM/crmProducts.js"></script>
+<link href="~/assests/js/CRM/SearchPopup.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+
+<script src="~/assests/js/CRM/crmMembers.js"></script>
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+
+
+<link href="~/assests/pluggins/JqueryConfirm/jquery-confirm.min.css" rel="stylesheet" />
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/SearchPopup.js"></script>
+<script src="/assests/js/CRM/ServiceCnt.js?v=1.0.109"></script>
+<script>
+    var ActivityProduct = [];
+    var ActivityProductCRM = [];
+    var ActivityProductProductId = "";
+</script>
+<style>
+    .modal-backdrop + .modal-backdrop {
+        z-index: 999998 !important;
+    }
+    .pmsModal#GridProductlistModel, .pmsModal#CustModel {
+        z-index: 999999;
+    } 
+    .colortable {
+        border: 1px solid #ccc;
+    } 
+    .colortable > thead > tr > th {
+        padding: 7px 8px;
+        background: #4646a2;
+        color: #fff;
+    }
+    .colortable > tbody {
+        min-height:100px
+    }
+    
+     .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .w100 {
+        width: 100px !important;
+    }
+
+    .gridcrmContact_DXFilterBar {
+        display: none !important;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+        /*#cmbPriority {
+        border-radius: 3px;
+    }*/
+        .myAssignTarget > li {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 11px;
+            text-align: center;
+        }
+
+            .myAssignTarget > li:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            .myAssignTarget > li.mainCircle {
+                border: 1px solid #a2d3d8;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .myAssignTarget > li .heading {
+                padding: 2px 12px;
+                background: #6d82c5;
+                color: #fff;
+            }
+
+            .myAssignTarget > li .Num {
+                font-size: 14px;
+            }
+
+            .myAssignTarget > li.mainHeadCenter {
+                font-size: 12px;
+                transform: translateY(-16px);
+            }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+    #cc, #bcc {
+        display: none;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -5px;
+        top: 5px;
+    }
+
+    .modal .modal-dialog.pTop0 {
+        margin-top: 5px !important;
+        padding-top: 0 !important;
+    }
+
+    .infoSection {
+        padding: 8px 7px;
+    }
+</style>
+
+@*-----------------------Start Activities---------------------------------*@
+<script type="text/javascript">
+    function DoActivity(id) {
+        $("#hdnLead_Code").val(id);
+        $("#hdnLead_Id").val(id);
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("DoActivity", "CRMActivity")",
+            data: { Module_Name: "ServiceContract  Activity", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Activities');
+                CRMpcControl.Show();
+            }
+        });
+    }
+    function CancelActivity() {
+        CRMpcControl.Hide();
+    }
+
+    function OnAddActivitiesbuttonClick() {
+        cActivity_Date.SetDate(new Date());
+        cddlActivity.SetValue("");
+        cddlActivityType.SetValue("");
+        ctxt_Subject.SetText("");
+        cmemo_Details.SetText("");
+        $("#ddlPriority").val(0);
+        cDue_dt.SetDate(new Date());
+        $("#btnClear").addClass('hide');
+        $("#btnSave").removeClass('hide');
+    }
+
+
+    function SaveActivity() {
+        if (validationsActivity()) {
+
+            var obj = {};
+            obj.activity = cddlActivity.GetValue();
+            obj.activity_type = cddlActivityType.GetValue();
+            obj.subject = ctxt_Subject.GetText();
+            obj.details = cmemo_Details.GetText();
+            obj.assignto = $("#ddlAssignTo").val();
+            obj.duration = ddlDuration.GetText();
+            obj.priority = $("#ddlPriority").val();
+            obj.DtxtDue = cDue_dt.GetDate();
+            obj.dtActivityDate = cActivity_Date.GetDate();
+            obj.CRMactivityid = $("#hdnLead_Code").val();
+            obj.contacttype = $("#ddlContactType").val();
+            // Mantis Issue 24175
+            obj.ActivityTypeNew = cddlActivityTypeNew.GetValue();
+            // End of Mantis Issue 24175
+            obj.Module_Name = "ServiceContract  Activity";
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SaveActivity", "CRMActivity")",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    jAlert(response, 'Alert');
+                    CRMpcControl.Hide();
+                }
+            });
+        }
+    }
+    function ActivityChange(s, e) {
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("ActivityChange", "CRMActivity")",
+            data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                cddlActivityType.ClearItems();
+                cddlActivityType.AddItem("Select", "0");
+                for (var i = 0; i < response.length; i++) {
+                    cddlActivityType.AddItem(response[i].Lead_ActivityTypeName, response[i].Id);
+                }
+                cddlActivityType.SetSelectedIndex(0);
+            }
+
+        });
+
+    }
+</script>
+
+<script type="text/javascript">
+  @*-----------------------Start Show History---------------------------------*@
+    function fn_crmShowHistory() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("CRMShowHistory", "CRMActivity")",
+            // data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                //$("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+
+
+
+    }
+    function btn_ShowHistory() {
+        var showhistory_Leadcode = $("#hdnLead_Code").val();
+        var showhistory_actiontype = 'ActivityShowAll';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Leadcode, Module: 'ServiceContract  Activity' },
+            success: function (response) {
+                // $("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+    function btn_ShowTopTenHistory() {
+        var showhistory_Leadcode = $("#hdnLead_Code").val();
+        var showhistory_actiontype = 'ActivityShowTop10';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Leadcode, Module: 'ServiceContract  Activity' },
+            success: function (response) {
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+
+
+</script> @*-----------------------End Show History---------------------------------*@
+@*-----------------------End Activities---------------------------------*@
+
+
+<script>
+
+    
+
+    function gridcrmServiceclick(s, e) {
+        $('#gvPaging').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+</script>
+<input type="hidden" value="@Url.Action("ExportCRMLeadsList", "ServiceContact", new { type = "_type_" })" id="hdnExportLink" />
+<input type="hidden" id="hdnOwnerAssignID" value="@ViewBag.OwnerAssignID" />
+<input type="hidden" id="hdnLead_Id" value="@Model.ServiceCnt_Id" />
+<input type="hidden" id="hdnLead_Code"/>
+<input type="hidden" id="hdnActionType" value="" />
+<div class="panel-heading">
+    <div id="td_contact1" class="panel-title">
+        <h3>
+            <span id="lblHeadTitle">Service Contract</span>
+        </h3>
+    </div>
+</div>
+<div class="form_main clearfix">
+    <div class="mTop5">
+@{ if (ViewBag.CanAdd)
+         {
+        <button class="btn btn-success btn-radius  " data-toggle="modal" data-backdrop="static" data-keyboard="true"   data-target="#addFservice" onclick="AddServiceContact();"><span class="btn-icon"><i class="fa fa-plus"></i></span>Service</button>
+     }
+        }    
+    <button class="btn btn-info btn-radius  " onclick="ShowAllClick();">Show</button>
+@{ if (ViewBag.CanExport)
+         {
+        <select name="ddlExport" class="btn btn-primary btn-radius" onchange="Exportclick()" id="ddlExport">
+            <option value="0">Export to</option>
+            <option value="1">PDF</option>
+            <option value="4">RTF</option>
+            <option value="2">XLSX</option>
+            <option value="3">XLS</option>
+            <option value="5">CSV</option>
+        </select>
+     }
+        }
+    </div>
+</div>
+
+<div class="GridViewArea relative">
+    @{
+        Html.RenderAction("PartialServiceContactGrid", "ServiceContact",new { frmdate = "Ispageload" });
+    }
+</div>
+
+<div class="modal fade pmsModal w90" id="addFservice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog pTop0" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Service Contract </h5>
+                <button type="button" class="close" onclick="CloseHeadModal();" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pmsForm">
+
+                <div class="clearfix text-center" style="margin-bottom:7px;">
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Owner</b></div>
+
+                                <div>
+                                    <div>@Html.DropDownListFor(m => m.OwnerID, new SelectList(Model.Users, "user_id", "user_name"), new { @class = "w100" })</div>
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Assign To</b></div>
+
+                                <div>
+                                    <div>@Html.DropDownListFor(m => m.AssignedID, new SelectList(Model.Assigners, "user_id", "user_name"), new { @class = "w100" })</div>
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Renewal Date</b></div>
+                                <div class="relative">
+                                    @*@Html.DevExpress().DateEditFor(model => model.RenewalDate,
+                                    settings =>
+                                    {
+                                        settings.Properties.EditFormat = EditFormat.Custom;
+                                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                        //settings.Properties.TimeSectionProperties.Visible = true;
+                                        //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                        //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                        settings.Properties.UseMaskBehavior = true;
+                                        settings.Date = DateTime.Now;
+                                        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        settings.Properties.ClientInstanceName = "cRenewalDate_Close";
+                                        settings.ControlStyle.CssClass = "dateEditInput";
+                                    }).GetHtml()*@
+
+                                    @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "RenewalDate_Close";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = System.Web.UI.WebControls.Unit.Pixel(130);
+                            //settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.RenewalDate);
+                            settings.Properties.ClientInstanceName = "cRenewalDate_Close";
+                            settings.ControlStyle.CssClass = "dateEditInput";
+                            //if (Model.EstimateDate !=null)
+                            //settings.Properties.MinDate = Convert.ToDateTime(Model.EstimateDate);
+                        }
+                        ).GetHtml()
+
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection ">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Status</b></div>
+                                <div>
+                                    <select class="form-control" id="StatusId">
+                                        <option id="0" selected="selected" value="0">Select</option>
+                                        <option id="1" value="1">New</option>
+                                        <option id="2" value="2">Hold</option>
+                                        <option id="3" value="3">Cancel</option>
+                                        <option id="4" value="4">Running</option>
+                                        <option id="5" value="5">Stop</option>
+                                    </select>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="Vtabs">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-1">
+                            <ul class="nav nav-pills nav-stacked flex-column">
+                                <li class="active" id="SummaryTabLink"><a href="#tab_a" data-toggle="pill">Summary</a></li>
+                                <li id="DetailsTabLink"><a href="#tab_b"  data-toggle="pill">Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-11">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_a">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Service Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Service name <span style="color:red">*</span></label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" id="SerViceName" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Unique Id <span style="color:red">*</span></label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" id="UniqueId" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Account / Customer <span style="color:red">*</span></label>
+                                                        <div class="col-md-12 relative">
+                                                            @Html.DevExpress().ButtonEdit(
+                        settings =>
+                        {
+                            settings.Name = "CustomerTxt";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Text = Model.Customer;
+                            settings.ReadOnly = true;
+                            settings.Properties.Buttons.Add("...");
+                            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){CustomerButnClick(s,e);}";
+                            settings.Properties.ClientSideEvents.KeyDown = "function(s,e){Customer_KeyDown(s,e);}";
+                            settings.ControlStyle.CssClass = "dateEditInput";
+
+                        }).GetHtml()
+
+                                                            <input type="hidden" id="txtContact_hidden">
+                                                            <input type="hidden" id="CustomerId" value="@Model.Customer_ID">
+                                                            <span id="EddlBankBranch" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Contacts </label>
+                                                        <div class="col-sm-12 dateEditInput">
+
+                                                            @{
+                                                                Html.RenderAction("PopulateSummaryContactGrid", "ServiceContact");
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Start Date</label>
+                                                        <div class="col-md-12 relative">
+                                                            @*@Html.DevExpress().DateEditFor(model => model.RenewalStartDate,
+            settings =>
+            {
+                settings.Properties.EditFormat = EditFormat.Custom;
+                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                //settings.Properties.TimeSectionProperties.Visible = true;
+                //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                settings.Properties.UseMaskBehavior = true;
+                settings.Date = DateTime.Now;
+                //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Properties.ClientInstanceName = "cRenewalStartDate_Close";
+                settings.ControlStyle.CssClass = "dateEditInput";
+            }).GetHtml()*@
+                                                            @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "RenewalStartDate_Close";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            //settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.RenewalStartDate);
+                            settings.Properties.ClientInstanceName = "cRenewalStartDate_Close";
+                            settings.ControlStyle.CssClass = "dateEditInput";
+                            //if (Model.EstimateDate !=null)
+                            //settings.Properties.MinDate = Convert.ToDateTime(Model.EstimateDate);
+                        }
+                        ).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">End date</label>
+                                                        <div class="col-md-12 relative">
+                                                            @*@Html.DevExpress().DateEditFor(model => model.RenewalEndDate,
+                                    settings =>
+                                    {
+                                        settings.Properties.EditFormat = EditFormat.Custom;
+                                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                        //settings.Properties.TimeSectionProperties.Visible = true;
+                                        //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                        //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                        settings.Properties.UseMaskBehavior = true;
+                                        settings.Date = DateTime.Now;
+                                        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        settings.Properties.ClientInstanceName = "cRenewalEndDate_Close";
+                                        settings.ControlStyle.CssClass = "dateEditInput";
+                                    }).GetHtml()*@
+                                                            @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "RenewalEndDate_Close";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.RenewalEndDate);
+                            settings.Properties.ClientInstanceName = "cRenewalEndDate_Close";
+                            settings.ControlStyle.CssClass = "dateEditInput";
+                            //if (Model.EstimateDate !=null)
+                            //settings.Properties.MinDate = Convert.ToDateTime(Model.EstimateDate);
+                        }
+                        ).GetHtml()
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Description</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" style="height:60px" class="form-control" id="servicedesc" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Service Cost <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Service amount  </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.ServiceAmount,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.MaskSettings.Mask = "<0..99999999999>.<00..99>";
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                                settings.Properties.ClientInstanceName = "cServiceAmount";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Product/service cost </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.ProdServCost,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.MaskSettings.Mask = "<0..99999999999>.<00..99>";
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                                settings.Properties.ClientInstanceName = "cProdServCost";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Additional cost </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.AdditionalCost,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.MaskSettings.Mask = "<0..99999999999>.<00..99>";
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                                settings.Properties.ClientInstanceName = "cAdditionalCost";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_b">
+                                    <div class="clearfix row">
+                                        <div class=" col-sm-2">
+                                            <label class="mtop10">Product <span class="red">*</span></label>
+                                            <div class="relative">
+                                                @Html.DevExpress().ButtonEdit(
+                        settings =>
+                        {
+                            settings.Name = "btnProduct";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Text = Model.ProductId;
+                            settings.ReadOnly = false;
+                            settings.Properties.Buttons.Add("...");
+                            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){OpenProductList(s,e);}";
+                            settings.Properties.ClientSideEvents.KeyDown = "function(s,e){ProductKeyDown(s,e);}";
+
+                        }).GetHtml()
+                                                <input type="hidden" id="hdnProdHSN" />
+                                                <input type="hidden" id="hdnProdProductID" />
+                                                <input type="hidden" id="GuiIDS" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label class="mtop10">Quantity</label>
+                                            <div class="relative">
+                                                @*<input type="text" class="form-control" maxlength="500" id="txt_ProdQty" />*@
+                                                @Html.DevExpress().TextBoxFor(m => m.ProductQty,
+                        settings =>
+                        {
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientInstanceName = "cProductQty";
+                            settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                            settings.ControlStyle.CssClass = "DEvInput";
+                            //settings.Properties.ClientSideEvents.LostFocus = "function(s,e){EstimateGridSetAmountQty(s,e);}";
+                        }).GetHtml()
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label class="mtop10">Price</label>
+                                            <div class="relative">
+                                                @*<input type="text" class="form-control" maxlength="500" id="txt_ProdPrice" />*@
+                                                @Html.DevExpress().TextBoxFor(m => m.ProductPrice,
+                        settings =>
+                        {
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientInstanceName = "cProductPrice";
+                            settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                            settings.ControlStyle.CssClass = "DEvInput";
+                            settings.Properties.ClientSideEvents.LostFocus = "function(s,e){ServiceGridSetAmount(s,e);}";
+                        }).GetHtml()
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <label class="mtop10">Amount</label>
+                                            <div class="relative">
+                                                @*<input type="text" class="form-control" maxlength="500" id="txt_ProdAmount" />*@
+                                                @Html.DevExpress().TextBoxFor(m => m.ProductAmount,
+                        settings =>
+                        {
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientInstanceName = "cProductAmount";
+                            settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                            //settings.Properties.ClientSideEvents.LostFocus = "function(s,e){EstimateGridSetTotalAmount(s,e);}";
+                            settings.ControlStyle.CssClass = "DEvInput";
+                            settings.ClientEnabled = false;
+                        }).GetHtml()
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group row">
+                                                <label for="" class="col-sm-12 col-form-label">	Warranty Start</label>
+                                                <div class="col-md-12 relative">
+                                                    @*@Html.DevExpress().DateEditFor(model => model.WarrStartdate,
+                                    settings =>
+                                    {
+                                        settings.Name = "WarrStartdate";
+                                        settings.Properties.EditFormat = EditFormat.Custom;
+                                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                        //settings.Properties.TimeSectionProperties.Visible = true;
+                                        //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                        //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                        settings.Properties.UseMaskBehavior = true;
+                                        settings.Date = DateTime.Now;
+                                        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        settings.Properties.ClientInstanceName = "cWarrStartdate";
+                                        settings.ControlStyle.CssClass = "dateEditInput";
+                                    }).GetHtml()*@
+
+                                                    @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "WarrStartdate";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            //settings.Properties.ClientSideEvents.DateChanged = "WarrdatevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.WarrStartdate);
+                            settings.Properties.ClientInstanceName = "cWarrStartdate";
+                            settings.ControlStyle.CssClass = "dateEditInput";
+                            //if (Model.EstimateDate !=null)
+                            //settings.Properties.MinDate = Convert.ToDateTime(Model.EstimateDate);
+                        }
+                        ).GetHtml()
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <div class="form-group row">
+                                                <label for="" class="col-sm-12 col-form-label">	Warranty End</label>
+                                                <div class="col-md-12 relative">
+                                                    @*@Html.DevExpress().DateEditFor(model => model.WarrEnddate,
+            settings =>
+            {
+                settings.Name = "WarrEnddate";
+                settings.Properties.EditFormat = EditFormat.Custom;
+                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                //settings.Properties.TimeSectionProperties.Visible = true;
+                //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                settings.Properties.UseMaskBehavior = true;
+                settings.Date = DateTime.Now;
+                //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Properties.ClientInstanceName = "cWarrEnddate";
+                settings.ControlStyle.CssClass = "dateEditInput";
+            }).GetHtml()*@
+                                                    @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "WarrEnddate";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            //settings.Properties.ClientSideEvents.DateChanged = "WarrdatevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.WarrEnddate);
+                            settings.Properties.ClientInstanceName = "cWarrEnddate";
+                            settings.ControlStyle.CssClass = "dateEditInput";
+                            //if (Model.EstimateDate !=null)
+                            //settings.Properties.MinDate = Convert.ToDateTime(Model.EstimateDate);
+                        }
+                        ).GetHtml()
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div class="col-sm-1" style="display:none">
+                                            <label class="mtop10">ProductDetailsID</label>
+                                            <div class="relative">
+                                                <input type="number" class="form-control" id="ProductDetailsID" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="button" id="ProductAdd" class="btn btn-success" style="margin:10px 0" onclick="btnAdd_ProductClick()">Add</button>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @{
+                                                Html.RenderAction("GetServiceProductEntryList", "ServiceContact");
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" onclick="CancelServiceContact()" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btnsave" class="btn btn-success btn-radius" onclick="SaveServiceContact()">Save & Exit</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<input type="hidden" value="@Url.Action("AttachmentDocument", "CRMAttachment", new { module = "ServiceContract" })" id="hdnAttachmentDocument" />
+
+<div>
+    @{
+        Html.RenderAction("AttachmentDocument", "CRMAttachment", new { module = "ServiceContract", DocNo = "" });
+    }
+</div>
+
+
+<!--Customer List-->
+<div class="modal pmsModal fade" id="CustModel" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Account/Customer Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="Customerkeydown(event)" id="txtCustSearch" autofocus width="100%" placeholder="Search By Customer Name or Unique Id" />
+                <div id="CustomerTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Name</th>
+                            <th>Unique Id</th>
+                            <th>Address</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "CRMpcControl";
+        settings.Width = 600;
+        settings.Height = 500;
+        //settings.ScrollBars.v
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.HeaderText = "Employees Target Setting";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        //settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+
+<div>
+    @{
+        Html.RenderAction("AddProducts", "CRMProducts");
+    }
+</div>
+
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "cCRMShowHistory";
+        settings.Width = 700;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Show History";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+<input type="hidden" id="hdfLeadValuesIDCRM" />
+
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStepOne";
+    }
+).GetHtml()
+
+<script>
+    $(document).ready(function () {
+        gridLookupcontact.gridView.Refresh()
+        gridLookupcontact.gridView.Refresh()
+    });
+</script>
+
+<!-- Grid Product List -->
+<div class="modal pmsModal fade" id="GridProductlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Product</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="GridProductListkeydown(event)" id="txtGridProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                <div id="GridProductTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Product Name</th>
+                            <th>DEscription</th>
+                            <th>HSN/SAC</th>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusDesc()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Product List-->

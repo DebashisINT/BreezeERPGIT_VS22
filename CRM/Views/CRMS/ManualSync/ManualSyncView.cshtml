@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "ManualSyncView";
+}
+
+<h4>Manual Sync View</h4>
+<div class="form_main">
+    <div class="row">
+        <div class='col-sm-2'>
+            <div class="form-group">
+                <label><b>Start Date</b><span style="color: red">*</span></label>
+                @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "iddate";
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Width = 208;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                //settings.Enabled = false;
+                                                //settings.Date = Convert.ToDateTime(@Model.last_contactdate);
+                                                //settings.Properties.ClientSideEvents.DateChanged = "ChnageNextDate";
+                                            }
+                                ).GetHtml()
+                @*<input type="date" name="bday" id="iddate" style="width:100%">*@
+                <span id="Mandatorystartdt" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-sm-2'>
+            <div class="form-group">
+                <label><b>Select Type</b><span style="color: red">*</span></label>
+                <select class="form-control" id="ddlselect" name="Select">
+                    <option value="Select">Select</option>
+                    <option value="IndiaMart">IndiaMart</option>
+                    <option value="TradeIndia">TradeIndia</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    @*<button type="button" class="btn btn-success" id="btn_save" onclick="saveNotificationSetting()">Save Settings</button>*@
+    <button type="button" class="btn btn-success" id="btn_save" onclick="Search()">
+       Import
+    </button>
+    <label id="lbllastdate"></label>
+</div>
+    <script>
+        $(document).ready(function () {
+            onload();
+        });
+        function Search() {
+            //var TaskCreationData = {
+            //    Selectlist: $("#ddlselect").val()
+            //}
+            var select = $("#ddlselect").val();
+            //var date = $("#iddate").val();
+            var date = iddate.GetDate();
+            if (date == "") {
+                alert("Please select a date");
+                Return;
+            }
+            if (select == "Select")
+            {
+                alert("Please select a value");
+                Return;
+            }
+            if (select == "IndiaMart") {
+                $.ajax({
+                    type: "POST",
+                    url: "/ManualSync/ImportIndiaMart",
+                    //data: "{data:" + JSON.stringify(TaskCreationData) + "}",
+                    data: JSON.stringify({ data: select, Date: date }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        @*jAlert(response, "Notification Message", function () {
+                    var url = '@Url.Action("Dashboard", "TaskCreation")';
+                    window.location.href = url;
+                });*@
+                        //alert("Import Process Completed For IndiaMart");
+                        alert(response);
+                        $('#ddlselect').val('Select');
+                        iddate.Clear();
+                        onload();
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+            if (select == "TradeIndia") {
+                $.ajax({
+                    type: "POST",
+                    url: "/ManualSync/ImportTradeIndia",
+                    //data: "{data:" + JSON.stringify(TaskCreationData) + "}",
+                    data: JSON.stringify({ data: select, Date: date }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        @*jAlert(response, "Notification Message", function () {
+                            var url = '@Url.Action("Dashboard", "TaskCreation")';
+                            window.location.href = url;
+                        });*@
+                        alert(response);
+                       // alert("Import Process Completed For TradeIndia");
+                        iddate.Clear()
+                        $('#ddlselect').val('Select');
+                         onload();
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+
+        }
+        function onload()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/ManualSync/Bindlabel",
+                //data: "{data:" + JSON.stringify(TaskCreationData) + "}",
+                // data: JSON.stringify({ data: select,Date:date }),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    $('#lbllastdate').text("Last Updated on :" +response);
+                    @*jAlert(response, "Notification Message", function () {
+                        var url = '@Url.Action("Dashboard", "TaskCreation")';
+                        window.location.href = url;
+                    });*@
+                    },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    </script>

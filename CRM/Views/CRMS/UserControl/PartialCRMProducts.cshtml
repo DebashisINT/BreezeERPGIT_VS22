@@ -1,0 +1,218 @@
+﻿<style>
+    #tbodyActivityProduct > td {
+        padding: 2px 25px;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th:not(:last-child) {
+        border-right: #333;
+    }
+
+    .boxStyle {
+        padding: 5px;
+        background: #f7f7f7;
+        margin: 0 15px 8px 15px;
+        border: 1px solid #ccc;
+    }
+
+    .link {
+        cursor: pointer;
+    }
+
+    .pdLeft0 {
+        padding-left: 0 !important;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner, #dataTbl_wrapper .dataTables_scrollHeadInner table {
+        width: 100% !important;
+    }
+
+        #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th {
+            background: #337ab7;
+            color: #fff;
+            padding: 2px 15px;
+        }
+
+    #tbodyActivityProduct > td {
+        padding: 2px 25px;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th:not(:last-child) {
+        border-right: #333;
+    }
+
+    .modal-footer .btn {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .dataTable > thead > tr > th {
+        background: #285e8e !important;
+        color: #fff !important;
+    }
+
+    .prTable > tbody > tr > td {
+        padding-right: 10px;
+    }
+</style>
+
+
+
+<div class="modal fade" id="cActivityProductCRM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="exampleModalLabel">Products Details</h4>
+
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="clearfix boxStyle">
+                        <div class="col-md-3 lblmTop8">
+                            <label>Product</label>
+
+
+                            @Html.DevExpress().ButtonEdit(settings =>
+                            {
+                                settings.Name = "btnProductsCRM";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.ButtonClick = "ProductButnClickCRM";
+                                settings.Properties.ClientSideEvents.KeyDown = "Product_KeyDownCRM";
+                                settings.Properties.ClientInstanceName = "ctxtProductCRM";
+                                settings.Properties.Buttons.Add("...");
+                            }).GetHtml()
+
+                            <input type="hidden" id="hdfProductID" />
+                        </div>
+                        <div class="col-md-2 lblmTop8">
+                            <label>No. Of Service</label>
+                            @Html.DevExpress().TextBox(
+                            settings =>
+                            {
+                                settings.Name = "txt_QuantityCRM";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientInstanceName = "ctxtQuantityCRM";
+                            }).GetHtml()
+                        </div>
+                        <div class="col-md-2 lblmTop8">
+                            <label>Rate</label>
+                            @Html.DevExpress().TextBox(
+                            settings =>
+                            {
+                                settings.Name = "txt_rateCRM";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientInstanceName = "ctxtRateCRM";
+                                settings.Properties.ClientSideEvents.LostFocus = "LostFocusInRateCRM";
+                            }).GetHtml()
+                        </div>
+                        <div class="col-md-2 lblmTop8">
+                            <label>Total</label>
+                            @Html.DevExpress().TextBox(
+                            settings =>
+                            {
+                                settings.Name = "txt_TotalCRM";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientInstanceName = "ctxtTotalCRM";
+                                settings.Properties.ClientSideEvents.LostFocus = "LostFocusInTotalCRM";
+                            }).GetHtml()
+                        </div>
+
+                        <div class="col-md-3 lblmTop8 ">
+                            <label>Remarks</label>
+                            @Html.DevExpress().TextBox(
+                            settings =>
+                            {
+                                settings.Name = "txt_RemarksCRM";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientInstanceName = "ctxtRemarksCRM";
+                            }).GetHtml()
+                        </div>
+                        @*Start Frequency Tanmoy 24-05-2021*@
+                        <div class="clear"></div>
+                        <div class="col-md-3 lblmTop8 hide" id="divFrequency">
+                            <label>Frequency</label>
+                            <div>
+                                <select class="form-control" id="ddlFrequencys">
+                                    <option value="">SELECT</option>
+                                    <option value="DAILY">DAILY</option>
+                                    <option value="HALF-YEARLY">HALF-YEARLY</option>
+                                    <option value="MONTHLY ONCE">MONTHLY ONCE</option>
+                                    <option value="MONTHLY THRICE">MONTHLY THRICE</option>
+                                    <option value="MONTHLY TWICE">MONTHLY TWICE</option>
+                                    <option value="QUARTERLY ONCE">QUARTERLY ONCE</option>
+                                    <option value="SINGLE-ONCE">SINGLE-ONCE</option>
+                                    <option value="WEEKLY ONCE">WEEKLY ONCE</option>
+                                    <option value="WEEKLY THRICE">WEEKLY THRICE</option>
+                                    <option value="WEEKLY TWICE">WEEKLY TWICE</option>
+                                    <option value="YEARLY THRICE">YEARLY THRICE</option>
+                                </select>
+                            </div>
+                        </div>
+                        @*End Frequency Tanmoy 24-05-2021*@
+                        <div class="col-md-1  pdLeft0">
+                            <label>&nbsp;</label>
+                            <div class="mtop5">
+                                <button type="button" onclick="AddActivityProductDetailsCRM();" class="btn btn-primary btn-radius">Add</button>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-12">
+                        <table id="dataTblCRM" class="display nowrap table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="hide">GUID</th>
+                                    <th class="hide">ProductId</th>
+                                    <th>SL</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                    <th>Remarks</th>
+                                    <th class="hide" id="tdFrequency">Frequency</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyActivityProductCRM"></tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 text-right pdTop15">
+                        <button class="btn btn-success" type="button" onclick="SaveCRMProductDetailsCRM('Campaign Products');">Save</button>
+                        <button class="btn btn-danger hide" type="button" onclick="crmProdCancelClickCRM();">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pmsModal w40" id="ProductModelCRM" role="dialog">
+    <div class="modal-dialog">
+        <!-- Contact content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Product Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="ProductkeydownCRM(event)" id="txtProductSearchCRM" autofocus width="100%" placeholder="Search By Product" />
+                <div id="ProductTableCRM">
+                    <table border='1' width="100%" class="dynamicPopupTbl ">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Product Name</th>
+                            <th>Product Description</th>
+                            <th>HSN/SAC</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hdfProductIDCRM" />

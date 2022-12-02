@@ -1,0 +1,48 @@
+﻿@Html.DevExpress().GridLookup(settings =>
+{
+    settings.Name = "gridLookupcontact";
+    settings.GridViewProperties.CallbackRouteValues = new { Controller = "ServiceContact", Action = "PopulateSummaryContactGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.KeyFieldName = "ID";
+    settings.Columns.Add("FirstName");
+    settings.Columns.Add("LastName");
+    settings.Columns.Add("Business_Phone");
+    settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Multiple;
+    settings.Properties.TextFormatString = "{0}";
+    settings.Properties.MultiTextSeparator = ", ";
+    settings.Properties.Width = 250;
+    settings.GridViewClientSideEvents.BeginCallback = "ContractStartCallback";
+    settings.GridViewProperties.Settings.ShowFilterRow = true;
+    settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+    settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+    settings.GridViewProperties.SettingsPager.PageSize = 7;
+
+    settings.DataBound = (sender, e) =>
+    {
+        var gridLookup = (MVCxGridLookup)sender;
+        gridLookup.GridView.Width = 450;
+        gridLookup.GridView.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        gridLookup.GridView.Settings.VerticalScrollableHeight = 200;
+
+        //if (ViewBag.CONTACT_IDs != null)
+        //{
+        //    foreach (CRM.Models.CONTACT_IDs item in ViewBag.CONTACT_IDs)
+        //    {
+        //        gridLookup.GridView.Selection.SelectRowByKey(item.CONTACT_ID);
+        //    }
+        //}
+
+    };
+    settings.GridViewProperties.BeforeGetCallbackResult = (sender, e) =>
+    {
+        var grid = (ASPxGridView)sender;
+        if (grid.VisibleRowCount <= 2)
+            grid.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+
+    };
+}).BindList(Model).GetHtml()
+
+

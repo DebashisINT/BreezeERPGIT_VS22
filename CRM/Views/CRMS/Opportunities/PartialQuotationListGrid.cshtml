@@ -1,0 +1,115 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvQuotGrid";
+   // settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "CRMOpportunities", Action = "PartialQuotationListGrid" };
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 200;
+
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.TopAndBottom;
+
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50", "100", "150" };
+    settings.Settings.ShowFilterRow = true;
+    settings.ClientSideEvents.RowClick = "gridclick";
+    //settings.KeyFieldName = "SEQ";
+  //  settings.SettingsPager.PageSize = 100;
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRowMenu = true;
+
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+    settings.CommandColumn.VisibleIndex = 0;
+    settings.CommandColumn.Width = 100;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Quote_Number";
+        column.Caption = "Document No.";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Quote_Date";
+        column.Caption = "Document Date";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 100;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Quote_TotalAmount";
+        column.Caption = "Total Amount";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.Width = 100;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Quote_Expiry";
+        column.Caption = "Valid Upto";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 100;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CreatedDate";
+        column.Caption = "Created On";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 100;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.Caption = "Actions";
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+        column.SetDataItemTemplateContent(c =>
+        {
+            ViewContext.Writer.Write("<a title='Modify' style='cursor:pointer' class='pad' onclick=\"OpenRequirementforEdit('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Customer_Id")) + "')\"><img src='/assests/images/Edit.png' /></a>");
+        });
+        column.Settings.AllowDragDrop = DefaultBoolean.False;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 150;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    });
+
+    settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Quote_TotalAmount").DisplayFormat = "0.00"; ;
+
+}).Bind(Model).GetHtml()

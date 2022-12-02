@@ -1,0 +1,12 @@
+﻿
+<div class="panel-heading">
+    <button type="button" class="btnOkformultiselection btn btn-success mleft15" onclick="btn_ShowHistory()">Show All</button>
+    <button type="button" class="btnOkformultiselection btn btn-success mleft15" onclick="btn_ShowTopTenHistory()">Show Top 10</button>
+</div>
+
+
+<div class="relative" id="idshowhistory">
+    @{
+        Html.RenderAction("PopulateActivityShowHistoryGrid", "CRMActivity");
+    }
+</div>

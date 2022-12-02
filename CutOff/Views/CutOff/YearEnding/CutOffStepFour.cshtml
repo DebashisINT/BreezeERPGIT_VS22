@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "CutOffStepFour";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+
+    function StartDataDeletion() {
+
+        var obj = {};
+        obj.CutoffDate = '@ViewBag.CutoffDate';
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/YearEnding/StartDataDeletion",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                jAlert(response);
+                document.getElementById("btnStep3").style.display = "inline-block";
+                LoadingPanel.Hide();
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+                LoadingPanel.Hide();
+            }
+        });
+    }
+
+</script>
+
+
+<div id="dvStep4" class="flexContainer">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending Step 4 by 4</h3>
+        <div class="bordered">
+            <table width="70%">
+                <tr>
+                    <td>
+                        <label>Cut Off Date :</label>
+                    </td>
+                    <td>
+                        <label>@ViewBag.CutoffDate</label>
+
+                    </td>
+                </tr>
+                
+            </table>
+            <hr />
+            <div class="text-right mtop-2">
+                <button class="btn btn-info" onclick="StartDataDeletion();">Start</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep4";
+    }
+).GetHtml()
+

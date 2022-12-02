@@ -1,0 +1,78 @@
+﻿@model CRM.Models.EnquiriesDet
+
+
+<div class="">
+    <input type="hidden" id="hdnUserid" />
+
+    <div class="row">
+
+        <div class="myAssignTarget" id="myAssignTargetpopup">
+            <div class="clearfix">
+                <div class="clear"></div>
+                <div class="col-lg-11" style="padding-top:5px">
+                    <div class="btn-group"  style="padding-top: 10px;">
+                        <label style="margin-right:8px" class="clicker">
+                            <input type="radio" id="q156" name="orstatus" value="1" onclick="handleClick(this);" /> Order Won
+                        </label>
+                        <label class="clicker" >
+                            <input type="radio" id="q157" name="orstatus" value="2" onclick="handleClick(this);" /> Order Lost
+                        </label>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="col-lg-11 " id="rsDiv" style="padding-top:8px;display:none">
+                    <label><b>Reason</b><span style="color:red">*</span></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbCloseReason";
+                        settings.Properties.TextField = "Close_Reason";
+                        settings.Properties.ValueField = "ID";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                        settings.Width = 400;
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (Model.CloseReasonId != 0)
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Value = Model.CloseReasonId;
+                            }
+                        };
+                    }).BindList(Model.listCloseReason).GetHtml()
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="col-lg-11 " id="qtyDiv" style="display:none">
+                    <label class="mTop10"><b>Qty</b><span style="color:red">*</span></label>
+                    <input type="text" class="form-control text-left shd" id="idCloseQty" value='@Model.CloseQty' pattern="[1-9]{5}" />
+                </div>
+                <div class="clear"></div>
+                <div class="col-lg-11">
+                    <label class="mTop10"><b>Remarks</b><span style="color:red">*</span></label>
+                    <input type="text" class="form-control text-left shd" id="idCloseReasonRemarks" value='@Model.CloseReasonRemarks' />
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+        </div>
+        <div class="clear "></div>
+
+        <div class=" col-md-12 pad15">
+
+            <div class="">
+                <button type="button" class="btn btn-primary" id="btnSaveCloseReason" onclick="SaveCloseReason();">Save</button>
+                <button type="button" class="btn btn-danger" onclick="CancelCloseReason();">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="hdnselectedEnquirisList" value="@Model.selectedEnquirisList" />
+
+

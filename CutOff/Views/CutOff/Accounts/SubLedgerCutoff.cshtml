@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "SubLedgerCutoff";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    function RedirectToBranchSubledgerLedgerCutoff() {
+        var obj = {};
+        obj.CutoffDate = txtCutoffDate.GetDate();
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/Accounts/StartSubLedgerCutoff",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                // jAlert(response);
+                // alert("Stock Cutoff done. Press OK to proceed.");
+                document.getElementById("btnStockcutoff").style.display = "none";
+                document.getElementById("btnNext").style.display = "inline-block";
+                LoadingPanel.Hide();
+                $.alert({
+                    title: 'Alert!',
+                    content: 'Ledger Cutoff done. Press OK to proceed.',
+                    buttons: {
+                        okay: {
+                            text: 'Ok',
+                            btnClass: 'btn-blue',
+                            //action: function () {
+                            //    window.location.href = "/Accounts/CutoffSubLedger/"
+                            //}
+
+                        }
+                    }
+                });
+
+            },
+            error: function (response) {
+                // jAlert("Please try again later");
+                $.alert({
+                    title: 'Alert!',
+                    content: 'Please try again later',
+                    buttons: {
+                        okay: {
+                            text: 'Ok',
+                            btnClass: 'btn-blue'
+
+                        }
+                    }
+                });
+                LoadingPanel.Hide();
+            }
+        });
+    }
+</script>
+
+<div class="flexContainer" id="dvSubledger">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending Step 7 by 7</h3>
+        <div class="bordered">
+            <table width="70%">
+                <tr>
+                    <td>
+                        <label>Cut off date :</label>
+                    </td>
+                    <td>
+
+                        @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "txtCutoffDate";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Date = Convert.ToDateTime((DateTime)ViewBag.CutoffDate);
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                        settings.ClientEnabled = false;
+                    }).GetHtml()
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Modules :</label>
+                    </td>
+                    <td>
+
+                        @Html.DevExpress().CheckBoxList(
+                    settings =>
+                    {
+                        settings.Name = "chkCutoffPurchase";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.ClientEnabled = false;
+
+                        settings.PreRender += (s, e) =>
+                        {
+                            MVCxCheckBoxList cbList = (MVCxCheckBoxList)s;
+
+                            cbList.Items.Add("Sales Invoice");
+                            cbList.Items.Add("Transit Sales Invoice");
+                            cbList.Items.Add("Purchase Invoice");
+                            cbList.Items.Add("Transit Purchase Invoice");
+                            cbList.Items.Add("Sales Return");
+                            cbList.Items.Add("Sale Return-Manual");
+                            cbList.Items.Add("Return With Invoice");
+                            cbList.Items.Add("Undelivery Return");
+                            cbList.Items.Add("Rate Difference Entry Customer");
+                            cbList.Items.Add("Purchase Return");
+                            cbList.Items.Add("Purchase Return Manual");
+                            cbList.Items.Add("Rate Difference Entry Vendor");
+                            cbList.Items.Add("Vendor Receipt/Payment");
+                            cbList.Items.Add("Vendor Debit/Credit Note");
+                            cbList.Items.Add("Customer Receipt/Payment");
+                            cbList.Items.Add("Customer Debit/Credit Note");
+                            cbList.Items.Add("Journal Voucher");
+                            cbList.Items.Add("CashBank Voucher");
+                            cbList.Items.Add("Advance With Invoice");
+                            cbList.Items.Add("Order(POS)");
+                            cbList.SelectAll();
+
+
+
+                        };
+                    }).GetHtml()
+
+                    </td>
+                </tr>
+
+            </table>
+            <hr />
+            <div class="text-right mtop-2">
+                <button id="btnStockcutoff" class="btn btn-primary" onclick="RedirectToBranchSubledgerLedgerCutoff();">Start</button>
+                <button style="display:none;" id="btnNext" class="btn btn-primary" onclick="RedirectToNextStep();">Next</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvSubledger";
+    }
+).GetHtml()

@@ -1,0 +1,521 @@
+﻿@if (Model != null)
+{
+    @Html.DevExpress().GridView(
+   settings =>
+   {
+       // settings = null;
+       settings.Name = "gridcrmLead";
+
+       settings.CallbackRouteValues = new { Controller = "CRMLeads", Action = "PopulateLeadGrid" };
+
+       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+       settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+       settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+       settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+       //settings.SettingsSearchPanel.Visible = true;
+       settings.Settings.ShowFilterRow = true;
+       settings.Settings.ShowGroupPanel = true;
+       settings.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+       settings.Settings.ShowFilterBar = GridViewStatusBarMode.Hidden;
+       settings.SettingsSearchPanel.Visible = true;
+       settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+       settings.Styles.Row.Cursor = "pointer";
+       settings.Settings.ShowFooter = true;
+       settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+       settings.KeyFieldName = "ID";
+
+       settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+       settings.SettingsPager.PageSizeItemSettings.Visible = true;
+       settings.SettingsPager.PageSize = 20;
+       settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+       settings.Settings.ShowFilterRowMenu = true;
+
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "ID";
+           x.FieldName = "ID";
+           x.Visible = false;
+           x.ShowInCustomizationForm = false;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "cnt_internalId";
+           x.FieldName = "cnt_internalId";
+           x.Visible = false;
+           x.ShowInCustomizationForm = false;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Unique Id";
+           x.FieldName = "UniqueID";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.FixedStyle = GridViewColumnFixedStyle.Left;
+
+       });
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Name";
+           x.FieldName = "Name";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 250;
+           x.FixedStyle = GridViewColumnFixedStyle.Left;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Company Name";
+           x.FieldName = "CompanyName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 150;
+           x.FixedStyle = GridViewColumnFixedStyle.Left;
+       });
+
+       if (ViewBag.MultipleKeyPersons == "Yes")
+       {
+           settings.Columns.Add(x =>
+           {
+               x.Caption = "Key Person Name";
+               x.FieldName = "KeyName";
+               x.ColumnType = MVCxGridViewColumnType.TextBox;
+               x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+               x.Width = 250;
+               x.FixedStyle = GridViewColumnFixedStyle.Left;
+           });
+           settings.Columns.Add(x =>
+           {
+               x.Caption = "Designation";
+               x.FieldName = "KeyDescription";
+               x.ColumnType = MVCxGridViewColumnType.TextBox;
+               x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+               x.Width = 150;
+               x.FixedStyle = GridViewColumnFixedStyle.Left;
+           });
+
+           settings.Columns.Add(x =>
+           {
+               x.Caption = "Phone Number";
+               x.FieldName = "PhoneNumber";
+               x.ColumnType = MVCxGridViewColumnType.TextBox;
+               x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+               x.Width = 150;
+               x.FixedStyle = GridViewColumnFixedStyle.Left;
+           });
+
+       }
+       // Rev Sayantani
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Business #";
+           x.FieldName = "BusinessPhone";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 150;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Mobile #";
+           x.FieldName = "MobileNo";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 150;
+       });
+
+       // End of Rev Sayantani
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Topic/Purpose";
+           x.FieldName = "Topic";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 150;
+       });
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "City";
+           x.FieldName = "CityName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Country";
+           x.FieldName = "CountryName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "State Name";
+           x.FieldName = "StateName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Pin";
+           x.FieldName = "PinCode";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Owner";
+           x.FieldName = "OwnerName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Assign To";
+           x.FieldName = "AssignToName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Lead Source";
+           x.FieldName = "LeadSourceName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Lead Values";
+           x.FieldName = "LeadSourceValue";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Rating";
+           x.FieldName = "rat_LeadRating";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Status";
+           x.FieldName = "Status";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "No of Employees";
+           x.FieldName = "NoOfEmployee";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Industry";
+           x.FieldName = "Industry";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Additional Description";
+           x.FieldName = "Description";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Annual Revenue";
+           x.FieldName = "AnnualRevenue";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Sector";
+           x.FieldName = "Lead_Sector";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           //x.FixedStyle = GridViewColumnFixedStyle.Left;
+
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Mode Of Visit";
+           x.FieldName = "Lead_ModeOfVisit";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 250;
+          // x.FixedStyle = GridViewColumnFixedStyle.Left;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Credential Submitted";
+           x.FieldName = "CredentialSubmitted";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 150;
+          // x.FixedStyle = GridViewColumnFixedStyle.Left;
+       });
+
+       // Rev Sayantani
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Business Activities";
+           x.FieldName = "Lead_BusinessActivities";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 150;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Product Application";
+           x.FieldName = "Lead_ProductApplication";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 150;
+       });
+
+       // End of Rev Sayantani
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Type of Material";
+           x.FieldName = "TypeMaterial";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = 150;
+       });
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Volume of Business";
+           x.FieldName = "VolumeBusiness";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Value Business expected";
+           x.FieldName = "ValueBusinessExpected";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Business Presence";
+           x.FieldName = "Lead_BusinessPresence";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Brand";
+           x.FieldName = "Brand_Name";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Competitor";
+           x.FieldName = "Competitor";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Pain Area";
+           x.FieldName = "Lead_PainArea";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Current Requirement";
+           x.FieldName = "Lead_CurrentRequirements";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Financial Status";
+           x.FieldName = "FinancialStatus";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Enquiry Expected";
+           x.FieldName = "EnquiryExpected";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Remarks";
+           x.FieldName = "Remarks";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Key Person";
+           //x.VisibleIndex = 16;
+           //x.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+           x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+           x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+           //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+           x.SetDataItemTemplateContent(c =>
+           {
+               string EnqRights = "<div>";
+               EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"ViewKeyPerson('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ID")) + "')\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span >View</span></a>";
+              
+               EnqRights = EnqRights + "</div>";
+               ViewContext.Writer.Write(EnqRights);
+           });
+
+
+       });
+       
+       
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Entered By";
+           x.FieldName = "EnteredByName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Entered On";
+           x.FieldName = "EnteredOn";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Updated By";
+           x.FieldName = "ModifiedByName";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Updated On";
+           x.FieldName = "ModifiedOn";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Action";
+           x.Width = 0;
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.ClientSideEvents.RowClick = "gridcrmLeadclick";
+       //This is Used For Add or hide column from column chooser
+       settings.SettingsBehavior.EnableCustomizationWindow = true;
+       settings.SettingsBehavior.EnableRowHotTrack = true;
+       settings.SettingsCookies.Enabled = true;
+       settings.SettingsCookies.StorePaging = true;
+       settings.SettingsCookies.StoreColumnsVisiblePosition = true;
+       //This is Used For Add or hide column from column chooser
+
+       settings.HtmlDataCellPrepared += (s, e) =>
+           {
+               if (e.DataColumn.Caption == "Action")
+               {
+                   MVCxGridView grid = (MVCxGridView)s;
+                   Int64 ID = Convert.ToInt64(grid.GetRowValues(e.VisibleIndex, new string[] { "ID" }));
+
+
+                   string Lead_Name = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Name" });
+
+                   string CompanyName = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "CompanyName" });     
+                   string Lead_Code = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "cnt_internalId" });
+                   string Status = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Status" });
+
+
+
+                   var buttonHtml = "";
+                   if (ViewBag.CanEdit)
+                       buttonHtml += string.Format("<div class='floatedBtnArea'><a onclick=\"EditClick('" + ID + "','" + Status + "');\" title=\"\" class='ed '><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+                   if (ViewBag.CanDelete)
+                       buttonHtml += string.Format("<a onclick=\"DeleteClick('" + ID + "','" + Status + "');\" title=\"\" class=''><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+                   if (ViewBag.CanCreateActivity)
+                       buttonHtml += string.Format("<a onclick=\"DoActivity('" + Lead_Code + "');\" title=\"\" class=''><span class='ico ColorThree'><i class='fa fa-wrench'></i></span><span class='hidden-xs'>Activities</span></a>");
+
+                   if (ViewBag.CanQualify)
+                   {
+                       buttonHtml += string.Format("<a onclick=\"Qualify('" + Lead_Code + "','" + Status + "');\" title=\"\" class=''><span class='ico ColorThree'><i class='fa fa-check'></i></span><span class='hidden-xs'>Qualify</span></a>");
+
+                   }
+                   if (ViewBag.CanCancelLost)
+                   {
+                       buttonHtml += string.Format("<a onclick=\"Lost('" + Lead_Code + "','" + Status + "');\" title=\"\" class=''><span class='ico deleteColor'><i class='fa fa-ban'></i></span><span class='hidden-xs'>Cancelled/Lost</span></a>");
+                   }
+
+                   //buttonHtml += string.Format("<a onclick=\"AddMember('" + ID + "');\" title=\"\" class=''><span class='ico ColorFour'><i class='fa fa-user'></i></span><span class='hidden-xs'>Member(s)</span></a>");
+                   if (ViewBag.CanSharing)
+                       buttonHtml += string.Format("<a onclick=\"DoSharing('" + ID + "');\" title=\"\" class=''><span class='ico ColorFive'><i class='fa fa-share-alt'></i></span><span class='hidden-xs'>Sharing</span></a>");
+                   if (ViewBag.CanProducts)
+                       buttonHtml += string.Format("<a onclick=\"DoProducts('" + ID + "');\" title=\"\" class=''><span class='ico ColorSix'><i class='fa fa-cube'></i></span><span class='hidden-xs'>Products</span></a>");
+                   if (ViewBag.CanLiterature)
+                       buttonHtml += string.Format("<a onclick=\"AddLiterature('" + ID + "','" + Lead_Name + "','" + Lead_Code + "');\" title=\"\" class=''><span class='ico ColorSeven'><i class='fa fa-user'></i></span><span class='hidden-xs'>Literature(s)</span></a>");
+                   if (ViewBag.CanLiterature)
+                       buttonHtml += string.Format("<a onclick=\"AddSeriveContact('" + ID + "','" + CompanyName + "','" + Lead_Code + "');\" title=\"\" class=''><span class='ico ColorEight'><i class='fa fa-shopping-cart'></i></span><span class='hidden-xs'>Service Contract</span></a></div>");
+
+                   e.Cell.Text = buttonHtml;
+               }
+
+           };
+
+
+
+
+
+
+   }).Bind(Model).GetHtml()
+
+}
+    @*<style>
+            #gridsalesman_DXHeadersRow0 > td {
+                width: 200px !important;
+            }
+        </style>*@

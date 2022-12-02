@@ -1,0 +1,27 @@
+﻿@model CRM.Models.crmMembers
+
+<div class="col-md-12" style="padding:8px 15px">
+    <label class="radio-inline checkStyle">
+        Customers
+        <input type="radio" name="Entity_type" value="CL" checked onchange="crmMemberTypeChange();">
+        <span class="checkmark"></span>
+    </label>
+    <label class="radio-inline checkStyle">
+        Leads
+        <input type="radio" name="Entity_type" value="LD" onchange="crmMemberTypeChange();">
+        <span class="checkmark"></span>
+    </label>
+    <label class="radio-inline checkStyle">
+        Accounts
+        <input type="radio" name="Entity_type" value="AC" onchange="crmMemberTypeChange();">
+        <span class="checkmark"></span>
+    </label>
+</div>
+
+
+
+<div class="col-md-12">
+   @Html.Partial("~/Views/CRMS/UserControl/PartialMembersGridView.cshtml", Model)
+</div>
+
+<div class="col-md-12 mTop5"><button type="button" class="btn btn-success" onclick="SaveCRMMembers()">Save</button></div>

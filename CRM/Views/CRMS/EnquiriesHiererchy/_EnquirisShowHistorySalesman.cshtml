@@ -1,0 +1,88 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvshowhistorysalesman";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "EnquiriesHiererchy", Action = "EnquirisSalesmanShowHistory" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.ClientSideEvents.BeginCallback = "OnStartShowHistoryCallback";
+    //settings.KeyFieldName = "SEQ";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "created_date";
+        column.Caption = "Created Date";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "enq_prodreq";
+        column.Caption = "Products required and quantity";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Final_IndustryId";
+        column.Caption = "Final Industry";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "feedback";
+        column.Caption = "Feedback";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    // Mantis Issue 24926
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "usefullid";
+        column.Caption = "Activities";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    // End of Mantis Issue 24926
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "last_contactdate";
+        column.Caption = "Last Contact Date";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "next_contactdate";
+        column.Caption = "Next Contact Date";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Contactedby";
+        column.Caption = "Contacted By";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+
+}).Bind(Model).GetHtml()
+
+
+
+

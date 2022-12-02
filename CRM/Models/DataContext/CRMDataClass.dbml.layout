@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 13.75, 11.5" name="CRMClass">
+  <DataContextMoniker Name="/CRMClassDataContext" />
+  <nestedChildShapes>
+    <classShape Id="e2a03eeb-b680-4c79-925a-c3bfc6995050" isExpanded="false" absoluteBounds="5.875, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/ENQUIRIES_REPORT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4f2515dd-84a9-41a9-8366-b9945555519f" absoluteBounds="5.89, 0.96, 1.9700000000000002, 7.1722412109375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d715e949-f5a2-41cd-bf62-b88a1ea2c72d" isExpanded="false" absoluteBounds="8.5, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/crm_CampaignType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="86f4b68c-e211-45bd-b36f-ab215fc599e1" absoluteBounds="8.515, 1.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b5127281-b4e7-4538-8d36-c18c0c3baf48" isExpanded="false" absoluteBounds="8.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/crm_StatusDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2ee4f518-92e6-4947-b10d-a0975376192c" absoluteBounds="8.515, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f728fb3a-f395-41b3-9884-fd43c4f93101" isExpanded="false" absoluteBounds="5.875, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/Lead_ActivityType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="de1d13ff-0a95-41c0-abc1-6530c737b0a2" absoluteBounds="5.89, 1.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1d87cb80-ebac-49f9-89e5-9d2850bf428e" isExpanded="false" absoluteBounds="0.5, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_EntityList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="126793f0-d656-474e-b32c-cf4d29fde02b" absoluteBounds="0.51500000000000057, 2.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="16bfe1c6-909f-4325-98c8-e288db754262" isExpanded="false" absoluteBounds="3.25, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_UserLIst" />
+      <nestedChildShapes>
+        <elementListCompartment Id="28a1121c-b9d7-4cbc-9f53-9a25fd9a5146" absoluteBounds="3.2649999999999997, 1.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3d903d02-129d-4a3b-9e08-0455664b7bcf" isExpanded="false" absoluteBounds="8.5, 3, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_Rating" />
+      <nestedChildShapes>
+        <elementListCompartment Id="188450f3-3a29-4981-98da-7db7599d6c2a" absoluteBounds="8.515, 3.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="21021118-244e-4446-8ec6-0c9c2352a867" isExpanded="false" absoluteBounds="5.875, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_jobResponsibility" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2d2411a9-babf-4df6-95c4-459b8926819b" absoluteBounds="5.89, 2.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="aa7af098-8130-467b-b2ed-153463e2d45d" isExpanded="false" absoluteBounds="8.5, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_Industry" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e96a9394-ccdf-4b15-a142-376ca8584cba" absoluteBounds="8.515, 2.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="de5ab2a5-8edd-4743-878b-56ea25af1398" isExpanded="false" absoluteBounds="0.5, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_maritalstatus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d1d32901-c3e4-49b2-9c52-adaae1713ad0" absoluteBounds="0.51499999999999968, 2.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bdbcd9d7-0afa-4318-882e-052e95c5d6fb" isExpanded="false" absoluteBounds="3.25, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/Master_PaymentTerm" />
+      <nestedChildShapes>
+        <elementListCompartment Id="76f695df-fa39-48a5-a1ca-6d44150c60dd" absoluteBounds="3.2649999999999997, 2.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dc9a3480-cb66-476e-947e-a38353265fdc" isExpanded="false" absoluteBounds="5.875, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/Master_ShippingMethod" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0bc17a82-97db-4bde-99fb-a19d473e0227" absoluteBounds="5.8900000000000006, 2.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cfa0339b-705a-4e23-9dbf-4bd65b584aa7" isExpanded="false" absoluteBounds="8.5, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/Master_PrefferedMethodofContact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="34668abf-0fc0-4869-99b1-559d8e909d1f" absoluteBounds="8.515, 2.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5fb74c97-6623-46c4-9edb-595434a58739" isExpanded="false" absoluteBounds="3.25, 3, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_PurchaseProcess" />
+      <nestedChildShapes>
+        <elementListCompartment Id="28847931-d347-41d2-b4e4-436d2e08a0e7" absoluteBounds="3.2649999999999997, 3.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c64404ac-cece-4fd1-897b-a455bcd1aabc" isExpanded="false" absoluteBounds="5.875, 3, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_PurchaseTimeframe" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4ab4d9d4-cbd8-4553-89dc-a32f9ba4043f" absoluteBounds="5.89, 3.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="beb1d590-d99a-4fd6-bb6a-981d24dbb19e" isExpanded="false" absoluteBounds="0.5, 3.625, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_StatusDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dff6d34d-e91d-43c2-9aa5-472180363975" absoluteBounds="0.51499999999999968, 4.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b2753c8c-06e8-4f4e-bb41-4a9f27a6226e" isExpanded="false" absoluteBounds="5.875, 3.625, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_RelationshipType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f82d4f16-dfda-48e7-ab01-4e98f7829df2" absoluteBounds="5.89, 4.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4df70207-97d0-4974-bf79-c345aded4dfd" isExpanded="false" absoluteBounds="8.5, 3.625, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_PaymentTerm" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6b3447c9-aeb5-46c9-9178-a8ed0d952ab3" absoluteBounds="8.515, 4.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e4157d9a-23ca-484f-8639-8e2b3980875b" isExpanded="false" absoluteBounds="0.5, 4.25, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_Ownership" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a6a4b188-1fc9-44c8-89fb-a2f5d35b1711" absoluteBounds="0.51499999999999968, 4.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b127db93-5362-4c3d-9e37-c8bdaa1497fb" isExpanded="false" absoluteBounds="3.25, 4.25, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_Freight" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aa16f676-701e-4dc6-81fe-55759cc07743" absoluteBounds="3.2649999999999997, 4.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="78955258-c464-4885-a1e7-b089e343fed4" isExpanded="false" absoluteBounds="5.875, 4.25, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_ShippingMethod" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d25c900d-9eea-487a-a817-a244ea22c07b" absoluteBounds="5.89, 4.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="aa94eddf-e0ad-4a17-956f-552addbce296" isExpanded="false" absoluteBounds="8.5, 4.25, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_ContactMethod" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0eef6101-f6f8-4879-942a-19cc0d1be0cc" absoluteBounds="8.515, 4.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1f119018-c738-4413-89e1-b3658e9ec2bf" isExpanded="false" absoluteBounds="0.5, 4.875, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_Email" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8de27b56-807f-465c-b6fe-592ab3f27570" absoluteBounds="0.51499999999999968, 5.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dc3678c7-a078-44d9-a758-2af651272109" isExpanded="false" absoluteBounds="5.875, 4.875, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_Fax" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5ca98b24-8311-47ee-b5ac-62553ac3a6c1" absoluteBounds="5.8900000000000006, 5.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8b7520d0-5026-4133-87c1-4b44a6737fe6" isExpanded="false" absoluteBounds="3.25, 4.875, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_Phone" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6e1c110b-9406-457d-bdf6-10ac96876eb4" absoluteBounds="3.2649999999999997, 5.3350000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="56f553c3-098a-45cd-9903-0c0e554de660" isExpanded="false" absoluteBounds="0.5, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_ContactSource" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9287a568-bdfe-4f37-ad03-80e0fb03982b" absoluteBounds="0.51499999999999968, 1.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c5468d66-8b9e-4777-869e-c8c44e8be317" isExpanded="false" absoluteBounds="3.25, 5.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_Campaign" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0e73729b-b8e9-462b-9fa6-896f2b882751" absoluteBounds="3.2649999999999997, 5.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b9e3fbf9-2799-4e36-a1ad-121441abbbd4" isExpanded="false" absoluteBounds="0.5, 3, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_CNTACCOUNTLIST" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6806914e-979b-465d-9ea7-f1c71488fed4" absoluteBounds="0.51499999999999968, 3.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c611ec81-940a-4aa6-8a0c-542dfc661991" isExpanded="false" absoluteBounds="3.25, 6.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_crmContactSelect" />
+      <nestedChildShapes>
+        <elementListCompartment Id="599faddb-61cb-42b7-8030-8359ab3138a6" absoluteBounds="3.2649999999999997, 6.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9c91a82c-6aa3-4d54-9de8-db1288f65d87" isExpanded="false" absoluteBounds="0.5, 6.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_crmOppSelect" />
+      <nestedChildShapes>
+        <elementListCompartment Id="27538d4a-4311-4128-b536-03c2d8986dd3" absoluteBounds="0.51499999999999968, 6.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6c49b948-75cb-44f4-b635-463d4989e645" isExpanded="false" absoluteBounds="0.5, 6.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/MASTER_ORIGIN" />
+      <nestedChildShapes>
+        <elementListCompartment Id="69931ad0-e744-4012-95bb-1e41314603de" absoluteBounds="0.51499999999999968, 7.2100000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bf4a4b0c-9e63-4f47-92da-70e4cf460dae" isExpanded="false" absoluteBounds="3.25, 6.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_crmContact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6338e1d8-f344-4050-a0be-8c0ec561ae79" absoluteBounds="3.265, 7.21, 1.9700000000000002, 7.3645426432291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="af6de01b-8eec-4112-87ae-646f6412ea8c" isExpanded="false" absoluteBounds="3.25, 3.625, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_ProjectList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fdb8d0bb-2aab-4d57-a23a-2ba4d0d03949" absoluteBounds="3.265, 4.085, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="285f5ac4-a5a8-4162-bc8b-3cced02663e2" isExpanded="false" absoluteBounds="8.5, 4.875, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/Technician_Report" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5343e722-2b8f-4173-b794-3ba1a21d52ba" absoluteBounds="8.515, 5.335, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="eaf981de-a0d3-45b6-8cff-7b25e3eda4db" isExpanded="false" absoluteBounds="8.5, 5.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_PROJECTLISTFieldService" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c6d2dce2-8810-471a-98ab-e04b754e6ba0" absoluteBounds="8.515, 5.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9383f347-8834-4dc4-ac00-f2a6f623fa03" isExpanded="false" absoluteBounds="5.875, 5.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_CRMCASE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f1b85c12-0c85-4758-91bc-edf1a933f0da" absoluteBounds="5.89, 5.96, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8c6ff688-1990-4056-9aec-ce176e1e4866" isExpanded="false" absoluteBounds="8.5, 6.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_CaseList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="957ef8ea-0719-496d-a089-a03134a68380" absoluteBounds="8.515, 6.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9f77f28e-aeb9-4a03-8eda-d471d35dc6d3" isExpanded="false" absoluteBounds="0.5, 7.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_MultiGroup" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e4066e7c-b146-45ec-9e4c-004ceb28e5fd" absoluteBounds="0.51499999999999968, 7.8350000000000009, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c682b15f-2cc7-4ce5-b19e-c568322d5027" isExpanded="false" absoluteBounds="3.25, 7.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_BranchList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="73513605-bc7e-4bba-be67-437ca2264e3b" absoluteBounds="3.2650000000000006, 7.8350000000000009, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5c5f16af-c239-4dee-9ca7-e94a736200f0" isExpanded="false" absoluteBounds="5.875, 6.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_CRMInquiry" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f1774cb5-df94-44f4-9743-ddca514ee6e7" absoluteBounds="5.89, 6.585, 1.9700000000000002, 6.7876383463541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ac761726-de30-4cfd-ad7f-cfbedb857596" isExpanded="false" absoluteBounds="5.875, 6.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_CRMAccount" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d9947841-d455-4506-983e-ab3ec832f144" absoluteBounds="5.89, 7.21, 1.9700000000000002, 7.941446940104167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c612eef6-51d1-492b-bcf7-b9bda1e44908" isExpanded="false" absoluteBounds="5.875, 7.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_CRMCampaign" />
+      <nestedChildShapes>
+        <elementListCompartment Id="73c55cbf-98b4-4e0a-bc68-c66e2015399d" absoluteBounds="5.89, 7.9600000000000009, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f7b952e3-c2d0-45d8-aa3e-4a46e700802b" isExpanded="false" absoluteBounds="8.625, 6.875, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_crmOpportunity" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8da17a12-2b95-43b9-ac86-9cd690094195" absoluteBounds="8.64, 7.335, 1.9700000000000002, 5.6338297526041661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8496d1ad-523d-4522-9f80-5a058ea65778" isExpanded="false" absoluteBounds="8.625, 7.625, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_CRMFieldService" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9e0d2758-4fbb-40d8-a950-73f77c0a69a5" absoluteBounds="8.64, 8.085, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0efa5c99-740d-47e2-8d90-a3a7875e7fc7" isExpanded="false" absoluteBounds="11.5, 7.625, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/v_CRMServiceContact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="042c8ca2-b5bf-492f-b10e-d9629645b5f5" absoluteBounds="11.515, 8.085, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="37fd5d97-5665-4747-9522-c432d29c9035" isExpanded="false" absoluteBounds="0.5, 5.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/SHOWACTIVITYHISTORY" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a5ef1f5b-0a5c-48f7-bcb3-ca9f84da993c" absoluteBounds="0.515, 5.96, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dfbfdd14-1b7e-4815-a5ec-4f206721c08c" isExpanded="false" absoluteBounds="3.25, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/ENQUIRIES_LISTING_HIERERCHYWISE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="61a0dff6-37f3-48ca-8184-5d142ebbf928" absoluteBounds="3.265, 0.96, 1.9700000000000002, 10.249064127604166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4e0fb7c0-6a54-4894-9dfe-55429b335ad0" isExpanded="false" absoluteBounds="0.5, 8.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_ModeOfVisit" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3f295066-26ef-4f35-88bf-62d0fcfab5d1" absoluteBounds="0.51500000000000012, 8.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2592f4bd-65fc-469d-873c-b153325e5fa7" isExpanded="false" absoluteBounds="3.25, 8.125, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_BusinessActivity" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6490ebf5-42ad-471d-a8a3-6d7f79d7ca45" absoluteBounds="3.265, 8.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f14c7212-0251-4cb3-96a6-8498ddbb5fec" isExpanded="false" absoluteBounds="3.25, 8.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_BusinessPresence" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bd80766d-5bc6-4ec9-a72e-937fe5223a3f" absoluteBounds="3.2649999999999997, 9.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d383f625-bd58-4cbc-89e0-4b4ad5c0e5d3" isExpanded="false" absoluteBounds="0.5, 8.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_CurrentRequirement" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ac02978b-e860-497b-ac47-3837b2f7daa0" absoluteBounds="0.51500000000000012, 9.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2db9eacf-1cb7-4b39-86de-6dd2a10dae53" isExpanded="false" absoluteBounds="5.875, 8.25, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_Brand" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a537c5f4-0125-4c48-b690-ad093a9cf42f" absoluteBounds="5.89, 8.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="69ad9782-bc5d-4168-9925-6ad959e7d49c" isExpanded="false" absoluteBounds="5.875, 8.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_PainArea" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c86c8090-4608-4f52-b15e-3bb7b4523674" absoluteBounds="5.89, 9.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1f527609-1d97-44bb-ab90-a95da25efaf0" isExpanded="false" absoluteBounds="0.5, 9.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_ProductApplication" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8984b991-b649-4563-9e03-9ad61e60eeb0" absoluteBounds="0.515, 9.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="61d7d9d1-2f67-4960-94d0-f99af3df378c" isExpanded="false" absoluteBounds="3.25, 9.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_ProductClass" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c8d9fc2b-dbe6-4a77-ba04-bfa1b15c7afc" absoluteBounds="3.265, 9.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4622f036-9a31-4b32-9713-7f4ecb53da0b" isExpanded="false" absoluteBounds="5.875, 9.375, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_Designation" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9331eb49-3368-414f-877f-1a6ff0f93086" absoluteBounds="5.89, 9.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="00f1d269-04c3-41d6-9ccc-4b4fad5c3787" isExpanded="false" absoluteBounds="0.5, 10, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_SectorList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a6cc30f2-cf3f-4da2-992e-8c4e1af48163" absoluteBounds="0.515, 10.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="18e55bdd-2cf1-44b9-a6ff-4475e39bdda7" isExpanded="false" absoluteBounds="0.5, 10.75, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_AssigneList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="09e7afc7-d17e-4bbc-bb4c-aa1cce43a7d1" absoluteBounds="0.515, 11.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="01df5379-a1aa-4a53-adfe-edc6081a826e" isExpanded="false" absoluteBounds="3.25, 10, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/V_CRMLead" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a706eb20-6f8b-47c1-a0c5-4b43ca278506" absoluteBounds="3.265, 10.46, 1.9700000000000002, 11.979777018229166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5a0e6f4d-1255-4447-9c93-6e37f7e615e3" isExpanded="false" absoluteBounds="0.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/CRMClassDataContext/ENQUIRIES_LISTING" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fe3a1212-a3dd-4772-ab3b-2a492c4a8dc5" absoluteBounds="0.515, 0.96, 1.9700000000000002, 10.249064127604166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

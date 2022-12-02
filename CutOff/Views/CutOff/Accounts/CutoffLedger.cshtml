@@ -1,0 +1,440 @@
+﻿@{
+    ViewBag.Title = "Cutoff Accounts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/jquery-confirm.min.css" rel="stylesheet" />
+<script src="~/assests/js/jquery-confirm.min.js"></script>
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>*@
+<link href="~/assests/js/wizard/smart_wizard.css" rel="stylesheet" />
+<link href="~/assests/js/wizard/smart_wizard_theme_arrows.css" rel="stylesheet" />
+<script src="~/assests/js/wizard/jquery.smartWizard.js"></script>
+
+<style>
+    #smartwizard .sw-btn-prev, #smartwizard .sw-btn-next {
+        display: none;
+    }
+
+    .fadeinDD {
+        opacity: 0;
+    }
+
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .itm {
+        width: 100%;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+
+    #smartwizard .btn-toolbar .btn-group {
+        float: right !important;
+    }
+
+    #smartwizard .nav > li > a:hover, .nav > li > a:focus {
+        background-color: #f5f5f5 !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.done > a {
+        border-color: #8390bb !important;
+        color: #fff !important;
+        background: #8390bb !important;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.done > a:after {
+            border-left: 30px solid #8390bb;
+        }
+
+    .sw-theme-arrows > ul.step-anchor > li.active > a {
+        border-color: #43589a !important;
+        color: #fff !important;
+        background: #44599b !important;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.active > a:after {
+            border-left: 30px solid #44599b !important;
+        }
+
+    #smartwizard .nav > li.active > a:hover, .nav > li > a:focus {
+        background-color: #44599b !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled > a:focus {
+        background-color: #f5f5f5 !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled.done > a:focus {
+        background-color: #8390bb !important;
+    }
+
+    #smartwizard .nav > li.done > a:hover, .nav > li.done > a:focus {
+        background-color: #8390bb !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled > a, .sw-theme-arrows > ul.step-anchor > li.disabled > a:hover {
+        color: #c1c0c0;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.disabled > a, .sw-theme-arrows > ul.step-anchor > li.disabled > a:hover {
+            color: #968d8d !important;
+        }
+
+
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled.done > a, .sw-theme-arrows > ul.step-anchor > li.disabled.done > a:hover {
+        color: #fff !important;
+    }
+</style>
+
+<style>
+    .bigger {
+        font-size: 15px;
+    }
+
+    .mtop15 {
+        margin-top: 15px;
+    }
+    .padTop10 {
+        padding-top:10px;
+    }
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Step show event
+        $(".sw-btn-prev, .sw-btn-next").addClass('Hide');
+        $("#smartwizard").on("showStep", function (e, anchorObject, stepNumber, stepDirection, stepPosition) {
+            //alert("You are on step "+stepNumber+" now");
+            //   $("#prev-btn").addClass('Hide');
+            if (stepPosition === 'first') {
+                $("#prev-btn").addClass('hide');
+            } else if (stepPosition === 'final') {
+                $("#next-btn").addClass('disabled');
+            } else {
+                $("#prev-btn").removeClass('hide');
+                $("#next-btn").removeClass('disabled');
+            }
+        });
+
+
+
+
+        // Smart Wizard
+        $('#smartwizard').smartWizard({
+            selected: 1,
+            theme: 'arrows',
+            transitionEffect: 'fade',
+            showStepURLhash: true,
+            disabledSteps: [0,2, 3, 4, 5,6,7],
+            toolbarSettings: {
+                //toolbarPosition: 'both',
+                toolbarButtonPosition: 'end',
+                //toolbarExtraButtons: [btnFinish, btnCancel]
+            }
+        });
+
+
+        setTimeout(function () {
+            $('#loadIssue').removeClass('fadeinDD');
+        }, 2000);
+
+
+        //$("#next-btn").on("click", function () {
+        //    // Navigate next
+        //    $('#smartwizard').smartWizard("next");
+        //    return true;
+        //});
+
+
+    });
+</script>
+
+<style>
+    #smartwizard .sw-btn-prev, #smartwizard .sw-btn-next {
+        display: none;
+    }
+    .fadeinDD {
+        opacity: 0;
+    }
+</style>
+
+
+
+
+<script>
+
+    //function RedirectToNextStep()
+    //{
+    //    $.alert({
+    //        title: 'Alert!',
+    //        content: 'Cutoff process completed.',
+    //        buttons: {
+    //            okay: {
+    //                text: 'Ok',
+    //                btnClass: 'btn-blue',
+    //                action: function () {
+    //                    window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+    //                }
+
+    //            }
+    //        }
+    //    });
+    //}
+
+
+    function RedirectToBranchLedgerCutoff() {
+        debugger;
+        var obj = {};
+        obj.CutoffDate = txtCutoffDate.GetDate();
+
+        if (chkCloseStock.GetChecked() == true)
+        {
+            obj.CloseStock = 1;
+        }
+        else
+        {
+            obj.CloseStock = 0;
+        }
+
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/Accounts/StartLedgerCutoff",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                // jAlert(response);
+                // alert("Stock Cutoff done. Press OK to proceed.");
+                document.getElementById("btnStockcutoff").style.display = "none";
+               // document.getElementById("btnNext").style.display = "inline-block";
+                // document.getElementById("btnNext").style.display = "none";
+                LoadingPanel.Hide();
+                $.alert({
+                    title: 'Alert!',
+                    content: 'Account Cutoff process is completed. Press OK to Proceed.',
+                    buttons: {
+                        okay: {
+                            text: 'Ok',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                // window.location.href = "/OMS/SignOff.aspx";
+                                window.location.href = "/Accounts/PartialCashBAnkView/";
+                            }
+
+                        }
+                    }
+                });
+
+
+            },
+            error: function (response) {
+                // jAlert("Please try again later");
+                $.alert({
+                    title: 'Alert!',
+                    content: 'Please try again later',
+                    buttons: {
+                        okay: {
+                            text: 'Ok',
+                            btnClass: 'btn-blue'
+
+                        }
+                    }
+                });
+                LoadingPanel.Hide();
+            }
+        });
+    }
+</script>
+
+<div class="form_main fadeinDD" id="loadIssue">
+    <!-- SmartWizard html -->
+  
+        <div id="smartwizard" class="mtop15">
+            <ul>
+                <li><a href=""><br /><div class="bigger">Database Creation & Restoration</div></a></li>
+                <li><a href="#step-2"><br /><div class="bigger">Account</div></a></li>
+                <li><a href=""><br /><div class="bigger">CashBank</div></a></li>
+                <li><a href=""><br /><div class="bigger">Journal</div></a></li>
+                <li><a href=""><br /><div class="bigger">Sales</div></a></li>
+                <li><a href=""><br /><div class="bigger">Purchase</div></a></li>
+                <li><a href=""><br /><div class="bigger">Stock</div></a></li>
+                <li><a href=""><br /><div class="bigger">Final</div></a></li>
+            </ul>
+            <div>
+                <div id="step-1" class="">
+
+
+                </div>
+                <div id="step-2" class="">
+                    <h3 class="border-bottom border-gray pb-2"></h3>
+                    <div class="flexContainer" id="dvLedger">
+
+                        <div class="itm">
+                            <h3 class="hdr">Accounts</h3>
+                            <div class="bordered">
+                                <table width="70%">
+                                    <tr>
+                                        <td>
+                                            <label>Cutoff date :</label>
+                                        </td>
+                                        <td>
+
+                                            @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "txtCutoffDate";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Date = Convert.ToDateTime((DateTime)ViewBag.CutoffDate);
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                        settings.ClientEnabled = false;
+                    }).GetHtml()
+
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().CheckBox(
+                                                settings =>
+                                                {
+                                                    settings.Name = "chkCloseStock";
+                                                    settings.Checked = false;
+                                                    settings.Text = "Consider Closing Stock";
+                                                    //settings.Properties.ClientSideEvents.CheckedChanged = "function (s, e){ myButton.SetVisible(!myButton.GetVisible());}";
+                                                }
+                                            ).GetHtml()
+                                        </td>
+                                     </tr>
+                                   
+                                    <tr>
+                                        <td>
+                                            <label>Modules :</label>
+                                        </td>
+                                        <td colspan="2" class="padTop10">
+
+                                            @Html.DevExpress().CheckBoxList(
+                    settings =>
+                    {
+                        settings.Name = "chkCutoffPurchase";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.ClientEnabled = false;
+
+                        settings.PreRender += (s, e) =>
+                        {
+                            MVCxCheckBoxList cbList = (MVCxCheckBoxList)s;
+
+                            cbList.Items.Add("Sales Invoice");
+                            cbList.Items.Add("Transit Sales Invoice");
+                            cbList.Items.Add("Purchase Invoice");
+                            cbList.Items.Add("Transit Purchase Invoice");
+                            cbList.Items.Add("Sales Return");
+                            cbList.Items.Add("Sale Return-Manual");
+                            cbList.Items.Add("Return With Invoice");
+                            cbList.Items.Add("Undelivery Return");
+                            cbList.Items.Add("Rate Difference Entry Customer");
+                            cbList.Items.Add("Purchase Return");
+                            cbList.Items.Add("Purchase Return Manual");
+                            cbList.Items.Add("Rate Difference Entry Vendor");
+                            cbList.Items.Add("Vendor Receipt/Payment");
+                            cbList.Items.Add("Vendor Debit/Credit Note");
+                            cbList.Items.Add("Customer Receipt/Payment");
+                            cbList.Items.Add("Customer Debit/Credit Note");
+                            cbList.Items.Add("Journal Voucher");
+                            cbList.Items.Add("CashBank Voucher");
+                            cbList.Items.Add("Advance With Invoice");
+                            cbList.Items.Add("Order(POS)");
+                            cbList.SelectAll();
+
+
+
+                        };
+                    }).GetHtml()
+
+                                        </td>
+                                    </tr>
+
+                                </table>
+                                <hr />
+                                <div class="text-right mtop-2">
+                                    <button id="btnStockcutoff" class="btn btn-primary" onclick="RedirectToBranchLedgerCutoff();">Start</button>
+                                    @*<button style="display:none;" id="btnNext" class="btn btn-primary" onclick="RedirectToNextStep();">Next</button>*@
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div id="step-3" class="">
+
+
+                </div>
+                <div id="step-4" class="">
+
+
+                </div>
+
+                <div id="step-5" class="">
+
+
+                </div>
+
+                <div id="step-6" class="">
+
+
+                </div>
+
+                <div id="step-7" class="">
+
+
+                </div>
+                <div id="step-8" class="">
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+</div>
+
+
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvLedger";
+    }
+).GetHtml()

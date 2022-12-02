@@ -1,0 +1,144 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@{
+    ViewBag.Title = "FetchDB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+</style>
+<script>
+    function LoadDB()
+    {
+        $.ajax({
+            url: "@Url.Action("RestoreDB", "CutOffDBBackUp")",
+            type: "GET",
+        dataType: "JSON",
+        success: function (data) {
+            $("#ddlDataBase").html(data.retdata);
+            document.getElementById("btnLoadDB").style.display = "none";
+            document.getElementById("l1").style.display = "inline-block";
+            document.getElementsByName("btnNext").style.display = "inline-block";
+        },
+        error: function (response) {
+            jAlert("Please try again later");
+            }
+        });
+    }
+    function CreateCompany() {
+        debugger;
+        var obj = {
+            //"dbnm": $('#ddldatabasename option:selected').val()
+            "dbnm": $('#ddlDataBase option:selected').val()
+        };
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "@Url.Action("CreateCompany", "CutOffDBBackUp")",
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            async: true,
+            success: function (response) {
+                console.log(response);
+                jAlert(response);
+                window.location.href = "/CutOffDBBackUp/DropCreateTable";
+                //document.getElementById("btnStep3").style.display = "inline-block";
+                //document.getElementById("btnNext").style.display = "none";
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+    function btnCancelClick() {
+        window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+    }
+</script>
+<div class="flexContainer" id="dvStep2">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending CutOff</h3>
+        <div class="bordered">
+            <table width="70%">
+                <tr>
+                    <td>
+                        <button class="btn btn-primary" id="btnLoadDB" onclick="LoadDB();">Load</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="l1" style="display:none;">Create Company :</label>
+                    </td>
+                    <td>
+                        @*<select id="ddldatabasename" class="form-control">
+                            <option value="YEAREND_TEST_FY2122">YEAREND_TEST_FY2122</option>
+                        </select>*@
+                        <label id="ddlDataBase"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label></label>
+                    </td>
+                    <td>
+                        @Html.DevExpress().Button(
+                        settings =>
+                        {
+                            settings.Name = "btnNext";
+                            settings.ClientSideEvents.Click = "CreateCompany";
+                            settings.Text = "Create";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-warning";
+                            settings.UseSubmitBehavior = false;
+                        }).GetHtml()
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label></label>
+                    </td>
+                    <td>
+                        <div id="dvBack" class="hide">Backup Done</div>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <div class="text-right mtop-2">
+                @*<button style="display:none;" id="btnStep3" class="btn btn-primary">Next</button>*@
+                <button class="btn btn-danger" onclick="btnCancelClick();">Cancel</button>
+            </div>
+        </div>
+    </div>
+    @*<input type="hidden" id="hdnCutoffDate" value="@ViewData["cutoffDate"]" />
+    <input type="hidden" id="hdnBackup" value="@ViewData["backup"]" />*@
+</div>

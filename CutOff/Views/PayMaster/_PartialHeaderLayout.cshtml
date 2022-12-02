@@ -1,0 +1,222 @@
+﻿<div class="leftLogowrap transit hide">
+
+    @*Images*@
+    <img src="@(ViewData["biglogo"])" class="img-responsive bigLogo" align="middle" />
+    <img src="@(ViewData["minilogo"])" class="img-responsive miniLogo" align="middle" />
+
+</div>
+<script>
+    $(document).ready(function () {
+        function getTime() {
+            var d = new Date();
+            d.setHours(d.getHours()); // offset from local time
+            var h = (d.getHours() % 12) || 12; // show midnight & noon as 12
+            return (
+                (h < 10 ? '0' : '') + h +
+                (d.getMinutes() < 10 ? ':0' : ':') + d.getMinutes() +
+                        // optional seconds display
+                // ( d.getSeconds() < 10 ? ':0' : ':') + d.getSeconds() +
+                (d.getHours() < 12 ? ' AM' : ' PM')
+            );
+
+        }
+
+        var clock = document.getElementById('clock');
+        setInterval(function () { clock.innerHTML = getTime(); }, 1000);
+
+
+        function formatDate(date) {
+            var monthNames = [
+              "January", "February", "March",
+              "April", "May", "June", "July",
+              "August", "September", "October",
+              "November", "December"
+            ];
+
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+            return day + ' ' + monthNames[monthIndex] + ' ' + year;
+        }
+        var dayDate = document.getElementById('dayDate');
+        setInterval(function () { dayDate.innerHTML = formatDate(new Date()); }, 1000);
+    });
+</script>
+<style>
+    span.text {
+        display: inline-block;
+    }
+
+    .dateTime {
+        background: #144a77;
+        border-radius: 5px;
+        padding: 5px 15px;
+        font-size: 14px;
+        margin: 14px 0;
+        color: #fff;
+    }
+
+    ul.recentLinks {
+        list-style-type: none;
+        padding-left: 10px;
+    }
+
+        ul.recentLinks > li > a {
+            margin-bottom: 8px;
+            display: inline-block;
+            text-decoration: underline;
+            /* padding-bottom: 5px; */
+            padding: 5px 10px;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.23);
+            width: 100%;
+        }
+    /*user access dropdown change*/
+    .navbar-top-links li .dropdown-menu.userAccsess {
+        background: #fff;
+        border-radius: 0;
+        color: #333;
+        padding: 0;
+        width: 240px !important;
+    }
+
+        .navbar-top-links li .dropdown-menu.userAccsess > li > a {
+            color: #333;
+            display: block;
+            padding: 6px 10px;
+        }
+
+        .navbar-top-links li .dropdown-menu.userAccsess > li.logout {
+            border-top: 1px solid #f1efef;
+        }
+
+        .navbar-top-links li .dropdown-menu.userAccsess > li .iconSubMenu {
+            max-width: 20px;
+            margin-right: 6px;
+        }
+
+        .navbar-top-links li .dropdown-menu.userAccsess > li.loginDetails {
+            padding: 10px 10px;
+            border-bottom: 1px dashed #ece9e9;
+            font-size: 10px;
+        }
+
+            .navbar-top-links li .dropdown-menu.userAccsess > li.loginDetails .val {
+                font-size: 12px;
+            }
+
+    .avtarHolder > img {
+        border-radius: 50%;
+    }
+</style>
+
+<div class="rightNav">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a href="#" class="btn navbar-minimalize"><i class="fa fa-bars"></i></a>
+            <span class="text">
+                <div class="dateTime">
+                    <span class="" id="dayDate"></span>  |
+                    <span id="clock"></span> <span class="text-muted hide"><small>pm</small></span>
+                </div>
+            </span>
+        </div>
+        <ul class="nav navbar-top-links navbar-right user-dropdown-custom">
+            <li>
+                <div class="aaadv" style="margin-right: 10px; max-width: 450px; height: 50px; display: block;">
+                    <table>
+                        <tr>
+
+                            <td>
+                                <div class="cmpName">
+                                    <label>@HttpContext.Current.Session["LastCompany"]</label>
+                                </div>
+                                <div class="cmpYear">
+                                    FY :
+                                    <label>@HttpContext.Current.Session["LastFinYear"]</label>
+                                    <span style="margin-left: 15px; margin-right: 15px;">|</span>
+                                    <label>Base Currency INR [@HttpContext.Current.Session["LocalCurrency"].ToString().Split('~')[2].Trim()]</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li class="dropdown usr">
+                <a class="dropdown-toggle user" data-toggle="dropdown" href="#" aria-expanded="true" style="padding: 9px 15px 6px 0px;">
+                    <div class="avtarHolder" style="margin-right: 24px; margin-top: 3px; border-radius: 0 !important;">
+                        @if (HttpContext.Current.Session["UserImage"] != "")
+                        {
+                            <img src=@Convert.ToString("/"+System.Configuration.ConfigurationManager.AppSettings["SaveFile"] + HttpContext.Current.Session["UserImage"]) />
+                        }
+                        else
+                        {
+                            <img src="/assests/images/profile1.png" />
+                        }
+                    </div>
+                    <span class="label hidden-xs">
+                        Welcome,
+                        <label>@Session["username"].ToString().Trim()</label>
+                        <i class="fa fa-caret-down"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu userAccsess">
+                    <li>
+                        <ul class="submenu">
+                            <li class="loginDetails">
+                                <div><b>LAST LOGIN</b></div>
+                                <div class="val"><span class="lstLoginDate">@HttpContext.Current.Session["Lastlogindate"]</span>, <span class="lstLoginTime">@HttpContext.Current.Session["Lastlogintime"]</span> </div>
+                            </li>
+                            <li>
+                                <a href="/OMS/Management/WhatsNewAddEdit.aspx" target="_blank">
+                                    <img src="/assests/images/DropIcons/Whtnew.png" class="iconSubMenu" />
+                                    <span>What's New</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#" id="showAbout">
+                                    <img src="/assests/images/DropIcons/abt.png" class="iconSubMenu" />
+                                    <span>About </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx">
+                                    <img src="/assests/images/DropIcons/chngpass.png" class="iconSubMenu" />
+                                    <span>Change Password</span>
+                                </a>
+                            </li>
+                            <li class="noBod logout">
+                                <a href="/OMS/SignOff.aspx">
+                                    <img src="/assests/images/DropIcons/logout.png" class="iconSubMenu" />
+                                    <span>Logout</span>
+                                </a>
+                            </li> 
+                            @*<li>
+            <a href="/OMS/Management/Master/view-version-features.aspx" target="_blank">
+                <img src="/assests/images/icon_idea.gif" class="iconSubMenu">
+                <span>What's New</span>
+            </a>
+        </li>
+    <li>
+        <a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx">
+            <img src="/assests/images/change.png" class="iconSubMenu">
+            <span>Change Password</span>
+        </a>
+    </li>
+    <li class="noBod">
+        <a href="/OMS/SignOff.aspx">
+            <img src="/assests/images/logout.png" class="iconSubMenu">
+            <span>Logout</span>
+        </a>
+    </li>*@
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+

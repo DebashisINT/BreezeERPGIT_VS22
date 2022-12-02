@@ -1,0 +1,638 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaging";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "Enquiries", Action = "PartialEnquiriesGrid" };
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 400;
+
+
+
+
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.TopAndBottom;
+
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50", "100", "150" };
+    settings.Settings.ShowFilterRow = true;
+
+    settings.KeyFieldName = "SEQ";
+    settings.SettingsPager.PageSize = 100;
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRowMenu = true;
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DATE";
+        column.Caption = "Date & Time";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 80;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CUSTOMER_NAME";
+        column.Caption = "Customer";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 110;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CONTACT_PERSON";
+        column.Caption = "Contact Person";
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.Width = 96;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PHONENO";
+        column.Caption = "Contact No";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.Width = 80;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EMAIL";
+        column.Caption = "Email";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LOCATION";
+        column.Caption = "Location";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PRODUCT_REQUIRED";
+        column.Caption = "Products Req.";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.Width = 90;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QTY";
+        column.Caption = "Qty.";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.Width = 40;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ORDER_VALUE";
+        column.Caption = "Order value";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.Width = 80;
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ENQ_DETAILS";
+        column.Caption = "Enquiry Details";
+        column.Width = 160;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "VEND_TYPE";
+        column.Caption = "Provided by";
+        column.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ENQ_NUMBER";
+        column.Caption = "Enq. No.";
+        column.VisibleIndex = 12;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 70;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+    });
+
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "SOURCE";
+    //    column.Caption = "Source";
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 100;
+    //});
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "INDUSTRY";
+        column.Caption = "Industry";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "MISC_COMMENTS";
+        column.Caption = "Misc Comments";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PRIORITYS";
+        column.Caption = "Priority";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EXIST_CUST";
+        column.Caption = "Existing Customer";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 140;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LAST_CONTACT_DATE";
+        column.Caption = "Last Contact Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "NEXT_CONTACT_DATE";
+        column.Caption = "Next Contact Date";
+        column.VisibleIndex = 19;
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CONTACTEDBY";
+        column.Caption = "Contacted By";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 140;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ENQ_PRODREQ";
+        column.Caption = "Product Required";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 140;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FEEDBACK";
+        column.Caption = "Feedback";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FINAL_INDUSTRY";
+        column.Caption = "Final Industry";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 140;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ACTIVITY";
+        column.Caption = "Activity";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "VERIFY_BY";
+        column.Caption = "Verified By";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "VERIFY_ON";
+        column.Caption = "Verified On";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 80;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "VERIFY_CLOSUREDATE";
+        column.Caption = "Closure Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 80;
+    });
+
+    // Mantis Issue 24748
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ASSIGNEDSALESMAN";
+        column.Caption = "Assigned user";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 110;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SALESMANASSIGNEDBY";
+        column.Caption = "Assigned By";
+        column.Width = 96;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SALESMANASSIGNREM";
+        column.Caption = "Remarks";
+        column.Width = 96;
+    });
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SALESMANASSIGNDT";
+        column.Caption = "Assigned Date & Time";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SETPRIORITY";
+        column.Caption = "Priority";
+        column.Width = 90;
+    });
+    // Mantis Issue 24993
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CLOSE_ORDER";
+        column.Caption = "Order Outcome";
+        column.Width = 90;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CLOSE_REASON";
+        column.Caption = "Close Reason";
+        column.Width = 90;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CLOSE_REMARKS";
+        column.Caption = "Close Remarks";
+        column.Width = 100;
+    });
+    //Mantis Issue 25025
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CLOSEDDT";
+        column.Caption = "Closed Date";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 100;
+        //column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+    //End of Mantis Issue 25025
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "REOPEN_FEEDBACK";
+        column.Caption = "Reopen Feedback";
+        column.Width = 100;
+    });
+    // End of Mantis Issue 24993
+    // End of Mantis Issue 24748
+    //Mantis Issue 24999
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CREATED_DATE";
+        column.Caption = "Created Date";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 80;
+        //column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CREATED_BY";
+        column.Caption = "Created By";
+        column.Width = 100;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "MODIFIED_DATE";
+        column.Caption = "Edited Date";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 80;
+        //column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "MODIFIED_BY";
+        column.Caption = "Edited By";
+        column.Width = 100;
+    });
+    //End of Mantis Issue 24999
+
+    settings.Columns.Add(column =>
+    {
+        column.Caption = "Actions";
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+
+        column.SetDataItemTemplateContent(tc =>
+        {
+            string EnqRights = "<div class='floatedBtnArea'>";
+            if (ViewBag.CanEdit)
+            {
+                EnqRights = EnqRights + "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"\" title=\"\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>";
+
+            }
+            if (ViewBag.CanDelete)
+            {
+                EnqRights = EnqRights + "&nbsp;" +
+          "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Mark for Delete\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>";
+
+            }
+            if (Convert.ToString(DataBinder.Eval(tc.DataItem, "ENQUIRY_WORKFLOW")) == "Yes")
+            {
+          
+                if (ViewBag.SupervisorFeedback)
+                {
+                    if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "SUPERVISOR")) == false)
+                    {
+                        EnqRights = EnqRights + "&nbsp;" +
+                  "<a href=\"javascript:void(0);\" onclick=\"OnClickSupervisor('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VEND_TYPE") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "')\" class=\"\" title=\"\"><span class='ico ColorFour'><i class='fa fa-user'></i></span><span class='hidden-xs'>Supervisor Feedback</span></a>";
+                    }
+                    else
+                    {
+                        EnqRights = EnqRights + "&nbsp;" +
+                  "<a href=\"javascript:void(0);\" onclick=\"OnClickSupervisor('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VEND_TYPE") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "')\" class=\"\" title=\"\"><span class='ico ColorFour'><i class='fa fa-user'></i></span><span class='hidden-xs'>Supervisor Feedback</span></a>";
+
+                    }
+                }
+                if (ViewBag.SalesmanFeedback)
+                {
+                    if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "SUPERVISOR")) == false)
+                    {
+                        EnqRights = EnqRights + "<a href=\"javascript:void(0);\" class=\" disableimage\" title=\"\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Salesman Feedback</span></a>";
+                    }
+                    else
+                    {
+                        EnqRights = EnqRights + "&nbsp;" +
+                  "<a href=\"javascript:void(0);\" onclick=\"OnClickSalesman('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "','" + DataBinder.Eval(tc.DataItem, "SOURCE") + "','" + DataBinder.Eval(tc.DataItem, "INDUSTRY") + "','" + DataBinder.Eval(tc.DataItem, "MISC_COMMENTS") + "','" + DataBinder.Eval(tc.DataItem, "PRIORITYS") + "','" + DataBinder.Eval(tc.DataItem, "EXIST_CUST") + "')\" class=\"\" title=\"\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Salesman Feedback</span></a>";
+
+                    }
+                }
+                if (ViewBag.Verified)
+                {
+                    if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "SALESMAN")) == false)
+                    {
+                        EnqRights = EnqRights + "&nbsp;" +
+                  "<a href=\"javascript:void(0);\" class=\"disableimage\" title=\"Verify\"><span class='ico editColor'><i class='fa fa-check' aria-hidden='true'></i></span><span class='hidden-xs'>Verify</span></a>";
+                    }
+                    else
+                    {
+                        EnqRights = EnqRights + "&nbsp;" +
+                    "<a href=\"javascript:void(0);\" onclick=\"OnClickVerify('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "')\" class=\"\" title=\"Verify\"><span class='ico editColor'><i class='fa fa-check' aria-hidden='true'></i></span><span class='hidden-xs'>Verify</span></a>";
+                    }
+
+                }
+                // Mantis Issue 24748
+                if (ViewBag.ReassignSalesman)
+                {
+                    if (Convert.ToString(DataBinder.Eval(tc.DataItem, "ASSIGNEDSALESMAN")) != "")
+                    {
+                        EnqRights = EnqRights + "<a href=\"javascript:void(0);\" class=\" disableimage\" title=\"\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Assign Salesman</span></a>";
+                    }
+                    else
+                    {
+                        EnqRights = EnqRights + "&nbsp;" +
+                        "<a href=\"javascript:void(0);\" onclick=\"OnClickAssignedSalesman('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "ASSIGNEDSALESMAN") + "')\" class=\"\" title=\"\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Assign Salesman</span></a>";
+
+                    }
+
+                    if (Convert.ToString(DataBinder.Eval(tc.DataItem, "ASSIGNEDSALESMAN")) != "")
+                    {
+                        EnqRights = EnqRights + "<a href=\"javascript:void(0);\" class=\" disableimage\" title=\"\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Set Priority</span></a>";
+                    }
+                    else
+                    {
+                        EnqRights = EnqRights + "&nbsp;" +
+                        "<a href=\"javascript:void(0);\" onclick=\"OnClickSetPriority('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "ASSIGNEDSALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "SETPRIORITY") + "')\" class=\"\" title=\"\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Set Priority</span></a>";
+
+                    }
+                }
+               
+                // End of Mantis Issue 24748
+            }
+            else if (Convert.ToString(DataBinder.Eval(tc.DataItem, "ENQUIRY_WORKFLOW")) == "No")
+            {
+                if (ViewBag.SupervisorFeedback)
+                {
+                    EnqRights = EnqRights + "&nbsp;" +
+                     "<a href=\"javascript:void(0);\" onclick=\"OnClickSupervisor('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VEND_TYPE") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"\" title=\"Supervisor Feedback\"><span class='ico ColorFour'><i class='fa fa-user'></i></span><span class='hidden-xs'>Supervisor Feedback</span></a>";
+                }
+                if (ViewBag.SalesmanFeedback)
+                {
+                    EnqRights = EnqRights + "&nbsp;" +
+                     "<a href=\"javascript:void(0);\" onclick=\"OnClickSalesman('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "','" + DataBinder.Eval(tc.DataItem, "SOURCE") + "','" + DataBinder.Eval(tc.DataItem, "INDUSTRY") + "','" + DataBinder.Eval(tc.DataItem, "MISC_COMMENTS") + "','" + DataBinder.Eval(tc.DataItem, "PRIORITYS") + "','" + DataBinder.Eval(tc.DataItem, "EXIST_CUST") + "')\" class=\"\" title=\"Salesman Feedback\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Salesman Feedback</span></a>";
+                }
+                if (ViewBag.Verified)
+                {
+                    EnqRights = EnqRights + "&nbsp;" +
+                       "<a href=\"javascript:void(0);\" onclick=\"OnClickVerify('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "')\" class=\"\" title=\"Verify\"><span class='ico editColor'><i class='fa fa-check' aria-hidden='true'></i></span><span class='hidden-xs'>Verify</span></a>";
+                }
+                // Mantis Issue 24748
+                if (ViewBag.ReassignSalesman)
+                {
+                    EnqRights = EnqRights + "&nbsp;" +
+                    "<a href=\"javascript:void(0);\" onclick=\"OnClickAssignedSalesman('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "ASSIGNEDSALESMAN") + "')\" class=\"\" title=\"\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Assign Salesman</span></a>";
+
+                    EnqRights = EnqRights + "&nbsp;" +
+                    "<a href=\"javascript:void(0);\" onclick=\"OnClickSetPriority('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "ASSIGNEDSALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "SETPRIORITY") + "')\" class=\"\" title=\"\"><span class='ico ColorSix'><i class='fa fa-star'></i></span><span class='hidden-xs'>Set Priority</span></a>";    
+                }
+                // End of Mantis Issue 24748
+            }
+            EnqRights = EnqRights + "</div>";
+            ViewContext.Writer.Write(EnqRights);
+            
+            //if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "SUPERVISOR")) == false)
+            //{
+            //    string EnqRights = "";
+            //    if (Model.UserRightsForPage.CanEdit)
+            //    {
+            //        EnqRights = EnqRights + "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Modify\"><img src=\"../../../assests/images/info.png\" /></a>";
+
+            //    }
+            //    if (Model.UserRightsForPage.CanDelete)
+            //    {
+            //        EnqRights = EnqRights + "&nbsp;" +
+            //  "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Mark for Delete\"><img src=\"../../../assests/images/Delete.png\" /></a>";
+
+            //    }
+            //    if (Model.UserRightsForPage.SupervisorFeedback)
+            //    {
+            //        if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "SUPERVISOR")) == false)
+            //        {
+            //            EnqRights = EnqRights + "&nbsp;" +
+            //      "<a href=\"javascript:void(0);\" onclick=\"OnClickSupervisor('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VEND_TYPE") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "')\" class=\"pad\" title=\"Supervisor Feedback\"><img src=\"../../../assests/images/spfeedback.png\" /></a>";
+            //        }
+            //        else
+            //        {
+            //            EnqRights = EnqRights + "&nbsp;" +
+            //      "<a href=\"javascript:void(0);\" onclick=\"OnClickSupervisor('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VEND_TYPE") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "')\" class=\"pad\" title=\"Supervisor Feedback\"><img src=\"../../../assests/images/spfeedback.png\" /></a>";
+
+            //        }
+            //    }
+            //    if (Model.UserRightsForPage.SalesmanFeedback)
+            //    {
+            //        if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "SUPERVISOR")) == false)
+            //        {
+            //            EnqRights = EnqRights + "<a href=\"javascript:void(0);\" class=\"pad  disableimage\" title=\"Salesman Feedback\"><img src=\"../../../assests/images/rating.png\" /></a>";
+            //        }
+            //        else
+            //        {
+            //            EnqRights = EnqRights + "&nbsp;" +
+            //      "<a href=\"javascript:void(0);\" onclick=\"OnClickSalesman('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "','" + DataBinder.Eval(tc.DataItem, "SOURCE") + "','" + DataBinder.Eval(tc.DataItem, "INDUSTRY") + "','" + DataBinder.Eval(tc.DataItem, "MISC_COMMENTS") + "','" + DataBinder.Eval(tc.DataItem, "PRIORITYS") + "','" + DataBinder.Eval(tc.DataItem, "EXIST_CUST") + "')\" class=\"pad\" title=\"Salesman Feedback\"><img src=\"../../../assests/images/rating.png\" /></a>";
+                   
+            //        }
+            //    }
+            //    if (Model.UserRightsForPage.Verified)
+            //    {
+            //        if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "SALESMAN")) == false)
+            //        {
+            //            EnqRights = EnqRights + "&nbsp;" +
+            //      "<a href=\"javascript:void(0);\" class=\"pad  disableimage\" title=\"Verify\"><img src=\"../../../assests/images/verified.png\" /></a>";
+            //        }
+            //        else
+            //        {
+            //            EnqRights = EnqRights + "&nbsp;" +
+            //        "<a href=\"javascript:void(0);\" onclick=\"OnClickVerify('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "')\" class=\"pad\" title=\"Verify\"><img src=\"../../../assests/images/verified.png\" /></a>";
+            //        }
+
+            //    }
+
+            //    //  ViewContext.Writer.Write(
+
+            //    //"<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Modify\"><img src=\"../../../assests/images/info.png\" /></a>" +
+            //    // "&nbsp;" +
+            //    //"<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Mark for Delete\"><img src=\"../../../assests/images/Delete.png\" /></a>" +
+            //    //"&nbsp;" +
+
+
+            //    //"<a href=\"javascript:void(0);\" onclick=\"OnClickSupervisor('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VEND_TYPE") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "')\" class=\"pad\" title=\"Supervisor Feedback\"><img src=\"../../../assests/images/spfeedback.png\" /></a>" +
+            //    // "&nbsp;" +
+            //    //"<a href=\"javascript:void(0);\" class=\"pad  disableimage\" title=\"Salesman Feedback\"><img src=\"../../../assests/images/rating.png\" /></a>" +
+            //    // "&nbsp;" +
+            //    //"<a href=\"javascript:void(0);\" class=\"pad  disableimage\" title=\"Verify\"><img src=\"../../../assests/images/verified.png\" /></a>"
+            //    //);
+            //    ViewContext.Writer.Write(EnqRights);
+
+            //}
+            //else if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "SALESMAN")) == false)
+            //{
+            //    ViewContext.Writer.Write(
+
+            //      "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Modify\"><img src=\"../../../assests/images/info.png\" /></a>" +
+            //       "&nbsp;" +
+            //      "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Mark for Delete\"><img src=\"../../../assests/images/Delete.png\" /></a>" +
+            //      "&nbsp;" +
+
+
+            //      "<a href=\"javascript:void(0);\" onclick=\"OnClickSupervisor('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VEND_TYPE") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "')\" class=\"pad\" title=\"Supervisor Feedback\"><img src=\"../../../assests/images/spfeedback.png\" /></a>" +
+            //       "&nbsp;" +
+            //      "<a href=\"javascript:void(0);\" onclick=\"OnClickSalesman('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "','" + DataBinder.Eval(tc.DataItem, "SOURCE") + "','" + DataBinder.Eval(tc.DataItem, "INDUSTRY") + "','" + DataBinder.Eval(tc.DataItem, "MISC_COMMENTS") + "','" + DataBinder.Eval(tc.DataItem, "PRIORITYS") + "','" + DataBinder.Eval(tc.DataItem, "EXIST_CUST") + "')\" class=\"pad\" title=\"Salesman Feedback\"><img src=\"../../../assests/images/rating.png\" /></a>" +
+            //       "&nbsp;" +
+            //      "<a href=\"javascript:void(0);\" class=\"pad disableimage\" title=\"Verify\"><img src=\"../../../assests/images/verified.png\" /></a>"
+            //  );
+            //}
+            //else
+            //{
+
+            //    ViewContext.Writer.Write(
+
+            //        "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Modify\"><img src=\"../../../assests/images/info.png\" /></a>" +
+            //         "&nbsp;" +
+            //        "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "SUPERVISOR") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "')\" class=\"pad\" title=\"Mark for Delete\"><img src=\"../../../assests/images/Delete.png\" /></a>" +
+            //        "&nbsp;" +
+
+
+            //        "<a href=\"javascript:void(0);\" onclick=\"OnClickSupervisor('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VEND_TYPE") + "','" + DataBinder.Eval(tc.DataItem, "SALESMAN") + "')\" class=\"pad\" title=\"Supervisor Feedback\"><img src=\"../../../assests/images/spfeedback.png\" /></a>" +
+            //         "&nbsp;" +
+            //        "<a href=\"javascript:void(0);\" onclick=\"OnClickSalesman('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "','" + DataBinder.Eval(tc.DataItem, "VERIFY") + "','" + DataBinder.Eval(tc.DataItem, "SOURCE") + "','" + DataBinder.Eval(tc.DataItem, "INDUSTRY") + "','" + DataBinder.Eval(tc.DataItem, "MISC_COMMENTS") + "','" + DataBinder.Eval(tc.DataItem, "PRIORITYS") + "','" + DataBinder.Eval(tc.DataItem, "EXIST_CUST") + "')\" class=\"pad\" title=\"Salesman Feedback\"><img src=\"../../../assests/images/rating.png\" /></a>" +
+            //         "&nbsp;" +
+            //        "<a href=\"javascript:void(0);\" onclick=\"OnClickVerify('" + DataBinder.Eval(tc.DataItem, "CRM_ID") + "')\" class=\"pad\" title=\"Verify\"><img src=\"../../../assests/images/verified.png\" /></a>"
+            //    );
+            //}
+
+
+        });
+        column.Settings.AllowDragDrop = DefaultBoolean.False;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 150;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    });
+
+    settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ORDER_VALUE").DisplayFormat = "0.00"; ;
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+}).Bind(Model).GetHtml()

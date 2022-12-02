@@ -1,0 +1,57 @@
+﻿@model CRM.Models.EnquiriesDet
+
+<div class="">
+
+   
+    <div class=" ">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="Widgheading relative clearfix" aria-expanded="true" aria-controls="collapseOne"></h4>
+        </div>
+
+        <div>
+            <label>Select Industry</label>
+            @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbAssIndustry";
+                        settings.Properties.ClientInstanceName = "ccmbAssIndustry";
+                        settings.Properties.TextField = "ind_industry";
+                        settings.Properties.ValueField = "ind_id";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 1;
+                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "AssIndustry_SelectedIndexChanged";
+
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (ViewBag.EnqFrom != "")
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Text = ViewBag.EnqFrom;
+                            }
+
+                        };
+
+                    }).BindList(Model.listAssIndustry).GetHtml()
+        </div>
+        <div class="clear"></div>
+        <hr />
+
+        <div class="GridViewArea">
+            @{
+                Html.RenderAction("PartialBulkAssign", "Enquiries");
+            }
+        </div>
+
+        <div class="text-center mTop10">
+            @*<button type="button" class="btn btn-success" onclick="SelectAll();">Select All</button>*@
+            <button type="button" class="btn btn-success" onclick="OnClickBulkAssignSalesman();">Confirm</button>
+        </div>
+
+    </div>
+
+
+</div>
+
+

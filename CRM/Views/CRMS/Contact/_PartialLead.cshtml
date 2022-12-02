@@ -1,0 +1,52 @@
+﻿@Html.DevExpress().GridLookup(settings =>
+{
+    settings.Name = "gridLookuplead";
+    settings.GridViewProperties.CallbackRouteValues = new { Controller = "CRMContact", Action = "PopulateLeadGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.KeyFieldName = "cnt_internalId";
+    settings.Columns.Add("UniqueID");
+    settings.Columns.Add("Name");
+    settings.Columns.Add("CompanyName");
+    settings.Columns.Add("Topic");   
+    
+    				
+    
+    settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Multiple;
+    settings.Properties.TextFormatString = "{1}";
+    settings.Properties.MultiTextSeparator = ", ";
+    settings.Properties.Width = 250;
+
+    settings.GridViewProperties.Settings.ShowFilterRow = true;
+    settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+    settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+    settings.GridViewProperties.SettingsPager.PageSize = 7;
+
+    settings.DataBound = (sender, e) =>
+    {
+        var gridLookup = (MVCxGridLookup)sender;
+        gridLookup.GridView.Width = 450;
+        gridLookup.GridView.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        gridLookup.GridView.Settings.VerticalScrollableHeight = 200;
+
+        //if (ViewBag.CONTACT_IDs != null)
+        //{
+        //    foreach (CRM.Models.CONTACT_IDs item in ViewBag.CONTACT_IDs)
+        //    {
+        //        gridLookup.GridView.Selection.SelectRowByKey(item.CONTACT_ID);
+        //    }
+        //}
+
+    };
+    settings.GridViewProperties.BeforeGetCallbackResult = (sender, e) =>
+    {
+        var grid = (ASPxGridView)sender;
+        if (grid.VisibleRowCount <= 2)
+            grid.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+
+    };
+}).BindList(Model).GetHtml()
+
+

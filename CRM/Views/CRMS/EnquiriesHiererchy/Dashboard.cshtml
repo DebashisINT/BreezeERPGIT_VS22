@@ -1,0 +1,2342 @@
+﻿@model CRM.Models.EnquiriesDet
+@{
+    ViewBag.Title = "Enquiry-Hierarchy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<link href="@Url.Action("~/assests/pluggins/TimePicker/bootstrap-timepicker.min.css")" rel="stylesheet" />
+    <script src="@Url.Action("~/assests/pluggins/TimePicker/bootstrap-timepicker.min.js")"></script>*@
+<link href="~/assests/pluggins/bootstrapSelect/bootstrap-select.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/bootstrapSelect/bootstrap-select.min.js"></script>
+<script src="~/assests/pluggins/amchart4/core.js"></script>
+<script src="~/assests/pluggins/amchart4/charts.js"></script>
+<script src="~/assests/pluggins/amchart4/animated.js"></script>
+
+<script>
+    function AddFormula() {
+        var url = '/EnquiriesHiererchy/Index?ActionType=ADD';
+        window.location.href = url;
+    }
+
+</script>
+<script>
+    var is_pageload = "0";
+    function OnClickEditForm(UNIQUEID, SUPERVISOR, SALESMAN, VERIFY) {
+        var url = '/EnquiriesHiererchy/Index?ActionType=EDIT&_uniqueid=' + UNIQUEID;
+        window.location.href = url;
+    }
+    function OnClickDeleteForm(UNIQUEID, SUPERVISOR, SALESMAN, VERIFY) {
+        var url = '/EnquiriesHiererchy/EnquiriesDelete/';
+        //Rev Subhra 11-04-2019 Mailed(Re: please remove this restriction)
+        //if (SUPERVISOR == "True" || SALESMAN == "True" || VERIFY == "True") {
+        //    jAlert("Next Stage Data updated.Cannot Delete.");
+        //}
+        //else {
+        //End of Rev 11-04-2019
+        jConfirm("Confirm Mark For Delete?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'DELETE', 'Uniqueid': UNIQUEID }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.response_msg == "Success") {
+                            jAlert("Successfully Deleted");
+                            gvPaging.Refresh();
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+        //}
+    }
+
+    function OnClickSupervisor(CRM_ID, VEND_TYPE, SUPERVISOR, SALESMAN, VERIFY) {
+        $('#hdnsupervisoruniqueid').value = SALESMAN;
+        $('#hdnSalesmanValue').val(SALESMAN);
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("EnquirisSupervisor", "EnquiriesHiererchy")",
+            data: { Unique_ID: CRM_ID, vend_type: VEND_TYPE },
+            success: function (response) {
+
+                pcModalMode.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                pcModalMode.Show();
+
+                if (SUPERVISOR == "True" || SALESMAN == "True" || VERIFY == "True") {
+                    $('#btnSaveSupervisor').hide();
+                }
+                else {
+                    $('#btnSaveSupervisor').Show();
+                }
+            }
+        });
+        //}
+    }
+
+
+    function ShowHistorySaleman(Unique_ID) {
+        $('#hdnsalesmanuniqueid').value = Unique_ID;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("EnquirisSalesmanShowHistory", "EnquiriesHiererchy")",
+            data: { Unique_ID: Unique_ID },
+            success: function (response) {
+
+                pcModalshowhistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                pcModalshowhistory.Show();
+
+
+            }
+        });
+
+
+    }
+
+    function MassDelete(Unique_ID) {
+        //$('#hdnsalesmanuniqueid').value = Unique_ID;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PartialMass", "EnquiriesHiererchy")",
+            success: function (response) {
+
+                pcModalMassDelete.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                pcModalMassDelete.Show();
+            }
+        });
+    }
+    // Mantis Issue 24748
+    function BulkAssign() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PartialBulk", "EnquiriesHiererchy")",
+            success: function (response) {
+
+                pcModalBulkAssign.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                pcModalBulkAssign.Show();
+            }
+        });
+    }
+    function AssIndustry_SelectedIndexChanged(s, e) {
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("SetAssindustryID", "EnquiriesHiererchy")",
+            data: { Assindustry: s.GetText() },
+            success: function (response) {
+                gvEnqBulkAssign.Refresh();
+            }
+
+        });
+
+    }
+
+    function PriorIndustry_SelectedIndexChanged(s, e) {
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("SetAssindustryID", "EnquiriesHiererchy")",
+            data: { Assindustry: s.GetText() },
+        success: function (response) {
+            gvEnqSetPriority.Refresh();
+        }
+
+    });
+
+    }
+
+    function SetPriority() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PartialPriority", "EnquiriesHiererchy")",
+            success: function (response) {
+
+                pcModalSetPriority.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                pcModalSetPriority.Show();
+            }
+        });
+    }
+    // End of Mantis Issue 24748
+    function OnClickSalesman(CRM_ID, SUPERVISOR, SALESMAN, VERIFY, SOURCE, INDUSTRY, MISC_COMMENTS, PRIORITYS, EXIST_CUST) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("EnquirisSalesman", "EnquiriesHiererchy")",
+            data: { Unique_ID: CRM_ID, SOURCE: SOURCE, INDUSTRY: INDUSTRY, MISC_COMMENTS: MISC_COMMENTS, PRIORITYS: PRIORITYS, EXIST_CUST: EXIST_CUST },
+            success: function (response) {
+                pcModalSalesman.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                pcModalSalesman.Show();
+                //Rev 1.0
+                // Mantis Issue 24926
+                //cmbSalesman.SetEnabled(false);
+                // End of Mantis Issue 24926
+                //End of Rev 1.0
+                // Mantis Issue 24926
+                //if (SUPERVISOR == "True" || SALESMAN == "True" || VERIFY == "True") {
+                if (SUPERVISOR == "True" || VERIFY == "True") {
+                    // End of Mantis Issue 24926
+                    $('#btnSaveSalesman').hide();
+                }
+                else {
+                    $('#btnSaveSalesman').show();
+                }
+            }
+        });
+    }
+
+
+    function OnClickVerify(CRM_ID) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("EnquirisVerified", "EnquiriesHiererchy")",
+            data: { Unique_ID: CRM_ID },
+            success: function (response) {
+
+                pcModalVerify.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                pcModalVerify.Show();
+                //Rev 1.0
+                cmbVerifiedBy.SetEnabled(false);
+                //End of Rev 1.0
+            }
+        });
+    }
+
+    function ChnageNextDate() {
+
+        //if (dt_LastContact.GetDate()) {
+        //    dt_NextContact.SetMinDate(new Date(dt_LastContact.GetDate()));
+        //}
+
+        var v_date = new Date();
+        v_date = dt_LastContact.GetDate();
+        v_date.setDate(v_date.getDate() + 1)
+
+        if (dt_LastContact.GetDate()) {
+            dt_NextContact.SetMinDate(new Date(v_date));
+            dt_NextContact.SetDate(new Date(v_date));
+        }
+    }
+    function Chnageverifiedon() {
+
+        var v_date = new Date();
+        v_date = dt_verifiedon.GetDate();
+        v_date.setDate(v_date.getDate())
+
+        if (dt_verifiedon.GetDate()) {
+            dt_closuredate.SetMaxDate(new Date(v_date));
+            dt_closuredate.SetDate(new Date(v_date));
+        }
+    }
+
+    function Chnageclosuredate() {
+
+        //var v_date = new Date();
+        //v_date = dt_closuredate.GetDate();
+        //v_date.setDate(v_date.getDate() - 1)
+
+        //if (dt_closuredate.GetDate()) {
+        //    dt_closuredate.SetDate(new Date(v_date));
+        //}
+    }
+
+    function OnClickCloseEnquiry(CRM_ID, CLOSE_ORDER, REOPEN_FEEDBACK, ASSIGNEDSALESMAN, SETPRIORITY) {
+
+        if (ASSIGNEDSALESMAN != '' && SETPRIORITY != '') {
+            if (CLOSE_ORDER == 'Pending' || REOPEN_FEEDBACK!='' ) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("CloseEnquiry", "EnquiriesHiererchy")",
+                        data: { Unique_ID: CRM_ID},
+                    success: function (response) {
+
+                        pcModalCloseEnquiry.SetContentHtml(response);
+                        MVCxClientUtils.FinalizeCallback();
+                        pcModalCloseEnquiry.Show();
+                    }
+                });
+            }
+            else {
+                jAlert("Enquiry Already Closed");
+            }
+        }
+        else {
+            if (ASSIGNEDSALESMAN == '') {
+                jAlert("Salesman not Assigned");
+            }
+            else if (SETPRIORITY=='') {
+                jAlert("Priority not Set");
+            }
+        }
+        
+    }
+
+    function OnClickReopenEnquiry(CRM_ID, CLOSE_ORDER, REOPEN_FEEDBACK, ASSIGNEDSALESMAN, SETPRIORITY) {
+        if (ASSIGNEDSALESMAN != '' && SETPRIORITY != '') {
+            if (CLOSE_ORDER != 'Pending' && REOPEN_FEEDBACK == '') {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("ReopenEnquiry", "EnquiriesHiererchy")",
+                        data: { Unique_ID: CRM_ID},
+                    success: function (response) {
+
+                        pcModalReopenEnquiry.SetContentHtml(response);
+                        MVCxClientUtils.FinalizeCallback();
+                        pcModalReopenEnquiry.Show();
+                    }
+                });
+            }
+            else {
+                jAlert("Enquiry Already Open");
+            }
+        }
+        else {
+            if (ASSIGNEDSALESMAN == '') {
+                jAlert("Salesman not Assigned");
+            }
+            else if (SETPRIORITY == '') {
+                jAlert("Priority not Set");
+            }
+        }
+        
+    }
+  
+    function Show() {
+        is_pageload = "1";
+        isshowclicked = "1";
+        gvPaging.Refresh();
+
+    }
+    function OnStartCallback(s, e) {
+        //var dateObj = new Date(frm_dt.GetDate());
+        //var day = dateObj.getDate();       // yields date
+        //var month = dateObj.getMonth() + 1;    // yields month (add one as '.getMonth()' is zero indexed)
+        //var year = dateObj.getFullYear();
+        //var hour = 0;
+        //var minute = 0;
+        //var second = 0;
+
+        //var time = month + "/" + day + "/" + year + " " + hour + ':' + minute + ':' + second;
+
+        //e.customArgs["EnquiriesFrom"] = cmbEnqFrom.GetText();
+        //e.customArgs["FromDate"] = time;
+
+
+        //var dateObj = new Date(to_dt.GetDate());
+        //var day = dateObj.getDate();       // yields date
+        //var month = dateObj.getMonth() + 1;    // yields month (add one as '.getMonth()' is zero indexed)
+        //var year = dateObj
+        //    .getFullYear();
+
+        //var time = month + "/" + day + "/" + year + " " + hour + ':' + minute + ':' + second;
+
+        //e.customArgs["ToDate"] = time;
+        //e.customArgs["is_pageload"] = is_pageload;
+
+
+        e.customArgs["EnquiriesFrom"] = $("#cmbEnqFrom_I").val();// cmbEnqFrom.GetText();
+        e.customArgs["FromDate"] = frm_dt.GetText();
+        e.customArgs["ToDate"] = to_dt.GetText();
+        e.customArgs["is_pageload"] = is_pageload;
+        e.customArgs["isshowclicked"] = isshowclicked;
+    }
+    function OnStartShowHistoryCallback(s, e) {
+        $('#hdnsalesmanuniqueid').value;
+        e.customArgs["Unique_ID"] = $('#hdnsalesmanuniqueid').val();
+    }
+    function DateValidateFrom() {
+        if (to_dt.GetDate()) {
+            if (to_dt.GetDate() < frm_dt.GetDate()) {
+                to_dt.SetValue(frm_dt.GetDate());
+            }
+        }
+    }
+    function DateValidateTo() {
+        if (frm_dt.GetDate()) {
+            if (to_dt.GetDate() < frm_dt.GetDate()) {
+                to_dt.SetValue(frm_dt.GetDate());
+            }
+        }
+    }
+
+    function OKSaved() {
+        var _supervisorheader = {
+
+            Unique_ID: $('#hdnsupervisoruniqueid').val(),
+            source: $('#idSource').val(),
+            IndustryId: cmbIndustry.GetValue(),
+            Misc_comments: $('#idMiscComments').val(),
+            enq_priorityID: cmbPriority.GetValue(),
+            checkedcustomer: cmbExistCust.GetValue()
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/EnquiriesHiererchy/SupervisorApply",
+            data: "{supervisorapply:" + JSON.stringify(_supervisorheader) + "}",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response.response_msg == "Success") {
+                    pcModalMode.Hide();
+                    jAlert("Saved Successfully", "Alert", function () {
+                        gvPaging.Refresh();
+
+                    });
+                }
+                else {
+                    jAlert(response.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+    function Cancel() {
+        pcModalMode.Hide();
+    }
+
+    function OKSalesman() {
+        if (SalesmanvalidateForm()) {
+            OKSavedSaleman();
+        }
+    }
+
+    function SalesmanvalidateForm() {
+        var x = true;
+
+        var applicbl_dt_LastContact = dt_LastContact.GetDate();
+        if (applicbl_dt_LastContact == "" || applicbl_dt_LastContact == null) {
+            $("#Mandatoryfrm_dt_LastContact").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryfrm_dt_LastContact").hide();
+        }
+
+        var applicbl_dt_NextContact = dt_NextContact.GetDate();
+        if (applicbl_dt_NextContact == "" || applicbl_dt_NextContact == null) {
+            $("#Mandatoryfrm_dt_NextContact").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryfrm_dt_NextContact").hide();
+        }
+
+
+        if (x == false) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+
+    function OKSavedSaleman() {
+        var _salesmanheader = {
+
+            Unique_ID: $('#hdnsalesmanuniqueid').val(),
+            enq_prodreq: $('#idproductrequired').val(),
+            feedback: $('#idfeedback').val(),
+            Final_IndustryId: cmbFinalIndustry.GetValue(),
+            usefullid: cmbActivities.GetValue(),
+            last_contactdate: dt_LastContact.GetDate(),
+            next_contactdate: dt_NextContact.GetDate(),
+            Contractedby: cmbSalesman.GetValue()
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/EnquiriesHiererchy/SalemanApply",
+            data: "{salesmanapply:" + JSON.stringify(_salesmanheader) + "}",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response.response_msg == "Success") {
+                    pcModalSalesman.Hide();
+                    jAlert("Saved Successfully", "Alert", function () {
+                        gvPaging.Refresh();
+                    });
+                }
+                else {
+                    jAlert(response.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+    function CancelSaleman() {
+        pcModalSalesman.Hide();
+    }
+
+    function OKVerify() {
+        if (VerifyvalidateForm()) {
+            OKSavedVerify();
+        }
+    }
+
+
+    function VerifyvalidateForm() {
+        var x = true;
+
+        var applicbl_cmbVerifiedBy = cmbVerifiedBy.GetValue();
+        if (applicbl_cmbVerifiedBy == "" || applicbl_cmbVerifiedBy == null) {
+            $("#Mandatoryfrm_cmbVerifiedBy").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryfrm_cmbVerifiedBy").hide();
+        }
+
+        var applicbl_dt_verifiedon = dt_verifiedon.GetDate();
+        if (applicbl_dt_verifiedon == "" || applicbl_dt_verifiedon == null) {
+            $("#Mandatoryfrm_dt_verifiedon").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryfrm_dt_verifiedon").hide();
+        }
+
+        var applicbl_dt_closuredate = dt_closuredate.GetDate();
+        if (applicbl_dt_closuredate == "" || applicbl_dt_closuredate == null) {
+            $("#Mandatoryfrm_dt_closuredate").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryfrm_dt_closuredate").hide();
+        }
+
+
+
+        if (x == false) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+    function OKSavedVerify() {
+
+        var _verifyheader = {
+
+            Unique_ID: $('#hdnVerifyuniqueid').val(),
+            verify_by: cmbVerifiedBy.GetValue(),
+            verified_on: dt_verifiedon.GetDate(),
+            closure_date: dt_closuredate.GetDate()
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/EnquiriesHiererchy/VerifyApply",
+            data: "{verifyapply:" + JSON.stringify(_verifyheader) + "}",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response.response_msg == "Success") {
+                    pcModalVerify.Hide();
+                    jAlert("Saved Successfully", "Alert", function () {
+                        gvPaging.Refresh();
+                    });
+                }
+                else {
+                    jAlert(response.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+    function CancelVerify() {
+        pcModalVerify.Hide();
+    }
+
+    // Mantis Issue 24748
+    function SaveAssignedSalesman() {
+        if (cmbAssignedSalesman.GetValue() != 0) {
+            var _AssignedSalesman = {
+                selectedEnquirisList: $('#hdnselectedEnquirisList').val(),
+                AssignedSalesmanId: cmbAssignedSalesman.GetValue(),
+                AssignedSaleRemarks: $('#idAssignedSaleRemarks').val(),
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/EnquiriesHiererchy/SaveAssignedSalesman",
+                data: "{AssignedSalesman:" + JSON.stringify(_AssignedSalesman) + "}",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.response_msg == "Success") {
+                        pcModalBulkAssignSalesmanSelect.Hide();
+                        jAlert("Salesman Assigned Successfully", "Alert", function () {
+                            gvPaging.Refresh();
+
+                        });
+                    }
+                    else {
+                        jAlert(response.response_msg);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+        else {
+            jAlert("Please select Salesman");
+        }
+
+    }
+    function CancelAssignedSalesman() {
+        pcModalBulkAssignSalesmanSelect.Hide();
+    }
+
+
+    function SaveCloseReason() {
+        if ($('input[name=orstatus]:checked').val()!=undefined )
+        {
+            if ($('input[name=orstatus]:checked').val() == '2' && cmbCloseReason.GetValue() == 0) {
+                jAlert("Select Close Reason");
+            }
+            else if ($('input[name=orstatus]:checked').val() == '1' && $('#idCloseQty').val()==0) {
+                jAlert("Enter Close Qty");
+            }
+            else if ($('#idCloseReasonRemarks').val() == '') {
+                jAlert("Enter Close Reason");
+            }
+            else {
+                var _CloseReason = {}
+
+                if ($('input[name=orstatus]:checked').val() == '1') {  // Order Won
+                    _CloseReason = {
+                        selectedEnquirisList: $('#hdnselectedEnquirisList').val(),
+                        CloseOrder: $('input[name=orstatus]:checked').val(),
+                        CloseReasonId: 0,
+                        CloseQty: $('#idCloseQty').val(),
+                        CloseReasonRemarks: $('#idCloseReasonRemarks').val()
+                    }
+                }
+                else {  // Order Lost
+                    _CloseReason = {
+                        selectedEnquirisList: $('#hdnselectedEnquirisList').val(),
+                        CloseOrder: $('input[name=orstatus]:checked').val(),
+                        CloseReasonId: cmbCloseReason.GetValue(),
+                        CloseQty: 0,
+                        CloseReasonRemarks: $('#idCloseReasonRemarks').val()
+                    }
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/EnquiriesHiererchy/SaveCloseReason",
+                    data: "{CloseReason:" + JSON.stringify(_CloseReason) + "}",
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        if (response.response_msg == "Success") {
+                            pcModalCloseEnquiry.Hide();
+                            jAlert("Enquiry Closed Successfully", "Alert", function () {
+                                gvPaging.Refresh();
+
+                            });
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+            
+        }
+        else {
+           jAlert("Select Order Status (Won / Lost)");
+        }
+
+    }
+    function CancelCloseReason() {
+        pcModalCloseEnquiry.Hide();
+    }
+
+
+
+    function SaveReopenEnquiry() {
+        if ($('#idReopenFeedback').val() != '') {
+            var _ReopenEnquiry = {
+                    selectedEnquirisList: $('#hdnselectedEnquirisList').val(),
+                    ReopenFeedback: $('#idReopenFeedback').val()
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/EnquiriesHiererchy/SaveReopenEnquiry",
+                data: "{ReopenEnquiry:" + JSON.stringify(_ReopenEnquiry) + "}",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.response_msg == "Success") {
+                        pcModalReopenEnquiry.Hide();
+                        jAlert("Enquiry Reopened Successfully", "Alert", function () {
+                            gvPaging.Refresh();
+
+                        });
+                    }
+                    else {
+                        jAlert(response.response_msg);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+
+        }
+        else {
+            jAlert("Enter Reopen Feedback");
+        }
+
+    }
+    function CancelReopenEnquiry() {
+        pcModalReopenEnquiry.Hide();
+    }
+    // End of Mantis Issue 24748
+
+    $(function () {
+        $('#ddlExport').on('change', function () {
+            if ($("#ddlExport option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlExport').prop("selectedIndex", 0);
+
+                var url = $('#hdnExportLink').val();
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+    var isshowclicked;
+    $(function () {
+
+        isshowclicked = "0";
+
+
+        if ('@ViewBag.EnqFrom' != "") {
+            is_pageload = "1";
+            gvPaging.Refresh();
+            gvPaging.Refresh();
+
+        }
+    });
+
+
+
+    var globalindexcheck = 0;
+    var cpSelectedKeys = [];
+    var enq_ids = '';
+    function EnqMassDelSelectionChanged(s, e) {
+        if (e.isChangedOnServer) {
+            //return;
+            s.GetSelectedFieldValues("CRM_ID", GetSelectedFieldValuesCallback);
+
+        }
+        else {
+            globalindexcheck = e.visibleIndex;
+            var key = s.GetRowKey(e.visibleIndex);
+            if (e.isSelected) {
+                s.GetRowValues(e.visibleIndex, 'CRM_ID', OnGetRowValues);
+            }
+            else {
+                s.GetRowValues(e.visibleIndex, 'CRM_ID', OnDelGetRowValues);
+
+            }
+        }
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        selectedValues = '';
+
+        for (var i = 0; i < values.length; i++) {
+            if (selectedValues.length == 0) {
+                selectedValues += values[i];
+            }
+            else {
+                selectedValues += '|' + values[i];
+            }
+        }
+        cpSelectedKeys.push(selectedValues);
+        appcode = cpSelectedKeys;
+    }
+    function OnGetRowValues(values) {
+        enq_ids = values;
+        cpSelectedKeys.push(enq_ids);
+        appcode = cpSelectedKeys;
+    }
+    function OnDelGetRowValues(key) {
+        cpSelectedKeys = cpSelectedKeys.filter(function (item) {
+            return item !== key
+        })
+        appcode = appcode.filter(function (item) {
+            return item !== key
+        })
+
+    }
+
+    function MarkasDel() {
+        $.ajax({
+            type: "POST",
+            url: "/EnquiriesHiererchy/EnquiriesMassDelete",
+            data: JSON.stringify({ 'ActionType': 'MASSDELETE', 'Uniqueid': appcode.join('|') }),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response.response_msg == "Success") {
+                    pcModalMassDelete.Hide();
+                    jAlert("Successfully Deleted", "Alert", function () {
+                        cpSelectedKeys = [];
+                        appcode = [];
+                        gvPaging.Refresh();
+                    });
+                }
+                else {
+                    jAlert(response.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+
+    // Mantis Issue 24748
+    var globalindexcheck = 0;
+    var cpSelectedKeys = [];
+    var enq_ids = '';
+    appcodeBulkAssign = [];
+
+    function EnqBulkAssignSelectionChanged(s, e) {
+        if (e.isChangedOnServer) {
+            //return;
+            s.GetSelectedFieldValues("CRM_ID", GetBulkAssignSelectedFieldValuesCallback);
+
+        }
+        else {
+            globalindexcheck = e.visibleIndex;
+            var key = s.GetRowKey(e.visibleIndex);
+            if (e.isSelected) {
+                s.GetRowValues(e.visibleIndex, 'CRM_ID', OnGetBulkAssignRowValues);
+            }
+            else {
+                s.GetRowValues(e.visibleIndex, 'CRM_ID', OnDelGetBulkAssignRowValues);
+
+            }
+        }
+    }
+    function GetBulkAssignSelectedFieldValuesCallback(values) {
+        selectedValues = '';
+
+        for (var i = 0; i < values.length; i++) {
+            if (selectedValues.length == 0) {
+                selectedValues += values[i];
+            }
+            else {
+                selectedValues += '|' + values[i];
+            }
+        }
+        cpSelectedKeys.push(selectedValues);
+        appcodeBulkAssign = cpSelectedKeys;
+    }
+    function OnGetBulkAssignRowValues(values) {
+        enq_ids = values;
+        cpSelectedKeys.push(enq_ids);
+        appcodeBulkAssign = cpSelectedKeys;
+    }
+    function OnDelGetBulkAssignRowValues(key) {
+        cpSelectedKeys = cpSelectedKeys.filter(function (item) {
+            return item !== key
+        })
+        appcodeBulkAssign = appcodeBulkAssign.filter(function (item) {
+            return item !== key
+        })
+
+    }
+
+    function OnClickBulkAssignSalesman() {
+        //$('#hdnsupervisoruniqueid').value = SALESMAN;
+        //$('#hdnSalesmanValue').val(SALESMAN);
+        if (appcodeBulkAssign.join('|').length > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("BulkAssignSalesman", "EnquiriesHiererchy")",
+                data: { ActionType: 'BULKASSIGN', Uniqueid: JSON.stringify(appcodeBulkAssign.join('|')) },
+                success: function (response) {
+
+                    pcModalBulkAssignSalesmanSelect.SetContentHtml(response);
+                    MVCxClientUtils.FinalizeCallback();
+                    pcModalBulkAssign.Hide();
+                    pcModalBulkAssignSalesmanSelect.Show();
+
+                    cpSelectedKeys = [];
+                    appcodeBulkAssign = [];
+
+                    //if (SUPERVISOR == "True" || SALESMAN == "True" || VERIFY == "True") {
+                    //    $('#btnSaveSupervisor').hide();
+                    //}
+                    //else {
+                    //    $('#btnSaveSupervisor').Show();
+                    //}
+                }
+            });
+        }
+        else {
+            jAlert("No Enquiries selected.");
+        }
+
+        //}
+    }
+
+    function OnClickAssignedSalesman(CRM_ID, ASSIGNEDSALESMAN) {
+        if (ASSIGNEDSALESMAN == "") {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("BulkAssignSalesman", "EnquiriesHiererchy")",
+                    data: { ActionType: 'BULKASSIGN', Uniqueid: CRM_ID },
+                success: function (response) {
+
+                    pcModalBulkAssignSalesmanSelect.SetContentHtml(response);
+                    MVCxClientUtils.FinalizeCallback();
+                    // pcModalBulkAssign.Hide();
+                    pcModalBulkAssignSalesmanSelect.Show();
+
+                    cpSelectedKeys = [];
+                    appcodeBulkAssign = [];
+
+                    //if (SUPERVISOR == "True" || SALESMAN == "True" || VERIFY == "True") {
+                    //    $('#btnSaveSupervisor').hide();
+                    //}
+                    //else {
+                    //    $('#btnSaveSupervisor').Show();
+                    //}
+                }
+            });
+        }
+        else {
+            jAlert("Salesman already assigned.");
+        }
+
+    }
+
+
+
+
+    appcodeSetSetPriority = [];
+
+    function EnqSetPrioritySelectionChanged(s, e) {
+        if (e.isChangedOnServer) {
+            //return;
+            s.GetSelectedFieldValues("CRM_ID", GetSetPrioritySelectedFieldValuesCallback);
+
+        }
+        else {
+            globalindexcheck = e.visibleIndex;
+            var key = s.GetRowKey(e.visibleIndex);
+            if (e.isSelected) {
+                s.GetRowValues(e.visibleIndex, 'CRM_ID', OnGetSetPriorityRowValues);
+            }
+            else {
+                s.GetRowValues(e.visibleIndex, 'CRM_ID', OnDelGetSetPriorityRowValues);
+
+            }
+        }
+    }
+    function GetSetPrioritySelectedFieldValuesCallback(values) {
+        selectedValues = '';
+
+        for (var i = 0; i < values.length; i++) {
+            if (selectedValues.length == 0) {
+                selectedValues += values[i];
+            }
+            else {
+                selectedValues += '|' + values[i];
+            }
+        }
+        cpSelectedKeys.push(selectedValues);
+        appcodeSetPriority = cpSelectedKeys;
+    }
+    function OnGetSetPriorityRowValues(values) {
+        enq_ids = values;
+        cpSelectedKeys.push(enq_ids);
+        appcodeSetPriority = cpSelectedKeys;
+    }
+    function OnDelGetSetPriorityRowValues(key) {
+        cpSelectedKeys = cpSelectedKeys.filter(function (item) {
+            return item !== key
+        })
+        appcodeSetPriority = appcodeSetPriority.filter(function (item) {
+            return item !== key
+        })
+
+    }
+
+    function OnClickBulkSetPriority() {
+        //$('#hdnsupervisoruniqueid').value = SALESMAN;
+        //$('#hdnSalesmanValue').val(SALESMAN);
+        if (appcodeSetPriority.join('|').length > 0) {
+
+            $.ajax({
+                type: "POST",
+                url: "/EnquiriesHiererchy/SavePriority",
+                data: "{Uniqueid:" + JSON.stringify(appcodeSetPriority.join('|')) + "}",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response == "Success") {
+                        pcModalSetPriority.Hide();
+                        jAlert("Priority set Successfully", "Alert", function () {
+                            gvPaging.Refresh();
+
+                        });
+                    }
+                    else {
+                        jAlert(response.response_msg);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+    }
+    else {
+            jAlert("No Enquiries selected.");
+    }
+
+    //}
+    }
+    // End of Mantis Issue 24748
+</script>
+@*JS for Scroll bar at the top of grid *@
+@*<script>
+        $(function () {
+            $(".wrapper1").scroll(function () {
+                $(".wrapper2").scrollLeft($(".wrapper1").scrollLeft());
+            });
+            $(".wrapper2").scroll(function () {
+                $(".wrapper1").scrollLeft($(".wrapper2").scrollLeft());
+            });
+        });
+    </script>*@
+@*JS for Scroll bar at the top of grid *@
+
+<style>
+    .padTab {
+        margin-bottom: 4px;
+    }
+
+        .padTab > tbody > tr > td {
+            padding-right: 15px;
+            vertical-align: middle;
+        }
+
+            .padTab > tbody > tr > td > label, .padTab > tbody > tr > td > input[type="button"] {
+                margin-bottom: 0 !important;
+            }
+
+    .dxpc-contentWrapper {
+        background-color: #fff;
+    }
+
+    .pad15 {
+        padding: 15px;
+    }
+
+    .mTop10 {
+        margin-top: 10px;
+    }
+
+    .disableimage {
+        opacity: 0.1;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+
+        .myAssignTarget > li {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 11px;
+            text-align: center;
+        }
+
+            .myAssignTarget > li:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            .myAssignTarget > li.mainCircle {
+                border: 1px solid #a2d3d8;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .myAssignTarget > li .heading {
+                padding: 2px 12px;
+                background: #6d82c5;
+                color: #fff;
+            }
+
+            .myAssignTarget > li .Num {
+                font-size: 14px;
+            }
+
+            .myAssignTarget > li.mainHeadCenter {
+                font-size: 12px;
+                transform: translateY(-16px);
+            }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+
+
+
+    /*.wrapper1, .wrapper2 {
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }*/
+</style>
+@*CSS for Scroll bar at the top of grid *@
+@*<style>
+        .wrapper1 {
+            width: 100%;
+            border: none 0px RED;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            height: 20px;
+            min-height: 0px !important;
+        }
+
+        .wrapper2 {
+            width: 100%;
+            border: none 0px RED;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            height: auto;
+        }
+
+        .div1 {
+            width: 3500px;
+            height: 20px;
+        }
+
+        .div2 {
+            width: 3500px;
+            height: auto;
+            overflow: auto;
+        }
+
+        .GridViewArea {
+            width: 100%;
+            overflow: auto;
+        }
+    </style>*@
+@*CSS for Scroll bar at the top of grid *@
+<script>
+    function gridRowclick(s, e) {
+        $('#gvPaging').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gvPaging.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gvPaging.SetWidth(cntWidth);
+            }
+
+        });
+        
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gvPaging.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gvPaging.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gvPaging.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gvPaging.SetWidth(cntWidth);
+            }
+
+        });
+        
+    });
+    function getTargetSalesman() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetTargetSalesmanlist", "Enquiries")",
+            data: {},
+        success: function (response) {
+            console.log(response);
+            var d = "";
+            for (let i = 0; i < response.length; i++) {
+                d += "<option data-tokens='" + response[i].name + "' value='" + response[i].id + "'>" + response[i].name + "</option>";
+            }
+             
+            $("#slectSalesman2").html(d).selectpicker('refresh');
+           
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+    }
+
+    function getTargetSalesmanHierarchy() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetTargetSalesmanlistH", "Enquiries")",
+            data: {},
+        success: function (response) {
+            console.log(response);
+            var d = "";
+            for (let i = 0; i < response.length; i++) {
+                d += "<option data-tokens='" + response[i].name + "' value='" + response[i].id + "'>" + response[i].name + "</option>";
+            }
+             
+            $("#slectSalesman2N").html(d).selectpicker('refresh');
+           
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+    }
+    function getProductClass() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetProductClass", "Enquiries")",
+            data: {},
+        success: function (response) {
+            console.log(response);
+            var d = "";
+            for (let i = 0; i < response.length; i++) {
+                d += "<option data-tokens='" + response[i].ProductClass_Name + "' value='" + response[i].ProductClass_ID + "'>" + response[i].ProductClass_Name + "</option>";
+            }
+            $("#slectProductClass, #slectProductClassN").html(d).selectpicker('refresh');
+
+
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+    }
+    $(document).ready(function () {
+        getSalesman()
+        // Mantis Issue 24835
+        getProductClass()
+        getTargetSalesman()
+        getTargetSalesmanHierarchy()
+        // End of Mantis Issue 24835
+    })
+    function ViewTargetAn() {
+        $("#TargetVsAchieved").modal('show')
+    }
+    function onChartDataN() {
+        var SalesmanId = $("#slectSalesman2N").val();
+        var month = $("#slectMonthN").val()
+        var productclass = $("#slectProductClassN").val().join();
+        var ConsiderReturn = $("#ConsiderReturn").prop('checked');
+
+        if(SalesmanId == "0"  || month == "0" ){
+            alert("You must select all the Fields")
+            return;
+        }
+        getChartN(SalesmanId, month, productclass, ConsiderReturn)
+    }
+    function getChartN(SalesmanId, month, productclass, ConsiderReturn) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetChartNewHirarchy", "Enquiries")",
+            data: { "SalesmanId": SalesmanId, "Month": month, "ProductClass": productclass, "ConsiderReturn": ConsiderReturn },
+        success: function (response) {
+            
+            var data = response;
+                
+            //chart.dispose();
+            if(response.length == 0) {
+                $("#TargetVsAchived").html("<p>No Data to Display</p>")
+                    .css({
+                        "display": "flex",
+                        "align-items": "center",
+                        "justify-content": "center"
+                    });
+            }
+            if(response.length > 0) {
+                $("#TargetVsAchived").css({
+                    "display": "block",
+                });
+                //var temp=[];
+                //for (var [key, value] of Object.entries(data)) {
+                //            var obj={ "Title": key, "value": value };
+                //    temp.push(obj)
+                //}
+                GenStackedChart(data)
+                
+            }
+
+            
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+    }
+    
+
+    function GenStackedChart(data) {
+        var dataLength = data.length;
+        console.log("length", dataLength)
+        if(dataLength > 0 && dataLength < 4){
+            $("#TargetVsAchived").css({"height": "300px"})
+        }
+        else if(dataLength > 3 && dataLength < 7){
+            $("#TargetVsAchived").css({"height": "400px"})
+        }
+        else if(dataLength > 6  && dataLength <16){
+            $("#TargetVsAchived").css({"height": "900px"})
+        }else if(dataLength > 16 && dataLength < 22){
+            $("#TargetVsAchived").css({"height": "1500px"})
+        }else if(dataLength > 22 && dataLength < 28){
+            $("#TargetVsAchived").css({"height": "1900px"})
+        }else if(dataLength > 28){
+            $("#TargetVsAchived").css({"height": "2300px"})
+        }
+        am4core.ready(function() {
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            // Create chart instance
+            var chart = am4core.create("TargetVsAchived", am4charts.XYChart);
+            //chart.scrollbarY = new am4core.Scrollbar();
+            // Add data
+            chart.data = data;
+            chart.colors.list = [
+              am4core.color("#00B050"),
+              am4core.color("#FFC000"),
+              am4core.color("#00B050"),
+              am4core.color("#FFC000"),
+              am4core.color("#00B050"),
+              am4core.color("#FFC000"),
+            ];
+            // Create axes
+            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "ProductClass_Name";
+            categoryAxis.numberFormatter.numberFormat = "#";
+            categoryAxis.renderer.inversed = true;
+            
+            categoryAxis.renderer.cellStartLocation = 0.1;
+            categoryAxis.renderer.cellEndLocation = 0.9;
+
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.line.strokeOpacity = 1;
+            categoryAxis.renderer.minGridDistance = 30;
+
+            categoryAxis.title.text = "PRODUCT CLASS ";
+            categoryAxis.title.fontWeight = 700;
+            categoryAxis.title.fontSize = 15;
+            var  valueAxis = chart.xAxes.push(new am4charts.ValueAxis()); 
+            valueAxis.renderer.opposite = true;
+            //valueAxis.renderer.inside = true;
+            // Create series
+            function createSeries(field, name) {
+                var series = chart.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueX = field;
+                series.dataFields.categoryY = "ProductClass_Name";
+                series.name = name;
+                series.columns.template.tooltipText = "{name}: [bold]{valueX}[/]";
+                series.columns.template.height = am4core.percent(70);
+                series.columns.template.maxWidth = am4core.percent(70)
+                series.sequencedInterpolation = true;
+
+                var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+                valueLabel.label.text = "{valueX}";
+                valueLabel.label.horizontalCenter = "left";
+                valueLabel.label.dx = 10;
+                valueLabel.label.hideOversized = false;
+                valueLabel.label.truncate = false;
+
+                var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
+                categoryLabel.label.text = "{name}";
+                categoryLabel.label.horizontalCenter = "right";
+                categoryLabel.label.dx = -10;
+                categoryLabel.label.fill = am4core.color("#fff");
+                categoryLabel.label.hideOversized = false;
+                categoryLabel.label.truncate = false;
+            }
+
+            
+            createSeries("Achieved", "Achieved");
+            createSeries("Target", "Target");
+            chart.legend = new am4charts.Legend();
+            
+        }); // end am4core.ready()
+    }
+</script>
+<script>
+    function handleClick(myRadio) {
+        $('input[name=orstatus]:radio').change(function () {
+
+            var seletedItem = $('input[name=orstatus]:checked').val();
+
+            if (seletedItem == 1) {
+                $("#rsDiv").css({ 'display': 'none' });
+                $("#qtyDiv").css({ 'display': 'block' });
+
+            } else {
+                $("#qtyDiv").css({ 'display': 'none' });
+                $("#rsDiv").css({ 'display': 'block' });
+            }
+        })
+    }
+    //susanta chart 29-03-2022
+    function getSalesman() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetSalesmanlistH", "Enquiries")",
+            data: {},
+        success: function (response) {
+            console.log(response);
+            var d = "";
+            for (let i = 0; i < response.length; i++) {
+                d += "<option data-tokens='" + response[i].name + "' value='" + response[i].id + "'>" + response[i].name + "</option>";
+            }
+            $("#slectSalesman, #slectSalesmanO").html(d).selectpicker('refresh');
+
+
+        },
+        error: function (response) {
+            console.log(response); 
+        }
+    });
+    }
+    function ViewCharts() {
+        $("#SalesmanAnalytics").modal('show')
+    }
+    function onChartData() {
+        var SalesmanId = $("#slectSalesman").val();
+        console.log(SalesmanId)
+        getChart(SalesmanId)
+    }
+    function getChart(id) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetChartOne", "Enquiries")",
+            data: { "id": id, "ACTION_TYPE": "ClosureOfEnquiries" },
+            success: function (response) {
+                console.log("GetChartOne", response);
+                var withColor = response.map(function (item) {
+                    var element = {};
+                    if (item.title == "Won") {
+                        element.title = item.title,
+                        element.value = item.value,
+                        element.color = "#53d593"
+                    } else if (item.title == "Lost") {
+                        element.title = item.title,
+                        element.value = item.value,
+                        element.color = "#f94b4b"
+                    } else if (item.title == "Pending") {
+                        element.title = item.title,
+                        element.value = item.value,
+                        element.color = "#e9d335"
+                    }
+                    return element
+                })
+                console.log("withColor", withColor)
+                GenchartClosure(withColor)
+            },
+            error: function (response) {
+                console.log(response); 
+            }
+        });
+        //lost reason
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetChartTwo", "Enquiries")",
+            data: { "id": id, "ACTION_TYPE": "LostReason" },
+        success: function (response) {
+            console.log("GetChartTwo", response);
+            var result = response.filter(function (e) {
+                return e.value != '0'
+            });
+            console.log(result)
+            GenchartLostReason(result)
+        },
+        error: function (response) {
+            console.log(response); 
+        }
+        });
+    }
+    function GenchartLostReason(data) {
+        am4core.useTheme(am4themes_animated);
+        var chart = am4core.create("chartdiv2", am4charts.PieChart);
+        chart.hideCredits = true;
+        chart.data = data;
+        var series = chart.series.push(new am4charts.PieSeries());
+        series.dataFields.value = "value";
+        series.dataFields.category = "title";
+        // this creates initial animation
+        series.hiddenState.properties.opacity = 1;
+        series.hiddenState.properties.endAngle = -90;
+        series.hiddenState.properties.startAngle = -90;
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "right"
+
+
+    }
+    function GenchartClosure(data) {
+
+        $("#chartdiv").html("");
+        am4core.useTheme(am4themes_animated);
+        var chart = am4core.create("chartdiv", am4charts.PieChart);
+        chart.data = data;
+        var pieSeries = chart.series.push(new am4charts.PieSeries());
+        pieSeries.dataFields.value = "value";
+        pieSeries.dataFields.category = "title";
+        pieSeries.slices.template.propertyFields.fill = "color";
+        // this creates initial animation
+        pieSeries.hiddenState.properties.opacity = 1;
+        pieSeries.hiddenState.properties.endAngle = -90;
+        pieSeries.hiddenState.properties.startAngle = -90;
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "right";
+
+    }
+    $(document).ready(function () {
+        getSalesman()
+    })
+
+    function ViewChartO() {
+        $("#AnalyticsO").modal('show')
+    }
+    function chartO() {
+        var SalesmanId = $("#slectSalesmanO").val();
+        var month = $("#slectMonthNO").val()
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetChartBar", "Enquiries")",
+            data: { "id": SalesmanId, "ACTION_TYPE": "TotalEnqVSOrderWON" , "Month":  month},
+        success: function (response) {
+
+            var data = response[0];
+
+            var temp=[];
+            for (const [key, value] of Object.entries(data)) {
+               if(key =="TOTAL_WON") {
+                var obj={ "Title": "WON", "value": value };
+    }else{
+                                var obj={ "Title": key, "value": value };
+    }
+    temp.push(obj)
+    }
+
+
+    GenchartBar(temp)
+    },
+    error: function (response) {
+        console.log(response);
+    }
+    });
+    }
+    function GenchartBar(data) {
+        am4core.ready(function () {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            // Create chart instance
+            var chart = am4core.create("chartBar", am4charts.XYChart);
+            chart.scrollbarX = new am4core.Scrollbar();
+
+            // Add data
+            chart.data = data;
+
+            // Create axes
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "Title";
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.minGridDistance = 30;
+            //categoryAxis.renderer.labels.template.horizontalCenter = "right";
+            // categoryAxis.renderer.labels.template.verticalCenter = "middle";
+            //categoryAxis.renderer.labels.template.rotation = 270;
+            categoryAxis.tooltip.disabled = true;
+            categoryAxis.renderer.minHeight = 110;
+
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.renderer.minWidth = 50;
+            valueAxis.maxPrecision = 0;
+            // Create series
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.sequencedInterpolation = true;
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "Title";
+            series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+            series.columns.template.strokeWidth = 0;
+
+            series.tooltip.pointerOrientation = "vertical";
+
+            series.columns.template.column.cornerRadiusTopLeft = 10;
+            series.columns.template.column.cornerRadiusTopRight = 10;
+            series.columns.template.column.fillOpacity = 0.8;
+
+            // on hover, make corner radiuses bigger
+            var hoverState = series.columns.template.column.states.create("hover");
+            hoverState.properties.cornerRadiusTopLeft = 0;
+            hoverState.properties.cornerRadiusTopRight = 0;
+            hoverState.properties.fillOpacity = 1;
+
+            series.columns.template.adapter.add("fill", function (fill, target) {
+                return chart.colors.getIndex(target.dataItem.index);
+            });
+            // Cursor
+            chart.cursor = new am4charts.XYCursor();
+            chart.colors.list = [
+              am4core.color("#3186ef"),
+              am4core.color("#25c46f"),
+            ];
+        }); // end am4core.ready()
+    }
+</script>
+<style>
+    #TargetVsAchieved .modal-dialog {
+        margin-top: 0px !important;
+    } 
+    #slectSalesman2N + .btn.dropdown-toggle {
+        width: 190px;
+        overflow: hidden;
+    }
+
+    #slectMonthN + .btn.dropdown-toggle {
+        width: 146px;
+        overflow: hidden;
+    }
+
+    #slectProductClassN + .btn.dropdown-toggle {
+        width: 146px;
+        overflow: hidden;
+    }
+    #SalesmanAnalytics .modal-dialog {
+        margin-top: 0;
+    }
+
+    .chartTab.nav-tabs > li a {
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #ddd;
+    }
+
+        .chartTab.nav-tabs > li a:hover {
+            background-color: transparent !important;
+            border: none;
+            color: #7e7b7b;
+        }
+    .pdSpace > tbody > tr > td {
+        padding-right: 8px;
+    }
+
+    .pdSpace2 > tbody > tr > td {
+        padding-right: 8px;
+    }
+
+    table.pdSpace {
+        width: 100%;
+    }
+
+    .dropdown.genSelect {
+        width: 100% !important;
+    }
+    .chartTab.nav-tabs > li.active > a, .chartTab.nav-tabs > li.active > a:hover, .chartTab.nav-tabs > li.active > a:focus {
+        border: none;
+        color: #1477bd;
+        cursor: default;
+        background-color: transparent !important;
+        border-bottom: 2px solid #1477bd;
+        border-bottom-color: #1477bd;
+    }
+
+    .bootstrap-select .dropdown-menu > li > a:hover,
+    .bootstrap-select .dropdown-menu > li > a:focus,
+    .bootstrap-select .dropdown-menu > li > a:active {
+        background: #1f7ddf;
+        color: #fff;
+        outline: none;
+    }
+
+    .pdSpace > tbody > tr > td {
+        padding-right: 8px;
+    }
+</style>
+<input type="hidden" value="@Url.Action("ExportEnquiriesList", "EnquiriesHiererchy", new { type = "_type_" })" id="hdnExportLink" />
+
+<div class="modal fade pmsModal " id="AnalyticsO" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Enq Target Vs Won</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="pdSpace2">
+                            <tr>
+                                <td><b>Select Salesman</b></td>
+                                <td><select class="selectpicker" data-live-search="true" id="slectSalesmanO" data-size="8"></select></td>
+                                <td><b>Month (Current FY) <span class="red">*</span></b></td>
+                                <td>
+                                    <select class="selectpicker genSelect" data-live-search="true" id="slectMonthNO" data-size="8" onchange="getBudget();">
+                                        <option value="0">Select</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                    </select>
+                                </td>
+                                <td><button type="button" class="btn btn-success" onclick="chartO()">Refresh</button></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="clear"></div>
+                <div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs chartTab" role="tablist">
+                        <li role="presentation" class="active"><a href="#BarCHO" aria-controls="BarCH" role="tab" data-toggle="tab">New Enq Target Vs Won</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="BarCHO">
+                            <div class="row">
+                                <div class="col-md-12"><div id="chartBar" style="min-height:60vh"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Target Opportunities</h3>
+    </div>
+    <input type="hidden" id="hdnSalesmanValue" value="" />
+    
+    <table class="padTab">
+        <tr>
+            <td><label>From Date</label></td>
+            <td>
+                <div>
+                    @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+
+                                                settings.Name = "frm_dt";
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateFrom";
+                                                if (ViewBag.Fromdate == "" || ViewBag.Fromdate == null)
+                                                {
+                                                    settings.Date = DateTime.Now;
+                                                }
+                                                else
+                                                {
+                                                    settings.Date = DateTime.ParseExact(ViewBag.Fromdate, "dd-MM-yyyy",
+                                   System.Globalization.CultureInfo.InvariantCulture); ;
+                                                }
+                                            }
+                                ).GetHtml()
+                </div>
+            </td>
+            <td><label>To Date</label></td>
+            <td>
+                <div>
+                    @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "to_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateTo";
+
+                                if (ViewBag.Todate == "" || ViewBag.Todate == null)
+                                {
+                                    settings.Date = DateTime.Now;
+                                }
+                                else
+                                {
+                                    settings.Date = DateTime.ParseExact(ViewBag.Todate, "dd'-'MM'-'yyyy",
+                                   System.Globalization.CultureInfo.InvariantCulture); ;
+                                }
+
+
+                            }
+                ).GetHtml()
+                </div>
+            </td>
+            <td><label>Enquiry From</label></td>
+            <td>
+                <div>
+                    @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbEnqFrom";
+                        settings.Properties.TextField = "EnqName";
+                        settings.Properties.ValueField = "EnqId";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(int);
+
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (ViewBag.EnqFrom != "")
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Text = ViewBag.EnqFrom;
+                            }
+
+                        };
+
+                    }).BindList(Model.enqfrom).GetHtml()
+                </div>
+            </td>
+            <td>
+                <a href="javascript:void(0);" onclick="Show()" class="btn btn-primary"><span>Show</span> </a>
+                @if (Model.UserRightsForPage.CanExport)
+                {
+                    <select name="ddlExport" class="btn btn-sm btn-primary" onchange="Exportclick()" id="ddlExport">
+                        <option value="0">Export to</option>
+                        <option value="1">PDF</option>
+                        <option value="4">RTF</option>
+                        <option value="2">XLSX</option>
+                        <option value="3">XLS</option>
+                        <option value="5">CSV</option>
+                    </select>
+                }
+                
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="modal fade pmsModal " id="TargetVsAchieved" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Target Vs Achieved Analytics</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="pdSpace">
+                            <tr>
+
+                                <td>
+                                    <b>Salesman <span class="red">*</span></b>
+                                    <select class="selectpicker genSelect" data-live-search="true" id="slectSalesman2N" data-size="8" ></select>
+                                </td>
+
+                                <td>
+                                    <b>Month (Current FY) <span class="red">*</span></b>
+                                    <select class="selectpicker genSelect" data-live-search="true" id="slectMonthN" data-size="8" >
+                                        <option value="0">Select</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                    </select>
+
+                                <td></td>
+                                <td>
+                                    <b>Product Class </b>
+                                    <select class="selectpicker genSelect" data-live-search="true" id="slectProductClassN" data-size="8" multiple data-actions-box="true"></select>
+                                </td>
+                                <td style="width: 150px;"><input type="checkbox" name="ConsiderReturn" id="ConsiderReturn" style="margin-right: 8px; margin-top: 13px;" /> <span>Consider Return</span> </td>
+                                <td><button type="button" class="btn btn-success" style="margin-top: 16px;" onclick="onChartDataN()">Refresh</button></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="clear"></div>
+                <div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs chartTab" role="tablist">
+                        <li role="presentation" class="active"><a href="#" aria-controls="home" role="tab" data-toggle="tab">Target Vs Achieved Salesmanwise</a></li>
+
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div style="height: 600px; overflow-y: auto; width: 99%;">
+                                        <div id="TargetVsAchived" style="min-height:60vh"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form_main">
+    <div class="clearfix">
+        @*@if (Model.UserRightsForPage.CanAdd)
+        {*@
+            <a href="javascript:void(0);" onclick="AddFormula()" class="btn btn-success"><span>Add New</span> </a>
+        @*}
+        @if (Model.UserRightsForPage.CanDelete)
+        {*@
+            <a href="javascript:void(0);" onclick="MassDelete()" class="btn btn-primary"><span>Mark Delete (Multiple)</span> </a>
+        @*}*@
+        <a href="javascript:void(0);" onclick="ViewCharts()" class="btn btn-info"><span>Analytics</span> </a>
+        <a href="javascript:void(0);" onclick="ViewTargetAn()" class="btn btn-info"><span>Target Vs Achieved</span> </a>
+        <a href="javascript:void(0);" onclick="ViewChartO()" class="btn btn-info"><span>New Enq Target Vs Won</span> </a>
+    </div>
+
+</div>
+
+<div class="modal fade pmsModal " id="SalesmanAnalytics" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Salesman Wise Analytics</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="pdSpace">
+                                <tr>
+                                    <td><b>Select Salesman</b></td>
+                                    <td><select class="selectpicker" data-live-search="true" id="slectSalesman" data-size="8"></select></td>
+                                    <td><button type="button" class="btn btn-success" onclick="onChartData()">Refresh</button></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="clear"></div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs chartTab" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Closure of the enquiries</a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Lost Reason wise</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="chartdiv" style="min-height:60vh"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                            <div class="row">
+                                <div class="col-md-12"><div id="chartdiv2" style="min-height:60vh"></div></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Scroll bar at the top of grid*@
+@*<div class="wrapper1">
+        <div class="div1"></div>
+    </div>
+    <div class="wrapper2">
+        <div class="div2">
+            <div class="GridViewArea">
+                @{
+                    Html.RenderAction("PartialEnquiriesGrid", "EnquiriesHiererchy");
+                }
+            </div>
+        </div>
+    </div>*@
+<div class="GridViewArea relative">
+    @{
+        Html.RenderAction("PartialEnquiriesGrid", "EnquiriesHiererchy");
+    }
+</div>
+
+@*Scroll bar at the top of grid*@
+
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalMode";
+        settings.Width = 500;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Supervisor Feedback";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalSalesman";
+        settings.Width = 750;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Salesman Feedback";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        //settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalVerify";
+        settings.Width = 300;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Verify";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        //settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalshowhistory";
+        settings.Width = 800;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Show History";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalMassDelete";
+        settings.Width = 1400;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Mark Delete (Multiple)";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+@* Mantis Issue 24748 *@
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalBulkAssign";
+        settings.Width = 1400;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Bulk Assign";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalBulkAssignSalesmanSelect";
+        settings.Width = 200;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Salesman Selection";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalSetPriority";
+        settings.Width = 1400;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Set Priority";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalCloseEnquiry";
+        settings.Width = 400;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Reason for Close";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "pcModalReopenEnquiry";
+        settings.Width = 400;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Reason for Reopen";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+@*End of Mantis Issue 24748*@

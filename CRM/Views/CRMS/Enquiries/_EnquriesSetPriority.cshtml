@@ -1,0 +1,297 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvEnqSetPriority";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "Enquiries", Action = "PartialSetPriority" };
+    settings.ClientSideEvents.SelectionChanged = "EnqSetPrioritySelectionChanged";
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 200;
+
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.TopAndBottom;
+
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50", "100", "150" };
+    settings.Settings.ShowFilterRow = true;
+
+    settings.CommandColumn.VisibleIndex = 0;
+    settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left; ;
+    settings.CommandColumn.ShowClearFilterButton = true;
+
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.Width = 40;
+
+    settings.KeyFieldName = "SEQ";
+    settings.SettingsPager.PageSize = 100;
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRowMenu = true;
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DATE";
+        column.Caption = "Date & Time";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        column.Width = 80;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CUSTOMER_NAME";
+        column.Caption = "Customer";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 110;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CONTACT_PERSON";
+        column.Caption = "Contact Person";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.Width = 96;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PHONENO";
+        column.Caption = "Contact No";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+        column.Width = 80;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EMAIL";
+        column.Caption = "Email";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LOCATION";
+        column.Caption = "Location";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PRODUCT_REQUIRED";
+        column.Caption = "Products Req.";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 90;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QTY";
+        column.Caption = "Qty.";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.Width = 40;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ORDER_VALUE";
+        column.Caption = "Order value";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.Width = 80;
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ENQ_DETAILS";
+        column.Caption = "Enquiry Details";
+        column.Width = 600;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "VEND_TYPE";
+        column.Caption = "Provided by";
+        column.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ENQ_NUMBER";
+        column.Caption = "Enq. No.";
+        column.VisibleIndex = 12;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 70;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+    });
+
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "SOURCE";
+    //    column.Caption = "Source";
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 100;
+    //});
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "INDUSTRY";
+        column.Caption = "Industry";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "MISC_COMMENTS";
+        column.Caption = "Misc Comments";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PRIORITYS";
+        column.Caption = "Priority";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EXIST_CUST";
+        column.Caption = "Existing Customer";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 140;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LAST_CONTACT_DATE";
+        column.Caption = "Last Contact Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "NEXT_CONTACT_DATE";
+        column.Caption = "Next Contact Date";
+        column.VisibleIndex = 19;
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CONTACTEDBY";
+        column.Caption = "Contacted By";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 140;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ENQ_PRODREQ";
+        column.Caption = "Product Required";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 140;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FEEDBACK";
+        column.Caption = "Feedback";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FINAL_INDUSTRY";
+        column.Caption = "Final Industry";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 140;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ACTIVITY";
+        column.Caption = "Activity";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "VERIFY_BY";
+        column.Caption = "Verified By";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "VERIFY_ON";
+        column.Caption = "Verified On";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 80;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "VERIFY_CLOSUREDATE";
+        column.Caption = "Closure Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 80;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CRM_ID";
+        column.Caption = "";
+        column.CellStyle.CssClass = "hide";
+        column.HeaderStyle.CssClass = "hide";
+        column.FilterCellStyle.CssClass = "hide";
+        column.FooterCellStyle.CssClass = "hide";
+        column.Width = 0;
+        column.Settings.AllowAutoFilter = DefaultBoolean.False;
+    });
+
+
+    settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ORDER_VALUE").DisplayFormat = "0.00"; ;
+
+}).Bind(Model).GetHtml()
+

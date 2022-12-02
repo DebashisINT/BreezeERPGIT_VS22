@@ -1,0 +1,500 @@
+﻿@model CRM.Models.NotificationClass
+@{
+    ViewBag.Title = "Notification List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="~/Scripts/multiselect.min.js"></script>
+
+
+@*<link rel="stylesheet" type="text/css" href="css/bootstrap-timepicker.min.css" />
+
+<script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>*@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
+
+<link href="~/assests/pluggins/TimePicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/TimePicker/bootstrap-timepicker.min.js"></script>
+<script>
+    $(function () {
+        $('#multiselect').multiselect();
+
+    });
+
+
+
+
+
+    function ddsupervisorchange(e) {
+
+        var objmultiselectto = [];
+
+
+        $("#multiselect_to option").each(function () {
+            //seletedUser = seletedUser + $(this).val() + "|";
+            var objitem = {};
+            objitem.seletedUser = $(this).val();
+            objmultiselectto.push(objitem);
+        });
+
+
+
+        var designationid = $(e).val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetUserList", "Notification")",
+            data: { designationid: designationid, notificationId: $("#hdnnotid").val(), stateid: $("#ddstate").val() },
+            success: function (response) {
+                var SubList = [];
+                i = 0;
+                $("#multiselect_to option").each(function () {
+                    if ($(this).val()) {
+                        SubList[i++] = $(this).val();
+                    }
+                });
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    if (jQuery.inArray(response[i].UserID, SubList) == -1) {
+
+                        var objcheck = $.grep(objmultiselectto, function (e) { return e.seletedUser == response[i].UserID });
+                        if (objcheck.length == 0)
+                            html = html + "<option value=" + response[i].UserID + ">" + response[i].username + "</option>";
+                    }
+                }
+                $('#multiselect').html(html);
+            }
+        });
+    }
+
+    function ddsstatechange(e) {
+
+        var objmultiselectto = [];
+
+
+        $("#multiselect_to option").each(function () {
+            //seletedUser = seletedUser + $(this).val() + "|";
+            var objitem = {};
+            objitem.seletedUser = $(this).val();
+            objmultiselectto.push(objitem);
+        });
+
+        var designationid = $("#ddsupervisor").val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetUserList", "Notification")",
+            data: { designationid: designationid, notificationId: $("#hdnnotid").val(), stateid: $("#ddstate").val() },
+            success: function (response) {
+                var SubList = [];
+                i = 0;
+                $("#multiselect_to option").each(function () {
+                    if ($(this).val()) {
+                        SubList[i++] = $(this).val();
+                    }
+                });
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    if (jQuery.inArray(response[i].UserID, SubList) == -1) {
+
+                        var objcheck = $.grep(objmultiselectto, function (e) { return e.seletedUser == response[i].UserID });
+                        if (objcheck.length == 0)
+                            html = html + "<option value=" + response[i].UserID + ">" + response[i].username + "</option>";
+                    }
+                }
+                $('#multiselect').html(html);
+            }
+        });
+    }
+
+
+    $(function () {
+        $('#dtstart').datetimepicker({
+            // dateFormat: 'dd-mm-yy',
+            format: 'DD-MM-YYYY HH:mm:ss',
+            minDate: getFormattedDate()
+        });
+
+        $('#starttime').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
+        $('#endtime').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
+
+    });
+
+
+    function getFormattedDate() {
+        var d = new Date();
+
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+
+        var output = d.getFullYear() + '/' +
+            (month < 10 ? '0' : '') + month + '/' +
+            (day < 10 ? '0' : '') + day;
+    }
+
+
+    function actionchange(e) {
+        var action = $(e).val();
+
+
+        var actionname = "";
+
+        if (action == "1") {
+            actionname = "hour";
+        }
+        else if (action == "2") {
+            actionname = "Day";
+        }
+        else if (action == "3") {
+            actionname = "Week";
+        }
+        else if (action == "4") {
+            actionname = "Month";
+        }
+        else if (action == "5") {
+            actionname = "Minute";
+        }
+
+        $("#txtactionname").val(actionname);
+    }
+
+    $(function () {
+
+
+        if ('@ViewBag.Action' != "") {
+            var action = '@ViewBag.Action';
+
+            if (action == "1") {
+                actionname = "hour";
+            }
+            else if (action == "2") {
+                actionname = "Day";
+            }
+            else if (action == "3") {
+                actionname = "Week";
+            }
+            else if (action == "4") {
+                actionname = "Month";
+            }
+            else if (action == "5") {
+                actionname = "Minutes";
+            }
+
+            $("#txtactionname").val(actionname);
+        }
+    });
+
+
+    function saveNotificationSetting() {
+
+        var objmultiselectto = [];
+
+
+        $("#multiselect_to option").each(function () {
+            //seletedUser = seletedUser + $(this).val() + "|";
+            //var objitem = {};
+            //objitem.seletedUser = $(this).val();
+            objmultiselectto.push($(this).val());
+        });
+
+        //var dtstart = $('#dtstart').val();
+
+        var jsDate = $('#dtstart').data('DateTimePicker').date();
+        jsDate = new Date(jsDate._d);
+        var action = $('#ddlAction').val();
+        var every = $('#1').val();
+
+        var date = jsDate;
+        var day = date.getDate();       // yields date
+        var month = date.getMonth() + 1;    // yields month (add one as '.getMonth()' is zero indexed)
+        var year = date.getFullYear();  // yields year
+        var hour = date.getHours();     // yields hours
+        var minute = date.getMinutes(); // yields minutes
+        var second = date.getSeconds(); // yields seconds
+
+        // After this construct a string with the above results as below
+        var time = year + "-" + month + "-" + day + " " + hour + ':' + minute + ':' + second;
+
+
+
+
+        var notificationdata = {};
+        notificationdata.Notidication_date = time;
+        notificationdata.Action = action;
+        notificationdata.every = every;
+        notificationdata.Selecteduser = objmultiselectto;
+        notificationdata.NOTIFICATION_ID = $("#hdnnotid").val();
+        notificationdata.starttime = $("#starttime").val();
+        notificationdata.endtime = $("#endtime").val();
+        notificationdata.IsActive = $('#IsActive').is(':checked');//$("#IsActive").val();
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveNotificationSetting", "Notification")",
+            data: notificationdata,
+            success: function (response) {
+                jAlert(response, "Notification Message", function () {
+                    var url = '@Url.Action("NotificationList", "Notification")';
+                    window.location.href = url;
+                });
+            }
+        });
+
+
+    }
+
+
+
+</script>
+<style>
+    .mainWraper .dxpc-contentWrapper {
+        background-color: #fff;
+    }
+
+    .mainWraper select[multiple], select[size] {
+        height: auto !important;
+    }
+
+    .pad28 {
+        padding-top: 26px;
+    }
+
+    .nopad {
+        padding: 0 !important;
+    }
+
+    .full {
+        width: 100%;
+    }
+
+    .min3 {
+        min-height: 150px;
+    }
+
+    .mBot10 {
+        margin-bottom: 10px !important;
+    }
+
+    .padTop40 {
+        padding-top: 40px;
+    }
+    .slm0 input {
+        margin:0 !important;
+    }
+    .SenEv>button {
+        width:10%;
+    }
+    .SenEv > input {
+        width: 76%;
+    }
+    .input-group> input {
+        height:auto !important;
+    }
+    .input-group > .input-group-addon {
+        padding: 3px 10px;
+    }
+    .filterCont {
+        background: #fffdfd;
+        padding-bottom: 12px;
+        margin-top: 4px;
+    }
+    .filterHd {
+        font-size: 15px;
+        margin-bottom: 0;
+    }
+</style>
+
+
+
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">SMS Notification Settings</h3>
+
+        <div class="crossBtn hide"><a href="DashBoardSettingList.aspx"><i class="fa fa-times"></i></a></div>
+    </div>
+</div>
+
+<div id="btncross" class="crossBtn" style=" margin-left: 50px;"><a href="#" onclick="cancelNotificationSetting()"><i class="fa fa-times"></i></a></div>
+
+<div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+    
+    <div class="clearfix" >
+        <div class="col-md-3">
+            <label><b>SMS Notification</b></label>
+            <div><input type="text" id="txtnotificationname" value="@ViewBag.notificationname" disabled="disabled" /></div>
+        </div>
+
+        <div class="col-md-3">
+            <label>&nbsp;</label>
+            <div>
+               @Html.CheckBoxFor(m => m.IsActive, new { @name = "from", @class = "" }) <b>Active</b>
+            </div>
+        </div>
+
+        
+    </div>
+    <div class="clearfix filterCont">
+        <h4 class="filterHd col-md-12">
+            <img src="~/assests/images/filter.png" style="width:14px;" /> Show user filtered on</h4>
+        <div class="col-md-3">
+            <label><b>State</b></label>
+            <div>
+                @Html.DropDownList("ddstate", new SelectList(Model.StateList, "ID", "Name"), new { @name = "from", @class = "full", @onchange = "ddsstatechange(this)" })
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <label><b>Designation</b></label>
+            <div>
+                @Html.DropDownList("ddsupervisor", new SelectList(Model.SupervisorList, "ID", "Name"), new { @name = "from", @class = "full", @onchange = "ddsupervisorchange(this)" })
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+            <div class="clearfix">
+                <div class="col-md-4 lblmTop8">
+                    <label><b>Users</b></label>
+                    <div>
+                        @Html.DropDownList("ddlUser", new SelectList(Model.UserList, "UserID", "username"), new { @id = "multiselect", @class = "form-control min3", @multiple = "multiple", @name = "from" })
+                    </div>
+
+                </div>
+                <div class="col-md-1 text-center padTop40">
+
+                    <button type="button" id="multiselect_rightAll" class="btn btn-primary btn-xs mBot10"><i class="glyphicon glyphicon-forward"></i></button><br />
+                    <button type="button" id="multiselect_rightSelected" class="btn btn-primary btn-xs mBot10"><i class="glyphicon glyphicon-chevron-right"></i></button><br />
+                    <button type="button" id="multiselect_leftSelected" class="btn btn-primary btn-xs mBot10"><i class="glyphicon glyphicon-chevron-left"></i></button><br />
+                    <button type="button" id="multiselect_leftAll" class="btn btn-primary btn-xs mBot10"><i class="glyphicon glyphicon-backward"></i></button>
+                </div>
+                <div class="col-md-4 lblmTop8">
+                    <label><b>Recipient</b></label>
+                    <select name="to" id="multiselect_to" class="form-control min3" multiple="multiple">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model.SelectedUser)
+                            {
+                                <option value="@item.UserID">@item.username</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+       
+  
+
+
+    <div class="clearfix">
+        <div class="col-md-3 lblmTop8">
+            <label><b>Basis</b></label>
+            <div> @Html.DropDownListFor(m => m.ddlAction, new SelectList(Model.ActionList, "ActionID", "actionname"), new {  @class = "full", @onchange = "actionchange(this)" })</div>
+        </div>
+        <div>
+            
+        </div>
+        <div class="col-sm-3 lblmTop8" style=" ">
+            <label><b>Send Every:</b></label>
+            <div class="SenEv">
+                <button type="button" id="sub" class="sub">-</button>
+                <input type="number" id="1" value="@ViewBag.Recur" min="1" />
+                <button type="button" id="add" class="add">+</button>
+            </div>
+        </div>
+
+        <div id="field1" class="col-sm-3 lblmTop8">
+            <label>&nbsp;</label>
+            <div><input type="text" id="txtactionname" class="form-control" disabled="disabled" /></div>
+        </div>
+
+    </div>
+
+    <div class="clerfix">
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <label><b>Start Date</b></label>
+                <div class='input-group date' id='dtstart'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label><b>Start Time</b></label>
+            <div class="bootstrap-timepicker">
+                <input id="starttime" value="@ViewBag.starttime" type="text" class="input-small">
+                <i class="icon-time"></i>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label><b>End Time</b></label>
+            <div class="bootstrap-timepicker">
+                <input id="endtime" type="text" value="@ViewBag.endtime" class="input-small">
+                <i class="icon-time"></i>
+            </div>
+        </div>
+    </div>
+
+
+   
+    <div>
+
+        <div class="clearfix">
+            
+        </div>
+        
+    </div>
+    <input type="hidden" id="hdnnotid" value="@ViewBag.NOTIFICATION_ID" />
+
+    <div class="col-md-12 ">
+        <button type="button" class="btn btn-success" onclick="saveNotificationSetting()">Save Settings</button>
+        <button type="button" class="btn btn-danger" onclick="cancelNotificationSetting()">Cancel</button>
+    </div>
+</div>
+
+<script>
+
+    function cancelNotificationSetting(){
+     
+        var url ='@Url.Action("NotificationList", "Notification")';
+        window.location.href = url;
+    }
+    $(function () {
+
+        $('.add').click(function () {
+            if ($(this).prev().val() < 24) {
+                $(this).prev().val(+$(this).prev().val() + 1);
+            }
+        });
+        $('.sub').click(function () {
+            if ($(this).next().val() > 1) {
+                if ($(this).next().val() > 1) $(this).next().val(+$(this).next().val() - 1);
+            }
+        });
+
+       // $("#ddlAction").val('@ViewBag.Action');
+       // $("#1").val('@ViewBag.Every');
+        $('#dtstart').data("DateTimePicker").date(new Date('@ViewBag.dtstart'));
+
+
+    });
+
+
+
+
+</script>

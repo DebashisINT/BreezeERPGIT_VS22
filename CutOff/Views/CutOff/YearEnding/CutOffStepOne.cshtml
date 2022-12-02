@@ -1,0 +1,964 @@
+﻿@model  CutOff.Models.PendingDocView
+@{
+    ViewBag.Title = "Database Creation & Restoration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/assests/css/jquery-confirm.min.css" rel="stylesheet" />
+<script src="~/assests/js/jquery-confirm.min.js"></script>
+<link href="~/assests/js/wizard/smart_wizard.css" rel="stylesheet" />
+<link href="~/assests/js/wizard/smart_wizard_theme_arrows.css" rel="stylesheet" />
+<script src="~/assests/js/wizard/jquery.smartWizard.js"></script>
+<style>
+    #smartwizard .sw-btn-prev, #smartwizard .sw-btn-next {
+        display: none;
+    }
+
+    .fadeinDD {
+        opacity: 0;
+    }
+
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+
+    #smartwizard .btn-toolbar .btn-group {
+        float: right !important;
+    }
+
+    #smartwizard .nav > li > a:hover, .nav > li > a:focus {
+        background-color: #f5f5f5 !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.done > a {
+        border-color: #8390bb !important;
+        color: #fff !important;
+        background: #8390bb !important;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.done > a:after {
+            border-left: 30px solid #8390bb;
+        }
+
+    .sw-theme-arrows > ul.step-anchor > li.active > a {
+        border-color: #43589a !important;
+        color: #fff !important;
+        background: #44599b !important;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.active > a:after {
+            border-left: 30px solid #44599b !important;
+        }
+
+    #smartwizard .nav > li.active > a:hover, .nav > li > a:focus {
+        background-color: #44599b !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled > a:focus {
+        background-color: #f5f5f5 !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled.done > a:focus {
+        background-color: #8390bb !important;
+    }
+
+    #smartwizard .nav > li.done > a:hover, .nav > li.done > a:focus {
+        background-color: #8390bb !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled > a, .sw-theme-arrows > ul.step-anchor > li.disabled > a:hover {
+        color: #c1c0c0;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.disabled > a, .sw-theme-arrows > ul.step-anchor > li.disabled > a:hover {
+            color: #968d8d !important;
+        }
+
+
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled.done > a, .sw-theme-arrows > ul.step-anchor > li.disabled.done > a:hover {
+        color: #fff !important;
+    }
+</style>
+
+<style>
+    .bigger {
+        font-size: 15px;
+    }
+
+    .mtop15 {
+        margin-top: 15px;
+    }
+</style>
+
+
+
+<script>
+   function  PendingDocSelection() 
+    {
+        gvPending.Refresh();
+
+       
+            if ($("#ddlAppIds option:selected").index() > 0) {
+                var selectedValue = $("#ddlAppIds").val();
+                $('#ddlAppIds').prop("selectedIndex", 0);
+                var url = '@Url.Action("ExportPendingDoclist", "YearEnding", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        
+   }
+
+
+    function PendingNegativeStock() {
+        gridNegativeStock.Refresh();
+
+
+        if ($("#ddlExportNeg option:selected").index() > 0) {
+            var selectedValue = $("#ddlExportNeg").val();
+            $('#ddlExportNeg').prop("selectedIndex", 0);
+            var url = '@Url.Action("ExportNegativeProduct", "YearEnding", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", selectedValue);
+        }
+
+    }
+   
+    $(document).ready(function () {
+        //var intervalmode = setInterval("Relodepage()", 60000);
+        //function Relodepage()
+        //{
+
+           if ('@ViewBag.Message' != "") {
+            //jAlert('@ViewBag.Message', "Alert", function () {
+            $.alert({
+                title: 'Alert!',
+                content: '@ViewBag.Message',
+                buttons: {
+                    okay: {
+                        text: 'Ok',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                       
+                            if ('@ViewBag.CutOfStatus' == "2") {
+                                var obj = {};
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/YearEnding/EndCutoffProcess",
+                                    data: JSON.stringify(obj),
+                                    async: true,
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function (response) {
+                                        window.location.href = "/Accounts/CutoffLedger";
+                                        //// jAlert(response);
+                                        // $.alert({
+                                        //     title: 'Alert!',
+                                        //     content: response,
+                                        //     buttons: {
+                                        //         okay: {
+                                        //             text: 'Ok',
+                                        //             btnClass: 'btn-blue',
+                                        //             action: function () {
+                                        //                 window.location.href = "/Accounts/PartialCashBAnkView";
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // });
+                                        document.getElementById("btnCancel").style.display = "none";
+                                        document.getElementById("btnNext").style.display = "none";
+                                        LoadingPanel.Hide();
+                                    },
+                                    error: function (response) {
+                                        jAlert("Please try again later");
+                                        LoadingPanel.Hide();
+                                    }
+                                });
+                            }
+
+                            document.getElementById("btnCancel").style.display = "none";
+                            document.getElementById("btnNext").style.display = "none";
+                            //  });
+
+                        }
+                    }
+                }
+            });
+        }
+    //}
+    });
+
+    function RedirectToStepTwo() {
+        // window.location.href = "/YearEnding/CutOffStepTwo?cutoffDate="+dtCutOffDate.GetText() +"&backup="+ $("#ddlBackUp").val();
+        //window.location.href = "/Accounts/PartialCashBAnkView";
+        //return false;
+        var negativeStock;
+        if (dtCutOffDate.GetText() == "" || dtCutOffDate.GetText() == undefined || dtCutOffDate.GetText() == null || dtCutOffDate.GetText() == "01-01-0100") {
+            // LoadingPanel.Show();
+            //  jAlert('Please enter a valid date to proceed.');
+            $.alert({
+                title: 'Alert!',
+                content: 'Please enter a valid date to proceed.',
+                buttons: {
+                    okay: {
+                        text: 'Ok',
+                        btnClass: 'btn-blue'
+
+                    }
+                }
+            });
+            return;
+            // LoadingPanel.Hide();
+        }
+
+        else {
+            LoadingPanel.Show();
+            //LoadingPanel.Show();
+            var DtObj = {};
+            DtObj.Cutoffdate = dtCutOffDate.GetDate();
+            $.ajax({
+                type: "POST",
+                url: "/YearEnding/NegativeStockProcess",
+                data: JSON.stringify(DtObj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    negativeStock = response
+
+                },
+                error: function (response) {
+                    // jAlert("Please try again later");
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Please try again later.',
+                        buttons: {
+                            okay: {
+                                text: 'Ok',
+                                btnClass: 'btn-blue'
+
+                            }
+                        }
+                    });
+                    LoadingPanel.Hide();
+                }
+            });
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "/YearEnding/PendingCutoffProcess",
+                data: JSON.stringify(DtObj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var pendms = response;
+                    debugger;
+                    // (pendms.ReturnValue == "2") || 
+                 
+                    if ((pendms.ReturnValue == "2") || (pendms.ReturnValue == "3") || (pendms.ReturnValue == "5")) {
+                        LoadingPanel.Hide();
+                        //jAlert(pendms.ReturnText, 'Title', function () {
+                        //    window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+                        //});
+
+                        //chinmoy 2106-2019
+                        $.alert({
+                            title: 'Alert!',
+                            content: pendms.ReturnText,
+                            buttons: {
+                                okay: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+
+                                        $.confirm({
+                                            title: 'Confirm!',
+                                            content: 'Do you want to see document number?',
+                                            buttons: {
+                                                Yes: function () {
+                                                    btnClass: 'btn-blue'
+                                                   
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "/YearEnding/GetPendingDocument",
+                                                        data: JSON.stringify(DtObj),
+                                                       // async: true,
+                                                        contentType: "application/json; charset=utf-8",
+                                                       
+                                                        success: function (result) {
+                                                            debugger;
+
+                                                            PendingDocumentPopup.SetContentHtml(result);
+                                                            MVCxClientUtils.FinalizeCallback();
+                                                            PendingDocumentPopup.Show();
+                                                            // jAlert(response);
+                                                            //$.alert({
+                                                            //    title: 'Alert!',
+                                                            //    content: response,
+                                                            //    buttons: {
+                                                            //        okay: {
+                                                            //            text: 'Ok',
+                                                            //            btnClass: 'btn-blue'
+
+                                                            //        }
+                                                            //    }
+                                                            //});
+                                                            document.getElementById("btnCancel").style.display = "none";
+                                                            document.getElementById("btnNext").style.display = "none";
+
+                                                            //LoadingPanel.Hide();
+                                                        },
+                                                        error: function (result) {
+                                                            debugger;
+                                                            // jAlert("Please try again later");
+                                                            $.alert({
+                                                                title: 'Alert!',
+                                                                content: 'Please try again later',
+                                                                buttons: {
+                                                                    okay: {
+                                                                        text: 'Ok',
+                                                                        btnClass: 'btn-blue'
+
+                                                                    }
+                                                                }
+                                                            });
+                                                            //LoadingPanel.Hide();
+                                                        }
+                                                    });
+
+                                                },
+                                                NO: function () {
+                                                    window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+                                                },
+
+                                            }
+                                        });
+
+
+
+                                        //window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+                                    }
+                                }
+                            }
+                        });
+                       
+                    }
+                   
+                
+                    else if (negativeStock.ReturnValue == "1") {
+                        //  jAlert(negativeStock.ReturnText);
+                        // window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+                        LoadingPanel.Hide();
+                        //jAlert(negativeStock.ReturnText, 'Title', function () {
+                        //    window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+                        //});
+                        $.alert({
+                            title: 'Alert!',
+                            content: negativeStock.ReturnText,
+                            buttons: {
+                                okay: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+                                        //  window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+                                        $.confirm({
+                                            title: 'Confirm!',
+                                            content: 'Do you want to Negative stock?',
+                                            buttons: {
+                                                Yes: function () {
+                                                    btnClass: 'btn-blue'
+
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "/YearEnding/NegativeProductList",
+                                                        data: JSON.stringify(DtObj),
+                                                        // async: true,
+                                                        contentType: "application/json; charset=utf-8",
+
+                                                        success: function (result) {
+                                                            debugger;
+
+                                                            PendingDocumentPopup.SetContentHtml(result);
+                                                            MVCxClientUtils.FinalizeCallback();
+                                                            PendingDocumentPopup.Show();
+                                                            // jAlert(response);
+                                                            //$.alert({
+                                                            //    title: 'Alert!',
+                                                            //    content: response,
+                                                            //    buttons: {
+                                                            //        okay: {
+                                                            //            text: 'Ok',
+                                                            //            btnClass: 'btn-blue'
+
+                                                            //        }
+                                                            //    }
+                                                            //});
+                                                            document.getElementById("btnCancel").style.display = "none";
+                                                            document.getElementById("btnNext").style.display = "none";
+
+                                                            //LoadingPanel.Hide();
+                                                        },
+                                                        error: function (result) {
+                                                            debugger;
+                                                            // jAlert("Please try again later");
+                                                            $.alert({
+                                                                title: 'Alert!',
+                                                                content: 'Please try again later',
+                                                                buttons: {
+                                                                    okay: {
+                                                                        text: 'Ok',
+                                                                        btnClass: 'btn-blue'
+
+                                                                    }
+                                                                }
+                                                            });
+                                                            //LoadingPanel.Hide();
+                                                        }
+                                                    });
+
+                                                },
+                                                NO: function () {
+                                                    window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+                                                },
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    else if (pendms.ReturnValue == "4") {
+                        $.confirm({
+                            title: 'Confirm!',
+                            content: pendms.ReturnText,
+                            buttons: {
+                                Yes: function () {
+                                    btnClass: 'btn-blue'
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/YearEnding/StartCutoffProcess",
+                                        data: JSON.stringify(DtObj),
+                                        async: true,
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (response) {
+
+                                            // jAlert(response);
+                                            $.alert({
+                                                title: 'Alert!',
+                                                content: response,
+                                                buttons: {
+                                                    okay: {
+                                                        text: 'Ok',
+                                                        btnClass: 'btn-blue'
+
+                                                    }
+                                                }
+                                            });
+                                            document.getElementById("btnCancel").style.display = "none";
+                                            document.getElementById("btnNext").style.display = "none";
+
+                                            LoadingPanel.Hide();
+                                        },
+                                        error: function (response) {
+                                            // jAlert("Please try again later");
+                                            $.alert({
+                                                title: 'Alert!',
+                                                content: 'Please try again later',
+                                                buttons: {
+                                                    okay: {
+                                                        text: 'Ok',
+                                                        btnClass: 'btn-blue'
+
+                                                    }
+                                                }
+                                            });
+                                            LoadingPanel.Hide();
+                                        }
+                                    });
+
+                                },
+                                NO: function () {
+                                    window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+                                },
+
+                            }
+                        });
+
+                    }
+
+                    else
+                    {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/YearEnding/StartCutoffProcess",
+                            data: JSON.stringify(DtObj),
+                            async: true,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (response) {
+
+                                // jAlert(response);
+                                $.alert({
+                                    title: 'Alert!',
+                                    content: response,
+                                    buttons: {
+                                        okay: {
+                                            text: 'Ok',
+                                            btnClass: 'btn-blue'
+
+                                        }
+                                    }
+                                });
+                                document.getElementById("btnCancel").style.display = "none";
+                                document.getElementById("btnNext").style.display = "none";
+
+                                LoadingPanel.Hide();
+                            },
+                            error: function (response) {
+                                // jAlert("Please try again later");
+                                $.alert({
+                                    title: 'Alert!',
+                                    content: 'Please try again later',
+                                    buttons: {
+                                        okay: {
+                                            text: 'Ok',
+                                            btnClass: 'btn-blue'
+
+                                        }
+                                    }
+                                });
+                                LoadingPanel.Hide();
+                            }
+                        });
+                    }
+
+                    //$.ajax({
+                    //    type: "POST",
+                    //    url: "/YearEnding/StartCutoffProcess",
+                    //    data: JSON.stringify(DtObj),
+                    //    async: true,
+                    //    contentType: "application/json; charset=utf-8",
+                    //    dataType: "json",
+                    //    success: function (response) {
+
+                    //        // jAlert(response);
+                    //        $.alert({
+                    //            title: 'Alert!',
+                    //            content: response,
+                    //            buttons: {
+                    //                okay: {
+                    //                    text: 'Ok',
+                    //                    btnClass: 'btn-blue'
+
+                    //                }
+                    //            }
+                    //        });
+                    //        document.getElementById("btnCancel").style.display = "none";
+                    //        document.getElementById("btnNext").style.display = "none";
+
+                    //        LoadingPanel.Hide();
+                    //    },
+                    //    error: function (response) {
+                    //        // jAlert("Please try again later");
+                    //        $.alert({
+                    //            title: 'Alert!',
+                    //            content: 'Please try again later',
+                    //            buttons: {
+                    //                okay: {
+                    //                    text: 'Ok',
+                    //                    btnClass: 'btn-blue'
+
+                    //                }
+                    //            }
+                    //        });
+                    //        LoadingPanel.Hide();
+                    //    }
+                    //});
+
+                },
+                error: function (response) {
+                    // jAlert("Please try again later");
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Please try again later',
+                        buttons: {
+                            okay: {
+                                text: 'Ok',
+                                btnClass: 'btn-blue'
+
+                            }
+                        }
+                    });
+                    LoadingPanel.Hide();
+                }
+            });
+
+
+
+            //var obj = {};
+            //obj.Cutoffdate = dtCutOffDate.GetDate();
+            //LoadingPanel.Show();
+
+
+        }
+    }
+
+
+
+    function btnCancelClick() {
+        window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+    }
+</script>
+<style>
+    #smartwizard .sw-btn-prev, #smartwizard .sw-btn-next {
+        display: none;
+    }
+    .fadeinDD {
+        opacity: 0;
+    }
+</style>
+<script type="text/javascript">
+       var intervalId = null;
+       var varCounter = 0;
+
+    var varinterval = function SetInterval() {
+        $.ajax({
+            type: "POST",
+            url: "/YearEnding/DataBackUpCheck",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                debugger;
+                var status = msg;
+                if (status != "") {
+
+                    if (varCounter<1)
+               {
+                        $.alert({
+                            title: 'Alert!',
+                            content: status,
+                            buttons: {
+                                okay: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-blue',
+                                    action: function () {
+                                        window.location.href = "/Accounts/CutoffLedger";
+                                        document.getElementById("btnCancel").style.display = "none";
+                                        document.getElementById("btnNext").style.display = "none";
+                                    }
+                                }
+                            }
+                         
+                        });
+               }
+                    else {
+                        clearInterval(intervalId);
+                         }
+                }
+            },
+            error: function (msg) {
+                // jAlert("Please try again later");
+                $.alert({
+                    title: 'Alert!',
+                    content: 'Please try again later',
+                    buttons: {
+                        okay: {
+                            text: 'Ok',
+                            btnClass: 'btn-blue'
+
+                        }
+                    }
+                });
+               
+            }
+
+
+        });
+    }
+
+    $(document).ready(function () {
+
+        // Step show event
+        $(".sw-btn-prev, .sw-btn-next").addClass('Hide');
+        $("#smartwizard").on("showStep", function (e, anchorObject, stepNumber, stepDirection, stepPosition) {
+            //alert("You are on step "+stepNumber+" now");
+            //   $("#prev-btn").addClass('Hide');
+            if (stepPosition === 'first') {
+                $("#prev-btn").addClass('hide');
+            } else if (stepPosition === 'final') {
+                $("#next-btn").addClass('disabled');
+            } else {
+                $("#prev-btn").removeClass('hide');
+                $("#next-btn").removeClass('disabled');
+            }
+        });
+
+        intervalId = setInterval(varinterval, 300000);
+
+
+        //setInterval(function () {
+
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/YearEnding/DataBackUpCheck",
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (msg) {
+        //            debugger;
+        //            var status = msg;
+        //            if (status != "") {
+        //                $.alert({
+        //                    title: 'Alert!',
+        //                    content: status,
+        //                    buttons: {
+        //                        okay: {
+        //                            text: 'Ok',
+        //                            btnClass: 'btn-blue'
+
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //        }
+        //    });
+            
+        //}, 30000);
+
+
+  
+
+
+
+        // Smart Wizard
+        $('#smartwizard').smartWizard({
+            selected: 0,
+            theme: 'arrows',
+            transitionEffect: 'fade',
+            showStepURLhash: true,
+            disabledSteps: [1,2,3,4,5,6,7],
+            toolbarSettings: {
+                //toolbarPosition: 'both',
+                toolbarButtonPosition: 'end',
+                //toolbarExtraButtons: [btnFinish, btnCancel]
+            }
+        });
+
+        setTimeout(function () {
+            $('#loadIssue').removeClass('fadeinDD');
+        }, 2000);
+        
+
+        //$("#next-btn").on("click", function () {
+        //    // Navigate next
+        //    $('#smartwizard').smartWizard("next");
+        //    return true;
+        //});
+
+        
+    });
+</script>
+<script>
+    function OnStartCallback(s, e) {
+        e.customArgs["Cutoffdate"] = JSON.stringify(dtCutOffDate.GetDate());
+    }
+   $("sw-btn-next").click (function (e) {
+        e.preventDefault();
+        alert('trigger');
+        location.href = "/Accounts/PartialCashBAnkView";
+
+    });
+
+</script>
+<div class="panel-heading">
+    <div class="panel-title">
+        <h3>Cutoff Process</h3>
+    </div>
+</div>
+<div class="form_main fadeinDD" id="loadIssue">
+    <!-- SmartWizard html -->
+  
+
+        <div id="smartwizard" class="mtop15">
+            <ul>
+                <li><a href="#step-1"><br /><div class="bigger">Database Creation & Restoration</div></a></li>
+                <li><a href=""><br /><div class="bigger">Account</div></a></li>
+                <li><a href=""><br /><div class="bigger">CashBank</div></a></li>
+                <li><a href=""><br /><div class="bigger">Journal</div></a></li>
+                <li><a href=""><br /><div class="bigger">Sales</div></a></li>
+                <li><a href=""><br /><div class="bigger">Purchase</div></a></li>
+                <li><a href=""><br /><div class="bigger">Stock</div></a></li>
+                <li><a href=""><br /><div class="bigger">Final</div></a></li>
+            </ul>
+
+            <div>
+                <div id="step-1" class="">
+                    <h3 class="border-bottom border-gray pb-2"></h3>
+
+                    <div class="flexContainer" id="dvStepOne">
+
+                        <div class="itm">
+                            <h3 class="hdr">Database Creation & Restoration</h3>
+                            <div class="bordered">
+                                <table style="margin:10px auto;">
+                                    <tr>
+                                        <td>
+                                            <label>Enter CutOff Date :</label>
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "dtCutOffDate";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormat = EditFormat.Custom;
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.MinDate = Convert.ToDateTime(HttpContext.Current.Session["FinYearStart"].ToString());// Start and end  date come from DBengine SetFinYearStartandEndDate method
+                        settings.Properties.MaxDate = Convert.ToDateTime(HttpContext.Current.Session["FinYearEnd"].ToString());
+
+
+                    }).GetHtml()
+
+                                        </td>
+                                    </tr>
+                                    <tr style="display:none;">
+                                        <td>
+                                            <label>Proceed with auto back up</label>
+                                        </td>
+                                        <td>
+                                            @Html.DropDownList("ddlBackUp", new List<SelectListItem> {
+                     new SelectListItem() {Text = "Yes", Value="Yes"},
+                        new SelectListItem() {Text = "No", Value="No"}
+                   }
+                        )
+                                        </td>
+                                    </tr>
+                                </table>
+                                <hr />
+                                <div class="text-right mtop-2">
+                                    <button class="btn btn-primary" id="btnNext" onclick="RedirectToStepTwo();">Save</button>
+                                    <button class="btn btn-danger" id="btnCancel" onclick="btnCancelClick();">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div id="step-2" class="">
+
+
+
+
+                </div>
+                <div id="step-3" class="">
+
+
+                </div>
+                <div id="step-4" class="">
+
+
+                </div>
+                <div id="step-5" class="">
+
+                </div>
+                <div id="step-6" class="">
+
+
+
+                </div>
+                <div id="step-7" class="">
+
+
+
+                </div>
+                <div id="step-8" class="">
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+</div>
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "PendingDocumentPopup";
+        settings.Width = 600;
+        settings.Height = 500;
+        //settings.ScrollBars.v
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.HeaderText = "Pending Document List";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+  
+        
+       
+        
+        }).GetHtml()
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStepOne";
+    }
+).GetHtml()
+
+
+
+
+<div id="BindDoc" style="display:none">
+    @{
+        Html.RenderAction("GetPendingDocument", "YearEnding");
+    }
+</div>
+<div id="BindNegativeProduct" style="display:none">
+    @{
+        Html.RenderAction("NegativeProductList", "YearEnding");
+    }
+</div>

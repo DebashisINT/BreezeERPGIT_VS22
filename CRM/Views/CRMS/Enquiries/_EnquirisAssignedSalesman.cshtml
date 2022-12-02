@@ -1,0 +1,91 @@
+﻿@model CRM.Models.EnquiriesDet
+
+
+<div class="">
+    <input type="hidden" id="hdnUserid" />
+
+    <div class="row">
+
+        <div class="myAssignTarget" id="myAssignTargetpopup">
+            <div class="clearfix">
+               <div class="col-lg-11">
+                    <label><b>Salesman</b></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbAssignedSalesman";
+                        settings.Properties.TextField = "Salesman_Name";
+                        settings.Properties.ValueField = "Salesman_Id";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                        settings.Width = 400;
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (Model.AssignedSalesmanId != 0)
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Value = Model.AssignedSalesmanId;
+                            }
+                        };
+                    }).BindList(Model.listAssignedSalesman).GetHtml()
+                    </div>
+                </div>
+                @*Rev Mantis Issue 24903*@
+                <div class="clear"></div>
+                <div class="col-lg-11">
+                    <label class="mTop10"><b>Select Industry</b></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                        settings =>
+                        {
+                            settings.Name = "cmbAssIndustryBulk";
+                            settings.Properties.ClientInstanceName = "ccmbAssIndustryBulk";
+                            settings.Properties.TextField = "ind_industry";
+                            settings.Properties.ValueField = "ind_id";
+                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                            settings.Properties.ValueType = typeof(int);
+                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                            settings.SelectedIndex = 0;
+                            //settings.Properties.ClientSideEvents.SelectedIndexChanged = "AssIndustryBulk_SelectedIndexChanged";
+
+                            settings.PreRender = (sender, e) =>
+                            {
+                                if (Model.AssignIndustry != "")
+                                {
+                                    ASPxComboBox com = (ASPxComboBox)sender;
+                                    com.Value = Model.AssignIndustryID;
+                                }
+
+                            };
+
+                        }).BindList(Model.listAssIndustry).GetHtml()
+                    </div>
+                </div>
+                @*End of Mantis Issue 24903*@
+                <div class="clear"></div>
+                <div class="col-lg-11">
+                    <label class="mTop10"><b>Remarks</b></label>
+                    <input type="text" class="form-control text-left shd" id="idAssignedSaleRemarks" value='@Model.AssignedSaleRemarks' />
+                </div>
+                
+                <div class="clear"></div>
+            </div>
+
+        </div>
+        <div class="clear "></div>
+
+        <div class=" col-md-12 pad15">
+
+            <div class="">
+                <button type="button" class="btn btn-primary" id="btnSaveAssignedSalesman" onclick="SaveAssignedSalesman();">Save</button>
+                <button type="button" class="btn btn-danger" onclick="CancelAssignedSalesman();">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="hdnselectedEnquirisList" value="@Model.selectedEnquirisList" />

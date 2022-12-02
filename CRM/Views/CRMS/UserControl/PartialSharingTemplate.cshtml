@@ -1,0 +1,424 @@
+﻿<link href="~/assests/js/CRM/ckeditor/contents.css" rel="stylesheet" />
+<script type="text/javascript" src="/assests/js/init.js"></script>
+<script type="text/javascript" src="/assests/js/ajax-dynamic-list.js"></script>
+<script src="~/assests/js/CRM/ckeditor/ckeditor.js"></script>
+
+<style>
+    .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+        /*#cmbPriority {
+        border-radius: 3px;
+    }*/
+        .myAssignTarget > li {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 11px;
+            text-align: center;
+        }
+
+            .myAssignTarget > li:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            .myAssignTarget > li.mainCircle {
+                border: 1px solid #a2d3d8;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .myAssignTarget > li .heading {
+                padding: 2px 12px;
+                background: #6d82c5;
+                color: #fff;
+            }
+
+            .myAssignTarget > li .Num {
+                font-size: 14px;
+            }
+
+            .myAssignTarget > li.mainHeadCenter {
+                font-size: 12px;
+                transform: translateY(-16px);
+            }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+    #cc, #bcc {
+        display: none;
+    }
+
+    .attachment_pin {
+        position: absolute;
+        bottom: 30px;
+        left: 3px;
+        font-size: 13px;
+        display: block;
+        width: 80px;
+        background: #f1f1f1;
+        text-align: center;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        debugger;
+        $('#clsSMS').hide();
+
+
+        $("#toinput").tagsinput('add', { preventPost: true });
+        $("#PhoneInput").tagsinput('add', { preventPost: true });
+
+        $('#toinput').on('beforeItemAdd', function (event) {
+            var tag = event.item;
+
+            if (!isValidEmailAddress(tag)) {
+
+                event.cancel = true;
+                alert('Please enter a valid email to procced.', 'Alert');
+
+
+            }
+
+
+
+        });
+
+        $('#ccinput').on('beforeItemAdd', function (event) {
+            var tag = event.item;
+
+            if (!isValidEmailAddress(tag)) {
+
+                event.cancel = true;
+                alert('Please enter a valid email to procced.', 'Alert');
+
+            }
+
+
+
+        });
+
+
+        $('#PhoneInput').on('beforeItemAdd', function (event) {
+            var tag = event.item;
+            if (!isphonenumber(tag)) {
+                event.cancel = true;
+                alert('Please enter a valid phone number to procced.', 'Alert');
+
+            }
+
+        });
+
+
+
+        $('#bccinput').on('beforeItemAdd', function (event) {
+            var tag = event.item;
+            if (!isValidEmailAddress(tag)) {
+                event.cancel = true;
+                alert('Please enter a valid email to procced.', 'Alert');
+            }
+        });
+
+        $("#ccinput").tagsinput('add', { preventPost: true });
+        $("#bccinput").tagsinput('add', { preventPost: true });
+
+
+        $('.widgetizeForm li .parentLabel').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).parent('li').hasClass('ready')) {
+                //$('.widgetDrop').hide();
+                // $(this).parent('li').addClass('on');
+                $('.widgetDrop').hide();
+                $(this).parent('li').find('.widgetDrop').toggle();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.widgetDrop .nextStage').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).hasClass('act')) {
+                $(this).closest('li.parentLi').next('.parentLi').addClass('ready');
+                $(this).closest('li.parentLi').next('.parentLi').find('.widgetDrop').show();
+                $(this).closest('li.parentLi').next('.parentLi').addClass('on');
+
+                $(this).closest('li.parentLi').removeClass('on').addClass('visited');
+                $(this).closest('li.parentLi').find('.widgetDrop').hide();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.closeDropCont').click(function () {
+            $(this).closest('li.parentLi').find('.widgetDrop').hide();
+        });
+
+        $('#ccAnchor').click(function (e) {
+            e.preventDefault();
+            $('#cc').show();
+            $(this).hide();
+            setTimeout(function () { $('#cc').focus(); }, 5000);
+
+        });
+        $('#bccAnchor').click(function (e) {
+            e.preventDefault();
+            $('#bcc').show();
+            $('#bcc').focus();
+            $(this).hide();
+        });
+        $('.sms-template-area').hide();
+        
+    });
+    function showEmail() {
+        $('.sms-template-area').hide();
+        $('.email-template-area').show();
+        $('#clsMail').show();
+        $('#clsSMS').hide();
+    }
+    function showSms() {
+        $('.email-template-area').hide();
+        $('.sms-template-area').show();
+        $('#clsMail').hide();
+        $('#clsSMS').show();
+    }
+
+
+    $(document).ready(function () {
+        var editor = CKEDITOR.instances['bodyInput'];
+        if (editor) { editor.destroy(true); }
+        CKEDITOR.replace('bodyInput');
+        
+    });
+
+    function SendMail() {
+
+        if ($('#toinput').val() == "") {
+            jAlert('Please specify at least one recipient.', 'Error');
+            return;
+        }
+
+        if (window.FormData !== undefined) {
+            var fileData = new FormData();
+            for (var j = 0; j < 10; j++) {
+                if ($("#fileUploader").get(j) != null && $("#fileUploader").get(j) != "") {
+                    var fileUpload = $("#fileUploader").get(j);
+                    var files = fileUpload.files;
+
+                    // Create FormData object
+
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+                }
+            }
+
+            // Adding one more key to FormData object
+            fileData.append('toinput', $('#toinput').val());
+            fileData.append('ccinput', $('#ccinput').val());
+            fileData.append('bccinput', $('#bccinput').val());
+            fileData.append('subjectinput', $('#subjectinput').val());
+            fileData.append('bodyInput', CKEDITOR.instances['bodyInput'].getData());
+            fileData.append('module_name', $("#hdnModule_Name").val());
+            fileData.append('module_id', $("#hdnModule_Id").val());
+
+            LoadingPanelcrmSharing.Show();
+            $.ajax({
+                url: '/CRMSharing/crmSendEmail',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    LoadingPanelcrmSharing.Hide();
+                    alert(result);
+                },
+                error: function (err) {
+                    LoadingPanelcrmSharing.Hide();
+                    alert(err.statusText);
+                }
+            });
+        } else {
+            alert("FormData is not supported.");
+        }
+
+    }
+
+    function SendSMS() {
+
+        if ($('#PhoneInput').val() == "") {
+            jAlert('Please specify at least one recipient.', 'Error');
+            return;
+        }
+
+        if (window.FormData !== undefined) {
+            var fileData = new FormData();
+            // Adding one more key to FormData object
+            fileData.append('MobileNo', $('#PhoneInput').val());
+            fileData.append('SmsContent', $('#msgInput').val());
+            fileData.append('module_name', $("#hdnModule_Name").val());
+            fileData.append('module_id', $("#hdnModule_Id").val());
+            LoadingPanelcrmSharing.Show();
+            $.ajax({
+                url: '/CRMSharing/crmSMS',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    LoadingPanelcrmSharing.Hide();
+
+                    alert(result);
+
+                },
+                error: function (err) {
+                    LoadingPanelcrmSharing.Hide();
+                    alert(err.statusText);
+                }
+            });
+        } else {
+            alert("FormData is not supported.");
+        }
+
+    }
+
+    function isphonenumber(inputtxt) {
+        return true;
+    }
+    function isValidEmailAddress(emailAddress) {
+        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        return pattern.test(emailAddress);
+    }
+
+
+
+
+
+</script>
+
+
+
+
+<div class="modal fade pmsModal w60" id="sharingmodel" tabindex="-1" role="dialog" aria-labelledby="sharingmodel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Send Email/SMS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pmsForm">
+                <div class="clearfix" style="border-bottom: 1px dashed #ccc;">
+                    <label class="radio-inline checkStyle">
+                        SMS
+                        <input type="radio" checked="checked" name="radio" onclick="showSms();">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radio-inline checkStyle">
+                        Email
+                        <input type="radio" checked="checked" name="radio" onclick="showEmail();">
+                        <span class="checkmark"></span>
+                    </label>
+
+                </div>
+                <div class="email-template-area">
+                    <div class="to-cc-sec">
+
+                        <div class="form-group">
+
+                            <input type="text" class="form-control singleBorder" id="toinput" placeholder="To">
+                        </div>
+                        <div class="form-group" id="cc">
+
+                            <input type="text" class="form-control singleBorder" id="ccinput" placeholder="CC">
+                        </div>
+                        <div class="form-group" id="bcc">
+
+                            <input type="text" class="form-control singleBorder" id="bccinput" placeholder="BCC">
+                        </div>
+                        <div class="links"><a href="#" id="ccAnchor">CC</a><a href="#" id="bccAnchor">BCC</a></div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control singleBorder" id="subjectinput" placeholder="Subject">
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <span class="attachment_pin">
+
+                            <input type="file" id="fileUploader" name="fileUploader" value="Attach" multiple>
+                        </span>
+                        <textarea class="form-control fullBorder" id="bodyInput" rows="13"></textarea>
+                    </div>
+                </div>
+                <div class="sms-template-area">
+                    <div class="to-cc-sec">
+
+                        <div class="form-group">
+                            <input type="text" class="form-control singleBorder" id="PhoneInput" placeholder="Phone Number">
+                        </div>
+                    </div>
+                    <div>
+                        <textarea class="form-control fullBorder" id="msgInput" rows="13" placeholder="Message Description"></textarea>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer" id="clsMail">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success btn-radius" onclick="SendMail();">Send</button>
+            </div>
+            <div class="modal-footer" id="clsSMS">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success btn-radius" onclick="SendSMS();">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanelcrmSharing";
+        settings.Modal = true;
+        settings.ContainerElementID = "sharingmodel";
+    }
+).GetHtml()

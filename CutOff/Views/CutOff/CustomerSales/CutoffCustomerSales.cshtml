@@ -1,0 +1,382 @@
+﻿@{
+    ViewBag.Title = "Cutoff Sales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/jquery-confirm.min.css" rel="stylesheet" />
+<script src="~/assests/js/jquery-confirm.min.js"></script>
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>*@
+
+<link href="~/assests/js/wizard/smart_wizard.css" rel="stylesheet" />
+<link href="~/assests/js/wizard/smart_wizard_theme_arrows.css" rel="stylesheet" />
+<script src="~/assests/js/wizard/jquery.smartWizard.js"></script>
+
+<style>
+    #smartwizard .sw-btn-prev, #smartwizard .sw-btn-next {
+        display: none;
+    }
+    .fadeinDD {
+        opacity: 0;
+    }
+</style>
+<style>
+    #smartwizard .sw-btn-prev, #smartwizard .sw-btn-next {
+        display: none;
+    }
+
+    .fadeinDD {
+        opacity: 0;
+    }
+
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .itm {
+        width: 100%;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+
+    #smartwizard .btn-toolbar .btn-group {
+        float: right !important;
+    }
+
+    #smartwizard .nav > li > a:hover, .nav > li > a:focus {
+        background-color: #f5f5f5 !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.done > a {
+        border-color: #8390bb !important;
+        color: #fff !important;
+        background: #8390bb !important;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.done > a:after {
+            border-left: 30px solid #8390bb;
+        }
+
+    .sw-theme-arrows > ul.step-anchor > li.active > a {
+        border-color: #43589a !important;
+        color: #fff !important;
+        background: #44599b !important;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.active > a:after {
+            border-left: 30px solid #44599b !important;
+        }
+
+    #smartwizard .nav > li.active > a:hover, .nav > li > a:focus {
+        background-color: #44599b !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled > a:focus {
+        background-color: #f5f5f5 !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled.done > a:focus {
+        background-color: #8390bb !important;
+    }
+
+    #smartwizard .nav > li.done > a:hover, .nav > li.done > a:focus {
+        background-color: #8390bb !important;
+    }
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled > a, .sw-theme-arrows > ul.step-anchor > li.disabled > a:hover {
+        color: #c1c0c0;
+    }
+
+        .sw-theme-arrows > ul.step-anchor > li.disabled > a, .sw-theme-arrows > ul.step-anchor > li.disabled > a:hover {
+            color: #968d8d !important;
+        }
+
+
+
+    .sw-theme-arrows > ul.step-anchor > li.disabled.done > a, .sw-theme-arrows > ul.step-anchor > li.disabled.done > a:hover {
+        color: #fff !important;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Step show event
+        $(".sw-btn-prev, .sw-btn-next").addClass('Hide');
+        $("#smartwizard").on("showStep", function (e, anchorObject, stepNumber, stepDirection, stepPosition) {
+            //alert("You are on step "+stepNumber+" now");
+            //   $("#prev-btn").addClass('Hide');
+            if (stepPosition === 'first') {
+                $("#prev-btn").addClass('hide');
+            } else if (stepPosition === 'final') {
+                $("#next-btn").addClass('disabled');
+            } else {
+                $("#prev-btn").removeClass('hide');
+                $("#next-btn").removeClass('disabled');
+            }
+        });
+
+
+
+
+        // Smart Wizard
+        $('#smartwizard').smartWizard({
+            selected: 4,
+            theme: 'arrows',
+            transitionEffect: 'fade',
+            showStepURLhash: true,
+            disabledSteps: [0,1, 2, 3, 5, 6,7],
+            toolbarSettings: {
+                //toolbarPosition: 'both',
+                toolbarButtonPosition: 'end',
+                //toolbarExtraButtons: [btnFinish, btnCancel]
+            }
+        });
+
+
+        setTimeout(function () {
+            $('#loadIssue').removeClass('fadeinDD');
+        }, 2000);
+
+        //$("#next-btn").on("click", function () {
+        //    // Navigate next
+        //    $('#smartwizard').smartWizard("next");
+        //    return true;
+        //});
+
+
+    });
+</script>
+
+
+
+
+
+
+<script>
+    function RedirectToSalecutoff() {
+        var obj = {};
+        obj.CutoffDate = txtCutoffDate.GetDate();
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/CustomerCutoff/StartSalesCutoff",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+
+                document.getElementById("btnsalescutoff").style.display = "none";
+               // document.getElementById("btnNext").style.display = "inline-block";
+                LoadingPanel.Hide();
+
+
+                //jAlert('Sales Cutoff done. Press OK to proceed.', 'Title',function () {
+                //    setTimeout(function () {
+                //        window.location.href = "/VendorCutoff/CutOffVendorPurchase";
+                //    }, 1000);
+                //});
+                $.alert({
+                    title: 'Alert!',
+                    content: 'Sales Cutoff done. Press OK to proceed.',
+                    buttons: {
+                        okay: {
+                            text: 'Ok',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                window.location.href = "/VendorCutoff/CutOffVendorPurchase";
+                            }
+                        }
+                    }
+                });
+            },
+            error: function (response) {
+                //jAlert("Please try again later");
+                $.alert({
+                    title: 'Alert!',
+                    content: 'Please try again later.',
+                    buttons: {
+                        okay: {
+                            text: 'Ok',
+                            btnClass: 'btn-blue'
+
+                        }
+                    }
+                });
+                LoadingPanel.Hide();
+            }
+        });
+    }
+    function RedirectToNextStep() {
+    }
+
+</script>
+
+<style>
+    .bigger {
+        font-size: 15px;
+    }
+
+    .mtop15 {
+        margin-top: 15px;
+    }
+</style>
+
+<div class="form_main fadeinDD" id="loadIssue">
+    <!-- SmartWizard html -->
+    
+        <div id="smartwizard" class="mtop15">
+            <ul>
+                <li><a href=""><br /><div class="bigger">Database Creation & Restoration</div></a></li>
+                <li><a href=""><br /><div class="bigger">Account</div></a></li>
+                <li><a href=""><br /><div class="bigger">CashBank</div></a></li>
+                <li><a href=""><br /><div class="bigger">Journal</div></a></li>
+                <li><a href="#step-5"><br /><div class="bigger">Sales</div></a></li>
+                <li><a href=""><br /><div class="bigger">Purchase</div></a></li>
+                <li><a href=""><br /><div class="bigger">Stock</div></a></li>
+                <li><a href=""><br /><div class="bigger">Final</div></a></li>
+            </ul>
+            <div>
+                <div id="step-1" class="">
+
+
+                </div>
+                <div id="step-2" class="">
+
+                </div>
+                <div id="step-3" class="">
+
+                </div>
+
+
+                <div id="step-4" class="">
+
+
+                </div>
+                <div id="step-5" class="">
+                    <h3 class="border-bottom border-gray pb-2"></h3>
+                    <div class="flexContainer" id="dvSales">
+
+                        <div class="itm">
+                            <h3 class="hdr">Sales</h3>
+                            <div class="bordered">
+                                <table width="70%">
+                                    <tr>
+                                        <td>
+                                            <label>Cutoff date : </label>
+                                        </td>
+                                        <td>
+
+                                            @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "txtCutoffDate";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Date = Convert.ToDateTime((DateTime)ViewBag.CutoffDate);
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                        settings.ClientEnabled = false;
+                    }).GetHtml()
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label>Modules :</label>
+                                        </td>
+                                        <td>
+
+                                            @Html.DevExpress().CheckBoxList(
+                    settings =>
+                    {
+                        settings.Name = "chkCutoffSales";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.ClientEnabled = false;
+
+                        settings.PreRender += (s, e) =>
+                        {
+                            MVCxCheckBoxList cbList = (MVCxCheckBoxList)s;
+
+                            cbList.Items.Add("Sales Order");
+                            cbList.Items.Add("Sales Invoice");
+                            cbList.Items.Add("Sales return");
+                            cbList.Items.Add("Customer Receipt/Payment");
+                            cbList.Items.Add("Customer Debit/Credit Note");
+                            cbList.Items.Add("Transit sales invoice");
+                            cbList.Items.Add("Customer opening ");
+                            cbList.Items.Add("Customer adjustment ");
+
+                            cbList.SelectAll();
+
+
+
+                        };
+                    }).GetHtml()
+
+                                        </td>
+                                    </tr>
+
+                                </table>
+                                <hr />
+                                <div class="text-right mtop-2">
+                                    <button id="btnsalescutoff" class="btn btn-primary" onclick="RedirectToSalecutoff();">Start</button>
+                                    @*<button style="display:none;" id="btnNext" class="btn btn-primary" onclick="RedirectToNextStep();">Next</button>*@
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div id="step-6" class="">
+
+
+                </div>
+                <div id="step-7" class="">
+
+
+                </div>
+                <div id="step-8" class="">
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+</div>
+
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvSales";
+    }
+).GetHtml()
+

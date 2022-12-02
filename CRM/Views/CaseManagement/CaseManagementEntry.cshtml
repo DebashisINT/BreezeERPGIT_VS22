@@ -1,0 +1,688 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+
+@{
+    ViewBag.Title = "Case Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+<style>
+    #gridProductionList_DXStatus, #gridBOMResourcesList_DXStatus {
+        display: none;
+    }
+
+    .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+        background: white !important;
+    }
+
+    .finishedQttable > tbody > tr > td:first-child {
+        padding-right: 15px;
+    }
+
+    #gridProductionList #gridProductionList_DXMainTable > tbody > tr > td:nth-child(12), #gridProductionList #gridProductionList_DXMainTable > tbody > tr > td:nth-child(13) {
+        display: none;
+    }
+
+    .gridHeader {
+        font-size: 16px;
+        padding: 3px 10px;
+        background: #576cae;
+        /* color: #fff; */
+        border-radius: 4px 4px 0 0;
+        margin: 1px 1px -2px 1px;
+        background: #b7deed;
+        background: -moz-linear-gradient(top, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
+        background: -webkit-linear-gradient(top, #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%);
+        background: linear-gradient(to bottom, #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed',GradientType=0 );
+        background: #ffffff;
+        background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%);
+        background: -webkit-linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%);
+        background: linear-gradient(to bottom, #daecf9 0%,#b6d9f2 50%,#90c2e6 51%,#c8e3f7 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 );
+        border: 1px solid #87b8dc;
+    }
+
+    .ttAMt {
+        padding: 9px 0 0 15px;
+        margin-left: 29%;
+    }
+
+        .ttAMt table > tbody > tr > td {
+            padding-right: 15px;
+        }
+
+        .ttAMt.tw {
+            padding: 9px 0 0 15px;
+            margin-left: 67%;
+        }
+
+    .mtop10 {
+        margin-top: 10px;
+    }
+
+    .fa.fa-exclamation-circle:before {
+        font-family: FontAwesome;
+    }
+
+    .iconRed {
+        right: -19px;
+        top: 3px;
+        position: absolute;
+    }
+
+    .boxBorder {
+        border: 1px solid #ccc;
+        padding: 15px;
+    }
+
+    .styledBox {
+        border-radius: 6px;
+    }
+
+    .mtop10 {
+        margin-top: 10px;
+    }
+
+
+
+
+    .pdRight10 {
+        padding-right: 10px;
+    }
+
+    .mTop10 {
+        margin-top: 10px;
+    }
+
+    .inDrops {
+        display: inline-block;
+    }
+
+    .verticlTop {
+        vertical-align: top;
+    }
+
+
+    #EmployeeGrid_DXPagerBottom {
+        min-width: 100% !important;
+    }
+
+    #EmployeeGrid {
+        width: 100 % !important;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+
+    #cmbPriority {
+        border-radius: 3px;
+    }
+
+    .myAssignTarget > li {
+        list-style-type: none;
+        display: inline-block;
+        font-size: 11px;
+        text-align: center;
+    }
+
+        .myAssignTarget > li:not(:last-child) {
+            margin-right: 15px;
+        }
+
+        .myAssignTarget > li.mainCircle {
+            border: 1px solid #a2d3d8;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .myAssignTarget > li .heading {
+            padding: 2px 12px;
+            background: #6d82c5;
+            color: #fff;
+        }
+
+        .myAssignTarget > li .Num {
+            font-size: 14px;
+        }
+
+        .myAssignTarget > li.mainHeadCenter {
+            font-size: 12px;
+            transform: translateY(-16px);
+        }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+    .modal-footer .btn {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .mleft15 {
+        margin-left: 15px;
+    }
+
+    #SalesActivityPopup_PW-1, #popupShowHistory_PW-1 {
+        border-radius: 15px;
+    }
+
+        #SalesActivityPopup_PW-1 .dxpc-header, #popupShowHistory_PW-1 .dxpc-header {
+            background: #3ca1e8;
+            background-image: none !important;
+            padding: 11px 20px;
+            border: none;
+            border-radius: 15px 15px 0 0;
+        }
+
+        #SalesActivityPopup_PW-1 .dxpc-contentWrapper, #popupShowHistory_PW-1 .dxpc-contentWrapper {
+            background: #fff;
+            border-radius: 0 0 15px 15px;
+        }
+
+        #SalesActivityPopup_PW-1 .dxpc-mainDiv, #popupShowHistory_PW-1 .dxpc-mainDiv {
+            background-color: transparent !important;
+        }
+
+        #SalesActivityPopup_PW-1 .modal-footer, #popupShowHistory_PW-1 .modal-footer {
+            text-align: left;
+        }
+
+        #SalesActivityPopup_PW-1 .dxpc-shadow, #popupShowHistory_PW-1 .dxpc-shadow {
+            box-shadow: none;
+        }
+</style>
+
+<script>
+    function OpenActivity() {
+        $('#ActivityModel').modal('show');
+    }
+</script>
+
+<div class="panel-title clearfix" id="myDiv">
+    <h3 class="pull-left">
+        <label>Case Management</label>
+    </h3>
+    <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("CaseManagementList", "CaseManagement")"><i class="fa fa-times"></i></a></div>
+</div>
+
+<input type="hidden" value="0" id="hdnSchemaId" />
+@*@Html.HiddenFor(x => x.WorkOrderID)
+    @Html.HiddenFor(x => x.ProductionOrderID)
+    @Html.HiddenFor(x => x.WorkCenterID)
+    @Html.HiddenFor(x => x.Details_ID)*@
+
+<div class="boxBorder">
+
+    <div class="mTop5">
+        <label style="font-size: 16px; color: #4664d0;">Case Details</label>
+
+    </div>
+    <div class="styledBox">
+        <div class="row">
+
+            <div class=" col-sm-2">
+                <label class="">Case Title</label>
+                <div class="relative">
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">ID</label>
+                <div class="relative">
+                    <input type="text" class="form-control" disabled />
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Subject</label>
+                <div class="relative">
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Customer</label>
+                <div class="relative">
+                    <select class="form-control">
+                        <option>Select</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Origin</label>
+                <div class="relative">
+                    <input type="text" class="form-control" disabled />
+                </div>
+            </div>
+
+
+            <div class=" col-sm-2">
+                <label class="">Contact</label>
+                <div class="relative">
+                    <select class="form-control">
+                        <option>Select</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Product</label>
+                <div class="relative">
+                    <select class="form-control">
+                        <option>Select</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Case Status</label>
+                <div class="relative">
+                    <select class="form-control">
+                        <option>Select</option>
+                        <option>Identify</option>
+                        <option>Research</option>
+                        <option>Resolve</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Knowledge Base</label>
+                <div class="relative">
+                    <input type="file" class="form-control" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mTop5">
+        <label style="font-size: 16px; color: #4664d0;">Customer Details</label>
+
+    </div>
+
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class=" col-sm-2">
+                    <label class="">Company</label>
+                    <div class="relative">
+                        <label class="form-control"></label>
+                    </div>
+                </div>
+
+                <div class=" col-sm-2">
+                    <label class="">Email</label>
+                    <div class="relative">
+                        <label class="form-control"></label>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label class="">Mobile</label>
+                    <div class="relative">
+                        <label class="form-control"></label>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label class="">Business</label>
+                    <div class="relative">
+                        <label class="form-control"></label>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="box-address">
+        <div class="hdAddress">
+
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Address1 </label>
+                <div class="relative">
+                    <input type="text" id="WorkCenterAddress1" class="form-control input-sm" />
+
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <label>Address2 </label>
+                <div class="relative">
+                    <input type="text" id="WorkCenterAddress3" class="form-control input-sm" />
+
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <label>Address3 </label>
+                <div class="relative">
+                    <input type="text" id="WorkCenterAddress3" class="form-control input-sm" />
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Landmark </label>
+                <div class="relative">
+                    <input type="text" id="WorkCenterLandmark" class="form-control input-sm" />
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Pin/Zip (6 Characters) <span style="color:red">*</span></label>
+                <div class="relative">
+                    <input type="text" class="form-control input-sm" id="lstPin" />
+                    @*<select id="lstPin" class="form-control input-sm"></select>*@
+                    <span id="EPin" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Country <span style="color:red">*</span></label>
+                <div class="relative">
+                    <input type="text" id="lstCountry" class="form-control input-sm" disabled />
+                    @*<select id="lstCountry" onchange="onCountryChange()" class="form-control input-sm"></select>*@
+                    <span id="ECountry" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label>State <span style="color:red">*</span></label>
+                <div class="relative">
+                    <input type="text" id="lstState" class="form-control input-sm" disabled />
+                    @*<select id="lstState" onchange="onStateChange()" class="form-control input-sm"></select>*@
+
+                    <span id="EState" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>City / District </label>
+                <div class="relative">
+                    <input type="text" id="lstCity" class="form-control input-sm" disabled />
+                    @*<select id="lstCity" onchange="onCityChange()" class="form-control input-sm"></select>*@
+
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <label>Phone No. </label>
+                <div class="relative">
+                    <input type="text" id="lstCity" class="form-control input-sm"  />
+                    @*<select id="lstCity" onchange="onCityChange()" class="form-control input-sm"></select>*@
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Email <span style="color:red">*</span></label>
+                <div class="relative">
+                    <input type="text" id="lstState" class="form-control input-sm"  />
+                    @*<select id="lstState" onchange="onStateChange()" class="form-control input-sm"></select>*@
+
+                    <span id="EState" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-success mRight5" style="width: 110px; border-radius: 16px; " onclick="OpenActivity();">Create Activity</button>
+
+    <div class="clearfix">
+
+
+       
+
+        <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveAndNew" onclick="">
+            <div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div>
+            <span>Save and New</span>
+
+
+        </div>
+        <div class="inline-block addResourceBtn themeColor " onclick="">
+            <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
+            <span>Save and Exit</span>
+        </div>
+
+
+    </div>
+
+    <div class="row mTop10">
+
+    </div>
+</div>
+
+<!-- Grid BOM List -->
+<div class="modal fade pmsModal w40" id="ActivityModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Case Activity</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <ul class="myAssignTarget" id="myAssignTargetpopup">
+
+                        <li class="mainCircle">
+                            <div class="heading">
+                                <label class="">Case Name </label>
+                            </div>
+                            <div id="lblsource" class="Num">
+                                &nbsp;
+                                <label></label>
+
+                            </div>
+                        </li>
+                        <li class="mainCircle">
+                            <div class="heading">
+                                <label class="">Due Date </label>
+                            </div>
+                            <div id="lblIndustry" class="Num">&nbsp;<label></label></div>
+                        </li>
+                        <li class="mainCircle">
+                            <div class="heading">
+                                <label class="">Priority </label>
+                            </div>
+                            <div id="lblMiscComments" class="Num">
+                                &nbsp;
+                                <label></label>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="clear"></div>
+                <div class="clearfix">
+
+
+                    <div class="col-md-4">
+                        <div class="visF">
+                            <div id="ltd_ActivityDate" class="labelt">
+                                <div class="visF">
+                                    <label class="">Activity Date</label>
+                                    <span style="color: red;">*</span>
+                                </div>
+                            </div>
+                            <div id="td_ActivityDate">
+                                <div class="visF">
+                                    @Html.DevExpress().DateEdit(
+                                      settings =>
+                                      {
+                                          settings.Name = "RevisionDate_dt";
+                                          settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                          settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                          settings.Width = Unit.Percentage(100);
+
+                                      }
+                             ).GetHtml()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+
+                        </label>
+                        @*<button type="button" class="btn btn-primary btn-block" onclick="Products('POE')">Product</button>*@
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-4">
+                        <div class="visF">
+                            <div id="td_Activity" class="labelt">
+                                <div class="visF">
+                                    <label class="">Activity</label>
+                                    <span style="color: red;">*</span>
+                                </div>
+                            </div>
+                            <div id="td_Type">
+                                <div class="visF">
+                                    <select class="form-control" id="cmbActivity"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="visF">
+                            <div class="labelt">
+                                <label>
+                                    <label class="">Type</label>
+                                    <span style="color: red;">*</span>
+
+                                </label>
+                                <div id="td_Type">
+                                    <div class="">
+                                        <select class="form-control" id="cmbType"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-12">
+                        <div class="">
+                            <label>
+                                <label class="">Subject</label>
+                                <span style="color: red;">*</span>
+
+                            </label>
+                            <div id="td_Type">
+                                <div class="">
+                                    
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-12">
+                        <div class="">
+                            <label>
+                                <label class="">Details</label>
+                                <span style="color: red;">*</span>
+
+                            </label>
+                            <div id="td_Details">
+                                <div class="">
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-12">
+                        <div class="">
+                            <div id="td_lAssignto" class="labelt">
+                                <label class="">Assign To</label>
+                                <span style="color: red;">*</span>
+                            </div>
+                            <div id="td_dAssignto">
+                                <select class="form-control" id="cmbSalesActivityAssignTo"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-4">
+                        <div class="">
+                            <div id="td_lDuration" class="labelt">
+                                <label class="">Duration</label>
+                                <span style="color: red;">*</span>
+                            </div>
+                            <div id="td_dDuration">
+                                <select class="form-control" id="cmbDuration"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="">
+                            <div id="td_lPriority" class="labelt">
+                                <label class="">Priority</label>
+                                <span style="color: red;">*</span>
+                            </div>
+                            <div id="td_dPriority">
+                                <select class="form-control" id="cmbPriority"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="">
+                            <div id="td_lDue" class="labelt">
+                                <label class="">Due</label>
+                                <dxe:ASPxLabel ID="lblDue" runat="server" Text="" CssClass="pdl8"></dxe:ASPxLabel>
+                            </div>
+                            <div>
+                                @Html.DevExpress().DateEdit(
+                                  settings =>
+                                  {
+                                      settings.Name = "Date_dt";
+                                      settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                      settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                      settings.Width = Unit.Percentage(100);
+
+                                  }
+                         ).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="clearfix">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" data-dismiss="modal" onclick="SetBOMFocusGrid()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid BOM List-->
+
+

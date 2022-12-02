@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h1>Welcome To Cut Off.</h1>
+
+    <ul type="square">
+
+       <li><a style="font-size: small;" href="~/CutOff/Master/FinYearList.aspx">Change Financial Year</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Year Ending", "CutOffStepOne", "YearEnding")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Year Ending Sales", "CutOffCustomerSales", "CustomerCutoff")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Cutoff Cash/Bank", "PartialCashBAnkView", "Accounts")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Year Ending Purchase", "CutOffVendorPurchase", "VendorCutoff")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Cutoff Stock", "CutOffStockValue", "StockCutoff")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Cutoff Journal", "PartialJournalView", "Accounts")</a></li>
+
+    @*<li><a style="font-size: small;">@Html.ActionLink("Employee Attachment", "Dashboard", "payrollEmpAttactchment")</a></li>
+    <li><a style="font-size: small;">@Html.ActionLink("HOP - Entered Once", "Dashboard", "payrollHOPEntryOnce")</a></li>*@
+    </ul>
+</div>
+
+
+
+
