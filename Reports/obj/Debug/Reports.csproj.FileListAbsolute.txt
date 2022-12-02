@@ -200,5 +200,5 @@ E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\de\DevExpress.Sparkline.v15.1.Core.res
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\es\DevExpress.Sparkline.v15.1.Core.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\ja\DevExpress.Sparkline.v15.1.Core.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\ru\DevExpress.Sparkline.v15.1.Core.resources.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Mvc.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Mvc.xml
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Mvc.dll
