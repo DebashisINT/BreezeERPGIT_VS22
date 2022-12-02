@@ -1,0 +1,36 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gdrLookupProduct";
+    settings.KeyFieldName = "Id";
+    
+    settings.CallbackRouteValues = new { Controller = "Synchronization", Action = "ProductLookUp" };
+    settings.ClientSideEvents.SelectionChanged = "productChange";
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "5", "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 5;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+    settings.Columns.Add("Id", "Id").Visible = false;
+    settings.Columns.Add("product_Name", "product Name");
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    //settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Multiple;
+    //settings.Properties.MultiTextSeparator = ", ";
+    //settings.Properties.TextFormatString = "{1}";
+    
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.VisibleIndex = 0;
+    settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left; ;
+    settings.CommandColumn.ShowClearFilterButton = true;
+    settings.Settings.UseFixedTableLayout = true;
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.Settings.ShowFooter = true;
+    
+    
+}).Bind(Model).GetHtml()

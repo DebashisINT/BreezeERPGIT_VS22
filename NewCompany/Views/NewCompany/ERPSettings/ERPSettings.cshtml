@@ -1,0 +1,51 @@
+﻿@model NewCompany.Models.ErpSettingList
+@{
+    ViewBag.Title = "ERP Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dvcmpny {
+        width: 100%;
+    }
+    #gridERPSetting_DXStatus {
+        display:none;
+    }
+
+</style>
+
+
+<script>
+
+    function Savegrid()
+    {
+        gridERPSetting.UpdateEdit();
+    }
+
+//$('#dvcmpny').click(function() {
+//    // location.reload();
+//    window.location.reload();
+//});
+
+function ErpSetting_Reload()
+{
+    //window.location.reload();
+    gridERPSetting.Refresh();
+    location.reload();
+}
+
+</script>
+
+<div class="dvcmpny">
+    <div>
+        <h3 class="hdr">ERP Settings</h3>
+    </div>
+<div>
+@Html.Partial("~/Views/NewCompany/ERPSettings/_ERPSettingsGridView.cshtml", Model.ErpSettProp)
+  
+    <div> 
+         <button class="btn btn-primary pull-right"  type="button" title="Save" onclick="Savegrid();">Save</button>
+       
+    </div>
+    </div>
+  
+</div>

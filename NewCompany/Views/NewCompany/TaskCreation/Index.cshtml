@@ -1,0 +1,779 @@
+﻿@model NewCompany.Models.TaskCreationClass
+
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "Welcome to BreezeERP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<script src="~/Scripts/multiselect.min.js"></script>*@
+<script src="~/assests/js/multiselect.min.js"></script>
+
+
+<script>
+    $(function () {
+        $('#multiselect').multiselect();
+
+        
+
+
+
+    });
+
+    //$(function () {
+    //    $('#dtstart').datetimepicker({
+    //        // dateFormat: 'dd-mm-yy',
+    //        format: 'DD-MM-YYYY HH:mm:ss',
+    //        minDate: getFormattedDate()
+    //    });
+
+    //    $('#starttime').timepicker({
+    //        template: false,
+    //        showInputs: false,
+    //        minuteStep: 5
+    //    });
+    //    $('#endtime').timepicker({
+    //        template: false,
+    //        showInputs: false,
+    //        minuteStep: 5
+    //    });
+
+    //});
+
+
+    //function getFormattedDate() {
+    //    var d = new Date();
+
+    //    var month = d.getMonth() + 1;
+    //    var day = d.getDate();
+
+    //    var output = d.getFullYear() + '/' +
+    //        (month < 10 ? '0' : '') + month + '/' +
+    //        (day < 10 ? '0' : '') + day;
+    //}
+
+
+    function actionchange(e) {
+        var action = $(e).val();
+
+
+        var actionname = "";
+
+        if (action == "2") {
+            actionname = "Day";
+            $("#start_day").hide();
+            $("#due_day").hide();
+            $("#due_dt").hide();
+        }
+         if (action == "3") {
+             actionname = "Week";
+             $("#start_day").show();
+             $("#due_day").show();
+             $("#due_dt").hide();
+        }
+        else if (action == "4") {
+            actionname = "Month";
+            $("#start_day").hide();
+            $("#due_day").hide();
+            $("#due_dt").show();
+        }
+        else if (action == "6") {
+            actionname = "Year";
+            $("#start_day").hide();
+            $("#due_day").hide();
+            $("#due_dt").show();
+        }
+        else if (action == "7") {
+            actionname = "Once";
+            $("#1").attr("disabled", true);
+        } else {
+            $("#1").attr("disabled", false);
+        }
+        $("#txtactionname").val(actionname);
+    }
+
+    function actionchangeday(e) {
+        var action1 = $(e).val();
+        var due_dt = $.grep(arr, function (e) { return e.day == action1 })
+        appcbl_Due_dt.SetDate(due_dt[0].Date);
+
+        
+       
+       
+    }
+
+    $(function () {
+
+        var flag = "@Model.flag";
+
+        if (flag == "1")
+        {
+           // $("#txtsubject").attr("disabled", "disabled");
+          //  $("#TASK_DESCRIPTION").attr("disabled", "disabled");
+           // $("#multiselect").attr("disabled", "disabled");
+           // $("#multiselect_to").attr("disabled", "disabled");
+            $("#ddlAction").attr("disabled", "disabled");
+            $("#1").attr("disabled", "disabled");
+            $("#ddlpriority").attr("disabled", "disabled");
+            appcbl_start_dt.SetEnabled(false);
+            appcbl_Due_dt.SetEnabled(false);
+           // $("#multiselect_rightAll").attr("disabled", "disabled");
+           // $("#multiselect_leftAll").attr("disabled", "disabled");
+           // $("#multiselect_rightSelected").attr("disabled", "disabled");
+           // $("#multiselect_leftSelected").attr("disabled", "disabled");
+            
+            
+           
+
+        }
+
+        var action_type = '@ViewBag.ActionType'
+        if (action_type == "View") {
+            $("#btn_save").addClass(' hide ');
+            $("#btn_cancel").addClass(' hide ');
+        }
+
+        if ('@ViewBag.Action' != "") {
+            var action = '@ViewBag.Action';
+
+            if (action == "2") {
+                actionname = "Day";
+                $("#start_day").hide();
+                $("#due_day").hide();
+                $("#due_dt").show();
+            }
+
+            else if (action == "3") {
+                actionname = "Week";
+                $("#start_day").show();
+                $("#due_day").show();
+                $("#due_dt").hide();
+            }
+            else if (action == "4") {
+                actionname = "Month";
+                $("#start_day").hide();
+                $("#due_day").hide();
+                $("#due_dt").show();
+            }
+            else if (action == "6") {
+                actionname = "Year";
+                $("#start_day").hide();
+                $("#due_day").hide();
+                $("#due_dt").show();
+            }
+
+
+            $("#txtactionname").val(actionname);
+        }
+        else {
+            $("#txtactionname").val("Week");
+        }
+
+
+    });
+
+
+    var arr = [];
+    function datevalidate() {
+
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var startdate = appcbl_start_dt.GetDate();
+        var d = new Date(startdate)
+        var day = days[d.getDay()];
+        $("#txtday").val(day);
+        appcbl_Due_dt.SetMinDate(appcbl_start_dt.GetDate());
+        $("#ddlday").val(day);
+        appcbl_Due_dt.SetDate(appcbl_start_dt.GetDate());
+         
+        arr = [];
+        for(var i=0;i<7; i++){
+            var startdate = appcbl_start_dt.GetDate();
+            var d = new Date(startdate)
+            d=d.addDays(i);
+            var day = days[d.getDay()];
+            var obj = {};
+            obj.day = day;
+            obj.Date = d;
+            arr.push(obj);
+        }
+       
+
+    }
+
+
+    function datevalidateEdit() {
+
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var startdate = appcbl_start_dt.GetDate();
+        var d = new Date(startdate)
+        var day = days[d.getDay()];
+        arr = [];
+        for (var i = 0; i < 7; i++) {
+            var startdate = appcbl_start_dt.GetDate();
+            var d = new Date(startdate)
+            d = d.addDays(i);
+            var day = days[d.getDay()];
+            var obj = {};
+            obj.day = day;
+            obj.Date = d;
+            arr.push(obj);
+        }
+
+
+    }
+
+    $(function () {
+        Date.prototype.addDays = function (days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        }
+
+    });
+    
+
+    function datevalidateTo() {
+
+       
+        appcbl_start_dt.SetMaxDate(appcbl_Due_dt.GetDate());
+    }
+
+
+    function saveNotificationSetting() {
+
+        var objmultiselectto = [];
+
+
+        $("#multiselect_to option").each(function () {
+            objmultiselectto.push($(this).val());
+        });
+
+
+        var action = $('#ddlAction').val();
+        var every = $('#1').val();
+        var task_subject = $('#txtsubject').val();
+        var taskdescription = $('#TASK_DESCRIPTION').val();
+        var applicbl_frm = appcbl_start_dt.GetDate();
+        var applicbl_to = appcbl_Due_dt.GetDate();
+
+        var x = true;
+
+        if (task_subject == "" || task_subject == null) {
+            $("#Mandatorysubject").show();
+            x = false;
+        }
+        else {
+            $("#Mandatorysubject").hide();
+        }
+        if (taskdescription == "" || taskdescription == null) {
+            $("#Mandatorydesc").show();
+            x = false;
+        }
+        else {
+            $("#Mandatorydesc").hide();
+        }
+        if (applicbl_frm == "" || applicbl_frm == null) {
+            $("#Mandatorystartdt").show();
+            x = false;
+        }
+        else {
+            $("#Mandatorystartdt").hide();
+        }
+
+        if (applicbl_to == "" || applicbl_to == null) {
+            $("#Mandatoryduedt").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryduedt").hide();
+        }
+
+        if (action == "" || action == null) {
+            $("#Mandatorybasis").show();
+            x = false;
+        }
+        else {
+            $("#Mandatorybasis").hide();
+        }
+
+        if (every == "" || every == null) {
+            $("#Mandatoryevry").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryevry").hide();
+        }
+
+        if (objmultiselectto.length < 1) {
+            $("#Mandatoryassignuser").show();
+            x = false;
+
+        }
+
+        else {
+            $("#Mandatoryassignuser").hide();
+        }
+
+        if (x == false) {
+            return false;
+        }
+        else {
+            var TaskCreationData = {
+                start_date: appcbl_start_dt.GetDate(),
+                due_date: appcbl_Due_dt.GetDate(),
+                Action: action,
+                every: every,
+                Selecteduser: objmultiselectto,
+                TaskCreation_ID: $("#hdnnotid").val(),
+                IsActive: $('#IsActive').is(':checked'),
+                TASK_SUBJECT: task_subject,
+                TASK_DESCRIPTION: taskdescription,
+                ddlpriority: $("#ddlpriority").val(),
+                start_day: $("#txtday").val(),
+                ddlday: $("#ddlday").val(),
+                BeforeTime: cBefore_Time.GetText(),
+                OnTime: cOn_Time.GetText(),
+                AfterTime: cAfter_Time.GetText(),
+                ddlUpperTask: $("#ddlUpperTask").val(),
+
+            }
+
+
+            $.ajax({
+                type: "POST",
+                url: "/TaskCreation/SaveTaskCreationSetting",
+                data: "{data:" + JSON.stringify(TaskCreationData) + "}",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    jAlert(response, "Notification Message", function () {
+                        var url = '@Url.Action("Dashboard", "TaskCreation")';
+                        window.location.href = url;
+                    });
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+
+
+
+    }
+
+
+
+</script>
+<style>
+    .mainWraper .dxpc-contentWrapper {
+        background-color: #fff;
+    }
+
+    .mainWraper select[multiple], select[size] {
+        height: auto !important;
+    }
+
+    .pad28 {
+        padding-top: 26px;
+    }
+
+    .nopad {
+        padding: 0 !important;
+    }
+
+    .full {
+        width: 100%;
+    }
+
+    .min3 {
+        min-height: 130px;
+    }
+
+    .mBot10 {
+        margin-bottom: 10px !important;
+    }
+
+    .padTop40 {
+        padding-top: 40px;
+    }
+
+    .slm0 input {
+        margin: 0 !important;
+    }
+
+    .SenEv > button {
+        width: 10%;
+    }
+
+    .SenEv > input {
+        width: 76%;
+    }
+
+    .input-group > input {
+        height: auto !important;
+    }
+
+    .input-group > .input-group-addon {
+        padding: 3px 10px;
+    }
+
+    .filterCont {
+        background: #fffdfd;
+        padding-bottom: 12px;
+        margin-top: 4px;
+    }
+
+    .filterHd {
+        font-size: 15px;
+        margin-bottom: 0;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -1px;
+        top: 27px;
+    }
+    .rtnhBox {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 7px;
+        border: 1px solid #ccc;
+    }
+    .rtnhBox > h6 {
+        padding: 5px 15px;
+        background: #c0e0d5;
+        margin: 0;
+        margin-bottom: 5px;
+    }
+</style>
+
+
+
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Task Creation</h3>
+
+        <div class="crossBtn hide"><a href="DashBoardSettingList.aspx"><i class="fa fa-times"></i></a></div>
+    </div>
+</div>
+
+<div id="btncross" class="crossBtn" style=" margin-left: 50px;"><a href="#" onclick="cancelNotificationSetting()"><i class="fa fa-times"></i></a></div>
+
+<div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+
+    <div class="clearfix">
+        <div class="col-md-4">
+            <label><b>Subject</b><span style="color: red">*</span></label>
+            <div>
+                <input type="text" id="txtsubject" value="@Model.TASK_SUBJECT" />
+                <span id="Mandatorysubject" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+
+        </div>
+
+        <div class="col-md-1">
+            <label>&nbsp;</label>
+            <div style=" padding-top: 6px;">
+                @Html.CheckBoxFor(m =>m.IsActive, new { @name = "from", @class = "" }) <b>Active</b>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label><b>Description</b><span style="color: red">*</span></label>
+            <div>
+                @Html.TextAreaFor(m=>m.TASK_DESCRIPTION,new {@class="form-control",@maxlength="400"})
+                <span id="Mandatorydesc" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+                @*<input type="text" id="txtsubject" value="@Model.TASK_DESCRIPTION" disabled="disabled" />*@
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="clearfix">
+        <div class="col-md-4 lblmTop8">
+            <label><b>Select User to Assign Task</b></label>
+            <div>
+                @Html.DropDownList("ddlUser", new SelectList(Model.UserList, "UserID", "username"), new { @id = "multiselect", @class = "form-control min3", @multiple = "multiple", @name = "from" })
+            </div>
+
+        </div>
+        <div class="col-md-1 text-center padTop40">
+
+            <button type="button" id="multiselect_rightAll" class="btn btn-primary btn-xs mBot10"><i class="glyphicon glyphicon-forward"></i></button><br />
+            <button type="button" id="multiselect_rightSelected" class="btn btn-primary btn-xs mBot10"><i class="glyphicon glyphicon-chevron-right"></i></button><br />
+            <button type="button" id="multiselect_leftSelected" class="btn btn-primary btn-xs mBot10"><i class="glyphicon glyphicon-chevron-left"></i></button><br />
+            <button type="button" id="multiselect_leftAll" class="btn btn-primary btn-xs mBot10"><i class="glyphicon glyphicon-backward"></i></button>
+        </div>
+        <div class="col-md-4 lblmTop8">
+            <label><b>Assigned User List</b><span style="color: red">*</span></label>
+            <select name="to" id="multiselect_to" class="form-control min3" multiple="multiple">
+                @if (Model != null)
+                {
+                    if (Model.SelectedUser != null)
+                    {
+                        foreach (var item in Model.SelectedUser)
+                        {
+                    <option value="@item.UserID">@item.username</option>
+                        }
+                    }
+
+                }
+            </select>
+            <span id="Mandatoryassignuser" style="display: none" class="validclass">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+
+
+
+
+    <div class="clearfix">
+        <div class="col-md-3 lblmTop8">
+            <label><b>Basis</b><span style="color: red">*</span></label>
+            <div> @Html.DropDownListFor(m => m.ddlAction, new SelectList(Model.ActionList, "ActionID", "actionname"), new { @class = "full", @onchange = "actionchange(this)" })</div>
+            <span id="Mandatorybasis" style="display: none" class="validclass">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+        <div>
+
+        </div>
+        <div class="col-sm-3 lblmTop8" style=" ">
+            <label><b>Every:</b><span style="color: red">*</span></label>
+            <div class="SenEv">
+                <button type="button"  class="sub">-</button>
+                <input type="number" id="1" value="@Model.every" min="1" />
+                
+                <button type="button"  class="add">+</button>
+            </div>
+        </div>
+
+        <div id="field1" class="col-sm-3 lblmTop8">
+            <label>&nbsp;</label>
+            <div><input type="text" id="txtactionname" class="form-control" disabled="disabled" /></div>
+        </div>
+
+    </div>
+
+    <div class="clerfix">
+        <div class='col-sm-2'>
+            <div class="form-group">
+                <label><b>Start Date</b><span style="color: red">*</span></label>
+                                @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "appcbl_start_dt";
+                                         //settings.Properties.DisplayFormatString = "dd-MM-yyyy HH:mm";
+                                         //settings.Properties.EditFormatString = "dd-MM-yyyy HH:mm";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormat = EditFormat.Custom;
+                                         settings.Properties.UseMaskBehavior = true;
+                                         settings.Properties.ShowOutOfRangeWarning = false;
+                                         
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Properties.ClientSideEvents.DateChanged = "datevalidate";
+                                         settings.Date = Convert.ToDateTime(@Model.start_date);
+
+
+
+                                     }
+                            ).GetHtml()
+                <span id="Mandatorystartdt" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+               
+            </div>
+        </div>
+
+        <div class='col-sm-2' id="start_day">
+            <div class="form-group">
+                <label><b>Start Day</b></label>
+                <input type="text" id="txtday" value="@Model.start_day" disabled />
+            </div>
+        </div>
+
+        <div class='col-sm-2' id="due_day">
+            <div class="form-group">
+                <label><b>Due Day</b><span style="color: red">*</span></label>
+                @Html.DropDownListFor(m => m.ddlday, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="Monday", Value = "Monday" },
+                                new SelectListItem{ Text="Tuesday", Value ="Tuesday" },
+                                 new SelectListItem{ Text="Wednesday", Value = "Wednesday" },
+                                  new SelectListItem{ Text="Thursday", Value = "Thursday" },
+                                new SelectListItem{ Text="Friday", Value ="Friday" },
+                                 new SelectListItem{ Text="Saturday", Value = "Saturday" },
+                                   new SelectListItem{ Text="Sunday", Value = "Sunday" }
+                             }, new { style = "width: 100%;", id = "ddlday", @onchange = "actionchangeday(this)" })
+
+                <span id="Mandatorydueday" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+
+            </div>
+        </div>
+
+        <div class='col-sm-2' id="due_dt" style="display:none">
+            <div class="form-group">
+                <label><b>Due Date</b><span style="color: red">*</span></label>
+                                @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "appcbl_Due_dt";
+                                        // settings.Properties.DisplayFormatString = "dd-MM-yyyy HH:mm";
+                                         //settings.Properties.EditFormatString = "dd-MM-yyyy HH:mm";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormat = EditFormat.Custom;
+                                         settings.Properties.UseMaskBehavior = true;
+                                         settings.Properties.ShowOutOfRangeWarning = false;
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                         settings.Date = Convert.ToDateTime(@Model.due_date);
+
+                                     }
+                            ).GetHtml()
+                <span id="Mandatoryduedt" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+
+            </div>
+        </div>
+
+        <div class='col-sm-2'>
+            <div class="form-group">
+                <label><b>Priority</b><span style="color: red">*</span></label>
+                @Html.DropDownListFor(m => m.ddlpriority, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="High", Value = "1" },
+                                new SelectListItem{ Text="Medium", Value ="2" },
+                                 new SelectListItem{ Text="Low", Value = "3" }
+                             }, new { style = "width: 100%;", id = "ddlpriority" })
+               
+                <span id="Mandatoryduedt" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+
+            </div>
+        </div>
+
+        <div class='col-sm-2'>
+            <div class="form-group">
+                <label><b>Parent Task</b><span style="color: red">*</span></label>
+                <div> @Html.DropDownListFor(m => m.ddlUpperTask, new SelectList(Model.UpperTaskList, "ID", "TASK_SUBJECT"), new { @class = "full", @onchange = "actionchange(this)" })</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div>
+            <div class="col-md-9">
+                <div class="clearfix rtnhBox">
+                    <h6>Rating Point</h6>
+                    <div class='col-sm-2' id="start_day">
+                        <div class="form-group">
+                            <label><b>Before Time</b></label>
+                            @Html.DevExpress().TextBoxFor(m => m.BeforeTime,
+                                            settings =>
+                                            {
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "cBefore_Time";
+                                                settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                                settings.ControlStyle.CssClass = "DEvInput";
+                                            }).GetHtml()
+                        </div>
+                    </div>
+
+
+                    <div class='col-sm-2' id="start_day">
+                        <div class="form-group">
+                            <label><b>On Time</b></label>
+                            @Html.DevExpress().TextBoxFor(m => m.OnTime,
+                                            settings =>
+                                            {
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "cOn_Time";
+                                                settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                                settings.ControlStyle.CssClass = "DEvInput";
+                                            }).GetHtml()
+                        </div>
+                    </div>
+
+
+                    <div class='col-sm-2' id="start_day">
+                        <div class="form-group">
+                            <label><b>After Time</b></label>
+                            @Html.DevExpress().TextBoxFor(m => m.AfterTime,
+                                            settings =>
+                                            {
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "cAfter_Time";
+                                                settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                                settings.ControlStyle.CssClass = "DEvInput";
+                                            }).GetHtml()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+
+
+
+    <div>
+
+        <div class="clearfix">
+
+        </div>
+
+    </div>
+    <input type="hidden" id="hdnnotid" value="@Model.TaskCreation_ID" />
+
+    <div class="col-md-12 ">
+        <button type="button" class="btn btn-success" id="btn_save" onclick="saveNotificationSetting()">Save Settings</button>
+        <button type="button" class="btn btn-danger" id="btn_cancel" onclick="cancelNotificationSetting()">Cancel</button>
+    </div>
+</div>
+
+<script>
+
+    function cancelNotificationSetting() {
+
+        var url = '@Url.Action("Dashboard", "TaskCreation")';
+        window.location.href = url;
+    }
+    $(function () {
+
+        $('.add').click(function () {
+            if ($(this).prev().val() < 24) {
+                $(this).prev().val(+$(this).prev().val() + 1);
+            }
+        });
+        $('.sub').click(function () {
+            if ($(this).next().val() > 1) {
+                if ($(this).next().val() > 1) $(this).next().val(+$(this).next().val() - 1);
+            }
+        });
+
+        if (appcbl_Due_dt.GetDate() != null)
+            datevalidateEdit();
+
+    });
+
+
+
+
+</script>

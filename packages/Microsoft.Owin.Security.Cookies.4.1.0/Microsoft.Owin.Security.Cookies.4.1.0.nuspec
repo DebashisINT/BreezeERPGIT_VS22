@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Owin.Security.Cookies</id>
+    <version>4.1.0</version>
+    <title>Microsoft.Owin.Security.Cookies</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://raw.githubusercontent.com/aspnet/AspNetKatana/v4.0.1/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/aspnet/AspNetKatana/</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Middleware that enables an application to use cookie based authentication, similar to ASP.NET's forms authentication.</description>
+    <summary />
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <tags>Microsoft OWIN Katana</tags>
+    <dependencies>
+      <dependency id="Owin" version="1.0.0" />
+      <dependency id="Microsoft.Owin" version="4.1.0" />
+      <dependency id="Microsoft.Owin.Security" version="4.1.0" />
+    </dependencies>
+  </metadata>
+</package>

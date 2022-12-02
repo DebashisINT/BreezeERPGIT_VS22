@@ -1,0 +1,78 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridERPSetting";
+    settings.KeyFieldName = "Key";
+    settings.CallbackRouteValues = new { Controller = "ERPSettings", Action = "PartialGridBind" };
+    settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "ERPSettings", Action = "SaveERPSettings" };
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+
+    settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50","100" };
+    settings.ClientSideEvents.EndCallback = "ErpSetting_Reload";
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 100;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Key";
+        x.Caption = "Key Field";
+        x.VisibleIndex = 1;
+
+        x.ColumnType = MVCxGridViewColumnType.TextBox;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(40);
+        //x.Visible = false;
+
+    });
+    
+    
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Value";
+        x.Caption = "Key Value";
+        x.VisibleIndex = 2;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+        x.ColumnType = MVCxGridViewColumnType.TextBox;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    });
+
+  
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Description";
+        x.Caption = "Description";
+        x.VisibleIndex = 3;
+
+        x.ColumnType = MVCxGridViewColumnType.TextBox;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(40);
+        //x.Visible = false;
+
+    });
+    settings.ClientSideEvents.BatchEditStartEditing = "function(s, e){ if(e.focusedColumn.fieldName == 'Key' || e.focusedColumn.fieldName == 'Description') e.cancel = (e.visibleIndex >= 0); }";
+
+    //settings.ClientSideEvents.EndCallBack = "OnEndCallback";
+   
+}).Bind(Model).GetHtml()
+
+
+
+
+
+
+
+
