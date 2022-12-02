@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Welcome to BreezeERP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+<script>
+    function AddTask() {
+        var url = '/TaskCreation/Index?ActionType=ADD';
+        window.location.href = url;
+    }
+</script>
+<script>
+    var taskcreation_id;
+    function OnStartAssignCallback(s, e) {
+        
+        e.customArgs["ID"] = taskcreation_id;
+       
+    }
+    function OnClickEditForm(ID) {
+        var url = '/TaskCreation/Index?ActionType=EDIT&taskcrationid=' + ID;
+        window.location.href = url;
+    }
+
+    function OnClickDeleteForm(ID, flag) {
+        var deleteflag;
+
+        $.ajax({
+            type: "POST",
+            url: '/TaskCreation/TaskDeleteProcessed/',
+            data: JSON.stringify({ 'ActionType': 'DeleteProcessed', 'id': ID }),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                deleteflag = response
+
+               
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+
+
+        
+
+        if (deleteflag == 1)
+        {
+            jAlert('Selected Task is being processed.Can not be deleted(You can only active or deactive the task)');
+              return;
+        }
+        
+        var url = '/TaskCreation/TaskDelete/';
+
+        jConfirm("Confirm Delete?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'Delete', 'id': ID }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        jAlert(response, "Notification Message", function () {
+                            gridTaskCreation.Refresh();
+                        });
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    }
+
+    function OnClickAssignForm(ID)
+    {
+        taskcreation_id = ID;
+        AssignUsergridView.Refresh();
+        $('#TaskCreationMode').modal('show');
+    }
+
+    function OnClickViewForm(ID)
+    {
+        var url = '/TaskCreation/Index?ActionType=View&taskcrationid=' + ID;
+        window.location.href = url;
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridTaskCreation.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridTaskCreation.SetWidth(cntWidth);
+            }
+        });
+    });
+</script>
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Task Creation</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="clearfix">
+    @if (ViewBag.CanAdd)
+    {
+        <a href="javascript:void(0);" onclick="AddTask()" class="btn btn-primary"><span>Add New</span> </a>
+    }
+        
+    </div>
+</div>
+<div class="GridViewArea">
+    @{
+        Html.RenderAction("PartialTaskCreationList", "TaskCreation");
+    }
+</div>
+
+<div class="modal fade" id="TaskCreationMode" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><label id="lblPopupTitle">Assigned User</label></h4>
+            </div>
+            <div class="modal-body">
+                <div id="TaxTable">
+                    @{
+                        Html.RenderAction("PartialAssignUserGrid", "TaskCreation");
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+

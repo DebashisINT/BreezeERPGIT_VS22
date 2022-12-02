@@ -1,0 +1,82 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridCompany";
+
+    settings.CallbackRouteValues = new { Action = "CompanyGrid", Controller = "CompanyCreation" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Company_Name";
+        x.Caption = "Company Name";
+        //x.VisibleIndex = 1;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(350);
+        //x.ColumnType = MVCxGridViewColumnType.TextBox;
+        x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Dbname";
+        x.Caption = "Database Name";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+        //x.ColumnType = MVCxGridViewColumnType.TextBox;
+        x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        //x.Visible = false;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Parent_name";
+        x.Caption = "Parent Company Name";
+        //x.VisibleIndex = 2;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+        //x.ColumnType = MVCxGridViewColumnType.TextBox;
+        // x.Visible = false;
+        x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    });//
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "URL";
+        x.Caption = "URL";
+        //x.VisibleIndex = 2;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(600);
+        //x.ColumnType = MVCxGridViewColumnType.TextBox;
+        // x.Visible = false;
+        x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(40);
+    });//
+
+   
+    
+
+}).Bind(Model).GetHtml()
+
+
+
+
+

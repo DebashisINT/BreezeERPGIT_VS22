@@ -1,0 +1,1212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DCAFDE52-3313-413B-AFC0-D827B9F3E206}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OpeningEntry</RootNamespace>
+    <AssemblyName>OpeningEntry</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\ERP.UI\bin\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\DevExpress.Data.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v15.1.Core, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v15.1.Core, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.Mvc.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ERP\ConsolidatedCustomerList.aspx" />
+    <Content Include="ERP\ConsolidatedCustomer.aspx" />
+    <Content Include="ERP\ConsolidatedTransportedList.aspx" />
+    <Content Include="ERP\ConsolidatedTransporter.aspx" />
+    <Content Include="ERP\ConsolidatedVendor.aspx" />
+    <Content Include="ERP\ConsolidatedVendorList.aspx" />
+    <Content Include="ERP\CustomerReceiptPayment.aspx" />
+    <Content Include="ERP\CustomerReceiptPaymentList.aspx" />
+    <Content Include="ERP\EntriesDocuments.aspx" />
+    <Content Include="ERP\js\PurchaseOrder.js" />
+    <Content Include="ERP\js\PurchaseOrderList.js" />
+    <Content Include="ERP\js\SearchPopup.css" />
+    <Content Include="ERP\js\SearchPopup.js" />
+    <Content Include="ERP\PurchaseInvoiceList.aspx" />
+    <Content Include="ERP\PurchaseOrderList.aspx" />
+    <Content Include="ERP\SalesInvoiceList.aspx" />
+    <Content Include="ERP\SalesOrderList.aspx" />
+    <Content Include="ERP\SalesQuotationList.aspx" />
+    <Content Include="ERP\Services\OpeningMaster.asmx" />
+    <Content Include="ERP\VendorPaymentReceipt.aspx" />
+    <Content Include="ERP\VendorPaymentReceiptList.aspx" />
+    <Content Include="ERP\frm_BranchUdfPopUp.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Master.Master" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="assests\bootstrap\css\bootstrap.css.map" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assests\css\custom\style.css.bak" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assests\fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="assests\fonts\font-awesome\less\animated.less" />
+    <Content Include="assests\fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="assests\fonts\font-awesome\less\core.less" />
+    <Content Include="assests\fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="assests\fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="assests\fonts\font-awesome\less\icons.less" />
+    <Content Include="assests\fonts\font-awesome\less\larger.less" />
+    <Content Include="assests\fonts\font-awesome\less\list.less" />
+    <Content Include="assests\fonts\font-awesome\less\mixins.less" />
+    <Content Include="assests\fonts\font-awesome\less\path.less" />
+    <Content Include="assests\fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="assests\fonts\font-awesome\less\screen-reader.less" />
+    <Content Include="assests\fonts\font-awesome\less\stacked.less" />
+    <Content Include="assests\fonts\font-awesome\less\variables.less" />
+    <Content Include="assests\fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_core.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_list.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_path.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="assests\js\jquery-1.10.2.min.map" />
+    <Content Include="OMS\MasterPage\ERP.Master" />
+    <Content Include="OMS\modalfiles\agreement.htm" />
+    <Content Include="OMS\modalfiles\blackdot.gif" />
+    <Content Include="OMS\modalfiles\modal.css" />
+    <Content Include="OMS\modalfiles\modal.js" />
+    <Content Include="OMS\modalfiles\newsletter.htm" />
+    <Content Include="OMS\modalfiles\originalmodal.js" />
+    <Content Include="OMS\windowfiles\close.gif" />
+    <Content Include="OMS\windowfiles\dhtmlwindow.css" />
+    <Content Include="OMS\windowfiles\dhtmlwindow.js" />
+    <Content Include="OMS\windowfiles\external.htm" />
+    <Content Include="OMS\windowfiles\external2.htm" />
+    <Content Include="OMS\windowfiles\max.gif" />
+    <Content Include="OMS\windowfiles\min.gif" />
+    <Content Include="OMS\windowfiles\resize.gif" />
+    <Content Include="OMS\windowfiles\restore.gif" />
+    <Content Include="OpeningEntry\DBML\OpeningEntryDBML.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>OpeningEntryDBML.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Models\OpeningDataClasses.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>OpeningDataClasses.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\OpeningEntry.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assests\bootstrap\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="assests\bootstrap\css\bootstrap.css" />
+    <Content Include="assests\bootstrap\css\bootstrap.min.css" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assests\bootstrap\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="assests\bootstrap\js\bootstrap.js" />
+    <Content Include="assests\bootstrap\js\bootstrap.min.js" />
+    <Content Include="assests\css\custom\AjaxStyle.css" />
+    <Content Include="assests\css\custom\demos.css" />
+    <Content Include="assests\css\custom\dhtmlgoodies_calendar.css" />
+    <Content Include="assests\css\custom\GenericCss.css" />
+    <Content Include="assests\css\custom\jquery.alerts.css" />
+    <Content Include="assests\css\custom\jquery.confirm.css" />
+    <Content Include="assests\css\custom\jquery.timeentry.css" />
+    <Content Include="assests\css\custom\main.css" />
+    <Content Include="assests\css\custom\menu-bar.css" />
+    <Content Include="assests\css\custom\menu-item.css" />
+    <Content Include="assests\css\custom\MultipleSelectionDDLCSS.css" />
+    <Content Include="assests\css\custom\PageStyle.css" />
+    <Content Include="assests\css\custom\style.css" />
+    <Content Include="assests\css\custom\sumoselect.css" />
+    <Content Include="assests\fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="assests\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assests\fonts\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="assests\images\1.png" />
+    <Content Include="assests\images\10.png" />
+    <Content Include="assests\images\11.png" />
+    <Content Include="assests\images\12.png" />
+    <Content Include="assests\images\13.png" />
+    <Content Include="assests\images\14.png" />
+    <Content Include="assests\images\15.png" />
+    <Content Include="assests\images\16.png" />
+    <Content Include="assests\images\17.png" />
+    <Content Include="assests\images\18.png" />
+    <Content Include="assests\images\19.png" />
+    <Content Include="assests\images\2.png" />
+    <Content Include="assests\images\20.png" />
+    <Content Include="assests\images\21.png" />
+    <Content Include="assests\images\22.png" />
+    <Content Include="assests\images\23.png" />
+    <Content Include="assests\images\24.png" />
+    <Content Include="assests\images\25.png" />
+    <Content Include="assests\images\26.png" />
+    <Content Include="assests\images\27.png" />
+    <Content Include="assests\images\28.png" />
+    <Content Include="assests\images\29.png" />
+    <Content Include="assests\images\3.png" />
+    <Content Include="assests\images\30.png" />
+    <Content Include="assests\images\31.png" />
+    <Content Include="assests\images\32.png" />
+    <Content Include="assests\images\33.png" />
+    <Content Include="assests\images\34.png" />
+    <Content Include="assests\images\35.png" />
+    <Content Include="assests\images\36.png" />
+    <Content Include="assests\images\37.png" />
+    <Content Include="assests\images\38.png" />
+    <Content Include="assests\images\39.png" />
+    <Content Include="assests\images\4.png" />
+    <Content Include="assests\images\40.png" />
+    <Content Include="assests\images\41.png" />
+    <Content Include="assests\images\42.png" />
+    <Content Include="assests\images\43.png" />
+    <Content Include="assests\images\44.png" />
+    <Content Include="assests\images\45.png" />
+    <Content Include="assests\images\46.png" />
+    <Content Include="assests\images\47.png" />
+    <Content Include="assests\images\48.png" />
+    <Content Include="assests\images\49.png" />
+    <Content Include="assests\images\5.png" />
+    <Content Include="assests\images\50.png" />
+    <Content Include="assests\images\51.png" />
+    <Content Include="assests\images\52.png" />
+    <Content Include="assests\images\53.png" />
+    <Content Include="assests\images\54.png" />
+    <Content Include="assests\images\55.png" />
+    <Content Include="assests\images\56.png" />
+    <Content Include="assests\images\6.png" />
+    <Content Include="assests\images\7.png" />
+    <Content Include="assests\images\8.png" />
+    <Content Include="assests\images\9.png" />
+    <Content Include="assests\images\activeState.png" />
+    <Content Include="assests\images\activity.png" />
+    <Content Include="assests\images\add-adress.png" />
+    <Content Include="assests\images\Add.png" />
+    <Content Include="assests\images\addmember.png" />
+    <Content Include="assests\images\addnew.gif" />
+    <Content Include="assests\images\ajax-loader.gif" />
+    <Content Include="assests\images\Animated_Email.gif" />
+    <Content Include="assests\images\arrow2.gif" />
+    <Content Include="assests\images\arrow_down.gif" />
+    <Content Include="assests\images\arrow_down.jpg" />
+    <Content Include="assests\images\arrow_up.gif" />
+    <Content Include="assests\images\arrow_up.jpg" />
+    <Content Include="assests\images\attach.png" />
+    <Content Include="assests\images\attachment.png" />
+    <Content Include="assests\images\av.jpg" />
+    <Content Include="assests\images\back.jpg" />
+    <Content Include="assests\images\back.png" />
+    <Content Include="assests\images\backhead.png" />
+    <Content Include="assests\images\bcktip.png" />
+    <Content Include="assests\images\bcktool.png" />
+    <Content Include="assests\images\bg.jpg" />
+    <Content Include="assests\images\bglogin.jpg" />
+    <Content Include="assests\images\blue.bmp" />
+    <Content Include="assests\images\blue_foward.png" />
+    <Content Include="assests\images\blue_reload.png" />
+    <Content Include="assests\images\blue_rewind.png" />
+    <Content Include="assests\images\blue_save.png" />
+    <Content Include="assests\images\border.png" />
+    <Content Include="assests\images\Box_Black.PNG" />
+    <Content Include="assests\images\Box_Blue.png" />
+    <Content Include="assests\images\Box_Green.png" />
+    <Content Include="assests\images\Box_Red.png" />
+    <Content Include="assests\images\btn-go.gif" />
+    <Content Include="assests\images\btnPinkActive.jpg" />
+    <Content Include="assests\images\calendar.jpg" />
+    <Content Include="assests\images\Cash_BackSearch.jpg" />
+    <Content Include="assests\images\Cash_Home.jpeg" />
+    <Content Include="assests\images\Cash_Search-icon.jpg" />
+    <Content Include="assests\images\Cash_Search-icon.png" />
+    <Content Include="assests\images\change-dark.png" />
+    <Content Include="assests\images\change.png" />
+    <Content Include="assests\images\changeIcon.png" />
+    <Content Include="assests\images\changeP.png" />
+    <Content Include="assests\images\chart_display.gif" />
+    <Content Include="assests\images\close.gif" />
+    <Content Include="assests\images\closePop.png" />
+    <Content Include="assests\images\close_over.gif" />
+    <Content Include="assests\images\cntrlogo_1.jpg" />
+    <Content Include="assests\images\cntrlogo_16.jpg" />
+    <Content Include="assests\images\cntrlogo_17.jpg" />
+    <Content Include="assests\images\cntrlogo_20.jpg" />
+    <Content Include="assests\images\cntrlogo_5.jpg" />
+    <Content Include="assests\images\cntrlogo_6.jpg" />
+    <Content Include="assests\images\contractimages.gif" />
+    <Content Include="assests\images\controls.png" />
+    <Content Include="assests\images\CrIcon.png" />
+    <Content Include="assests\images\crs.png" />
+    <Content Include="assests\images\CurrencyImage1.jpg" />
+    <Content Include="assests\images\Delete.png" />
+    <Content Include="assests\images\disk.gif" />
+    <Content Include="assests\images\doc.png" />
+    <Content Include="assests\images\down.gif" />
+    <Content Include="assests\images\downarrow.png" />
+    <Content Include="assests\images\down_over.gif" />
+    <Content Include="assests\images\down_time.gif" />
+    <Content Include="assests\images\down_time_over.gif" />
+    <Content Include="assests\images\Edit.jpg" />
+    <Content Include="assests\images\Edit.png" />
+    <Content Include="assests\images\EHeaderBack.gif" />
+    <Content Include="assests\images\email.png" />
+    <Content Include="assests\images\endBG.JPG" />
+    <Content Include="assests\images\endlessLoading.gif" />
+    <Content Include="assests\images\endprogressBG.JPG" />
+    <Content Include="assests\images\error.png" />
+    <Content Include="assests\images\exportcsv.gif" />
+    <Content Include="assests\images\exportword.gif" />
+    <Content Include="assests\images\exportxls.gif" />
+    <Content Include="assests\images\feedback.png" />
+    <Content Include="assests\images\file.gif" />
+    <Content Include="assests\images\first.gif" />
+    <Content Include="assests\images\folder.gif" />
+    <Content Include="assests\images\footerbg.jpg" />
+    <Content Include="assests\images\full.jpg" />
+    <Content Include="assests\images\Go.gif" />
+    <Content Include="assests\images\Gradient.jpg" />
+    <Content Include="assests\images\green.bmp" />
+    <Content Include="assests\images\gridhead.gif" />
+    <Content Include="assests\images\headbg.jpg" />
+    <Content Include="assests\images\headerpanel.gif" />
+    <Content Include="assests\images\history.png" />
+    <Content Include="assests\images\icoaccts.gif" />
+    <Content Include="assests\images\icoactivity.gif" />
+    <Content Include="assests\images\icoexport.gif" />
+    <Content Include="assests\images\icohome.gif" />
+    <Content Include="assests\images\icopipe.gif" />
+    <Content Include="assests\images\icoprint.gif" />
+    <Content Include="assests\images\icosearch.gif" />
+    <Content Include="assests\images\icoxls.gif" />
+    <Content Include="assests\images\inactiveState.png" />
+    <Content Include="assests\images\indianrupee.jpg" />
+    <Content Include="assests\images\info-back.png" />
+    <Content Include="assests\images\info.png" />
+    <Content Include="assests\images\JournalEntry.jpeg" />
+    <Content Include="assests\images\l.jpg" />
+    <Content Include="assests\images\left.gif" />
+    <Content Include="assests\images\LeftNav.gif" />
+    <Content Include="assests\images\left_over.gif" />
+    <Content Include="assests\images\lightbox\bg-checker.png" />
+    <Content Include="assests\images\lightbox\box.png" />
+    <Content Include="assests\images\lightbox\bullet.gif" />
+    <Content Include="assests\images\lightbox\close.png" />
+    <Content Include="assests\images\lightbox\donate.png" />
+    <Content Include="assests\images\lightbox\favicon.gif" />
+    <Content Include="assests\images\lightbox\loading.gif" />
+    <Content Include="assests\images\lightbox\next.png" />
+    <Content Include="assests\images\lightbox\prev.png" />
+    <Content Include="assests\images\lightbox\speech-bubbles.png" />
+    <Content Include="assests\images\loader.gif" />
+    <Content Include="assests\images\loading.gif" />
+    <Content Include="assests\images\loading_background.png" />
+    <Content Include="assests\images\login-bg.gif" />
+    <Content Include="assests\images\login-head.gif" />
+    <Content Include="assests\images\login.gif" />
+    <Content Include="assests\images\logo-mini.png" />
+    <Content Include="assests\images\logo.bmp" />
+    <Content Include="assests\images\logo.jpg" />
+    <Content Include="assests\images\logo.png" />
+    <Content Include="assests\images\logo2.jpg" />
+    <Content Include="assests\images\logout.png" />
+    <Content Include="assests\images\logo_test.bmp" />
+    <Content Include="assests\images\lprogressBG.JPG" />
+    <Content Include="assests\images\meeting.png" />
+    <Content Include="assests\images\Members.png" />
+    <Content Include="assests\images\menback.png" />
+    <Content Include="assests\images\menu-bar-gradient.jpg" />
+    <Content Include="assests\images\menu-bar-gradient1.JPG" />
+    <Content Include="assests\images\menu-bar-right-arrow.gif" />
+    <Content Include="assests\images\menu-bar-right-arrow.png" />
+    <Content Include="assests\images\menu_strip_bg.jpg" />
+    <Content Include="assests\images\menu_strip_bg1.JPG" />
+    <Content Include="assests\images\menu_strip_down_arrow.gif" />
+    <Content Include="assests\images\menu_strip_down_arrow.png" />
+    <Content Include="assests\images\menu_strip_separator.gif" />
+    <Content Include="assests\images\New_messag1.gif" />
+    <Content Include="assests\images\next.gif" />
+    <Content Include="assests\images\next_fast.gif" />
+    <Content Include="assests\images\not-verified.png" />
+    <Content Include="assests\images\ok.jpg" />
+    <Content Include="assests\images\onmouse_addnew.gif" />
+    <Content Include="assests\images\onmouse_exportcsv.gif" />
+    <Content Include="assests\images\onmouse_exportword.gif" />
+    <Content Include="assests\images\onmouse_exportxls.gif" />
+    <Content Include="assests\images\onmouse_search.gif" />
+    <Content Include="assests\images\open.gif" />
+    <Content Include="assests\images\PageSize.gif" />
+    <Content Include="assests\images\PDFICON.jpg" />
+    <Content Include="assests\images\pFirst.png" />
+    <Content Include="assests\images\phone_number.png" />
+    <Content Include="assests\images\pLast.png" />
+    <Content Include="assests\images\pNext.png" />
+    <Content Include="assests\images\popuparrow.jpg" />
+    <Content Include="assests\images\pPrev.png" />
+    <Content Include="assests\images\prev.gif" />
+    <Content Include="assests\images\preview.jpg" />
+    <Content Include="assests\images\previous_disabled.gif" />
+    <Content Include="assests\images\previous_fast_disabled.gif" />
+    <Content Include="assests\images\print.gif" />
+    <Content Include="assests\images\print.png" />
+    <Content Include="assests\images\profile1.png" />
+    <Content Include="assests\images\progress.gif" />
+    <Content Include="assests\images\progressBG.JPG" />
+    <Content Include="assests\images\r.jpg" />
+    <Content Include="assests\images\reassign.png" />
+    <Content Include="assests\images\refresh1.jpg" />
+    <Content Include="assests\images\right.gif" />
+    <Content Include="assests\images\rightArrowHand.jpg" />
+    <Content Include="assests\images\RightNav.gif" />
+    <Content Include="assests\images\right_over.gif" />
+    <Content Include="assests\images\rupee.png" />
+    <Content Include="assests\images\sales.png" />
+    <Content Include="assests\images\schedule.png" />
+    <Content Include="assests\images\sdown.JPG" />
+    <Content Include="assests\images\search.gif" />
+    <Content Include="assests\images\show.png" />
+    <Content Include="assests\images\sms.png" />
+    <Content Include="assests\images\snext.JPG" />
+    <Content Include="assests\images\snext1.JPG" />
+    <Content Include="assests\images\subnavhov.gif" />
+    <Content Include="assests\images\subnavlink.gif" />
+    <Content Include="assests\images\success.png" />
+    <Content Include="assests\images\sup.JPG" />
+    <Content Include="assests\images\tip.png" />
+    <Content Include="assests\images\verified.png" />
+    <Content Include="assests\images\viewIcon.png" />
+    <Content Include="assests\images\viewt1.png" />
+    <Content Include="assests\images\warehouse.png" />
+    <Content Include="assests\images\Warning.png" />
+    <Content Include="assests\js\ajax-dynamic-list.js" />
+    <Content Include="assests\js\ajax-dynamic-list1.js" />
+    <Content Include="assests\js\ajax-dynamic-list1_rootfile.js" />
+    <Content Include="assests\js\ajax-dynamic-list1_wofolder.js" />
+    <Content Include="assests\js\ajax-dynamic-list_rootfile.js" />
+    <Content Include="assests\js\ajax-dynamic-list_wofolder.js" />
+    <Content Include="assests\js\ajaxList.js" />
+    <Content Include="assests\js\ajaxList_rootfile.js" />
+    <Content Include="assests\js\ajaxList_wofolder.js" />
+    <Content Include="assests\js\dhtmlgoodies_calendar.js" />
+    <Content Include="assests\js\floating-1.12.js" />
+    <Content Include="assests\js\GenericJScript.js" />
+    <Content Include="assests\js\gen_validatorv31.js" />
+    <Content Include="assests\js\init.js" />
+    <None Include="assests\js\jquery-1.10.2.intellisense.js" />
+    <Content Include="assests\js\jquery-1.10.2.js" />
+    <Content Include="assests\js\jquery-1.10.2.min.js" />
+    <Content Include="assests\js\jquery-1.3.1.js" />
+    <Content Include="assests\js\jquery-1.3.2.js" />
+    <Content Include="assests\js\jquery-1.3.2.min.js" />
+    <Content Include="assests\js\jquery.alerts.js" />
+    <Content Include="assests\js\jquery.colorbox-min.js" />
+    <Content Include="assests\js\jquery.colorbox.js" />
+    <Content Include="assests\js\jquery.confirm.min.js" />
+    <Content Include="assests\js\jquery.meio.mask.js" />
+    <Content Include="assests\js\jquery.min.js" />
+    <Content Include="assests\js\jquery.sumoselect.min.js" />
+    <Content Include="assests\js\jquery.timeentry.js" />
+    <None Include="assests\js\jquery.validate-vsdoc.js" />
+    <Content Include="assests\js\jquery.validate.js" />
+    <Content Include="assests\js\jquery.validate.min.js" />
+    <Content Include="assests\js\jquery.validate.unobtrusive.js" />
+    <Content Include="assests\js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="assests\js\loaddata.js" />
+    <Content Include="assests\js\loaddata1.js" />
+    <Content Include="assests\js\main.js" />
+    <Content Include="assests\js\modalmsg.js" />
+    <Content Include="assests\js\modernizr-2.6.2.js" />
+    <Content Include="assests\js\modernizr-2.8.3-respond-1.4.2.min.js" />
+    <Content Include="assests\js\MultipleSelectionDDLJS.js" />
+    <Content Include="assests\js\PageMethods.js" />
+    <Content Include="assests\js\progress.js" />
+    <Content Include="assests\js\respond.js" />
+    <Content Include="assests\js\respond.min.js" />
+    <Content Include="assests\js\vendor\jquery-1.11.2.min.js" />
+    <Content Include="assests\js\wz_tooltip.js" />
+    <None Include="assests\js\_references.js" />
+    <Content Include="assests\logoshort.png" />
+    <Content Include="assests\pluggins\choosen\choosen.min.css" />
+    <Content Include="assests\pluggins\choosen\choosen.min.js" />
+    <Content Include="assests\pluggins\choosen\chosen-sprite.png" />
+    <Content Include="assests\pluggins\choosen\chosen.css" />
+    <Content Include="assests\pluggins\customScroll\customScroll.js" />
+    <Content Include="assests\pluggins\customScroll\custoScroll.css" />
+    <Content Include="assests\pluggins\easyui\easyui.css" />
+    <Content Include="assests\pluggins\easyui\icon.css" />
+    <Content Include="assests\pluggins\easyui\images\tree_icons.png" />
+    <Content Include="assests\pluggins\easyui\jquery.easyui.min.js" />
+    <Content Include="assests\pluggins\jquery.alert\images\help.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\important.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\info.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\title.gif" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.alerts.css" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.alerts.js" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.ui.draggable.js" />
+    <Content Include="ERP\CustomerNote.aspx" />
+    <Content Include="ERP\ProjectMainPage.aspx" />
+    <Content Include="License.txt" />
+    <Content Include="ERP\SalesInvoice.aspx" />
+    <Content Include="ERP\PurchaseOrder.aspx" />
+    <Content Include="ERP\SalesQuotation.aspx" />
+    <Content Include="ERP\SalesOrderAdd.aspx" />
+    <Content Include="OpeningEntry\OpeningBranchRequisitionReturnList.aspx" />
+    <Content Include="OpeningEntry\OpeningCSS\OpeningSearchPopup.css" />
+    <Content Include="OpeningEntry\OpeningCustomerCrNoteAdjustDrNoteList.aspx" />
+    <Content Include="OpeningEntry\OpeningCustomerCrNoteAdjustmentList.aspx" />
+    <Content Include="OpeningEntry\OpeningCustomerDebitCreditNote.aspx" />
+    <Content Include="OpeningEntry\OpeningCustomerNoteList.aspx" />
+    <Content Include="OpeningEntry\OpeningCustomerReceiptAdjustmentList.aspx" />
+    <Content Include="OpeningEntry\OpeningCustomerReceiptPaymentList.aspx" />
+    <Content Include="OpeningEntry\OpeningCustomerReturnList.aspx" />
+    <Content Include="OpeningEntry\OpeningCustReceiptAdvanceAdstDrNoteList.aspx" />
+    <Content Include="OpeningEntry\OpeningInvoiceView\OpeningSInvoice.js" />
+    <Content Include="OpeningEntry\OpeningInvoiceView\OpeningSInvoiceView.html" />
+    <Content Include="OpeningEntry\OpeningJournalCreditorsAdjustPInvoiceList.aspx" />
+    <Content Include="OpeningEntry\OpeningJournalDebtorsAdjustInvoiceList.aspx" />
+    <Content Include="OpeningEntry\OpeningJS\OpeningPurchaseInvoice.js" />
+    <Content Include="OpeningEntry\OpeningJS\OpeningSalesBillingShipping.js" />
+    <Content Include="OpeningEntry\OpeningCashBankList.aspx" />
+    <Content Include="OpeningEntry\OpeningJS\OpeningSearchPopup.js" />
+    <Content Include="OpeningEntry\OpeningJS\OpeningTaxDetailsItemlevel.js" />
+    <Content Include="OpeningEntry\OpeningJS\OpeningTransitPurchaseInvoice.js" />
+    <Content Include="OpeningEntry\OpeningJS\OpeningTransitSalesInvoice.js" />
+    <Content Include="OpeningEntry\OpeningPReturnList.aspx" />
+    <Content Include="OpeningEntry\OpeningPurchaseIndent.aspx" />
+    <Content Include="OpeningEntry\OpeningPurchaseInvoicelist.aspx" />
+    <Content Include="OpeningEntry\OpeningPurchaseInvoiceListForCustomer.aspx" />
+    <Content Include="OpeningEntry\OpeningPurchaseInvoiceListForTransporter.aspx" />
+    <Content Include="OpeningEntry\OpeningPurchaseOrderList.aspx" />
+    <Content Include="OpeningEntry\OpeningPurchaseReturnManualList.aspx" />
+    <Content Include="OpeningEntry\OpeningRateDifferenceEntryCustomerList.aspx" />
+    <Content Include="OpeningEntry\OpeningRateDifferenceEntryVendorList.aspx" />
+    <Content Include="OpeningEntry\OpeningReturnManualList.aspx" />
+    <Content Include="OpeningEntry\OpeningReturnNormalList.aspx" />
+    <Content Include="OpeningEntry\OpeningSalesInvoice.aspx" />
+    <Content Include="OpeningEntry\OpeningSalesInvoiceList.aspx" />
+    <Content Include="OpeningEntry\OpeningSalesOrderAdd.aspx" />
+    <Content Include="OpeningEntry\OpeningSalesOrderEntityList.aspx" />
+    <Content Include="OpeningEntry\OpeningSalesOrderList.aspx" />
+    <Content Include="OpeningEntry\OpeningSalesQuotationList.aspx" />
+    <Content Include="OpeningEntry\OpeningSalesReturnList.aspx" />
+    <Content Include="OpeningEntry\OpeningSelfPurchaseInvoiceList.aspx" />
+    <Content Include="OpeningEntry\OpeningServices\OpeningBillingShipping.asmx" />
+    <Content Include="OpeningEntry\OpeningServices\OpeningMaster.asmx" />
+    <Content Include="OpeningEntry\OpeningServices\OpeningTaxService.asmx" />
+    <Content Include="OpeningEntry\OpeningServices\OpeningViewService.asmx" />
+    <Content Include="OpeningEntry\OpeningTPurchaseInvoicelist.aspx" />
+    <Content Include="OpeningEntry\OpeningTSalesInvoiceList.aspx" />
+    <Content Include="OpeningEntry\OpeningUndeliveryReturnList.aspx" />
+    <Content Include="OpeningEntry\OpeningVendorDrCrNoteList.aspx" />
+    <Content Include="OpeningEntry\OpeningVendorPaymentAdjustmentList.aspx" />
+    <Content Include="OpeningEntry\OpeningVendorPaymentReceiptList.aspx" />
+    <Content Include="OpeningEntry\OpeningVendorRateDiffAdjustmentInvoiceList.aspx" />
+    <Content Include="OpeningEntry\OpeningVendPaymentAdvanceAdstCrNoteList.aspx" />
+    <Content Include="OpeningEntry\OpenningJournalEntry.aspx" />
+    <Content Include="UserControls\OpeningSales_BillingShipping.ascx" />
+    <Content Include="UserControls\OpeningTermsConditionsControl.ascx" />
+    <Content Include="UserControls\ucPaymentDetails.ascx" />
+    <Content Include="UserControls\VehicleDetailsControl.ascx" />
+    <Content Include="ERP\VendorDebitCreditNote.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ERP\ConsolidatedCustomerList.aspx.cs">
+      <DependentUpon>ConsolidatedCustomerList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedCustomerList.aspx.designer.cs">
+      <DependentUpon>ConsolidatedCustomerList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedCustomer.aspx.cs">
+      <DependentUpon>ConsolidatedCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedCustomer.aspx.designer.cs">
+      <DependentUpon>ConsolidatedCustomer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedTransportedList.aspx.cs">
+      <DependentUpon>ConsolidatedTransportedList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedTransportedList.aspx.designer.cs">
+      <DependentUpon>ConsolidatedTransportedList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedTransporter.aspx.cs">
+      <DependentUpon>ConsolidatedTransporter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedTransporter.aspx.designer.cs">
+      <DependentUpon>ConsolidatedTransporter.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedVendor.aspx.cs">
+      <DependentUpon>ConsolidatedVendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedVendor.aspx.designer.cs">
+      <DependentUpon>ConsolidatedVendor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedVendorList.aspx.cs">
+      <DependentUpon>ConsolidatedVendorList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\ConsolidatedVendorList.aspx.designer.cs">
+      <DependentUpon>ConsolidatedVendorList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\CustomerReceiptPayment.aspx.cs">
+      <DependentUpon>CustomerReceiptPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\CustomerReceiptPayment.aspx.designer.cs">
+      <DependentUpon>CustomerReceiptPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\CustomerReceiptPaymentList.aspx.cs">
+      <DependentUpon>CustomerReceiptPaymentList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\CustomerReceiptPaymentList.aspx.designer.cs">
+      <DependentUpon>CustomerReceiptPaymentList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\PurchaseInvoiceList.aspx.cs">
+      <DependentUpon>PurchaseInvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\PurchaseInvoiceList.aspx.designer.cs">
+      <DependentUpon>PurchaseInvoiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\PurchaseOrderList.aspx.cs">
+      <DependentUpon>PurchaseOrderList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\PurchaseOrderList.aspx.designer.cs">
+      <DependentUpon>PurchaseOrderList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\SalesInvoiceList.aspx.cs">
+      <DependentUpon>SalesInvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\SalesInvoiceList.aspx.designer.cs">
+      <DependentUpon>SalesInvoiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\Services\OpeningMaster.asmx.cs">
+      <DependentUpon>OpeningMaster.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ERP\VendorPaymentReceipt.aspx.cs">
+      <DependentUpon>VendorPaymentReceipt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\VendorPaymentReceipt.aspx.designer.cs">
+      <DependentUpon>VendorPaymentReceipt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\VendorPaymentReceiptList.aspx.cs">
+      <DependentUpon>VendorPaymentReceiptList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\VendorPaymentReceiptList.aspx.designer.cs">
+      <DependentUpon>VendorPaymentReceiptList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\frm_BranchUdfPopUp.aspx.cs">
+      <DependentUpon>frm_BranchUdfPopUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\frm_BranchUdfPopUp.aspx.designer.cs">
+      <DependentUpon>frm_BranchUdfPopUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OpeningDataClasses.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OpeningDataClasses.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="OMS\MasterPage\ERP.Master.cs">
+      <DependentUpon>ERP.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OMS\MasterPage\ERP.Master.designer.cs">
+      <DependentUpon>ERP.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\SalesInvoice.aspx.cs">
+      <DependentUpon>SalesInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\SalesInvoice.aspx.designer.cs">
+      <DependentUpon>SalesInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\PurchaseOrder.aspx.cs">
+      <DependentUpon>PurchaseOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\PurchaseOrder.aspx.designer.cs">
+      <DependentUpon>PurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\SalesQuotation.aspx.cs">
+      <DependentUpon>SalesQuotation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\SalesQuotation.aspx.designer.cs">
+      <DependentUpon>SalesQuotation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\SalesOrderAdd.aspx.cs">
+      <DependentUpon>SalesOrderAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\SalesOrderAdd.aspx.designer.cs">
+      <DependentUpon>SalesOrderAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\DBML\OpeningEntryDBML.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OpeningEntryDBML.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\Opening TaxDetails\GSTtaxDetails.cs" />
+    <Compile Include="OpeningEntry\OpeningBranchRequisitionReturnList.aspx.cs">
+      <DependentUpon>OpeningBranchRequisitionReturnList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningBranchRequisitionReturnList.aspx.designer.cs">
+      <DependentUpon>OpeningBranchRequisitionReturnList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCashBankList.aspx.cs">
+      <DependentUpon>OpeningCashBankList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCashBankList.aspx.designer.cs">
+      <DependentUpon>OpeningCashBankList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerCrNoteAdjustDrNoteList.aspx.cs">
+      <DependentUpon>OpeningCustomerCrNoteAdjustDrNoteList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerCrNoteAdjustDrNoteList.aspx.designer.cs">
+      <DependentUpon>OpeningCustomerCrNoteAdjustDrNoteList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerCrNoteAdjustmentList.aspx.cs">
+      <DependentUpon>OpeningCustomerCrNoteAdjustmentList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerCrNoteAdjustmentList.aspx.designer.cs">
+      <DependentUpon>OpeningCustomerCrNoteAdjustmentList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerDebitCreditNote.aspx.cs">
+      <DependentUpon>OpeningCustomerDebitCreditNote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerDebitCreditNote.aspx.designer.cs">
+      <DependentUpon>OpeningCustomerDebitCreditNote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerNoteList.aspx.cs">
+      <DependentUpon>OpeningCustomerNoteList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerNoteList.aspx.designer.cs">
+      <DependentUpon>OpeningCustomerNoteList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerReceiptAdjustmentList.aspx.cs">
+      <DependentUpon>OpeningCustomerReceiptAdjustmentList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerReceiptAdjustmentList.aspx.designer.cs">
+      <DependentUpon>OpeningCustomerReceiptAdjustmentList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerReceiptPaymentList.aspx.cs">
+      <DependentUpon>OpeningCustomerReceiptPaymentList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerReceiptPaymentList.aspx.designer.cs">
+      <DependentUpon>OpeningCustomerReceiptPaymentList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerReturnList.aspx.cs">
+      <DependentUpon>OpeningCustomerReturnList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustomerReturnList.aspx.designer.cs">
+      <DependentUpon>OpeningCustomerReturnList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustReceiptAdvanceAdstDrNoteList.aspx.cs">
+      <DependentUpon>OpeningCustReceiptAdvanceAdstDrNoteList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningCustReceiptAdvanceAdstDrNoteList.aspx.designer.cs">
+      <DependentUpon>OpeningCustReceiptAdvanceAdstDrNoteList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningJournalCreditorsAdjustPInvoiceList.aspx.cs">
+      <DependentUpon>OpeningJournalCreditorsAdjustPInvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningJournalCreditorsAdjustPInvoiceList.aspx.designer.cs">
+      <DependentUpon>OpeningJournalCreditorsAdjustPInvoiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningJournalDebtorsAdjustInvoiceList.aspx.cs">
+      <DependentUpon>OpeningJournalDebtorsAdjustInvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningJournalDebtorsAdjustInvoiceList.aspx.designer.cs">
+      <DependentUpon>OpeningJournalDebtorsAdjustInvoiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPReturnList.aspx.cs">
+      <DependentUpon>OpeningPReturnList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPReturnList.aspx.designer.cs">
+      <DependentUpon>OpeningPReturnList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseIndent.aspx.cs">
+      <DependentUpon>OpeningPurchaseIndent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseIndent.aspx.designer.cs">
+      <DependentUpon>OpeningPurchaseIndent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseInvoicelist.aspx.cs">
+      <DependentUpon>OpeningPurchaseInvoicelist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseInvoicelist.aspx.designer.cs">
+      <DependentUpon>OpeningPurchaseInvoicelist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseInvoiceListForCustomer.aspx.cs">
+      <DependentUpon>OpeningPurchaseInvoiceListForCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseInvoiceListForCustomer.aspx.designer.cs">
+      <DependentUpon>OpeningPurchaseInvoiceListForCustomer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseInvoiceListForTransporter.aspx.cs">
+      <DependentUpon>OpeningPurchaseInvoiceListForTransporter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseInvoiceListForTransporter.aspx.designer.cs">
+      <DependentUpon>OpeningPurchaseInvoiceListForTransporter.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseOrderList.aspx.cs">
+      <DependentUpon>OpeningPurchaseOrderList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseOrderList.aspx.designer.cs">
+      <DependentUpon>OpeningPurchaseOrderList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseReturnManualList.aspx.cs">
+      <DependentUpon>OpeningPurchaseReturnManualList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningPurchaseReturnManualList.aspx.designer.cs">
+      <DependentUpon>OpeningPurchaseReturnManualList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningRateDifferenceEntryCustomerList.aspx.cs">
+      <DependentUpon>OpeningRateDifferenceEntryCustomerList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningRateDifferenceEntryCustomerList.aspx.designer.cs">
+      <DependentUpon>OpeningRateDifferenceEntryCustomerList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningRateDifferenceEntryVendorList.aspx.cs">
+      <DependentUpon>OpeningRateDifferenceEntryVendorList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningRateDifferenceEntryVendorList.aspx.designer.cs">
+      <DependentUpon>OpeningRateDifferenceEntryVendorList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningReturnManualList.aspx.cs">
+      <DependentUpon>OpeningReturnManualList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningReturnManualList.aspx.designer.cs">
+      <DependentUpon>OpeningReturnManualList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningReturnNormalList.aspx.cs">
+      <DependentUpon>OpeningReturnNormalList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningReturnNormalList.aspx.designer.cs">
+      <DependentUpon>OpeningReturnNormalList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesInvoice.aspx.cs">
+      <DependentUpon>OpeningSalesInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesInvoice.aspx.designer.cs">
+      <DependentUpon>OpeningSalesInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesInvoiceList.aspx.cs">
+      <DependentUpon>OpeningSalesInvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesInvoiceList.aspx.designer.cs">
+      <DependentUpon>OpeningSalesInvoiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesOrderAdd.aspx.cs">
+      <DependentUpon>OpeningSalesOrderAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesOrderAdd.aspx.designer.cs">
+      <DependentUpon>OpeningSalesOrderAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesOrderEntityList.aspx.cs">
+      <DependentUpon>OpeningSalesOrderEntityList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesOrderEntityList.aspx.designer.cs">
+      <DependentUpon>OpeningSalesOrderEntityList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesOrderList.aspx.cs">
+      <DependentUpon>OpeningSalesOrderList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesOrderList.aspx.designer.cs">
+      <DependentUpon>OpeningSalesOrderList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesQuotationList.aspx.cs">
+      <DependentUpon>OpeningSalesQuotationList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesQuotationList.aspx.designer.cs">
+      <DependentUpon>OpeningSalesQuotationList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesReturnList.aspx.cs">
+      <DependentUpon>OpeningSalesReturnList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSalesReturnList.aspx.designer.cs">
+      <DependentUpon>OpeningSalesReturnList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSelfPurchaseInvoiceList.aspx.cs">
+      <DependentUpon>OpeningSelfPurchaseInvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningSelfPurchaseInvoiceList.aspx.designer.cs">
+      <DependentUpon>OpeningSelfPurchaseInvoiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningServices\OpeningBillingShipping.asmx.cs">
+      <DependentUpon>OpeningBillingShipping.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningServices\OpeningMaster.asmx.cs">
+      <DependentUpon>OpeningMaster.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningServices\OpeningTaxService.asmx.cs">
+      <DependentUpon>OpeningTaxService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningServices\OpeningViewService.asmx.cs">
+      <DependentUpon>OpeningViewService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningTPurchaseInvoicelist.aspx.cs">
+      <DependentUpon>OpeningTPurchaseInvoicelist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningTPurchaseInvoicelist.aspx.designer.cs">
+      <DependentUpon>OpeningTPurchaseInvoicelist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningTSalesInvoiceList.aspx.cs">
+      <DependentUpon>OpeningTSalesInvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningTSalesInvoiceList.aspx.designer.cs">
+      <DependentUpon>OpeningTSalesInvoiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningUndeliveryReturnList.aspx.cs">
+      <DependentUpon>OpeningUndeliveryReturnList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningUndeliveryReturnList.aspx.designer.cs">
+      <DependentUpon>OpeningUndeliveryReturnList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendorDrCrNoteList.aspx.cs">
+      <DependentUpon>OpeningVendorDrCrNoteList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendorDrCrNoteList.aspx.designer.cs">
+      <DependentUpon>OpeningVendorDrCrNoteList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendorPaymentAdjustmentList.aspx.cs">
+      <DependentUpon>OpeningVendorPaymentAdjustmentList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendorPaymentAdjustmentList.aspx.designer.cs">
+      <DependentUpon>OpeningVendorPaymentAdjustmentList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendorPaymentReceiptList.aspx.cs">
+      <DependentUpon>OpeningVendorPaymentReceiptList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendorPaymentReceiptList.aspx.designer.cs">
+      <DependentUpon>OpeningVendorPaymentReceiptList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendorRateDiffAdjustmentInvoiceList.aspx.cs">
+      <DependentUpon>OpeningVendorRateDiffAdjustmentInvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendorRateDiffAdjustmentInvoiceList.aspx.designer.cs">
+      <DependentUpon>OpeningVendorRateDiffAdjustmentInvoiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendPaymentAdvanceAdstCrNoteList.aspx.cs">
+      <DependentUpon>OpeningVendPaymentAdvanceAdstCrNoteList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpeningVendPaymentAdvanceAdstCrNoteList.aspx.designer.cs">
+      <DependentUpon>OpeningVendPaymentAdvanceAdstCrNoteList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningEntry\OpenningJournalEntry.aspx.cs">
+      <DependentUpon>OpenningJournalEntry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpeningEntry\OpenningJournalEntry.aspx.designer.cs">
+      <DependentUpon>OpenningJournalEntry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OpeningSales_BillingShipping.ascx.cs">
+      <DependentUpon>OpeningSales_BillingShipping.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\OpeningSales_BillingShipping.ascx.designer.cs">
+      <DependentUpon>OpeningSales_BillingShipping.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OpeningTermsConditionsControl.ascx.cs">
+      <DependentUpon>OpeningTermsConditionsControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\OpeningTermsConditionsControl.ascx.designer.cs">
+      <DependentUpon>OpeningTermsConditionsControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ucPaymentDetails.ascx.cs">
+      <DependentUpon>ucPaymentDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\ucPaymentDetails.ascx.designer.cs">
+      <DependentUpon>ucPaymentDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\VehicleDetailsControl.ascx.cs">
+      <DependentUpon>VehicleDetailsControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\VehicleDetailsControl.ascx.designer.cs">
+      <DependentUpon>VehicleDetailsControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\VendorDebitCreditNote.aspx.cs">
+      <DependentUpon>VendorDebitCreditNote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\VendorDebitCreditNote.aspx.designer.cs">
+      <DependentUpon>VendorDebitCreditNote.aspx</DependentUpon>
+    </Compile>
+    <Content Include="App_Code\clsDropDownList.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="ERP\CustomerNote.aspx.cs">
+      <DependentUpon>CustomerNote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\CustomerNote.aspx.designer.cs">
+      <DependentUpon>CustomerNote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\EntriesDocuments.aspx.cs">
+      <DependentUpon>EntriesDocuments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\EntriesDocuments.aspx.designer.cs">
+      <DependentUpon>EntriesDocuments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\ProjectMainPage.aspx.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\ProjectMainPage.aspx.designer.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\SalesOrderList.aspx.cs">
+      <DependentUpon>SalesOrderList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\SalesOrderList.aspx.designer.cs">
+      <DependentUpon>SalesOrderList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ERP\SalesQuotationList.aspx.cs">
+      <DependentUpon>SalesQuotationList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ERP\SalesQuotationList.aspx.designer.cs">
+      <DependentUpon>SalesQuotationList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExceptionLogging.cs" />
+    <Compile Include="Master.Master.cs">
+      <DependentUpon>Master.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master.Master.designer.cs">
+      <DependentUpon>Master.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
+      <Project>{ea505340-6c3f-4a45-8876-61c0c8a17a5f}</Project>
+      <Name>BusinessLogicLayer</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{e0403ce7-71f7-4d02-85d1-1ee7125c1e75}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityLayer\EntityLayer.csproj">
+      <Project>{d31c544e-8eb6-4a69-b0f2-9c46ff7fc533}</Project>
+      <Name>EntityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpeningBusinessLogic\OpeningBusinessLogic.csproj">
+      <Project>{70eb1679-a728-4f6c-b740-4d4c36000b4d}</Project>
+      <Name>OpeningBusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UtilityLayer\UtilityLayer.csproj">
+      <Project>{9f45f4c2-a1b9-4aea-9f77-72b9f864b593}</Project>
+      <Name>UtilityLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpeningEntry\DBML\OpeningEntryDBML.dbml.layout">
+      <DependentUpon>OpeningEntryDBML.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\OpeningDataClasses.dbml.layout">
+      <DependentUpon>OpeningDataClasses.dbml</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2223</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2223/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

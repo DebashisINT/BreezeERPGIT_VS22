@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BreezeERP_19082019" Class="OpeningDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=LABSERVER\MSSQLSERVER17;Initial Catalog=BreezeERP_19082019;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BreezeERP_19082019ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.V_ProjectList" Member="V_ProjectLists">
+    <Type Name="V_ProjectList">
+      <Column Name="Proj_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Proj_Code" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
+      <Column Name="CustId" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IsInUse" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ProjectStatus" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjBracnchid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Hierarchy_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="HIERARCHY_NAME" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

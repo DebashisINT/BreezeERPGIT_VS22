@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>IonicVS2015</id>
+    <version>1.1.0</version>
+    <title>Ionic Framework VS2015</title>
+    <authors>richdizz</authors>
+    <owners>richdizz</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package installs the Ionic Framework into a VS2015 Apache Cordova template, which is updated in VS2015 to use a www root folder.</description>
+    <summary>This package installs the Ionic Framework into a VS2015 Apache Cordova template, which is updated in VS2015 to use a www root folder.</summary>
+    <language>en-US</language>
+  </metadata>
+</package>

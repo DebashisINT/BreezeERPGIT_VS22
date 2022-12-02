@@ -1,0 +1,392 @@
+﻿@model NewCompany.Models.CompanyCreationClass
+@{
+    ViewBag.Title = "Create Company";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Prefix = System.Configuration.ConfigurationSettings.AppSettings["Prefix"];
+}
+
+<style>
+    #gridCompany {
+        width: 100% !important;
+    }
+
+    .modal {
+        z-index: 10 !important;
+    }
+
+    .modal-backdrop {
+        z-index: 5 !important;
+    }
+
+    .navbar {
+        z-index: 1 !important;
+    }
+</style>
+<script>
+    function TypeChange(elem) {
+        var obj = {};
+        var type = $(elem).val();
+        obj.level = type;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetparentCompany", "CompanyCreation")',
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $('#ddlCompany').empty();
+                var i;
+                for (i = 0 ; i <= response.length - 1; i++) {
+                    $("#ddlCompany").append($('<option></option>').val(response[i].ID).html(response[i].Company_Name))
+                }
+
+            },
+            error: function (response) {
+            }
+        });
+    }
+    function SubmitCompany() {
+
+        if ($("#companyname").val() == "" || $("#companyname").val() == null) {
+            jAlert('Please enter a company name.', 'Alert');
+            return;
+        }
+
+        if ($("#dbname").val() == "" || $("#dbname").val() == null) {
+            jAlert('Please enter a database name.', 'Alert');
+            return;
+        }
+
+        if ($("#ddlType").val() == "" || $("#ddlType").val() == null) {
+            jAlert('Please select a level.', 'Alert');
+            return;
+        }
+
+        if ($("#ddlType").val() != "" && $("#ddlType").val() != null && $("#ddlType").val() != "1") {
+            if ($("#ddlCompany").val() == "" || $("#ddlCompany").val() == null) {
+                jAlert('Please select a parent company.', 'Alert');
+                return;
+            }
+        }
+
+        if (start_dt.GetValue() == null) {
+            jAlert('Please select financial start date.','Alert');
+            return;
+        }
+        if (end_dt.GetValue() == null) {
+            jAlert('Please select financial end date.', 'Alert');
+            return;
+        }
+
+
+        var obj = {};
+        obj.Company_Name = $("#companyname").val();
+        obj.DbName = $("#prefixs").val() + $("#dbname").val();
+        obj.Level = $("#ddlType").val();
+        obj.parentid = $("#ddlCompany").val();
+        obj.start_dt = start_dt.GetDate();
+        obj.end_dt = end_dt.GetDate();
+
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveNewCompany", "CompanyCreation")',
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $('#myModal').modal('hide');
+                $("#hdnoutputText").val(response);
+                jAlert('<div style="overflow-wrap: break-word;">New Company Created Successfully. Login URL for New Company is: ' + response + ' </div>', 'Alert');
+                gridCompany.Refresh();
+                LoadingPanel.Hide();
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+                LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function CopyURL() {
+        var copyText = document.getElementById("hdnoutputText");
+        copyText.select();
+        document.execCommand('copy');
+    }
+
+    $(function () {
+        gridCompany.Refresh();
+        gridCompany.Refresh();
+
+    });
+
+    $(function () {
+        $('#myModal').on('shown.bs.modal', function () {
+
+            $("#companyname").val("");
+            $("#dbname").val("");
+            $("#ddlType").val("1");
+            $(ddlCompany).empty();
+
+        });
+
+    });
+
+
+
+
+    function copyToClipboard(elem) {
+        // create hidden text element, if it doesn't already exist
+        var targetId = "_hiddenCopyText_";
+        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+        var origSelectionStart, origSelectionEnd;
+        if (isInput) {
+            // can just use the original source element for the selection and copy
+            target = elem;
+            origSelectionStart = elem.selectionStart;
+            origSelectionEnd = elem.selectionEnd;
+        } else {
+            // must use a temporary form element for the selection and copy
+            target = document.getElementById(targetId);
+            if (!target) {
+                var target = document.createElement("textarea");
+                target.style.position = "absolute";
+                target.style.left = "-9999px";
+                target.style.top = "0";
+                target.id = targetId;
+                document.body.appendChild(target);
+            }
+            target.textContent = elem.textContent;
+        }
+        // select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+        } catch (e) {
+            succeed = false;
+        }
+        // restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (isInput) {
+            // restore prior selection
+            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+        } else {
+            // clear temporary content
+            target.textContent = "";
+        }
+        return succeed;
+    }
+
+
+
+
+
+    function DbLostFocus() {
+        var obj = {};
+        obj.DbName = $("#prefixs").val() + $("#dbname").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CompanyIfExists", "CompanyCreation")',
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (!response) {
+                    $("#dbname").val("");
+                    alert('Database already exists. Please try another name.');
+                }
+
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+                LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function datevalidateTo() {
+        end_dt.SetMinDate(start_dt.GetDate());
+    }
+
+
+
+</script>
+
+
+<style>
+    .padtop28 {
+        padding-top: 28px;
+    }
+
+    .noStyle .modal-header {
+        background-image: none !important;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        color: #3c3b3b;
+        padding: 8px 13px 8px 15px;
+    }
+
+    .noStyle .modal-body {
+        background: #fff;
+    }
+
+    .modal-dialog.modal-sm {
+        width: 30%;
+    }
+
+    .mBot0 {
+        margin: 0;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridCompany.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridCompany.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridCompany.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridCompany.SetWidth(cntWidth);
+            }
+
+        });
+    });
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title">
+        <h3>Company Creation</h3>
+    </div>
+</div>
+<div class="form_main">
+
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Create New Company
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade pmsModal w30 bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">New Company Creation</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 lblmTop8">
+                            <label><b>Company Name <font color="red">*</font></b></label>
+                            <input id="companyname" type="text" maxlength="50" />
+                        </div>
+                        <div class="col-md-12">
+                            <label><b>Database Name <font color="red">*</font></b></label>
+                            <div>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:50px;"><input id="prefixs" type="text" class="col-sm-4" value="@ViewBag.Prefix" disabled="disabled" /></td>
+                                        @*Mantis Issue 24784*@ 
+                                        @*<td><input id="dbname" type="text" class="col-sm-8" maxlength="10" onblur="DbLostFocus();" /></td>*@
+                                        <td><input id="dbname" type="text" class="col-sm-8" maxlength="20" onblur="DbLostFocus();" /></td>
+                                        @*End of Mantis Issue 24784*@
+                                        
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12 lblmTop8">
+                            <label><b>Company Type</b></label>
+                            @Html.DropDownList("ddlType", new SelectList(Model.Company_type, "ID", "Level_Name"), new { @name = "from", @class = "full form-control", @onchange = "TypeChange(this)" })
+                        </div>
+                        <div class="col-md-12">
+                            <label><b>Select Parent Company</b></label>
+                            @Html.DropDownList("ddlCompany", new SelectList(Model.Company_List, "ID", "Company_Name"), new { @name = "from", @class = "full form-control", @onchange = "bca(this)" })
+                        </div>
+                        <div class="col-md-12">
+                            <label><b>Financial Start Date</b></label>
+                            @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "start_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormat = DevExpress.Web.EditFormat.Custom;
+                                         settings.Properties.UseMaskBehavior = true;
+                                         settings.Properties.ShowOutOfRangeWarning = false;
+                                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                         settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+
+                                     }
+                            ).GetHtml()
+                        </div>
+                        <div class="col-md-12">
+                            <label><b>Financial End Date</b></label>
+                            @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "end_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormat = DevExpress.Web.EditFormat.Custom;
+                                         settings.Properties.UseMaskBehavior = true;
+                                         settings.Properties.ShowOutOfRangeWarning = false;
+                                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                         settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+
+                                     }
+                            ).GetHtml()
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius mBot0" data-dismiss="modal">Close</button>
+                    <input type="button" value="Create" onclick="SubmitCompany();" class="btn btn-success btn-radius" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("~/Views/NewCompany/CompanyGrid.cshtml", Model.grd)
+        </div>
+    </div>
+    <div class="hide">
+        <input type="text" id="hdnoutputText" />
+    </div>
+
+    @Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "myModal";
+    }
+).GetHtml()
+</div>

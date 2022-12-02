@@ -1,0 +1,146 @@
+﻿@model NewCompany.Models.TaxSyncClass
+
+@{
+    ViewBag.Title = "TaxSync";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel-heading">
+    <div class="panel-title">
+        <h3>TaxSync</h3>
+    </div>
+</div>
+<script>
+
+    $(function () {
+        LoadingPanel.Show();
+        setTimeout(function () { gdrLookupCompany.SelectRows(); LoadingPanel.Hide(); }, 1000);
+        //gdrLookupCompany.SelectRows();
+    });
+
+    function SyncTax() {
+        var input = {};
+        //input.Company = Companiess.replace(/,\s*$/, "");
+        input.Company = gdrLookupCompany.keys.join(",");
+        //input.Product = Productss.replace(/,\s*$/, "");
+        LoadingPanel.Show();
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            data: input,
+            url: '@Url.Action("SyncTax", "Synchronization")',
+            async:true,
+           }).done(function (x) {
+
+               jAlert(x);
+               LoadingPanel.Hide();
+            //Console.log(x);
+        });
+    }
+
+
+
+
+
+    //var cpSelectedKeysProduct = [];
+    var cpSelectedKeysCompany = [];
+
+    var Companiess = "";
+    //function productChange(s,e) {
+    //    if (e.isChangedOnServer) return;
+    //    globalindexcheck = e.visibleIndex;
+    //    var key = s.GetRowKey(e.visibleIndex);
+    //    if (e.isSelected) {
+    //        cpSelectedKeysProduct.push(key);
+    //    }
+    //    else {
+    //        cpSelectedKeysProduct = RemoveElementFromArray(cpSelectedKeysProduct, key);
+    //    }
+    //    SelectedProducts = cpSelectedKeysProduct;
+    //    Productss = "";
+    //    for (var index = 0; index < cpSelectedKeysProduct.length; index++) {
+    //        Productss += cpSelectedKeysProduct[index] + ",";
+    //    }
+
+
+    //}
+
+    function RemoveElementFromArray(array, element) {
+        var index = array.indexOf(element);
+        if (index < 0) return array;
+        array[index] = null;
+        var result = [];
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] === null)
+                continue;
+            result.push(array[i]);
+        }
+        return result;
+    }
+
+    var Productss = "";
+    function CompanyChange(s,e) {
+        if (e.isChangedOnServer) return;
+        globalindexcheck = e.visibleIndex;
+        var key = s.GetRowKey(e.visibleIndex);
+        if (e.isSelected) {
+            cpSelectedKeysCompany.push(key);
+        }
+        else {
+            cpSelectedKeysCompany = RemoveElementFromArray(cpSelectedKeysCompany, key);
+        }
+        SelectedCompany = cpSelectedKeysCompany;
+
+        Companiess = "";
+        for (var index = 0; index < cpSelectedKeysCompany.length; index++) {
+            Companiess += cpSelectedKeysCompany[index] + ",";
+        }
+    }
+</script>
+
+<style>
+    #gdrLookupCompany_DXMainTable>tbody>tr>td:first-child{
+        display:none;
+    }
+    .mtop10 {
+        margin-top:10px;
+    }
+</style>
+
+
+<div id="" class="form_main">
+    <div class="">
+        <div class="row">
+            <div class="col-md-4">
+                <label><b>Select Company</b></label>
+                <div>@Html.Partial(@"~\Views\NewCompany\Sync\Product\CompanyLookUp.cshtml", Model.Company_list)</div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 mtop10">
+
+
+                <button type="button" value="" onclick="SyncTax();" class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-danger hide" value="">Cancel</button>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mtop10">
+            <p style="color: red;">* Please do not refresh or close the browser</p>
+
+            </div>
+        </div>
+
+
+    </div>
+    
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "loadingdiv";
+    }
+).GetHtml()

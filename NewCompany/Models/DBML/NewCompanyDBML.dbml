@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK14052019" Class="NewCompanyDBMLDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=10.0.8.251\MSSQLSERVERR2;Initial Catalog=PK14052019;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="breeze_developmentConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.V_AssignUser" Member="V_AssignUsers">
+    <Type Name="V_AssignUser">
+      <Column Name="serial" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TASK_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="UserID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="username" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.V_TaskCreation" Member="V_TaskCreations">
+    <Type Name="V_TaskCreation">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="TASK_SUBJECT" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="TASK_DESCRIPTION" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ModyfiedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CREATEDON" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TASK_STARTDATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TASK_DUEDATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="INTERVAL" Type="System.String" DbType="VarChar(26)" CanBeNull="true" />
+      <Column Name="ModyfiedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ISACTIVE" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="flag" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="userlist" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,48 @@
+﻿
+    .panel-body {
+        border: 1px solid #ccc;
+        border-top: 3px solid #3D5294;
+    }
+
+    .table-fixed thead {
+        width: 99%;
+    }
+
+    .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+
+        .table-fixed tbody td, .table-fixed thead > tr > th {
+            float: left;
+        }
+
+    .pure-table > thead > tr > th {
+        background: #425799;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#596fb1+0,415698+100 */
+        background: #596fb1; /* Old browsers */
+        background: -moz-linear-gradient(top, #596fb1 0%, #415698 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #596fb1 0%,#415698 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #596fb1 0%,#415698 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#596fb1', endColorstr='#415698',GradientType=0 ); /* IE6-9 */
+        color: #fff;
+        border-right: 1px solid #394d8c;
+        padding: 9px 10px;
+        border-top: 1px solid #3b4e88;
+        box-shadow: inset 0px 1px 2px rgba(255,255,255,0.35);
+    }
+
+    /*.mtbl {
+        width: 100%;
+    }*/
+
+    .mtbl > tbody > tr > td {
+        padding-right: 25px;
+        position: relative;
+        padding-bottom: 5px;
+    }

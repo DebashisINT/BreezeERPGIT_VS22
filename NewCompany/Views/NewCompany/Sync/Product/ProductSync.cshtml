@@ -1,0 +1,168 @@
+﻿@model NewCompany.Models.ProductSyncClass
+
+@{
+    ViewBag.Title = "Sync Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+
+    function SyncProduct() {
+
+
+
+        var input = {};
+        
+        if (Companiess.length == 0) {
+            jAlert('Please select atleast one company to proceed.');
+            return;
+        }
+
+        if (Productss.length == 0) {
+            jAlert('Please select atleast one product to proceed.');
+            return;
+        }
+
+
+        input.Company = Companiess.replace(/,\s*$/, "");
+        input.Product = Productss.replace(/,\s*$/, "");
+
+        LoadingPanel.Show();
+
+
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            data: input,
+            url: '@Url.Action("SyncProduct", "Synchronization")',
+            async:true,
+           }).done(function (x) {
+
+               jAlert(x, 'Alert');
+               LoadingPanel.Hide();
+            //Console.log(x);
+        });
+    }
+
+
+
+
+
+    var cpSelectedKeysProduct = [];
+    var cpSelectedKeysCompany = [];
+
+    var Companiess = "";
+    function productChange(s,e) {
+        if (e.isChangedOnServer) return;
+        globalindexcheck = e.visibleIndex;
+        var key = s.GetRowKey(e.visibleIndex);
+        if (e.isSelected) {
+            cpSelectedKeysProduct.push(key);
+        }
+        else {
+            cpSelectedKeysProduct = RemoveElementFromArray(cpSelectedKeysProduct, key);
+        }
+        SelectedProducts = cpSelectedKeysProduct;
+        Productss = "";
+        for (var index = 0; index < cpSelectedKeysProduct.length; index++) {
+            Productss += cpSelectedKeysProduct[index] + ",";
+        }
+        
+
+    }
+
+    function RemoveElementFromArray(array, element) {
+        var index = array.indexOf(element);
+        if (index < 0) return array;
+        array[index] = null;
+        var result = [];
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] === null)
+                continue;
+            result.push(array[i]);
+        }
+        return result;
+    }
+
+    var Productss = "";
+    function CompanyChange(s,e) {
+        if (e.isChangedOnServer) return;
+        globalindexcheck = e.visibleIndex;
+        var key = s.GetRowKey(e.visibleIndex);
+        if (e.isSelected) {
+            cpSelectedKeysCompany.push(key);
+        }
+        else {
+            cpSelectedKeysCompany = RemoveElementFromArray(cpSelectedKeysCompany, key);
+        }
+        SelectedCompany = cpSelectedKeysCompany;
+
+        Companiess = "";
+        for (var index = 0; index < cpSelectedKeysCompany.length; index++) {
+            Companiess += cpSelectedKeysCompany[index] + ",";
+        }
+        
+
+    }
+
+    function closeclick() {
+        window.location.href = "/OMS/management/ProjectMainPage.aspx";
+    }
+
+</script>
+<style>
+    .boxStyle {
+        border: 1px solid #ccc;
+        padding: 0 0px 15px 0;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .pagHD {
+        font-size: 16px;
+        margin-bottom: 6px;
+        padding: 5px 15px;
+        background: #f3f3f3;
+        border-bottom: 1px solid #e2dcdc;
+    }
+    .mTop10 {
+        margin-top:10px;
+    }
+</style>
+<div class="panel-heading">
+    <div class="panel-title">
+        <h3>Sync Product</h3>
+    </div>
+</div>
+
+
+<div class="form_main">
+    <div class="">
+        <div class="boxStyle">
+            <div class="pagHD">Select Target Company</div>
+            <div class="col-md-12 mTop10">
+                
+                <div>@Html.Partial(@"~\Views\NewCompany\Sync\Product\CompanyLookUp.cshtml", Model.Company_list)</div>
+            </div>
+        </div>
+        <div class="boxStyle mTop10">
+            <div class="pagHD ">Select Product(s)</div>
+            <div class="col-md-12 mTop10">
+                
+                <div>@Html.Partial(@"~\Views\NewCompany\Sync\Product\ProductLookUp.cshtml", Model.product_List)</div>
+            </div>
+        </div>
+        <div class="mTop10 col-md-12">
+            <input type="button" value="Sync" onclick="SyncProduct();" class="btn btn-success" />
+            <input type="button" class="btn btn-danger" onclick="closeclick();" value="Close" />
+        </div>
+   </div>
+    
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "loadingdiv";
+    }
+).GetHtml()
