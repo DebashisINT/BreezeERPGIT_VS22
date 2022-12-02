@@ -1,0 +1,80 @@
+﻿.inline {
+            display: inline !important;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content {
+            overflow: visible !important;
+        }
+
+
+        #DivBilling [class^="col-md"], #DivShipping [class^="col-md"] {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+
+        .voucherno {
+            position: absolute;
+            right: -3px;
+            top: 22px;
+        }
+
+        .POVendor {
+            position: absolute;
+            right: -3px;
+            top: 22px;
+        }
+
+        .abs {
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+
+        .fa.fa-exclamation-circle:before {
+            font-family: FontAwesome;
+        }
+
+        .tp2 {
+            right: -18px;
+            top: 7px;
+            position: absolute;
+        }
+
+        #txtCreditLimit_EC {
+            position: absolute;
+        }
+
+        #grid_DXStatus span > a {
+            display: none;
+        }
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        .absolute, #grid_DXMainTable .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }
+
+        .col-md-3 > label, .col-md-3 > span {
+            margin-top: 0px;
+            display: inline-block;
+        }
+
+        #grid_DXMainTable > tbody > tr > td:last-child {
+            display: none !important;
+        }
+
+        #aspxGridTax_DXStatus {
+            display: none !important;
+        }
+
+        .mTop {
+            margin-top: 10px;
+        }
+        .pullleftClass {
+            position: absolute;
+            right: -3px;
+            top: 20px;
+        }

@@ -1,0 +1,127 @@
+﻿.okClass {
+            margin-top: 5px;
+        }
+
+        .smallList > li {
+            font-size: 11px;
+            color: red;
+        }
+
+        .smallList {
+            position: absolute;
+            right: 0;
+            top: 4px;
+        }
+
+        .modal-footer .btn {
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
+        }
+        .smllpad > tbody > tr > td {
+        padding-right: 25px;
+    }
+
+.errorField {
+    position: absolute;
+    right: 5px;
+    top: 9px;
+}
+
+.padTab {
+    margin-bottom: 4px;
+}
+
+.padTab > tbody > tr > td {
+    padding-right: 15px;
+    vertical-align: middle;
+}
+
+.padTab > tbody > tr > td > label, .padTab > tbody > tr > td > input[type="button"] {
+    margin-bottom: 0 !important;
+}
+
+.backBranch {
+    font-weight: 600;
+    background: #75c1f5;
+    padding: 5px;
+}
+
+        #influencerGrid {
+    width: 100% !important;
+        }
+
+        #tableProduct_wrapper .dataTables_scroll thead tr th, #influencerGrid_wrapper thead tr th {
+    background: #1E6AB1;
+    color: #fff;
+        }
+
+.colorTable > thead > tr > th, #influencerGrid > thead > tr > th {
+    background: #1E6AB1;
+    color: #fff;
+}
+
+        #colorTable, #influencerGrid {
+            border-top: 1px solid #1E6AB1;
+        }
+
+            #colorTable > thead > tr > th, #influencerGrid > thead > tr > th {
+                border-right: 1px solid #1E6AB1;
+            }
+
+            #colorTable > tbody > tr > td, #influencerGrid > tbody > tr > td {
+    padding: 8px 8px 0 8px;
+                vertical-align: middle;
+            }
+
+.padTop25 {
+    padding-top: 25px;
+}
+
+.dataTables_scrollHeadInner, .dataTables_scrollHeadInner > table {
+    width: 100% !important;
+    margin: 0 auto;
+}
+
+table.dataTable thead th {
+    border-bottom: 0;
+}
+
+table.dataTable tfoot th {
+    border-top: 0;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 8px 15px;
+}
+
+.btn.onDxe {
+    padding: 0px 5px 4px 5px !important;
+    font-size: 18px !important;
+}
+
+.mroonText {
+    color: red;
+    background: #ffd3be;
+    border: 1px solid #e47743;
+    padding: 5px 15px;
+    border-radius: 3px;
+    margin-top: 26px;
+}
+
+.btn.btn-xs.typeNotificationBtn {
+    position: relative;
+    padding-right: 16px !important;
+}
+
+.typeNotification {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: #ff5140;
+    display: block;
+    font-size: 12px;
+    border-radius: 50%;
+    right: -7px;
+    top: -9px;
+    line-height: 22px;
+}

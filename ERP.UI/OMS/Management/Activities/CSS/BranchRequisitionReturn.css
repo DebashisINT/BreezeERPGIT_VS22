@@ -1,0 +1,62 @@
+﻿.BranchTo {
+            position: absolute;
+            right: -2px;
+            top: 29px;
+        }
+
+        .Region {
+            position: absolute;
+            right: -2px;
+            top: 29px;
+        }
+
+        .voucherno {
+            position: absolute;
+            right: -3px;
+            top: 29px;
+        }
+
+
+        .dxgv.dx-al, .dxgv.dx-ar, .dx-nowrap.dxgv, .gridcellleft.dxgv, .dxgv.dx-ac, .dxgvCommandColumn_PlasticBlue.dxgv.dx-ac {
+            display: table-cell !important;
+        }
+
+        #gridBatch_DXMainTable tr td:first-child {
+            display: table-cell !important;
+        }
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        #gridBatch_DXStatus span > a {
+            display: none;
+        }
+
+        #gridBatch_DXEditingErrorRow-1 {
+            display: none;
+        }
+
+        #Grid_PurchaseIndent_DXMainTable .dxgv {
+            display: table-cell !important;
+        }
+
+        #Grid_PurchaseIndent_DXFilterRow .dxgv {
+            display: table-cell !important;
+        }
+
+        #gridBatch .dxeButtonEditSys.dxeButtonEdit_PlasticBlue {
+            margin-bottom: 0px !important;
+            height: 27px;
+        }
+
+        .dxeTextBoxSys.dxeTextBox_PlasticBlue {
+            height: 25PX;
+        }
+        .absolute, #gridBatch_DXMainTable .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }
+
+        #gridBatch_DXMainTable > tbody > tr > td:last-child {
+            display: none !important;
+        }

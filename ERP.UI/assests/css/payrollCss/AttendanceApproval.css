@@ -1,0 +1,25 @@
+﻿#example{
+    margin-bottom:10px
+}
+#example > thead > tr > th {
+    padding: 7px 10px;
+    background: #435ee2;
+    color: #fff;
+    border: 1px solid #324dd0;
+}
+#example > tbody > tr > td {
+    padding: 4px 10px;
+    border:1px solid #ccc
+}
+.sWidth{
+    min-width:130px;
+}
+.dataTables_scrollHeadInner > .dataTable > thead > tr > th {
+    background: #435ee2;
+    color: #fff;
+    border: 1px solid #324dd0;
+}
+#example_filter input {
+    padding: 0;
+    height: 23px;
+}

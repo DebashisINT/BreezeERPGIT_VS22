@@ -1,0 +1,61 @@
+﻿.horizontallblHolder {
+            height: auto;
+            border: 1px solid #12a79b;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+            .horizontallblHolder > table > tbody > tr > td {
+                padding: 8px 10px;
+                background: #ffffff;
+                background: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+                background: -webkit-linear-gradient(top, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                background: linear-gradient(to bottom, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+            }
+
+                .horizontallblHolder > table > tbody > tr > td:first-child {
+                    background: #12a79b;
+                    color: #fff;
+                }
+
+                .horizontallblHolder > table > tbody > tr > td:last-child {
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    color: #121212;
+                }
+
+
+                 .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        .popover {
+            z-index: 999999;
+            max-width: 350px;
+        }
+
+            .popover .popover-title {
+                margin-top: 0 !important;
+                background: #465b9d;
+                color: #fff;
+            }
+
+        .pdLeft15 {
+            padding-left: 15px;
+        }
+
+        .mTop {
+            margin-top: 10px;
+        }
+
+        .mLeft {
+            margin-left: 15px;
+        }
+
+        .popover .popover-content {
+            min-height: 60px;
+        }
+        #gridTax_DXStatus {
+            display:none;
+        }

@@ -1,0 +1,146 @@
+﻿body
+    {
+    height:auto;
+    width:100%;
+    background-color: #DDECFE;
+    }
+    h3
+{
+	color:#0066cc;
+    font-weight :bold ;
+    text-align: center;
+    font-family:Bodoni MT ;
+   
+}
+	
+ul, li, form, p,h1, h2, h3, img, input, label
+{
+	margin: 0px;
+	padding: 0px;
+}
+ul
+{
+list-style-type:none;
+margin:0px;
+
+overflow:hidden;
+
+}
+li
+{
+margin:0px;
+display:inline;
+float:left;
+}
+ 
+ .gridselectedrow
+{
+background-color: orange;	
+}
+   
+.div_Middle
+	{
+	    width:96%;	/* Width of box */
+		
+		
+    }
+    .div_Middle_big
+	{
+	    width:96%;	/* Width of box */
+		height:13%;	/* Height of box */
+		
+    }
+.tdmain
+{
+	background-color: #b7ceec; 
+	vertical-align: top; 
+	text-align: left;
+	height:auto ;
+	width:auto;
+	float:Left;
+	border:1px Solid White;
+	font-family :Calibri ;
+	font-size :small; 
+	margin:2px;
+	padding:2px;
+}
+.GVdiv
+{
+	background-color:Transparent; 
+	vertical-align: top; 
+	text-align: left;
+	height:auto ;
+	width:auto;
+	float:Left;
+	font-family :Calibri ;
+	font-size :small; 
+	margin:2px;
+	padding:2px;
+	
+}
+
+
+.tdsecondary
+{
+	height :auto;
+	width:auto;	/* Width of box */
+	text-align: right;
+	height:auto;	/* Height of box */
+	float:Left;
+	border:1px Solid White;
+	font-family :Calibri ;
+	font-size :small;
+	margin:2px;
+	padding:2px; 
+	
+}
+	.popup_tdmain
+{
+	background-color: gainsboro; 
+	vertical-align: top; 
+	text-align: left;
+	height:auto ;
+	width:auto;
+	float:Left;
+	border:1px Solid White;
+	font-family :Calibri ;
+	color:#666666;
+	font-size :small 
+}
+
+.popup_tdsecondary
+{
+	height :auto;
+	width:auto;	/* Width of box */
+	text-align: right;
+	height:auto;	/* Height of box */
+	float:Left;
+	border:1px Solid Grey;
+	font-family :Calibri ;
+	font-size :small 
+	
+}
+
+	#Div_header{
+		width:85%;	/* Width of box */
+		height:3%;	/* Height of box */
+		background-image:  url( '../images/EHeaderBack.gif' );
+		padding-left: 10px;
+	    padding-right: 3px;
+	    background-repeat: repeat-x;
+	    background-position:top;
+	}
+	.EHEADER
+{
+	height: 20px;
+	padding-left: 10px;
+	padding-right: 3px;
+	background-image: url( '../images/EHeaderBack.gif' );
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+	
+	
+	
+	
+	

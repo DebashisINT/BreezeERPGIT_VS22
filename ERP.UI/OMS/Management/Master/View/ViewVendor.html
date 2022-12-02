@@ -1,0 +1,687 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="../../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../../../assests/js/jquery.min.js"></script>
+    <script src="../../../../assests/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../../../../assests/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="../../../../assests/js/angular.min.js"></script>
+    <script src="JS/ViewVendor.js?v=0.6"></script>
+
+    <style>
+        .btn {
+            cursor: auto !important;
+        }
+
+        .clsCreditHold {
+            cursor: auto !important;
+        }
+
+        input[type="checkbox"] + .btn-group > label span {
+            width: 20px;
+        }
+
+            input[type="checkbox"] + .btn-group > label span:first-child {
+                /*display: none;*/
+            }
+
+            input[type="checkbox"] + .btn-group > label span:last-child {
+                display: inline-block;
+            }
+
+        input[type="checkbox"]:checked + .btn-group > label span:first-child {
+            display: inline-block;
+        }
+
+        input[type="checkbox"]:checked + .btn-group > label span:last-child {
+            display: none;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+
+
+
+        .modal-backdrop {
+            z-index: auto !important;
+        }
+
+        body {
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .table-bordered {
+            border: 1px solid #ddd;
+        }
+
+            .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+                border: 1px solid #ddd;
+            }
+
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            padding: 4px 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+
+        .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border: 1px solid #ddd;
+        }
+
+        .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
+            border-top: 0;
+        }
+
+        .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border-bottom-width: 2px;
+        }
+
+        .stTble td > label {
+            font-weight: bold;
+        }
+
+        div.input {
+            width: 100%;
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-top: 4px;
+            height: 31px;
+            background: #fdfbfb;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+            div.input > input {
+                border: none;
+            }
+
+        .paddingTop {
+            padding-top: 15px;
+        }
+
+        .sttble > thead > tr > th, .sttble tr th {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#258dc8+0,258dc8+100;Blue+Flat+%231 */
+            background: #258dc8; /* Old browsers */
+            background: -moz-linear-gradient(top, #258dc8 0%, #258dc8 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #258dc8 0%,#258dc8 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #258dc8 0%,#258dc8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#258dc8', endColorstr='#258dc8',GradientType=0 ); /* IE6-9 */
+            color: #fff;
+            font-weight: normal;
+            border: 1px solid #1a79af;
+            border-top: 1px solid #1a79af !important;
+        }
+
+        .paddingBottom {
+            margin-bottom: 10px;
+        }
+
+        .hdr {
+            border-bottom: 1px solid #ccc;
+            margin: 0 15px;
+        }
+
+        .tab_con {
+            float: left;
+            width: 100%;
+            margin: 5px 0 0 0;
+        }
+
+        .nav-tabs {
+            background: #337ab7;
+        }
+
+            .nav-tabs > li > a {
+                border-radius: 0 !important;
+                color: #fff;
+            }
+
+                .nav-tabs > li > a:hover {
+                    background-color: #2d2d2d;
+                    border-color: #2d2d2d;
+                    color: #fff;
+                }
+
+        .tab-content .tab-pane div.form-group {
+            margin-top: 10px;
+        }
+
+        .tab-content {
+            float: left;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 3px;
+            /*margin-bottom: 25px;*/
+        }
+
+        .tab-pane {
+            padding: 25px 0%;
+            background: #fff;
+            float: left;
+            width: 100%;
+            min-height: 100px;
+        }
+
+        .page_title {
+            float: left;
+            width: 100%;
+            font-size: 18px;
+            color: #104e8b;
+            border-bottom: 1px solid #dadada;
+            margin-bottom: 0px;
+            padding: 5px 0;
+            line-height: 32px;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+        <div class="col-md-12">
+            <div class="page_title">
+                <h3>Vendor Details [{{lbl_vndor_name}}]</h3>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="paddingTop tab_con" role="tabpanel" id="tab_con">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+
+                    <li role="presentation" class="active"><a href="#General" aria-controls="Zone" role="tab" data-toggle="tab">General</a></li>
+                    <li role="presentation"><a href="#C_person" aria-controls="C_person" role="tab" data-toggle="tab">Contact Person</a></li>
+                    <li role="presentation"><a href="#Correspondence" aria-controls="Correspondence" role="tab" data-toggle="tab">Correspondence</a></li>
+                    <li role="presentation"><a href="#Bank" aria-controls="Bank" role="tab" data-toggle="tab">Bank Details</a></li>
+                    <li role="presentation"><a href="#doc" aria-controls="doc" role="tab" data-toggle="tab">Documents</a></li>
+                    <li role="presentation"><a href="#Registration" aria-controls="Registration" role="tab" data-toggle="tab">Registration</a></li>
+                    <li role="presentation" style="display:none"><a href="#Groups" aria-controls="Groups" role="tab" data-toggle="tab">Groups</a></li>
+                    <li role="presentation"><a href="#TDS" aria-controls="TDS" role="tab" data-toggle="tab">TDS</a></li>
+
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="General">
+                        <div class="clearfix">
+
+                            <div class="col-md-3">
+                                <label>
+                                    Name
+                                </label>
+                                <div id="lbl_vndor_name" class="input">
+                                    {{lbl_vndor_name}}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Unique ID</label>
+                                <div class="input" id="lbl_unique_id">{{lbl_unique_id}}</div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label>Referred By</label>
+                                <div class="input" id="lbl_rffr_by">{{lbl_rffr_by}}</div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label>Status</label>
+                                <div class="input" id="lbl_status">{{lbl_status}}</div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="clearfix">
+
+                            <div class="col-md-3">
+                                <label>
+                                    Legal Status
+                                </label>
+                                <div id="lbl_type" class="input">
+                                    {{lbl_legal_status}}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>
+                                    Date Of Incorporation
+                                </label>
+                                <div id="lbldt_incrp" class="input">
+                                    {{lbldt_incrp}}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Main Account</label>
+                                <div class="input" id="lbl_m_acnt">{{lbl_m_acnt}}</div>
+                            </div>
+                            <div class="col-md-1">
+                                <label>Select </label>
+                                <button id="btn_pop_search_jv" class="btn btn-primary btn-sm" ng-click="btn_show()">Branch(s)</button>
+                            </div>
+                            <div class="col-md-1">
+                                <label>Select </label>
+                                <button id="btn_pop_search_jv_pro" class="btn btn-primary btn-sm" ng-click="btn_showP()"> Product(s)</button>
+                            </div>
+
+
+                        </div>
+                        <div class="clearfix">
+
+                            <div class="col-md-3" style="margin-top: 7px;">
+                                <div style="padding-top:8%">
+                                    <input type="checkbox" name="fancy-checkbox-success" id="fancy-checkbox-success" autocomplete="off" ng-checked="check_register" ng-model="ng_register" />
+                                    <div class="[ btn-group ]">
+                                        <label class="[clsCreditHold btn btn-success ]" style="background-color:#5c7db8">
+                                            <span class="[ glyphicon glyphicon-ok ]" id="spanCrdtHold1" ng-class="class"></span>
+                                            <span> </span>
+                                        </label>
+                                        <label class="[ btn btn-default active ]">
+                                            Registered
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label>
+                                    GSTIN
+                                </label>
+                                <div id="lbl_GSTIN" class="input">
+                                    {{lbl_GSTIN}}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Name To Print In Cheque</label>
+                                <div class="input" id="lbl_print_cheque">{{lbl_print_cheque}}</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Accounts Group</label>
+                                <div class="input" id="lbl_crdt_limit">{{lbl_acnt_grp}}</div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="clearfix">
+
+                            <div class="col-md-4">
+                                <label>Vendor Type</label>
+                                <div class="input" id="lbl_vndr_type">{{lbl_vndr_type}}</div>
+                            </div>
+
+                            <div class="col-md-8">
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="C_person">
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Contact Person</h5>
+                            </div>
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Relationship</th>
+                                        <th>Designation</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in contact_list">
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.cp_relationShip}}</td>
+                                    <td>{{item.cp_designation}}</td>
+                                    <td>{{item.phf_phoneNumber}}</td>
+                                    <td>{{item.eml_email}}</td>
+                                    <td>{{item.status}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="Correspondence">
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Address</h5>
+                            </div>
+
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th>Contact Person</th>
+                                        <th>Type</th>
+                                        <th>Address1</th>
+                                        <th>Address2</th>
+                                        <th>Address3</th>
+                                        <th>Country</th>
+                                        <th>State</th>
+                                        <th>City/District</th>
+                                        <th>Pincode/Zip</th>
+                                        <th>Phone</th>
+                                        <th>Distance</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in correspondence_dtls">
+                                    <td>{{item.c_person}}</td>
+                                    <td>{{item.type}}</td>
+                                    <td>{{item.addr1}}</td>
+                                    <td>{{item.addr2}}</td>
+                                    <td>{{item.addr3}}</td>
+                                    <td>{{item.country}}</td>
+                                    <td>{{item.state}}</td>
+                                    <td>{{item.city}}</td>
+                                    <td>{{item.pin}}</td>
+                                    <td>{{item.phone}}</td>
+                                    <td>{{item.distance}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Phone</h5>
+                            </div>
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">Contact Person</th>
+                                        <th style="display:none">Designation</th>
+                                        <th style="width:50%">Phone Type</th>
+                                        <th>Number</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in phone_number">
+                                    <td style="display:none">{{item.contact_person}}</td>
+                                    <td style="display:none">{{item.designation}}</td>
+                                    <td>{{item.ph_type}}</td>
+                                    <td>{{item.ph_nmbr}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Email</h5>
+                            </div>
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in email">
+                                    <td style="width:50%">{{item.type}}</td>
+                                    <td>{{item.email_id}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="Bank">
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Bank Details</h5>
+                            </div>
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Account Type</th>
+                                        <th>Bank Name</th>
+                                        <th>Branch</th>
+                                        <th>MICR</th>
+                                        <th>IFSC CODE</th>
+                                        <th>Account Number</th>
+                                        <th>Account Name</th>
+                                        <th>POA</th>
+                                        <th>POA Name</th>
+
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in bank">
+                                    <td>{{item.Category}}</td>
+                                    <td>{{item.AccountType}}</td>
+                                    <td>{{item.BankName}}</td>
+                                    <td>{{item.Branch}}</td>
+                                    <td>{{item.MICR}}</td>
+                                    <td>{{item.IFSCcode}}</td>
+                                    <td>{{item.AccountNumber}}</td>
+                                    <td>{{item.AccountName}}</td>
+                                    <td>{{item.IsPOA}}</td>
+                                    <td>{{item.POAName}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="doc">
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Document Details</h5>
+                            </div>
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th>Doc Type</th>
+                                        <th>Doc Name</th>
+                                        <th>Document Physical Location</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in document_dtls">
+                                    <td>{{item.doc_type}}</td>
+                                    <td>{{item.doc_name}}</td>
+                                    <td>{{item.doc_loc}}</td>
+                                    <td>
+                                        <a style="text-decoration: none; cursor: pointer;" title="Download" class="pad" ng-href="{{'../../Documents/' + item.doc_source}}" target="_blank">
+                                            <i class="fa fa-cloud-download"></i>
+
+                                        </a>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="Registration">
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Statutory Registration</h5>
+                            </div>
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Number</th>
+                                        <th>Place Of Issue</th>
+                                        <th>Date Of Issue</th>
+                                        <th>Valid Untill</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in registration">
+                                    <td>{{item.type}}</td>
+                                    <td>{{item.number}}</td>
+                                    <td>{{item.place_issue}}</td>
+                                    <td>{{item.date_issue}}</td>
+                                    <td>{{item.valid_untill}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Other Membership</h5>
+                            </div>
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th>Professional Association</th>
+                                        <th>Member Number</th>
+                                        <th>Membership Type</th>
+                                        <th>Validity Type</th>
+                                        <th>Memnbership Expiry Date</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in membership">
+                                    <td>{{item.prof_assoc}}</td>
+                                    <td>{{item.member_nmbr}}</td>
+                                    <td>{{item.membership_type}}</td>
+                                    <td>{{item.validity_type}}</td>
+                                    <td>{{item.member_expiry_dt}}</td>
+                                    <td>{{item.notes}}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="Groups">
+                        <div class="col-md-12">
+                            <div>
+                                <h5>Group Member</h5>
+                            </div>
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+                                        <th>Group Name</th>
+                                        <th>Group Type</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in group">
+                                    <td>{{item.group_name}}</td>
+                                    <td>{{item.group_type}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="TDS">
+                        <div class="col-md-4 ">
+                            <label>Deductees Type</label>
+                            <div class="input" id="lbl_vndr_type">{{lbl_deductee_type}}</div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+        <div class="modal fade" id="TimeUpdateModel" role="dialog">
+            <div class="modal-dialog customSizeModal">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Branch Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div style="width:100%;overflow:auto;height:300px;">
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+
+                                        <th>Branch Code</th>
+                                        <th>Branch Description</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in branch_dtls">
+
+                                    <td>{{item.branch_code}}</td>
+                                    <td>{{item.branch_description}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="modal fade" id="ProductUpdateModel" role="dialog">
+            <div class="modal-dialog customSizeModal">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Product Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div style="width:100%;overflow:auto;height:300px;">
+                            <table class="table table-bordered sttble">
+                                <thead>
+                                    <tr>
+
+                                        <th>Product Code</th>
+                                        <th>Product Description</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in product_dtls">
+
+                                    <td>{{item.product_code}}</td>
+                                    <td>{{item.product_description}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

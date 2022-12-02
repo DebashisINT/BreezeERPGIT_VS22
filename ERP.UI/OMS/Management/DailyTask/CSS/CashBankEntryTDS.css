@@ -1,0 +1,269 @@
+﻿.rowRed {
+            color: red !important;
+        }
+
+        #gridBatch_DXEmptyRow {
+            display: none;
+        }
+
+        .dxtcSys.dxtc-init > .dxtc-content {
+            border-color: #CCCCCC !important;
+        }
+
+        .iconInstrumentType {
+            position: absolute;
+            right: -1px;
+            top: 27px;
+        }
+
+        .iconInstNo {
+            position: absolute;
+            right: -1px;
+            top: 27px;
+        }
+
+        .iconNumberScheme {
+            position: absolute;
+            right: 3px;
+            top: 44px;
+        }
+
+        .voucherno {
+            position: absolute;
+            right: -2px;
+            top: 36px;
+        }
+
+        .iconBranch {
+            position: absolute;
+            right: 1px;
+            top: 36px;
+        }
+
+        .iconCashBank {
+            position: absolute;
+            right: -1px;
+            top: 27px;
+        }
+
+        #gridBatch_DXFooterRow, #gridBatch_DXStatus, #aspxGridTax_DXStatus {
+            display: none;
+        }
+
+        .dxgv.dx-al, .dxgv.dx-ar, .dx-nowrap.dxgv, .gridcellleft.dxgv, .dxgv.dx-ac, .dxgvCommandColumn_PlasticBlue.dxgv.dx-ac {
+            display: table-cell !important;
+        }
+
+        #gridBatch_DXMainTable tr td:first-child {
+            display: table-cell !important;
+        }
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        #gridBatch_DXStatus span > a {
+            display: none;
+        }
+
+        /*#GvCBSearch_DXMainTable .dxgv {
+            display: table-cell !important;
+        }
+
+        #GvCBSearch_DXFilterRow .dxgv {
+            display: table-cell !important;
+        }*/
+        /* Big box with list of options */
+        #ajax_listOfOptions {
+            position: absolute; /* Never change this one */
+            width: 50px; /* Width of box */
+            height: auto; /* Height of box */
+            overflow: auto; /* Scrolling features */
+            border: 1px solid Blue; /* Blue border */
+            /*background-color: #FFF;*/ /* White background color */
+            text-align: left;
+            font-size: 0.9em;
+            z-index: 32761;
+        }
+
+            #ajax_listOfOptions div { /* General rule for both .optionDiv and .optionDivSelected */
+                margin: 1px;
+                padding: 1px;
+                cursor: pointer;
+                font-size: 0.9em;
+            }
+
+            #ajax_listOfOptions .optionDiv { /* Div for each item in list */
+            }
+
+            #ajax_listOfOptions .optionDivSelected { /* Selected item in the list */
+                background-color: #DDECFE;
+                color: Blue;
+            }
+
+        #ajax_listOfOptions_iframe {
+            background-color: #F00;
+            position: absolute;
+            z-index: 3000;
+        }
+
+        form {
+            display: inline;
+        }
+
+        #txtIssuingBank {
+            z-index: 10000;
+        }
+
+        .bubblewrap {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+            .bubblewrap li {
+                display: inline;
+                width: 65px;
+                height: 60px;
+            }
+
+                .bubblewrap li img {
+                    width: 30px; /* width of each image.*/
+                    height: 35px; /* height of each image.*/
+                    border: 0;
+                    margin-right: 12px; /*spacing between each image*/
+                    -webkit-transition: -webkit-transform 0.1s ease-in; /*animate transform property */
+                    -o-transition: -o-transform 0.1s ease-in; /*animate transform property in Opera */
+                }
+
+                    .bubblewrap li img:hover {
+                        -moz-transform: scale(1.8); /*scale up image 1.8x*/
+                        -webkit-transform: scale(1.8);
+                        -o-transform: scale(1.8);
+                    }
+
+
+        .chosen-container.chosen-container-single {
+            width: 100% !important;
+        }
+
+        .chosen-choices {
+            width: 100% !important;
+        }
+
+        #lstIssueBankItems {
+            width: 200px;
+        }
+
+        #lstIssueBankItems_chosen {
+            width: 200px !important;
+        }
+
+
+        #lstWithFromItems {
+            width: 200px;
+        }
+
+        #lstWithFromItems_chosen {
+            width: 200px !important;
+        }
+
+        #lstDepositIntoItems {
+            width: 200px;
+        }
+
+        #lstDepositIntoItems_chosen {
+            width: 200px !important;
+        }
+
+        #gridBatch_DXEditingErrorRow-1 {
+            display: none;
+        }
+
+        #txtRecieve_ET td {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        .expad {
+            height: 32px;
+        }
+
+        .cngtbl {
+            border: 1px solid #525252;
+            margin-bottom: 15px;
+        }
+
+            .cngtbl th {
+                background: #656565;
+                color: #fff !important;
+                border: 1px solid #525252;
+                padding: 6px 10px;
+            }
+
+            .cngtbl td {
+                padding: 6px 10px;
+            }
+
+        .gridfooter {
+            text-align: right;
+        }
+
+        .dxbButton_PlasticBlue div.dxb {
+            padding: 0 !important;
+        }
+
+        #tblDetailE .dxgvControl_PlasticBlue a {
+            color: #fff !important;
+        }
+
+        .mRight2 {
+            margin-right: 2%;
+        }
+
+        .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }
+
+        #DivBilling [class^="col-md"], #DivShipping [class^="col-md"] {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .dxtcSys.dxtc-init > .dxtc-stripContainer {
+            visibility: visible;
+        }
+
+        #ASPxPageControl1_TC, #gridBatch, #gridBatch .dxgvHSDC > div, .dxgvCSD {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        #tbltdsDetails_wrapper {
+            padding: 5px 0;
+            border-top: 1px dashed #ccc;
+            margin-top: 8px;
+        }
+
+        #tbltdsDetails > thead > tr > th, .dataTables_scrollHeadInner > table > thead > tr > th {
+            background: #337ab7;
+            color: #fff;
+            padding: 2px 15px;
+        }
+
+        .dataTables_scrollHeadInner > table > thead > tr > th {
+            padding: 8px 15px;
+        }
+         #DivBilling [class^="col-md"], #DivShipping [class^="col-md"] {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .padTabtype2 > tbody > tr > td {
+            padding: 0px 5px;
+        }
+
+            .padTabtype2 > tbody > tr > td > label {
+                margin-bottom: 0 !important;
+                margin-right: 15px;
+            }

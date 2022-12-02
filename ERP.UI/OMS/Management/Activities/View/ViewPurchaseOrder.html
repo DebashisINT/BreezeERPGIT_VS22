@@ -1,0 +1,756 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <link href="../../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="../../../../assests/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../../assests/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../assests/js/angular.min.js"></script>
+    <script src="JS/ViewPnv.js"></script>
+
+
+    <style>
+        .modal-backdrop {
+            z-index: auto !important;
+        }
+
+        body {
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .table-bordered {
+            border: 1px solid #ddd;
+        }
+
+            .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+                border: 1px solid #ddd;
+            }
+
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            padding: 4px 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+
+        .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border: 1px solid #ddd;
+        }
+
+        .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
+            border-top: 0;
+        }
+
+        .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border-bottom-width: 2px;
+        }
+
+        .stTble td > label {
+            font-weight: bold;
+        }
+
+        div.input {
+            width: 100%;
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-top: 4px;
+            height: 31px;
+            background: #fdfbfb;
+            margin-bottom: 11px;
+            overflow: hidden;
+        }
+
+            div.input > input {
+                border: none;
+            }
+
+        .paddingTop {
+            padding-top: 15px;
+        }
+
+        .sttble > thead > tr > th, .sttble tr th {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#258dc8+0,258dc8+100;Blue+Flat+%231 */
+            background: #258dc8; /* Old browsers */
+            background: -moz-linear-gradient(top, #258dc8 0%, #258dc8 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #258dc8 0%,#258dc8 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #258dc8 0%,#258dc8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#258dc8', endColorstr='#258dc8',GradientType=0 ); /* IE6-9 */
+            color: #fff;
+            font-weight: normal;
+            border: 1px solid #1a79af;
+            border-top: 1px solid #1a79af !important;
+        }
+
+        .paddingBottom {
+            margin-bottom: 10px;
+        }
+
+        .hdr {
+            border-bottom: 1px solid #ccc;
+            margin: 0 15px;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+
+        <div class="clearfix hdr">
+            <h3>Purchase Invoice</h3>
+        </div>
+        <div class="paddingTop clearfix">
+            <div class="paddingBottom clearfix">
+                <div class="col-md-6">
+                    <label>Shipping Address</label>
+                    <textarea ng-model="shipping_addr" class="form-control" readonly></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label>Billing Address</label>
+                    <textarea ng-model="billing_addr" class="form-control" readonly></textarea>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>
+                    Type
+                </label>
+                <div id="lbl_type" class="input">
+                    {{lbl_type}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>
+                    Document No
+                </label>
+                <div id="lbldoc_no" class="input">
+                    {{lbldoc_no}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label> Posting Date</label>
+                <div class="input" id="lbl_party_inv_dt">{{lbl_party_inv_dt}}</div>
+            </div>
+            <div class="col-md-2">
+                <label>
+                    For Unit
+                </label>
+
+                <div id="lbl_for_unit" class="input">
+                    <input type="text" ng-model="lbl_for_unit" readonly="true" />
+
+                </div>
+
+            </div>
+            <div class="col-md-2">
+                <label>Vendor</label>
+                <div id="lbl_vendor" class="input"><input type="text" ng-model="lbl_vendor" readonly="true" /></div>
+            </div>
+            <div class="col-md-2">
+                <label>Party Invoice No</label>
+                <div id="lbl_party_inv_no" class="input">
+                    {{lbl_party_inv_no}}
+                </div>
+            </div>
+
+        </div>
+        <div class="clearfix">
+            <div class="col-md-2">
+                <label> Party Invoice date</label>
+                <div class="input" id="lbl_inv_dt">{{lbl_inv_dt}}</div>
+            </div>
+            <div class="col-md-3">
+                <label>Contact Person</label>
+                <div class="input" id="lbl_contact">
+                    {{lbl_contact}}
+                </div>
+
+            </div>
+            <div class="col-md-2">
+                <label>Currency</label>
+                <div class="input" id="lbl_currency">
+                    {{lbl_currency}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>Rate</label>
+                <div class="input" id="lbl_Rate">
+                    {{lbl_Rate}}
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label>RCM</label>
+                <div class="input" id="lbl_reverse_mchnsm">
+                    {{lbl_reverse_mchnsm}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>GRN</label>
+                <div id="lbl_grn" class="input"><input type="text" ng-model="lbl_grn" /></div>
+
+            </div>
+        </div>
+
+        <div class="clearfix">
+            <div class="col-md-2">
+                <label> Amounts are</label>
+                <div class="input" id="lbl_amnts_are">
+                    {{lbl_amnts_are}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>
+                    E-Way Bill Number
+                </label>
+                <div class="input" id="lbl_eway_bill_no">
+                    {{lbl_eway_bill_no}}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Remarks</label>
+                <div class="input" id="lbl_remarks">
+                    {{lbl_remarks}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>Reference</label>
+                <div id="lbl_ref" class="input">{{lbl_ref}}</div>
+            </div>
+
+            <div class="col-md-2">
+                <label>Entry Date</label>
+                <div class="input" id="lbl_entry_dt">
+                    {{lbl_entry_dt}}
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-12 paddingTop">
+            <table class="table table-bordered sttble">
+                <thead>
+                    <tr>
+
+                        <th>Invoice Product Description</th>
+                        <th>Details Quantity</th>
+                        <th>Purchase Price</th>
+                        <th>Details Amount</th>
+                        <th>Tax Amount</th>
+                        <th>Amount Base Currency</th>
+                        <th>Name</th>
+
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in pnv_header_details" ng-click="show(item.DetailsId)">
+                    <td>{{item.InvoceProductDescriptiopn}}</td>
+                    <td>{{item.DetailsQuantity}}</td>
+                    <td>{{item.PurchasePrice}}</td>
+                    <td>{{item.DetailsAmount}}</td>
+                    <td>{{item.TaxAmount}}</td>
+                    <td>{{item.AmountBaseCurrency}}</td>
+                    <td>{{item.Name}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-12" ng-show="PurchaseInvoiceTax.length>0">
+            <div>
+                <h5>Tax Details</h5>
+            </div>
+            <table class="table table-bordered sttble">
+                <thead>
+                    <tr>
+                        <th>Scheme Name</th>
+                        <th>Amount</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in PurchaseInvoiceTax">
+
+
+                    <td>{{item.t_scheme_name}}</td>
+                    <td>{{item.inv_tax_amnt}}</td>
+                    <td>{{item.inv_tax_per}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12">
+            <button id="btn_pop_search_jv" class="btn btn-primary btn-sm" ng-model="btn_ng_trms_show" ng-show="value=='Yes'" ng-click="trms_show()">Terms and Conditions Details</button>
+        </div>
+
+        <div class="modal fade" id="TimeUpdateModel" role="dialog">
+            <div class="modal-dialog customSizeModal">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Tax Details</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <table class="table table-bordered sttble">
+                            <thead>
+                                <tr>
+
+                                    <th>Scheme Name</th>
+                                    <th>Amount</th>
+                                    <th>Percentage</th>
+
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in tax_details|filter:{p_detailid:detailsid}">
+
+                                <td>{{item.t_scheme_name}}</td>
+                                <td>{{item.p_tax_amnt}}</td>
+                                <td>{{item.p_percentage}}</td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="TimeUpdateModel1" role="dialog">
+            <div class="modal-dialog customSizeModal" style="width:75%">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Terms and Conditions Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div ng-show="lbl_amnts_are!='Import'">
+
+                            <div>
+                                <table class="table table-bordered sttble">
+                                    <tr>
+                                        <th>Delivery Schedule/Date</th>
+                                        <td>
+                                            <span id="lbl_delvrydt">
+                                                {{lbl_delvrydt}}
+                                            </span>
+                                        </td>
+                                        <th>Delivery Remarks</th>
+                                        <td>
+                                            <span id="lbl_dlvryrmrk">
+                                                {{lbl_dlvryrmrk}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th> Insurance Coverage</th>
+                                        <td>
+                                            <span id="lbl_insurance_cvrg">
+                                                {{lbl_insurance_cvrg}}
+                                            </span>
+                                        </td>
+                                        <th>Freight Charges</th>
+                                        <td>
+                                            <span id="lbl_frght_chrgs">
+                                                {{lbl_frght_chrgs}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th> Freight Remarks</th>
+                                        <td>
+                                            <span id="lbl_freight_rmrk">
+                                                {{lbl_freight_rmrk}}
+                                            </span>
+                                        </td>
+                                        <th> E-Permit/Way bill / Road Permit</th>
+                                        <td>
+                                            <span id="lbl_e_payment">
+                                                {{lbl_e_payment}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th> Other Remarks</th>
+                                        <td>
+                                            <span id="lbl_othr_rmrk">
+                                                {{lbl_othr_rmrk}}
+                                            </span>
+                                        </td>
+                                        <th> Test Certificate Required</th>
+                                        <td>
+                                            <span id="lbl_tst_cert_req">
+                                                {{lbl_tst_cert_req}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th> Delivery Details</th>
+                                        <td>
+                                            <span id="lbl_dlvry_dtls">
+                                                {{lbl_dlvry_dtls}}
+                                            </span>
+                                        </td>
+                                        <th>  Tranporter Name(General)</th>
+                                        <td>
+                                            <span id="lbl_trnsprt_nm">
+                                                {{lbl_trnsprt_nm}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Any Discount Receivable</th>
+                                        <td>
+                                            <span id="lbl_dscnt_rcvl">
+                                                {{lbl_dscnt_rcvl}}
+                                            </span>
+                                        </td>
+                                        <th>Discount Details</th>
+                                        <td>
+                                            <span id="lbl_dscnt_dtls">
+                                                {{lbl_dscnt_dtls}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th> Any commission Receivable</th>
+                                        <td>
+                                            <span id="lbl_cmsn_rcvl">
+                                                {{lbl_cmsn_rcvl}}
+                                            </span>
+                                        </td>
+                                        <th>Commission Details</th>
+                                        <td>
+                                            <span id="lbl_cmsn_dtls">
+                                                {{lbl_cmsn_dtls}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th> Commission Rate</th>
+                                        <td>
+                                            <span id="lbl_cmsn_rate">
+                                                {{lbl_cmsn_rate}}
+                                            </span>
+                                        </td>
+                                        <th>Bank Name</th>
+                                        <td>
+                                            <span id="lbl_bnk_nm">
+                                                {{lbl_bnk_nm}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Bank Branch Name</th>
+                                        <td>
+                                            <span id="lbl_bnk_brnch_nm">
+                                                {{lbl_bnk_brnch_nm}}
+                                            </span>
+                                        </td>
+                                        <th>Bank Branch Address</th>
+                                        <td>
+                                            <span id="lbl_bnk_brnch_addr">
+                                                {{lbl_bnk_brnch_addr}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Bank Branch Landmark</th>
+                                        <td>
+                                            <span id="lbl_bnk_brnch_lnd_mrk">
+                                                {{lbl_bnk_brnch_lnd_mrk}}
+                                            </span>
+                                        </td>
+                                        <th>Bank Branch Pin</th>
+                                        <td>
+                                            <span id="lbl_bnk_brnch_pin">
+                                                {{lbl_bnk_brnch_pin}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Account Number</th>
+                                        <td>
+                                            <span id="lbl_bnk_acnt_nmbr">
+                                                {{lbl_bnk_acnt_nmbr}}
+                                            </span>
+                                        </td>
+                                        <th>Swipt Code</th>
+                                        <td>
+                                            <span id="lbl_bnk_swft_code">
+                                                {{lbl_bnk_swft_code}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> RTGS</th>
+                                        <td>
+                                            <span id="lbl_bnk_rtgs">
+                                                {{lbl_bnk_rtgs}}
+                                            </span>
+                                        </td>
+                                        <th> IFSC CODE</th>
+                                        <td>
+                                            <span id="lbl_bnk_ifsc">
+                                                {{lbl_bnk_ifsc}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Remarks</th>
+                                        <td>
+                                            <span id="lbl_bnk_rmrk">
+                                                {{lbl_bnk_rmrk}}
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div ng-show="lbl_amnts_are=='Import'">
+
+                            <div>
+                                <table class="table table-bordered sttble">
+                                    <tr>
+                                        <th>
+                                            Type Of Import
+                                        </th>
+                                        <td>
+                                            <span id="lbl_imprt_type">
+                                                {{lbl_imprt_type}}
+                                            </span>
+                                        </td>
+                                        <th>Payment Term Remarks</th>
+                                        <td>
+                                            <span id="lbl_pymnt_trm_rmrks">
+                                                {{lbl_pymnt_trm_rmrks}}
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th> Inco term (Delivery Term)</th>
+                                        <td>
+                                            <span id="lbl_inco_term">
+                                                {{lbl_inco_term}}
+                                            </span>
+                                        </td>
+                                        <th>Inco term (Delivery Term) Remarks</th>
+                                        <td>
+                                            <span id="lbl_inco_trm_rmrks">
+                                                {{lbl_inco_trm_rmrks}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Shipment Schedule</th>
+                                        <td>
+                                            <span id="lbl_shpmnt_schedule">
+                                                {{lbl_shpmnt_schedule}}
+                                            </span>
+                                        </td>
+                                        <th>Port of Shipment</th>
+                                        <td>
+                                            <span id="port_shpmnt">
+                                                {{port_shpmnt}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Port of Destination </th>
+                                        <td>
+                                            <span id="port_dstntn">
+                                                {{port_dstntn}}
+                                            </span>
+                                        </td>
+                                        <th> BE Number</th>
+                                        <td>
+                                            <span id="lbl_be_nmbr">
+                                                {{lbl_be_nmbr}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> BE Date </th>
+                                        <td>
+                                            <span id="lbl_be_dt">
+                                                {{lbl_be_dt}}
+                                            </span>
+                                        </td>
+                                        <th>BE Value</th>
+                                        <td>
+                                            <span id="lbl_be_value">
+                                                {{lbl_be_value}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Partial Shipment</th>
+                                        <td>
+                                            <span id="lbl_partial_shpmnt">
+                                                {{lbl_partial_shpmnt}}
+                                            </span>
+                                        </td>
+                                        <th>Trans Shipment</th>
+                                        <td>
+                                            <span id="lbl_trns_shpmnt">
+                                                {{lbl_trns_shpmnt}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Packing Specification</th>
+                                        <td>
+                                            <span id="lbl_pkng_spc">
+                                                {{lbl_pkng_spc}}
+                                            </span>
+                                        </td>
+                                        <th>Validity of Order</th>
+                                        <td>
+                                            <span id="lbl_val_ordr">
+                                                {{lbl_val_ordr}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Validity of Order Remarks</th>
+                                        <td>
+                                            <span id="lbl_val_ordr_rmrks">
+                                                {{lbl_val_ordr_rmrks}}
+                                            </span>
+                                        </td>
+                                        <th>Country of Origin</th>
+                                        <td>
+                                            <span id="lbl_cntry_origin">
+                                                {{lbl_cntry_origin}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Free Detention Period</th>
+                                        <td>
+                                            <span id="lbl_f_dstntn_prd">
+                                                {{lbl_f_dstntn_prd}}
+                                            </span>
+                                        </td>
+                                        <th>Free Detention Period Remarks</th>
+                                        <td>
+                                            <span id="lbl_f_dstntn_prd_rmrks">
+                                                {{lbl_f_dstntn_prd_rmrks}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Bank Branch Name</th>
+                                        <td>
+                                            <span id="lbl_bnk_brnch_nm">
+                                                {{lbl_bnk_brnch_nm}}
+                                            </span>
+                                        </td>
+                                        <th>Bank Branch Address</th>
+                                        <td>
+                                            <span id="lbl_bnk_brnch_addr">
+                                                {{lbl_bnk_brnch_addr}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Bank Branch Landmark</th>
+                                        <td>
+                                            <span id="lbl_bnk_brnch_lnd_mrk">
+                                                {{lbl_bnk_brnch_lnd_mrk}}
+                                            </span>
+                                        </td>
+                                        <th>Bank Branch Pin</th>
+                                        <td>
+                                            <span id="lbl_bnk_brnch_pin">
+                                                {{lbl_bnk_brnch_pin}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Account Number</th>
+                                        <td>
+                                            <span id="lbl_bnk_acnt_nmbr">
+                                                {{lbl_bnk_acnt_nmbr}}
+                                            </span>
+                                        </td>
+                                        <th>Swipt Code</th>
+                                        <td>
+                                            <span id="lbl_bnk_swft_code">
+                                                {{lbl_bnk_swft_code}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>RTGS</th>
+                                        <td>
+                                            <span id="lbl_bnk_rtgs">
+                                                {{lbl_bnk_rtgs}}
+                                            </span>
+                                        </td>
+                                        <th>IFSC CODE</th>
+                                        <td>
+                                            <span id="lbl_bnk_ifsc">
+                                                {{lbl_bnk_ifsc}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Remarks</th>
+                                        <td>
+                                            <span id="lbl_bnk_rmrk">
+                                                {{lbl_bnk_rmrk}}
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+</body>
+
+</html>
+

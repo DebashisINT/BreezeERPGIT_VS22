@@ -1,0 +1,386 @@
+﻿
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Vendor Add</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <link href="../../../assests/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <link href="../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../../assests/js/jquery.min.js"></script>
+    <script src="../../../assests/bootstrap/js/bootstrap.min.js"></script>
+   
+   
+    <script type="text/javascript" src="/assests/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../../assests/js/modalmsg.js"></script>
+  
+    <style>
+        .input-sm {
+            margin-bottom: 5px;
+        }
+
+        .nogap {
+            padding: 0px;
+        }
+
+        .ui-widget-header {
+            border: 1px solid #272b3c !important;
+            background: #272b3c !important;
+            text-align: center;
+            color: #fff;
+        }
+
+        .ui-widget.ui-widget-content + .ui-widget-overlay {
+            z-index: 999998 !important;
+            background: #040404;
+            opacity: 0.7;
+        }
+
+        .ui-widget.ui-widget-content {
+            min-width: 300px !important;
+            min-width: 300px !important;
+            box-shadow: 0px 0px 0px 4px rgba(255,255,255,0.7);
+            border: none;
+            z-index: 999999 !important;
+        }
+
+        .ui-dialog-buttonset {
+            float: none !important;
+            text-align: center;
+            padding: 0px;
+        }
+
+        ui-dialog-buttonset > button {
+            margin: 0 !important;
+            margin-top: 3px;
+            background: #5a77d3 !important;
+            color: #fff !important;
+        }
+    </style>
+    <style>
+        .input-sm {
+            margin-bottom: 5px;
+        }
+
+        .nogap {
+            padding: 0px;
+        }
+        select#cddlSegmentMandatory1 {
+            display: none;
+        }
+        
+
+            #Table1 > tbody > tr:nth-child(odd) > td {
+                background: #f1f1f1;
+            }
+        #Table1 .multiselect-native-select .dropdown-menu {
+            max-height: auto;
+            height: 350px;
+            overflow: hidden auto;
+            width: 400px;
+        }
+        #Table1 .btn-group button.dropdown-toggle {
+            text-align: left;
+            display: inline-block;
+            max-width: 214px;
+            overflow: hidden;
+        }
+        .multiselect-container.dropdown-menu li.multiselect-filter {
+            padding: 0 10px;
+        }
+        #Table1 .multiselect-container.dropdown-menu li   label {
+            font-weight: 400;
+            white-space: normal;
+            margin-bottom: 4px;
+            margin-top: 6px;
+        }
+    </style>
+    <script src="../../../assests/pluggins/bootstrap-multiselect/bootstrap-multiselect.min.js"></script>
+    <script src="Js/vendorPopup.js?var=2.0"></script>
+    <script src="../../../assests/pluggins/choosen/choosen.min.js"></script>
+ 
+  
+    <style>
+        .form-group input[type="checkbox"] {
+            display: none;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                    display: none;
+                }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                    display: inline-block;
+                }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;
+            }
+
+        .clear {
+            clear: both;
+        }
+       
+    </style>
+
+</head>
+
+<body>
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="row">
+              
+                <div class="col-md-3" id="dvUniqueVendorId">
+                    <label>Unique Id </label><label style="color:red">*</label>
+                    <input class="form-control input-sm" placeholder="Unique ID" maxlength="80" id="VenuniqueId" onblur="CheckVendorUnique()" type="text" data-toggle="tooltip" title="Unique ID">
+                    <div id="uniqueIdMessage" style="display:none">
+                        <label id="lblUniqueId" style="color:red">Vendor Already Exists.</label>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4" id="dvNumberingScheme" style="display:none">
+                    <label>Numbering Scheme</label>
+                    <select class="form-control" id="NumSchemeVendor">
+                        <!--<option value="0" selected="selected">Select</option>-->
+                    </select>
+                </div>
+
+              
+
+
+                <div class="col-md-3" id="dvdoc" style="display:none">
+                    <label>Unique ID</label><label style="color:red">*</label>
+                    <input class="form-control input-sm" placeholder="Unique ID" maxlength="80" id="DocNum" type="text" data-toggle="tooltip" title="Unique ID" onblur="UniqueVendorCodeCheck()">
+                </div>
+
+                
+                <div class="col-md-4">
+                    <label>Name</label><label style="color:red">*</label>
+                    <input class="form-control input-sm" placeholder="Name" id="VenName" type="text" maxlength="50" data-toggle="tooltip" title="Name">
+                </div>
+                <!--<rev srijeeta   mantis issue 0024515 >-->
+                <div class="col-md-4" id="altcodee">
+                    <label>Alternative Code</label>
+                    <input class="form-control input-sm" placeholder="Alternative Code" maxlength="100" id="Docaltcodee" type="text" data-toggle="tooltip" title="Alternative Code">
+                </div>
+                <!--<end of rev srijeeta  mantis issue 0024515>-->
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>GSTIN</label>
+                        </div>
+                        <div class="clear" />
+                        <div class="col-md-3">
+                            <input class="form-control input-sm" id="VenGSTIN1" type="text" maxlength="2" data-toggle="tooltip" title="GSTIN">
+                        </div>
+                        <div class="col-md-5">
+                            <input class="form-control input-sm" id="VenGSTIN2" type="text" maxlength="10" data-toggle="tooltip" title="GSTIN">
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control input-sm" id="VenGSTIN3" type="text" maxlength="3" data-toggle="tooltip" title="GSTIN">
+                        </div>
+                    </div>
+                </div>
+
+              
+               
+            </div>
+            <div id="Table1" class="col-md-4">
+                <label>Preferred Products</label>
+
+
+                <input class="form-control input-sm charmaxed text-right" style="display:none" id="txtSegment1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="2" min="0" max="15">
+                <input class="form-control input-sm" id="txtUsedFor1" style="display:none" type="text" maxlength="30">
+                <select class="form-control " id="cddlSegmentMandatory1" multiple></select>
+
+            </div>
+
+            <div class="clear"></div>
+            <div class="" style="padding-top:10px;">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-header">
+                            <label style="padding-left: 10px; padding-top: 6px;">Billing Details</label>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <div class="col-md-6 nogap">
+                                <label>Pin</label><label style="color:red">*</label>
+                                <input class="form-control input-sm" placeholder="Pin Code" id="VenpinCode" maxlength="6" onblur="VendorPinChange()"
+                                       type="text" data-toggle="tooltip" title="Pin Code">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Alternative Phone</label>
+                                <input class="form-control input-sm" placeholder="Alternative Phone" id="VenBillingPhone" maxlength="12" type="text"
+                                       data-toggle="tooltip" title="Alternative Phone">
+                            </div>
+                            <div class="clear"></div>
+
+                            <!--Mantis Issue  0024200-->
+                            <!--<div class="col-md-12 nogap">
+                                <label>Address </label><label style="color:red">*</label>
+                                <input class="form-control input-sm" placeholder="Address 1" id="VenBillingAddress1" maxlength="50" type="text" data-toggle="tooltip" title="Address 1">
+                            </div>
+                            <div class="col-md-12 nogap">
+                                <input class="form-control input-sm" placeholder="Address 2" id="VenBillingAddress2" maxlength="50" type="text" data-toggle="tooltip" title="Address 2">
+                            </div>-->
+                            <div class="col-md-12 nogap">
+                                <label>Address </label><label style="color:red">*</label>
+                                <input class="form-control input-sm" placeholder="Address 1" id="VenBillingAddress1" maxlength="500" type="text" data-toggle="tooltip" title="Address 1">
+                            </div>
+                            <div class="col-md-12 nogap">
+                                <input class="form-control input-sm" placeholder="Address 2" id="VenBillingAddress2" maxlength="500" type="text" data-toggle="tooltip" title="Address 2">
+                            </div>
+
+                            <!--End of Mantis Issue 0024200-->
+
+                            <div class="col-md-4 nogap">
+                                <label> Country</label>
+                                <input class="form-control input-sm " placeholder="Country" disabled id="VenCountry" type="text" data-toggle="tooltip" title="Country">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>State</label>
+                                <input class="form-control input-sm" placeholder="State" disabled id="VenState" type="text" data-toggle="tooltip" title="State">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>District</label>
+                                <input class="form-control input-sm" placeholder="District" disabled id="VenCity" type="text" data-toggle="tooltip" title="District">
+                            </div>
+                            <!-- <a href="#" onclick="billingCopyToshipping()">-->
+                            <a class="[ form-group ]" href="#" onclick="javascript: VendorBillingCheckChange()">
+                                <input type="checkbox" name="fancy-checkbox-success" id="fancy-checkbox-success" autocomplete="off" />
+                                <div class="[ btn-group ]">
+                                    <label for="fancy-checkbox-success" class="[ btn btn-success ]">
+                                        <span class="[ glyphicon glyphicon-ok ]"></span>
+                                        <span> </span>
+                                    </label>
+                                    <label for="fancy-checkbox-success" class="[ btn btn-default active ]">
+                                        Ship To Same Address
+                                    </label>
+                                </div>
+                            </a>
+                            <!--</a>-->
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 10px">
+
+                        <label id="lblgrpName">Group</label>
+                        <select class="form-control" id="VenGroupCust">
+                            <option value="0" selected="selected">Select</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6" id="shippingId">
+                    <div class="panel panel-default">
+                        <div class="panel-header">
+                            <label style="padding-left: 10px; padding-top: 6px;">Shipping Details</label>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-12 nogap">
+                                <label>Contact Person</label>
+                                <input class="form-control input-sm" placeholder="Contact Person" id="Vencontactperson" maxlength="40" type="text" data-toggle="tooltip" title="Contact Person">
+                            </div>
+
+                            <div class="col-md-6 nogap">
+                                <label>Pin</label><label style="color:red">*</label>
+                                <input class="form-control input-sm" placeholder="Pin Code" id="VenshippingpinCode" maxlength="6" onblur="VendorshippingPinChange()"  type="text" data-toggle="tooltip" title="Pin Code">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Alternative Phone</label>
+                                <input class="form-control input-sm" placeholder="Alternative Phone" id="VenShippingPhone" maxlength="12" type="text" data-toggle="tooltip" title="Alternative Phone">
+                            </div>
+                            <div class="clear"></div>
+
+                            <!--Mantis Issue 0024200-->
+
+                            <!--<div class="col-md-12 nogap">
+                                <label>Address 1</label><label style="color:red">*</label>
+                                <input class="form-control input-sm" placeholder="Address 1" id="VenshippingAddress1" maxlength="50" type="text" data-toggle="tooltip" title="Address 1">
+                            </div>
+                            <div class="col-md-12 nogap">
+                                <input class="form-control input-sm" placeholder="Address 2" id="VenshippingAddress2" maxlength="50" type="text" data-toggle="tooltip" title="Address 2">
+                            </div>-->
+
+                            <div class="col-md-12 nogap">
+                                <label>Address 1</label><label style="color:red">*</label>
+                                <input class="form-control input-sm" placeholder="Address 1" id="VenshippingAddress1" maxlength="500" type="text" data-toggle="tooltip" title="Address 1">
+                            </div>
+                            <div class="col-md-12 nogap">
+                                <input class="form-control input-sm" placeholder="Address 2" id="VenshippingAddress2" maxlength="500" type="text" data-toggle="tooltip" title="Address 2">
+                            </div>
+
+                            <!--End of Mantis Issue 0024200-->
+
+                            <div class="col-md-4 nogap">
+                                <label> Country</label>
+                                <input class="form-control input-sm " placeholder="Country" disabled id="VenshippingCountry" type="text" data-toggle="tooltip" title="Country">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>State</label>
+                                <input class="form-control input-sm" placeholder="State" disabled id="VenshippingState" type="text" data-toggle="tooltip" title="State">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>District</label>
+                                <input class="form-control input-sm" placeholder="District" disabled id="VenshippingCity" type="text" data-toggle="tooltip" title="District">
+                            </div>
+
+
+
+                            <a class="[ form-group ]" href="#" onclick="javascript: VendorShippingCheckChange()">
+                                <input type="checkbox" name="fancy-checkbox-successShipping" id="fancy-checkbox-successShipping" autocomplete="off" />
+                                <div class="[ btn-group ]">
+                                    <label for="fancy-checkbox-successShipping" class="[ btn btn-success ]">
+                                        <span class="[ glyphicon glyphicon-ok ]"></span>
+                                        <span> </span>
+                                    </label>
+                                    <label for="fancy-checkbox-successShipping" class="[ btn btn-default active ]">
+                                        Bill To Same Address
+                                    </label>
+                                </div>
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+
+
+
+            <div class="col-md-12 pull-left">
+                <input type="button" class="btn btn-primary btn-small" value="Save" onclick="SaveVendor()" />
+                <label style="color: red">[After Save this data, Billing/Shipping to be filled automatically.]</label>
+            </div>
+
+        </div>
+    </div>
+</body>
+<asp:HiddenField ID="hdnSegmentMandatory1" runat="server" />
+</html>

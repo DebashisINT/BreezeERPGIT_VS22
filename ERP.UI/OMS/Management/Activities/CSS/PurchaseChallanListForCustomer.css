@@ -1,0 +1,32 @@
+﻿.smllpad > tbody > tr > td {
+            padding-right: 25px;
+        }
+
+        .errorField {
+            position: absolute;
+            right: 5px;
+            top: 9px;
+        }
+
+        .padTab {
+            margin-bottom: 4px;
+        }
+
+            .padTab > tbody > tr > td {
+                padding-right: 15px;
+                vertical-align: middle;
+            }
+
+                .padTab > tbody > tr > td > label, .padTab > tbody > tr > td > input[type="button"] {
+                    margin-bottom: 0 !important;
+                }
+
+        .backBranch {
+            font-weight: 600;
+            background: #75c1f5;
+            padding: 5px;
+        }
+
+        #grid .dxgvHEC {
+            display: none;
+        }

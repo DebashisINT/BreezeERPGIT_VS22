@@ -1,0 +1,51 @@
+﻿.inline {
+            display: inline !important;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content {
+            overflow: visible !important;
+        }
+
+        .abs {
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+
+        .fa.fa-exclamation-circle:before {
+            font-family: FontAwesome;
+        }
+
+        .tp2 {
+            right: -18px;
+            top: 7px;
+            position: absolute;
+        }
+
+        #txtCreditLimit_EC {
+            position: absolute;
+        }
+
+        #gridReplacement_DXStatus span > a {
+            display: none;
+        }
+
+        #aspxGridTax_DXEditingErrorRow0 {
+            display: none;
+        }
+
+        .horizontal-images.content li {
+            float: left;
+        }
+
+        #rdl_SaleInvoice {
+            margin-top: 3px;
+        }
+
+            #rdl_SaleInvoice > tbody > tr > td {
+                padding-right: 5px;
+            }
+             #DivBilling [class^="col-md"], #DivShipping [class^="col-md"] {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }

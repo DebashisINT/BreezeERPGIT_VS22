@@ -1,0 +1,45 @@
+﻿   .timeWraper {
+            width:100%;
+        }
+        .timeBox {
+            width:420px;
+            margin:100px auto 50px auto;
+            border:1px solid #ccc;
+            padding:50px;
+            border-radius:5px;
+            text-align:center;
+        }
+        .timeBox #time_span {
+            font-size:22px;
+        }
+        .timeBox .line {
+            border-top:1px solid #95d495;
+            margin-bottom:30px;
+        }
+        .timeBox .dateMnth {
+            font-size:16px;
+            font-weight:normal;
+        }
+        .btnWrap {
+            margin-top:20px;
+        }
+
+        .employeeNameClass {
+           margin-top: 10px;
+    font-size: 14px;
+    display: inline-block;
+        }
+        .butnlaymargin {
+            padding-top:18px;
+            margin-bottom:8px;
+        }
+        .bxCenter {
+            width: 217px;
+            margin: 11px auto;
+        }
+        .mTop15 {
+            margin-top:15px;
+        }
+        .customSizeModal {
+                width: 400px !important;
+        }

@@ -1,0 +1,27 @@
+﻿
+            #ASPxPageControl1 {
+                width:100%;
+            }
+            .boxLayout {
+               background: #f3efd3;
+                margin-bottom: 15px;
+                padding: 23px  0 9px 0;
+                border: 1px solid #a59d66;
+                position:relative;
+            }
+            .hdBoxLayout {
+                position: absolute;
+                background: #d2cca0;
+                display: block;
+                width: 100%;
+                top: 0;
+                padding: 5px 15px;
+                border-bottom: 1px solid #b9b38a;
+                    font-weight: 600;
+            }
+            .iconRed {
+                position: absolute;
+                right: -18px;
+                top: 3px;
+            }
+ 

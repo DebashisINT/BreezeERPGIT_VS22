@@ -1,0 +1,214 @@
+﻿
+        .dynamicPopupTbl > thead > tr > th, .dynamicPopupTbl > tbody > tr > td {
+            padding: 5px 8px !important;
+            font-size: 14px;
+        }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            cursor: pointer;
+        }
+
+            .dynamicPopupTbl > tbody > tr > td input {
+                border: none !important;
+                cursor: pointer;
+                background: transparent !important;
+            }
+
+
+
+        .HeaderStyle {
+            background-color: #180771d9;
+            color: #f5f5f5;
+        }
+
+         .eqTble > tbody>tr>td {
+            padding:0 7px;
+            vertical-align:top;
+        }
+
+        #grid_DXMainTable > tbody > tr > td:last-child, #productLookUp_DDD_gv_DXMainTable > tbody > tr > td:nth-child(2) {
+            display: none !important;
+        }
+
+        #openlink {
+            font-size: 18px;
+            cmbContactPerson;
+        }
+
+        .inline {
+            display: inline-block !important;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content {
+            overflow: visible !important;
+        }
+
+        .abs {
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+
+
+        .fa.fa-exclamation-circle:before {
+            font-family: FontAwesome;
+        }
+
+        .tp2 {
+            right: -18px;
+            top: 7px;
+            position: absolute;
+        }
+
+        #txtCreditLimit_EC {
+            position: absolute;
+        }
+
+        #grid_DXStatus span > a {
+            display: none;
+        }
+
+        #aspxGridTax_DXEditingErrorRow0 {
+            display: none;
+        }
+
+        .horizontal-images.content li {
+            float: left;
+        }
+
+        #grid_DXMainTable > tbody > tr > td:last-child {
+            display: none !important;
+        }
+
+        #taxroundedOf, #chargesRoundOf {
+            font-weight: 600;
+            font-size: 15px;
+            color: #7f0826;
+        }
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        .popover {
+            z-index: 999999;
+            max-width: 350px;
+        }
+
+            .popover .popover-title {
+                margin-top: 0 !important;
+                background: #465b9d;
+                color: #fff;
+            }
+
+        .pdLeft15 {
+            padding-left: 15px;
+        }
+
+        .mTop {
+            margin-top: 10px;
+        }
+
+        .mLeft {
+            margin-left: 15px;
+        }
+
+        .popover .popover-content {
+            min-height: 60px;
+        }
+        /*#grid_DXEditingErrorRow-1 {
+            display: none;
+        }*/
+
+        /*#grid_DXStatus span > a {
+            display: none;
+        }
+
+        #gridTax_DXStatus span > a {
+            display: none;
+        }*/
+
+        #grid_DXStatus {
+            display: none;
+        }
+
+        #aspxGridTax_DXStatus {
+            display: none;
+        }
+
+        #gridTax_DXStatus {
+            display: none;
+        }
+
+        .hideCell {
+            display: none;
+        }
+
+        .pullleftClass {
+            position: absolute;
+            right: -3px;
+            top: 24px;
+        }
+
+        #myCheck {
+            transform: translateY(2px);
+            -webkit-transform: translateY(2px);
+            -moz-transform: translateY(2px);
+            margin-right: 5px;
+        }
+
+        .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }
+
+        .dxeButtonEditClearButton_PlasticBlue {
+            display: none;
+        }
+
+        .mbot5 .col-md-8 {
+            margin-bottom: 5px;
+        }
+
+        .validclass {
+            position: absolute;
+            right: -4px;
+            top: 20px;
+        }
+
+        .mandt {
+            position: absolute;
+            right: -18px;
+            top: 4px;
+        }
+
+        #txtProductAmount, #txtProductTaxAmount, #txtProductDiscount, #txtProductNetAmount {
+            font-weight: bold;
+        }
+
+        /*#grid, #grid div {
+            width: 100% !important;
+        }*/
+        .crossBtn {
+            cursor: pointer;
+        }
+
+        #txtTaxTotAmt input, #txtprodBasicAmt input, #txtGstCstVat input {
+            text-align: right;
+        }
+
+        #grid .dxgvHSDC > div, #grid .dxgvCSD {
+            width: 100% !important;
+        }
+        .rbl input[type="radio"]
+		{
+		   margin-left: 10px;
+		   margin-right: 1px;
+		}
+         .mlableWh{
+            padding-top: 22px;
+            display:inline-block
+        }
+        .mlableWh>input +span {
+            white-space: nowrap;
+        }
+
+

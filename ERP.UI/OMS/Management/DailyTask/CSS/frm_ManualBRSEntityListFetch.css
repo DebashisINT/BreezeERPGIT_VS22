@@ -1,0 +1,15 @@
+﻿.padTab > tbody > tr > td {
+            padding-right: 15px;
+            vertical-align: middle;
+        }
+
+        .padTab > tbody > tr > td > label {
+            margin-bottom: 0 !important;
+        }
+
+        .padTab > tbody > tr > td > .btn {
+            margin-top: 0 !important;
+        }
+        #grdmanualBRS  {
+            width:100% !important;
+        }

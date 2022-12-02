@@ -1,0 +1,62 @@
+﻿
+        /*.dxgv {
+            display: block;
+        }*/
+
+        .rowRed {
+            color: red !important;
+        }
+
+        .itcShow {
+            display: block !important;
+        }
+
+        .dxgv.dx-al, .dxgv.dx-ar, .dx-nowrap.dxgv, .gridcellleft.dxgv, .dxgv.dx-ac, .dxgvCommandColumn_PlasticBlue.dxgv.dx-ac {
+            display: table-cell !important;
+        }
+
+        #grid_DXMainTable tr td:first-child {
+            display: table-cell !important;
+        }
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        #GvJvSearch_DXMainTable .dxgv {
+            display: table-cell !important;
+        }
+
+        #GvJvSearch_DXFilterRow .dxgv {
+            display: table-cell !important;
+        }
+
+        .pullleftClass {
+            position: absolute;
+            right: 10px;
+            top: 32px;
+        }
+
+        .crossBtn.CloseBtn {
+            border: none;
+            margin-right: 10px;
+        }
+
+            .crossBtn.CloseBtn input {
+                padding: 0;
+                border: none;
+            }
+
+        .padTabtype2 > tbody > tr > td {
+            padding: 0px 5px;
+        }
+
+            .padTabtype2 > tbody > tr > td > label {
+                margin-bottom: 0 !important;
+                margin-right: 15px;
+            }
+
+        #loadCurrencyMassage {
+            margin: 8px 0 0 36px;
+        }
+

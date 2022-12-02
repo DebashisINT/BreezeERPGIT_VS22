@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Product Add</title>
+
+    <style>
+       .input-sm {
+            margin-bottom: 5px;
+        }
+    </style>
+    
+    <link href="../../../../assests/css/jquery-ui.css" rel="stylesheet" />
+    
+    <link href="../../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/assests/js/jquery.min.js"></script>
+
+    <script src="/assests/bootstrap/js/bootstrap.min.js"></script>
+ 
+    
+    <script src="/OMS/Management/Activities/JS/SearchPopup.js"></script>
+    <link href="/OMS/Management/Activities/CSS/SearchPopup.css" rel="stylesheet" />
+    <script src="JS/ProductPop.js?var=21.97"></script>
+
+
+    
+    <script type="text/javascript" src="/assests/js/jquery-ui.min.js"></script>
+   
+    <script src="../../../../assests/js/modalmsg.js"></script>
+    <style>
+        .input-sm {
+            margin-bottom: 5px;
+        }
+
+        .nogap {
+            padding: 0px;
+        }
+
+        .ui-widget-header {
+            border: 1px solid #272b3c !important;
+            background: #272b3c !important;
+            text-align: center;
+            color: #fff;
+        }
+
+        .ui-widget.ui-widget-content + .ui-widget-overlay {
+            z-index: 999998 !important;
+            background: #040404;
+            opacity: 0.7;
+        }
+
+        .ui-widget.ui-widget-content {
+            min-width: 300px !important;
+            min-width: 300px !important;
+            box-shadow: 0px 0px 0px 4px rgba(255,255,255,0.7);
+            border: none;
+            z-index: 999999 !important;
+        }
+
+        .ui-dialog-buttonset {
+            float: none !important;
+            text-align: center;
+            padding: 0px;
+        }
+
+        ui-dialog-buttonset > button {
+            margin: 0 !important;
+            margin-top: 3px;
+        }
+    </style>
+
+
+    <style>
+        #ClassModel .modal-backdrop {
+            display: none;
+        }
+        #HSNModel .modal-backdrop {
+            display: none;
+        }
+        .input-group.customInputGroup input {
+            height: 29px;
+        }
+        .input-group.customInputGroup .input-group-btn .btn {
+            padding: 1px 5px;
+        }
+        .conent-areas {
+            padding:15px
+        }
+            .conent-areas .lbl {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+            .conent-areas .form-group {
+                margin-bottom:5px;
+            }
+            .conent-areas select {
+                height: 29px !important;
+            }
+        
+        .npInput {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 12px;
+            padding: 5px;
+        }
+        .mt-10 {
+            margin-top: 2px;
+        }
+        .hyperlink {
+            text-decoration:underline;
+        }
+        .infoArea {
+            border: 1px solid #e2e2e2;
+            background:#fff;
+            border-radius: 3px;
+            padding-bottom: 8px;
+            font-size:13px;
+            padding:15px 0;
+        }
+        .UOMHeader {
+            font-size: 16px;
+            font-weight: 600;
+            color: #9e9797;
+            margin-top: -6px;
+        }
+        .normalDisabled {
+            cursor: default !important;
+            background: #fff !important;
+            border-radius: 3px 0 0 3px !important;
+        }
+    </style>
+</head>
+<body style="background: transparent;">
+    <div class="clearfix " style="border: 1px solid #e2e2e2; border-radius: 3px; padding-bottom: 8px; background: #fff;">
+        <div class="conent-areas">
+            <div class="row">
+
+
+
+                <div class="col-md-4" id="dvNumberingScheme" style="display:none">
+                    <label>Numbering Scheme</label>
+
+                    <div class="form-group ">
+                        <select class="form-control" id="NumScheme">
+                            <!--<option value="0" selected="selected">Select</option>-->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3" id="dvdoc" style="display:none">
+                    <label>Unique ID</label><label style="color:red">*</label>
+                   <div class="form-group">
+                       <input class="form-control input-sm" placeholder="Unique ID" maxlength="80" id="DocNum" type="text" data-toggle="tooltip" title="Unique ID" onblur="UniqueCodeProductCheck()">
+                   </div>
+                </div>
+
+
+                <div class="col-sm-4" id="dvProduct">
+                    <div class="lbl">
+
+                        <!--Product Code-->
+                        Short Name (Unique)
+                        <span style="color: red;"> *</span>
+                    </div>
+                    <div class="form-group ">
+
+                        <!--<input class="form-control input-sm" placeholder="Product Code" id="PCode" type="text" maxlength="80" data-toggle="tooltip" title="Product Code" onchange="TextChanged_Productname()">-->
+                        <input class="form-control input-sm" placeholder="Short Name (Unique)" id="PCode" type="text" maxlength="80" data-toggle="tooltip" title="Product Code" onchange="TextChanged_Productname()">
+                    </div>
+                </div>
+                <div class="col-sm-4" id="dvProductName">
+                    <div class="lbl">
+                        Product Name
+                        <span style="color: red;"> *</span>
+                    </div>
+                    <div class="form-group ">
+
+                        <input class="form-control input-sm" placeholder="Product Name" id="Product_Name" type="text" maxlength="80" data-toggle="tooltip" title="Product Name">
+
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="lbl">Inventory Item?</div>
+                    <div class="form-group">
+                        <select class="form-control" id="InvProd" onchange="ChangeOfInventory()">
+                            <option value="1" selected="selected">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="lbl">Service Item?</div>
+                    <div class="form-group">
+                        <select class="form-control" id="servItm" onchange="ChangeOfServiceitem()">
+                            <option value="0" selected="selected">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="lbl mt-10">Capital Goods?</div>
+                    <div class="form-group">
+                        <select class="form-control" id="Capgoods">
+                            <option value="0" selected="selected">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="lbl mt-10">Alternate Name</div>
+                    <div class="form-group"><input class="form-control input-sm" placeholder="Alternate Name" id="AltName" type="text" maxlength="50" data-toggle="tooltip" title="Alternate Name"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="lbl mt-10">Class Name</div>
+                    <div class="input-group customInputGroup">
+                        <input type="hidden" id="ClassId" name="ClassId" value="">
+                        <input type="text" class="form-control normalDisabled" id="ClassName" name="ClassName">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#ClassModel"><span style="font-size:18px">...</span></button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="lbl mt-10">HSN/SAC Code</div>
+                    <div class="input-group customInputGroup">
+                        <input type="hidden" id="HSNId" name="HSNId" value="">
+                        <input type="text" class="form-control normalDisabled" id="HSNName" name="HSNName">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="button" id="HSNBtn" data-toggle="modal" data-target="#HSNModel"><span style="font-size:18px">...</span></button>
+                        </div>
+                    </div>
+                    <div class="text-muted"><span style="font-size: 12px;">Not sure about HSN code ? <a href="http://www.cbic.gov.in/resources//htdocs-cbec/gst/goods-rates-booklet-03July2017.pdf" target="_blank" class="hyperlink">Look up here</a></span></div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="lbl mt-10">
+                        &nbsp;
+                    </div>
+                    <input type="checkbox" name="FurtherBusiness" id="FurtherBusiness" value=""><span style="margin-left:10px">Furtherance to Business</span><br>
+                </div>
+                <div class="col-sm-4">
+                    <div class="lbl mt-10">
+                        Unit [Sales/Purchases/Stock]
+                        <span style="color: red;"> *</span>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="Unit" onchange="selectChangeUnit()">
+                            <option value="0" selected="selected">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="margin: 0;" />
+        <div class="conent-areas">
+            <div class="row">
+                <div class="col-md-12"><h5 class="UOMHeader">Configure UOM Conversion</h5></div>
+                <div class="col-sm-3">
+                    <div class="lbl">Quantity</div>
+                    <div class="form-group"><input class="form-control input-sm" placeholder="Quantity" id="qnty" type="text" maxlength="50" data-toggle="tooltip" style="text-align: right;" title="quantity" onkeypress="return isNumberKey(event)"></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="lbl">Main Unit</div>
+                    <div class="form-group">
+                        <select class="form-control" id="MainUnit" onchange="selectChangeUnit()">
+                            <option value="0" selected="selected">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="lbl">Alt. Quantity</div>
+                    <div class="form-group"><input class="form-control input-sm" placeholder="Alt. Quantity" id="Altqnty" type="text" maxlength="50" data-toggle="tooltip" style="text-align: right;" title="Alt. Quantity" onkeypress="return isNumberKey(event)"></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="lbl">Alt. Unit</div>
+                    <div class="form-group">
+                        <select class="form-control" id="AltUnit">
+                            <option value="0" selected="selected">Select</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <input type="checkbox" name="OverrideUOM" id="OverrideUOM" value=""><span style="margin-left:10px">Do not override UOM conversion in transaction.</span><br>
+            </div>
+        </div>
+        <div class="col-sm-12 pull-left">
+            <input type="hidden" id="hdnAltNameMandatory" name="hdnAltNameMandatory" value="">
+            <input type="button" class="btn btn-primary " value="Save" onclick="SaveProduct()" />
+        </div>
+    </div>
+    <br />
+    <div class="clearfix infoArea">
+        <div class="col-md-12">
+            <p><span><b>Item(s)/Product(s) add-on-fly:</b></span></p>
+
+            <p><span>BreezeERP provides the feature of Product Add-on-fly with minimal data capture. It will help to immediately create Product(s) from within the  transaction module and proceed with entries. <br />It will save the time and effort.</span></p>
+
+            <p><span>If you wish to create Product(s) with detailed data, you may click on the following link to open the Product Master module of BreezeERP: <span style="color:#0000CD"><u><strong><span> <a href="/OMS/management/store/Master/sProducts.aspx" target="_blank">Product Master</a></span></strong></u></span></span></p>
+
+            <p></p>
+
+            <p><span>Here, all the <span style="color:#FF0000">*red asterisk</span> marked fields are mandatory. Please put all the values for those fields to save Product(s) data properly.</span></p>
+        </div>
+    </div>
+        
+
+
+</body>
+</html>
+<!--Customer Modal -->
+<div class="modal fade" id="ClassModel" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Class Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="npInput" onkeydown="Classkeydown(event)" id="txtClassSearch" autofocus width="100%" placeholder="Search By Class Name" />
+
+                <div id="ClassTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tbody>
+                            <tr class="HeaderStyle">
+                                <th class="hide">Id</th>
+                                <th>Class Name</th>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="HSNModel" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">HSN/SAC Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="npInput" onkeydown="HSNkeydown(event)" id="txtHSNSearch" autofocus width="100%" placeholder="Search By HSN/SAC Code or Description" />
+
+                <div id="HSNTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tbody>
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th style="width:150px;">Code</th>
+                                <th>Description</th>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

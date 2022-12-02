@@ -1,0 +1,65 @@
+﻿#grid_DXStatus.statusBar a {
+            visibility: hidden;
+        }
+
+        .gridcellleft.dx-nowrap.dxgv, .gridcellleft.dxgv, .dxgv.dx-al, .dxgv.dx-ar, .dxgv.dx-ac {
+            display: table-cell !important;
+        }
+
+        .dxgv.dx-al, .dxgv.dx-ar, .dx-nowrap.dxgv, .gridcellleft.dxgv, .dxgv.dx-ac, .dxgvCommandColumn_PlasticBlue.dxgv.dx-ac {
+            display: table-cell !important;
+        }
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        .voucherno {
+            position: absolute;
+            right: 22px;
+            top: 37px;
+        }
+
+        .FromBranch {
+            position: absolute;
+            right: 22px;
+            top: 37px;
+        }
+
+        .BranchTo {
+            position: absolute;
+            right: 1px;
+            top: 25px;
+        }
+
+        .iconInstrumentType {
+            position: absolute;
+            right: -2px;
+            top: 35px;
+        }
+
+        .iconNumberScheme {
+            position: absolute;
+            right: -2px;
+            top: 34px;
+        }
+
+        #Grid_ContraVoucher_DXFilterRow .dxgv {
+            display: table-cell !important;
+        }
+
+        #Grid_ContraVoucher_DXGroupRow0.dxgvGroupRow_PlasticBlue td.dxgv {
+            display: table-cell !important;
+        }
+
+        .padTabtype2 > tbody > tr > td {
+            padding: 0px 5px;
+        }
+
+            .padTabtype2 > tbody > tr > td > label {
+                margin-bottom: 0 !important;
+                margin-right: 15px;
+            }
+            .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }

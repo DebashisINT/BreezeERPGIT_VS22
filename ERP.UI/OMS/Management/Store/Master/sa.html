@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<title>jQuery mtz.monthpicker Demos</title>
+
+
+</head>
+
+<body>
+
+<input type="text" id="demo-2" >
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+<script src="/assests/js/jquery.mtz.monthpicker.js"></script>
+<script>
+$('#demo-1').monthpicker();
+$('#demo-2').monthpicker({pattern: 'yyyy-mm', 
+    selectedYear: 2015,
+    startYear: 2015,
+    finalYear: 2212,});
+	var options = {
+    selectedYear: 2015,
+    startYear: 2008,
+    finalYear: 2018,
+    openOnFocus: false // Let's now use a button to show the widget
+};
+
+</script>
+
+</body>
+</html>

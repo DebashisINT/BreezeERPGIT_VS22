@@ -1,0 +1,12 @@
+﻿.padTab {
+            margin-bottom: 4px;
+        }
+
+            .padTab > tbody > tr > td {
+                padding-right: 15px;
+                vertical-align: middle;
+            }
+
+                .padTab > tbody > tr > td > label, .padTab > tbody > tr > td > input[type="button"] {
+                    margin-bottom: 0 !important;
+                }

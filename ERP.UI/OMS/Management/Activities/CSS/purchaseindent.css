@@ -1,0 +1,96 @@
+﻿
+        .voucherno {
+            position: absolute;
+            right: 0px;
+            top: 34px;
+        }
+
+        .brnchreq label {
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+
+        
+    
+        /*.dxgv.dx-al, .dxgv.dx-ar, .dx-nowrap.dxgv, .gridcellleft.dxgv, .dxgv.dx-ac, .dxgvCommandColumn_PlasticBlue.dxgv.dx-ac {
+            display: table-cell !important;
+        }*/
+
+
+      
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        
+
+
+
+        /*#gridBatch_DXStatus span > a {
+            display: none;
+        }
+
+        #gridBatch_DXEditingErrorRow-1 {
+            display: none;
+        }
+
+        #Grid_PurchaseIndent_DXMainTable .dxgv {
+            display: table-cell !important;
+        }
+
+        #Grid_PurchaseIndent_DXFilterRow .dxgv {
+            display: table-cell !important;
+        }*/
+
+        .padTabtype2 > tbody > tr > td {
+            padding-right: 15px;
+        }
+
+        padTabtype2 > tbody > tr > td:last-child {
+            padding-right: 0px;
+        }
+          .eqTble > tbody>tr>td {
+            padding:0 7px;
+            vertical-align:top;
+        }
+   
+       .mlableWh{
+            padding-top: 22px;
+            display:inline-block
+        }
+        .mlableWh>input +span {
+            white-space: nowrap;
+        }
+
+
+
+
+   
+        /*#gridSkillMasterList, #gridSkillMasterList > tbody > tr > td .dxgvCSD {
+            width: 100% !important;
+        }*/
+
+        /*#gridBatch_DXMainTable > tbody > tr > td:nth-child(11) {
+            display: none !important;
+        }*/
+
+
+                   /*.dxgv {
+            display: none;
+        }*/
+
+
+        /*#gridBatch_DXMainTable tr td:first-child {
+            display: table-cell !important;
+        }*/
+
+        /*.absolute, #gridBatch_DXMainTable .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }*/
+
+        /*#gridBatch_DXMainTable > tbody > tr > td:last-child {
+            display: none !important;
+        }*/
+ 

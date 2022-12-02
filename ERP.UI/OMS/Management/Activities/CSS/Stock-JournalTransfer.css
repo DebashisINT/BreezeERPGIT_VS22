@@ -1,0 +1,126 @@
+﻿
+        #grid_DXStatus {
+            display: none !important;
+        }
+
+        #aspxGridTax_DXStatus {
+            display: none !important;
+        }
+
+        #gridTax_DXStatus {
+            display: none !important;
+        }
+
+        #grid_DXMainTable > tbody > tr > td:last-child {
+            display: none !important;
+        }
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        .mbot5 .col-md-8 {
+            margin-bottom: 5px;
+        }
+
+        .pullleftClass {
+            position: absolute;
+            right: -3px;
+            top: 18px;
+        }
+
+        .horizontallblHolder {
+            height: auto;
+            border: 1px solid #12a79b;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+            .horizontallblHolder > table > tbody > tr > td {
+                padding: 8px 10px;
+                background: #ffffff;
+                background: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+                background: -webkit-linear-gradient(top, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                background: linear-gradient(to bottom, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+            }
+
+                .horizontallblHolder > table > tbody > tr > td:first-child {
+                    background: #12a79b;
+                    color: #fff;
+                }
+
+                .horizontallblHolder > table > tbody > tr > td:last-child {
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    color: #121212;
+                }
+
+        .dynamicPopupTbl > thead > tr > th, .dynamicPopupTbl > tbody > tr > td {
+            padding: 5px 8px !important;
+        }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            cursor: pointer;
+        }
+
+        .dynamicPopupTbl.back > thead > tr > th {
+            background: #4e64a6;
+            color: #fff;
+        }
+
+        .dynamicPopupTbl.back > tbody > tr > td {
+            background: #fff;
+        }
+
+        .dynamicPopupTbl > tbody > tr > td input {
+            border: none !important;
+            cursor: pointer;
+            background: transparent !important;
+        }
+
+        .focusrow {
+            background-color: #0000ff3d;
+        }
+
+        .HeaderStyle {
+            background-color: #180771d9;
+            color: #f5f5f5;
+        }
+
+        .gridStatic {
+            margin-top: 25px;
+        }
+
+            .gridStatic .dynamicPopupTbl {
+                width: 100%;
+            }
+
+        .bodBot {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        table.scroll {
+            /* width: 100%; */ /* Optional */
+            /* border-collapse: collapse; */
+            border-spacing: 0;
+            width: 100%;
+        }
+
+            table.scroll tbody,
+            table.scroll thead {
+                display: block;
+            }
+
+        thead tr th {
+            height: 30px;
+            line-height: 30px;
+            /* text-align: left; */
+        }
+
+        table.scroll tbody {
+            height: 250px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }

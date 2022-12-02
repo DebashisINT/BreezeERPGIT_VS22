@@ -1,0 +1,62 @@
+﻿ body {	margin: 1px 1px 1px 1px;background-color: #DDECFE;	font-family:Arial;	}
+.main{}
+.LFloat_Lable{float:left;border: solid 1px  #D1E0F3;padding:2px;height:22px; margin-right:10px;font-size:14px;line-height:22px;}
+.Lable{border: solid 1px  #D1E0F3;padding:2px;height:22px; margin-right:10px;font-size:14px;line-height:30px;}
+.LFloat_Content{float:left;margin-right:3px;border: solid 1px  #D1E0F3;padding:2px;}
+.Content{margin-right:3px;border: solid 1px  #D1E0F3;padding:2px;}
+.Row{Margin-bottom:5px;clear:both;}
+.LFloat_Row{float:left;border: solid 1px  #D1E0F3;padding:2px;}
+.Header{height: 20px;padding-left: 10px;padding-right: 3px;background-image: url('../images/EHeaderBack.gif');background-repeat: repeat-x;
+		background-position: bottom;Margin-bottom:5px;text-align:center;font-weight:bold;color:#000099;}
+.BtnCenter{	text-align:center;	font-weight:bold;}
+.BtnLeft{	text-align:Left;	font-weight:bold;}
+.BtnRight{	text-align:Right;	font-weight:bold;}
+/*-------WaterMark CSS-------------*/
+.WaterMarkedTextBox{background-color: #F0F8FF;color: gray;font-style:italic;}
+.NormalTextBox{width:250px;}
+/*-------WaterMark CSS-------------*/
+
+/*-------------------------------------Start New Add---------------------------------------*/
+ #Gmain{padding:5px; width:995px;}
+.container{margin-right:10px;margin-bottom:10px;Float:left;background-color: #B7CEEC;border: solid 2px  #ccc;}       
+ a{text-decoration: none;color:#555;}
+ a:hover{color:#000;}
+ a:active{color:#555;}
+ /*----Start Add To List ShowFilter -----*/      
+.lnkBtnAjax{text-decoration: underline; font-size: 10pt;}
+.green{color: #009900;}
+.blue{color: #000099;}
+.red{color: #cc3300;}
+.finalSelectedBox{height: 105px; margin-top: 5px;}
+/*--- End  Add To List ShowFilter ---*/
+/*----Start Paging -----*/      
+.paging{width:99.01%; padding:2px; background-color: #DDD;border: solid .1pt #aaa; border-bottom:none; }        
+.pagingContent{font-size:13px;}
+a.number_box {background-color:#EDEDED;color:#555; border:solid .1pt #aaa; margin-right:6px; text-decoration: none;}
+a.number_box:hover {background-color:#FCA977;color:#000; border:solid .1pt #aaa; margin-right:6px; text-decoration: none;}
+a.number_box:active {background-color:#FCA977;color:#000; border:solid .1pt #aaa; margin-right:6px; text-decoration: none;}
+a.number_box_selected {background-color:#FCA977;color:#000; border:solid .1pt #aaa; margin-right:6px; text-decoration: none;}
+.paging_nav{text-decoration:none; border:solid .1pt #aaa;}
+/*----End Paging -----*/      
+.clear{clear:both;}
+.left{float:left;}
+.right{float:right;}
+.textLeft{text-align:left;}
+.textRight{text-align:right;}
+/*-------------------------------------End New Add---------------------------------------*/
+/*Header Portion*/
+.HeaderStyle1{VERTICAL-ALIGN: top; BACKGROUND-COLOR: #b7ceec; TEXT-ALIGN: center;font-weight:bold}
+
+/*-------------------------------------Messages CSS----------------------------------------*/
+.Info, .Success, .Warning, .Error, .Validation {
+border: 1px solid;margin: 10px 0px;padding:15px 10px 15px 50px;background-repeat: no-repeat;background-position: 10px center;}
+.Info {color: #00529B;background-color: #BDE5F8;background-image: url('../images/info.png');
+	background-position: Left; background-repeat: no-repeat;}
+.Success {color: #4F8A10;background-color: #DFF2BF;background-image:url('../images/success.png');
+	background-position: Left; background-repeat: no-repeat;}
+.Warning {color: #9F6000;background-color: #FEEFB3;background-image: url('../images/warning.png');
+	background-position: Left; background-repeat: no-repeat;}
+.Error {color: #D8000C;background-color: #FFBABA;background-image: url('../images/Error.png'); 
+background-position: Left; background-repeat: no-repeat; }
+.Validation {color: #D63301;background-color: #FFCCBA;background-image: url('../images/Validation.png');
+	background-position: Left; background-repeat: no-repeat;}

@@ -1,0 +1,638 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ERP.master.cs" Inherits="ERP.OMS.MasterPage.ERP" %>
+
+<%--<%@ Register Src="~/OMS/Management/Headermain.ascx" TagPrefix="uc" TagName="Fyear" %>--%>
+<%@ Register Src="~/OMS/MasterPage/UserControls/ucPartialMenu.ascx" TagPrefix="ucMenu" TagName="ucpartialMenu" %>
+<%@ Register Src="~/OMS/MasterPage/UserControls/ctlChatBox.ascx" TagName="ctlChatBox" TagPrefix="uc1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Welcome to BreezeERP</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <%--JAlert Start--%>
+    <script type="text/javascript" src="/assests/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/assests/js/jquery.min.js'><\/script>")
+    </script>
+    <link href="/assests/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+
+    <%--JAlert End--%>
+
+    <%--<link href="/assests/css/custom/jquery.alerts.css" rel="stylesheet" />--%>
+    <%--<link href="../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />--%>
+
+    <%--<link rel="stylesheet" href="/assests/bootstrap/css/bootstrap.min.css" />--%>
+    <link rel="stylesheet" href="~/assests/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assests/bootstrap/css/bootstrap-theme.min.css" />
+    <link href="/assests/pluggins/choosen/chosen.css" rel="stylesheet" />
+    <%--<link rel="stylesheet" href="/assests/css/custom/main.css?v=0.1" />--%>
+
+    <link rel="stylesheet" href="/assests/css/custom/newtheme.css?v=0.4" />
+    <link rel="stylesheet" href="/assests/css/custom/PMSStyles.css?v=0.1" />
+    <link rel="stylesheet" type="text/css" href="/assests/fonts/font-awesome/css/font-awesome.min.css" />
+    <link href="/assests/pluggins/customScroll/custoScroll.css" rel="stylesheet" />
+    <link href="/OMS/MasterPage/css/MasterPage.css?v=0.3" rel="stylesheet" />
+    <link href="/assests/pluggins/JqueryConfirm/jquery-confirm.min.css" rel="stylesheet" />
+  <%--  <script src="//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script>--%>
+    <%--<script src="../../assests/js/jquery-ui.min.js"></script>--%>
+    <%--<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"></script>--%>
+    <%--<script type="text/javascript">
+
+        window.jQuery || document.write("<script src='/assests/js/jquery-ui.min.js'><\/script>")
+    </script>--%>
+    <link href="/Styles/style.css" rel="stylesheet" />    
+    <link href="/Styles/jquery.ui.chatbox.css" rel="stylesheet" />
+    <script type="text/javascript" src="/assests/js/jquery-ui.min.js"></script>
+    <script src="/assests/pluggins/JqueryConfirm/jquery-confirm.min.js"></script>
+    <script src="/assests/js/slimscroll.js"></script>
+    <%--confierm plugin--%>
+    <script src="/assests/js/jquery.confirm.min.js"></script>
+    <script type="text/javascript">
+
+        var srp = '/';
+
+        $(document).ready(function () {
+            
+            $("#yrCopy").text(new Date().getFullYear());
+
+            //About section
+            $('#showAbout').click(function () {
+                $(".AboutPop").show();
+            });
+            $('.CrossIconAbout, #CRSAbtButton').click(function () {
+                $(".AboutPop").hide();
+            });
+
+
+            //$(".bubble").draggable();
+
+            var isMoving = false;
+            var isdragging = false;
+            var chatMode = false;
+
+            function closeChat() {
+                $(".bubble").css("top", "50%").css("right", "-15px").css("transition", "all 0.5s");
+                $(".chat").addClass("bounceout").removeClass("bouncein");
+                $(".chat").replaceWith($(".chat").clone(true));
+            }
+            function closeChatonSht() {
+                $(".bubble").css("top", "50%").css("right", "-15px").css("transition", "all 0.5s");
+                $(".chat").removeClass("bouncein bounceout");
+
+            }
+
+            $(".bubble").on("click", function () {
+
+                var pos = $(".chat_container").offset();
+
+                if (chatMode) {
+                    closeChat();
+                    chatMode = false;
+                } else {
+                    $(".chat").addClass("bouncein").removeClass("bounceout");
+                    $(".bubble").css("top", (pos.top + 30) + "px").css("left", (pos.left - 70) + "px").css("transition", "all 0.3s");
+                    $(".chat").replaceWith($(".chat").clone(true));
+                    chatMode = true;
+                }
+            });
+
+            $(".bubble").mousedown(function () {
+                isdragging = false;
+            });
+
+            $(".bubble").mousemove(function () {
+                isdragging = true;
+                $(this).css("transition", "all 0s");
+            });
+
+            $(".bubble").mouseup(function (e) {
+                e.preventDefault();
+                var lastY = window.event.clientY;
+                var lastX = window.event.clientX;
+                var swidth = $(window).width();
+
+                if (isdragging) {
+
+                    if (chatMode) {
+                        closeChat();
+                        chatMode = false;
+                    }
+
+                    if (lastX > (swidth / 2)) {
+                        $(this).css("top", lastY).css("left", (swidth - 55) + "px").css("transition", "all 0.4s");
+                    } else {
+                        $(this).css("top", lastY).css("left", "-15px").css("transition", "all 0.4s");
+                    }
+                }
+
+
+            });
+            function favDelete() {
+                alert('delete success');
+            }
+            function menuScrollerInit() {
+                var SideNavHeight = $('.sidenav').height();
+                var LogoutBtnHeight = $('.pwred').outerHeight();
+                var maxMenuH = SideNavHeight - LogoutBtnHeight;
+                //alert(maxMenuH);
+                $('.sidenav > ul').css({ 'max-height': maxMenuH + 'px' });
+            }
+            menuScrollerInit();
+            $(window).resize(function () {
+                menuScrollerInit();
+            });
+
+            //$(window).load(function () {
+            //    if (localStorage.getItem('LCmini-navbarcss')) {
+            //        if (localStorage.getItem('LCmini-navbarcss')=="Yes")
+            //            $("body").addClass("mini-navbar");
+            //        else
+            //            $("body").removeClass("mini-navbar");
+            //    }
+            //});
+
+            //$(".sidenav > ul").mCustomScrollbar({
+            //    theme:"minimal-dark"
+            //});
+            // shortcut key show 
+            document.addEventListener("keydown", function (event) {
+
+                //console.log(event);
+                if (event.keyCode == 81 && event.ctrlKey == true) {
+                    document.getElementById("bubblePin").classList.toggle("hide");
+                    if (chatMode) {
+                        chatMode = false;
+                        closeChatonSht();
+                    }
+                }
+
+                var baseurl = window.location.origin;
+
+                if (event.keyCode == 49 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/Customer_Ledger.aspx?&From=Hotkey";
+                    window.open(url);
+
+                }
+                else if (event.keyCode == 50 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/Vendor_Ledger.aspx?&From=Hotkey";
+                    window.open(url);
+
+                }
+                else if (event.keyCode == 51 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/GeneralLedgerRegister.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+                else if (event.keyCode == 52 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/CashBankReport.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+                else if (event.keyCode == 53 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/StockLedger.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+
+            });
+            function quickToggleTilesCalculator() {
+                document.getElementById("bubblePin").classList.toggle("hide");
+                if (chatMode) {
+                    chatMode = false;
+                    closeChatonSht();
+                }
+            }
+        });
+
+    </script>
+
+    <script type="text/javascript" src="/assests/js/modalmsg.js"></script>
+    <script src="/OMS/MasterPage/Js/MasterPage.js?v=0.2" type="text/javascript"></script>
+
+    <link href="../../assests/css/RES.css" rel="stylesheet" />
+    <meta name="theme-color" content="#0C78B1" />
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#0C78B1" />
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body class="mini-navbar" onload="noBack();" onpageshow="if (event.persisted) noBack();">
+   
+    <%--new update popup--%>
+  <div class="modal updateModal w50" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" >Software Updates</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="uptodate">
+                <h4>Your App Version is Uptodate</h4>
+            </div>
+              <div class="updatePanel">
+                  <div class="form-group">
+               <h5 class="text-uppercase">A New Version of ERP is available for Update</h5>
+                <p> ERP version <span class="latestVersion"></span> is available now. ( You have version <span id="version2" runat="server"></span>  )</p>
+                
+                <label><b>Release Notes :</b></label>
+                <div class="areaInfo">
+                    <h4>Version <span class="latestVersion"></span> (<span class="versionDate"></span>)</h4>
+                    <p><span class="whatsNewIn"></span></p>
+                    <%--<ul>
+                        <li>This site can’t be reached</li>
+                        <li>This site can’t be reached</li>
+                        <li>This site can’t be reached</li>
+                        <li>This site can’t be reached</li>
+                    </ul>
+                    <p><b>Other Improvements</b></p>
+                    <ul>
+                        <li>This site can’t be reached</li>
+                        <li>This site can’t be reached</li>
+                    </ul>--%>
+                </div>
+                <div class="text-right upButtons">
+                    <button class="gButton" id="updateApp">Install Update</button>
+                    <%-- <button class="orColor">Skip This Version</button>--%>
+                    <button class="" data-dismiss="modal">Remind Me Later</button>
+                    
+                </div>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+  </div>
+    <%--software version details --- 12-12-2016 susanta--%>
+<!-- Modal favourite -->
+<div class="modal fade pmsModal w30" id="addfavModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Add to Favourite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         
+        <div class="form-group">
+            <label for="titleFav">Title</label>
+            <input type="text" class="form-control" id="titleFav" aria-describedby="emailHelp" placeholder="" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" onclick="saveFav()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="backdrop off"></div>
+<div id="panelForQuick" class="off">
+    <span class="quickCross"><i class="fa fa-close"></i></span>
+    <div class="qHeading">Favourite List <span class="text-muted" style="font-size: 10px;">(10 MAX)</span></div>
+    <div class="boxedInside" id="boxedFavData">
+        <div >No Favourite Added Yet</div>
+    </div>
+    <div class="footerOption">
+        
+        <div class="submitOption">
+            <button type="button" class="fedit" id="editFav">Remove </button>
+            <button type="button" class="fadd" id="FavAdd">Add to Fav</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Tiles Calculator Part-->
+    <div class="chat_container hide" id="bubblePin">
+        <div class="bubble " title="Tiles Calculator">
+            <%--<img src="../../../assests/images/calculator.png" />--%>
+        </div>
+        <div class="chat">
+            <div class="Calcheader">Tiles <span>Calculator</span></div>
+            <div class="tilesContent">
+                <p>Hi, Your TIles Calculator goes here</p>
+            </div>
+            <div class="textbox clearfix">
+                <button class="btn btn-primary pull-right ">Calculate</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Tiles calculator End -->
+
+    <div class="overlayEf hide"></div>
+    <section id="sftVer" class="hide">
+
+        <div class="insd">
+            <%--<img class="" src="/assests/images/l.jpg" alt="" >--%>
+            <div style="font-size: 20px; font-weight: 500; padding: 9px;">Breeze ERP <span style="color: #ccc; display: block; font-size: 10px;">Version - 1.0</span></div>
+            <div>Software version Area</div>
+            <button class="hide">Upgrade </button>
+        </div>
+        <div style="padding-top: 5px">
+            <a href="" id="cross"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+        </div>
+    </section>
+
+    <form id="form1" class="jpopup" runat="server">
+
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+        </asp:ScriptManager>
+
+        <%--About section--%>
+        <div class="AboutPop">
+            <div class="AboutBox relative">
+                <div class="AboutBoxHeader">About BreezeERP</div>
+
+                <span class="CrossIconAbout"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                <div class="abtContent clearfix">
+                    <div>
+                        <%--<img src="/assests/images/logo.png" style="width: 170px;" class="AbtImage" />--%>
+                        <img src="/assests/images/webP/logo.webp" style="width: 170px;" class="AbtImage" />
+                    </div>
+                    <div class="aboutText">
+                        <p>Version : <b id="lblVersion" runat="server"></b></p>
+                        <p><i class="fa fa-copyright" aria-hidden="true"></i>Copyright <span id="yrCopy">2021</span> Indus Net Technologies </p>
+                        <p>Application best viewed at 1280 x 720 resolution in Google Chrome <b>59 or above</b> </p>
+                        <button type="button" id="CRSAbtButton">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mobileMenu">
+           <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="/OMS/SignOff.aspx" class="logout mLogout" data-toggle="tooltip" title="" data-original-title="logout"><i class="fa fa-power-off"></i></a>
+            <a class="navbar-brand" href="#">BreezeERP</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+              <div><input type="text" id="searchOnMenu2" onkeyup="myMenuFilter2()" style="margin-top: 8px;border-radius: 3px;height: 28px;" placeholder="Search" autocomplete="off" /></div>
+            <ul class="nav navbar-nav" id="mApp">
+              
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+        </div>
+        <%--About section--%>
+        <div class="fixedMenuNew">
+            <div class="leftLogowrap transit">
+                <dxe:ASPxImage runat="server" ShowLoadingImage="true" ID="bigLogo" CssClass="img-responsive bigLogo"></dxe:ASPxImage>
+                <dxe:ASPxImage runat="server" ShowLoadingImage="true" ID="miniLogo" CssClass="img-responsive miniLogo"></dxe:ASPxImage>
+            </div>
+            <div class="sidebar transit">
+                <div class="searchMenuCont">
+                    <div class="searchonlyIcon">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    <div class="searchArea">
+                        <input type="text" id="searchOnMenu" onkeyup="myMenuFilter()" placeholder="Search" autocomplete="off" />
+                    </div>
+                    <div class="search-result">
+                        <div class="search-result__content">
+                            <div class="search-result__content__title">Search in Menus <span class="sepr"></span></div>
+                            <div class="scrollBarSearhMenu">
+                                <ul id="clonedMenus"></ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <%--   <nav class="sidenav">
+                    <% ERP.OMS.MVCUtility.RenderAction("Common", "_PartialMenu", new { }); %>
+                    <div class="text-center pwred"> <%=PageFooterTag3 %>  </div>
+                </nav>--%>
+                <ucMenu:ucpartialMenu runat="server" ID="_PartialMenu" />
+
+            </div>
+            <div class="text-center pwred">
+                <div class="divNav">
+                    <a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx" class="pas" data-toggle="tooltip" title="" data-original-title="change password"><i class="fa fa-key"></i></a>
+                    <a href="/OMS/SignOff.aspx" class="logout" data-toggle="tooltip" title="" data-original-title="logout"><i class="fa fa-power-off"></i></a>
+                </div>
+                <div>Powered by BreezeERP </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+
+
+<div class="modal fade pmsModal w30" id="searchOfMenu" tabindex="-1" role="dialog" aria-labelledby="searchOfMenulabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Recent pages visted</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <ul class="recentLinks">
+             <li><a href=""><i class="fa fa fa-arrow-circle-o-right" aria-hidden="true"></i> Product master</a></li>
+             <li><a href=""><i class="fa fa fa-arrow-circle-o-right" aria-hidden="true"></i> Product master</a></li>
+             <li><a href=""><i class="fa fa fa-arrow-circle-o-right" aria-hidden="true"></i> Product master</a></li>
+         </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="mainWraper">
+            <header id="header" class="clearfix transit">
+
+                <div class="rightNav">
+                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a href="#" class="btn navbar-minimalize"><i class="fa fa-bars"></i></a>
+                            <span class="text">
+                                    <div class="dateTime">
+                                        <span class="" id="dayDate"></span>  |  
+                                        <span id="clock"></span> <span class="text-muted hide"><small>pm</small></span>
+                                    </div>
+                            </span>
+
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right user-dropdown-custom">
+                            <li class="" >
+                                <span id="btnHelpPopupRec" class="HelpMasterClass" data-toggle="tooltip" data-placement="bottom" title="Open Favourite">
+                                    <i class="fa fa-star str"></i>
+                                    <%--<svg class="ico" width="30" height="30" viewBox="0 0 24 24">
+                                        <polygon points="50 160 55 180 70 180 60 190 65 205 50 195 35 205 40 190 30 180 45 180" stroke="green" fill="transparent" stroke-width="5"/>
+                                    </svg>--%>
+                                </span>
+                            </li>
+                            <li>
+                                <span id="btnHelpPopup" style="display: none" onclick="ShowHelpPopup()" class="HelpMasterClass" data-toggle="tooltip" data-placement="bottom" title="Help">
+                                    <i class="fa fa-question-circle" style="margin-top: 6px;"></i>
+                                </span>
+                            </li>
+
+
+                            <li>
+
+
+
+
+                                <div class="aaadv" style="margin-right: 10px; max-width: 700px; height: 50px; display: block;">
+                                    <table>
+                                        <tr>
+
+                                            <td>
+                                                <div class="cmpName">
+                                                    <asp:Label ID="lblSCompName" runat="server"></asp:Label>
+                                                </div>
+                                                <div class="cmpYear">
+                                                    FY :
+                                                <asp:Label ID="lblFinYear" runat="server"></asp:Label>
+                                                    <span style="margin-left: 7px; margin-right: 7px;">|</span>
+                                                    <asp:Label ID="lblCurrency" runat="server"></asp:Label>
+                                                </div>
+
+
+                                            </td>
+
+
+
+                                        </tr>
+                                    </table>
+                                </div>
+                                <%--</a>--%>
+                          
+                            </li>
+                            <li class="dropdown usr">
+                                <a class="dropdown-toggle user" data-toggle="dropdown" href="#" aria-expanded="true" style="padding: 9px 15px 6px 0px;">
+                                    <div class="avtarHolder" style="margin-right: 24px; margin-top: 3px; border-radius: 0 !important;">
+                                        <img id="imgpp" src="/assests/images/webP/profile1.webp" runat="server" /> <%--src="/assests/images/profile1.png"--%>
+                                    </div>
+                                    <span class="label hidden-xs">Welcome,
+                                    <asp:Label runat="server" ID="LogedUser"></asp:Label>
+                                        <i class="fa fa-caret-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu userAccsess">
+                                    <li class="loginDetails">
+                                        <div><b>LAST LOGIN</b></div>
+                                        <div class="val"><span class="lstLoginDate"><asp:Label ID="lbllastlogindate" runat="server"></asp:Label></span>, <span class="lstLoginTime"><asp:Label ID="lbllastlogintime" runat="server"></asp:Label></span> </div>
+                                    </li>
+                                    <li><a href="/OMS/Management/WhatsNewAddEdit.aspx" target="_blank">
+                                        <img src="/assests/images/webP/dropIcons/Whtnew.webp" class="iconSubMenu" />
+                                        <span>What's New</span></a></li>
+                                     <li class="hide"><a href="#" class="showUpdatepop">
+                                        <img src="/assests/images/updated.png" class="iconSubMenu" />
+                                        <span>Updates</span><span class="updateIndicator"></span></a></li>
+                                    <li class=""><a href="#" id="showAbout">
+                                        <img src="/assests/images/webP/dropIcons/abt.webp" class="iconSubMenu" />
+                                        <span>About </span></a></li>
+                                    <li><a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx">
+                                        <img src="/assests/images/webP/dropIcons/chngpass.webp" class="iconSubMenu" />
+                                        <span>Change Password</span></a></li>
+                                    <li class="noBod logout"><a href="/OMS/SignOff.aspx">
+                                        <img src="/assests/images/webP/dropIcons/logout.webp" class="iconSubMenu" />
+                                        <span>Logout</span></a></li> 
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+                <!-- <div class="rightNav">
+            
+                
+
+          <div class="searhHead">
+            <a href="" class="btn navbarMinialize"><i class="icon-bars"></i></a>
+            <form class="srcfield"><span class="text">Global Search</span></form>
+          </div>
+        </div> -->
+
+            </header>
+            <section class="rightSide transit clearfix" style="min-height: 415px;">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </section>
+        </div>
+        <asp:HiddenField ID="hiddnversion" runat="server" ClientIDMode="Static" />
+
+        <%--<asp:Label ID="lbltext" runat="server"></asp:Label>--%>
+        <dxe:ASPxPopupControl ID="ASPXPopupControl11" runat="server" ContentUrl="../management/frm_selectCompFinYrSett.aspx?id=1"
+            CloseAction="CloseButton" Top="120" Left="500" ClientInstanceName="popup11"
+            Width="450px" HeaderText="Financial Year" AllowResize="false" ContentStyle-Wrap="True" ResizingMode="Live" Modal="true">
+            <ContentCollection>
+                <dxe:PopupControlContentControl runat="server">
+                </dxe:PopupControlContentControl>
+            </ContentCollection>
+            <HeaderStyle BackColor="Blue" Font-Bold="True" ForeColor="White" />
+        </dxe:ASPxPopupControl>
+
+
+        <script type="text/javascript" src="/assests/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assests/js/main.js"></script>
+        <div class="hide" id="chatUSer">
+         <uc1:ctlChatBox ID="ctlChatBox1" runat="server" />
+        </div>
+        <asp:HiddenField ID="hdnCurrentUserIDS" runat="server" />
+         <asp:HiddenField ID="hdnChat" runat="server" />
+        <asp:HiddenField ID="hdnCurrentGroup" runat="server" />
+
+    </form>
+    <script type="text/javascript" src="/assests/js/init.js"></script>
+    <script type="text/javascript" src="/assests/js/ajax-dynamic-list.js"></script>
+    <script src="/assests/pluggins/customScroll/customScroll.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+        //if (typeof (grid) !== 'undefined') grid.PerformCallback();
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+    <%--Help Popup Div Started Here--%>
+
+    <div id="HelpDivid" class="helpDivClass" style="display: none">
+        <span class="close-it pull-right" onclick="CloseHelpPopup()"><i class="fa fa-close"></i></span>
+        <div id="helptextpart"></div>
+        <div>
+            <ul class="listInfo">
+                <li><a href="https://www.icai.org/new_post.html?post_id=1527&c_id=270" target="_blank"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Reference to Accounting Standard</a></li>
+                <li><a href="https://www.gst.gov.in/" target="_blank"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Reference to GST</a></li>
+                <li><a href="https://www.incometaxindia.gov.in/Pages/default.aspx" target="_blank"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Reference to Income Tax</a></li>
+                <li><a href="https://www.rbi.org.in/scripts/banklinks.aspx" target="_blank"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Reference to All Banks</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <%--Help Popup Div End Here--%>
+</body>
+
+</html>

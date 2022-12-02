@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="sqlDataSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="customSqlQuery1.Sql" xml:space="preserve">
+    <value>select h.Invoice_Id as 'Id',(select ISNULL(cnt_firstName,'')+' '+ISNULL(cnt_middleName,'')+'  '+ISNULL(cnt_lastName,'')
+ from tbl_master_contact where cnt_internalId=h.Customer_Id) as 'Customer',h.Customer_Id,h.Invoice_FinYear as 'Doc_FinYear',h.Invoice_Number as 'Doc_no',h.Invoice_Date as 'Doc_date',(select branch_description from tbl_master_branch where branch_id=h.Invoice_BranchId) as 'Branch'
+--,h.Challan_TotalAmount as 'Total Net Amount' ,
+,RTRIM(LTRIM(ISNULL((select sum(InvoiceDetails_TotalAmountInBaseCurrency) from tbl_trans_SalesInvoiceProducts where InvoiceDetails_OrderId=h.Invoice_Id),0) + ISNULL((select sum(InvoiceTax_Amount) from tbl_trans_SalesInvoiceTax  where InvoiceTax_InvoiceId=h.Invoice_Id),0))) as 'Total Net Amount' ,
+
+RTRIM(LTRIM(cast(ISNULL((select sum(InvoiceDetails_TotalAmountInBaseCurrency) from tbl_trans_SalesInvoiceProducts where InvoiceDetails_OrderId=h.Invoice_Id),0) + ISNULL((select sum(InvoiceTax_Amount) from tbl_trans_SalesInvoiceTax  where InvoiceTax_InvoiceId=h.Invoice_Id),0)  as decimal(18,2)))) as 'Format Total Net Amount' ,
+
+c.CNT_GSTIN,pan_no=(select crg_Number from tbl_master_contactRegistration where crg_cntId=c.cnt_internalId and crg_type ='Pan Card')
+,(select user_name from tbl_master_user where user_id=h.CreatedBy) as 'user_name'
+from tbl_trans_SalesInvoice h
+inner join tbl_master_contact c on h.Customer_Id=c.cnt_internalId
+where h.Invoice_Id=@Invoice_id
+
+</value>
+  </data>
+  <data name="customSqlQuery2.Sql" xml:space="preserve">
+    <value>select Id,relation_Id,Product_Name,Product_Id,Product_Description,barcode_itemslno,Quantity,Unit,cast(Rate as decimal(18,2)) as Rate,cast(Amount as decimal(18,2)) as Amount,cast(Total_Amount as decimal(18,2)) as Total_Amount,cast(Isnull(ProdWise_TaxAmt,0) as decimal(18,2)) as ProdWise_TaxAmt,cast((Total_Amount+Isnull(ProdWise_TaxAmt,0)) as decimal(18,2)) as prodTaxTotAmt
+,Is_Taxpresent=ISNULL(( select top 1 ProductTax_TaxTypeId from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id and ProductTax_ProductId=Id),0)
+,CGST_Rate,CGST_Amt,SGST_Rate,SGST_Amt,IGST_Rate,IGST_Amt,UTGST_Rate,UTGST_Amt
+,REPLACE(CONVERT(varchar(20), [Quantity], 1), (select top 1 '.'+REPLICATE('0', scale) from sys.columns where name like '%InvoiceDetails_Quantity%' ), '')+'['+Unit+']' as 'Qty_Unit'
+,REPLACE(cast(Rate as varchar(20)),(select top 1 '.'+REPLICATE('0', scale) from sys.columns where name like '%InvoiceDetails_SalePrice%' ),'') as 'Rate_Format'
+,REPLACE(cast(Amount as varchar(20)),(select top 1 '.'+REPLICATE('0', scale)  from sys.columns where name like '%InvoiceDetails_Amount%' ),'') as 'Amount_Format'
+,REPLACE(cast(Total_Amount as varchar(20)),(select top 1 '.'+REPLICATE('0', scale)  from sys.columns where name like '%InvoiceDetails_TotalAmountInBaseCurrency%' ),'') as 'TotalAmount_Format'
+ from 
+
+(
+select InvoiceDetails_Id as 'Id',InvoiceDetails_OrderId as 'relation_Id',(select sProducts_Name from Master_sProducts where sProducts_ID=InvoiceDetails_ProductId) as 'Product_Name',InvoiceDetails_ProductId as 'Product_Id',
+InvoiceDetails_ProductDescription as 'Product_Description',
+(select sProducts_barCode from Master_sProducts where sProducts_ID=tbl_trans_SalesInvoiceProducts.InvoiceDetails_ProductId) as 'barcode_itemslno',
+InvoiceDetails_Quantity as 'Quantity',(select UOM_ShortName from Master_UOM where UOM_ID=tbl_trans_SalesInvoiceProducts.InvoiceDetails_UOMId) as 'Unit',InvoiceDetails_SalePrice as 'Rate',InvoiceDetails_Amount as 'Amount',InvoiceDetails_TotalAmountInBaseCurrency as 'Total_Amount',
+
+ProdWise_TaxAmt=(select sum(ProductTax_Amount) from tbl_trans_SalesOrderProductTax where ProductTax_OrderId=@Invoice_id and ProductTax_ProductId=tbl_trans_SalesInvoiceProducts.InvoiceDetails_Id and (ProductTax_Percentage!=0 or  ProductTax_Amount!=0))
+
+
+,'CGST_Rate'=(select ISNULL(ProductTax_Percentage,0) from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id and ProductTax_TaxTypeId=0
+and ProductTax_VatGstCstId=(select   c.TaxRates_id as 'TaxRates_id' from Master_Taxes t inner join Config_TaxRates c on t.Taxes_ID=c.TaxRates_TaxCode 
+where t.TaxTypeCode='G' and  TaxRates_id=ProductTax_VatGstCstId and TaxRatesSchemeName like '%CGST%'))
+
+
+,'CGST_Amt'=(select ISNULL(ProductTax_Amount,0) from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id
+and ProductTax_VatGstCstId=(select   c.TaxRates_id as 'TaxRates_id' from Master_Taxes t inner join Config_TaxRates c on t.Taxes_ID=c.TaxRates_TaxCode 
+where t.TaxTypeCode='G' and  TaxRates_id=ProductTax_VatGstCstId and TaxRatesSchemeName like '%CGST%'))
+
+,'SGST_Rate'=(select ISNULL(ProductTax_Percentage,0) from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id and ProductTax_TaxTypeId=0
+and ProductTax_VatGstCstId=(select   c.TaxRates_id as 'TaxRates_id' from Master_Taxes t inner join Config_TaxRates c on t.Taxes_ID=c.TaxRates_TaxCode 
+where t.TaxTypeCode='G' and  TaxRates_id=ProductTax_VatGstCstId and TaxRatesSchemeName like '%SGST%'))
+
+
+,'SGST_Amt'=(select ISNULL(ProductTax_Amount,0) from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id
+and ProductTax_VatGstCstId=(select   c.TaxRates_id as 'TaxRates_id' from Master_Taxes t inner join Config_TaxRates c on t.Taxes_ID=c.TaxRates_TaxCode 
+where t.TaxTypeCode='G' and  TaxRates_id=ProductTax_VatGstCstId and TaxRatesSchemeName like '%SGST%'))
+
+,'IGST_Rate'=(select ISNULL(ProductTax_Percentage,0) from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id and ProductTax_TaxTypeId=0
+and ProductTax_VatGstCstId=(select   c.TaxRates_id as 'TaxRates_id' from Master_Taxes t inner join Config_TaxRates c on t.Taxes_ID=c.TaxRates_TaxCode 
+where t.TaxTypeCode='G' and  TaxRates_id=ProductTax_VatGstCstId and TaxRatesSchemeName like '%IGST%'))
+
+
+,'IGST_Amt'=(select ISNULL(ProductTax_Amount,0) from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id
+and ProductTax_VatGstCstId=(select   c.TaxRates_id as 'TaxRates_id' from Master_Taxes t inner join Config_TaxRates c on t.Taxes_ID=c.TaxRates_TaxCode 
+where t.TaxTypeCode='G' and  TaxRates_id=ProductTax_VatGstCstId and TaxRatesSchemeName like '%IGST%'))
+
+,'UTGST_Rate'=(select ISNULL(ProductTax_Percentage,0) from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id and ProductTax_TaxTypeId=0
+and ProductTax_VatGstCstId=(select   c.TaxRates_id as 'TaxRates_id' from Master_Taxes t inner join Config_TaxRates c on t.Taxes_ID=c.TaxRates_TaxCode 
+where t.TaxTypeCode='G' and  TaxRates_id=ProductTax_VatGstCstId and TaxRatesSchemeName like '%UTGST%'))
+
+
+,'UTGST_Amt'=(select ISNULL(ProductTax_Amount,0) from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id
+and ProductTax_VatGstCstId=(select   c.TaxRates_id as 'TaxRates_id' from Master_Taxes t inner join Config_TaxRates c on t.Taxes_ID=c.TaxRates_TaxCode 
+where t.TaxTypeCode='G' and  TaxRates_id=ProductTax_VatGstCstId and TaxRatesSchemeName like '%UTGST%'))
+
+ from tbl_trans_SalesInvoiceProducts where InvoiceDetails_OrderId=@Invoice_id
+  
+  
+ )  details
+
+
+
+
+</value>
+  </data>
+  <data name="customSqlQuery3.Sql" xml:space="preserve">
+    <value>select relation_Id,Address,Address1,Address2,Address3,landMark,Country,State,StateCode,StateId,City,Area,Pin ,Type
+,BGSTIN_CODE=(case when StateId ='' and (select count(*) InvoiceAdd_stateId from tbl_trans_SalesInvoiceAddress  where InvoiceAdd_OrderId=@Invoice_id and InvoiceAdd_addressType='Shipping')&gt;0 then (select c.CNT_GSTIN from tbl_trans_SalesInvoice h inner join tbl_trans_SalesInvoiceAddress a on h.Invoice_Id=a.InvoiceAdd_OrderId inner join tbl_master_contact c on c.cnt_internalId=h.Customer_Id) else case when StateId&lt;&gt;'' then (select top 1 GSTIN from tbl_master_Gstin where state_id=StateId) else '' end end)
+from
+(
+
+select InvoiceAdd_OrderId as 'relation_Id',InvoiceAdd_addressType as 'Type',
+
+(select InvoiceAdd_address1+case when InvoiceAdd_address2='' then '' else +','+InvoiceAdd_address2 end  
++case when InvoiceAdd_address3='' then '' else +','+InvoiceAdd_address3 end 
++case when InvoiceAdd_landMark='' then '' else +','+InvoiceAdd_landMark end  
+) as 'Address',
+
+InvoiceAdd_address1 as 'Address1',InvoiceAdd_address2 as 'Address2',InvoiceAdd_address3 as 'Address3',InvoiceAdd_landMark as 'landMark',(select cou_country from tbl_master_country where cou_id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_countryId) as 'Country',
+(select state from tbl_master_state where id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_stateId) as 'State',(select StateCode from tbl_master_state where id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_stateId) as 'StateCode',InvoiceAdd_stateId as 'StateId',(select RTrim(LTrim(city_name))+'  :' from tbl_master_city where city_id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_cityId) as 'City',(select area_name from tbl_master_area where area_id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_areaId) as 'Area',InvoiceAdd_pin as 'Pin' from tbl_trans_SalesInvoiceAddress where InvoiceAdd_OrderId=@Invoice_id and InvoiceAdd_addressType='Billing'
+) BAddress
+</value>
+  </data>
+  <data name="customSqlQuery4.Sql" xml:space="preserve">
+    <value>
+select
+ProductTax_Id as 'Id',ProductTax_InvoiceId as  'relation_Id',cast(ProductTax_ProductId as bigint) as 'ProductId',ProductTax_TaxTypeId,(select TaxRatesSchemeName from Config_TaxRates where TaxRates_ID=tbl_trans_SalesInvoiceProductTax.ProductTax_TaxTypeId) as 'ProductTax_TaxTypeName',ProductTax_Percentage,ProductTax_Amount,
+(select TaxRatesSchemeName from Config_TaxRates where TaxRates_ID=tbl_trans_SalesInvoiceProductTax.ProductTax_TaxTypeId)+'      '+cast((CONVERT(DECIMAL(10,0),ProductTax_Percentage)) as varchar(20))+'%' +'        '+cast(ProductTax_Amount as varchar(50)) as 'Tax',(cast((CONVERT(DECIMAL(10,0),ProductTax_Percentage)) as varchar(20))+'%') as tax_percnt
+from  tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id and (ProductTax_Percentage!=0 or  ProductTax_Amount!=0)</value>
+  </data>
+  <data name="customSqlQuery5.Sql" xml:space="preserve">
+    <value>select Id,relation_Id ,Percentage,Amount,TaxTypeId,Tax_Name=(select Taxes_Name from Master_Taxes where taxes_Id=(select TaxRates_TaxCode from Config_TaxRates where TaxRates_ID=TaxTypeId)) from 
+(
+select InvoiceTax_Id as 'Id',InvoiceTax_InvoiceId as 'relation_Id',InvoiceTax_Percentage as 'Percentage',InvoiceTax_Amount as 'Amount',InvoiceTax_TaxTypeId as 'TaxTypeId' from tbl_trans_SalesInvoiceTax where  (InvoiceTax_TaxTypeId&lt;&gt;0 or ProductTax_VatGstCstId&lt;&gt;0)) aa
+where 
+ relation_Id=@Invoice_id
+and Amount&lt;&gt;0</value>
+  </data>
+  <data name="customSqlQuery6.Sql" xml:space="preserve">
+    <value>select c.*,phone=(select top 1 phf_phoneNumber from tbl_master_phonefax where phf_cntId=c.cmp_internalid),email=(select top 1 eml_email from tbl_master_email where eml_cntId=c.cmp_internalid)  ,
+
+ISNULL(a.add_address1,'')+', '+ISNULL(a.add_address2,'')+', '+ISNULL(a.add_address3,'')+', '+case when (select ISNULL(city_name,'') from tbl_master_city where city_id=a.add_city)&lt;&gt;'' then (select ISNULL(city_name,'') from tbl_master_city where city_id=a.add_city)+'-'+(select pin_code from tbl_master_pinzip where pin_id=a.add_pin)+'.' else '' end as 'Address',
+(select state from tbl_master_state where id=a.add_state)as add_state,
+(select city_name from tbl_master_city where city_id=a.add_city)as add_city,(select pin_code from tbl_master_pinzip where pin_id=a.add_pin) as add_pin  from tbl_master_company c  left join tbl_master_address a on c.cmp_internalid=a.add_cntId  where c.cmp_internalid=@Company_Id
+
+
+
+
+</value>
+  </data>
+  <data name="customSqlQuery7.Sql" xml:space="preserve">
+    <value>
+select ProductTax_InvoiceId as 'relation_Id',sum(ProductTax_Amount) as ProductTax_Amount,
+mode=(select TaxCalculateMethods from Master_Taxes where Taxes_ID=(select  TaxRates_TaxCode from Config_TaxRates where TaxRates_ID=tbl_trans_SalesInvoiceProductTax.ProductTax_TaxTypeId)) ,
+TaxRatesSchemeName=(select  TaxRatesSchemeName from Config_TaxRates where TaxRates_ID=tbl_trans_SalesInvoiceProductTax.ProductTax_TaxTypeId)
+from tbl_trans_SalesInvoiceProductTax where ProductTax_InvoiceId=@Invoice_id  and (ProductTax_Percentage!=0 or  ProductTax_Amount!=0) group by ProductTax_TaxTypeId,ProductTax_InvoiceId</value>
+  </data>
+  <data name="customSqlQuery9.Sql" xml:space="preserve">
+    <value>
+select relation_Id,Type,Address,Address1,Address2,Address3,landMark,Country,State,StateCode,StateId,City,Area,Pin
+
+,BGSTIN_CODE=(case when StateId ='' and (select count(*) InvoiceAdd_stateId from tbl_trans_SalesInvoiceAddress  where InvoiceAdd_OrderId=@Invoice_id and InvoiceAdd_addressType='Billing')&gt;0 then (select c.CNT_GSTIN from tbl_trans_SalesInvoice h inner join tbl_trans_SalesInvoiceAddress a on h.Invoice_Id=a.InvoiceAdd_OrderId inner join tbl_master_contact c on c.cnt_internalId=h.Customer_Id) else case when StateId&lt;&gt;'' then (select top 1 GSTIN from tbl_master_Gstin where state_id=StateId) else '' end end)
+
+
+from 
+(
+select InvoiceAdd_OrderId as 'relation_Id',InvoiceAdd_addressType as 'Type',
+
+(select InvoiceAdd_address1+case when InvoiceAdd_address2='' then '' else +','+InvoiceAdd_address2 end  
++case when InvoiceAdd_address3='' then '' else +','+InvoiceAdd_address3 end 
++case when InvoiceAdd_landMark='' then '' else +','+InvoiceAdd_landMark end  
+) as 'Address',
+
+InvoiceAdd_address1 as 'Address1',InvoiceAdd_address2 as 'Address2',InvoiceAdd_address3 as 'Address3',InvoiceAdd_landMark as 'landMark',(select cou_country from tbl_master_country where cou_id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_countryId) as 'Country',
+(select state from tbl_master_state where id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_stateId) as 'State',(select StateCode from tbl_master_state where id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_stateId) as 'StateCode',InvoiceAdd_stateId as 'StateId',(select RTrim(LTrim(city_name))+'  :' from tbl_master_city where city_id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_cityId) as 'City',(select area_name from tbl_master_area where area_id=tbl_trans_SalesInvoiceAddress.InvoiceAdd_areaId) as 'Area',InvoiceAdd_pin as 'Pin' from tbl_trans_SalesInvoiceAddress where InvoiceAdd_OrderId=@Invoice_id and InvoiceAdd_addressType='Shipping'
+) SAddress
+
+
+</value>
+  </data>
+  <data name="sqlDataSource1.ResultSchemaSerializable" xml:space="preserve">
+    <value>PERhdGFTZXQgTmFtZT0ic3FsRGF0YVNvdXJjZTEiPjxWaWV3IE5hbWU9IkFkZHJlc3MiPjxGaWVsZCBOYW1lPSJyZWxhdGlvbl9JZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IkFkZHJlc3MiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWRkcmVzczEiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWRkcmVzczIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWRkcmVzczMiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0ibGFuZE1hcmsiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQ291bnRyeSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJTdGF0ZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJTdGF0ZUNvZGUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iU3RhdGVJZCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkNpdHkiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQXJlYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJQaW4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iVHlwZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJCR1NUSU5fQ09ERSIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48VmlldyBOYW1lPSJBZGRyZXNzU2hpcHBpbmciPjxGaWVsZCBOYW1lPSJyZWxhdGlvbl9JZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlR5cGUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWRkcmVzcyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBZGRyZXNzMSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBZGRyZXNzMiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBZGRyZXNzMyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJsYW5kTWFyayIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJDb3VudHJ5IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlN0YXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlN0YXRlQ29kZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJTdGF0ZUlkIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iQ2l0eSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBcmVhIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlBpbiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJCR1NUSU5fQ09ERSIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48VmlldyBOYW1lPSJDb21wYW55TWFzdGVyIj48RmllbGQgTmFtZT0iY21wX2lkIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJjbXBfaW50ZXJuYWxpZCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfTmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfcGFyZW50aWQiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX25hdHVyZU9mQnVzaW5lc3MiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX2RpcmVjdG9ycyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfYXV0aG9yaXplZFNpZ25hdG9yaWVzIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9leGNoYW5nZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfcmVnaXN0cmF0aW9uTm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX3NlYmlSZWduTm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX3Bhbk5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9zZXJ2aWNlVGF4Tm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX3NhbGVzVGF4Tm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQ3JlYXRlRGF0ZSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IkNyZWF0ZVVzZXIiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9Ikxhc3RNb2RpZnlEYXRlIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iTGFzdE1vZGlmeVVzZXIiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9ImNtcF9EYXRlSW5jb3Jwb3JhdGlvbiIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9ImNtcF9DSU4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX0NJTmR0IiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iY21wX1ZyZWdpc05vIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iY21wX1ZQYW5ObyIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9ImNtcF9PZmZSb2xlU2hvcnROYW1lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9PblJvbGVTaG9ydE5hbWUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY29tX0FkZCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjb21fbG9nb3BhdGgiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX2N1cnJlbmN5aWQiIFR5cGU9IkJ5dGUiIC8+PEZpZWxkIE5hbWU9ImNtcF9LWUNQcmVmaXgiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX0tSQUludGVybWVkaWFyeUlEIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9MZWRnZXJWaWV3IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9Db21iaW5lZENudHJEYXRlIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iY21wX0NvbWJDbnRyTnVtYmVyIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iY21wX0NvbWJDbnRyUmVzZXQiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX0NvbWJDbnRyT3JkZXIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX3ZhdF9ubyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfRVBGUmVnaXN0cmF0aW9uTm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX0VQRlJlZ2lzdHJhdGlvbk5vVmFsaWRmcm9tIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iY21wX0VQRlJlZ2lzdHJhdGlvbk5vVmFsaWR1cHRvIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iY21wX0VTSUNSZWdpc3RyYXRpb25ObyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfRVNJQ1JlZ2lzdHJhdGlvbk5vVmFsaWRmcm9tIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iY21wX0VTSUNSZWdpc3RyYXRpb25Ob1ZhbGlkdXB0byIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9Im9ucm9sZV9zY2hlbWFfaWQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJvZmZyb2xlX3NjaGVtYV9pZCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9ImNtcF9iaWdMb2dvIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9zbWFsbExvZ28iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX2dzdGluIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9InBob25lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImVtYWlsIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkFkZHJlc3MiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iYWRkX3N0YXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImFkZF9jaXR5IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImFkZF9waW4iIFR5cGU9IlN0cmluZyIgLz48L1ZpZXc+PFZpZXcgTmFtZT0iRGV0YWlscyI+PEZpZWxkIE5hbWU9IklkIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0icmVsYXRpb25fSWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0X05hbWUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iUHJvZHVjdF9JZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlByb2R1Y3RfRGVzY3JpcHRpb24iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iYmFyY29kZV9pdGVtc2xubyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJRdWFudGl0eSIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iVW5pdCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJSYXRlIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJBbW91bnQiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlRvdGFsX0Ftb3VudCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iUHJvZFdpc2VfVGF4QW10IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJwcm9kVGF4VG90QW10IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJJc19UYXhwcmVzZW50IiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iQ0dTVF9SYXRlIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJDR1NUX0FtdCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iU0dTVF9SYXRlIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJTR1NUX0FtdCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iSUdTVF9SYXRlIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJJR1NUX0FtdCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iVVRHU1RfUmF0ZSIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iVVRHU1RfQW10IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJRdHlfVW5pdCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJSYXRlX0Zvcm1hdCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBbW91bnRfRm9ybWF0IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlRvdGFsQW1vdW50X0Zvcm1hdCIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48VmlldyBOYW1lPSJIZWFkZXIiPjxGaWVsZCBOYW1lPSJJZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IkN1c3RvbWVyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkN1c3RvbWVyX0lkIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkRvY19GaW5ZZWFyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkRvY19ubyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJEb2NfZGF0ZSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IkJyYW5jaCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJUb3RhbCBOZXQgQW1vdW50IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkZvcm1hdCBUb3RhbCBOZXQgQW1vdW50IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkNOVF9HU1RJTiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJwYW5fbm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0idXNlcl9uYW1lIiBUeXBlPSJTdHJpbmciIC8+PC9WaWV3PjxWaWV3IE5hbWU9IkhlYWRlck1haW5UYXgiPjxGaWVsZCBOYW1lPSJJZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9InJlbGF0aW9uX0lkIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iUGVyY2VudGFnZSIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iQW1vdW50IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJUYXhUeXBlSWQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJUYXhfTmFtZSIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48VmlldyBOYW1lPSJwcm9kdWN0d2lzZWJhcmNvZGUiPjxGaWVsZCBOYW1lPSJRdW90ZV9JZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlByb2R1Y3RJZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlNlcmlhbE5vIiBUeXBlPSJTdHJpbmciIC8+PC9WaWV3PjxWaWV3IE5hbWU9IlByb2R1Y3RXaXNlVGF4Ij48RmllbGQgTmFtZT0iSWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJyZWxhdGlvbl9JZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlByb2R1Y3RJZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlByb2R1Y3RUYXhfVGF4VHlwZUlkIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iUHJvZHVjdFRheF9UYXhUeXBlTmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0VGF4X1BlcmNlbnRhZ2UiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlByb2R1Y3RUYXhfQW1vdW50IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJUYXgiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0idGF4X3BlcmNudCIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48VmlldyBOYW1lPSJQcm9kV2lzZVRheFdpc2VBbW50Ij48RmllbGQgTmFtZT0icmVsYXRpb25fSWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0VGF4X0Ftb3VudCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0ibW9kZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJUYXhSYXRlc1NjaGVtZU5hbWUiIFR5cGU9IlN0cmluZyIgLz48L1ZpZXc+PFJlbGF0aW9uIE1hc3Rlcj0iRGV0YWlscyIgRGV0YWlsPSJQcm9kdWN0V2lzZVRheCI+PEtleUNvbHVtbiBNYXN0ZXI9IklkIiBEZXRhaWw9IlByb2R1Y3RJZCIgLz48L1JlbGF0aW9uPjxSZWxhdGlvbiBNYXN0ZXI9IkhlYWRlciIgRGV0YWlsPSJEZXRhaWxzIj48S2V5Q29sdW1uIE1hc3Rlcj0iSWQiIERldGFpbD0icmVsYXRpb25fSWQiIC8+PC9SZWxhdGlvbj48UmVsYXRpb24gTWFzdGVyPSJIZWFkZXIiIERldGFpbD0iQWRkcmVzcyI+PEtleUNvbHVtbiBNYXN0ZXI9IklkIiBEZXRhaWw9InJlbGF0aW9uX0lkIiAvPjwvUmVsYXRpb24+PFJlbGF0aW9uIE1hc3Rlcj0iSGVhZGVyIiBEZXRhaWw9IkhlYWRlck1haW5UYXgiPjxLZXlDb2x1bW4gTWFzdGVyPSJJZCIgRGV0YWlsPSJyZWxhdGlvbl9JZCIgLz48L1JlbGF0aW9uPjxSZWxhdGlvbiBNYXN0ZXI9IkhlYWRlciIgRGV0YWlsPSJQcm9kV2lzZVRheFdpc2VBbW50Ij48S2V5Q29sdW1uIE1hc3Rlcj0iSWQiIERldGFpbD0icmVsYXRpb25fSWQiIC8+PC9SZWxhdGlvbj48UmVsYXRpb24gTWFzdGVyPSJIZWFkZXIiIERldGFpbD0iQWRkcmVzc1NoaXBwaW5nIj48S2V5Q29sdW1uIE1hc3Rlcj0iSWQiIERldGFpbD0icmVsYXRpb25fSWQiIC8+PC9SZWxhdGlvbj48L0RhdGFTZXQ+</value>
+  </data>
+  <metadata name="xrTable10.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableRow11.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell50.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell51.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell52.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell55.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell64.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell65.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell66.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell67.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell68.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell69.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell70.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell2.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableRow12.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell71.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell72.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell83.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell73.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell75.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell76.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell77.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell78.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell79.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell80.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell84.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell81.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell85.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell82.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell4.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell6.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.ScriptsSource" xml:space="preserve">
+    <value>
+private void SubBand1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+//GetCurrentColumnValue("RailName").ToString();
+//xrLabel16.Text=((DataRowView)DetailsProductWiseTax.GetCurrentRow()).Row["Tax"].ToString();
+
+}
+
+double pagewiseTotalAmnt;
+int serial_no=0;
+int sn=0;
+ public string CompanyName { get; set; }
+
+private void xrTableCell26_AfterPrint(object sender, System.EventArgs e) {
+}
+
+private void xrTableCell19_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+serial_no++;
+ XRLabel slno = sender as XRLabel;
+ slno.Text = Convert.ToString(serial_no);
+
+}
+
+private void xrCompanyName_AfterPrint(object sender, System.EventArgs e) {
+         }
+</value>
+  </data>
+</root>
