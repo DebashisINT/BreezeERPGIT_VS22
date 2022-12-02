@@ -1,0 +1,2 @@
+E:\PROJECTS\BreezeERPGIT_VS22\FleetManagement\obj\Debug\FleetManagement.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\FleetManagement\obj\Debug\FleetManagement.csproj.CoreCompileInputs.cache

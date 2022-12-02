@@ -1,0 +1,2 @@
+E:\PROJECTS\BreezeERPGIT_VS22\BreezeChat\obj\Debug\BreezeChat.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\BreezeChat\obj\Debug\BreezeChat.csproj.CoreCompileInputs.cache

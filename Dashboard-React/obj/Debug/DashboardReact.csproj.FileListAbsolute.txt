@@ -1,0 +1,2 @@
+E:\PROJECTS\BreezeERPGIT_VS22\Dashboard-React\obj\Debug\DashboardReact.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\Dashboard-React\obj\Debug\DashboardReact.csproj.CoreCompileInputs.cache

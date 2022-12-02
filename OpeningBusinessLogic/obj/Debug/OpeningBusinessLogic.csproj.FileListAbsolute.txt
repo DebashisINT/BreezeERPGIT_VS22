@@ -1,0 +1,9 @@
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\bin\Debug\OpeningBusinessLogic.dll
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\bin\Debug\OpeningBusinessLogic.pdb
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\bin\Debug\DataAccessLayer.dll
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\bin\Debug\DataAccessLayer.pdb
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.csproj.CoreCompileInputs.cache
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.csproj.CopyComplete
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.dll
+E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.pdb

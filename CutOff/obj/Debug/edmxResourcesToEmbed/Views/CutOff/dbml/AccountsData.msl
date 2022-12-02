@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+  <Alias Key="Model" Value="AccountsData" />
+  <Alias Key="Target" Value="AccountsData.Store" />
+  <EntityContainerMapping CdmEntityContainer="AccountsDataContainer" StorageEntityContainer="AccountsDataStoreContainer">
+    <EntitySetMapping Name="v_YearEnding_CashBank">
+      <EntityTypeMapping TypeName="AccountsData.v_YearEnding_CashBank">
+        <MappingFragment StoreEntitySet="v_YearEnding_CashBank">
+          <ScalarProperty Name="branch_description" ColumnName="branch_description" />
+          <ScalarProperty Name="Tax_Code" ColumnName="Tax_Code" />
+          <ScalarProperty Name="CashBank_Narration" ColumnName="CashBank_Narration" />
+          <ScalarProperty Name="CashBank_TransactionType" ColumnName="CashBank_TransactionType" />
+          <ScalarProperty Name="CashBank_TransactionDate" ColumnName="CashBank_TransactionDate" />
+          <ScalarProperty Name="CashBank_FinYear" ColumnName="CashBank_FinYear" />
+          <ScalarProperty Name="CashBank_VoucherNumber" ColumnName="CashBank_VoucherNumber" />
+          <ScalarProperty Name="CashBank_ID" ColumnName="CashBank_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="v_YearEnding_Journal">
+      <EntityTypeMapping TypeName="AccountsData.v_YearEnding_Journal">
+        <MappingFragment StoreEntitySet="v_YearEnding_Journal">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="branch_description" ColumnName="branch_description" />
+          <ScalarProperty Name="JournalVoucher_Narration" ColumnName="JournalVoucher_Narration" />
+          <ScalarProperty Name="JournalVoucher_TransactionDate" ColumnName="JournalVoucher_TransactionDate" />
+          <ScalarProperty Name="JournalVoucher_FinYear" ColumnName="JournalVoucher_FinYear" />
+          <ScalarProperty Name="JournalVoucher_VoucherNumber" ColumnName="JournalVoucher_VoucherNumber" />
+          <ScalarProperty Name="JournalVoucher_ID" ColumnName="JournalVoucher_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

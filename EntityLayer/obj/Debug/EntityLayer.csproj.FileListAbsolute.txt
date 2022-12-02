@@ -1,0 +1,6 @@
+E:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\bin\Debug\EntityLayer.dll
+E:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\bin\Debug\EntityLayer.pdb
+E:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache
+E:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.dll
+E:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.pdb

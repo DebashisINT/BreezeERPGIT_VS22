@@ -1,0 +1,2 @@
+E:\PROJECTS\BreezeERPGIT_VS22\BreezeERPAPI\obj\Debug\BreezeERPAPI.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\BreezeERPAPI\obj\Debug\BreezeERPAPI.csproj.CoreCompileInputs.cache

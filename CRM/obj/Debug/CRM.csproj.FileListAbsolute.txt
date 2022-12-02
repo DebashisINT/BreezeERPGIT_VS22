@@ -1,0 +1,2 @@
+E:\PROJECTS\BreezeERPGIT_VS22\CRM\obj\Debug\CRM.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\CRM\obj\Debug\CRM.csproj.CoreCompileInputs.cache
