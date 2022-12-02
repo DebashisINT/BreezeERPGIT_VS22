@@ -1,2 +1,15 @@
 E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\obj\Debug\ECommerce.csproj.AssemblyReference.cache
 E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\obj\Debug\ECommerce.csproj.CoreCompileInputs.cache
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\ECommerce.dll.config
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\ECommerce.dll
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\ECommerce.pdb
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\Microsoft.Web.Infrastructure.dll
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\Newtonsoft.Json.dll
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\UtilityLayer.dll
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\EntityLayer.dll
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\UtilityLayer.pdb
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\Microsoft.Web.Infrastructure.xml
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\EntityLayer.pdb
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\obj\Debug\ECommerce.csproj.CopyComplete
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\obj\Debug\ECommerce.dll
+E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\obj\Debug\ECommerce.pdb
