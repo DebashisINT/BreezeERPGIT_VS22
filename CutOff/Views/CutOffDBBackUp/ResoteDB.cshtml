@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "ResoteDB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+</style>
+<div id="dvStep3" class="flexContainer">
+    <div class="itm">
+        <h3 class="hdr">Year Ending CuOff DB Restore</h3>
+        <div class="bordered">
+            <table width="70%">
+                <tr>
+                    <td>
+                        <button class="btn btn-primary" id="btnLoadDB" onclick="LoadDB();">Load</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="l1" style="display:none;">Select Database to Restore:</label>
+                    </td>
+                    <td>
+                        <label id="ddlDataBase"></label>
+                    </td>
+                </tr>
+                @*<tr>
+                    <td>
+                        <label>Select .Bak File :</label>
+                    </td>
+                    <td>
+                        <label id="ddlbackUp"></label>
+                    </td>                   
+                </tr>*@
+            </table>
+            <hr />
+            <div class="text-right mtop-2">
+                <button style="display:none;" class="btn btn-primary" id="btnRestoreDB" onclick="RestoreDB();">Restore DB</button>
+                <button style="display:none;" id="btnStep3" class="btn btn-primary" onclick="RedirectTo();">Next</button>
+                <button style="display:none;" class="btn btn-primary" id="btnStep4">Exit</button>
+                <button class="btn btn-danger hide">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+    <input type="hidden" id="hdnAuditDB" value="@ViewData["AuditDBName"]" />
+    <input type="hidden" id="hdnDB" value="@ViewData["Dbname"]" />
+</div>
+<script type="text/javascript">
+    //$(function () {
+    //    ResoreDB();
+    //    ReadBackupFiles();
+    //});
+   function LoadDB()
+    {
+            $.ajax({
+                url: "@Url.Action("RestoreDB", "CutOffDBBackUp")",
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    $("#ddlDataBase").html(data.retdata);
+                    document.getElementById("btnLoadDB").style.display = "none";
+                    document.getElementById("l1").style.display = "inline-block";
+                    document.getElementById("btnRestoreDB").style.display = "inline-block";
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+       //ReadBackupFiles();
+    }
+    function ReadBackupFiles() {
+        $.ajax({
+            url: '@Url.Action("ReadBackupFiles", "CutOffDBBackUp")',
+            type: 'GET',
+            datatType: 'json',
+            success: function (data) {
+                $('#ddlbackUp').html(data.retData2)
+            }
+        });
+    }
+    function RestoreDB()
+    {
+        var Strdata = {};
+        var data = {
+            //"FromStrData": $("#ddlbackUp option:selected").val(),
+            "ToStrData": $("#ddlDataBase option:selected").val(),
+        };
+        $.ajax({   
+            type: "POST",
+            dataType: "JSON",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            url: "@Url.Action("CreateRestoreBackUp", "CutOffDBBackUp")",
+            success: function (response) {
+            console.log(response);
+            jAlert(response);
+            document.getElementById("btnStep3").style.display = "inline-block";
+            document.getElementById("btnRestoreDB").style.display = "none";
+        },
+        error: function (response) {
+            jAlert("Please try again later");
+        }
+    });
+    }
+    function RedirectTo() {
+        // window.location.href = "/YearEnding/CutOffStepThree?cutoffDate=" + $("#hdnCutoffDate").val() + "&backup=" + $("#hdnBackup").val() + "&Dbname=" + txtDbName.GetText() + "&AuditDbname=" + txtAuditDbName.GetText();
+        window.location.href = "/CutOffDBBackUp/FetchDB";
+       @*window.location.href = '@Url.Action("CutOffDBBac", "Home")';*@
+       }
+</script>

@@ -1,0 +1,2069 @@
+﻿@model CRM.Models.crmOpportunitiesModel
+@{
+    ViewBag.Title = "Opportunities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+    <script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+    <link href="~/assests/js/CRM/SearchPopup.css" rel="stylesheet" />
+    <script src="~/assests/js/CRM/SearchPopup.js"></script>*@
+
+
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/SearchPopup.js"></script>
+<script src="/assests/pluggins/choosen/choosen.min.js"></script>
+<script>
+    var ActivityProduct = [];
+    var ActivityProductCRM = [];
+    var ActivityProductProductId = "";
+</script>
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<script src="~/assests/js/CRM/crmProducts.js"></script>
+<link href="~/assests/js/CRM/SearchPopup.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+
+<script src="~/assests/js/CRM/crmMembers.js"></script>
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+<style>
+    .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .mRight20 {
+        margin-right: 12px !important;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+        /*#cmbPriority {
+        border-radius: 3px;
+    }*/
+        .myAssignTarget > li {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 11px;
+            text-align: center;
+        }
+
+            .myAssignTarget > li:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            .myAssignTarget > li.mainCircle {
+                border: 1px solid #a2d3d8;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .myAssignTarget > li .heading {
+                padding: 2px 12px;
+                background: #6d82c5;
+                color: #fff;
+            }
+
+            .myAssignTarget > li .Num {
+                font-size: 14px;
+            }
+
+            .myAssignTarget > li.mainHeadCenter {
+                font-size: 12px;
+                transform: translateY(-16px);
+            }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+    #cc, #bcc {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function LostFocusInUniqueID() {
+
+    }
+
+
+    function PinChange() {
+
+        var detailsByPin = cpin.GetText().trim();
+
+        //cpin
+
+        if (detailsByPin != '') {
+            //var details = {}
+
+            //details.PinCode = detailsByPin;
+            $.ajax({
+                type: "POST",
+                url: "/CRMLeads/AddressByPin",
+                data: JSON.stringify({ PinCode: detailsByPin }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cpin.SetText(returnObj.PinCode);
+                        ccountry.SetText(returnObj.CountryName);
+                        cstate.SetText(returnObj.StateName);
+                        ccity.SetText(returnObj.CityName);
+
+
+                    }
+                    else {
+
+
+                        cpin.SetText('');
+                        ccountry.SetText('');
+                        cstate.SetText('');
+                        ccity.SetText('');
+
+                    }
+                }
+            });
+        }
+
+    }
+
+    // Rev Mantis issue 20684 (27/05/2021)
+    function PercentCheck() {
+        var valProbability_Perc = cProbability_Perc.GetText().trim();
+        if (valProbability_Perc > 100 ) {
+            cProbability_Perc.SetText(0);
+        }
+
+    }
+    // End of Rev Mantis issue 20684 (27/05/2021)
+
+
+    $(document).ready(function () {
+
+        $("#toinput").tagsinput('add', { preventPost: true });
+        $('#toinput').on('beforeItemAdd', function (event) {
+            var tag = event.item;
+            // Do some processing here
+           //; alert(tag)
+
+            //if (!event.options || !event.options.preventPost) {
+
+            //}
+        });
+        $("#ccinput").tagsinput('add', { preventPost: true });
+        $("#bccinput").tagsinput('add', { preventPost: true });
+
+
+        $('.widgetizeForm li .parentLabel').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).parent('li').hasClass('ready')) {
+                //$('.widgetDrop').hide();
+                // $(this).parent('li').addClass('on');
+                $('.widgetDrop').hide();
+                $(this).parent('li').find('.widgetDrop').toggle();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.widgetDrop .nextStage').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).hasClass('act')) {
+                $(this).closest('li.parentLi').next('.parentLi').addClass('ready');
+                $(this).closest('li.parentLi').next('.parentLi').find('.widgetDrop').show();
+                $(this).closest('li.parentLi').next('.parentLi').addClass('on');
+
+                $(this).closest('li.parentLi').removeClass('on').addClass('visited');
+                $(this).closest('li.parentLi').find('.widgetDrop').hide();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.closeDropCont').click(function () {
+            $(this).closest('li.parentLi').find('.widgetDrop').hide();
+        });
+
+        $('#ccAnchor').click(function (e) {
+            e.preventDefault();
+            $('#cc').show();
+            $(this).hide();
+            setTimeout(function () { $('#cc').focus(); }, 5000);
+
+        });
+        $('#bccAnchor').click(function (e) {
+            e.preventDefault();
+            $('#bcc').show();
+            $('#bcc').focus();
+            $(this).hide();
+        });
+        $('.sms-template-area').hide();
+    });
+    function showEmail() {
+        $('.sms-template-area').hide();
+        $('.email-template-area').show();
+    }
+    function showSms() {
+        $('.email-template-area').hide();
+        $('.sms-template-area').show();
+    }
+</script>
+<script type="text/javascript">
+    //function PinChange() {
+
+    //    var detailsByPin = cpin.GetText().trim();
+
+    //    //cpin
+
+    //    if (detailsByPin != '') {
+    //        //var details = {}
+
+    //        //details.PinCode = detailsByPin;
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/CRMLeads/AddressByPin",
+    //            data: JSON.stringify({ PinCode: detailsByPin }),
+    //            contentType: "application/json; charset=utf-8",
+    //            dataType: "json",
+    //            success: function (msg) {
+    //                var obj = msg;
+    //                var returnObj = obj[0];
+    //                if (returnObj) {
+    //                    cpin.SetText(returnObj.PinCode);
+    //                    ccountry.SetText(returnObj.CountryName);
+    //                    cstate.SetText(returnObj.StateName);
+    //                    ccity.SetText(returnObj.CityName);
+
+    //                    $('#hdnpinid').val(returnObj.PinId);
+    //                    $('#hdncountryid').val(returnObj.CountryId);
+    //                    $('#hdnstateid').val(returnObj.StateId);
+    //                    $('#hdncityid').val(returnObj.CityId);
+    //                }
+    //                else {
+    //                    $('#hdnpinid').val('');
+    //                    $('#hdncountryid').val('');
+    //                    $('#hdnstateid').val('');
+    //                    $('#hdncityid').val('');
+
+    //                    cpin.SetText('');
+    //                    ccountry.SetText('');
+    //                    cstate.SetText('');
+    //                    ccity.SetText('');
+
+    //                }
+
+    //            }
+    //        });
+    //    }
+
+    //}
+</script>
+
+<script>
+    function Contact_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#ContactModel').modal('show');
+            $('#txtContactSearch').focus();
+        }
+    }
+
+    function ContactButnClick(s, e) {
+        $('#ContactModel').modal('show');
+        $('#txtContactSearch').focus();
+    }
+
+    function Account_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#AccountModel').modal('show');
+            $('#txtAccountSearch').focus();
+        }
+    }
+
+    function AccountButnClick(s, e) {
+        $('#AccountModel').modal('show');
+        $('#txtAccountSearch').focus();
+    }
+
+    function Contactkeydown(e) {
+
+        var OtherDetails = {}
+        OtherDetails.SearchKey = $("#txtContactSearch").val();
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Contact Name");
+            HeaderCaption.push("Address");
+            if ($("#txtContactSearch").val() != '') {
+                callonServer("../CRMOpportunities/GetContact", OtherDetails, "ContactTableCRM", HeaderCaption, "ContactIndex", "SetContact");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ContactIndex=0]"))
+                $("input[ContactIndex=0]").focus();
+        }
+    }
+
+    function SetContact(Id, Name) {
+        // debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#ContactModel').modal('hide');
+           // ctxContact.SetText(Name);
+            GetObjectID('hdnContactid').value = key;
+           // ctxContact.Focus();
+        }
+        else {
+           // ctxContact.SetText('');
+            GetObjectID('hdnContactid').value = '';
+
+        }
+    }
+
+    function Accountkeydown(e) {
+
+        var OtherDetails = {}
+        OtherDetails.SearchKey = $("#txtAccountSearch").val();
+        // OtherDetails.OpportunityType = 'Customer';
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Account Name");
+            HeaderCaption.push("Unique Id");
+            HeaderCaption.push("Address");
+            if ($("#txtAccountSearch").val() != '') {
+                callonServer("../CRMOpportunities/GetAccount", OtherDetails, "AccountTable", HeaderCaption, "AccountIndex", "SetAccount");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[AccountIndex=0]"))
+                $("input[AccountIndex=0]").focus();
+        }
+    }
+
+    function SetAccount(Id, Name) {
+        // debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#AccountModel').modal('hide');
+            ctxtCompany.SetText(Name);
+            GetObjectID('hdnAccountid').value = key;
+            $("#hdnAccountid").val()
+            ctxtCompany.Focus();
+        }
+        else {
+            ctxtCompany.SetText('');
+            GetObjectID('hdnAccountid').value = '';
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if (indexName == "ContactIndex") {
+
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                if (Id) {
+                    SetContact(Id, name);
+                }
+            }
+            else if (indexName == "CompanyIndex") {
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                SetAccount(Id, name);
+            }
+            else if (indexName == "CompanyIndex") {
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                SetCompany(Id, name);
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1) {
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            }
+            else {
+
+                if (indexName == "ContactIndex")
+                    $('#txtContactSearch').focus();
+                else if (indexName == "AccountIndex")
+                    $('#txtAccountSearch').focus();
+                else if (indexName == "CompanyIndex")
+                    $('#txtCompanySearch').focus();
+            }
+        }
+    }
+
+    function PinChange() {
+
+        var detailsByPin = cpin.GetText().trim();
+
+        //cpin
+
+        if (detailsByPin != '') {
+            $.ajax({
+                type: "POST",
+                url: "/CRMOpportunities/AddressByPin",
+                data: JSON.stringify({ PinCode: detailsByPin }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cpin.SetText(returnObj.PinCode);
+                        ccountry.SetText(returnObj.CountryName);
+                        cstate.SetText(returnObj.StateName);
+                        ccity.SetText(returnObj.CityName);
+
+                        $('#hdnpinid').val(returnObj.PinId);
+                        $('#hdncountryid').val(returnObj.CountryId);
+                        $('#hdnstateid').val(returnObj.StateId);
+                        $('#hdncityid').val(returnObj.CityId);
+                    }
+                    else {
+                        $('#hdnpinid').val('');
+                        $('#hdncountryid').val('');
+                        $('#hdnstateid').val('');
+                        $('#hdncityid').val('');
+
+                        cpin.SetText('');
+                        ccountry.SetText('');
+                        cstate.SetText('');
+                        ccity.SetText('');
+
+                    }
+                }
+            });
+        }
+
+    }
+
+    function Company_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#CompanyModel').modal('show');
+            $('#txtCompanySearch').focus();
+        }
+    }
+
+    function CompanyButnClick(s, e) {
+        $('#CompanyModel').modal('show');
+        $('#txtCompanySearch').focus();
+    }
+
+    function Companykeydown(e) {
+
+        var OtherDetails = {}
+        OtherDetails.SearchKey = $("#txtCompanySearch").val();
+        OtherDetails.ContactType = "Customer";
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Company Name");
+            HeaderCaption.push("Unique ID");
+            HeaderCaption.push("Address");
+
+            if ($("#txtCompanySearch").val() != '') {
+                callonServer("../CRMOpportunities/GetCompany", OtherDetails, "CompanyTable", HeaderCaption, "CompanyIndex", "SetCompany");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[CompanyIndex=0]"))
+                $("input[CompanyIndex=0]").focus();
+        }
+    }
+
+    function SetCompany(Id, Name) {
+        // debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#CompanyModel').modal('hide');
+            ctxtCompany.SetText(Name);
+            GetObjectID('hdnCompannyId').value = key;
+            GetObjectID('hdnAccountid').value = key;
+
+            ctxtCompany.Focus();
+            CompanyChange(key);
+        }
+        else {
+            ctxtCompany.SetText('');
+            CompanyChange('');
+            GetObjectID('hdnCompannyId').value = '';
+        }
+    }
+
+
+    function CompanyChange(id) {
+        var detailsByPin = cpin.GetText().trim();
+        //Address Fill From Companny
+        if (id != '') {
+            $.ajax({
+                type: "POST",
+                url: "/CRMOpportunities/AddressByCompany",
+                data: JSON.stringify({ cntID: id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cpin.SetText(returnObj.PinCode);
+                        ccountry.SetText(returnObj.CountryName);
+                        cstate.SetText(returnObj.StateName);
+                        ccity.SetText(returnObj.CityName);
+                        cWebSite.SetText(returnObj.WebSite);
+                        $("#txt_Address1").val(returnObj.Address1);
+                        $("#txt_Address2").val(returnObj.Address2);
+                        // Rev Mantis issue 20684 (27/05/2021)
+                        $("#txt_Address3").val(returnObj.Address3);
+                        // End of Rev Mantis issue 20684 (27/05/2021)
+                        $("#txt_Landmark").val(returnObj.Landmark);
+
+
+                        cAddress1.SetText(returnObj.Address1);
+                        cAddress2.SetText(returnObj.Address2);
+                        // Rev Mantis issue 20684 (27/05/2021)
+                        //cAddress3.SetText(response.Address3);
+                        cAddress3.SetText(returnObj.Address3);
+                        // End of Rev Mantis issue 20684 (27/05/2021)
+                        cLandMark.SetText(returnObj.Landmark);
+
+
+                        $('#hdnpinid').val(returnObj.PinId);
+                        $('#hdncountryid').val(returnObj.CountryId);
+                        $('#hdnstateid').val(returnObj.StateId);
+                        $('#hdncityid').val(returnObj.CityId);
+                    }
+                    else {
+                        $('#hdnpinid').val('');
+                        $('#hdncountryid').val('');
+                        $('#hdnstateid').val('');
+                        $('#hdncityid').val('');
+
+                        cpin.SetText('');
+                        ccountry.SetText('');
+                        cstate.SetText('');
+                        ccity.SetText('');
+                        cWebSite.SetText('');
+                        $("#txt_Address1").val('');
+                        $("#txt_Address2").val('');
+                        // Rev Mantis issue 20684 (27/05/2021)
+                        $("#txt_Address3").val('');
+                        // End of Rev Mantis issue 20684 (27/05/2021)
+                        $("#txt_Landmark").val('');
+                    }
+                }
+            });
+        }
+        else {
+            $('#hdnpinid').val('');
+            $('#hdncountryid').val('');
+            $('#hdnstateid').val('');
+            $('#hdncityid').val('');
+
+            cpin.SetText('');
+            ccountry.SetText('');
+            cstate.SetText('');
+            ccity.SetText('');
+            cWebSite.SetText('');
+            $("#txt_Address1").val('');
+            $("#txt_Address2").val('');
+            // Rev Mantis issue 20684 (27/05/2021)
+            $("#txt_Address2").val('');
+            // End of Rev Mantis issue 20684 (27/05/2021)
+            $("#txt_Landmark").val('');
+        }
+    }
+
+    function OpenQuatList() {
+        var AccountID = $("#hdnAccountid").val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PartialQuotationBind", "CRMOpportunities")",
+            data: { AccountNo: AccountID },
+            success: function (response) {
+                $('#QuotationModel').modal('show');
+                gvPaging.Refresh();
+                gvPaging.Refresh();
+            }
+        });
+
+    }
+
+
+    function EditClick(id) {
+        $("#hdnContact_Id").val(id);
+        $("#hdnOpportunities_Id").val(id);
+
+        var obj = {};
+        obj.OpportunitiesID = id;
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/CRMOpportunities/EditOpportunities",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (obj) {
+                var response = obj;
+                LoadingPanel.Hide();
+                $("#WonerID").val(response.Woner);
+                $("#AssignedID").val(obj.AssignedID);
+                //obj.SourceID = $("#SourceID").val();
+                $("#RatingID").val(obj.RatingID);
+                $("#Status_Id").val(obj.Status_Id);
+                GetObjectID('hdnContactid').value = obj.Contact;
+                GetObjectID('hdnCompannyId').value = obj.Account;
+
+                cTopic.SetText(obj.Topic);
+
+                GetObjectID('hdnContactid').value = obj.Contact;
+                GetObjectID('hdnCompannyId').value = obj.Account;
+
+                // obj.company_name = ccompany_name.GetText();
+                cWebSite.SetText(obj.Website);
+
+                gridLookupcontact.GetGridView().SelectRowsByKey(response.cntids);
+
+                if (obj.Unique_Id != null) {
+                    cshortname.SetText(obj.Unique_Id);
+                    cshortname.SetEnabled(false);
+                }
+
+
+                cdescription.SetText(obj.Description);
+                ctxtCompany.SetText(obj.CompanyName);
+              //  ctxContact.SetText(obj.ContactName);
+
+
+                cAddress1.SetText(response.Address1);
+                cAddress2.SetText(response.Address2);
+                cAddress3.SetText(response.Address3);
+                cLandMark.SetText(response.LandMark);
+                cpin.SetText(response.Pin);
+                ccity.SetText(response.city);
+                cstate.SetText(response.state);
+                ccountry.SetText(response.country);
+
+
+                 $("#hdncountryid").val(obj.CountryId);
+                 $("#hdnstateid").val(obj.StateId);
+                 $("#hdncityid").val(obj.CityId);
+
+
+
+
+                $("#PurchaseTimeframeID").val(obj.PurchaseTimeframeID)
+                cBudgetAmount.SetText(obj.BudgetAmount)
+                $("#PurchaseProcessID").val(obj.PurchaseProcessID);
+                $("#txt_CurrentSituation").val(obj.CurrentSituation)
+                $("#txt_CustomerNeed").val(obj.CustomerNeed);
+                $("#txt_PropossedSolution").val(obj.PropossedSolution);
+                // Rev Mantis issue 20684 (27/05/2021)
+                cProbability_Perc.SetText(obj.Probability_Perc);
+                // End of Rev Mantis issue 20684 (27/05/2021)
+                cEstimate_Revenue.SetText(obj.Estimate_Revenue);
+                if (response.estDate_fromDB != null)
+                    cExpected_Close.SetDate(new Date(parseInt(response.estDate_fromDB.substr(6))));
+
+
+
+
+
+                $("#addOpportunity").modal('show');
+
+            },
+            error: function (response) {
+                jAlert("Can not Edit");
+                LoadingPanel.Hide();
+            }
+        });
+    }
+
+
+    function DeleteClick(id) {
+        
+         var obj = {};
+         obj.OpportunitiesID = id;
+        jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+            if (r == true) {
+                LoadingPanel.Show();
+                $.ajax({
+                    type: "POST",
+                    url: "/CRMOpportunities/DeleteCRMOpportunities",
+                    data: JSON.stringify(obj),
+                    async: true,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        jAlert(response);
+                        gridcrmOpportuniy.Refresh();
+                        gridcrmOpportuniy.Refresh();
+                        LoadingPanel.Hide();
+                    },
+                    error: function (response) {
+                        jAlert("Can not Delete");
+                        gridcrmOpportuniy.Refresh();
+                        gridcrmOpportuniy.Refresh();
+                        LoadingPanel.Hide();
+                    }
+                });
+            }
+        });
+    }
+
+
+    function OnStartCallback(s, e) {
+        e.customArgs["Account"] = $("#hdnAccountid").val();
+    }
+
+    var globalrowindex = 0;
+    function gridclick(s, e) {
+        globalrowindex = e.visibleIndex;
+    }
+
+    function AddQuotList(QuotID, Quote_Number, Quote_Date, Quote_TotalAmount, Quote_Expiry, CreatedDate) {
+
+        debugger;
+
+        //var Quote_Number = gvPaging.batchEditApi.GetCellValue(globalrowindex, 'Quote_Number');
+        //var Quote_Date = gvPaging.batchEditApi.GetCellValue(globalrowindex, 'Quote_Date');
+        //var Quote_TotalAmount = gvPaging.batchEditApi.GetCellValue(globalrowindex, 'Quote_TotalAmount');
+        //var Quote_Expiry = gvPaging.batchEditApi.GetCellValue(globalrowindex, 'Quote_Expiry');
+
+        //var CreatedDate = gvPaging.batchEditApi.GetCellValue(globalrowindex, 'Created On');
+
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PartialQuotationDetails", "CRMOpportunities")",
+            data: { Quot_ID: QuotID, QuoteNumber: Quote_Number, QuoteDate: Quote_Date, QuoteTotalAmount: Quote_TotalAmount, QuoteExpiry: Quote_Expiry, Created_Date: CreatedDate },
+            success: function (response) {
+                $('#QuotationModel').modal('hide');
+                gvQuotGrid.Refresh();
+                gvQuotGrid.Refresh();
+            }
+        });
+    }
+
+    function OpenQuatModel() {
+
+    }
+</script>
+
+<script>
+    function ShowAllClick() {
+        gridcrmOpportuniy.Refresh()
+        gridcrmOpportuniy.Refresh()
+    }
+
+
+    function ActivityChange(s, e) {
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("ActivityChange", "CRMActivity")",
+            data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                cddlActivityType.ClearItems();
+                cddlActivityType.AddItem("Select", "0");
+                for (var i = 0; i < response.length; i++) {
+                    cddlActivityType.AddItem(response[i].Lead_ActivityTypeName, response[i].Id);
+                }
+                cddlActivityType.SetSelectedIndex(0);
+            }
+
+        });
+
+    }
+
+
+
+
+    function SaveActivity() {
+
+        if (validationsActivity()) {
+
+            var obj = {};
+            obj.activity = cddlActivity.GetValue();
+            obj.activity_type = cddlActivityType.GetValue();
+            obj.subject = ctxt_Subject.GetText();
+            obj.details = cmemo_Details.GetText();
+            obj.assignto = $("#ddlAssignTo").val();
+            obj.duration = ddlDuration.GetText();
+            obj.priority = $("#ddlPriority").val();
+
+            obj.DtxtDue = cDue_dt.GetDate();
+            obj.dtActivityDate = cActivity_Date.GetDate();
+            obj.CRMactivityid = $("#hdnOpportunities_Id").val();
+            obj.contacttype = $("#ddlContactType").val();
+            // Mantis Issue 24175
+            obj.ActivityTypeNew = cddlActivityTypeNew.GetValue();
+            // End of Mantis Issue 24175
+            obj.Module_Name = "Opportunity Activity";
+
+
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SaveActivity", "CRMActivity")",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    jAlert(response, 'Alert');
+                    CRMpcControl.Hide();
+                }
+            });
+        }
+    }
+
+
+    function ValidationOpportunities() {
+        var isvalid = false;
+        if (cTopic.GetText() == "") {
+            isvalid = false;
+            jAlert("Topic is Mandatory."); return;
+        }
+        else {
+            isvalid = true;
+        }
+        //if ($("#hdnContactid").val() == "") {
+        //    isvalid = false;
+        //    jAlert("Contact is Mandatory."); return;
+        //}
+        //else {
+        //    isvalid = true;
+        //}
+        //if ($("#hdnAccountid").val() == "") {
+        //    isvalid = false;
+        //    jAlert("Account is Mandatory."); return;
+        //}
+        //else {
+        //    isvalid = true;
+        //}
+        if ($("#ddlPurchaseTimeframe").val() == "0") {
+            isvalid = false;
+            jAlert("Purchase Timeframe is Mandatory."); return;
+        }
+        else {
+            isvalid = true;
+        }
+
+        return isvalid;
+    }
+
+
+    function SaveOpportunities() {
+
+        if (ValidationOpportunities()) {
+            var obj = {};
+
+            //$("#hdnOpportunities_Id").val() == ""
+
+            if ($("#hdnOpportunities_Id").val() == "") {
+                obj.Action = "Add";
+                $("#hdnActionType").val('Add');
+                obj.OpportunitiesID = 0;
+            }
+            else {
+                obj.Action = "Update";
+                $("#hdnActionType").val('Update');
+                obj.OpportunitiesID = $("#hdnOpportunities_Id").val();
+            }
+
+            //$("#hdnLead_Id").val();
+
+            obj.Woner = $("#WonerID").val();
+            obj.AssignedID = $("#AssignedID").val();
+            //obj.SourceID = $("#SourceID").val();
+            obj.RatingID = $("#RatingID").val();
+            obj.Status_Id = $("#Status_Id").val();
+            obj.Contact = GetObjectID('hdnContactid').value;
+            obj.Account = GetObjectID('hdnCompannyId').value;
+
+
+
+            obj.PurchaseTimeframeID = $("#PurchaseTimeframeID").val()
+            obj.BudgetAmount = cBudgetAmount.GetText()
+            obj.PurchaseProcessID = $("#PurchaseProcessID").val();
+            obj.CurrentSituation = $("#txt_CurrentSituation").val()
+            obj.CustomerNeed = $("#txt_CustomerNeed").val();
+            obj.PropossedSolution = $("#txt_PropossedSolution").val();
+            obj.Estimate_Revenue = cEstimate_Revenue.GetText();
+            obj.EstCloseDate = cExpected_Close.GetText();
+            // Rev Mantis issue 20684 (27/05/2021)
+            obj.Probability_Perc = cProbability_Perc.GetText()
+            // End of Rev Mantis issue 20684 (27/05/2021)
+
+            var contacts = gridLookupcontact.GetSelectedKeyFieldValues();
+            obj.crmcontacts_id = contacts.join();
+
+
+            obj.Topic = cTopic.GetText();
+
+            // obj.company_name = ccompany_name.GetText();
+            obj.website = cWebSite.GetText();
+
+
+            obj.Address1 = cAddress1.GetText();
+            obj.Address2 = cAddress2.GetText();
+            obj.Address3 = cAddress3.GetText();
+
+            obj.LandMark = cLandMark.GetText();
+            obj.PinId = cpin.GetText()
+            obj.CountryId = $("#hdncountryid").val();
+            obj.StateId = $("#hdnstateid").val();
+            obj.CityId = $("#hdncityid").val();
+
+
+            obj.Description = cdescription.GetText();
+
+
+
+
+            LoadingPanel.Show();
+            $.ajax({
+                type: "POST",
+                url: "/CRMOpportunities/SaveCRMOpportunities",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    jAlert(response);
+                    //gridcrmCampaign.Refresh();
+                    //gridcrmCampaign.Refresh();
+                    //$("#projectMod").modal('hide');
+                    gridcrmOpportuniy.Refresh()
+                    gridcrmOpportuniy.Refresh()
+                    LoadingPanel.Hide();
+                    $("#addOpportunity").modal('hide');
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                    LoadingPanel.Hide();
+                }
+            });
+        }
+
+    }
+
+    function gridcrmContactclick(s, e) {
+        $('#gridcrmOpportuniy').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    console.log(value);
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+
+
+
+    function fn_crmShowHistory() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("CRMShowHistory", "CRMActivity")",
+            // data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                //$("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+
+
+
+    }
+
+    function OnAddActivitiesbuttonClick() {
+        cActivity_Date.SetDate(new Date());
+        cddlActivity.SetValue("");
+        cddlActivityType.SetValue("");
+        ctxt_Subject.SetText("");
+        cmemo_Details.SetText("");
+        $("#ddlPriority").val(0);
+        cDue_dt.SetDate(new Date());
+        $("#btnClear").addClass('hide');
+        $("#btnSave").removeClass('hide');
+    }
+
+
+    function DoProducts(id) {
+        $("#hdnOpportunities_Id").val(id);
+        $("#hdnCrmProductIdentityId").val(id);
+
+        ShowProducts('ACPRD');
+
+        ShowCRMProductsEditCRM('Opportunity Products', id);
+    }
+
+    function AddLiterature(id, name, code) {
+
+
+        $('#AttachmentModal').modal('show');
+
+        $("#hdnOpportunities_Id").val(id);
+        $('#hdnDocNo').val(id);
+        $('#hdndoc_id').val(id);
+        $("#docFileName").val(code);
+        $("#docNumber").val(name);
+        document.getElementById("docFileName").disabled = true;
+        document.getElementById("docNumber").disabled = true;
+
+        setTimeout(function () { $('#documentType').focus(); }, 1000);
+    }
+
+
+    function btn_ShowHistory() {
+        var showhistory_Leadcode = $("#hdnOpportunities_Id").val();
+        var showhistory_actiontype = 'ActivityShowAll';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Leadcode, Module: 'Opportunity Activity' },
+            success: function (response) {
+                // $("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+
+    function CancelActivity() {
+        CRMpcControl.Hide();
+    }
+
+
+    function DoActivity(id) {
+        $("#hdnOpportunities_Id").val(id);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DoActivity", "CRMActivity")",
+            data: { Module_Name: "Opportunity Activity", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Activities');
+                CRMpcControl.Show();
+
+
+            }
+        });
+    }
+
+    function DoSharing(id) {
+        $("#hdnModule_Name").val("Opportunity");
+        $("#hdnModule_Id").val(id);
+        $("#toinput").tagsinput('add', "", { preventPost: true });
+        $("#PhoneInput").tagsinput('add', "", { preventPost: true });
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("GetEntityDetails", "CRMSharing")",
+            data: { Module_Name: "Opportunity", Module_id: id },
+            async: false,
+            success: function (response) {
+
+
+                var emails = response.emails.map(function (elem) {
+                    return elem.Entity_Email;
+                }).join(",");
+
+                $("#toinput").tagsinput('add', emails, { preventPost: true });
+
+                var sms = response.phones.map(function (elem) {
+                    return elem.Entity_Phone;
+                }).join(",");
+
+                $("#PhoneInput").tagsinput('add', sms, { preventPost: true });
+
+            }
+
+        });
+        $("#sharingmodel").modal('show');
+
+    }
+
+    function AddMember(id) {
+        $("#Module_Name").val('Opportunity');
+        $("#hdnOpportunities_Id").val(id);
+
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("doAddMembers", "CRMMembers")",
+            data: { Module_Name: "Opportunity", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Members');
+
+                CRMpcControl.Show();
+                $("#chkLead").addClass('hide');
+
+            }
+        });
+
+    }
+    function btn_ShowTopTenHistory() {
+        var showhistory_Leadcode = $("#hdnOpportunities_Id").val();
+        var showhistory_actiontype = 'ActivityShowTop10';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Leadcode, Module: 'Opportunity Activity' },
+            success: function (response) {
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+
+
+    function addOpp() {
+        $("#hdnOpportunities_Id").val("");
+        $("#RatingID").val(0);
+        $("#Status_Id").val(0);
+        GetObjectID('hdnContactid').value = "";
+        GetObjectID('hdnCompannyId').value = "";
+       // ctxContact.SetText("");
+        cTopic.SetText("");
+
+        // obj.company_name = ccompany_name.GetText();
+        cWebSite.SetText("");
+
+        cdescription.SetText("");
+
+        cAddress1.SetText("");
+        cAddress2.SetText("");
+        cAddress3.SetText("");
+        cLandMark.SetText("");
+        cpin.SetText("");
+        ccity.SetText("");
+        cstate.SetText("");
+        ccountry.SetText("");
+
+
+
+
+        $("#PurchaseTimeframeID").val(0)
+        cBudgetAmount.SetText(0)
+        $("#PurchaseProcessID").val(0);
+        $("#txt_CurrentSituation").val("")
+        $("#txt_CustomerNeed").val("");
+        $("#txt_PropossedSolution").val("");
+        cEstimate_Revenue.SetText(0);
+        cExpected_Close.SetDate(new Date());
+        // Rev Mantis issue 20684 (27/05/2021)
+        cProbability_Perc.SetText(0)
+        // End of Rev Mantis issue 20684 (27/05/2021)
+
+        cshortname.SetText("");
+        cshortname.SetEnabled(true);
+
+
+
+        cdescription.SetText("");
+
+
+
+
+
+
+        $("#PurchaseTimeframeID").val(0)
+        $("#PurchaseProcessID").val(0);
+        $("#txt_CurrentSituation").val(0)
+        $("#txt_CustomerNeed").val(0);
+        $("#txt_PropossedSolution").val(0);
+        cEstimate_Revenue.SetText(0);
+        cExpected_Close.SetDate(new Date());
+
+
+
+
+
+        //  $("#addOpportunity").modal('show');
+
+    }
+
+</script>
+
+<div class="panel-heading">
+    <div id="td_Opportunity1" class="panel-title">
+        <h3>
+            <span id="lblHeadTitle">Opportunities </span>
+        </h3>
+    </div>
+</div>
+<div class="form_main clearfix">
+    <div class="mTop5">
+        @{ if (ViewBag.CanAdd)
+         {
+            <button class="btn btn-success btn-radius " data-toggle="modal" data-target="#addOpportunity" onclick="addOpp();" data-backdrop="static" data-keyboard="true">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span> Opportunity
+            </button>
+
+         }
+        }
+
+
+        <button class="btn btn-info btn-radius  " onclick="ShowAllClick();">Show</button>
+        @{ if (ViewBag.CanExport)
+         {
+            <select name="ddlExport" class="btn btn-primary btn-radius" onchange="Exportclick()" id="ddlExport">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="4">RTF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="5">CSV</option>
+            </select>
+         }
+        }
+        <input type="hidden" value="@Url.Action("ExportCRMContactList", "CRMContact", new { type = "_type_" })" id="hdnExportLink" />
+
+
+
+    </div>
+</div>
+
+
+<div class="modal fade pmsModal w90" id="addOpportunity" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Opportunity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+
+
+
+
+
+
+            </div>
+            <div class="modal-body ">
+                <div class="clearfix" style="margin-bottom:10px;">
+
+                </div>
+                <div class="formLine"></div>
+                <div class="clearfix text-center" style="margin-bottom:7px;">
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Owner</b></div>
+                                <div>
+                                    <div>
+                                        @*<select ><option>Select</option></select>*@
+                                        @Html.DropDownListFor(m => m.WonerID, new SelectList(Model.Users, "user_id", "user_name"))
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Assign To</b></div>
+                                <div>
+                                    @*<select ><option>Select</option></select>*@
+                                    @Html.DropDownListFor(m => m.AssignedID, new SelectList(Model.Users, "user_id", "user_name"))
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item ">
+                                <div><b>Status</b></div>
+                                <div>
+                                    @*<select ><option>Select</option></select>*@
+                                    @Html.DropDownListFor(m => m.Status_Id, new SelectList(Model.Status_Details, "Id", "Status_Code"))
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Est. Revenue</b></div>
+                                <div>
+                                    @*<input type="text"  />*@
+                                    @Html.DevExpress().TextBoxFor(m => m.Estimate_Revenue,
+                                    settings =>
+                                    {
+                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        //settings.ControlStyle.CssClass = "form-control";
+                                        settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                        ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                        ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                        settings.Properties.ClientInstanceName = "cEstimate_Revenue";
+                                    }).GetHtml()
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection ">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Est. Close Date</b></div>
+                                <div>
+                                    @*<input type="text" />*@
+                                    @Html.DevExpress().DateEditFor(model => model.EstCloseDate,
+                                    settings =>
+                                    {
+                                        settings.Properties.EditFormat = EditFormat.Custom;
+                                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                        //settings.Properties.TimeSectionProperties.Visible = true;
+                                        //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                        //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                        settings.Properties.UseMaskBehavior = true;
+                                        settings.Date = DateTime.Now;
+                                        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        settings.Properties.ClientInstanceName = "cExpected_Close";
+                                        settings.ControlStyle.CssClass = "dateEditInput";
+                                    }).GetHtml()
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="Vtabs pmsForm">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-1">
+                            <ul class="nav nav-pills nav-stacked flex-column">
+                                <li class="active"><a href="#tab_a" data-toggle="pill">Summary</a></li>
+                                <li class="hide"><a href="#tab_b" data-toggle="pill">Collateral</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-11">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_a">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Opportunity Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Topic <span style="color:red">*</span></label>
+                                                        <div class="col-sm-12">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @Html.DevExpress().TextBoxFor(m => m.Topic,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cTopic";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.ControlStyle.CssClass = "dateEditInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">
+                                                            Unique ID
+                                                            <span style="color:red">*</span>
+                                                        </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Unique_Id,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cshortname";
+                                                                settings.Properties.MaxLength = 80;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.ClientSideEvents.LostFocus = "LostFocusInUniqueID";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="clearfix"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Contact </label>
+                                                        @* Rev Mantis issue 20684 (27/05/2021) [dateEditInput added in div] *@
+                                                        <div class="col-sm-12 dateEditInput ">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @*@Html.DevExpress().ButtonEdit(settings =>
+                                                            {
+                                                                settings.Name = "btnContact";
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientSideEvents.ButtonClick = "ContactButnClick";
+                                                                settings.Properties.ClientSideEvents.KeyDown = "Contact_KeyDown";
+                                                                settings.Properties.ClientInstanceName = "ctxContact";
+                                                                settings.Properties.Buttons.Add("...");
+                                                                settings.ReadOnly = true;
+                                                                settings.ControlStyle.CssClass = "dateEditInput";
+                                                            }).GetHtml()*@
+                                                            @{
+                                                                Html.RenderAction("PopulateContactGrid", "CRMOpportunities");
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Purchase Timeframe </label>
+                                                        <div class="col-sm-12">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @Html.DropDownListFor(m => m.PurchaseTimeframeID, new SelectList(Model.Timeframe_List, "TIMEFRAME_ID", "TIMEFRAME_NAME"))
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Rating</label>
+                                                        <div class="col-sm-12">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @Html.DropDownListFor(m => m.RatingID, new SelectList(Model.Rating_List, "rat_id", "rat_LeadRating"))
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Budget Amount</label>
+                                                        <div class="col-sm-12">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @Html.DevExpress().TextBoxFor(m => m.BudgetAmount,
+                                                                settings =>
+                                                                {
+                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                    //settings.ControlStyle.CssClass = "form-control";
+                                                                    settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                                                    ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                                    ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                                    settings.Properties.ClientInstanceName = "cBudgetAmount";
+                                                                    settings.ControlStyle.CssClass = "dateEditInput";
+                                                                }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Purchase Process </label>
+                                                        <div class="col-sm-12">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @Html.DropDownListFor(m => m.PurchaseProcessID, new SelectList(Model.PurchaseProcess_List, "ProcessID", "Process_NAME"))
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Description </label>
+                                                        <div class="col-sm-12">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @Html.DevExpress().TextBoxFor(m => m.Description,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cdescription";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.ControlStyle.CssClass = "dateEditInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix mTop5">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Current Situation </label>
+                                                        <div class="col-sm-12">
+                                                            @*<textarea class="form-control" rows="2"></textarea>*@
+                                                            <input type="text" id="txt_CurrentSituation" value="@Model.CurrentSituation" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Customer Need </label>
+                                                        <div class="col-sm-12">
+                                                            @*<textarea class="form-control" rows="2"></textarea>*@
+                                                            <input type="text" id="txt_CustomerNeed" value="@Model.CustomerNeed" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Propossed Solution </label>
+                                                        <div class="col-sm-12">
+                                                            @*<textarea class="form-control" rows="2"></textarea>*@
+                                                            <input type="text" id="txt_PropossedSolution" value="@Model.PropossedSolution" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @* Rev Mantis issue 20684 (27/05/2021) *@
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Probability Percentage </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Probability_Perc,
+                                                                    settings =>
+                                                                    {
+                                                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                        settings.Properties.MaskSettings.Mask = "<0..999>.<00..99>";
+                                                                        settings.Properties.ClientInstanceName = "cProbability_Perc";
+                                                                        settings.ControlStyle.CssClass = "dateEditInput";
+                                                                        settings.Properties.ClientSideEvents.LostFocus = "PercentCheck";
+                                                                    }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @* End of Rev Mantis issue 20684 (27/05/2021) *@
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Account/Company Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Account/Company Name </label>
+                                                        <div class="col-sm-12">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @Html.DevExpress().ButtonEdit(settings =>
+                                                                {
+                                                                    settings.Name = "btnCompany";
+                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                    settings.ControlStyle.CssClass = "dateEditInput";
+                                                                    settings.Properties.ClientSideEvents.ButtonClick = "CompanyButnClick";
+                                                                    settings.Properties.ClientSideEvents.KeyDown = "Company_KeyDown";
+                                                                    settings.Properties.ClientInstanceName = "ctxtCompany";
+                                                                    settings.Properties.Buttons.Add("...");
+                                                                }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Website </label>
+                                                        <div class="col-sm-12">
+                                                            @*<input type="text" class="form-control" />*@
+                                                            @Html.DevExpress().TextBoxFor(m => m.Website,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cWebSite";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.ControlStyle.CssClass = "dateEditInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class=" pmsForm slick clearfix bxStyle2">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Address  1</label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.Address1,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.ClientInstanceName = "cAddress1";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Address  2 </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.Address2,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+
+                                                                settings.Properties.ClientInstanceName = "cAddress2";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Address 3 </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.Address3,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+
+                                                                settings.Properties.ClientInstanceName = "cAddress3";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Landmark </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.LandMark,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+
+                                                                settings.Properties.ClientInstanceName = "cLandMark";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Postal/Zip Code </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.Pin,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+
+                                                                settings.Properties.ClientInstanceName = "cpin";
+                                                                settings.Properties.ClientSideEvents.LostFocus = "PinChange";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">City </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.city,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ClientEnabled = false;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+
+                                                                settings.Properties.ClientInstanceName = "ccity";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">State </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.state,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ClientEnabled = false;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+
+                                                                settings.Properties.ClientInstanceName = "cstate";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Country </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.country,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ClientEnabled = false;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+
+                                                                settings.Properties.ClientInstanceName = "ccountry";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_b">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="crmTAbhd">Quatation Information<span class="bulet"></span></div>
+                                            <div>
+                                                <button type="button" class="btn btn-success btn-radius btn-sm" onclick="OpenQuatList()">Select Quotation</button>
+                                                <button type="button" class="btn btn-success btn-radius btn-sm hide" onclick="OpenQuatModel()">
+                                                    <span class="btn-icon"><i class="fa fa-plus"></i></span>  Quotation
+                                                </button>
+                                            </div>
+                                            <div class="clearfix">
+                                                @{
+                                                    Html.RenderAction("PartialQuotationListGrid", "CRMOpportunities");
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" onclick="SaveOpportunities()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="clearfix relative">
+
+    @{
+        Html.RenderAction("PopulateGrid", "CRMOpportunities", new { frmdate = "Ispageload" });
+    }
+</div>
+
+<input type="hidden" id="hdnpinid" value="@Model.PinId" />
+<input type="hidden" id="hdncountryid" value="@Model.CountryId" />
+<input type="hidden" id="hdnstateid" value="@Model.StateId" />
+<input type="hidden" id="hdncityid" value="@Model.CityId" />
+<input type="hidden" id="hdnOpportunities_Id" value="@Model.OpportunitiesID" />
+<input type="hidden" id="hdnContactid" />
+
+<input type="hidden" id="hdnActionType" value="" />
+
+@*<input type="hidden" id="hdnPartialQuotationGridurl" value="@Url.Action("PartialQuotationGrid", "CRMOpportunities", new { account = "__account__" })" />*@
+
+
+<input type="hidden" id="hdnOpportunityid" />
+<input type="hidden" id="hdnAccountid" />
+<input type="hidden" id="hdnCompannyId" />
+
+<!--Opportunity search-->
+<div class="modal fade pmsModal w40" id="ContactModel" role="dialog">
+    <div class="modal-dialog">
+        <!-- Opportunity content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Contact Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="Contactkeydown(event)" id="txtContactSearch" autofocus width="100%" placeholder="Search By Opportunity" />
+                <div id="ContactTableCRM">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Contact Name</th>
+                            <th>Unique Id</th>
+                            <th>Address</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Account Modal -->
+<div class="modal fade pmsModal w40" id="AccountModel" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Account Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="Accountkeydown(event)" id="txtAccountSearch" autofocus width="100%" placeholder="Search By Account " />
+
+                <div id="AccountTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Account Name</th>
+                            @*<th>Unique Id</th>
+                                <th>Address</th>*@
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--Company Modal -->
+<div class="modal fade pmsModal w40" id="CompanyModel" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Company Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="Companykeydown(event)" id="txtCompanySearch" autofocus width="100%" placeholder="Search By Company " />
+
+                <div id="CompanyTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Company Name</th>
+                            <th>Unique Id</th>
+                            @*<th>Address</th>*@
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Quotation List Modal -->
+<div class="modal fade pmsModal w40" id="QuotationModel" role="dialog">
+    <div class="modal-dialog" style="width: 52%;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background: #263de1;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Quotation List</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderAction("PartialQuotationGrid", "CRMOpportunities");
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<input type="hidden" value="@Url.Action("AttachmentDocument", "CRMAttachment", new { module = "CRM Opportunity" })" id="hdnAttachmentDocument" />
+
+<div>
+    @{
+        Html.RenderAction("AttachmentDocument", "CRMAttachment", new { module = "CRM Opportunity", DocNo = "" });
+    }
+</div>
+
+
+<div>
+    @{
+        Html.RenderAction("AddProducts", "CRMProducts");
+    }
+</div>
+
+<div>
+    @{
+        Html.RenderAction("DoSharing", "CRMSharing");
+    }
+</div>
+
+
+
+
+
+
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "CRMpcControl";
+        settings.Width = 600;
+        settings.Height = 500;
+        //settings.ScrollBars.v
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.HeaderText = "Employees Target Setting";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        //settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+
+<input type="hidden" id="hdnContact_Id" />
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "addContact";
+    }
+).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "cCRMShowHistory";
+        settings.Width = 700;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Show History";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+<input type="hidden" id="hdfLeadValuesIDCRM" />
+<script>
+    $(document).ready(function () {
+        gridLookupcontact.gridView.Refresh()
+        gridLookupcontact.gridView.Refresh()
+    });
+</script>

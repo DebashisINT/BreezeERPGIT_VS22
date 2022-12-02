@@ -1,0 +1,171 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@{
+    ViewBag.Title = "DropCreateTable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+</style>
+<script>
+    function DropTable() {
+        debugger;
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "@Url.Action("DropTableSchema", "CutOffDBBackUp")",
+            contentType: "application/json; charset=utf-8",
+            async: true,
+            success: function (response) {
+                console.log(response);
+                jAlert(response);
+                document.getElementById("btnDrop").style.display = "none";
+                document.getElementById("btnCreate").style.display = "inline-block";
+                document.getElementById("btnSetFinancialYear").style.display = "none";
+
+                document.getElementById("l1").style.display = "none";
+                document.getElementById("l2").style.display = "inline-block";
+                document.getElementById("l3").style.display = "none";
+                //window.location.href = "/CutOffDBBackUp/DropCreateTable";
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+    function CreateTable() {
+        debugger;
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: "@Url.Action("CreateTableSchema", "CutOffDBBackUp")",
+            contentType: "application/json; charset=utf-8",
+        async: true,
+        success: function (response) {
+            console.log(response);
+            jAlert(response);
+            document.getElementById("btnCreate").style.display = "none";
+            document.getElementById("btnSetFinancialYear").style.display = "inline-block";
+
+            document.getElementById("l2").style.display = "none";
+            document.getElementById("l3").style.display = "inline-block";
+            //window.location.href = "/CutOffDBBackUp/DropCreateTable";
+        },
+        error: function (response) {
+            jAlert("Please try again later");
+        }
+    });
+    }
+    function btnCancelClick() {
+        window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+    }
+    function SetFINYear()
+    {
+        debugger;
+        $.ajax({
+        url: "@Url.Action("InsertFinYear", "CutOffDBBackUp")",
+        type: "POST",
+        dataType: "JSON",
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+            jAlert(response);
+            document.getElementById("btnSetFinancialYear").style.display = "none";
+            document.getElementById("l3").style.display = "none";
+        },
+        error: function (response) {
+            jAlert(response+"Please try again later");
+        }
+    });
+    }
+</script>
+<div class="flexContainer" id="dvStep2">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending CutOff</h3>
+        <div class="bordered">
+            <table width="70%">
+                <tr>
+                    <td>
+                        <label id="l1">Drop Table :</label>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" id="btnDrop" onclick="DropTable();">Drop Table</button>
+                        @*@Html.DevExpress().Button(
+                        settings =>
+                        {
+                            settings.Name = "btnDrop";
+                            settings.ClientSideEvents.Click = "DropTableSchema";
+                            settings.Text = "Drop Table";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-warning";
+                            settings.UseSubmitBehavior = false;
+                        }).GetHtml()*@
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:none;" id="l2">Create Table :</label>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" id="btnCreate" onclick="CreateTable();" style="display:none;">Create Table</button>
+                        @*@Html.DevExpress().Button(
+                        settings =>
+                        {
+                            settings.Name = "btnCreate";
+                            settings.ClientSideEvents.Click = "DropTableSchema";
+                            settings.Text = "Drop Table";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-warning";
+                            settings.UseSubmitBehavior = false;
+                        }).GetHtml()*@
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:none;" id="l3">Create Financial Year :</label>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" id="btnSetFinancialYear" onclick="SetFINYear();" style="display:none;">Set Financial Year</button>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            @*<div class="text-right mtop-2">
+                <button style="display:none;" id="btnStep3" class="btn btn-primary">Next</button>
+                <button class="btn btn-danger">Cancel</button>
+            </div>*@
+        </div>
+    </div>
+    @*<input type="hidden" id="hdnCutoffDate" value="@ViewData["cutoffDate"]" />
+        <input type="hidden" id="hdnBackup" value="@ViewData["backup"]" />*@
+</div>
+

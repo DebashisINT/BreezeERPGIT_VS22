@@ -1,0 +1,234 @@
+﻿@model CRM.Models.EnquiriesReport
+@{
+    ViewBag.Title = "Listing of Enquiries";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var is_pageload = "0";
+  
+    function Show() {
+        is_pageload = "1";
+        gvPaging.Refresh();
+    }
+    function OnStartCallback(s, e) {
+       
+        e.customArgs["EnquiriesFrom"] = cmbEnqFrom.GetText();
+        e.customArgs["FromDate"] = frm_dt.GetText();
+        e.customArgs["ToDate"] = to_dt.GetText();
+        e.customArgs["is_pageload"] = is_pageload;
+    }
+  
+    $(function () {
+        $('#ddlExport').on('change', function () {
+            if ($("#ddlExport option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlExport').prop("selectedIndex", 0);
+                $('#reportLink').prop('href', '/EnquiriesReport/ExportEnquiriesList?type=' + selectedValue);
+                var url = '@Url.Action("ExportEnquiriesList", "EnquiriesReport", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+    //Rev Subhra 11-04-2019
+    function OnClickRestoreForm(UNIQUEID) {
+        var url = '/EnquiriesReport/EnquiriesRestore/';
+        jConfirm("Are you sure?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'RESTORE', 'Uniqueid': UNIQUEID }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.response_msg == "Success") {
+                            jAlert("Successfully Restored");
+                            gvPaging.Refresh();
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    }
+
+    function OnClickPermanentDelete(UNIQUEID) {
+        var url = '/EnquiriesReport/EnquiriesPDelete/';
+        jConfirm("Are you sure?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'PERMANENTDELETE', 'Uniqueid': UNIQUEID }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.response_msg == "Success") {
+                            jAlert("Successfully Permanent Deleted.");
+                            gvPaging.Refresh();
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    }
+    //End of Rev Subhra
+</script>
+
+
+<style>
+    .padTab {
+        margin-bottom: 4px;
+    }
+
+        .padTab > tbody > tr > td {
+            padding-right: 15px;
+            vertical-align: middle;
+        }
+
+            .padTab > tbody > tr > td > label, .padTab > tbody > tr > td > input[type="button"] {
+                margin-bottom: 0 !important;
+            }
+
+    .dxpc-contentWrapper {
+        background-color: #fff;
+    }
+
+    .pad15 {
+        padding: 15px;
+    }
+
+    .mTop10 {
+        margin-top: 10px;
+    }
+    .disableimage {
+        opacity: 0.1;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gvPaging.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gvPaging.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gvPaging.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gvPaging.SetWidth(cntWidth);
+            }
+
+        });
+    });
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Listing of Enquiries</h3>
+    </div>
+    <input type="hidden" id="hdnSalesmanValue" value="" />
+
+    <table class="padTab">
+        <tr>
+            <td><label>From Date</label></td>
+            <td>
+                <div>
+                    @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+
+                                                settings.Name = "frm_dt";
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                //settings.Properties.ClientSideEvents.DateChanged = "DateValidateFrom";
+                                                settings.Date = DateTime.Now;
+                                            }
+                                ).GetHtml()
+                </div>
+            </td>
+            <td><label>To Date</label></td>
+            <td>
+                <div>
+                    @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "to_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                //settings.Properties.ClientSideEvents.DateChanged = "DateValidateTo";
+                                settings.Date = DateTime.Now;
+                            }
+                ).GetHtml()
+                </div>
+            </td>
+            <td><label>Enquiry From</label></td>
+            <td>
+                <div>
+                    @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbEnqFrom";
+                        settings.Properties.TextField = "EnqName";
+                        settings.Properties.ValueField = "EnqId";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                    }).BindList(Model.enqfrom).GetHtml()
+                </div>
+            </td>
+            <td>
+            <a href="javascript:void(0);" onclick="Show()" class="btn btn-primary"><span>Show</span> </a>
+                <select name="ddlExport" class="btn btn-sm btn-primary" onchange="Exportclick()" id="ddlExport">
+                    <option value="0">Export to</option>
+                    <option value="1">PDF</option>
+                    <option value="4">RTF</option>
+                    <option value="2">XLSX</option>
+                    <option value="3">XLS</option>
+                    <option value="5">CSV</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+
+</div>
+
+<div class="GridViewArea">
+    @{
+        Html.RenderAction("PartialEnquiriesReportGrid", "EnquiriesReport");
+    }
+</div>

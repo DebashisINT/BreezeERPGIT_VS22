@@ -1,0 +1,430 @@
+﻿@if (Model != null)
+{
+    @Html.DevExpress().GridView(
+   settings =>
+   {
+       // settings = null;
+       settings.Name = "gridcrmAccount";
+
+       settings.CallbackRouteValues = new { Controller = "CRMAccount", Action = "PopulateLeadGrid" };
+
+       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+       settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+       //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+       settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+       //settings.SettingsSearchPanel.Visible = true;
+       settings.Settings.ShowFilterRow = true;
+       settings.Settings.ShowGroupPanel = true;
+       settings.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+       //settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+       settings.SettingsSearchPanel.Visible = true;
+       settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+       settings.Styles.Row.Cursor = "pointer";
+       settings.Settings.ShowFooter = true;
+       settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+       settings.KeyFieldName = "ID";
+
+       settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+       settings.SettingsPager.PageSizeItemSettings.Visible = true;
+       settings.SettingsPager.PageSize = 20;
+       settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+       settings.Settings.ShowFilterRowMenu = true;
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "ID";
+           x.FieldName = "ID";
+           x.Visible = false;
+           x.ShowInCustomizationForm = false;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "cnt_internalId";
+           x.FieldName = "cnt_internalId";
+           x.Visible = false;
+           x.ShowInCustomizationForm = false;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Account Code";
+           x.FieldName = "Account_Code";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = DevExpress.Web.Mvc.AutoFilterCondition.Contains;
+           x.FixedStyle = GridViewColumnFixedStyle.Left;
+       });
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Account Name";
+           x.FieldName = "Account_Name";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = DevExpress.Web.Mvc.AutoFilterCondition.Contains;
+           x.FixedStyle = GridViewColumnFixedStyle.Left;
+       });
+
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Phone No";
+           x.FieldName = "PhoneNo";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       // Rev Mantis Issue 20685 (31/05/2021)
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Fax";
+           x.FieldName = "AccDet_Fax";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       // End of Rev Mantis Issue 20685 (31/05/2021)
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Parent Account";
+           x.FieldName = "Parent_Account_Name";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = DevExpress.Web.Mvc.AutoFilterCondition.Contains;
+       });
+       
+       // Rev Mantis Issue 20685 (31/05/2021)
+       //settings.Columns.Add(x =>
+       //{
+       //    x.Caption = "Contact Name";
+       //    x.FieldName = "Contact_Name";
+       //    x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+       //    //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       //});
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Ticker Symbol";
+           x.FieldName = "AccDet_TickerSymbol";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Relationship Type";
+           x.FieldName = "crm_RelationshipType_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Website";
+           x.FieldName = "add_Website";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Address";
+           x.FieldName = "Address1";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Landmark";
+           x.FieldName = "add_landMark";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Pin Code";
+           x.FieldName = "PinCode";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       
+       // End of Rev Mantis Issue 20685 (31/05/2021)
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Country";
+           x.FieldName = "countryName";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       // Rev Mantis Issue 20685 (31/05/2021)
+       //settings.Columns.Add(x =>
+       //{
+       //    x.Caption = "Pin Code";
+       //    x.FieldName = "PinCode";
+       //    x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+       //    //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       //});
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "State";
+           x.FieldName = "StateName";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       
+       // End of Rev Mantis Issue 20685 (31/05/2021)
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "City";
+           x.FieldName = "CityName";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       
+       // Rev Mantis Issue 20685 (31/05/2021)
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "GSTIN";
+           x.FieldName = "AccDet_GSTINCODE";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Ownership";
+           x.FieldName = "ownershp_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Description";
+           x.FieldName = "AccDet_Description";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Credit Limit";
+           x.FieldName = "AccDet_CreditLimit";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Credit Hold";
+           x.FieldName = "AccDet_CreditHold";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Payment Terms";
+           x.FieldName = "crm_PaymentTerms_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Contact Name";
+           x.FieldName = "ContactName";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Oppertunity Name";
+           x.FieldName = "OppertunityName";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Contact Method";
+           x.FieldName = "crm_ContactMethod_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Email";
+           x.FieldName = "crm_Email_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Phone";
+           x.FieldName = "crm_Phone_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Fax";
+           x.FieldName = "crm_Fax_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Shipping Method";
+           x.FieldName = "crm_ShippingMethod_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Freight Terms";
+           x.FieldName = "Freight_Name";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           //x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       
+       // End of Rev Mantis Issue 20685 (31/05/2021)
+       
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Status";
+           x.FieldName = "Status";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Owner";
+           x.FieldName = "Owner";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Assign To";
+           x.FieldName = "AssignTo";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Entered By";
+           x.FieldName = "EnteredBy";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Entered On";
+           x.FieldName = "EnteredOn";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Updated By";
+           x.FieldName = "ModifiedBy";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Updated On";
+           x.FieldName = "ModifiedOn";
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Action";
+           x.Width = 0;
+           x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+           // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.ClientSideEvents.RowClick = "gridcrmAccountclick";
+       //This is Used For Add or hide column from column chooser
+       settings.SettingsBehavior.EnableCustomizationWindow = true;
+       settings.SettingsBehavior.EnableRowHotTrack = true;
+       settings.SettingsCookies.Enabled = true;
+       settings.SettingsCookies.StorePaging = true;
+       settings.SettingsCookies.StoreColumnsVisiblePosition = true;
+       //This is Used For Add or hide column from column chooser
+
+       settings.HtmlDataCellPrepared += (s, e) =>
+           {
+               if (e.DataColumn.Caption == "Action")
+               {
+                   DevExpress.Web.Mvc.MVCxGridView grid = (DevExpress.Web.Mvc.MVCxGridView)s;
+                   Int64 ID = Convert.ToInt64(grid.GetRowValues(e.VisibleIndex, new string[] { "ID" }));
+
+
+                   string Account_Name = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Account_Name" });
+                   string Account_internalId = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "cnt_internalId" });
+                   string Status = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Status" });
+
+
+
+                   var buttonHtml = "";
+                   if (ViewBag.CanEdit)
+                       buttonHtml += string.Format("<div class='floatedBtnArea'><a onclick=\"EditClick('" + ID + "','" + Status + "');\" title=\"\" class='ed '><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+                   if (ViewBag.CanDelete)
+                       buttonHtml += string.Format("<a onclick=\"DeleteClick('" + ID + "');\" title=\"\" class=''><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+                   if (ViewBag.CanCreateActivity)
+                       buttonHtml += string.Format("<a onclick=\"DoActivity('" + ID + "');\" title=\"\" class=''><span class='ico ColorThree'><i class='fa fa-wrench'></i></span><span class='hidden-xs'>Activities</span></a>");
+                   if (ViewBag.CanSharing)
+                       buttonHtml += string.Format("<a onclick=\"DoSharing('" + ID + "');\" title=\"\" class=''><span class='ico ColorFive'><i class='fa fa-share-alt'></i></span><span class='hidden-xs'>Sharing</span></a>");
+                   if (ViewBag.CanProducts)
+                       buttonHtml += string.Format("<a onclick=\"DoProducts('" + ID + "');\" title=\"\" class=''><span class='ico ColorSix'><i class='fa fa-cube'></i></span><span class='hidden-xs'>Products</span></a>");
+                   if (ViewBag.CanLiterature)
+                       buttonHtml += string.Format("<a onclick=\"AddLiterature('" + ID + "','" + Account_Name + "','" + Account_internalId + "');\" title=\"\" class=''><span class='ico ColorSeven'><i class='fa fa-user'></i></span><span class='hidden-xs'>Literature(s)</span></a></div>");
+
+                   e.Cell.Text = buttonHtml;
+               }
+
+           };
+
+
+
+
+
+
+   }).Bind(Model).GetHtml()
+
+}
+<style>
+    #gridsalesman_DXHeadersRow0 > td {
+        width: 200px !important;
+    }
+</style>

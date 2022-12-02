@@ -1,0 +1,50 @@
+﻿@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridNegativeStock";
+        settings.CallbackRouteValues = new { Action = "BindNegativeProduct", Controller = "YearEnding" };
+        settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+        settings.KeyFieldName = "ProductId";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Settings.ShowFilterRow = true;
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Product";
+            x.Caption = "Product Name";
+            x.VisibleIndex = 1;
+            x.Width = 250;
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        });
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Branch";
+            x.Caption = "Branch";
+            x.VisibleIndex = 2;
+            x.Width = 200;
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        });
+
+
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Quantity";
+            x.Caption = "Quantity";
+            x.VisibleIndex = 3;
+            x.Width = 80;
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+        });
+
+
+
+
+    }).Bind(Model.NegativeProduct).GetHtml()
+

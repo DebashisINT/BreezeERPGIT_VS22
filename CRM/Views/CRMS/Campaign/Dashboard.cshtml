@@ -1,0 +1,1040 @@
+﻿@model CRM.Models.CRMCampaign
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/SearchPopup.js"></script>
+<script src="/assests/pluggins/choosen/choosen.min.js"></script>
+<script>
+    var ActivityProduct = [];
+    var ActivityProductCRM = [];
+    var ActivityProductProductId = "";
+</script>
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<script src="~/assests/js/CRM/crmProducts.js"></script>
+<link href="~/assests/js/CRM/SearchPopup.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+
+<script src="~/assests/js/CRM/crmMembers.js"></script>
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+
+<link href="../css/campaign.css" rel="stylesheet" />
+
+<script>
+    function isValidEmailAddress(emailAddress) {
+        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        return pattern.test(emailAddress);
+    }
+</script>
+<script>
+
+    $(document).ready(function () {
+        $("#hfActivityFilter").val("Y");
+        $('#dataTbl').DataTable({
+            "searching": false,
+            "bInfo": false,
+            "info": false,
+            "ordering": false,
+            "paging": false
+        });
+        $('#dataTblCRM').DataTable({
+            "searching": false,
+            "bInfo": false,
+            "info": false,
+            "ordering": false,
+            "paging": false
+        });
+
+        //$("#Expected_Response").mask("#0.00", { reverse: true });
+
+    })
+
+
+    $(function () {
+        $('#ddlExport').on('change', function () {
+            if ($("#ddlExport option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlExport').prop("selectedIndex", 0);
+
+                var url = $('#hdnExportLink').val();
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+
+
+    function fn_crmShowHistory() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("CRMShowHistory", "CRMActivity")",
+            // data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                //$("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+
+
+
+    }
+
+
+
+    function btn_ShowHistory() {
+        var showhistory_Leadcode = $("#hdnCampaign_Id").val();
+        var showhistory_actiontype = 'ActivityShowAll';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Leadcode, Module: 'Campaign Activity' },
+            success: function (response) {
+                // $("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+    function btn_ShowTopTenHistory() {
+        var showhistory_Leadcode = $("#hdnCampaign_Id").val();
+        var showhistory_actiontype = 'ActivityShowTop10';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Leadcode, Module: 'Campaign Activity' },
+            success: function (response) {
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+
+
+
+    function SaveActivity() {
+
+        if (validationsActivity()) {
+
+            var obj = {};
+            obj.activity = cddlActivity.GetValue();
+            obj.activity_type = cddlActivityType.GetValue();
+            obj.subject = ctxt_Subject.GetText();
+            obj.details = cmemo_Details.GetText();
+            obj.assignto = $("#ddlAssignTo").val();
+            obj.duration = ddlDuration.GetText();
+            obj.priority = $("#ddlPriority").val();
+            obj.DtxtDue = cDue_dt.GetDate();
+            obj.dtActivityDate = cActivity_Date.GetDate();
+            obj.CRMactivityid = $("#hdnCampaign_Id").val();
+            obj.contacttype = $("#ddlContactType").val();
+            // Mantis Issue 24175
+            obj.ActivityTypeNew = cddlActivityTypeNew.GetValue();
+            // End of Mantis Issue 24175
+            obj.Module_Name = "Campaign Activity";
+
+
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SaveActivity", "CRMActivity")",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    jAlert(response, 'Alert');
+                    CRMpcControl.Hide();
+                }
+            });
+        }
+    }
+
+    function CalculateTotalCost() {
+        var tot = cActivity_Cost.GetValue() - cMisc_Cost.GetValue();
+        cTotal_Cost.SetValue(tot);
+    }
+
+
+
+
+    function OnAddbuttonClick() {
+        $("#hdnCampaign_Id").val("");
+        $("#hdnCrmProductIdentityId").val("");
+        $("#hdnCampaign_Id").val("");
+        $("#hdnModule_Name").val("");
+        $("#hdnModule_Id").val("");
+        $("#hdnCampaign_Id").val("");
+        $("#hdnCrmProductIdentityId").val("");
+
+        $("#projectMod").modal('show');
+        cCampaign_Name.SetEnabled(true);
+        cCampaign_Code.SetEnabled(true);
+
+        cCampaign_Name.SetText("");
+        cCampaign_Code.SetText("");
+        $("#TYPE_ID").val(0);
+        cExpected_Response.SetValue(0);
+        if (response.Expected_Start != null)
+            cExpected_Start.SetDate(new Date());
+        if (response.Expected_End != null)
+            cExpected_End.SetDate(new Date());
+        if (response.Actual_Start != null)
+            cActual_Start.SetDate(new Date());
+        if (response.Actual_End != null)
+            cActual_End.SetDate(new Date());
+
+        cActivity_Cost.SetValue(0);
+        cAllocated_Budget.SetValue(0);
+        cMisc_Cost.SetValue(0);
+        cTotal_Cost.SetValue(0);
+        cOffer.SetText("");
+        cEstimate_Revenue.SetText(0);
+        // cWoner.SetText("");
+        $("#Status_Id").val("");
+    }
+
+    function Expected_Responsechange() {
+        $("#Expected_Response").validate();
+    }
+
+
+    function EditClick(id) {
+        $("#hdnCampaign_Id").val(id);
+        var obj = {};
+        obj.Campaign_Id = id;
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/Campaign/EditCampaign",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadingPanel.Hide();
+                cCampaign_Name.SetText(response.Campaign_Name);
+                cCampaign_Code.SetText(response.Campaign_Code);
+                cCampaign_Name.SetEnabled(false);
+                cCampaign_Code.SetEnabled(false);
+
+                $("#TYPE_ID").val(response.TYPE_ID);
+                cExpected_Response.SetValue(parseFloat(response.Expected_Response));
+                if (response.Expected_Start != null)
+                    cExpected_Start.SetDate(new Date(parseInt(response.Expected_Start.substr(6))));
+                if (response.Expected_End != null)
+                    cExpected_End.SetDate(new Date(parseInt(response.Expected_End.substr(6))));
+                if (response.Actual_Start != null)
+                    cActual_Start.SetDate(new Date(parseInt(response.Actual_Start.substr(6))));
+                if (response.Actual_End != null)
+                    cActual_End.SetDate(new Date(parseInt(response.Actual_End.substr(6))));
+
+                cActivity_Cost.SetValue(parseFloat(response.Activity_Cost));
+                cAllocated_Budget.SetValue(parseFloat(response.Allocated_Budget));
+                cMisc_Cost.SetValue(parseFloat(response.Misc_Cost));
+                cTotal_Cost.SetValue(parseFloat(response.Total_Cost));
+                cOffer.SetText(response.Offer);
+                cEstimate_Revenue.SetValue(parseFloat(response.Estimate_Revenue));
+                //cWoner.SetText(response.Woner);
+
+                $("#WonerID").val(response.WonerID);
+                $("#AssignedID").val(response.AssignedID);
+
+
+                $("#Status_Id").val(response.Status_Id);
+                $("#SourceID").val(response.SourceID);
+                $("#projectMod").modal('show');
+            },
+            error: function (response) {
+                jAlert("Can not Edit");
+                LoadingPanel.Hide();
+            }
+        });
+    }
+    function DeleteClick(id) {
+        $("#hdnCampaign_Id").val(id);
+
+        var obj = {};
+        obj.Campaign_Id = id;
+        jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+            if (r == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Campaign/DeleteCampaign",
+                    data: JSON.stringify(obj),
+                    async: true,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        jAlert(response);
+                        gridcrmCampaign.Refresh();
+                        gridcrmCampaign.Refresh();
+                    },
+                    error: function (response) {
+                        jAlert("Can not Delete");
+                        gridcrmCampaign.Refresh();
+                        gridcrmCampaign.Refresh();
+                        LoadingPanel.Hide();
+                    }
+                });
+            }
+        });
+    }
+    function DoActivity(id) {
+        $("#hdnCampaign_Id").val(id);
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("DoActivity", "CRMActivity")",
+            data: { Module_Name: "Campaign Activity", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Activities');
+                CRMpcControl.Show();
+
+
+            }
+        });
+    }
+
+    function CancelActivity() {
+        CRMpcControl.Hide();
+    }
+    function DoSharing(id) {
+        $("#hdnCampaign_Id").val(id);
+        $("#hdnModule_Name").val("Campaign");
+        $("#hdnModule_Id").val(id);
+        $("#toinput").tagsinput('add', "", { preventPost: true });
+        $("#PhoneInput").tagsinput('add', "", { preventPost: true });
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("GetEntityDetails", "CRMSharing")",
+            data: { Module_Name: "Campaign", Module_id: id },
+            async: false,
+            success: function (response) {
+
+
+                var emails = response.emails.map(function (elem) {
+                    return elem.Entity_Email;
+                }).join(",");
+
+                $("#toinput").tagsinput('add', emails, { preventPost: true });
+
+                var sms = response.phones.map(function (elem) {
+                    return elem.Entity_Phone;
+                }).join(",");
+
+                $("#PhoneInput").tagsinput('add', sms, { preventPost: true });
+
+            }
+
+        });
+        $("#sharingmodel").modal('show');
+
+    }
+    function DoProducts(id) {
+        $("#hdnCampaign_Id").val(id);
+        $("#hdnCrmProductIdentityId").val(id);
+        ShowProducts('ACPRD');
+
+
+        ShowCRMProductsEditCRM('Campaign Products', id);
+
+    }
+    function AddMember(id) {
+        $("#Module_Name").val('Campaign');
+        $("#hdnCampaign_Id").val(id);
+
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("doAddMembers", "CRMMembers")",
+            data: { Module_Name: "Campaign", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Members');
+
+                CRMpcControl.Show();
+
+
+            }
+        });
+
+    }
+    function AddLiterature(id, name, code) {
+
+
+        $('#AttachmentModal').modal('show');
+
+        $("#hdnCampaign_Id").val(id);
+        $('#hdnDocNo').val(id);
+        $('#hdndoc_id').val(id);
+        //////Do Not need in Others module
+        $("#docFileName").val(code);
+        $("#docNumber").val(name);
+        document.getElementById("docFileName").disabled = true;
+        document.getElementById("docNumber").disabled = true;
+        ////
+        setTimeout(function () { $('#documentType').focus(); }, 1000);
+    }
+
+
+    function SaveCampaign() {
+
+        if (cCampaign_Name.GetText() == "") {
+            jAlert('Please enter a valid name to procced.', 'Alert');
+            return;
+        }
+
+        var obj = {};
+        if ($("#hdnCampaign_Id").val() == "") {
+            obj.Action = "Add";
+        }
+        else {
+            obj.Action = "Update";
+        }
+
+        obj.Campaign_Id = $("#hdnCampaign_Id").val();
+        obj.Campaign_Name = cCampaign_Name.GetText();
+        obj.Campaign_Code = cCampaign_Code.GetText();
+        obj.TYPE_ID = $("#TYPE_ID").val();
+        obj.Expected_Response = cExpected_Response.GetText();
+        obj.Expected_Start = cExpected_Start.GetDate();
+        obj.Expected_End = cExpected_End.GetDate();
+        obj.Actual_Start = cActual_Start.GetDate();
+        obj.Actual_End = cActual_End.GetDate();
+        obj.Activity_Cost = cActivity_Cost.GetText();
+        obj.Allocated_Budget = cAllocated_Budget.GetText();
+        obj.Misc_Cost = cMisc_Cost.GetText();
+        obj.Total_Cost = cTotal_Cost.GetText();
+        obj.Offer = cOffer.GetText();
+        obj.Estimate_Revenue = cEstimate_Revenue.GetText();
+        //obj.Woner = cWoner.GetText();
+        obj.WonerId = $("#WonerID").val();
+        obj.AssignedId = $("#AssignedID").val();
+        obj.Status_Id = $("#Status_Id").val();
+        obj.SourceID = $("#SourceID").val();
+
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/Campaign/SaveCampaign",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                jAlert(response);
+                gridcrmCampaign.Refresh();
+                gridcrmCampaign.Refresh();
+                $("#projectMod").modal('hide');
+                LoadingPanel.Hide();
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+                LoadingPanel.Hide();
+            }
+        });
+
+    }
+    function ActivityChange(s, e) {
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("ActivityChange", "CRMActivity")",
+            data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                cddlActivityType.ClearItems();
+                cddlActivityType.AddItem("Select", "0");
+                for (var i = 0; i < response.length; i++) {
+                    cddlActivityType.AddItem(response[i].Lead_ActivityTypeName, response[i].Id);
+                }
+                cddlActivityType.SetSelectedIndex(0);
+            }
+
+        });
+
+    }
+    $(document).ready(function () {
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 65 && event.altKey == true) {
+                OnAddbuttonClick();
+            }
+        });
+    });
+
+
+
+    $(function () {
+        $("#hdnCampaign_Id").val("")
+        //gridcrmCampaign.Refresh();
+        //gridcrmCampaign.Refresh();
+    })
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    function gridcrmCampaignclick(s, e) {
+        $('#gridcrmCampaign').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    console.log(value);
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+    function OnAddActivitiesbuttonClick() {
+        cActivity_Date.SetDate(new Date());
+        cddlActivity.SetValue("");
+        cddlActivityType.SetValue("");
+        ctxt_Subject.SetText("");
+        cmemo_Details.SetText("");
+        $("#ddlPriority").val(0);
+        cDue_dt.SetDate(new Date());
+        $("#btnClear").addClass('hide');
+        $("#btnSave").removeClass('hide');
+    }
+
+    function ShowAllClick() {
+        gridcrmCampaign.Refresh();
+        gridcrmCampaign.Refresh();
+
+    }
+
+
+</script>
+
+<div class="panel-heading">
+    <div id="td_contact1" class="panel-title">
+        <h3>
+            <span id="lblHeadTitle">Campaign </span>
+        </h3>
+    </div>
+
+</div>
+<div class="form_main clearfix">
+    <div>
+        @{ if (ViewBag.CanAdd)
+         {
+            <button type="button" class="btn btn-success btn-radius" onclick="OnAddbuttonClick();"><span class="btn-icon"><i class="fa fa-plus"></i></span>Campaign</button>
+         }
+        }
+        <button class="btn btn-info btn-radius  " onclick="ShowAllClick();">Show</button>
+        @{ if (ViewBag.CanExport)
+         {
+            <select name="ddlExport" class="btn btn-primary btn-radius" onchange="Exportclick()" id="ddlExport">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="4">RTF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="5">CSV</option>
+            </select>
+         }
+        }
+    </div>
+    <input type="hidden" value="@Url.Action("ExportCRmCampaignList", "Campaign", new { type = "_type_" })" id="hdnExportLink" />
+    @*@using(Html.BeginForm("SaveCampaign", "Campaign",FormMethod.Post)){*@
+
+    <input type="hidden" id="hdnCampaign_Id" />
+    <input type="hidden" id="hfActivityFilter" />
+
+    <input type="hidden" id="hdnCampaign_Id" />
+    <input type="hidden" id="Module_Name" />
+
+    <div class="clearfix relative">
+
+        @{
+            Html.RenderAction("PopulateGrid", "Campaign", new { frmdate = "Ispageload" });
+        }
+    </div>
+    @*}*@
+
+    @Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStepOne";
+    }
+).GetHtml()
+
+
+
+    @Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "CRMpcControl";
+        settings.Width = 600;
+        settings.Height = 500;
+        //settings.ScrollBars.v
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.HeaderText = "Employees Target Setting";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+
+    <input type="hidden" value="@Url.Action("AttachmentDocument", "CRMAttachment", new { module = "Campaign" })" id="hdnAttachmentDocument" />
+
+    <div>
+        @{
+            Html.RenderAction("AttachmentDocument", "CRMAttachment", new { module = "Campaign", DocNo = "" });
+        }
+    </div>
+
+
+    <div>
+        @{
+            Html.RenderAction("AddProducts", "CRMProducts");
+        }
+    </div>
+
+    <div>
+        @{
+            Html.RenderAction("DoSharing", "CRMSharing");
+        }
+    </div>
+
+
+
+
+
+    <input type="hidden" id="hdnCrmProductIdentityId" />
+    <input type="hidden" id="hdnModule_Name" />
+    <input type="hidden" id="hdnModule_Id" />
+
+</div>
+
+
+<div class="modal fade pmsModal w90 Projectmodaltype no-footer" id="projectMod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Campaign  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="clearfix text-center" style="margin-bottom:7px;">
+                    <div class="infoSection mRight10">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Owner</b></div>
+                                <div>
+                                    <div>@Html.DropDownListFor(m => m.WonerID, new SelectList(Model.Users, "user_id", "user_name"))</div>
+
+                                    @*@Html.DevExpress().ComboBoxFor(m => m.Woner,
+                                        settings =>
+                                        {
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+                                            settings.Properties.ClientInstanceName = "cWoner";
+                                        }).GetHtml()*@
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight10">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Assign To</b></div>
+                                <div>@Html.DropDownListFor(m => m.AssignedID, new SelectList(Model.Users, "user_id", "user_name"))</div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="infoSection mRight10 hide">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Lead Source</b></div>
+                                <div>@Html.DropDownListFor(m => m.SourceID, new SelectList(Model.ContactSource, "SourceID", "cntsrc_sourceType"))</div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight10">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Estimated Revenue</b></div>
+                                <div>
+                                    @Html.DevExpress().TextBoxFor(m => m.Estimate_Revenue,
+                                    settings =>
+                                    {
+                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        //settings.ControlStyle.CssClass = "form-control";
+                                        settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                        ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                        ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                        settings.Properties.ClientInstanceName = "cEstimate_Revenue";
+                                    }).GetHtml()
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="infoSection ">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Status</b></div>
+                                <div>@Html.DropDownListFor(m => m.Status_Id, new SelectList(Model.Status_Details, "Id", "Status_Code"))</div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    @Html.Hidden("hdnCampaign_Id", Model.Campaign_Id)
+                </div>
+
+                <div class="Vtabs">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-1">
+                            <ul class="nav nav-pills nav-stacked flex-column">
+                                <li class="active"><a href="#tab_a" data-toggle="pill">Summary</a></li>
+                                <li><a href="#tab_b" data-toggle="pill">Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-11">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_a">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Campaign Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">
+                                                            Campaign  Name
+                                                            <span style="color: red;">*</span>
+                                                        </label>
+
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Campaign_Name,
+                                                        settings =>
+                                                        {
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cCampaign_Name";
+                                                            settings.Properties.MaxLength = 200;
+                                                            settings.ControlStyle.CssClass = "DEvInput";
+                                                        }).GetHtml()
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Campaign Code</label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Campaign_Code,
+                                                        settings =>
+                                                        {
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cCampaign_Code";
+                                                            settings.Properties.MaxLength = 30;
+                                                            settings.ControlStyle.CssClass = "DEvInput";
+                                                        }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Campaign Type</label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DropDownListFor(m => m.TYPE_ID, new SelectList(Model.Campaign_Type, "Id", "Campaign_Code"), new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label mTop5">Expected Response(%)</label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Expected_Response,
+                                                        settings =>
+                                                        {
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cExpected_Response";
+                                                            settings.Properties.MaskSettings.Mask = "<0..99>.<00..99>";
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                            settings.ControlStyle.CssClass = "DEvInput";
+                                                        }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Schedule Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="form-group ">
+                                                    <label for="" class="col-sm-12 col-form-label ">Propossed Start</label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DevExpress().DateEditFor(model => model.Expected_Start,
+                                                        settings =>
+                                                        {
+                                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                            //settings.Properties.TimeSectionProperties.Visible = true;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                            settings.Properties.UseMaskBehavior = true;
+                                                            settings.Date = DateTime.Now;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cExpected_Start";
+                                                            settings.ControlStyle.CssClass = "dateEditInput";
+                                                        }).GetHtml()
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group ">
+                                                    <label for="" class="col-sm-12 col-form-label mTop5">Propossed End</label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DevExpress().DateEditFor(model => model.Expected_End,
+                                                        settings =>
+                                                        {
+
+                                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                            //settings.Properties.TimeSectionProperties.Visible = true;
+                                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                            settings.Properties.UseMaskBehavior = true;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                            settings.Date = DateTime.Now;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cExpected_End";
+                                                            settings.ControlStyle.CssClass = "dateEditInput";
+                                                        }).GetHtml()
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group ">
+                                                    <label for="" class="col-sm-4 col-form-label mTop5">Actual Start</label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DevExpress().DateEditFor(model => model.Actual_Start,
+                                                        settings =>
+                                                        {
+                                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                            //settings.Properties.TimeSectionProperties.Visible = true;
+                                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                            settings.Properties.UseMaskBehavior = true;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                            settings.Date = DateTime.Now;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cActual_Start";
+                                                            settings.ControlStyle.CssClass = "dateEditInput";
+                                                        }).GetHtml()
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group ">
+                                                    <label for="" class="col-sm-12 col-form-label mTop5">Actual End</label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DevExpress().DateEditFor(model => model.Actual_End,
+                                                        settings =>
+                                                        {
+                                                            settings.Properties.EditFormat = EditFormat.DateTime;
+                                                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                            //settings.Properties.TimeSectionProperties.Visible = true;
+                                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                            settings.Properties.UseMaskBehavior = true;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                            settings.Date = DateTime.Now;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cActual_End";
+                                                            settings.ControlStyle.CssClass = "dateEditInput";
+
+                                                        }).GetHtml()
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_b">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Financial Details <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-12 col-form-label">Activity Cost</label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DevExpress().TextBoxFor(m => m.Activity_Cost,
+                                                        settings =>
+                                                        {
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cActivity_Cost";
+                                                            settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                            settings.Properties.ClientSideEvents.LostFocus = "CalculateTotalCost";
+                                                            settings.ControlStyle.CssClass = "DEvInput";
+                                                        }).GetHtml()
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-12 col-form-label">Allocated Budget</label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DevExpress().TextBoxFor(m => m.Allocated_Budget,
+                                                        settings =>
+                                                        {
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cAllocated_Budget";
+                                                            settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                            settings.ControlStyle.CssClass = "DEvInput";
+                                                        }).GetHtml()
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-12 col-form-label">Misc. Cost</label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DevExpress().TextBoxFor(m => m.Misc_Cost,
+                                                        settings =>
+                                                        {
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cMisc_Cost";
+                                                            settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                                            settings.Properties.ClientSideEvents.LostFocus = "CalculateTotalCost";
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                            settings.ControlStyle.CssClass = "DEvInput";
+                                                        }).GetHtml()
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-12 col-form-label">Total Cost</label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DevExpress().TextBoxFor(m => m.Total_Cost,
+                                                        settings =>
+                                                        {
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cTotal_Cost";
+                                                            settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                                            settings.ClientEnabled = false;
+                                                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                            //settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+                                                            settings.ControlStyle.CssClass = "DEvInput";
+                                                        }).GetHtml()
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Offer Details <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Offer</label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().MemoFor(m => m.Offer,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.ControlStyle.CssClass = "form-control textareaDev bigHeight";
+                                                                settings.Properties.ClientInstanceName = "cOffer";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-radius" onclick="SaveCampaign()">Save</button>
+                <button class="btn btn-danger btn-radius" data-dismiss="modal" aria-label="Close">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "cCRMShowHistory";
+        settings.Width = 700;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Show History";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()

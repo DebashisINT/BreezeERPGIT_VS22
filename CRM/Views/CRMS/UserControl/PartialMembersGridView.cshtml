@@ -1,0 +1,38 @@
+﻿
+ 
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvEntity";
+    settings.CallbackRouteValues = new { Controller = "CRMMembers", Action = "refreshMembersGrid" };
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.ControlStyle.CssClass = "grid";
+
+    settings.KeyFieldName = "cnt_internalid";
+    settings.Settings.ShowFilterRow = true;
+    settings.SettingsBehavior.AllowDragDrop = false;
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.ShowClearFilterButton = true;
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+    settings.Columns.Add("shortname").Caption="Short Code";
+    settings.Columns.Add("Name").Caption = "Name";
+    settings.Columns.Add("Billing").Caption="Addess";
+    
+    settings.ClientSideEvents.SelectionChanged = "EntitySelectionChanged";
+    settings.ClientSideEvents.BeginCallback = "gvEntityBeginCallback";
+    
+    settings.DataBinding = (s, e) =>
+    {
+        ASPxGridView grd = (ASPxGridView)s;
+        if (Model.Selectedvalues != null)
+        {
+            foreach (string item in Model.Selectedvalues)
+            {
+                grd.Selection.SelectRowByKey(item);
+            }
+        }
+        
+    };
+
+}).Bind(Model.EntityList).GetHtml()

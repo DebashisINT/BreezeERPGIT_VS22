@@ -1,0 +1,2918 @@
+﻿@model CRM.Models.crmContact
+
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/SearchPopup.js"></script>
+<script src="/assests/pluggins/choosen/choosen.min.js"></script>
+<script>
+    var ActivityProduct = [];
+    var ActivityProductCRM = [];
+    var ActivityProductProductId = "";
+</script>
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<script src="~/assests/js/CRM/crmProducts.js"></script>
+<link href="~/assests/js/CRM/SearchPopup.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+
+<script src="~/assests/js/CRM/crmMembers.js"></script>
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+@*Rev Mantis Issue 22801_Sushanta*@
+<link href="~/assests/pluggins/TimePicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/TimePicker/bootstrap-timepicker.min.js"></script>
+@* End of Rev Mantis Issue 22801_Sushanta*@
+<style>
+    .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .gridcrmContact_DXFilterBar, .gridcrmContact_DXFilterBar {
+        display: none !important;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+        /*#cmbPriority {
+        border-radius: 3px;
+    }*/
+        .myAssignTarget > li {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 11px;
+            text-align: center;
+        }
+
+            .myAssignTarget > li:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            .myAssignTarget > li.mainCircle {
+                border: 1px solid #a2d3d8;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .myAssignTarget > li .heading {
+                padding: 2px 12px;
+                background: #6d82c5;
+                color: #fff;
+            }
+
+            .myAssignTarget > li .Num {
+                font-size: 14px;
+            }
+
+            .myAssignTarget > li.mainHeadCenter {
+                font-size: 12px;
+                transform: translateY(-16px);
+            }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+    #cc, #bcc {
+        display: none;
+    }
+
+    .pmsForm table.dxeTextBoxSys input {
+        padding: 0;
+        max-height: 24px;
+        box-shadow: none;
+    }
+    /*Rev Mantis Issue 22801_Sushanta*/
+    .bootstrap-timepicker-widget table td input {
+        margin: 0 auto !important;
+    }
+
+    .bootstrap-timepicker-meridian {
+        font-size: 11px;
+    }
+    /*End of Rev Mantis Issue 22801_Sushanta*/
+</style>
+
+<script type="text/javascript">
+
+    function ShowAllClick() {
+        gridcrmContact.Refresh();
+        gridcrmContact.Refresh();
+
+    }
+
+    function LostFocusInUniqueID() {
+        if (cshortname.GetText() != '') {
+            var obj = {};
+            obj.column = "cont_shortName";
+            obj.value = cshortname.GetText();
+
+
+            $.ajax({
+                type: "POST",
+                url: "/CRMContact/checkValidation",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    if (response == 1) {
+                        jAlert("Unique ID is found Duplicate! Cannot Proceed.", 'Alert', function () {
+                            cshortname.SetText('');
+                            cshortname.SetFocus()
+                        });
+
+                    }
+
+                },
+                error: function (response) {
+                    jAlert("please try again later!");
+                }
+            });
+        }
+    }
+
+
+
+    function PinChange() {
+
+        var detailsByPin = cpin.GetText().trim();
+
+        //cpin
+
+        if (detailsByPin != '') {
+            //var details = {}
+
+            //details.PinCode = detailsByPin;
+            $.ajax({
+                type: "POST",
+                url: "/CRMLeads/AddressByPin",
+                data: JSON.stringify({ PinCode: detailsByPin }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cpin.SetText(returnObj.PinCode);
+                        ccountry.SetText(returnObj.CountryName);
+                        cstate.SetText(returnObj.StateName);
+                        ccity.SetText(returnObj.CityName);
+
+
+                    }
+                    else {
+
+
+                        cpin.SetText('');
+                        ccountry.SetText('');
+                        cstate.SetText('');
+                        ccity.SetText('');
+
+                    }
+                }
+            });
+        }
+
+    }
+
+
+    function fn_crmShowHistory() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("CRMShowHistory", "CRMActivity")",
+            // data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                //$("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+
+
+
+    }
+
+
+    function OnAddActivitiesbuttonClick() {
+        cActivity_Date.SetDate(new Date());
+        cddlActivity.SetText("");
+        cddlActivityType.SetText("");
+        ctxt_Subject.SetText("");
+        cmemo_Details.SetText("");
+        $("#ddlPriority").val(0);
+        // Rev Mantis Issue 22801
+        $("#timepicker1").val("00:00:00");
+        // End of Rev Mantis Issue 22801
+        cDue_dt.SetDate(new Date());
+        $("#btnClear").addClass('hide');
+        $("#btnSave").removeClass('hide');
+    }
+
+
+
+    function DoProducts(id) {
+        $("#hdnContact_Id").val(id);
+        $("#hdnCrmProductIdentityId").val(id);
+        ShowProducts('ACPRD');
+
+        ShowCRMProductsEditCRM('Contact Products', id);
+    }
+
+    function AddLiterature(id, name, code) {
+
+
+        $('#AttachmentModal').modal('show');
+
+        $("#hdnContact_Id").val(id);
+        $('#hdnDocNo').val(id);
+        $('#hdndoc_id').val(id);
+        $("#docFileName").val(code);
+        $("#docNumber").val(name);
+        document.getElementById("docFileName").disabled = true;
+        document.getElementById("docNumber").disabled = true;
+
+        setTimeout(function () { $('#documentType').focus(); }, 1000);
+    }
+
+
+    function btn_ShowHistory() {
+        var showhistory_Leadcode = $("#hdnContact_Id").val();
+        var showhistory_actiontype = 'ActivityShowAll';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Leadcode, Module: 'Contact Activity' },
+            success: function (response) {
+                // $("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+
+    function CancelActivity() {
+        CRMpcControl.Hide();
+    }
+
+    function DoSharing(id) {
+        $("#hdnModule_Name").val("Contact");
+        $("#hdnModule_Id").val(id);
+        $("#toinput").tagsinput('add', "", { preventPost: true });
+        $("#PhoneInput").tagsinput('add', "", { preventPost: true });
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("GetEntityDetails", "CRMSharing")",
+            data: { Module_Name: "Contact", Module_id: id },
+            async: false,
+            success: function (response) {
+
+
+                var emails = response.emails.map(function (elem) {
+                    return elem.Entity_Email;
+                }).join(",");
+
+                $("#toinput").tagsinput('add', emails, { preventPost: true });
+
+                var sms = response.phones.map(function (elem) {
+                    return elem.Entity_Phone;
+                }).join(",");
+
+                $("#PhoneInput").tagsinput('add', sms, { preventPost: true });
+
+            }
+
+        });
+        $("#sharingmodel").modal('show');
+
+    }
+
+    function AddMember(id) {
+        $("#Module_Name").val('Contact');
+        $("#hdnContact_Id").val(id);
+
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("doAddMembers", "CRMMembers")",
+            data: { Module_Name: "Contact", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Members');
+
+                CRMpcControl.Show();
+                $("#chkLead").addClass('hide');
+
+            }
+        });
+
+    }
+    function btn_ShowTopTenHistory() {
+        var showhistory_Leadcode = $("#hdnContact_Id").val();
+        var showhistory_actiontype = 'ActivityShowTop10';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Leadcode, Module: 'Contact Activity' },
+            success: function (response) {
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+
+    function gridcrmContactclick(s, e) {
+        $('#gridcrmContact').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    console.log(value);
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+
+    //$(document).ready(function () {
+
+    //    $("#toinput").tagsinput('add', { preventPost: true });
+    //    $('#toinput').on('beforeItemAdd', function (event) {
+    //        var tag = event.item;
+    //        // Do some processing here
+    //        alert(tag)
+
+    //        //if (!event.options || !event.options.preventPost) {
+
+    //        //}
+    //    });
+    //    $("#ccinput").tagsinput('add', { preventPost: true });
+    //    $("#bccinput").tagsinput('add', { preventPost: true });
+
+
+    //    $('.widgetizeForm li .parentLabel').click(function () {
+    //        //alert($(this).attr('class'));
+    //        if ($(this).parent('li').hasClass('ready')) {
+    //            //$('.widgetDrop').hide();
+    //            // $(this).parent('li').addClass('on');
+    //            $('.widgetDrop').hide();
+    //            $(this).parent('li').find('.widgetDrop').toggle();
+    //        } else {
+    //            $(this).parent('li').find('.widgetDrop').hide();
+    //        }
+    //    });
+    //    $('.widgetDrop .nextStage').click(function () {
+    //        //alert($(this).attr('class'));
+    //        if ($(this).hasClass('act')) {
+    //            $(this).closest('li.parentLi').next('.parentLi').addClass('ready');
+    //            $(this).closest('li.parentLi').next('.parentLi').find('.widgetDrop').show();
+    //            $(this).closest('li.parentLi').next('.parentLi').addClass('on');
+
+    //            $(this).closest('li.parentLi').removeClass('on').addClass('visited');
+    //            $(this).closest('li.parentLi').find('.widgetDrop').hide();
+    //        } else {
+    //            $(this).parent('li').find('.widgetDrop').hide();
+    //        }
+    //    });
+    //    $('.closeDropCont').click(function () {
+    //        $(this).closest('li.parentLi').find('.widgetDrop').hide();
+    //    });
+
+    //    $('#ccAnchor').click(function (e) {
+    //        e.preventDefault();
+    //        $('#cc').show();
+    //        $(this).hide();
+    //        setTimeout(function () { $('#cc').focus(); }, 5000);
+
+    //    });
+    //    $('#bccAnchor').click(function (e) {
+    //        e.preventDefault();
+    //        $('#bcc').show();
+    //        $('#bcc').focus();
+    //        $(this).hide();
+    //    });
+    //    $('.sms-template-area').hide();
+    //});
+    function showEmail() {
+        $('.sms-template-area').hide();
+        $('.email-template-area').show();
+    }
+    function showSms() {
+        $('.email-template-area').hide();
+        $('.sms-template-area').show();
+    }
+
+
+    function SaveContact() {
+
+        var obj = {};
+        if ($("#hdnContact_Id").val() == "") {
+            obj.Action = "Add";
+        }
+        else {
+            obj.Action = "Update";
+        }
+
+        if (cfirstname.GetText() == "") {
+            jAlert('Please Enter a valid First Name to proceed.', 'Alert');
+            return;
+        }
+
+        if (clastname.GetText() == "") {
+            jAlert('Please Enter a valid Last Name to proceed.', 'Alert');
+            return;
+        }
+
+        obj.Contact_Id = $("#hdnContact_Id").val();
+        obj.firstname = cfirstname.GetText();
+        obj.lastname = clastname.GetText();
+        obj.Unique_Id = cshortname.GetText();
+
+        obj.job_title = $("#jobResponsibilityID").val();
+        obj.jobResponsibilityID = 0;
+        obj.email = cemail.GetText();
+        obj.Business_phone = cBusiness_phone.GetText();
+        obj.Mobile = cMobile.GetText();
+        obj.Fax = cFax.GetText();
+        obj.PrefferedMethodofContactID = $("#PrefferedMethodofContactID").val();
+        obj.WonerID = $("#WonerID").val();
+        obj.Status_Id = $("#Status_Id").val();
+        obj.SourceID = $("#SourceID").val();
+        obj.RatingID = $("#RatingID").val();
+        obj.Gender = $("#ddlGender").val();
+        obj.Account_ID = $("#Account_ID").val();
+        obj.maritalstatus_ID = $("#maritalstatus_ID").val();
+        obj.Spouce_Name = cSpouce_Name.GetText();
+        obj.BirthDay = cBirthDay.GetDate();
+        obj.Anniversary = cAnniversary.GetDate();
+        obj.Credit_Limit = cCredit_Limit.GetValue();
+        obj.PaymentTermID = $("#PaymentTermID").val();
+        obj.Credit_holdId = $("#ddlCredit_hold").val();
+        obj.Originating_Lead = cOriginating_Lead.GetText();
+        obj.Last_Campaign_Date = cLast_Campaign_Date.GetDate();
+        obj.Marketing_Materials = $("#mm").val();
+        obj.AssignedID = $("#AssignedID").val();
+        obj.ShippingMethodID = $("#ShippingMethodID").val();
+        obj.Freight_Terms = cFreight_Terms.GetText();
+
+        obj.Address1 = cAddress1.GetText();
+        obj.Address2 = cAddress2.GetText();
+        obj.Address3 = cAddress3.GetText();
+        obj.LandMark = cLandMark.GetText();
+        obj.pin = cpin.GetText();
+
+        var leads = gridLookuplead.GetSelectedKeyFieldValues();
+        obj.crmleads_id = leads.join();
+
+
+        // Mantis Issue 21677,21676,23104 (03/06/2021)
+        var opportunity = gridLookupOpportunity.GetSelectedKeyFieldValues();
+        obj.crmoportunity_id = opportunity.join();
+        // End of Mantis Issue 21677,21676,23104 (03/06/2021)
+
+
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/CRMContact/SaveContact",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                jAlert(response);
+                gridcrmContact.Refresh();
+                gridcrmContact.Refresh();
+                $("#addContact").modal('hide');
+                LoadingPanel.Hide();
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+                LoadingPanel.Hide();
+            }
+        });
+
+    }
+
+    function EditClick(id) {
+        $("#hdnContact_Id").val(id);
+        var obj = {};
+        obj.Contact_Id = id;
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/CRMContact/EditContact",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadingPanel.Hide();
+                cfirstname.SetText(response.firstname);
+                clastname.SetText(response.lastname);
+                $("#jobResponsibilityID").val(response.job_title);
+                cemail.SetText(response.email);
+                cshortname.SetText(response.Unique_Id);
+                cshortname.SetEnabled(false);
+                cBusiness_phone.SetText(response.Business_phone);
+                cMobile.SetText(response.Mobile);
+                cFax.SetText(response.Fax);
+                $("#PrefferedMethodofContactID").val(response.PrefferedMethodofContactID);
+                $("#WonerID").val(response.WonerID);
+                $("#Status_Id").val(response.Status_Id);
+                $("#SourceID").val(response.SourceID);
+                $("#RatingID").val(response.RatingID);
+                $("#Account_ID").val(response.Account_ID);
+                $("#mm").val(response.Marketing_Materials);
+
+                $("#ddlGender").val(response.Gender);
+                $("#maritalstatus_ID").val(response.maritalstatus_ID);
+                cSpouce_Name.SetText(response.Spouce_Name);
+                if (response.BirthDay != null)
+                    cBirthDay.SetDate(new Date(parseInt(response.BirthDay.substr(6))));
+                if (response.Anniversary != null)
+                    cAnniversary.SetDate(new Date(parseInt(response.Anniversary.substr(6))))
+                cCredit_Limit.SetValue(response.Credit_Limit);
+                $("#PaymentTermID").val(response.PaymentTermID);
+                $("#ddlCredit_hold").val(response.Credit_holdId);
+                cOriginating_Lead.SetText(response.Originating_Lead);
+                if (response.Last_Campaign_Date != null)
+                    cLast_Campaign_Date.SetDate(new Date(parseInt(response.Last_Campaign_Date.substr(6))))
+                $("#AssignedID").val(response.AssignedID);
+                $("#ShippingMethodID").val(response.ShippingMethodID);
+                cFreight_Terms.SetText(response.Freight_Terms);
+
+                cAddress1.SetText(response.Address1);
+                cAddress2.SetText(response.Address2);
+                cAddress3.SetText(response.Address3);
+                cLandMark.SetText(response.LandMark);
+                cpin.SetText(response.pin);
+                ccity.SetText(response.city);
+                cstate.SetText(response.state);
+                ccountry.SetText(response.country);
+                cOriginating_Lead.SetText(response.Originating_Lead);
+
+                gridLookuplead.GetGridView().SelectRowsByKey(response.LEAD_LIST);
+                // Mantis Issue 21677,21676,23104 (03/06/2021) [ the setTimeout is used to resolve refresh issue in the control. Refresh was not happening]
+                setTimeout(function () { gridLookupOpportunity.GetGridView().SelectRowsByKey(response.oppids); }, 1200);
+                gridLookupOpportunity.Refresh
+                // End of Mantis Issue 21677,21676,23104 (03/06/2021)
+
+                $("#addContact").modal('show');
+
+            },
+            error: function (response) {
+                jAlert("Can not Edit");
+                LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function addContact() {
+
+        $("#hdnContact_Id").val("");
+        cshortname.SetEnabled(true);
+        cshortname.SetText("");
+        cfirstname.SetText("");
+        clastname.SetText("");
+        $("#jobResponsibilityID").val(0);
+        cemail.SetText("");
+        cBusiness_phone.SetText("");
+        cMobile.SetText("");
+        $("#Account_ID").val("0");
+        cFax.SetText("");
+        $("#PrefferedMethodofContactID").val(0);
+        $("#WonerID").val('@Convert.ToString(HttpContext.Current.Session["userid"])');
+        $("#Status_Id").val(0);
+        $("#SourceID").val(0);
+        $("#RatingID").val(0);
+        $("#ddlGender").val(0);
+        $("#maritalstatus_ID").val(0);
+        cSpouce_Name.SetText("");
+        cCredit_Limit.SetValue(0);
+        $("#PaymentTermID").val(0);
+        $("#ddlCredit_hold").val(0);
+        cOriginating_Lead.SetText("");
+        $("#AssignedID").val('@Convert.ToString(HttpContext.Current.Session["userid"])');
+        $("#ShippingMethodID").val(0);
+        cFreight_Terms.SetText("");
+        $("#addContact").modal('show');
+
+    }
+    function DeleteClick(id) {
+        $("#hdnContact_Id").val(id);
+
+        var obj = {};
+        obj.Contact_Id = id;
+        jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+            if (r == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "/CRMContact/DeleteContact",
+                    data: JSON.stringify(obj),
+                    async: true,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        jAlert(response);
+                        gridcrmContact.Refresh();
+                        gridcrmContact.Refresh();
+                    },
+                    error: function (response) {
+                        jAlert("Can not Delete");
+                        gridcrmContact.Refresh();
+                        gridcrmContact.Refresh();
+                        LoadingPanel.Hide();
+                    }
+                });
+            }
+        });
+    }
+
+    function DoActivity(id) {
+        $("#hdnContact_Id").val(id);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DoActivity", "CRMActivity")",
+            data: { Module_Name: "Contact Activity", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Activities');
+                CRMpcControl.Show();
+
+                // Rev Mantis Issue 22801_Sushanta
+                setTimeout(function () {
+                    // alert("hi")
+                    $('#timepicker1').timepicker({
+                        minuteStep: 1,
+                        showSeconds: true,
+                        showMeridian: false,
+                        defaultTime: false,
+                        explicitMode: true,
+                        setTime: new Date()
+                    });
+                }, 1000)
+                // End of Rev Mantis Issue 22801
+            }
+        });
+    }
+
+    function SaveActivity() {
+
+        if (validationsActivity()) {
+
+            var obj = {};
+            obj.activity = cddlActivity.GetValue();
+            obj.activity_type = cddlActivityType.GetValue();
+            obj.subject = ctxt_Subject.GetText();
+            obj.details = cmemo_Details.GetText();
+            obj.assignto = $("#ddlAssignTo").val();
+            obj.duration = $("#ddlDuration").val();
+            obj.priority = $("#ddlPriority").val();
+            obj.DtxtDue = cDue_dt.GetDate();
+            obj.dtActivityDate = cActivity_Date.GetDate();
+            obj.CRMactivityid = $("#hdnContact_Id").val();
+            obj.contacttype = $("#ddlContactType").val();
+            obj.Module_Name = "Contact Activity";
+            // Rev Mantis Issue 22801
+            obj.Duration_New = $("#timepicker1").val();
+            // End of Mantis Issue 22801
+            // Mantis Issue 24175
+            obj.ActivityTypeNew = cddlActivityTypeNew.GetValue();
+            // End of Mantis Issue 24175
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SaveActivity", "CRMActivity")",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    jAlert(response, 'Alert');
+                    CRMpcControl.Hide();
+                }
+            });
+        }
+    }
+    function ActivityChange(s, e) {
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("ActivityChange", "CRMActivity")",
+            data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                cddlActivityType.ClearItems();
+                cddlActivityType.AddItem("Select", "0");
+                for (var i = 0; i < response.length; i++) {
+                    cddlActivityType.AddItem(response[i].Lead_ActivityTypeName, response[i].Id);
+                }
+                cddlActivityType.SetSelectedIndex(0);
+            }
+
+        });
+
+    }
+
+    $(document).ready(function () {
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 65 && event.altKey == true) {
+                addContact();
+            }
+        });
+
+
+
+    });
+
+    $(function () {
+
+        //gridcrmContact.Refresh();
+        //gridcrmContact.Refresh();
+
+    })
+
+
+    $(function () {
+        $('#ddlExport').on('change', function () {
+            if ($("#ddlExport option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlExport').prop("selectedIndex", 0);
+
+                var url = $('#hdnExportLink').val();
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+</script>
+<div class="panel-heading">
+    <div id="td_contact1" class="panel-title">
+        <h3>
+            <span id="lblHeadTitle">Contacts </span>
+        </h3>
+    </div>
+
+</div>
+<div class="form_main clearfix">
+    <div class="mTop5">
+        @{ if (ViewBag.CanAdd)
+         {
+            <button type="button" class="btn btn-success btn-radius" data-toggle="modal" onclick="addContact();" data-backdrop="static" data-keyboard="true">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span>
+                Contact
+            </button>
+         }
+        }
+        <button class="btn btn-info btn-radius  " onclick="ShowAllClick();">Show</button>
+        @{ if (ViewBag.CanExport)
+         {
+            <select name="ddlExport" class="btn btn-primary btn-radius" onchange="Exportclick()" id="ddlExport">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="4">RTF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="5">CSV</option>
+            </select>
+         }
+        }
+        <input type="hidden" value="@Url.Action("ExportCRMContactList", "CRMContact", new { type = "_type_" })" id="hdnExportLink" />
+
+        @*<button class="btn btn-success btn-radius " >Add New Contact</button>*@
+    </div>
+</div>
+<div class="modal fade pmsModal w90" id="addContact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pmsForm">
+                <div class="clearfix" style="margin-bottom:10px;">
+                    <ul class="widgetizeForm hide">
+                        <li class="parentLi ready on">
+                            <span class="parentLabel "></span>
+                            <div>New</div>
+                            <ul class="widgetDrop bigActivity">
+                                <li>
+                                    <div class="dropContent">
+                                        <span class="arrow-up"></span>
+                                        <div class="dropContent-HD">New <i class="fa fa-close closeDropCont"></i></div>
+                                        <div class="pmsForm slick dropContent-body">
+                                            <div>
+                                                <div class="">
+                                                    <ul class="myAssignTarget hide" id="myAssignTargetpopup">
+
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Case Name </label>
+                                                            </div>
+                                                            <div id="lblsource" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+
+                                                            </div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Due Date </label>
+                                                                Due Date
+                                                            </div>
+                                                            <div id="lblIndustry" class="Num">&nbsp;<label></label></div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Priority </label>
+                                                            </div>
+                                                            <div id="lblMiscComments" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="ltd_ActivityDate" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity Date <span style="color: red;">*</span></label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_ActivityDate">
+                                                                <div class="visF">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-4">
+                                                            <label>
+
+                                                            </label>
+                                                            <button type="button" class="btn btn-primary btn-block" onclick="Products('POE')">Product</button>
+                                                        </div>*@
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="td_Activity" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity</label>
+                                                                    <span style="color: red;">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_Type">
+                                                                <div class="visF">
+                                                                    <select class="form-control" id="cmbActivity"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div class="">
+                                                                <label>
+                                                                    <label>Type</label>
+                                                                    <span style="color: red;">*</span>
+
+                                                                </label>
+                                                                <div id="td_Type">
+                                                                    <div class="">
+                                                                        <select class="form-control" id="cmbType"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Subject</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Type">
+                                                                <div class="">
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Details</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Details">
+                                                                <div class="">
+                                                                    <textarea class="form-control" placeholder="please add your details"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <div id="td_lAssignto" class="">
+                                                                <label>Assign To</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dAssignto">
+                                                                <select class="form-control" id="cmbSalesActivityAssignTo"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDuration" class="">
+                                                                <label>Duration</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dDuration">
+                                                                <select class="form-control" id="cmbDuration"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lPriority" class="">
+                                                                <label>Priority</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dPriority">
+                                                                <select class="form-control" id="cmbPriority"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDue" class="">
+                                                                <label>Due</label>
+
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="clearfix">
+                                                    <input type="hidden" id="hdnEntityID" />
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full  nextStage act mTop5">Go to Next</button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="parentLi">
+                            <span class="parentLabel"></span>
+                            <div>Qualify </div>
+                            <ul class="widgetDrop bigActivity">
+                                <li>
+                                    <div class="dropContent">
+                                        <span class="arrow-up"></span>
+                                        <div class="dropContent-HD">Qualify <i class="fa fa-close closeDropCont"></i></div>
+                                        <div class="pmsForm slick dropContent-body">
+                                            <div>
+                                                <div class="">
+                                                    <ul class="myAssignTarget hide" id="myAssignTargetpopup">
+
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Case Name </label>
+                                                            </div>
+                                                            <div id="lblsource" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+
+                                                            </div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Due Date </label>
+                                                                Due Date
+                                                            </div>
+                                                            <div id="lblIndustry" class="Num">&nbsp;<label></label></div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Priority </label>
+                                                            </div>
+                                                            <div id="lblMiscComments" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="ltd_ActivityDate" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity Date <span style="color: red;">*</span></label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_ActivityDate">
+                                                                <div class="visF">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-4">
+                                                            <label>
+
+                                                            </label>
+                                                            <button type="button" class="btn btn-primary btn-block" onclick="Products('POE')">Product</button>
+                                                        </div>*@
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="td_Activity" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity</label>
+                                                                    <span style="color: red;">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_Type">
+                                                                <div class="visF">
+                                                                    <select class="form-control" id="cmbActivity"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div class="">
+                                                                <label>
+                                                                    <label>Type</label>
+                                                                    <span style="color: red;">*</span>
+
+                                                                </label>
+                                                                <div id="td_Type">
+                                                                    <div class="">
+                                                                        <select class="form-control" id="cmbType"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Subject</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Type">
+                                                                <div class="">
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Details</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Details">
+                                                                <div class="">
+                                                                    <textarea class="form-control" placeholder="please add your details"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <div id="td_lAssignto" class="">
+                                                                <label>Assign To</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dAssignto">
+                                                                <select class="form-control" id="cmbSalesActivityAssignTo"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDuration" class="">
+                                                                <label>Duration</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dDuration">
+                                                                <select class="form-control" id="cmbDuration"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lPriority" class="">
+                                                                <label>Priority</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dPriority">
+                                                                <select class="form-control" id="cmbPriority"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDue" class="">
+                                                                <label>Due</label>
+
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="clearfix">
+                                                    <input type="hidden" ID="hdnEntityID"  />
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Go to Next</button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="parentLi">
+                            <span class="parentLabel"></span>
+                            <div>Planning</div>
+                            <ul class="widgetDrop bigActivity">
+                                <li>
+                                    <div class="dropContent">
+                                        <span class="arrow-up"></span>
+                                        <div class="dropContent-HD">Planning <i class="fa fa-close closeDropCont"></i></div>
+                                        <div class="pmsForm slick dropContent-body">
+                                            <div>
+                                                <div class="">
+                                                    <ul class="myAssignTarget hide" id="myAssignTargetpopup">
+
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Case Name </label>
+                                                            </div>
+                                                            <div id="lblsource" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+
+                                                            </div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Due Date </label>
+                                                                Due Date
+                                                            </div>
+                                                            <div id="lblIndustry" class="Num">&nbsp;<label></label></div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Priority </label>
+                                                            </div>
+                                                            <div id="lblMiscComments" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="ltd_ActivityDate" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity Date <span style="color: red;">*</span></label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_ActivityDate">
+                                                                <div class="visF">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-4">
+                                                            <label>
+
+                                                            </label>
+                                                            <button type="button" class="btn btn-primary btn-block" onclick="Products('POE')">Product</button>
+                                                        </div>*@
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="td_Activity" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity</label>
+                                                                    <span style="color: red;">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_Type">
+                                                                <div class="visF">
+                                                                    <select class="form-control" id="cmbActivity"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div class="">
+                                                                <label>
+                                                                    <label>Type</label>
+                                                                    <span style="color: red;">*</span>
+
+                                                                </label>
+                                                                <div id="td_Type">
+                                                                    <div class="">
+                                                                        <select class="form-control" id="cmbType"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Subject</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Type">
+                                                                <div class="">
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Details</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Details">
+                                                                <div class="">
+                                                                    <textarea class="form-control" placeholder="please add your details"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <div id="td_lAssignto" class="">
+                                                                <label>Assign To</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dAssignto">
+                                                                <select class="form-control" id="cmbSalesActivityAssignTo"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDuration" class="">
+                                                                <label>Duration</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dDuration">
+                                                                <select class="form-control" id="cmbDuration"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lPriority" class="">
+                                                                <label>Priority</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dPriority">
+                                                                <select class="form-control" id="cmbPriority"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDue" class="">
+                                                                <label>Due</label>
+
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="clearfix">
+                                                    <input type="hidden" ID="hdnEntityID" />
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Go to Next</button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="parentLi">
+                            <span class="parentLabel"></span>
+                            <div>Execution</div>
+                            <ul class="widgetDrop bigActivity">
+                                <li>
+                                    <div class="dropContent">
+                                        <span class="arrow-up"></span>
+                                        <div class="dropContent-HD">Execution <i class="fa fa-close closeDropCont"></i></div>
+                                        <div class="pmsForm slick dropContent-body">
+                                            <div>
+                                                <div class="">
+                                                    <ul class="myAssignTarget hide" id="myAssignTargetpopup">
+
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Case Name </label>
+                                                            </div>
+                                                            <div id="lblsource" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+
+                                                            </div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Due Date </label>
+                                                                Due Date
+                                                            </div>
+                                                            <div id="lblIndustry" class="Num">&nbsp;<label></label></div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Priority </label>
+                                                            </div>
+                                                            <div id="lblMiscComments" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="ltd_ActivityDate" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity Date <span style="color: red;">*</span></label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_ActivityDate">
+                                                                <div class="visF">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-4">
+                                                            <label>
+
+                                                            </label>
+                                                            <button type="button" class="btn btn-primary btn-block" onclick="Products('POE')">Product</button>
+                                                        </div>*@
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="td_Activity" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity</label>
+                                                                    <span style="color: red;">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_Type">
+                                                                <div class="visF">
+                                                                    <select class="form-control" id="cmbActivity"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div class="">
+                                                                <label>
+                                                                    <label>Type</label>
+                                                                    <span style="color: red;">*</span>
+
+                                                                </label>
+                                                                <div id="td_Type">
+                                                                    <div class="">
+                                                                        <select class="form-control" id="cmbType"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Subject</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Type">
+                                                                <div class="">
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Details</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Details">
+                                                                <div class="">
+                                                                    <textarea class="form-control" placeholder="please add your details"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <div id="td_lAssignto" class="">
+                                                                <label>Assign To</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dAssignto">
+                                                                <select class="form-control" id="cmbSalesActivityAssignTo"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDuration" class="">
+                                                                <label>Duration</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dDuration">
+                                                                <select class="form-control" id="cmbDuration"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lPriority" class="">
+                                                                <label>Priority</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dPriority">
+                                                                <select class="form-control" id="cmbPriority"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDue" class="">
+                                                                <label>Due</label>
+
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="clearfix">
+                                                    <input type="hidden" ID="hdnEntityID" />
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Go to Next</button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="parentLi">
+                            <span class="parentLabel"></span>
+                            <div>Deliver</div>
+                            <ul class="widgetDrop bigActivity">
+                                <li>
+                                    <div class="dropContent">
+                                        <span class="arrow-up"></span>
+                                        <div class="dropContent-HD">Deliver <i class="fa fa-close closeDropCont"></i></div>
+                                        <div class="pmsForm slick dropContent-body">
+                                            <div>
+                                                <div class="">
+                                                    <ul class="myAssignTarget hide" id="myAssignTargetpopup">
+
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Case Name </label>
+                                                            </div>
+                                                            <div id="lblsource" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+
+                                                            </div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Due Date </label>
+                                                                Due Date
+                                                            </div>
+                                                            <div id="lblIndustry" class="Num">&nbsp;<label></label></div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Priority </label>
+                                                            </div>
+                                                            <div id="lblMiscComments" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="ltd_ActivityDate" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity Date <span style="color: red;">*</span></label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_ActivityDate">
+                                                                <div class="visF">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-4">
+                                                            <label>
+
+                                                            </label>
+                                                            <button type="button" class="btn btn-primary btn-block" onclick="Products('POE')">Product</button>
+                                                        </div>*@
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="td_Activity" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity</label>
+                                                                    <span style="color: red;">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_Type">
+                                                                <div class="visF">
+                                                                    <select class="form-control" id="cmbActivity"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div class="">
+                                                                <label>
+                                                                    <label>Type</label>
+                                                                    <span style="color: red;">*</span>
+
+                                                                </label>
+                                                                <div id="td_Type">
+                                                                    <div class="">
+                                                                        <select class="form-control" id="cmbType"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Subject</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Type">
+                                                                <div class="">
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Details</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Details">
+                                                                <div class="">
+                                                                    <textarea class="form-control" placeholder="please add your details"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <div id="td_lAssignto" class="">
+                                                                <label>Assign To</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dAssignto">
+                                                                <select class="form-control" id="cmbSalesActivityAssignTo"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDuration" class="">
+                                                                <label>Duration</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dDuration">
+                                                                <select class="form-control" id="cmbDuration"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lPriority" class="">
+                                                                <label>Priority</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dPriority">
+                                                                <select class="form-control" id="cmbPriority"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDue" class="">
+                                                                <label>Due</label>
+
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="clearfix">
+                                                    
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Go to Next</button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="parentLi">
+                            <span class="parentLabel"></span>
+                            <div>Complete</div>
+                            <ul class="widgetDrop bigActivity bigActivityright">
+                                <li>
+                                    <div class="dropContent">
+                                        <span class="arrow-up"></span>
+                                        <div class="dropContent-HD">Complete <i class="fa fa-close closeDropCont"></i></div>
+                                        <div class="pmsForm slick dropContent-body">
+                                            <div>
+                                                <div class="">
+                                                    <ul class="myAssignTarget hide" id="myAssignTargetpopup">
+
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Case Name </label>
+                                                            </div>
+                                                            <div id="lblsource" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+
+                                                            </div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Due Date </label>
+                                                                Due Date
+                                                            </div>
+                                                            <div id="lblIndustry" class="Num">&nbsp;<label></label></div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Priority </label>
+                                                            </div>
+                                                            <div id="lblMiscComments" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="ltd_ActivityDate" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity Date <span style="color: red;">*</span></label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_ActivityDate">
+                                                                <div class="visF">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-4">
+                                                            <label>
+
+                                                            </label>
+                                                            <button type="button" class="btn btn-primary btn-block" onclick="Products('POE')">Product</button>
+                                                        </div>*@
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="td_Activity" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity</label>
+                                                                    <span style="color: red;">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_Type">
+                                                                <div class="visF">
+                                                                    <select class="form-control" id="cmbActivity"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div class="">
+                                                                <label>
+                                                                    <label>Type</label>
+                                                                    <span style="color: red;">*</span>
+
+                                                                </label>
+                                                                <div id="td_Type">
+                                                                    <div class="">
+                                                                        <select class="form-control" id="cmbType"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Subject</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Type">
+                                                                <div class="">
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Details</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Details">
+                                                                <div class="">
+                                                                    <textarea class="form-control" placeholder="please add your details"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <div id="td_lAssignto" class="">
+                                                                <label>Assign To</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dAssignto">
+                                                                <select class="form-control" id="cmbSalesActivityAssignTo"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDuration" class="">
+                                                                <label>Duration</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dDuration">
+                                                                <select class="form-control" id="cmbDuration"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lPriority" class="">
+                                                                <label>Priority</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dPriority">
+                                                                <select class="form-control" id="cmbPriority"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDue" class="">
+                                                                <label>Due</label>
+
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="clearfix">
+                                                   
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Go to Next</button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="parentLi">
+                            <span class="parentLabel"></span>
+                            <div>Close</div>
+                            <ul class="widgetDrop bigActivity ">
+                                <li>
+                                    <div class="dropContent">
+                                        <span class="arrow-up"></span>
+                                        <div class="dropContent-HD">Close <i class="fa fa-close closeDropCont"></i></div>
+                                        <div class="pmsForm slick dropContent-body">
+                                            <div>
+                                                <div class="">
+                                                    <ul class="myAssignTarget hide" id="myAssignTargetpopup">
+
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Case Name </label>
+                                                            </div>
+                                                            <div id="lblsource" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+
+                                                            </div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Due Date </label>
+                                                                Due Date
+                                                            </div>
+                                                            <div id="lblIndustry" class="Num">&nbsp;<label></label></div>
+                                                        </li>
+                                                        <li class="mainCircle">
+                                                            <div class="heading">
+                                                                <label>Priority </label>
+                                                            </div>
+                                                            <div id="lblMiscComments" class="Num">
+                                                                &nbsp;
+                                                                <label></label>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="ltd_ActivityDate" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity Date <span style="color: red;">*</span></label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_ActivityDate">
+                                                                <div class="visF">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-4">
+                                                            <label>
+
+                                                            </label>
+                                                            <button type="button" class="btn btn-primary btn-block" onclick="Products('POE')">Product</button>
+                                                        </div>*@
+
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div id="td_Activity" class="">
+                                                                <div class="visF">
+                                                                    <label>Activity</label>
+                                                                    <span style="color: red;">*</span>
+                                                                </div>
+                                                            </div>
+                                                            <div id="td_Type">
+                                                                <div class="visF">
+                                                                    <select class="form-control" id="cmbActivity"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="visF">
+                                                            <div class="">
+                                                                <label>
+                                                                    <label>Type</label>
+                                                                    <span style="color: red;">*</span>
+
+                                                                </label>
+                                                                <div id="td_Type">
+                                                                    <div class="">
+                                                                        <select class="form-control" id="cmbType"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Subject</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Type">
+                                                                <div class="">
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <label>
+                                                                <label>Details</label>
+                                                                <span style="color: red;">*</span>
+
+                                                            </label>
+                                                            <div id="td_Details">
+                                                                <div class="">
+                                                                    <textarea class="form-control" placeholder="please add your details"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-12">
+                                                        <div class="">
+                                                            <div id="td_lAssignto" class="">
+                                                                <label>Assign To</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dAssignto">
+                                                                <select class="form-control" id="cmbSalesActivityAssignTo"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDuration" class="">
+                                                                <label>Duration</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dDuration">
+                                                                <select class="form-control" id="cmbDuration"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lPriority" class="">
+                                                                <label>Priority</label>
+                                                                <span style="color: red;">*</span>
+                                                            </div>
+                                                            <div id="td_dPriority">
+                                                                <select class="form-control" id="cmbPriority"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="">
+                                                            <div id="td_lDue" class="">
+                                                                <label>Due</label>
+
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="clearfix">
+                                                    
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Finish</button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="formLine"></div>
+                <div class="clearfix text-center" style="margin-bottom:7px;">
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Owner</b></div>
+                                <div>@Html.DropDownListFor(m => m.WonerID, new SelectList(Model.Users, "user_id", "user_name"))</div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Assign To</b></div>
+                                <div>@Html.DropDownListFor(m => m.AssignedID, new SelectList(Model.Users, "user_id", "user_name"))</div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="infoSection mRight20 hide">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Lead Source</b></div>
+                                <div>@Html.DropDownListFor(m => m.SourceID, new SelectList(Model.ContactSource, "SourceID", "cntsrc_sourceType"))</div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20 hide">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Rating</b></div>
+                                <div>@Html.DropDownListFor(m => m.RatingID, new SelectList(Model.Rating_List, "rat_id", "rat_LeadRating"))</div>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="infoSection hide">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Status</b></div>
+                                <div>@Html.DropDownListFor(m => m.Status_Id, new SelectList(Model.Status_Details, "Id", "Status_Code"))</div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="Vtabs">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-1">
+                            <ul class="nav nav-pills nav-stacked flex-column">
+                                <li class="active"><a href="#tab_a" data-toggle="pill">Summary</a></li>
+                                <li><a href="#tab_b" data-toggle="pill">Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-11">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_a">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Contact Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">
+                                                            First Name
+                                                            <span style="color:red">*</span>
+                                                        </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.firstname,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cfirstname";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">
+                                                            Last Name
+                                                            <span style="color:red">*</span>
+                                                        </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.lastname,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "clastname";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">
+                                                            Unique ID
+                                                            <span style="color:red">*</span>
+                                                        </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Unique_Id,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cshortname";
+                                                                settings.Properties.MaxLength = 80;
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.ClientSideEvents.LostFocus = "LostFocusInUniqueID";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Job Title </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.jobResponsibilityID, new SelectList(Model.jobResponsibility_List, "job_id", "job_responsibility"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Company/Account </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.Account_ID, new SelectList(Model.V_CNTACCOUNTLISTS, "cnt_internalId", "Name"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Email ID </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.email,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cemail";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Fax</label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Fax,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cFax";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Business Phone </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Business_phone,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cBusiness_phone";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Mobile Phone </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Mobile,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cMobile";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Preferred Method of Contact </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.PrefferedMethodofContactID, new SelectList(Model.PrefferedMethodofContact_List, "ID", "Contact_Methods"))</div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Address Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address  1</label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Address1,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cAddress1";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address  2 </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Address2,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cAddress2";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 3 </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Address3,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cAddress3";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Landmark </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.LandMark,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cLandMark";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Postal/Zip Code </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.pin,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cpin";
+                                                                settings.Properties.ClientSideEvents.LostFocus = "PinChange";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">City </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.city,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ClientEnabled = false;
+                                                                settings.Properties.ClientInstanceName = "ccity";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">State </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.state,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ClientEnabled = false;
+                                                                settings.Properties.ClientInstanceName = "cstate";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Country </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.country,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ClientEnabled = false;
+                                                                settings.Properties.ClientInstanceName = "ccountry";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_b">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Personal Details <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Gender </label>
+                                                        <div class="col-sm-12">
+                                                            <select id="ddlGender" class="form-control">
+                                                                <option value="0">Select</option>
+                                                                <option value="M">Male</option>
+                                                                <option value="F">Female</option>
+                                                                <option value="O">Others</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Martial Status </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.maritalstatus_ID, new SelectList(Model.maritalstatus_List, "mts_id", "mts_maritalStatus"))</div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Spouse/Partner Name</label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Spouce_Name,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cSpouce_Name";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Birthday </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().DateEditFor(model => model.BirthDay,
+                                                        settings =>
+                                                        {
+                                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                            settings.Date = DateTime.Now;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cBirthDay";
+                                                            settings.ControlStyle.CssClass = "dateEditInput";
+                                                        }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Anniversary </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().DateEditFor(model => model.Anniversary,
+                                                        settings =>
+                                                        {
+                                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                            settings.Date = DateTime.Now;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cAnniversary";
+                                                            settings.ControlStyle.CssClass = "dateEditInput";
+                                                        }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @*Mantis Issue 21677,21676,23104 (03/06/2021)*@
+                                                <div class="col-md-6">
+                                                    <div class="form-group row ">
+                                                        <label for="" class="col-sm-12 col-form-label">Opportunity Name </label>
+                                                        <div class="col-sm-12 dateEditInput">
+
+                                                            @{
+                                                                Html.RenderAction("PopulateOpportunityGrid", "CRMContact");
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @*End of Mantis Issue 21677,21676,23104 (03/06/2021)*@
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6 ">
+                                            <div class="crmTAbhd ">Marketing Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-12">
+                                                   
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Originating Lead</label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.Originating_Lead,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.ClientEnabled = false;
+                                                                settings.Properties.ClientInstanceName = "cOriginating_Lead";
+                                                            }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                               
+                                                    
+
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Last Campaign Date </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().DateEditFor(model => model.Last_Campaign_Date,
+                                                        settings =>
+                                                        {
+                                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.EditFormatString = "dd-MM-yyyy hh:mm tt";
+                                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy hh:mm tt";
+                                                            settings.Properties.TimeSectionProperties.Visible = true;
+                                                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                            settings.Date = DateTime.Now;
+                                                            settings.ClientEnabled = false;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cLast_Campaign_Date";
+                                                            settings.ControlStyle.CssClass = "dateEditInput";
+                                                        }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Marketing Materials </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" id="mm" class="form-control" />
+                                                        </div>
+                                                    </div>                                                   
+                                                        
+                                                    </div>*@
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Marketing Materials </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.Marketing_Materials, new SelectList(Model.marketingmaterials, "material_id", "material_Name"), new { @id="mm" })</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Lead Name </label>
+                                                        <div class="col-sm-12 dateEditInput">
+
+                                                            @{
+                                                                Html.RenderAction("PopulateLeadGrid", "CRMContact");
+                                                            }
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                
+
+                                            </div>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div class="col-sm-6 col-md-6 ">
+                                            <div class="crmTAbhd mTop5">Billing Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-6 hide">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Currency</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Credit Limit</label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Credit_Limit,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cCredit_Limit";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Credit Hold</label>
+                                                        <div class="col-sm-12">
+
+                                                            <select class="form-control" id="ddlCredit_hold">
+                                                                <option value="0">Select</option>
+                                                                <option value="Y">Yes</option>
+                                                                <option value="N">No</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Payment Terms</label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.PaymentTermID, new SelectList(Model.PaymentTerm_List, "ID", "Terms"))</div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 mTop5">
+                                            <div class="crmTAbhd ">Shipping Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Shipping Method </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.ShippingMethodID, new SelectList(Model.ShippingMethod_List, "ID", "Methods"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Freight Terms </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Freight_Terms,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.MaxLength = 100;
+                                                                settings.Properties.ClientInstanceName = "cFreight_Terms";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" onclick="SaveContact();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix relative">
+
+    @{
+        Html.RenderAction("PopulateGrid", "CRMContact", new { frmdate = "Ispageload" });
+    }
+</div>
+
+<input type="hidden" value="@Url.Action("AttachmentDocument", "CRMAttachment", new { module = "CRM Contact" })" id="hdnAttachmentDocument" />
+
+<div>
+    @{
+        Html.RenderAction("AttachmentDocument", "CRMAttachment", new { module = "CRM Contact", DocNo = "" });
+    }
+</div>
+
+
+<div>
+    @{
+        Html.RenderAction("AddProducts", "CRMProducts");
+    }
+</div>
+
+<div>
+    @{
+        Html.RenderAction("DoSharing", "CRMSharing");
+    }
+</div>
+
+
+
+
+
+
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "CRMpcControl";
+        settings.Width = 600;
+        settings.Height = 500;
+        //settings.ScrollBars.v
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.HeaderText = "Employees Target Setting";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        //settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+
+<input type="hidden" id="hdnContact_Id" />
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "addContact";
+    }
+).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "cCRMShowHistory";
+        settings.Width = 700;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Show History";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+<input type="hidden" id="hdfLeadValuesIDCRM" />
+<input type="hidden" id="hdnCrmProductIdentityId" />
+
+<script>
+    $(document).ready(function () {
+        gridLookuplead.gridView.Refresh()
+        gridLookuplead.gridView.Refresh()
+    });
+</script>

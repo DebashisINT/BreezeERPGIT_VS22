@@ -1,0 +1,140 @@
+﻿
+    @Html.DevExpress().GridView(
+   settings =>
+   {
+       // settings = null;
+       settings.Name = "gridcrmshowhistory";
+
+       settings.CallbackRouteValues = new { Controller = "CRMActivity", Action = "PopulateActivityShowHistoryGrid" };
+
+       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+       settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+       settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+       settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+       //settings.SettingsSearchPanel.Visible = true;
+       settings.Settings.ShowFilterRow = true;
+       settings.Settings.ShowGroupPanel = true;
+       settings.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+       //settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+       settings.SettingsSearchPanel.Visible = true;
+       settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+       settings.Styles.Row.Cursor = "pointer";
+       settings.Settings.ShowFooter = true;
+       settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+       settings.KeyFieldName = "SHOWHISTORY_SALESACTIVITYID";
+
+       //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+       settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+       settings.SettingsPager.PageSizeItemSettings.Visible = true;
+       settings.SettingsPager.PageSize = 20;
+       settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+       settings.Settings.ShowFilterRowMenu = true;
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "SHOWHISTORY_SALESACTIVITYID";
+           x.FieldName = "SHOWHISTORY_SALESACTIVITYID";
+           x.Visible = false;
+           x.ShowInCustomizationForm = false;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "SHOWHISTORY_ACTIVITYENTITY_ID";
+           x.FieldName = "SHOWHISTORY_ACTIVITYENTITY_ID";
+           x.Visible = false;
+           x.ShowInCustomizationForm = false;
+       });
+       settings.Columns.Add(x =>
+       {
+           // Mantis Issue 24175
+           //x.Caption = "Activity Type";
+           x.Caption = "Activity Source";
+           // End of Mantis Issue 24175
+           x.FieldName = "SHOWHISTORY_ACTIVITYNAME";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       // Mantis Issue 24175
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Mode";
+           x.FieldName = "SHOWHISTORY_ACTIVITYTYPENAME";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Type";
+           x.FieldName = "SHOWHISTORY_TYPENEWNAME";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       // End of Mantis Issue 24175
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Subject";
+           x.FieldName = "SHOWHISTORY_SUBJECT";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Details";
+           x.FieldName = "SHOWHISTORY_LEADDETAILS";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Assign To";
+           x.FieldName = "SHOWHISTORY_ASSIGNTO_NAME";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Priority";
+           x.FieldName = "SHOWHISTORY_PRIORITYNAME";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Duration";
+           x.FieldName = "SHOWHISTORY_DURATIONNAME";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Due Date";
+           x.FieldName = "SHOWHISTORY_DUEDATE";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       
+       
+      
+      // settings.ClientSideEvents.RowClick = "gridcrmLeadclick";
+       //This is Used For Add or hide column from column chooser
+       settings.SettingsBehavior.EnableCustomizationWindow = true;
+       settings.SettingsBehavior.EnableRowHotTrack = true;
+       settings.SettingsCookies.Enabled = true;
+       settings.SettingsCookies.StorePaging = true;
+       settings.SettingsCookies.StoreColumnsVisiblePosition = true;
+       //This is Used For Add or hide column from column chooser
+
+
+
+
+
+
+
+   }).Bind(Model).GetHtml()
+

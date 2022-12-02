@@ -1,0 +1,64 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gvPending";
+        settings.CallbackRouteValues = new { Action = "BindPendingDocument", Controller = "YearEnding" };
+        settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+        settings.KeyFieldName = "DocumentNo";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Settings.ShowFilterRow = true;
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "DocumentNo";
+            x.Caption = "Document Number";
+            x.VisibleIndex = 1;
+            x.Width = 100;
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        });
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Branch";
+            x.Caption = "Branch";
+            x.VisibleIndex = 2;
+            x.Width = 200;
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        });
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Date";
+            x.Caption = "Posting Date";
+            x.VisibleIndex = 5;
+            x.Width = 120;
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+            (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+        });
+
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Name";
+            x.Caption = "Name";
+            x.VisibleIndex = 4;
+            x.Width = 200;
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+        });
+
+
+
+
+    }).Bind(Model.pendingDocument).GetHtml()

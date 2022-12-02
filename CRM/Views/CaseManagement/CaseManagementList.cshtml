@@ -1,0 +1,69 @@
+﻿@using System.Web.UI.WebControls
+@{
+    ViewBag.Title = "Case Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<div class="panel-heading">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Case Management</label>
+        </h3>
+        @*<div id="ApprovalCross" class="crossBtn"><a href=""><i class="fa fa-times"></i></a></div>*@
+
+    </div>
+</div>
+<div class="mainarea form_main">
+    <div class="clearfix">
+        <div class="md-pull-left">
+            <button type="button" class="btn btn-success" id="btnAddNew" onclick="location.href='@Url.Action("CaseManagementEntry", "CaseManagement")'">Add Cases</button>
+            @*<select id="exportlist" class="btn btn-primary" onchange="cmbExport_SelectedIndexChanged()">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">RTF</option>
+                <option value="4">CSV</option>
+            </select>*@
+        </div>
+        @*<div class="md-pull-right">
+            <table class="paddingTbl">
+                <tr>
+                    <td>From Date</td>
+                    <td>
+                        <div class="relative">
+                            <input type="text" class="form_control" />
+                        </div>
+                    </td>
+                    <td>To Date</td>
+                    <td>
+                        <div class="relative">
+                            <input type="text" class="form_control" />
+                        </div>
+                    </td>
+                    <td><button type="button" id="btnShowData" class="btn btn-primary" style="    margin-top: 15px;" onclick="updateGridByDate()">Show</button></td>
+                </tr>
+            </table>
+        </div>*@
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+
+            <div id="refreshgrid">
+                @{
+                    Html.RenderAction("GetCaseManagementList", "CaseManagement");
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+

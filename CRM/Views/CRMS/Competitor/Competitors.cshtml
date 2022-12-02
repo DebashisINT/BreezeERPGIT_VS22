@@ -1,0 +1,513 @@
+﻿
+@{
+    ViewBag.Title = "Competitors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+<style>
+    .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+        /*#cmbPriority {
+        border-radius: 3px;
+    }*/
+        .myAssignTarget > li {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 11px;
+            text-align: center;
+        }
+
+            .myAssignTarget > li:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            .myAssignTarget > li.mainCircle {
+                border: 1px solid #a2d3d8;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .myAssignTarget > li .heading {
+                padding: 2px 12px;
+                background: #6d82c5;
+                color: #fff;
+            }
+
+            .myAssignTarget > li .Num {
+                font-size: 14px;
+            }
+
+            .myAssignTarget > li.mainHeadCenter {
+                font-size: 12px;
+                transform: translateY(-16px);
+            }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+    #cc, #bcc {
+        display: none;
+    }
+    .mTop10 {
+        margin-top:10px;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#toinput").tagsinput('add', { preventPost: true });
+        $('#toinput').on('beforeItemAdd', function (event) {
+            var tag = event.item;
+            // Do some processing here
+            alert(tag)
+
+            //if (!event.options || !event.options.preventPost) {
+
+            //}
+        });
+        $("#ccinput").tagsinput('add', { preventPost: true });
+        $("#bccinput").tagsinput('add', { preventPost: true });
+
+
+        $('.widgetizeForm li .parentLabel').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).parent('li').hasClass('ready')) {
+                //$('.widgetDrop').hide();
+                // $(this).parent('li').addClass('on');
+                $('.widgetDrop').hide();
+                $(this).parent('li').find('.widgetDrop').toggle();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.widgetDrop .nextStage').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).hasClass('act')) {
+                $(this).closest('li.parentLi').next('.parentLi').addClass('ready');
+                $(this).closest('li.parentLi').next('.parentLi').find('.widgetDrop').show();
+                $(this).closest('li.parentLi').next('.parentLi').addClass('on');
+
+                $(this).closest('li.parentLi').removeClass('on').addClass('visited');
+                $(this).closest('li.parentLi').find('.widgetDrop').hide();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.closeDropCont').click(function () {
+            $(this).closest('li.parentLi').find('.widgetDrop').hide();
+        });
+
+        $('#ccAnchor').click(function (e) {
+            e.preventDefault();
+            $('#cc').show();
+            $(this).hide();
+            setTimeout(function () { $('#cc').focus(); }, 5000);
+
+        });
+        $('#bccAnchor').click(function (e) {
+            e.preventDefault();
+            $('#bcc').show();
+            $('#bcc').focus();
+            $(this).hide();
+        });
+        $('.sms-template-area').hide();
+    });
+    function showEmail() {
+        $('.sms-template-area').hide();
+        $('.email-template-area').show();
+    }
+    function showSms() {
+        $('.email-template-area').hide();
+        $('.sms-template-area').show();
+    }
+</script>
+<script type="text/javascript">
+    function PinChange() {
+
+        var detailsByPin = cpin.GetText().trim();
+
+        //cpin
+
+        if (detailsByPin != '') {
+            //var details = {}
+
+            //details.PinCode = detailsByPin;
+            $.ajax({
+                type: "POST",
+                url: "/CRMLeads/AddressByPin",
+                data: JSON.stringify({ PinCode: detailsByPin }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cpin.SetText(returnObj.PinCode);
+                        ccountry.SetText(returnObj.CountryName);
+                        cstate.SetText(returnObj.StateName);
+                        ccity.SetText(returnObj.CityName);
+
+                        $('#hdnpinid').val(returnObj.PinId);
+                        $('#hdncountryid').val(returnObj.CountryId);
+                        $('#hdnstateid').val(returnObj.StateId);
+                        $('#hdncityid').val(returnObj.CityId);
+                    }
+                    else {
+                        $('#hdnpinid').val('');
+                        $('#hdncountryid').val('');
+                        $('#hdnstateid').val('');
+                        $('#hdncityid').val('');
+
+                        cpin.SetText('');
+                        ccountry.SetText('');
+                        cstate.SetText('');
+                        ccity.SetText('');
+
+                    }
+                    //Billing
+                    //if (returnObj) {
+
+                    //    if ($('#hdStateCodeBilling').val() != returnObj.StateCode && AllowAddressShipToPartyState == false) {
+                    //        ctxtbillingPin.SetText($('#hdOldBillingPinCode').val());
+                    //        jAlert('You may change the Shipping/Billing details except PIN/State.');
+                    //    }
+                    //    else {
+                    //        $('#hdBillingPin').val(returnObj.PinId);
+                    //        if ((ctxtbillingPin.SetText(returnObj.PinCode)) != '' || (ctxtbillingPin.SetText(returnObj.PinCode)) != "0") {
+                    //            ctxtbillingPin.SetText(returnObj.PinCode);
+                    //            document.getElementById("bpin").style.display = "none";
+                    //        }
+                    //        else {
+                    //            document.getElementById("bpin").style.display = "block";
+                    //        }
+
+                    //        $('#hdCountryIdBilling').val(returnObj.CountryId);
+
+                    //        if (ctxtbillingCountry.SetText(returnObj.CountryName) != '') {
+                    //            ctxtbillingCountry.SetText(returnObj.CountryName);
+                    //            document.getElementById("billingcountry").style.display = "none";
+                    //        }
+                    //        else {
+                    //            document.getElementById("billingcountry").style.display = "block";
+                    //        }
+                    //        $('#hdStateIdBilling').val(returnObj.StateId);
+
+                    //        if (ctxtbillingState.SetText(returnObj.StateName) != '') {
+                    //            ctxtbillingState.SetText(returnObj.StateName);
+                    //            document.getElementById("billingstate").style.display = "none";
+                    //        }
+                    //        else {
+                    //            document.getElementById("billingstate").style.display = "block";
+                    //        }
+                    //        $('#hdStateCodeBilling').val(returnObj.StateCode);
+                    //        if (ctxtbillingCity.SetText(returnObj.CityName) != '') {
+                    //            ctxtbillingCity.SetText(returnObj.CityName);
+                    //            document.getElementById("billingcity").style.display = "none";
+                    //        }
+                    //        else {
+                    //            document.getElementById("billingcity").style.display = "block";
+                    //        }
+                    //        $('#hdCityIdBilling').val(returnObj.CityId);
+                    //        ctxtSelectBillingArea.SetText('');
+                    //        var htmlScript = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th class=\"hide\">id</th><th>Area</th> </tr>";
+
+                    //        document.getElementById('billingAreatable').innerHTML = htmlScript;
+                    //    }
+                    //    //else if ($('#hdStateCodeBilling').val() != returnObj.StateCode)
+                    //    //{
+
+                    //    //    ctxtbillingPin.SetText($('#hdOldBillingPinCode').val());
+                    //    //    jAlert('Existing state and Entering state must be same.');
+                    //    //}
+                    //}
+                    //else {
+
+                    //    // ctxtbillingPin.SetText('');
+                    //    $('#hdCountryIdBilling').val('');
+                    //    ctxtbillingCountry.SetText('');
+                    //    $('#hdStateIdBilling').val('');
+                    //    ctxtbillingState.SetText('');
+                    //    $('#hdStateCodeBilling').val('');
+                    //    ctxtbillingCity.SetText('');
+                    //    $('#hdCityIdBilling').val('');
+                    //    ctxtSelectBillingArea.SetText('');
+                    //}
+                }
+            });
+        }
+
+    }
+</script>
+
+<div class="panel-heading">
+    <div id="td_contact1" class="panel-title">
+        <h3>
+            <span id="lblHeadTitle">Competitors </span>
+        </h3>
+    </div>
+</div>
+<div class="form_main clearfix">
+    <div class="mTop5">
+        <button class="btn btn-success btn-radius " data-toggle="modal" data-target="#addcomp" data-backdrop="static" data-keyboard="true"><span class="btn-icon"><i class="fa fa-plus"></i></span> Add Competitor</button>
+
+    </div>
+</div>
+
+
+<div class="modal fade pmsModal w90" id="addcomp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Opportunity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+               
+                
+                <div class="clearfix text-center" style="margin-bottom:7px;">
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Owner</b></div>
+                                <div>
+                                    <div><select><option>Select</option></select></div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Assign To</b></div>
+                                <div><select><option>Select</option></select></div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item ">
+                                <div><b>Status</b></div>
+                                <div><select><option>Select</option></select></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Est. Revenue</b></div>
+                                <div><input type="text" /></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection ">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Est. Close Date</b></div>
+                                <div><input type="text" /></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="Vtabs pmsForm">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-1">
+                            <ul class="nav nav-pills nav-stacked flex-column">
+                                <li class="active"><a href="#tab_a" data-toggle="pill">Summary</a></li>
+                               
+                            </ul>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-11">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_a">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Competitor Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Name </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Website </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Currency </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               
+                                            </div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix mTop10">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Strength </label>
+                                                        <div class="col-sm-12">
+                                                            <textarea class="form-control" rows="3"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Weakness </label>
+                                                        <div class="col-sm-12">
+                                                            <textarea class="form-control" rows="3"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Address Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 1 </label>
+                                                        <div class="col-sm-12">
+                                                            <textarea class="form-control" rows="1"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 2 </label>
+                                                        <div class="col-sm-12">
+                                                            <textarea class="form-control" rows="1"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Landmark </label>
+                                                        <div class="col-sm-12">
+                                                            <textarea class="form-control" rows="2"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row lblmTop8">
+                                                        <label for="" class="col-sm-12 col-form-label">Pin/Zip (6 Characters) </label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row lblmTop8">
+                                                        <label for="" class="col-sm-12 col-form-label">Country </label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row lblmTop8">
+                                                        <label for="" class="col-sm-12 col-form-label">State </label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row lblmTop8">
+                                                        <label for="" class="col-sm-12 col-form-label">City / District </label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

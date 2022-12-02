@@ -1,0 +1,134 @@
+﻿@using System.Web.UI.WebControls;
+
+
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "grid";
+    settings.CallbackRouteValues = new { Action = "AdvancedSelectionJournalPartial", Controller = "Accounts" };
+
+    settings.Width = Unit.Percentage(100);
+    settings.Settings.ShowFilterRow = true;
+    settings.SettingsBehavior.AllowDragDrop = false;
+
+    settings.KeyFieldName = "JournalVoucher_ID";
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.ShowClearFilterButton = true;
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+    //settings.Columns.Add("CashBank_VoucherNumber");
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "JournalVoucher_VoucherNumber";
+        column.Caption = "Document Number";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "branch_description";
+        column.Caption = "Branch Description";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "JournalVoucher_FinYear";
+        column.Caption = "Financial Year";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "CashBank_TransactionType";
+    //    column.Caption = "Transaction Type";
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //});
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "JournalVoucher_TransactionDate";
+        column.Caption = "Posting Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Settings.FilterMode = ColumnFilterMode.Value;
+
+
+        var DateEditProperties = column.PropertiesEdit as DateEditProperties;
+        DateEditProperties.DisplayFormatString = "dd-MM-yyyy";
+        DateEditProperties.DisplayFormatInEditMode = true;
+
+
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "JournalVoucher_Narration";
+        column.Caption = "Narration";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Amount";
+        column.Caption = "Amount";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+
+
+    //settings.Columns.Add("branch_description");
+    //settings.Columns.Add("CashBank_FinYear");
+    //settings.Columns.Add("CashBank_TransactionType");
+    //settings.Columns.Add("CashBank_TransactionDate");
+    //settings.Columns.Add("CashBank_Narration");
+    //settings.Columns.Add("Tax_Code");
+
+
+
+
+    settings.CustomJSProperties = (s, e) =>
+    {
+        var grid = s as MVCxGridView;
+        e.Properties["cpVisibleRowCount"] = grid.VisibleRowCount;
+        e.Properties["cpFilteredRowCountWithoutPage"] = GetFilteredRowCountWithoutPage(grid);
+    };
+
+    settings.AutoFilterCellEditorInitialize = (s, e) =>
+    {
+        if (e.Editor is ASPxDateEdit)
+            (e.Editor as ASPxDateEdit).EditFormatString = "dd-MM-yyyy";
+    };
+
+    settings.PreRender = (s, e) =>
+    {
+        (s as MVCxGridView).Selection.SelectAll();
+    };
+
+    settings.ClientSideEvents.Init = "OnGridViewInit";
+    settings.ClientSideEvents.SelectionChanged = "OnGridViewSelectionChanged";
+    settings.ClientSideEvents.EndCallback = "OnGridViewEndCallback";
+    settings.ClientSideEvents.BeginCallback = "OnGridViewBeginCallback";
+
+
+    settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+    settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+
+    settings.ClientSideEvents.SelectionChanged = "SelectionChanged";
+
+    // DevExpress.Web.Demos.GridViewFeaturesHelper.SetupGlobalGridViewBehavior(settings);
+}).Bind(Model).GetHtml()
+
+@functions {
+
+
+
+    int GetFilteredRowCountWithoutPage(MVCxGridView grid)
+    {
+        int selectedRowsOnPage = 0;
+        foreach (var key in grid.GetCurrentPageRowValues("JournalVoucher_ID"))
+        {
+            if (grid.Selection.IsRowSelectedByKey(key))
+                selectedRowsOnPage++;
+        }
+        return grid.Selection.FilteredCount - selectedRowsOnPage;
+    }
+
+
+}
+
+

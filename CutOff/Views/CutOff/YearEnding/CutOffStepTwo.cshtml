@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewBag.Title = "Cut Off Step Two";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+</style>
+
+<script>
+    function OnNextButtonClickTwo() {
+
+        var obj = {};
+        obj.path=txtCutOffPath.GetText();
+        obj.Dbname=txtDbName.GetText();
+        obj.Cutoffdate=$("#hdnCutoffDate").val();
+        obj.backup=$("#hdnBackup").val();
+        obj.AuditDBName = txtAuditDbName.GetText();
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/YearEnding/StartBackup",
+
+            //data: "{path:" + JSON.stringify(txtCutOffPath.GetText()) + ",Dbname:" + JSON.stringify(txtDbName.GetText()) + ",Cutoffdate:" + JSON.stringify($("#hdnCutoffDate").val()) + ",backup:" + JSON.stringify($("#hdnBackup").val()) + ",AuditDBName:" + JSON.stringify($("#txtAuditDbName").val()) + "}",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                jAlert(response);
+                document.getElementById("btnStep3").style.display = "inline-block";
+                document.getElementById("btnNext").style.display = "none";
+                LoadingPanel.Hide();
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+                LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function btnCancelClick() {
+        window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+    }
+
+    function RedirectToStepthree() {
+        window.location.href = "/YearEnding/CutOffStepThree?cutoffDate=" + $("#hdnCutoffDate").val() + "&backup=" + $("#hdnBackup").val() + "&Dbname=" + txtDbName.GetText() + "&AuditDbname=" + txtAuditDbName.GetText();
+    }
+
+</script>
+
+<div class="flexContainer" id="dvStep2">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending Step 2 by 3</h3>
+        <div class="bordered">
+            <table width="70%">
+                <tr style="display:none;">
+                    <td>
+                        <label>Back Up Path :</label>
+                    </td>
+                    <td>
+
+                   @Html.DevExpress().TextBox(
+                    settings =>
+                    {
+                        settings.Name = "txtCutOffPath";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = ViewBag.backupPath;
+                        settings.ClientEnabled = false;
+                    }).GetHtml()
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Database Name</label>
+                    </td>
+                    <td>
+                        @Html.DevExpress().TextBox(
+                    settings =>
+                    {
+                        settings.Name = "txtDbName";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = ViewBag.DbName;
+                        settings.ClientEnabled = false;
+                    }).GetHtml()
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Audit Database Name</label>
+                    </td>
+                    <td>
+                        @Html.DevExpress().TextBox(
+                    settings =>
+                    {
+                        settings.Name = "txtAuditDbName";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = ViewBag.AuditDbName;
+                        settings.ClientEnabled = false;
+                    }).GetHtml()
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label></label>
+                    </td>
+                    <td>
+                        @Html.DevExpress().Button(
+
+                        settings => {
+                            settings.Name = "btnNext";
+                            settings.ClientSideEvents.Click = "OnNextButtonClickTwo";
+                            settings.Text = "Start Backup";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-warning";
+                            settings.UseSubmitBehavior = false;
+                        }).GetHtml()
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label></label>
+                    </td>
+                    <td>
+                    <div id="dvBack" class="hide">Backup Done</div>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <div class="text-right mtop-2">
+                <button style="display:none;" id="btnStep3" class="btn btn-primary" onclick="RedirectToStepthree();">Next</button>
+                <button class="btn btn-danger" onclick="btnCancelClick();">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+    <input type="hidden" id="hdnCutoffDate" value="@ViewData["cutoffDate"]" />
+    <input type="hidden" id="hdnBackup" value="@ViewData["backup"]" />
+
+</div>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep2";
+    }
+).GetHtml()
+

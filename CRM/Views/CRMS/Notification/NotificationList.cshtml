@@ -1,0 +1,30 @@
+﻿@model CRM.Models.NotificationListClass
+@{
+    ViewBag.Title = "Notification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function OnMoreInfoClick(notificationid,name) {
+
+        var url = "@Url.Action("NotificationSettings", "Notification")" + "?notificationId=" + notificationid + "&notificationame=" + name;
+
+        //window.location.href = "/Notification/NotificationSettings?notificationId=" + notificationid;
+        window.location.href = url;
+
+
+    }
+
+</script>
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Notification</h3>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+         @Html.Partial(@"~\Views\CRMS\Notification\NotificationGrid.cshtml", Model.notificationList)
+    </div>
+</div>

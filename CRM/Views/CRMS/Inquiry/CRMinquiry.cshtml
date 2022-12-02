@@ -1,0 +1,3331 @@
+﻿@model CRM.Models.crmInquirys
+@{
+    ViewBag.Title = "Inquiry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/pluggins/JqueryConfirm/jquery-confirm.min.css" rel="stylesheet" />
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/SearchPopup.js"></script>
+<script src="/assests/pluggins/choosen/choosen.min.js"></script>
+<script>
+    var ActivityProduct = [];
+    var ActivityProductCRM = [];
+    var ActivityProductProductId = "";
+
+    var ActivityProductAdd = [];
+</script>
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<script src="~/assests/js/CRM/crmProducts.js"></script>
+<link href="~/assests/js/CRM/SearchPopup.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/ActivityProducts.js"></script>
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+
+<script src="~/assests/js/CRM/crmMembers.js"></script>
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+<script src="~/assests/pluggins/JqueryConfirm/jquery-confirm.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+<style>
+    .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .w100 {
+        width: 100px !important;
+    }
+
+    .gridcrmContact_DXFilterBar {
+        display: none !important;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+        /*#cmbPriority {
+        border-radius: 3px;
+    }*/
+        .myAssignTarget > li {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 11px;
+            text-align: center;
+        }
+
+            .myAssignTarget > li:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            .myAssignTarget > li.mainCircle {
+                border: 1px solid #a2d3d8;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .myAssignTarget > li .heading {
+                padding: 2px 12px;
+                background: #6d82c5;
+                color: #fff;
+            }
+
+            .myAssignTarget > li .Num {
+                font-size: 14px;
+            }
+
+            .myAssignTarget > li.mainHeadCenter {
+                font-size: 12px;
+                transform: translateY(-16px);
+            }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+    #cc, #bcc {
+        display: none;
+    }
+
+    .auto {
+        cursor: auto;
+    }
+
+    .default {
+        cursor: default;
+    }
+
+    .none {
+        cursor: none;
+    }
+
+    .context-menu {
+        cursor: context-menu;
+    }
+
+    .help {
+        cursor: help;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    .progress {
+        cursor: progress;
+    }
+
+    .wait {
+        cursor: wait;
+    }
+
+    .cell {
+        cursor: cell;
+    }
+
+    .crosshair {
+        cursor: crosshair;
+    }
+
+    .text {
+        cursor: text;
+    }
+
+    .vertical-text {
+        cursor: vertical-text;
+    }
+
+    .alias {
+        cursor: alias;
+    }
+
+    .copy {
+        cursor: copy;
+    }
+
+    .move {
+        cursor: move;
+    }
+
+    .no-drop {
+        cursor: no-drop;
+    }
+
+    .not-allowed {
+        cursor: not-allowed;
+    }
+
+    .all-scroll {
+        cursor: all-scroll;
+    }
+
+    .col-resize {
+        cursor: col-resize;
+    }
+
+    .row-resize {
+        cursor: row-resize;
+    }
+
+    .n-resize {
+        cursor: n-resize;
+    }
+
+    .e-resize {
+        cursor: e-resize;
+    }
+
+    .s-resize {
+        cursor: s-resize;
+    }
+
+    .w-resize {
+        cursor: w-resize;
+    }
+
+    .ns-resize {
+        cursor: ns-resize;
+    }
+
+    .ew-resize {
+        cursor: ew-resize;
+    }
+
+    .ne-resize {
+        cursor: ne-resize;
+    }
+
+    .nw-resize {
+        cursor: nw-resize;
+    }
+
+    .se-resize {
+        cursor: se-resize;
+    }
+
+    .sw-resize {
+        cursor: sw-resize;
+    }
+
+    .nesw-resize {
+        cursor: nesw-resize;
+    }
+
+    .nwse-resize {
+        cursor: nwse-resize;
+    }
+
+    .cursors > div {
+        float: left;
+        box-sizing: border-box;
+        background: #f2f2f2;
+        border: 1px solid #ccc;
+        width: 20%;
+        padding: 10px 2px;
+        text-align: center;
+        white-space: nowrap;
+
+
+    {
+        background: #eee;
+    }
+
+    &:hover {
+        opacity: 0.25;
+    }
+
+    }
+</style>
+@*For Single selection when click on ok button*@
+<script type="text/javascript">
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if (indexName == "InquiryValuesIndex") {
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                if (Id) {
+                    SetInquiryValues(Id, name);
+                }
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                $('#txtInquiryValuesSearch').focus();
+            }
+        }
+    }
+
+    function GroupChange() {
+        var objGroup = {};
+        objGroup.group_id = $("#GroupId").val();
+        $.ajax({
+            type: "POST",
+            url: "/Inquiry/GetGroupData",
+            data: JSON.stringify(objGroup),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response) {
+                    if ($("#hdnExistingEntity").val() == '') {
+                        if (response.IsIndivisual == "True") {
+                            ccompany_name.SetText(cfirstname.GetText() + ' ' + clastname.GetText())
+                            ccompany_name.SetEnabled(false);
+                        }
+                        else {
+                            ccompany_name.SetText('')
+                            ccompany_name.SetEnabled(true);
+                        }
+                    }
+
+                }
+
+            }
+        });
+
+    }
+
+    function OnsameInquiryAddbuttonClick() {
+
+
+        cemail.SetFocus();
+        CRMpcControl.Hide();
+    }
+
+    function OnsameInquiryCancelbuttonClick() {
+        cMobile.SetFocus();
+        CRMpcControl.Hide();
+    }
+
+
+    function MobileLostFocus(s, e) {
+        var mobile = cMobile.GetText();
+        var obj = {};
+        obj.MobileNo = mobile;
+
+
+        if (cMobile.GetText() == "") {
+            return;
+        }
+
+        var str = "<div id='InquiryValueTable'><table border='1' width='100%' class='table dynamicPopupTbl'><thead><tr class='HeaderStyle'><th>Entity Name</td><th>Unique ID</td></tr></thead>"
+
+        $.ajax({
+            type: "POST",
+            url: "/Inquiry/GetInquiryData",
+            data: JSON.stringify(obj),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response) {
+                    if (response.length > 0) {
+
+                        if (response.length == 1) {
+                            var obj = {};
+                            obj.Entity_Id = response[0].cnt_id;
+
+                            $("#hdnExistingEntity").val(response[0].cnt_id);
+
+                            LoadingPanel.Show();
+                            CRMpcControl.Hide();
+                            $.ajax({
+                                type: "POST",
+                                url: "/Inquiry/GetEntityData",
+                                data: JSON.stringify(obj),
+                                async: true,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (response) {
+                                    LoadingPanel.Hide();
+                                    // cInquiryCode.SetEnabled(false);
+
+                                    $("#OwnerID").val(response.OwnerID);
+                                    $("#AssignedID").val(response.AssignedID);
+                                    $("#SourceID").val(response.SourceID);
+                                    $("#RatingID").val(response.RatingID);
+
+
+
+                                    $("#Status_Id").empty();
+                                    var statursddet = response.Status_Details;
+                                    $.each(statursddet, function (i, statursddet) {      // bind the dropdown list using json result
+                                        $('<option>',
+                                           {
+                                               value: statursddet.Id,
+                                               text: statursddet.Status_Code
+                                           }).html(statursddet.Status_Code).appendTo("#Status_Id");
+                                    });
+
+
+                                    $("#Status_Id").val(9);
+                                    //cTopic.SetText(response.Topic);
+                                    $("#ddlTopic").val(response.Topic);
+                                    //cInquiryCode.SetText(response.InquiryCode);
+                                    cfirstname.SetText(response.firstname);
+                                    clastname.SetText(response.lastname);
+                                    $("#job_titleId").val(response.job_titleId);
+                                    $("#GroupId").val(response.GroupId);
+
+                                    //cBusiness_phone.SetText(response.Business_phone);
+                                    //cMobile.SetText(response.Mobile);
+                                    //cemail.SetText(response.email);
+
+
+                                    ccompany_name.SetText(response.company_name);
+                                    //cwebsite.SetText(response.custdetails.add_Website);
+                                    cExpected_Reveneu.SetText(response.Expected_Reveneu);
+                                    cstree1.SetText(response.custdetails.Address1);
+                                    cstree2.SetText(response.custdetails.Address2);
+                                    cstree3.SetText(response.custdetails.Address3);
+                                    cLandmark.SetText(response.custdetails.Landmark);
+                                    $("#hdnpinid").val(response.custdetails.PinId);
+                                    cpin.SetText(response.custdetails.PinCode);
+                                    $("#hdncountryid").val(response.custdetails.CountryId);
+                                    ccountry.SetText(response.custdetails.CountryName);
+                                    $("#hdnstateid").val(response.custdetails.StateId);
+                                    cstate.SetText(response.custdetails.StateName);
+                                    $("#hdncityid").val(response.custdetails.CityId);
+                                    ccity.SetText(response.custdetails.CityName);
+                                    ccompany_description.SetText(response.company_description);
+
+
+
+                                    cs_Address1.SetText(response.s_Address1);
+                                    cs_Address2.SetText(response.s_Address2);
+                                    cs_Address3.SetText(response.s_Address3);
+                                    cs_Landmark.SetText(response.s_Landmark);
+                                    $("#cshdnpinid").val(response.Pinid);
+                                    cs_Pin.SetText(response.s_Pin);
+                                    $("#cshdncountryid").val(response.s_Countryid);
+                                    cs_Country.SetText(response.s_Country);
+                                    $("#cshdnstateid").val(response.s_Stateid);
+                                    cs_State.SetText(response.s_State);
+                                    $("#cshdncityid").val(response.s_Cityid);
+                                    cs_City.SetText(response.s_City);
+                                    cGSTIN.SetText(response.GSTIN);
+
+
+
+                                    $("#IndustryID").val(response.IndustryID);
+                                    cAnnual_Reveneu.SetValue(response.Annual_Reveneu)
+                                    cNo_of_Employee.SetText(response.No_of_Employee);
+                                    //cSource_campaign.SetText(response.Source_campaign);
+                                    //cMarketing_Materials.SetText(response.Marketing_Materials);
+                                    $("#Source_campaign").val(response.Source_campaign);
+                                    $("#Marketing_Materials").val(response.Marketing_Materials);
+
+                                    $("#hdnSourceType").val(response.InquiryValuesType);
+                                    if ($("#SourceID option:selected").text() == "Others") {
+                                        $("#divInquiryvalues").hide();
+                                        $("#divOthersInquiryvalues").show();
+                                        ctxtOthersInquiryValues.SetText(response.InquiryValuesInternalName);
+                                        $("#hdfInquiryValuesIDCRM").val(response.InquiryValuesInternalID);
+                                    }
+                                    else {
+                                        $("#divInquiryvalues").show();
+                                        $("#divOthersInquiryvalues").hide();
+                                        ctxtInquiryValues.SetText(response.InquiryValuesInternalName);
+                                        $("#hdfInquiryValuesIDCRM").val(response.InquiryValuesInternalID);
+                                    }
+
+
+                                    $("#ddlSalesType").val(response.SalesType);
+                                    $("#ddlServiceLocation").val(response.ServiceLocation);
+                                    $("#BranchId").val(response.BranchId);
+                                    $("#AccountManagerId").val(response.AccountManagerId)
+                                    // Rev Sanchita
+                                    $("#ddlTypeOfCustomer").val(response.TypeOfCustomer);
+                                    // End of Rev Sanchita
+
+
+                                    if (response.Last_InquiryCampaign_Date != null)
+                                        cLast_Campaign_Date.SetDate(new Date(parseInt(response.Last_InquiryCampaign_Date.substr(6))));
+                                    $("#addInquiry").modal('show');
+                                },
+                                error: function (response) {
+                                    jAlert("Can not Edit");
+                                    LoadingPanel.Hide();
+                                }
+                            });
+                        }
+                        else {
+
+                            for (var i = 0; i < response.length; i++) {
+                                str = str + '<tbody><tr class="pointer" onclick="AddExixtingCustomer(' + response[i].cnt_id + ')"><td>' + response[i].Name + '</td><td>' + response[i].Unique_id + '</td></tr></tbody>';
+                            }
+
+
+
+                            str = str + '</table></div>';
+                            //str = str + '<div><button class="btn btn-success btn-radius  "  onclick="OnsameInquiryAddbuttonClick();"><span class="btn-icon">Add Inquiry</button>';
+                            //str = str + '<button class="btn btn-danger btn-radius  " onclick="OnsameInquiryCancelbuttonClick();">Cancel</button></div>';
+
+
+                            CRMpcControl.SetContentHtml(str);
+                            MVCxClientUtils.FinalizeCallback();
+                            CRMpcControl.SetHeaderText('Already Added Inquiry with same Mobile number');
+                            CRMpcControl.Show();
+                        }
+                    }
+                }
+
+
+
+            },
+            error: function (response) {
+                console.log(response);
+            }
+
+        })
+
+
+
+    }
+
+    function AddExixtingCustomer(customer_id) {
+        var obj = {};
+        obj.Entity_Id = customer_id;
+        $("#hdnExistingEntity").val(customer_id);
+        LoadingPanel.Show();
+        CRMpcControl.Hide();
+        $.ajax({
+            type: "POST",
+            url: "/Inquiry/GetEntityData",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadingPanel.Hide();
+                //cInquiryCode.SetEnabled(false);
+
+                $("#OwnerID").val(response.OwnerID);
+                $("#AssignedID").val(response.AssignedID);
+                $("#SourceID").val(response.SourceID);
+                $("#RatingID").val(response.RatingID);
+
+
+
+                $("#Status_Id").empty();
+                var statursddet = response.Status_Details;
+                $.each(statursddet, function (i, statursddet) {      // bind the dropdown list using json result
+                    $('<option>',
+                       {
+                           value: statursddet.Id,
+                           text: statursddet.Status_Code
+                       }).html(statursddet.Status_Code).appendTo("#Status_Id");
+                });
+
+
+                $("#Status_Id").val(9);
+                //cTopic.SetText(response.Topic);
+                $("#ddlTopic").val(response.Topic);
+                //cInquiryCode.SetText(response.InquiryCode);
+                cfirstname.SetText(response.firstname);
+                clastname.SetText(response.lastname);
+                $("#job_titleId").val(response.job_titleId);
+                $("#GroupId").val(response.GroupId);
+
+                //cBusiness_phone.SetText(response.Business_phone);
+                //cMobile.SetText(response.Mobile);
+                //cemail.SetText(response.email);
+
+
+                ccompany_name.SetText(response.company_name);
+                cwebsite.SetText(response.custdetails.add_Website);
+                cExpected_Reveneu.SetText(response.Expected_Reveneu);
+                cstree1.SetText(response.custdetails.Address1);
+                cstree2.SetText(response.custdetails.Address2);
+                cstree3.SetText(response.custdetails.Address3);
+                cLandmark.SetText(response.custdetails.Landmark);
+                $("#hdnpinid").val(response.custdetails.PinId);
+                cpin.SetText(response.custdetails.PinCode);
+                $("#hdncountryid").val(response.custdetails.CountryId);
+                ccountry.SetText(response.custdetails.CountryName);
+                $("#hdnstateid").val(response.custdetails.StateId);
+                cstate.SetText(response.custdetails.StateName);
+                $("#hdncityid").val(response.custdetails.CityId);
+                ccity.SetText(response.custdetails.CityName);
+                ccompany_description.SetText(response.company_description);
+
+
+
+                cs_Address1.SetText(response.s_Address1);
+                cs_Address2.SetText(response.s_Address2);
+                cs_Address3.SetText(response.s_Address3);
+                cs_Landmark.SetText(response.s_Landmark);
+                $("#cshdnpinid").val(response.Pinid);
+                cs_Pin.SetText(response.s_Pin);
+                $("#cshdncountryid").val(response.s_Countryid);
+                cs_Country.SetText(response.s_Country);
+                $("#cshdnstateid").val(response.s_Stateid);
+                cs_State.SetText(response.s_State);
+                $("#cshdncityid").val(response.s_Cityid);
+                cs_City.SetText(response.s_City);
+                cGSTIN.SetText(response.GSTIN);
+
+
+
+                $("#IndustryID").val(response.IndustryID);
+                cAnnual_Reveneu.SetValue(response.Annual_Reveneu)
+                cNo_of_Employee.SetText(response.No_of_Employee);
+                //cSource_campaign.SetText(response.Source_campaign);
+                //cMarketing_Materials.SetText(response.Marketing_Materials);
+                $("#Source_campaign").val(response.Source_campaign);
+                $("#Marketing_Materials").val(response.Marketing_Materials);
+
+                $("#hdnSourceType").val(response.InquiryValuesType);
+                if ($("#SourceID option:selected").text() == "Others") {
+                    $("#divInquiryvalues").hide();
+                    $("#divOthersInquiryvalues").show();
+                    ctxtOthersInquiryValues.SetText(response.InquiryValuesInternalName);
+                    $("#hdfInquiryValuesIDCRM").val(response.InquiryValuesInternalID);
+                }
+                else {
+                    $("#divInquiryvalues").show();
+                    $("#divOthersInquiryvalues").hide();
+                    ctxtInquiryValues.SetText(response.InquiryValuesInternalName);
+                    $("#hdfInquiryValuesIDCRM").val(response.InquiryValuesInternalID);
+                }
+
+
+
+
+                if (response.Last_InquiryCampaign_Date != null)
+                    cLast_Campaign_Date.SetDate(new Date(parseInt(response.Last_InquiryCampaign_Date.substr(6))));
+                $("#addInquiry").modal('show');
+            },
+            error: function (response) {
+                jAlert("Can not Edit");
+                LoadingPanel.Hide();
+            }
+        });
+    }
+
+
+
+</script>
+@*For Single selection when click on ok button*@
+@*For Inquiry Values Single Selection*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#InquiryValueModel').on('shown.bs.modal', function () {
+            $('#txtInquiryValuesSearch').focus();
+        })
+        $("#divInquiryvalues").show();
+        $("#divOthersInquiryvalues").hide();
+    })
+    function InquiryValueButnClick(s, e) {
+        clear_PreviousCustdata();
+        $('#InquiryValueModel').modal('show');
+    }
+
+    function InquiryValue_KeyDown(s, e) {
+        clear_PreviousCustdata();
+        if (e.htmlEvent.key == "Enter") {
+            $('#InquiryValueModel').modal('show');
+        }
+    }
+    function clear_PreviousCustdata() {
+        // ctxtInquiryValues.SetText("");
+        var OtherDetails = {}
+        OtherDetails.SearchKey = 'abc123zzxx';
+        OtherDetails.ContactType = $("#hdnSourceType").val();
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Name");
+        callonServer("../Inquiry/GetInquiryValues", OtherDetails, "InquiryValueTable", HeaderCaption, "InquiryValuesIndex", "SetInquiryValues");
+    }
+    function InquiryValueskeydown(e) {
+        var OtherDetails = {}
+
+        if ($.trim($("#txtInquiryValuesSearch").val()) == "" || $.trim($("#txtInquiryValuesSearch").val()) == null) {
+            return false;
+        }
+        OtherDetails.SearchKey = $("#txtInquiryValuesSearch").val();
+        OtherDetails.ContactType = $("#hdnSourceType").val();
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Name");
+
+            if ($("#txtInquiryValuesSearch").val() != "") {
+                callonServer("../Inquiry/GetInquiryValues", OtherDetails, "InquiryValueTable", HeaderCaption, "InquiryValuesIndex", "SetInquiryValues");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[InquiryValuesIndex=0]"))
+                $("input[InquiryValuesIndex=0]").focus();
+        }
+    }
+
+    function SetInquiryValues(Id, Name) {
+        debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#InquiryValueModel').modal('hide');
+            ctxtInquiryValues.SetText(Name);
+            GetObjectID('hdfInquiryValuesIDCRM').value = key;
+            ctxtInquiryValues.Focus();
+        }
+        else {
+            ctxtInquiryValues.SetText('');
+            GetObjectID('hdfInquiryValuesIDCRM').value = '';
+        }
+    }
+
+</script>
+@*For Inquiry Values  Single Selection*@
+@*-----------------------Start Qualify---------------------------------*@
+<script type="text/javascript">
+
+    function onInquirySourceSelectedIndexChanged() {
+        var SourceID = $("#SourceID").val();
+        var SourceName = $("#SourceID option:selected").text();
+        var SourceType = "";
+
+        ctxtInquiryValues.SetText("");
+        GetObjectID('hdfInquiryValuesIDCRM').value = "";
+
+
+        if (SourceName == "Existing Inquiry") {
+            SourceType = "LD";
+            ctxtInquiryValues.SetEnabled(true);
+        }
+        else if (SourceName == "Customer") {
+            SourceType = "CL";
+            ctxtInquiryValues.SetEnabled(true);
+        }
+        else if (SourceName == "Vendor" || SourceName == "Data Vendor") {
+            SourceType = "DV";
+            ctxtInquiryValues.SetEnabled(true);
+        }
+        else if (SourceName == "Salesmen/Agent") {
+            SourceType = "AG";
+            ctxtInquiryValues.SetEnabled(true);
+        }
+        else if (SourceName == "Influencer") {
+            SourceType = "RA";
+            ctxtInquiryValues.SetEnabled(true);
+        }
+        else if (SourceName == "Employee") {
+            SourceType = "EM";
+            ctxtInquiryValues.SetEnabled(true);
+        }
+        else if (SourceName == "Contacts") {
+            SourceType = "CT";
+            ctxtInquiryValues.SetEnabled(true);
+        }
+        else if (SourceName == "Existing Lead") {
+            SourceType = "LD";
+            ctxtInquiryValues.SetEnabled(true);
+        }
+        else {
+            ctxtInquiryValues.SetEnabled(false);
+        }
+
+        if (SourceName == "Others") {
+            SourceType = "Others";
+            $("#divInquiryvalues").hide();
+            $("#divOthersInquiryvalues").show();
+        }
+        else {
+            $("#divInquiryvalues").show();
+            $("#divOthersInquiryvalues").hide();
+        }
+        hdnSourceType.value = SourceType;
+    }
+    function Qualify(id, status) {
+        if (status == 'Cancelled/Lost') {
+            jAlert('Already Cancelled/Lost.');
+        }
+        else if (status == 'Qualify') {
+            jAlert('Already Qualified.');
+        }
+        else {
+            $("#hdnInquiry_Id").val(id);
+            var obj = {};
+            obj.InquiryCode = id;
+            jConfirm('Confirm Qualify?', 'Confirmation Dialog', function (r) {
+                if (r == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Inquiry/QualifyInquiry",
+                        data: JSON.stringify(obj),
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            jAlert(response);
+                            gridcrmInquiry.Refresh();
+                            gridcrmInquiry.Refresh();
+                        },
+                        error: function (response) {
+                            jAlert("Can not Qualified");
+                            gridcrmInquiry.Refresh();
+                            gridcrmInquiry.Refresh();
+                            LoadingPanel.Hide();
+                        }
+                    });
+                }
+            });
+        }
+
+    }
+
+    function Lost(id, status) {
+
+        if (status == 'Qualify') {
+            jAlert('Already Qualified. Can not modified.');
+        }
+        else {
+            //$("#hdnInquiry_Id").val(id);
+            var obj = {};
+            obj.InquiryCode = id;
+            jConfirm('Confirm Cancelled/Lost?', 'Confirmation Dialog', function (r) {
+                if (r == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Inquiry/LostInquiry",
+                        data: JSON.stringify(obj),
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            jAlert(response);
+                            gridcrmInquiry.Refresh();
+                            gridcrmInquiry.Refresh();
+                        },
+                        error: function (response) {
+                            jAlert("Can not Cancelled/Lost");
+                            gridcrmInquiry.Refresh();
+                            gridcrmInquiry.Refresh();
+                            LoadingPanel.Hide();
+                        }
+                    });
+                }
+            });
+        }
+
+    }
+</script>
+@*-----------------------End Qualify---------------------------------*@
+
+
+
+<script type="text/javascript">
+    $("#MyDropDown").change(function (e) {
+        return GetEmployeeDetails();
+    });
+
+    function LostFocusInInquiryCode() {
+        var obj = {};
+        obj.column = "cnt_UCC";
+        obj.value = cInquiryCode.GetText();
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Inquiry/checkValidation",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (cInquiryCode.GetText() != '') {
+                    if (response == 1) {
+                        jAlert("Unique ID is found Duplicate! Cannot Proceed.", 'Alert', function () {
+                            cInquiryCode.SetText('');
+                            cInquiryCode.SetFocus()
+                        });
+                    }
+                }
+
+            },
+            error: function (response) {
+                jAlert("please try again later!");
+            }
+        });
+    }
+
+    function OnAddbuttonClick() {
+
+        $("#Mandatoryfrm_topic").hide();
+        $("#Mandatoryfrm_firstname").hide();
+        $("#Mandatoryfrm_companyname").hide();
+
+
+        $('.widgetizeForm').find('.parentLi').removeClass('ready visited on');
+        $('#idnew').addClass('ready on');
+
+        cInquiryCode.SetEnabled(true);
+        cInquiryCode.SetText("");
+        $("#OwnerID").val($("#hdnOwnerAssignID").val());
+        $("#AssignedID").val($("#hdnOwnerAssignID").val());
+        $("#SourceID").val(0);
+        $("#RatingID").val(0);
+        $("#Status_Id").val(7);
+
+
+        //cTopic.SetText('');
+        $("#ddlTopic").val('');
+        cInquiryCode.SetText('');
+        cfirstname.SetText('');
+        clastname.SetText('');
+        $("#job_titleId").val(0);
+        cBusiness_phone.SetText('');
+        cMobile.SetText('');
+        cemail.SetText('');
+        ccompany_name.SetText('');
+        cwebsite.SetText('');
+
+        cstree1.SetText('');
+        cstree2.SetText('');
+        cstree3.SetText('');
+        cLandmark.SetText('');
+        $("#hdnpinid").val(0);
+        cpin.SetText('');
+        $("#hdncountryid").val(0);
+        ccountry.SetText('');
+        $("#hdnstateid").val(0);
+        cstate.SetText('');
+        $("#hdncityid").val(0);
+        ccity.SetText('');
+        $("#hdnExistingEntity").val('')
+        cs_Address1.SetText('');
+        cs_Address2.SetText('');
+        cs_Address3.SetText('');
+        cs_Landmark.SetText('');
+        $("#cshdnpinid").val(0);
+        cs_Pin.SetText('');
+        $("#cshdncountryid").val(0);
+        cs_Country.SetText('');
+        $("#cshdnstateid").val(0);
+        cs_State.SetText('');
+        $("#cshdncityid").val(0);
+        cs_City.SetText('');
+
+        ccompany_description.SetText('');
+        $("#IndustryID").val(0);
+        cAnnual_Reveneu.SetText(0.00);
+        cNo_of_Employee.SetText('');
+        $("#Source_campaign").val(0);
+        $("#Marketing_Materials").val(0);
+        ctxtInquiryValues.SetText('');
+        $("#hdnSourceType").val(0);
+        $("#hdfInquiryValuesIDCRM").val(0);
+        cExpected_Reveneu.SetText(0);
+        document.getElementById("btnsave").style.visibility = "visible";
+        $("#Status_Id").prop("disabled", false);
+
+        $("#ddlSalesType").val('');
+        $("#ddlServiceLocation").val('');
+        // Rev Sanchita
+        $("#ddlTypeOfCustomer").val('');
+        // End of Rev Sanchita
+        ctxtQuantityAdd.SetText(0);
+        ctxtRateAdd.SetText(0);
+        ctxtTotalAdd.SetText(0);
+        GetObjectID('hdfProductIDAdd').value = 0;
+        $("#ddlFrequency").val('');
+        ctxtProductAdd.SetText('');
+        ctxtRemarksAdd.SetText('');
+        ShowCRMProductsEditAdd("Inquiry Products", 0);
+        $("#tbodyActivityProductAdd").html('');
+
+        $("#BranchId").val(0);
+        $("#AccountManagerId").val(0)
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Inquiry/AddStatusPopulate",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var obj = response.Status_Details;
+                $("#Status_Id").empty();
+                $.each(obj, function (i, obj) {
+                    $('<option>',
+                       {
+                           value: obj.Id,
+                           text: obj.Status_Code
+                       }).html(obj.Status_Code).appendTo("#Status_Id");
+                });
+
+            }
+        });
+
+
+
+        AddnewRecord();
+
+
+
+
+        //if (response.Last_InquiryCampaign_Date != null)
+        //    cLast_Campaign_Date.SetDate(new Date(parseInt(response.Last_InquiryCampaign_Date.substr(6))));
+        $("#OwnerID").focus();
+    }
+    function PinChange() {
+
+        var detailsByPin = cpin.GetText().trim();
+
+        //cpin
+
+        if (detailsByPin != '') {
+            //var details = {}
+
+            //details.PinCode = detailsByPin;
+            $.ajax({
+                type: "POST",
+                url: "/Inquiry/AddressByPin",
+                data: JSON.stringify({ PinCode: detailsByPin }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cpin.SetText(returnObj.PinCode);
+                        ccountry.SetText(returnObj.CountryName);
+                        cstate.SetText(returnObj.StateName);
+                        ccity.SetText(returnObj.CityName);
+
+                        $('#hdnpinid').val(returnObj.PinId);
+                        $('#hdncountryid').val(returnObj.CountryId);
+                        $('#hdnstateid').val(returnObj.StateId);
+                        $('#hdncityid').val(returnObj.CityId);
+                    }
+                    else {
+                        $('#hdnpinid').val('');
+                        $('#hdncountryid').val('');
+                        $('#hdnstateid').val('');
+                        $('#hdncityid').val('');
+
+                        cpin.SetText('');
+                        ccountry.SetText('');
+                        cstate.SetText('');
+                        ccity.SetText('');
+
+                    }
+                }
+            });
+        }
+
+    }
+    function SPinChange() {
+
+        var detailsByPin = cs_Pin.GetText().trim();
+
+        //cpin
+
+        if (detailsByPin != '') {
+            //var details = {}
+
+            //details.PinCode = detailsByPin;
+            $.ajax({
+                type: "POST",
+                url: "/Inquiry/AddressByPin",
+                data: JSON.stringify({ PinCode: detailsByPin }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cs_Pin.SetText(returnObj.PinCode);
+                        cs_Country.SetText(returnObj.CountryName);
+                        cs_State.SetText(returnObj.StateName);
+                        cs_City.SetText(returnObj.CityName);
+
+                        $('#cshdnpinid').val(returnObj.PinId);
+                        $('#cshdncountryid').val(returnObj.CountryId);
+                        $('#cshdnstateid').val(returnObj.StateId);
+                        $('#cshdncityid').val(returnObj.CityId);
+                    }
+                    else {
+                        cs_Pin.SetText('');
+                        cs_Country.SetText('');
+                        cs_State.SetText('');
+                        cs_City.SetText('');
+
+                        $('#cshdnpinid').val('');
+                        $('#cshdncountryid').val('');
+                        $('#cshdnstateid').val('');
+                        $('#cshdncityid').val('');
+
+                    }
+                }
+            });
+        }
+
+    }
+
+
+    function ValidationInquirys() {
+        var isvalid = false;
+        //if (cTopic.GetText() == "") {
+        if($("#ddlTopic").val()==""){
+            isvalid = false;
+            $("#Mandatoryfrm_topic").show();
+            jAlert("Topic is Mandatory"); return;
+        }
+        else {
+            isvalid = true;
+        }
+
+        if (cfirstname.GetText() == "") {
+            isvalid = false;
+            $("#Mandatoryfrm_firstname").show();
+            jAlert("First Name is Mandatory"); return;
+        }
+        else {
+            isvalid = true;
+        }
+
+        //if (clastname.GetText() == "") {
+        //    isvalid = false;
+        //    jAlert("Last Name is Mandatory"); return;
+        //}
+        //else {
+        //    isvalid = true;
+        //}
+
+        if (ccompany_name.GetText() == "") {
+            isvalid = false;
+            $("#Mandatoryfrm_companyname").show();
+            jAlert("Company/Account Name is Mandatory"); return;
+        }
+        else {
+            isvalid = true;
+        }
+
+
+        var objGroup = {};
+        objGroup.group_id = $("#GroupId").val();
+        $.ajax({
+            type: "POST",
+            url: "/Inquiry/GetGroupData",
+            data: JSON.stringify(objGroup),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response) {
+                    if (response.emailmandatory == "True" && cemail.GetText() == "") {
+                        isvalid = false;
+                        jAlert("Email is Mandatory"); return;
+                    }
+                    else {
+                        isvalid = true;
+                    }
+                    if (response.mobilemandatory == "True" && cMobile.GetText() == "") {
+                        isvalid = false;
+                        jAlert("Mobile is Mandatory"); return;
+                    }
+                    else {
+                        isvalid = true;
+                    }
+                }
+
+            }
+        });
+
+        return isvalid;
+    }
+    function SaveInquirys() {
+
+        if (ValidationInquirys()) {
+            var obj = {};
+            var address = {};
+            $("#hdnInquiry_Id").val() == ""
+
+            if ($("#hdnInquiry_Id").val() == "") {
+                obj.Action = "Add";
+                $("#hdnActionType").val('Add');
+                obj.Inquiry_Id = 0;
+            }
+            else {
+                obj.Action = "Update";
+                $("#hdnActionType").val('Update');
+                obj.Inquiry_Id = $("#hdnInquiry_Id").val();
+            }
+
+
+
+
+
+            //$("#hdnInquiry_Id").val();
+
+            obj.OwnerID = $("#OwnerID").val();
+            obj.AssignedID = $("#AssignedID").val();
+            obj.SourceID = $("#SourceID").val();
+            obj.RatingID = $("#RatingID").val();
+            obj.Status_Id = $("#Status_Id").val();
+
+            //obj.Topic = cTopic.GetText();
+            obj.Topic = $("#ddlTopic").val();
+            obj.InquiryCode = cInquiryCode.GetText();
+            obj.firstname = cfirstname.GetText();
+            obj.lastname = clastname.GetText();
+            obj.job_titleId = $("#job_titleId").val();
+            obj.GroupId = $("#GroupId").val();
+            obj.GSTIN = cGSTIN.GetText();
+            obj.Business_phone = cBusiness_phone.GetText();
+            obj.Mobile = cMobile.GetText();
+            obj.email = cemail.GetText();
+
+            obj.company_name = ccompany_name.GetText();
+            obj.website = cwebsite.GetText();
+            obj.existingCustomeriD = $("#hdnExistingEntity").val();
+
+
+            address.Address1 = cstree1.GetText();
+            address.Address2 = cstree2.GetText();
+            address.Address3 = cstree3.GetText();
+            address.Landmark = cLandmark.GetText();
+            address.PinId = $("#hdnpinid").val();
+            address.CountryId = $("#hdncountryid").val();
+            address.StateId = $("#hdnstateid").val();
+            address.CityId = $("#hdncityid").val();
+
+            obj.s_Address1 = cs_Address1.GetText();
+            obj.s_Address2 = cs_Address2.GetText();
+            obj.s_Address3 = cs_Address3.GetText();
+            obj.s_Landmark = cs_Landmark.GetText();
+            obj.s_Pin = $("#cshdnpinid").val();
+            obj.s_Country = $("#cshdncountryid").val();
+            obj.s_State = $("#cshdnstateid").val();
+            obj.s_City = $("#cshdncityid").val();
+
+
+
+            obj.custdetails = address;
+            obj.company_description = ccompany_description.GetText();
+            obj.IndustryID = $("#IndustryID").val();
+            obj.Annual_Reveneu = cAnnual_Reveneu.GetText();
+            obj.No_of_Employee = cNo_of_Employee.GetText();
+
+            //obj.Source_campaign = cSource_campaign.GetText();
+            //obj.Marketing_Materials = cMarketing_Materials.GetText();
+            obj.Source_campaign = $("#Source_campaign").val();
+            obj.Marketing_Materials = $("#Marketing_Materials").val();
+            obj.Last_InquiryCampaign_Date = cLast_Campaign_Date.GetDate();
+            obj.InquiryValuesInternalID = $("#hdfInquiryValuesIDCRM").val();
+            obj.InquiryValuesType = $("#hdnSourceType").val();
+            obj.InquiryValue = ctxtOthersInquiryValues.GetText();
+            obj.Expected_Reveneu = cExpected_Reveneu.GetText();
+            obj.Productlist = ActivityProductAdd;
+            obj.SalesType = $("#ddlSalesType").val();
+            obj.ServiceLocation = $("#ddlServiceLocation").val();
+            // Rev Sanchita
+            obj.TypeOfCustomer = $("#ddlTypeOfCustomer").val();
+            // End of Rev Sanchita
+
+            obj.BranchId = $("#BranchId").val();
+            obj.AccountManagerId = $("#AccountManagerId").val()
+
+            LoadingPanel.Show();
+            $.ajax({
+                type: "POST",
+                url: "/Inquiry/SaveCRMInquirys",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    jAlert(response);
+                    gridcrmInquiry.Refresh();
+                    gridcrmInquiry.Refresh();
+                    $("#addInquiry").modal('hide');
+                    LoadingPanel.Hide();
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                    LoadingPanel.Hide();
+                }
+            });
+        }
+
+    }
+    function EditClick(id, Status) {
+        $("#Mandatoryfrm_topic").hide();
+        $("#Mandatoryfrm_firstname").hide();
+        $("#Mandatoryfrm_companyname").hide();
+
+        if (Status == 'Cancelled/Lost') {
+            $('#idnew').removeClass('on').addClass('ready visited');
+            $('#idqualify').removeClass('on').addClass('ready visited');
+            $('#idclose').removeClass('on').addClass('ready visited');
+            $('#dqualify').text('Cancelled/Lost');
+        }
+        else if (Status == 'Qualify') {
+            $('#idnew').removeClass('on').addClass('ready visited');
+            $('#idqualify').removeClass('on').addClass('ready visited');
+            $('#idclose').removeClass('on').addClass('ready visited');
+            $('#dqualify').text('Qualify');
+        }
+        else {
+            $('.widgetizeForm').find('.parentLi').removeClass('ready visited on');
+            $('#idnew').removeClass('on').addClass('ready visited');
+            $('#idqualify').removeClass('on').addClass('ready on');
+            $('#dqualify').text('Qualify');
+        }
+        $("#hdnInquiry_Id").val(id);
+        var obj = {};
+        obj.Inquiry_Id = id;
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/Inquiry/EditCRMInquirys",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadingPanel.Hide();
+                cInquiryCode.SetEnabled(false);
+                $("#hdnActionType").val('Update');
+                $("#hdnInquiry_Id").val(response.Inquiry_Id);
+                $("#OwnerID").val(response.OwnerID);
+                $("#AssignedID").val(response.AssignedID);
+                $("#SourceID").val(response.SourceID);
+                $("#RatingID").val(response.RatingID);
+
+
+
+
+                $("#Status_Id").empty();
+                var statursddet = response.Status_Details;
+                $.each(statursddet, function (i, statursddet) {      // bind the dropdown list using json result
+                    $('<option>',
+                       {
+                           value: statursddet.Id,
+                           text: statursddet.Status_Code
+                       }).html(statursddet.Status_Code).appendTo("#Status_Id");
+                });
+
+
+                $("#Status_Id").val(response.Status_Id);
+                //cTopic.SetText(response.Topic);
+                $("#ddlTopic").val(response.Topic);
+                cInquiryCode.SetText(response.InquiryCode);
+                cfirstname.SetText(response.firstname);
+                clastname.SetText(response.lastname);
+                $("#job_titleId").val(response.job_titleId);
+                $("#GroupId").val(response.GroupId);
+
+                cBusiness_phone.SetText(response.Business_phone);
+                cMobile.SetText(response.Mobile);
+                cemail.SetText(response.email);
+
+
+                ccompany_name.SetText(response.company_name);
+                cwebsite.SetText(response.custdetails.add_Website);
+                cExpected_Reveneu.SetText(response.Expected_Reveneu);
+                cstree1.SetText(response.custdetails.Address1);
+                cstree2.SetText(response.custdetails.Address2);
+                cstree3.SetText(response.custdetails.Address3);
+                cLandmark.SetText(response.custdetails.Landmark);
+                $("#hdnpinid").val(response.custdetails.PinId);
+                cpin.SetText(response.custdetails.PinCode);
+                $("#hdncountryid").val(response.custdetails.CountryId);
+                ccountry.SetText(response.custdetails.CountryName);
+                $("#hdnstateid").val(response.custdetails.StateId);
+                cstate.SetText(response.custdetails.StateName);
+                $("#hdncityid").val(response.custdetails.CityId);
+                ccity.SetText(response.custdetails.CityName);
+                ccompany_description.SetText(response.company_description);
+
+
+
+                cs_Address1.SetText(response.s_Address1);
+                cs_Address2.SetText(response.s_Address2);
+                cs_Address3.SetText(response.s_Address3);
+                cs_Landmark.SetText(response.s_Landmark);
+                $("#cshdnpinid").val(response.Pinid);
+                cs_Pin.SetText(response.s_Pin);
+                $("#cshdncountryid").val(response.s_Countryid);
+                cs_Country.SetText(response.s_Country);
+                $("#cshdnstateid").val(response.s_Stateid);
+                cs_State.SetText(response.s_State);
+                $("#cshdncityid").val(response.s_Cityid);
+                cs_City.SetText(response.s_City);
+                cGSTIN.SetText(response.GSTIN);
+
+
+
+                $("#IndustryID").val(response.IndustryID);
+                cAnnual_Reveneu.SetValue(response.Annual_Reveneu)
+                cNo_of_Employee.SetText(response.No_of_Employee);
+                //cSource_campaign.SetText(response.Source_campaign);
+                //cMarketing_Materials.SetText(response.Marketing_Materials);
+                $("#Source_campaign").val(response.Source_campaign);
+                $("#Marketing_Materials").val(response.Marketing_Materials);
+                if (response.Status != "Qualify" && response.Status != "Cancelled/Lost") {
+                    document.getElementById("btnsave").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("btnsave").style.visibility = "hidden";
+                }
+
+                if (response.Status_Id == 5 || response.Status_Id == 12)  //status_id=5 => Cancelled/Lost and Status_Id == 12  =>Qualify
+                {
+                    $("#Status_Id").prop("disabled", true);
+                }
+                else {
+                    $("#Status_Id").prop("disabled", false);
+                }
+                $("#hdnSourceType").val(response.InquiryValuesType);
+                if ($("#SourceID option:selected").text() == "Others") {
+                    $("#divInquiryvalues").hide();
+                    $("#divOthersInquiryvalues").show();
+                    ctxtOthersInquiryValues.SetText(response.InquiryValuesInternalName);
+                    $("#hdfInquiryValuesIDCRM").val(response.InquiryValuesInternalID);
+                }
+                else {
+                    $("#divInquiryvalues").show();
+                    $("#divOthersInquiryvalues").hide();
+                    ctxtInquiryValues.SetText(response.InquiryValuesInternalName);
+                    $("#hdfInquiryValuesIDCRM").val(response.InquiryValuesInternalID);
+                }
+
+
+
+
+                if (response.Last_InquiryCampaign_Date != null)
+                    cLast_Campaign_Date.SetDate(new Date(parseInt(response.Last_InquiryCampaign_Date.substr(6))));
+
+                $("#ddlSalesType").val(response.SalesType);
+
+                $("#ddlServiceLocation").val(response.ServiceLocation);
+
+                $("#BranchId").val(response.BranchId);
+                $("#AccountManagerId").val(response.AccountManagerId);
+                // Rev Sanchita
+                $("#ddlTypeOfCustomer").val(response.TypeOfCustomer);
+                // End of Rev Sanchita
+
+                //ShowCRMProductsEditAdd("Inquiry Products", id);
+                crmProductModuleName = "Inquiry Products";
+                ActivityProductAdd = response.Productlist;
+                MakeTableFromArrayObjectAdd(ActivityProductAdd);
+
+                $("#addInquiry").modal('show');
+            },
+            error: function (response) {
+                jAlert("Can not Edit");
+                LoadingPanel.Hide();
+            }
+        });
+
+
+    }
+
+    function DeleteClick(id, status) {
+        if (status == 'Qualify') {
+            jAlert('Already Qualified! Can not Delete');
+        }
+        else if (status == 'Cancelled/Lost') {
+            jAlert('Already Cancelled! Can not Delete');
+        }
+        else {
+            $("#hdnInquiry_Id").val(id);
+
+            var obj = {};
+            obj.Inquiry_Id = id;
+            jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+                if (r == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Inquiry/DeleteCRMInquirys",
+                        data: JSON.stringify(obj),
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            jAlert(response);
+                            gridcrmInquiry.Refresh();
+                            gridcrmInquiry.Refresh();
+                        },
+                        error: function (response) {
+                            jAlert("Can not Delete");
+                            gridcrmInquiry.Refresh();
+                            gridcrmInquiry.Refresh();
+                            LoadingPanel.Hide();
+                        }
+                    });
+                }
+            });
+        }
+
+
+    }
+    function gridcrmInquiryclick(s, e) {
+        $('#gridcrmInquiry').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+</script>
+@*-----------------------Start Activities---------------------------------*@
+<script type="text/javascript">
+    function DoActivity(id) {
+        $("#hdnInquiry_Code").val(id);
+        $("#hdnInquiry_Id").val(id);
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("DoActivity", "CRMActivity")",
+            data: { Module_Name: "Inquiry Activity", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Activities');
+                $("#btnActivityProducts").addClass('hide');
+                CRMpcControl.Show();
+            }
+        });
+    }
+    function CancelActivity() {
+        CRMpcControl.Hide();
+    }
+
+    function OnAddActivitiesbuttonClick() {
+        cActivity_Date.SetDate(new Date());
+        cddlActivity.SetValue("");
+        cddlActivityType.SetValue("");
+        ctxt_Subject.SetText("");
+        cmemo_Details.SetText("");
+        $("#ddlPriority").val(0);
+        cDue_dt.SetDate(new Date());
+        $("#btnClear").addClass('hide');
+        $("#btnSave").removeClass('hide');
+    }
+
+
+    function SaveActivity() {
+        if (validationsActivity()) {
+
+            var obj = {};
+            obj.activity = cddlActivity.GetValue();
+            obj.activity_type = cddlActivityType.GetValue();
+            obj.subject = ctxt_Subject.GetText();
+            obj.details = cmemo_Details.GetText();
+            obj.assignto = $("#ddlAssignTo").val();
+            obj.duration = ddlDuration.GetText();
+            obj.priority = $("#ddlPriority").val();
+            obj.DtxtDue = cDue_dt.GetDate();
+            obj.dtActivityDate = cActivity_Date.GetDate();
+            obj.CRMactivityid = $("#hdnInquiry_Id").val();
+            obj.contacttype = $("#ddlContactType").val();
+            // Mantis Issue 24175
+            obj.ActivityTypeNew = cddlActivityTypeNew.GetValue();
+            // End of Mantis Issue 24175
+            obj.Module_Name = "Inquiry Activity";
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SaveActivity", "CRMActivity")",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    jAlert(response, 'Alert');
+                    CRMpcControl.Hide();
+                }
+            });
+        }
+    }
+    function ActivityChange(s, e) {
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("ActivityChange", "CRMActivity")",
+            data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                cddlActivityType.ClearItems();
+                cddlActivityType.AddItem("Select", "0");
+                for (var i = 0; i < response.length; i++) {
+                    cddlActivityType.AddItem(response[i].Inquiry_ActivityTypeName, response[i].Id);
+                }
+                cddlActivityType.SetSelectedIndex(0);
+            }
+
+        });
+
+    }
+</script>
+
+<script type="text/javascript">
+  @*-----------------------Start Show History---------------------------------*@
+    function fn_crmShowHistory() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("CRMShowHistory", "CRMActivity")",
+            // data: { ActivityId: s.GetValue() },
+            success: function (response) {
+                //$("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+
+
+
+    }
+    function btn_ShowHistory() {
+        var showhistory_Inquirycode = $("#hdnInquiry_Code").val();
+        var showhistory_actiontype = 'ActivityShowAll';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Inquirycode, Module: 'LD' },
+            success: function (response) {
+                // $("#idshowhistory").html(response);
+                //$("#cCRMShowHistory").modal('show');
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+    function btn_ShowTopTenHistory() {
+        var showhistory_Inquirycode = $("#hdnInquiry_Code").val();
+        var showhistory_actiontype = 'ActivityShowTop10';
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateActivityAllShowHistoryGrid", "CRMActivity")",
+            data: { frmdate: '1', action_type: showhistory_actiontype, entity_id: showhistory_Inquirycode, Module: 'LD' },
+            success: function (response) {
+                cCRMShowHistory.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                cCRMShowHistory.Show();
+            }
+        });
+    }
+
+
+</script> @*-----------------------End Show History---------------------------------*@
+@*-----------------------End Activities---------------------------------*@
+
+@*-----------------------Start Members---------------------------------*@
+<script type="text/javascript">
+    function AddMember(id) {
+        $("#Module_Name").val('Inquiry');
+        $("#hdnInquiry_Id").val(id);
+        $("#hdnCampaign_Id").val(id);
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("doAddMembers", "CRMMembers")",
+            data: { Module_Name: "Inquiry", Module_id: id },
+            success: function (response) {
+                CRMpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                CRMpcControl.SetHeaderText('Members');
+
+                CRMpcControl.Show();
+            }
+        });
+
+    }
+
+
+
+</script>
+@*-----------------------End Members---------------------------------*@
+
+@*-----------------------Start Sharing---------------------------------*@
+<script type="text/javascript">
+    function DoSharing(id) {
+        $("#hdnInquiry_Id").val(id);
+        $("#hdnModule_Name").val("Inquiry");
+        $("#hdnModule_Id").val(id);
+        $("#toinput").tagsinput('add', "", { preventPost: true });
+        $("#PhoneInput").tagsinput('add', "", { preventPost: true });
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("GetEntityDetails", "CRMSharing")",
+            data: { Module_Name: "Inquiry", Module_id: id },
+            async: false,
+            success: function (response) {
+
+
+                var emails = response.emails.map(function (elem) {
+                    return elem.Entity_Email;
+                }).join(",");
+
+                $("#toinput").tagsinput('add', emails, { preventPost: true });
+
+                var sms = response.phones.map(function (elem) {
+                    return elem.Entity_Phone;
+                }).join(",");
+
+                $("#PhoneInput").tagsinput('add', sms, { preventPost: true });
+
+            }
+
+        });
+        $("#sharingmodel").modal('show');
+
+    }
+</script>
+@*-----------------------End Sharing---------------------------------*@
+@*-----------------------Start Products---------------------------------*@
+<script type="text/javascript">
+    function DoProducts(id) {
+        $("#hdnInquiry_Id").val(id);
+        $("#hdnCrmProductIdentityId").val(id);
+        ShowProducts('ACPRD');
+
+        ShowCRMProductsEditCRM('Inquiry Products', id);
+    }
+</script>
+@*-----------------------End Products---------------------------------*@
+
+@*-----------------------Start AddLiterature---------------------------------*@
+<script type="text/javascript">
+    function AddLiterature(id, name, code) {
+
+
+        $('#AttachmentModal').modal('show');
+
+        $("#hdnInquiry_Id").val(id);
+        $('#hdnDocNo').val(id);
+        $('#hdndoc_id').val(id);
+        $("#docFileName").val(code);
+        $("#docNumber").val(name);
+        document.getElementById("docFileName").disabled = true;
+        document.getElementById("docNumber").disabled = true;
+
+        setTimeout(function () { $('#documentType').focus(); }, 1000);
+    }
+    //$(document).ready(function () {
+    //    $('#Mobile_I').blur(function () {
+    //        $.confirm({
+    //            title: 'Confirm!',
+    //            content: 'Simple confirm!',
+    //            icon: 'fa fa-phone',
+    //            theme: 'modern',
+    //            closeIcon: true,
+    //            animation: 'scale',
+    //            type: 'blue',
+    //            buttons: {
+    //                Confirm: {
+    //                    text: 'Confirm',
+    //                    btnClass: 'btn-success btn-xs',
+    //                    keys: ['enter', 'shift'],
+    //                    action: function () {
+    //                        $.alert('Something else?');
+    //                    }
+    //                },
+    //                Cancel: {
+    //                    text: 'Cancel',
+    //                    btnClass: 'btn-danger btn-xs',
+    //                    keys: ['enter', 'shift'],
+    //                    action: function () {
+    //                        $.alert('Something else?');
+    //                    }
+    //                },
+    //                somethingElse: {
+    //                    text: 'Something else',
+    //                    btnClass: 'btn-blue btn-xs',
+    //                    keys: ['enter', 'shift'],
+    //                    action: function () {
+    //                        $.alert('Something else?');
+    //                    }
+    //                }
+    //            }
+    //        });
+    //    });
+    //});
+
+
+
+</script>
+<style>
+    .validclass {
+        position: absolute;
+        right: -5px;
+        top: 5px;
+    }
+
+    .modal .modal-dialog.pTop0 {
+        margin-top: 5px !important;
+        padding-top: 0 !important;
+    }
+
+    .infoSection {
+        padding: 8px 7px;
+    }
+</style>
+@*-----------------------End AddLiterature---------------------------------*@
+<script type="text/javascript">
+    $(function () {
+        $('#ddlExport').on('change', function () {
+            if ($("#ddlExport option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlExport').prop("selectedIndex", 0);
+
+                var url = $('#hdnExportLink').val();
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+    function AddnewRecord() {
+        $("#addInquiry").modal('show');
+        $("#hdnInquiry_Id").val("");
+    }
+
+    function ShowAllClick() {
+        gridcrmInquiry.Refresh();
+        gridcrmInquiry.Refresh();
+
+    }
+
+    function AddSeriveContact(id, name, internalid) {
+        window.location.href = '/OMS/management/activities/ServiceContact.aspx?key=ADD&EntityId=' + internalid + '&EntityName=' + name
+    }
+
+</script>
+
+<script type="text/javascript">
+    function GSTINlostfocus(s, e) {
+        var inputvalues = cGSTIN.GetText();
+        if (inputvalues != "") {
+            var gstinformat = new RegExp('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$');
+            if (gstinformat.test(inputvalues)) {
+                return true;
+            } else {
+                jAlert('Please Enter Valid GSTIN Number');
+                cGSTIN.SetText('');
+                cGSTIN.SetFocus();
+            }
+        }
+
+    }
+</script>
+
+
+@*-------------------------Add product selection Start--------------------------*@
+<script>
+
+    $(document).ready(function () {
+        ctxtQuantityAdd.SetText(0);
+        ctxtRateAdd.SetText(0);
+        ctxtTotalAdd.SetText(0);
+        GetObjectID('hdfProductIDAdd').value = 0;
+        $("#ddlFrequency").val('');
+        ctxtProductAdd.SetText('');
+        ctxtRemarksAdd.SetText('');
+    });
+
+    function ProductButnClickAdd(s, e) {
+        $('#ProductModelAdd').modal('show');
+    }
+
+    function Product_KeyDownAdd(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#ProductModelAdd').modal('show');
+        }
+    }
+
+    function AddActivityProductDetailsAdd() {
+
+
+        var Quantity = ctxtQuantityAdd.GetText();
+        var Rate = ctxtRateAdd.GetText();
+        var ProductID = GetObjectID('hdfProductIDAdd').value;
+        var ProductName = ctxtProductAdd.GetText();
+        var Remarks = ctxtRemarksAdd.GetText();
+        var Frequency = $("#ddlFrequency").val();
+        var totalAmount = ctxtTotalAdd.GetText();
+        if (ProductName == '' && Quantity == 0 && Rate == 0) {
+            jAlert('Select Product,Quantity & Rate');
+        }
+        else {
+            if (EditFlagCRM != "" && EditFlagCRM != null) {
+                for (var i = 0; i < ActivityProductAdd.length; i++) {
+                    if (ActivityProductAdd[i].guid == EditFlagCRM) {
+
+                        ActivityProductAdd[i].ProductId = ProductID;
+                        ActivityProductAdd[i].Quantity = Quantity;
+                        ActivityProductAdd[i].Rate = Rate;
+                        ActivityProductAdd[i].Remarks = Remarks;
+                        ActivityProductAdd[i].ProductName = ProductName;
+                        ActivityProductAdd[i].Frequency = Frequency;
+                        ActivityProductAdd[i].Amount = totalAmount;
+
+                        MakeTableFromArrayObjectAdd(ActivityProductAdd);
+                        return;
+
+                    }
+                }
+                EditFlagCRM = null;
+            }
+
+            var guid = uuidCRM();
+
+            var ActivityProductboj = {};
+            ActivityProductboj.guid = guid;
+            ActivityProductboj.Quantity = Quantity;
+            ActivityProductboj.Rate = Rate;
+            ActivityProductboj.ProductId = ProductID;
+            ActivityProductboj.Remarks = Remarks;
+            ActivityProductboj.ProductName = ProductName;
+            ActivityProductboj.Frequency = Frequency;
+            ActivityProductboj.Amount = totalAmount;
+
+            ActivityProductAdd.push(ActivityProductboj);
+
+
+            MakeTableFromArrayObjectAdd(ActivityProductAdd);
+        }
+    }
+
+    var ModuleNameActivityProductAdd = 'ACPRD';
+
+    function MakeTableFromArrayObjectAdd(arr) {
+        if (ModuleNameActivityProductAdd == 'ACPRD') {
+            var str = "";
+            for (var i = 0; i < arr.length; i++) {
+                var sl = i + 1;
+                str += "<tr>"
+                str += "<td class='hide'>" + arr[i].guid + "</td>";
+                str += "<td class='hide'>" + arr[i].ProductId + "</td>";
+                str += "<td>" + sl + "</td>";
+                str += "<td>" + arr[i].ProductName + "</td>";
+                str += "<td>" + arr[i].Quantity + "</td>";
+                str += "<td>" + arr[i].Rate + "</td>";
+                str += "<td>" + arr[i].Amount + "</td>";
+                str += "<td>" + arr[i].Remarks + "</td>";
+                str += "<td>" + arr[i].Frequency + "</td>";
+
+                str += "<td><a href='#' class='iconCD link' onclick='EditActivityProdAdd(" + JSON.stringify(arr[i].guid) + ")' ><img src='/assests/images/Edit.png' /></a>";
+                str += "<a href='#' class='link' onclick='DeleteActivityProductAdd(" + JSON.stringify(arr[i].guid) + ")' ><img src='/assests/images/crs.png' /></a></td>";
+                str += "</tr>"
+            }
+            $("#tbodyActivityProductAdd").html(str);
+
+        }
+    }
+
+    function DeleteActivityProductAdd(uid) {
+        for (var i = 0; i < ActivityProductAdd.length; i++) {
+            if (ActivityProductAdd[i].guid == uid) {
+                ActivityProductAdd.splice(i, 1);
+            }
+        }
+        MakeTableFromArrayObjectAdd(ActivityProductAdd);
+    }
+
+    function EditActivityProdAdd(uid) {
+        var EditActivityProdobj = $.grep(ActivityProductAdd, function (e) { return e.guid == uid });
+        EditFlagCRM = uid;
+
+        SetActivityProductOnEditAdd(EditActivityProdobj);
+    }
+
+    function ShowCRMProductsEditAdd(module_name, module_id) {
+        crmProductModuleName = module_name;
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "../CRMProducts/GetCRMProductsDetails",
+            data: { Module_Name: module_name, Module_id: module_id },
+            success: function (response) {
+
+                ActivityProductAdd = response;
+                MakeTableFromArrayObjectAdd(ActivityProductAdd);
+
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+
+    function SetActivityProductOnEditAdd(EditActivityProdobj) {
+        ctxtProductAdd.SetText(EditActivityProdobj[0].ProductName);
+        GetObjectID('hdfProductIDAdd').value = EditActivityProdobj[0].ProductId;
+        ctxtQuantityAdd.SetValue(EditActivityProdobj[0].Quantity);
+        ctxtRateAdd.SetValue(EditActivityProdobj[0].Rate);
+        ctxtRemarksAdd.SetText(EditActivityProdobj[0].Remarks);
+        $("#ddlFrequency").val(EditActivityProdobj[0].Frequency);
+        ctxtTotalAdd.SetValue(EditActivityProdobj[0].Amount);
+    }
+
+    function ProductkeydownAdd(e) {
+        var OtherDetails = {}
+
+        if ($.trim($("#txtProductSearchAdd").val()) == "" || $.trim($("#txtProductSearchAdd").val()) == null) {
+            return false;
+        }
+        OtherDetails.SearchKey = $("#txtProductSearchAdd").val();
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Product Name");
+            HeaderCaption.push("Product Description");
+            HeaderCaption.push("HSN/SAC");
+
+            if ($("#txtProductSearchAdd").val() != "") {
+                callonServer("../CRMActivity/GetcrmProducts", OtherDetails, "ProductTableAdd", HeaderCaption, "ProductIndexAdd", "SetProductAdd");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ProductIndexAdd=0]"))
+                $("input[ProductIndexAdd=0]").focus();
+        }
+    }
+
+    function SetProductAdd(Id, Name) {
+        //debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#ProductModelAdd').modal('hide');
+            ctxtProductAdd.SetText(Name);
+            GetObjectID('hdfProductIDAdd').value = key;
+            ctxtProductAdd.Focus();
+        }
+        else {
+            ctxtProductAdd.SetText('');
+            GetObjectID('hdfProductIDAdd').value = '';
+        }
+    }
+
+    function LostFocusInRateAdd() {
+        var Quantity = ctxtQuantityAdd.GetText();
+        var Rate = ctxtRateAdd.GetText();
+        var total = Quantity * Rate;
+        ctxtTotalAdd.SetValue(total);
+    }
+
+    function LostFocusInTotalAdd() {
+        var Quantity = ctxtQuantityAdd.GetText();
+        var total = ctxtTotalAdd.GetText();
+        var Rate = total / Quantity;
+
+        ctxtRateAdd.SetValue(Rate);
+    }
+</script>
+@*-------------------------Add product selection End--------------------------*@
+<input type="hidden" value="@Url.Action("ExportInquiryList", "Inquiry", new { type = "_type_" })" id="hdnExportLink" />
+<div class="panel-heading">
+    <div id="td_contact1" class="panel-title">
+        <h3>
+            <span id="lblHeadTitle">Inquiries</span>
+        </h3>
+    </div>
+
+</div>
+<div class="form_main clearfix">
+    <div class="mTop5">
+        @{ if (ViewBag.CanAdd)
+         {
+        <button class="btn btn-success btn-radius  " data-toggle="modal" data-backdrop="static" data-keyboard="true" onclick="OnAddbuttonClick();"><span class="btn-icon"><i class="fa fa-plus"></i></span>Inquiry</button>
+         }
+        }
+        <button class="btn btn-info btn-radius  " onclick="ShowAllClick();">Show</button>
+
+        @*<button class="btn btn-success btn-radius " data-toggle="modal" data-target="#Mail" data-backdrop="static" data-keyboard="true" onchange="Exportclick()"><span class="btn-icon"><i class="fa fa-plus"></i></span>Export</button>*@
+        @{ if (ViewBag.CanExport)
+         {
+        <select name="ddlExport" class="btn btn-primary btn-radius" onchange="Exportclick()" id="ddlExport">
+            <option value="0">Export to</option>
+            <option value="1">PDF</option>
+            <option value="4">RTF</option>
+            <option value="2">XLSX</option>
+            <option value="3">XLS</option>
+            <option value="5">CSV</option>
+        </select>
+         }
+        }
+    </div>
+</div>
+
+
+<div class="relative">
+    @{
+        Html.RenderAction("PopulateInquiryGrid", "Inquiry", new { frmdate = "Ispageload" });
+    }
+</div>
+
+
+<div class="modal fade pmsModal w90" id="addInquiry" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog pTop0" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Inquiry</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pmsForm">
+                <div class="clearfix" style="margin-bottom:10px;">
+                    <ul class="widgetizeForm">
+                        @*<li id="idnew" class="parentLi ready visited">
+                                <span class="parentLabel "></span>
+                                <div>New</div>
+
+                            </li>
+                            <li id="idqualify" class="parentLi on">
+                                <span class="parentLabel"></span>
+                                <div>Qualify </div>
+
+                            </li>
+                            <li id="idclose" class="parentLi">
+                                <span class="parentLabel"></span>
+                                <div>Close</div>
+                            </li>*@
+
+                        <li id="idnew" class="parentLi on no-child">
+                            <span class="parentLabel "></span>
+                            <div>New</div>
+
+                        </li>
+                        <li id="idqualify" class="parentLi no-child">
+                            <span class="parentLabel"></span>
+                            <div id="dqualify">Qualify </div>
+
+                        </li>
+                        <li id="idclose" class="parentLi no-child">
+                            <span class="parentLabel"></span>
+                            <div>Close</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="formLine"></div>
+                <div class="clearfix text-center" style="margin-bottom:7px;">
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Owner</b></div>
+                                <div>
+                                    <div>@Html.DropDownListFor(m => m.OwnerID, new SelectList(Model.Users, "user_id", "user_name"), new { @class = "w100" })</div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Assign To</b></div>
+                                <div>@Html.DropDownListFor(m => m.AssignedID, new SelectList(Model.Users, "user_id", "user_name"), new { @class = "w100" })</div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Inquiry Source</b></div>
+                                <div>
+                                    @Html.DropDownListFor(m => m.SourceID, new SelectList(Model.ContactSource, "SourceID", "cntsrc_sourceType"), new { onChange = "onInquirySourceSelectedIndexChanged()", @class = "w100" })
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20" id="divInquiryvalues">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Inquiry Values</b></div>
+                                <div>
+                                    @Html.DevExpress().ButtonEdit(
+                                                            settings =>
+                                                            {
+                                                                settings.Name = "txtInquiryValues";
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(140);
+                                                                settings.Properties.ClientSideEvents.ButtonClick = "InquiryValueButnClick";
+                                                                settings.Properties.ClientSideEvents.KeyDown = "InquiryValue_KeyDown";
+                                                                settings.Properties.ClientInstanceName = "ctxtInquiryValues";
+                                                                settings.ControlStyle.CssClass = "dateEditInput";
+                                                                settings.Properties.Buttons.Add("...");
+                                                                settings.ReadOnly = true;
+                                                                //settings.ControlStyle.CssClass = "dateEditInput";
+                                                            }).GetHtml()
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20 " id="divOthersInquiryvalues">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Inquiry Values</b></div>
+                                <div>
+                                    @Html.DevExpress().TextBoxFor(m => m.InquiryValuesInternalID,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                                                settings.Properties.ClientInstanceName = "ctxtOthersInquiryValues";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Rating</b></div>
+                                <div>@Html.DropDownListFor(m => m.RatingID, new SelectList(Model.Ratings, "rat_id", "rat_LeadRating"), new { @class = "w100" })</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="infoSection ">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Status</b></div>
+                                <div>@Html.DropDownListFor(m => m.Status_Id, new SelectList(Model.Status_Details, "Id", "Status_Code"), new { @class = "w100" })</div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="Vtabs">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-1">
+                            <ul class="nav nav-pills nav-stacked flex-column">
+                                <li class="active"><a href="#tab_a" data-toggle="pill">Summary</a></li>
+                                <li><a href="#tab_b" data-toggle="pill">Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-11">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_a">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="crmTAbhd">Contact Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Topic/Purpose <span style="color:red">*</span> </label>
+
+                                                        <div class="col-sm-12 relative">
+                                                            @*@Html.DevExpress().TextBoxFor(m => m.Topic,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cTopic";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()*@
+                                                            <select class="form-control" id="ddlTopic">
+                                                                <option value="">Select</option>
+                                                                <option value="Pest Control">Pest Control</option>
+                                                                <option value="Sanitization">Sanitization</option>
+                                                                @*Rev Sanchita*@
+                                                                <option value="Fumigation">Fumigation</option>
+                                                                @*End of Rev Sanchita*@
+                                                            </select>
+                                                            <span id="Mandatoryfrm_topic" style="display: none" class="validclass">
+                                                                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                                            </span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Unique ID </label>
+                                                        <div class="col-sm-12 relative">
+                                                            <div class="">
+                                                                @Html.DevExpress().TextBoxFor(m => m.InquiryCode,
+                                                                settings =>
+                                                                {
+                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                    settings.Properties.ClientInstanceName = "cInquiryCode";
+                                                                    settings.Properties.MaxLength = 80;
+                                                                    settings.ControlStyle.CssClass = "DEvInput";
+                                                                    settings.Properties.ClientSideEvents.LostFocus = "LostFocusInInquiryCode";
+                                                                }).GetHtml()
+                                                            </div>
+
+                                                            @*<span id="" style="display: none" class="validclass">
+                                                                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                                                </span>*@
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">First Name <span style="color:red">*</span> </label>
+                                                        <div class="col-sm-12 relative">
+                                                            @Html.DevExpress().TextBoxFor(m => m.firstname,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cfirstname";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+
+                                                            <span id="Mandatoryfrm_firstname" style="display: none" class="validclass">
+                                                                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                                            </span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Last Name </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.lastname,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "clastname";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Job Title</label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.job_titleId, new SelectList(Model.jobtitles, "job_id", "job_responsibility"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Business Phone </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Business_phone,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cBusiness_phone";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        @*Rev Sanchita [<span style="color:red">*</span>  added ]*@
+                                                        <label for="" class="col-sm-12 col-form-label">Mobile Phone <span style="color:red">*</span> </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Mobile,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cMobile";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.ClientSideEvents.LostFocus = "MobileLostFocus";
+
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        @*Rev Sanchita [<span style="color:red">*</span>  added ]*@
+                                                        <label for="" class="col-sm-12 col-form-label">Email ID <span style="color:red">*</span> </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.email,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cemail";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Group</label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.GroupId, new SelectList(Model.groupList, "Group_Id", "Group_Name"), new { onchange = "GroupChange()" })</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">GSTIN </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.GSTIN,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cGSTIN";
+                                                                settings.ControlStyle.CssClass = "DEvInput gst";
+                                                                settings.Properties.ClientSideEvents.LostFocus = "GSTINlostfocus";
+                                                                settings.Properties.NullText = "Enter GSTIN..";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Sales Type</label>
+                                                        <div class="col-sm-12">
+                                                            <div>
+                                                                <select class="form-control" id="ddlSalesType">
+                                                                    <option value="">Select</option>
+                                                                    <option value="Internal Sales team">Internal Sales team</option>
+                                                                    <option value="Internal non sales team">Internal non sales team</option>
+                                                                    <option value="Commission Agent">Commission Agent</option>
+                                                                    <option value="Tender">Tender</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Service Location</label>
+                                                        <div class="col-sm-12">
+                                                            <div>
+                                                                <select class="form-control" id="ddlServiceLocation">
+                                                                    <option value="">Select</option>
+                                                                    <option value="Single Location">Single Location</option>
+                                                                    <option value="Multi Location">Multi Location</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Branch</label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.BranchId, new SelectList(Model.BranchList, "ID", "branch_description"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Account Manager</label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.AccountManagerId, new SelectList(Model.AccountManagerList, "user_id", "user_name"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*Rev Sanchita*@
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Type of Customer</label>
+                                                        <div class="col-sm-12">
+                                                            <div>
+                                                                <select class="form-control" id="ddlTypeOfCustomer">
+                                                                    <option value="">Select</option>
+                                                                    <option value="Corporate">Corporate</option>
+                                                                    <option value="Individual">Individual</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*End of Rev Sanchita*@
+                                            </div>
+                                        </div>
+                                        <div class="clear" style="padding-top:10px"></div>
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Company/Account Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Company/Account Name <span style="color:red">*</span> </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.company_name,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "ccompany_name";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                            <span id="Mandatoryfrm_companyname" style="display: none" class="validclass">
+                                                                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Website </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.website,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cwebsite";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 1 </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.stree1,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cstree1";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 2 </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.stree2,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cstree2";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 3 </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.stree3,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cstree3";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Landmark </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Landmark,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cLandmark";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Pin/Zip (6 Characters) </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.pin,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cpin";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.ClientSideEvents.LostFocus = "PinChange";
+                                                            }).GetHtml()
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Country </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.country,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "ccountry";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">State </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.state,
+                                                            settings =>
+                                                            {
+                                                                settings.Name = "state";
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cstate";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">City / District </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.city,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "ccity";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <input type="hidden" id="hdnpinid" value="@Model.custdetails.PinId" />
+                                            <input type="hidden" id="hdncountryid" value="@Model.custdetails.CountryId" />
+                                            <input type="hidden" id="hdnstateid" value="@Model.custdetails.StateId" />
+                                            <input type="hidden" id="hdncityid" value="@Model.custdetails.CityId" />
+
+                                            <input type="hidden" id="cshdnpinid" value="@Model.custdetails.PinId" />
+                                            <input type="hidden" id="cshdncountryid" value="@Model.custdetails.CountryId" />
+                                            <input type="hidden" id="cshdnstateid" value="@Model.custdetails.StateId" />
+                                            <input type="hidden" id="cshdncityid" value="@Model.custdetails.CityId" />
+
+                                            <input type="hidden" id="hdnInquiry_Id" value="@Model.Inquiry_Id" />
+                                            <input type="hidden" id="hdnOwnerAssignID" value="@ViewBag.OwnerAssignID" />
+                                            <input type="hidden" id="hdnActionType" value="" />
+                                            <input type="hidden" id="hdnSourceType" value="" />
+                                            <input type="hidden" id="hdnInquiry_Code" value="" />
+
+
+                                            @*@Html.Hidden("hdnInquiry_Id", Model.Inquiry_Id)*@
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Company/Account Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-6 hide">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Company/Account Name <span style="color:red">*</span> </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="DEvInput" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 hide">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Website </label>
+                                                        <div class="col-sm-12">
+                                                            @*@Html.DevExpress().TextBoxFor(m => m.s_website,
+                                                                settings =>
+                                                                {
+                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                    settings.Properties.ClientInstanceName = "cs_website";
+                                                                    settings.ControlStyle.CssClass = "DEvInput";
+                                                                }).GetHtml()*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 1 </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.s_Address1,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cs_Address1";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 2 </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.s_Address2,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cs_Address2";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Address 3 </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.s_Address3,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cs_Address3";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Landmark </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.s_Landmark,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cs_Landmark";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Pin/Zip (6 Characters) </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.s_Pin,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cs_Pin";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.MaxLength = 6;
+                                                                settings.Properties.ClientSideEvents.LostFocus = "SPinChange";
+
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Country </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.s_Country,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cs_Country";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">State </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.s_State,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cs_State";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">City / District </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.s_City,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cs_City";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_b">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Company Details <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Additional Description </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.company_description,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "ccompany_description";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Industry </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.IndustryID, new SelectList(Model.Industries, "ind_id", "ind_industry"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Annual Revenue </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Annual_Reveneu,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.MaskSettings.Mask = "<0..99999999999>.<00..99>";
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                                settings.Properties.ClientInstanceName = "cAnnual_Reveneu";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">No of Employees </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.No_of_Employee,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.Properties.ClientInstanceName = "cNo_of_Employee";
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Expected Revenue </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().TextBoxFor(m => m.Expected_Reveneu,
+                                                            settings =>
+                                                            {
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                settings.ControlStyle.CssClass = "DEvInput";
+                                                                settings.Properties.MaskSettings.Mask = "<0..99999999999>.<00..99>";
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                                                ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                                                settings.Properties.ClientInstanceName = "cExpected_Reveneu";
+                                                            }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="clear"></div>*@
+                                                @*<div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">SIC Code </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.SIC_Code,
+                                                                                settings =>
+                                                                                {
+                                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                                    settings.Properties.ClientInstanceName = "cSIC_Code";
+                                                                                    settings.ControlStyle.CssClass = "DEvInput";
+                                                                                }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                                @*<div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Currency </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.Currency,
+                                                                                settings =>
+                                                                                {
+                                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                                    settings.Properties.ClientInstanceName = "cCurrency";
+                                                                                    settings.ControlStyle.CssClass = "DEvInput";
+                                                                                }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                                @*<div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Type </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.TypeDetails,
+                                                                                settings =>
+                                                                                {
+                                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                                    settings.Properties.ClientInstanceName = "cTTypeDetails";
+                                                                                    settings.ControlStyle.CssClass = "DEvInput";
+                                                                                }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Marketing Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                @*<div class="col-md-12">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Source Campaign </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.Source_campaign,
+                                                                settings =>
+                                                                {
+                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                    settings.Properties.ClientInstanceName = "cSource_campaign";
+                                                                    settings.ControlStyle.CssClass = "DEvInput";
+                                                                }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                                @*<div class="col-md-12">
+                                                        <div class="form-group row">
+                                                            <label for="" class="col-sm-12 col-form-label">Marketing Materials </label>
+                                                            <div class="col-sm-12">
+                                                                @Html.DevExpress().TextBoxFor(m => m.Marketing_Materials,
+                                                                settings =>
+                                                                {
+                                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                                    settings.Properties.ClientInstanceName = "cMarketing_Materials";
+                                                                    settings.ControlStyle.CssClass = "DEvInput";
+                                                                }).GetHtml()
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Source Campaign </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.Source_campaign, new SelectList(Model.CampaignList, "ID", "Campaign_Name"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Marketing Materials </label>
+                                                        <div class="col-sm-12">
+                                                            <div>@Html.DropDownListFor(m => m.Marketing_Materials, new SelectList(Model.marketingmaterials, "material_id", "material_Name"))</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Last Campaign Date </label>
+                                                        <div class="col-sm-12">
+                                                            @Html.DevExpress().DateEditFor(model => model.Last_InquiryCampaign_Date,
+                                                        settings =>
+                                                        {
+                                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.EditFormatString = "dd-MM-yyyy hh:mm tt";
+                                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy hh:mm tt";
+                                                            settings.Properties.TimeSectionProperties.Visible = true;
+                                                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                            settings.Date = DateTime.Now;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.ClientInstanceName = "cLast_Campaign_Date";
+                                                            settings.ControlStyle.CssClass = "dateEditInput";
+                                                        }).GetHtml()
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" pmsForm slick  bxStyle2 clearfix" style="margin-top: 7px;">
+                                        <div class="clearfix">
+                                            <div class="col-md-3 lblmTop8">
+                                                <label>Product</label>
+                                                <div>
+                                                    @*<input type="text" class="form-control" />*@
+                                                    @Html.DevExpress().ButtonEdit(settings =>
+                                                       {
+                                                           settings.Name = "btnProductsAdd";
+                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                           settings.Properties.ClientSideEvents.ButtonClick = "ProductButnClickAdd";
+                                                           settings.Properties.ClientSideEvents.KeyDown = "Product_KeyDownAdd";
+                                                           settings.Properties.ClientInstanceName = "ctxtProductAdd";
+                                                           settings.Properties.Buttons.Add("...");
+                                                           settings.ControlStyle.CssClass = "DEvInput";
+                                                       }).GetHtml()
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 lblmTop8">
+                                                <label>No. Of Service</label>
+                                                <div>
+                                                    @*<input type="text" class="form-control" />*@
+                                                    @Html.DevExpress().TextBox(
+                                                    settings =>
+                                                    {
+                                                        settings.Name = "txt_QuantityAdd";
+                                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                        settings.Properties.ClientInstanceName = "ctxtQuantityAdd";
+                                                        settings.ControlStyle.CssClass = "DEvInput";
+                                                    }).GetHtml()
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 lblmTop8">
+                                                <label>Rate</label>
+                                                <div>
+                                                    @*<input type="text" class="form-control" />*@
+                                                    @Html.DevExpress().TextBox(
+                                                    settings =>
+                                                    {
+                                                        settings.Name = "txt_rateAdd";
+                                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                        settings.Properties.ClientInstanceName = "ctxtRateAdd";
+                                                        settings.ControlStyle.CssClass = "DEvInput";
+                                                        settings.Properties.ClientSideEvents.LostFocus = "LostFocusInRateAdd";
+                                                    }).GetHtml()
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 lblmTop8">
+                                                <label>Total</label>
+                                                @Html.DevExpress().TextBox(
+                                                settings =>
+                                                {
+                                                    settings.Name = "txt_TotalAdd";
+                                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                    settings.Properties.ClientInstanceName = "ctxtTotalAdd";
+                                                    settings.Properties.ClientSideEvents.LostFocus = "LostFocusInTotalAdd";
+                                                    settings.ControlStyle.CssClass = "DEvInput";
+                                                }).GetHtml()
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Remarks</label>
+                                                <div>
+                                                    @*<input type="text" class="form-control" />*@
+                                                    @Html.DevExpress().TextBox(
+                                                    settings =>
+                                                    {
+                                                        settings.Name = "txt_RemarksAdd";
+                                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                        settings.Properties.ClientInstanceName = "ctxtRemarksAdd";
+                                                        settings.ControlStyle.CssClass = "DEvInput";
+                                                    }).GetHtml()
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix">
+                                            <div class="col-md-3 lblmTop8">
+                                                <label>Frequency</label>
+                                                <div>
+                                                    <select class="form-control" id="ddlFrequency">
+                                                        <option value="">SELECT</option>
+                                                        <option value="DAILY">DAILY</option>
+                                                        <option value="HALF-YEARLY">HALF-YEARLY</option>
+                                                        <option value="MONTHLY ONCE">MONTHLY ONCE</option>
+                                                        <option value="MONTHLY THRICE">MONTHLY THRICE</option>
+                                                        @*Rev Sanchita*@
+                                                        @*<option value="MONTHLY TWISE">MONTHLY TWISE</option>*@
+                                                        <option value="MONTHLY TWICE">MONTHLY TWICE</option>
+                                                        @*End of Rev Sanchita*@
+                                                        <option value="QUARTERLY ONCE">QUARTERLY ONCE</option>
+                                                        <option value="SINGLE-ONCE">SINGLE-ONCE</option>
+                                                        <option value="WEEKLY ONCE">WEEKLY ONCE</option>
+                                                        <option value="WEEKLY THRICE">WEEKLY THRICE</option>
+                                                        @*Rev Sanchita*@
+                                                        @*<option value="WEEKLY TWISE">WEEKLY TWISE</option>*@
+                                                        <option value="WEEKLY TWICE">WEEKLY TWICE</option>
+                                                        @*End of Rev Sanchita*@
+                                                        <option value="YEARLY THRICE">YEARLY THRICE</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1" style="padding-top: 30px;">
+                                                <button type="button" class="btn btn-primary btn-radius" onclick="AddActivityProductDetailsAdd();">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix row">
+                                        <div class="col-md-12">
+                                            <table id="" class="display nowrap table" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="hide">GUID</th>
+                                                        <th class="hide">ProductId</th>
+                                                        <th>SL</th>
+                                                        <th>Product</th>
+                                                        <th>Quantity</th>
+                                                        <th>Rate</th>
+                                                        <th>Amount</th>
+                                                        <th>Remarks</th>
+                                                        <th>Frequency</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyActivityProductAdd"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Cancel</button>
+
+                <button type="button" id="btnsave" class="btn btn-success btn-radius" onclick="SaveInquirys()">Save & Exit</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStepOne";
+    }
+).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "CRMpcControl";
+        settings.Width = 600;
+        settings.Height = 500;
+        //settings.ScrollBars.v
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.HeaderText = "Employees Target Setting";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        //settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "CRMQualify";
+        settings.Width = 600;
+        settings.Height = 500;
+        //settings.ScrollBars.v
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.HeaderText = "Qualify";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+<input type="hidden" value="@Url.Action("AttachmentDocument", "CRMAttachment", new { module = "Inquiry" })" id="hdnAttachmentDocument" />
+
+<div>
+    @{
+        Html.RenderAction("AttachmentDocument", "CRMAttachment", new { module = "Inquiry", DocNo = "" });
+    }
+</div>
+
+<div>
+    @{
+        Html.RenderAction("AddProducts", "CRMProducts");
+    }
+</div>
+
+<div>
+    @{
+        Html.RenderAction("DoSharing", "CRMSharing");
+    }
+</div>
+
+
+<input type="hidden" id="hdnCrmProductIdentityId" />
+<input type="hidden" id="hdnModule_Name" />
+<input type="hidden" id="hdnModule_Id" />
+<input type="hidden" id="hdnCampaign_Id" />
+<input type="hidden" id="Module_Name" />
+
+<input type="hidden" id="hdnExistingEntity" />
+
+
+
+<!--Inquirys Values Modal -->
+<div class="modal fade pmsModal w30" id="InquiryValueModel" role="dialog">
+    <div class="modal-dialog">
+        <!-- Inquirys Values content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Inquiry Values Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="InquiryValueskeydown(event)" id="txtInquiryValuesSearch" autofocus width="100%" placeholder="Search By Value" />
+                <div id="InquiryValueTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Name</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Inquirys Values Modal -->
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "cCRMShowHistory";
+        settings.Width = 700;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Show History";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = DevExpress.Web.PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = DevExpress.Web.PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+<input type="hidden" id="hdfInquiryValuesIDCRM" />
+
+
+
+
+<div class="modal fade pmsModal w40" id="ProductModelAdd" role="dialog">
+    <div class="modal-dialog">
+        <!-- Contact content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Product Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="ProductkeydownAdd(event)" id="txtProductSearchAdd" autofocus width="100%" placeholder="Search By Product" />
+                <div id="ProductTableAdd">
+                    <table border='1' width="100%" class="dynamicPopupTbl ">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Product Name</th>
+                            <th>Product Description</th>
+                            <th>HSN/SAC</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hdfProductIDAdd" />

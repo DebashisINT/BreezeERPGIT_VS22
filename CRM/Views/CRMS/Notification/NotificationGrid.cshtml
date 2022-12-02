@@ -1,0 +1,176 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridNotificationSettings";
+
+    settings.CallbackRouteValues = new { Action = "NotificationGrid", Controller = "Notification" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "NAME";
+        x.Caption = "Notification Name";
+        //x.VisibleIndex = 1;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+        x.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "NOTIFICATION_ID";
+        x.Caption = "NOTIFICATION_ID";
+        //x.VisibleIndex = 1;
+        
+        x.ColumnType = MVCxGridViewColumnType.TextBox;
+        x.Visible = false;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "DESCRIPTION";
+        x.Caption = "Notification Description";
+        //x.VisibleIndex = 2;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+        x.ColumnType = MVCxGridViewColumnType.TextBox;
+        // x.Visible = false;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CREATED_DATE";
+        x.Caption = "Created On";
+        //x.VisibleIndex = -1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = MVCxGridViewColumnType.DateEdit;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "MODIFIED_DATE";
+        x.Caption = "Modified On";
+        //x.VisibleIndex = 3;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.ColumnType = MVCxGridViewColumnType.DateEdit;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+
+    });
+    settings.Columns.Add(x =>
+        {
+            x.FieldName = "START_DATETIME";
+            x.Caption = "Starts On";
+            //x.VisibleIndex = 3;
+            x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            x.ColumnType = MVCxGridViewColumnType.DateEdit;
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+            (x.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy hh:mm:ss";
+
+        });
+
+    settings.Columns.Add(x =>
+        {
+            x.FieldName = "START_TIME";
+            x.Caption = "Start Time";
+            //x.VisibleIndex = 3;
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+            //x.ColumnType = MVCxGridViewColumnType.TimeEdit;
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+           // x.PropertiesEdit.DisplayFormatString = "hh:mm:ss tt";
+            //(x.PropertiesEdit as DateEditProperties).EditFormatString = "hh:mm:ss";
+
+        });
+
+    settings.Columns.Add(x =>
+        {
+            x.FieldName = "END_TIME";
+            x.Caption = "End Time";
+            //x.VisibleIndex = 3;
+           // x.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+            //x.ColumnType = MVCxGridViewColumnType.TimeEdit;
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            //x.PropertiesEdit.DisplayFormatString = "hh:mm:ss tt";
+            
+            //(x.PropertiesEdit as DateEditProperties).EditFormatString = "hh:mm:ss";
+
+        });
+
+    settings.Columns.Add(x =>
+        {
+            x.FieldName = "INTERVAL";
+            x.Caption = "Send Every";
+            x.ColumnType = MVCxGridViewColumnType.TextBox;
+            x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+        });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ISACTIVE";
+        x.Caption = "Status";
+        x.ColumnType = MVCxGridViewColumnType.TextBox;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+    });
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "Actions";
+        //x.VisibleIndex = 4;
+       // x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        
+        x.SetDataItemTemplateContent(c =>
+        {
+            string notification_id = Convert.ToString(DataBinder.Eval(c.DataItem, "NOTIFICATION_ID")).Trim();
+            string notification_name = Convert.ToString(DataBinder.Eval(c.DataItem, "NAME"));
+            notification_name = notification_name.Replace(" ", "&nbsp;");
+            ViewContext.Writer.Write(
+                "<a href='javascript:void(0);' onclick=OnMoreInfoClick('" + notification_id + "','" + notification_name + "') class='pad' title='Edit'><img src='/assests/images/info.png' /></i></a>"
+              );
+        });
+
+
+
+    });
+
+}).Bind(Model).GetHtml()
+
+
+
+
+

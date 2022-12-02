@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<head>
+    <title>Login</title>
+
+
+
+    <link href="~/assests/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/assests/css/login.css" rel="stylesheet" />
+    
+    <script src="~/assests/js/jquery.3.3.1.js"></script>
+    <script src="~/assests/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assests/js/angular.min.js"></script>
+    <style>
+        .modal-dialog {
+            width: 360px;
+        }
+
+        .modal-content {
+            left: 20%;
+            width: 60%;
+        }
+
+        .modal-header-danger {
+            color: #fff;
+            padding: 9px 15px;
+            border-bottom: 1px solid #eee;
+            background-color: #d9534f;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+    </style>
+
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+
+    <br />
+    <br />
+    <div class="container">
+        <div class="card card-container" style="background-color:#ddd;text-align:center;opacity:0.8;box-shadow:#555555 3px 3px 10px;">
+
+            <img src="~/assests/images/logo.png">
+            <p id="profile-name" class="profile-name-card"></p>
+            <form class="form-signin" id="f1">
+                <span id="reauth-email" class="reauth-email"></span>
+                <input type="text" id="inputEmail" class="form-control" placeholder="Enter User id" required autofocus ng-model="uid">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Enter Password" required ng-model="pwd">
+                <br />
+                <br />
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-click="login()"><b>Login in</b></button>
+
+
+            </form>
+
+        </div>
+    </div>
+    <!-- Modal2 -->
+    <!----------------->
+
+
+</body>
+<div class="modal fade" id="danger" role="dialog" data-keyboard="false">
+    <div class=" modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert-danger" style="border-bottom:none;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="glyphicon glyphicon-remove-sign"></i>&nbsp;&nbsp;Warning</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <strong>Warning!</strong><p id="msg_error"></p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class=" btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    var app = angular.module("myApp", []);
+    app.controller("myCtrl", function ($scope, $http) {
+        $scope.uid = '';
+        $scope.pwd = '';
+
+        $scope.login = function () {
+            if (($scope.uid == '' || $scope.uid == null) || ($scope.pwd == '' || $scope.pwd == null)) {
+
+                return;
+            }
+
+            $http({
+                url: "/CutOffLogin/login/",
+                method: "POST",
+                dataType: 'json',
+                data: "{'user_id':'" + $scope.uid + "','password':'" + $scope.pwd + "'}",
+                headers: { "Content-Type": "application/json" }
+            }).then(function (r) {
+
+
+                if (r.data == 1) {
+                    //window.location.href = "/CuttoffMaster/Index";
+                    window.location.href = "/CutOffDBBackUp/Index";
+                }
+                else {
+                    $('#msg_error').html('Invalid User Id OR Password');
+                    $('#danger').modal();
+                }
+
+            });
+        };
+    });
+</script>
+
+

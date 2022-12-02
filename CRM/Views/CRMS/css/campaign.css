@@ -1,0 +1,64 @@
+﻿
+    .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .fixedMenuNew {
+        z-index: 5 !important;
+    }
+
+    .tableList {
+        width: 100%;
+        border: 1px solid #ccc;
+    }
+
+        .tableList > thead > tr > th {
+            background: #5a4590;
+            color: #fff;
+        }
+
+        .tableList > thead > tr > th, .tableList > tbody > tr > td {
+            padding: 8px 10px;
+        }
+
+    .btn-product {
+        margin-top: 13px;
+        background: #4c9e9e;
+        color: #fff;
+        box-shadow: 0 3px 0 #3b7d7d;
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+    }
+
+        .btn-product:hover {
+            box-shadow: 0 3px 0 #3b7d7d, 0 5px 3px rgba(0,0,0,0.12);
+            background: #159e9e;
+            -webkit-transform: translateY(-3px);
+            -moz-transform: translateY(-3px);
+            transform: translateY(-3px);
+            color: #fff;
+        }
+
+    .rowActive {
+        background-color: #d3edff;
+    }
+

@@ -1,0 +1,592 @@
+﻿@model CRM.Models.crmActivity
+
+<script>
+    $(function () {
+        setTimeout(function () {
+            // Rev Mantis Issue 22801_Sushanta
+            // alert("hi")
+            $('#timepicker1').timepicker({
+                minuteStep: 1,
+                showSeconds: true,
+                showMeridian: false,
+                defaultTime: false,
+                explicitMode: true,
+                setTime: new Date()
+            });
+           
+        }, 500)
+        // End of Rev Mantis Issue 22801_Sushanta
+
+        setTimeout(function () {
+            if ('@ViewBag.ddlContactType' != "")
+                $("#ddlContactType").val(@ViewBag.ddlContactType);
+
+            $("#ddlAssignTo").val('@ViewBag.AssignTo');
+            @*if ('@ViewBag.Duration' != "")
+            //$("#Duration").val(@ViewBag.Duration);
+            ddlDuration.SetText(@ViewBag.Duration);*@
+
+            if ('@ViewBag.ddlPriority' != "")
+                $("#ddlPriority").val(@ViewBag.ddlPriority);
+
+            
+            $("#btnClear").removeClass('hide');
+            $("#btnSave").addClass('hide');
+            
+        }, 1000)
+        // Rev Mantis Issue 22801_Sushanta
+            setTimeout(function () {
+            $("#timepicker1").blur();
+            $("#btnClear").focus()
+        }, 2500)
+        // Rev Mantis Issue 22801_Sushanta
+
+    })
+
+    
+   </script>
+
+<style>
+    #tbodyActivityProduct > td {
+        padding: 2px 25px;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th:not(:last-child) {
+        border-right: #333;
+    }
+
+    .boxStyle {
+        padding: 5px;
+        background: #f7f7f7;
+        margin: 0 15px 8px 15px;
+        border: 1px solid #ccc;
+    }
+
+    .link {
+        cursor: pointer;
+    }
+
+    .pdLeft0 {
+        padding-left: 0 !important;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner, #dataTbl_wrapper .dataTables_scrollHeadInner table {
+        width: 100% !important;
+    }
+
+        #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th {
+            background: #337ab7;
+            color: #fff;
+            padding: 2px 15px;
+        }
+
+    #tbodyActivityProduct > td {
+        padding: 2px 25px;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th:not(:last-child) {
+        border-right: #333;
+    }
+
+    .modal-footer .btn {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .dataTable > thead > tr > th {
+        background: #285e8e;
+        color:#fff;
+    }
+</style>
+
+
+
+<div class="clear"></div>
+<div style="background:#fff">
+    <div class="clearfix">
+
+
+        <div class="col-md-4">
+            <div class="visF">
+                <div id="ltd_ActivityDate" class="labelt">
+                    <div class="visF">
+                        <label>Activity Date</label>
+                        <span style="color: red;">*</span>
+                    </div>
+                </div>
+                <div id="td_ActivityDate">
+                    <div class="visF">
+                        @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "Activity_Date";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy hh:mm tt";
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy hh:mm tt";
+                                                settings.Properties.TimeSectionProperties.Visible = true;
+                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                if (ViewBag.cActivity_Date != null)
+                                                    settings.Date = ViewBag.cActivity_Date;
+                                                else
+                                                    settings.Date = DateTime.Now;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "cActivity_Date";
+                                            }).GetHtml()
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 hide">
+            <div class="visF">
+                <div id="td_Activity" class="labelt">
+                    <div class="visF">
+                        <label>Activity For</label>
+                        <span style="color: red;">*</span>
+                    </div>
+                </div>
+                <div id="td_Type">
+                    <div class="visF">
+                        @Html.DropDownList("ddlContactType", new SelectList(Model.Contact_Type, "Code", "ContactType"))
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 hide">
+            <div class="visF">
+                <div id="td_ConactName" class="labelt">
+                    <div class="visF">
+                        <label>Contact Name</label>
+                        <span style="color: red;">*</span>
+                    </div>
+                </div>
+                <div id="td_ContactName">
+                    <div class="visF">
+                        @Html.DevExpress().ButtonEdit(settings =>
+                                       {
+                                           settings.Name = "btnEntity";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.Buttons.Add("...");
+                                           settings.Properties.ClientInstanceName = "cbtnEntity";
+                                           settings.Text = ViewBag.cbtnEntity;
+                                       }).GetHtml()
+                        <asp:HiddenField ID="hdnSelectedContact" runat="server" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="col-md-4">
+            <div class="visF">
+                <div id="td_Activity" class="labelt">
+                    <div class="visF">
+                        @*Mantis Issue 24175*@
+                        @*<label>Activity</label>*@
+                        <label>Source</label>
+                        @*End of Mantis Issue 24175*@
+                        <span style="color: red;">*</span>
+                    </div>
+                </div>
+                <div id="td_Type">
+                    <div class="visF">
+
+                        @Html.DevExpress().ComboBox(settings =>
+                   {
+                       settings.Name = "ddlActivity";
+                       settings.Properties.ClientInstanceName = "cddlActivity";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.SelectedIndex = 0;
+                       settings.Properties.CallbackPageSize = 15;
+                       settings.Properties.TextField = "Activity_Code";
+                       settings.Properties.ValueField = "ID";
+                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "ActivityChange";
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                       settings.PreRender = (sender, e) =>
+                       {
+                           ASPxComboBox cmd = (ASPxComboBox)sender;
+                           cmd.Value = ViewBag.cddlActivity;
+                       };
+
+
+
+                   }).BindList(Model.Activity).GetHtml()
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="visF">
+                <div class="labelt">
+                    <label>
+                        @*Mantis Issue 24175*@
+                        @*<label>Type</label>*@
+                        <label>Mode</label>
+                        @*End of Mantis Issue 24175*@
+                        <span style="color: red;">*</span>
+
+                    </label>
+                    <div id="td_Type">
+                        <div class="">
+
+                            @Html.DevExpress().ComboBox(settings =>
+                               {
+                                   settings.Name = "ddlActivityType";
+                                   settings.Properties.ClientInstanceName = "cddlActivityType";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.CallbackPageSize = 15;
+                                   settings.Properties.TextField = "Lead_ActivityTypeName";
+                                   settings.Properties.ValueField = "Id";
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                                   settings.PreRender = (sender, e) =>
+                                   {
+                                       ASPxComboBox cmd = (ASPxComboBox)sender;
+                                       cmd.Value = ViewBag.cddlActivityType;
+                                   };
+                               }).BindList(Model.ActivityType).GetHtml()
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Mantis Issue 24175*@
+        <div class="col-md-4">
+            <div class="visF">
+                <div class="labelt">
+                    <label>
+                        <label>Type</label>
+                        <span style="color: red;">*</span>
+
+                    </label>
+                    <div id="td_Type">
+                        <div class="">
+
+                            @Html.DevExpress().ComboBox(settings =>
+                               {
+                                   settings.Name = "ddlActivityTypeNew";
+                                   settings.Properties.ClientInstanceName = "cddlActivityTypeNew";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.CallbackPageSize = 15;
+                                   settings.Properties.TextField = "ActivityTypeNew";
+                                   settings.Properties.ValueField = "Id";
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                                   settings.PreRender = (sender, e) =>
+                                   {
+                                       ASPxComboBox cmd = (ASPxComboBox)sender;
+                                       cmd.Value = ViewBag.cddlActivityTypeNew;
+                                   };
+                               }).BindList(Model.ActivityTypeNew).GetHtml()
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*End of Mantis Issue 24175*@
+        <div class="col-md-4">
+            <label>
+
+            </label>
+            <button type="button" id="btnActivityProducts" class="btn btn-product btn-block" onclick="Products('ACPRD')">Product</button>
+        </div>
+        <div class="clear"></div>
+        <div class="col-md-12">
+            <div class="">
+                <label>
+                    Subject
+                    <span style="color: red;">*</span>
+
+                </label>
+                <div id="td_Type">
+                    <div class="">
+                        @Html.DevExpress().TextBox(
+                                            settings =>
+                                            {
+                                                settings.Name = "txt_Subject";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "ctxt_Subject";
+                                                settings.Text = ViewBag.ctxt_Subject;
+                                            }).GetHtml()
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="col-md-12">
+            <div class="">
+                <label>
+                    <label>Details</label>
+                    <span style="color: red;">*</span>
+
+                </label>
+                <div id="td_Details">
+                    <div class="">
+                        @Html.DevExpress().Memo(
+                        settings =>
+                        {
+                            settings.Name = "memo_Details";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientInstanceName = "cmemo_Details";
+                            settings.Text = ViewBag.cmemo_Details;
+                        }).GetHtml()
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="col-md-12">
+            <div class="">
+                <div id="td_lAssignto" class="labelt">
+                    <label>Assign To</label>
+                    <span style="color: red;">*</span>
+                </div>
+                <div id="td_dAssignto">
+                    @Html.DropDownList("ddlAssignTo", new SelectList(Model.AssignTo, "ID", "Assign_To"), new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="col-md-6">
+            <div class="">
+                <div id="td_lDuration" class="labelt">
+                    <label>Duration</label>
+                    <span style="color: red;">*</span>
+                </div>
+                @*Rev Mantis Issue 22801_Sushanta [New Tinme control "timepicker1" control for Duration used  and the olkd class "td_dDuration" hidden *@
+                <div>
+                    <div class="input-group bootstrap-timepicker timepicker">
+                        <input id="timepicker1" type="text" class="form-control input-small" value="@ViewBag.timepicker1" />
+                        <span class="input-group-addon" style="padding: 2px 5px;"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                </div>
+                    <div id="td_dDuration" class="hide">
+                        @*@Html.DropDownList("ddlDuration", new SelectList(Model.Duration, "ID", "Duration_Code"), new { @class = "form-control" })*@
+
+                        @Html.DevExpress().TextBox(
+                                            settings =>
+                                            {
+                                                settings.Name = "ddlDuration";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "ddlDuration";
+                                                settings.Properties.MaskSettings.Mask = "<0..99999999999>.<00..99>";
+                                                settings.Text = ViewBag.Duration;
+                                            }).GetHtml()
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-6">
+            <div class="">
+                <div id="td_lPriority" class="labelt">
+                    <label>Priority</label>
+                    <span style="color: red;">*</span>
+                </div>
+                <div id="td_dPriority">
+                    @Html.DropDownList("ddlPriority", new SelectList(Model.Priority, "ID", "Priority"), new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="">
+                <div id="td_lDue" class="labelt">
+                    <label>Due</label>
+                </div>
+                <div>
+                    @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "Due_dt";
+                        settings.Properties.EditFormat = EditFormat.Custom;
+                        settings.Properties.EditFormatString = "dd-MM-yyyy hh:mm tt";
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy hh:mm tt";
+                        settings.Properties.TimeSectionProperties.Visible = true;
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                        if (ViewBag.cDue_dt != null)
+                            settings.Date = ViewBag.cDue_dt;
+                        else
+                            settings.Date = DateTime.Now;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.ClientInstanceName = "cDue_dt";
+                    }).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <input type="hidden" id="hdnEntityID" />
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-success btn-radius" id="btnClear" data-toggle="modal" data-backdrop="static" data-keyboard="true" onclick="OnAddActivitiesbuttonClick();"><span class="btn-icon"><i class="fa fa-plus"></i></span>Activity</button>
+        <button type="button" class="btnOkformultiselection btn btn-success hide" id="btnSave" onclick="SaveActivity()">Save</button>
+        <button type="button" class="btnOkformultiselection btn btn-danger" onclick="CancelActivity()">Cancel</button>
+        <button type="button" class="btnOkformultiselection btn btn-info" onclick="fn_crmShowHistory()">Show History</button>
+    </div>
+
+
+
+
+    <div class="modal fade" id="cActivityProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Products Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="clearfix boxStyle">
+                            <div class="col-md-4">
+                                <label>Product</label>
+
+                                <dxe:ASPxButtonEdit ID="txtProduct" runat="server" ReadOnly="true" ClientInstanceName="ctxtProduct" Width="100%" TabIndex="2">
+                                    @Html.DevExpress().ButtonEdit(settings =>
+                                       {
+                                           settings.Name = "btnProducts";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.ClientSideEvents.ButtonClick = "ProductButnClick";
+                                           settings.Properties.ClientSideEvents.KeyDown = "Product_KeyDown";
+                                           settings.Properties.ClientInstanceName = "ctxtProduct";
+                                           settings.Properties.Buttons.Add("...");
+                                       }).GetHtml()
+                                </dxe:ASPxButtonEdit>
+                                <input type="hidden" id="hdfProductID" />
+                            </div>
+                            <div class="col-md-2 lblmTop8">
+                                <label>Quantity</label>
+                                @Html.DevExpress().TextBox(
+                                            settings =>
+                                            {
+                                                settings.Name = "txt_Quantity";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "ctxtQuantity";
+                                            }).GetHtml()
+                            </div>
+                            <div class="col-md-2 lblmTop8">
+                                <label>Rate</label>
+                                @Html.DevExpress().TextBox(
+                                            settings =>
+                                            {
+                                                settings.Name = "txt_rate";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "ctxtRate";
+                                            }).GetHtml()
+                            </div>
+                            <div class="col-md-2 hide">
+                                <label>Total</label>
+                                @Html.DevExpress().TextBox(
+                                            settings =>
+                                            {
+                                                settings.Name = "txt_Total";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "ctxtTotal";
+                                            }).GetHtml()
+                            </div>
+
+                            <div class="col-md-3 lblmTop8 ">
+                                <label>Remarks</label>
+                                @Html.DevExpress().TextBox(
+                                            settings =>
+                                            {
+                                                settings.Name = "txt_Remarks";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientInstanceName = "ctxtRemarks";
+                                            }).GetHtml()
+                            </div>
+
+                            <div class="col-md-1  pdLeft0">
+                                <label>&nbsp;</label>
+                                <div class="mtop5">
+                                    <button type="button" onclick="AddActivityProductDetails();" class="btn btn-primary">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <table id="dataTbl" class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="hide">GUID</th>
+                                        <th class="hide">ProductId</th>
+                                        <th>SL</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Rate</th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyActivityProduct"></tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 text-right pdTop15">
+                            <button class="btn btn-success " type="button" onclick="SaveActivityProductDetails('Campaign Activity');">OK</button>
+                            <button class="btn btn-danger hide" type="button" onclick="crmProdCancelClick();">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade pmsModal w40" id="ProductModel" role="dialog">
+        <div class="modal-dialog">
+            <!-- Contact content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Product Search</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" onkeydown="Productkeydown(event)" id="txtProductSearch" autofocus width="100%" placeholder="Search By Product" />
+                    <div id="ProductTable">
+                        <table border='1' width="100%" class="dynamicPopupTbl">
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Product Name</th>
+                                <th>Product Description</th>
+                                <th>HSN/SAC</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @*<div class="modal fade" id="cCRMShowHistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="exampleModalLabel">Show History</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div id="idshowhistory">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+   

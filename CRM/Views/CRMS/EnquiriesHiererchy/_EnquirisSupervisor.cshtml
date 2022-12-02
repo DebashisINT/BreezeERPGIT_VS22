@@ -1,0 +1,113 @@
+﻿@model CRM.Models.EnquiriesSupervisorFeedback
+
+
+<div class="">
+    <input type="hidden" id="hdnUserid" />
+
+    <div class="row">
+
+        <div class="myAssignTarget" id="myAssignTargetpopup">
+            <div class="clearfix">
+                <div class="col-lg-6">
+                    <label><b>Source</b></label>
+                    <input type="text" disabled="disabled" class="form-control text-left shd" id="idSource" value=@Model.source />
+
+                </div>
+                <div class="col-lg-6">
+                    <label><b>Industry</b></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbIndustry";
+                        settings.Properties.TextField = "Industry_Name";
+                        settings.Properties.ValueField = "Industry_Id";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                        settings.Width = 220;
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (Model.IndustryId != 0)
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Value = Model.IndustryId;
+                            }
+                        };
+                    }).BindList(Model.listIndustry).GetHtml()
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="col-lg-6">
+                    <label class="mTop10"><b>Misc Comments</b></label>
+                    <input type="text" class="form-control text-left shd" id="idMiscComments" value='@Model.Misc_comments' />
+                </div>
+                <div class="col-lg-6">
+                    <label class="mTop10"><b>Priority</b></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbPriority";
+                        settings.Properties.TextField = "priorityName";
+                        settings.Properties.ValueField = "priorityID";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                        settings.Width = 220;
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (Model.enq_priorityID != 0)
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Value = Model.enq_priorityID;
+                            }
+                        };
+                    }).BindList(Model.listpriority).GetHtml()
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="clearfix">
+                <div class="col-lg-6">
+                    <label class="mTop10"><b>Whether Existing Customer</b></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbExistCust";
+                        settings.Properties.TextField = "Name";
+                        settings.Properties.ValueField = "Id";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(string);
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                        settings.PreRender = (sender, e) =>
+                        {
+                            ASPxComboBox com = (ASPxComboBox)sender;
+                            com.Value = Model.checkedcustomer;
+                        };
+
+                    }).BindList(Model.listExistOrNotCustomer).GetHtml()
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="clear "></div>
+
+        <div class=" col-md-12 pad15">
+
+            <div class="">
+                <button type="button" class="btn btn-primary" id="btnSaveSupervisor" onclick="OKSaved();">Save</button>
+                <button type="button" class="btn btn-danger" onclick="Cancel();">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="hdnsupervisoruniqueid" value="@Model.Unique_ID" />

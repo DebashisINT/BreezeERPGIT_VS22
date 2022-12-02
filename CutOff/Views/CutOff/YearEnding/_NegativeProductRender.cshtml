@@ -1,0 +1,15 @@
+﻿@model  CutOff.Models.PendingDocView
+
+<div class="col-md-12">
+    <select name="ddlExportNeg" class="btn btn-sm btn-primary" id="ddlExportNeg" onchange="PendingNegativeStock()">
+        <option value="0">Export to</option>
+        <option value="1">PDF</option>
+        <option value="2">XLSX</option>
+        <option value="3">XLS</option>
+        <option value="4">RTF</option>
+        <option value="5">CSV</option>
+
+    </select>
+    @Html.Partial("~/Views/CutOff/YearEnding/_NegativeProductPartial.cshtml", Model);
+</div>
+

@@ -1,0 +1,298 @@
+﻿@if (Model != null)
+{
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaging";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "ServiceContact", Action = "PartialServiceContactGrid" };
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 150;
+
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+    //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50", "100", "150" };
+    settings.Settings.ShowFilterRow = true;
+
+    settings.KeyFieldName = "servicecontact_id";
+    settings.SettingsPager.PageSize = 100;
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRowMenu = true;
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Service_UniqueId";
+        column.Caption = "Unique Id";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        column.Width = 170;
+        column.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Service_Name";
+        column.Caption = "Name";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 180;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Customer";
+        column.Caption = "Customer";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 180;
+    });
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "c";
+    //    column.Caption = "Contacts";
+    //    column.ColumnType = MVCxGridViewColumnType.DateEdit;
+    //    column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+    //    (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+    //    column.Width = 150;
+    //});
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "StartDate";
+        column.Caption = "Start Date";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EndDate";
+        column.Caption = "End Date";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Description";
+        column.Caption = "Description";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "g";
+    //    column.Caption = "Entitlement Terms";
+    //    column.ColumnType = MVCxGridViewColumnType.DateEdit;
+    //    column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+    //    (column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+    //    column.Width = 150;
+    //});
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Service_Amount";
+        column.Caption = "Service Amount";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 110;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Prod_Serivce_cost";
+        column.Caption = "Prod/Serivce cost";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 110;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Service_AddlCost";
+        column.Caption = "Addl. cost";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 110;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Renewal_Date";
+        column.Caption = "Renewal Date";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+ 
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "AssignTo";
+        column.Caption = "Assign To";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Enteredby";
+        column.Caption = "Entered by";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Enteredon";
+        column.Caption = "Entered on";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Updatedby";
+        column.Caption = "Updated by";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Updatedon";
+        column.Caption = "Updated on";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Status";
+        column.Caption = "Status";
+        //column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        //(column.PropertiesEdit as DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        column.Width = 150;
+    });
+    //settings.Columns.Add(column =>
+    //{
+    //    column.Caption = "Actions";
+    //    column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //    column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+
+    //    column.SetDataItemTemplateContent(tc =>
+    //    {
+
+    //    });
+    //    column.Settings.AllowDragDrop = DefaultBoolean.False;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.Width = 150;
+    //    column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    //});
+
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ORDER_VALUE").DisplayFormat = "0.00"; ;
+    //settings.ClientSideEvents.RowClick = "gridRowclick";
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "Action";
+        x.Width = 0;
+        x.ColumnType = MVCxGridViewColumnType.TextBox;
+        x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    settings.ClientSideEvents.RowClick = "gridcrmServiceclick";
+    //This is Used For Add or hide column from column chooser
+    settings.SettingsBehavior.EnableCustomizationWindow = true;
+    settings.SettingsBehavior.EnableRowHotTrack = true;
+    settings.SettingsCookies.Enabled = true;
+    settings.SettingsCookies.StorePaging = true;
+    settings.SettingsCookies.StoreColumnsVisiblePosition = true;
+    //This is Used For Add or hide column from column chooser
+
+    settings.HtmlDataCellPrepared += (s, e) =>
+    {
+        if (e.DataColumn.Caption == "Action")
+        {
+            MVCxGridView grid = (MVCxGridView)s;
+            Int64 ID = Convert.ToInt64(grid.GetRowValues(e.VisibleIndex, new string[] { "servicecontact_id" }));
+
+
+            string Lead_Name = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Service_Name" });
+            string Lead_Code = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Service_UniqueId" });
+            //string Status = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Status" });
+
+
+
+            var buttonHtml = "<div class='floatedBtnArea'>";
+            if (ViewBag.CanView)
+                buttonHtml += string.Format("<a onclick=\"ViewClick('" + ID + "');\" title=\"\" class='ed '><span class='ico editColor'><i class='fa fa-eye' aria-hidden='true'></i></span><span class='hidden-xs'>View</span></a>");
+          
+            if (ViewBag.CanEdit)
+                buttonHtml += string.Format("<a onclick=\"EditClick('" + ID + "');\" title=\"\" class='ed '><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+           if (ViewBag.CanDelete)
+               buttonHtml += string.Format("<a onclick=\"DeleteClick('" + ID + "');\" title=\"\" class=''><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+           if (ViewBag.CanCreateActivity)
+
+               buttonHtml += string.Format("<a onclick=\"DoActivity('" + ID + "');\" title=\"\" class=''><span class='ico ColorThree'><i class='fa fa-wrench'></i></span><span class='hidden-xs'>Activities</span></a>");
+                  
+            //if (ViewBag.CanQualify)
+            //{
+            //    buttonHtml += string.Format("<a onclick=\"Qualify('" + Lead_Code + "','" + Status + "');\" title=\"\" class=''><span class='ico ColorThree'><i class='fa fa-check'></i></span><span class='hidden-xs'>Qualify</span></a>");
+
+            //}
+            //if (ViewBag.CanCancelLost)
+            //{
+            //    buttonHtml += string.Format("<a onclick=\"Lost('" + Lead_Code + "','" + Status + "');\" title=\"\" class=''><span class='ico deleteColor'><i class='fa fa-ban'></i></span><span class='hidden-xs'>Cancelled/Lost</span></a>");
+            //}
+
+            ////buttonHtml += string.Format("<a onclick=\"AddMember('" + ID + "');\" title=\"\" class=''><span class='ico ColorFour'><i class='fa fa-user'></i></span><span class='hidden-xs'>Member(s)</span></a>");
+            //if (ViewBag.CanSharing)
+            //    buttonHtml += string.Format("<a onclick=\"DoSharing('" + ID + "');\" title=\"\" class=''><span class='ico ColorFive'><i class='fa fa-share-alt'></i></span><span class='hidden-xs'>Sharing</span></a>");
+            //if (ViewBag.CanProducts)
+            //    buttonHtml += string.Format("<a onclick=\"DoProducts('" + ID + "');\" title=\"\" class=''><span class='ico ColorSix'><i class='fa fa-cube'></i></span><span class='hidden-xs'>Products</span></a>");
+           if (ViewBag.CanLiterature)
+               buttonHtml += string.Format("<a onclick=\"AddLiterature('" + ID + "','" + Lead_Name + "','" + Lead_Code + "');\" title=\"\" class=''><span class='ico ColorSeven'><i class='fa fa-user'></i></span><span class='hidden-xs'>Literature(s)</span></a>");
+               buttonHtml += "</div>";
+           e.Cell.Text = buttonHtml;
+        }
+
+    };
+    
+    
+}).Bind(Model).GetHtml()
+
+}
+
+

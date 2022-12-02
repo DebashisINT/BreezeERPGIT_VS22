@@ -1,0 +1,26 @@
+﻿@model CRM.Models.EnquiriesDet
+
+<div class="">
+
+    <hr />
+    <div class=" ">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="Widgheading relative clearfix" aria-expanded="true" aria-controls="collapseOne"></h4>
+        </div>
+
+        <div class="GridViewArea">
+            @{
+                Html.RenderAction("PartialMassDelete", "Enquiries");
+            }
+        </div>
+
+        <div class="text-center mTop10">
+            @*<button type="button" class="btn btn-success" onclick="SelectAll();">Select All</button>*@
+            <button type="button" class="btn btn-success" onclick="MarkasDel();">Confirm</button>
+        </div>
+
+    </div>
+
+
+</div>
+

@@ -1,0 +1,104 @@
+﻿
+@model CRM.Models.EnquiriesVerify
+
+<div class="">
+    <input type="hidden" id="hdnUserid" />
+
+    <div class="row">
+        <div class="myAssignTarget" id="myAssignTargetpopup">
+            <div class="clearfix">
+              
+
+                <div class="col-lg-12">
+                    <label class="mTop10"><b>Verified By</b></label>
+                    <div>
+                        @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmbVerifiedBy";
+                        settings.Properties.TextField = "Name";
+                        settings.Properties.ValueField = "ID";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.ValueType = typeof(string);
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.SelectedIndex = 0;
+                        settings.PreRender = (sender, e) =>
+                        {
+                            if (Model.verify_by != "")
+                            {
+                                ASPxComboBox com = (ASPxComboBox)sender;
+                                com.Value = Model.verify_by;
+                            }
+                           
+                        };
+                    }).BindList(Model.listemployee).GetHtml()
+
+
+
+                        <span id="Mandatoryfrm_cmbVerifiedBy" style="display: none" class="validclass">
+                            <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                        </span>
+                    </div>
+                </div>
+
+           
+                <div class="col-lg-12">
+                    <label class="mTop10"><b>Verified On</b></label>
+                    <div>
+                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "dt_verifiedon";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "Chnageverifiedon";
+                                settings.Date = DateTime.Now;
+                            }
+                        ).GetHtml()
+                    </div>
+                    <span id="Mandatoryfrm_dt_verifiedon" style="display: none" class="validclass">
+                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </div>
+
+                <div class="col-lg-12">
+                    <label class="mTop10"><b>Closure Date</b></label>
+                    <div>
+                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "dt_closuredate";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "Chnageclosuredate";
+                                settings.Date = DateTime.Now;
+                                settings.Properties.MaxDate = @Model.verified_on;
+                            }
+                        ).GetHtml()
+                        <span id="Mandatoryfrm_dt_closuredate" style="display: none" class="validclass">
+                            <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                        </span>
+                    </div>
+                </div>
+
+                </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <div class=" col-md-12 pad15">
+
+            <div class="">
+                <button type="button" class="btn btn-primary" onclick="OKVerify();">Save</button>
+                <button type="button" class="btn btn-danger" onclick="CancelVerify();">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="hdnVerifyuniqueid" value="@Model.Unique_ID" />

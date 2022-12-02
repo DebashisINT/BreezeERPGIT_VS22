@@ -1,0 +1,773 @@
+﻿
+@{
+    ViewBag.Title = "Entitlement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+<link href="~/assests/js/CRM/SearchPopup.css" rel="stylesheet" />
+<script src="~/assests/js/CRM/SearchPopup.js"></script>
+<style>
+    .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .myAssignTarget {
+        margin-bottom: 0;
+    }
+        /*#cmbPriority {
+        border-radius: 3px;
+    }*/
+        .myAssignTarget > li {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 11px;
+            text-align: center;
+        }
+
+            .myAssignTarget > li:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            .myAssignTarget > li.mainCircle {
+                border: 1px solid #a2d3d8;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .myAssignTarget > li .heading {
+                padding: 2px 12px;
+                background: #6d82c5;
+                color: #fff;
+            }
+
+            .myAssignTarget > li .Num {
+                font-size: 14px;
+            }
+
+            .myAssignTarget > li.mainHeadCenter {
+                font-size: 12px;
+                transform: translateY(-16px);
+            }
+
+    #myAssignTargetpopup {
+        padding: 0;
+    }
+
+        #myAssignTargetpopup > li .heading {
+            padding: 6px 12px;
+            background: #7f96dc;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #myAssignTargetpopup li .Num {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+    #cc, #bcc {
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#toinput").tagsinput('add', { preventPost: true });
+        $('#toinput').on('beforeItemAdd', function (event) {
+            var tag = event.item;
+            // Do some processing here
+            alert(tag)
+
+            //if (!event.options || !event.options.preventPost) {
+
+            //}
+        });
+        $("#ccinput").tagsinput('add', { preventPost: true });
+        $("#bccinput").tagsinput('add', { preventPost: true });
+
+
+        $('.widgetizeForm li .parentLabel').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).parent('li').hasClass('ready')) {
+                //$('.widgetDrop').hide();
+                // $(this).parent('li').addClass('on');
+                $('.widgetDrop').hide();
+                $(this).parent('li').find('.widgetDrop').toggle();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.widgetDrop .nextStage').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).hasClass('act')) {
+                $(this).closest('li.parentLi').next('.parentLi').addClass('ready');
+                $(this).closest('li.parentLi').next('.parentLi').find('.widgetDrop').show();
+                $(this).closest('li.parentLi').next('.parentLi').addClass('on');
+
+                $(this).closest('li.parentLi').removeClass('on').addClass('visited');
+                $(this).closest('li.parentLi').find('.widgetDrop').hide();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.closeDropCont').click(function () {
+            $(this).closest('li.parentLi').find('.widgetDrop').hide();
+        });
+
+        $('#ccAnchor').click(function (e) {
+            e.preventDefault();
+            $('#cc').show();
+            $(this).hide();
+            setTimeout(function () { $('#cc').focus(); }, 5000);
+
+        });
+        $('#bccAnchor').click(function (e) {
+            e.preventDefault();
+            $('#bcc').show();
+            $('#bcc').focus();
+            $(this).hide();
+        });
+        $('.sms-template-area').hide();
+    });
+    function showEmail() {
+        $('.sms-template-area').hide();
+        $('.email-template-area').show();
+    }
+    function showSms() {
+        $('.email-template-area').hide();
+        $('.sms-template-area').show();
+    }
+</script>
+<script type="text/javascript">
+    //function PinChange() {
+
+    //    var detailsByPin = cpin.GetText().trim();
+
+    //    //cpin
+
+    //    if (detailsByPin != '') {
+    //        //var details = {}
+
+    //        //details.PinCode = detailsByPin;
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/CRMLeads/AddressByPin",
+    //            data: JSON.stringify({ PinCode: detailsByPin }),
+    //            contentType: "application/json; charset=utf-8",
+    //            dataType: "json",
+    //            success: function (msg) {
+    //                var obj = msg;
+    //                var returnObj = obj[0];
+    //                if (returnObj) {
+    //                    cpin.SetText(returnObj.PinCode);
+    //                    ccountry.SetText(returnObj.CountryName);
+    //                    cstate.SetText(returnObj.StateName);
+    //                    ccity.SetText(returnObj.CityName);
+
+    //                    $('#hdnpinid').val(returnObj.PinId);
+    //                    $('#hdncountryid').val(returnObj.CountryId);
+    //                    $('#hdnstateid').val(returnObj.StateId);
+    //                    $('#hdncityid').val(returnObj.CityId);
+    //                }
+    //                else {
+    //                    $('#hdnpinid').val('');
+    //                    $('#hdncountryid').val('');
+    //                    $('#hdnstateid').val('');
+    //                    $('#hdncityid').val('');
+
+    //                    cpin.SetText('');
+    //                    ccountry.SetText('');
+    //                    cstate.SetText('');
+    //                    ccity.SetText('');
+
+    //                }
+
+    //            }
+    //        });
+    //    }
+
+    //}
+</script>
+
+<script>
+    function Contact_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#ContactModel').modal('show');
+            $('#txtContactSearch').focus();
+        }
+    }
+
+    function ContactButnClick(s, e) {
+        $('#ContactModel').modal('show');
+        $('#txtContactSearch').focus();
+    }
+
+    function Account_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#AccountModel').modal('show');
+            $('#txtAccountSearch').focus();
+        }
+    }
+
+    function AccountButnClick(s, e) {
+        $('#AccountModel').modal('show');
+        $('#txtAccountSearch').focus();
+    }
+
+    function Contactkeydown(e) {
+
+        var OtherDetails = {}
+        OtherDetails.SearchKey = $("#txtContactSearch").val();
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Contact Name");
+            HeaderCaption.push("Address");
+            if ($("#txtContactSearch").val() != '') {
+                callonServer("../CRMOpportunities/GetContact", OtherDetails, "ContactTableCRM", HeaderCaption, "ContactIndex", "SetContact");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ContactIndex=0]"))
+                $("input[ContactIndex=0]").focus();
+        }
+    }
+
+    function SetContact(Id, Name) {
+        // debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#ContactModel').modal('hide');
+            ctxtContact.SetText(Name);
+            GetObjectID('hdnContactid').value = key;
+            ctxtContact.Focus();
+        }
+        else {
+            ctxtContact.SetText('');
+            GetObjectID('hdnContactid').value = '';
+        }
+    }
+
+    function Accountkeydown(e) {
+
+        var OtherDetails = {}
+        OtherDetails.SearchKey = $("#txtAccountSearch").val();
+        // OtherDetails.contactType = 'Customer';
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Account Name");
+            HeaderCaption.push("Unique Id");
+            HeaderCaption.push("Address");
+            if ($("#txtAccountSearch").val() != '') {
+                callonServer("../CRMOpportunities/GetAccount", OtherDetails, "AccountTable", HeaderCaption, "AccountIndex", "SetAccount");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[AccountIndex=0]"))
+                $("input[AccountIndex=0]").focus();
+        }
+    }
+
+    function SetAccount(Id, Name) {
+        // debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#AccountModel').modal('hide');
+            ctxtAccount.SetText(Name);
+            GetObjectID('hdnAccountid').value = key;
+            ctxtAccount.Focus();
+        }
+        else {
+            ctxtAccount.SetText('');
+            GetObjectID('hdnAccountid').value = '';
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if (indexName == "ContactIndex") {
+
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                if (Id) {
+                    SetContact(Id, name);
+                }
+            }
+            else if (indexName == "AccountIndex") {
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                SetAccount(Id, name);
+            }
+            else if (indexName == "CompanyIndex") {
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                SetCompany(Id, name);
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1) {
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            }
+            else {
+
+                if (indexName == "ContactIndex")
+                    $('#txtContactSearch').focus();
+                else if (indexName == "AccountIndex")
+                    $('#txtAccountSearch').focus();
+                else if (indexName == "CompanyIndex")
+                    $('#txtCompanySearch').focus();
+            }
+        }
+    }
+
+    function PinChange() {
+
+        var detailsByPin = cpin.GetText().trim();
+
+        //cpin
+
+        if (detailsByPin != '') {
+            $.ajax({
+                type: "POST",
+                url: "/CRMOpportunities/AddressByPin",
+                data: JSON.stringify({ PinCode: detailsByPin }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cpin.SetText(returnObj.PinCode);
+                        ccountry.SetText(returnObj.CountryName);
+                        cstate.SetText(returnObj.StateName);
+                        ccity.SetText(returnObj.CityName);
+
+                        $('#hdnpinid').val(returnObj.PinId);
+                        $('#hdncountryid').val(returnObj.CountryId);
+                        $('#hdnstateid').val(returnObj.StateId);
+                        $('#hdncityid').val(returnObj.CityId);
+                    }
+                    else {
+                        $('#hdnpinid').val('');
+                        $('#hdncountryid').val('');
+                        $('#hdnstateid').val('');
+                        $('#hdncityid').val('');
+
+                        cpin.SetText('');
+                        ccountry.SetText('');
+                        cstate.SetText('');
+                        ccity.SetText('');
+
+                    }
+                }
+            });
+        }
+
+    }
+
+    function Company_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#CompanyModel').modal('show');
+            $('#txtCompanySearch').focus();
+        }
+    }
+
+    function CompanyButnClick(s, e) {
+        $('#CompanyModel').modal('show');
+        $('#txtCompanySearch').focus();
+    }
+
+    function Companykeydown(e) {
+
+        var OtherDetails = {}
+        OtherDetails.SearchKey = $("#txtCompanySearch").val();
+        OtherDetails.contactType = "Lead";
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Company Name");
+            HeaderCaption.push("Unique ID");
+            if ($("#txtCompanySearch").val() != '') {
+                callonServer("../CRMOpportunities/GetCompany", OtherDetails, "CompanyTable", HeaderCaption, "CompanyIndex", "SetCompany");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[CompanyIndex=0]"))
+                $("input[CompanyIndex=0]").focus();
+        }
+    }
+
+    function SetCompany(Id, Name) {
+        // debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#CompanyModel').modal('hide');
+            ctxtCompany.SetText(Name);
+            GetObjectID('hdnCompannyId').value = key;
+            ctxtCompany.Focus();
+            CompanyChange(key);
+        }
+        else {
+            ctxtCompany.SetText('');
+            CompanyChange('');
+            GetObjectID('hdnCompannyId').value = '';
+        }
+    }
+
+
+    function CompanyChange(id) {
+        var detailsByPin = cpin.GetText().trim();
+        //Address Fill From Companny
+        if (id != '') {
+            $.ajax({
+                type: "POST",
+                url: "/CRMOpportunities/AddressByCompany",
+                data: JSON.stringify({ cntID: id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var obj = msg;
+                    var returnObj = obj[0];
+                    if (returnObj) {
+                        cpin.SetText(returnObj.PinCode);
+                        ccountry.SetText(returnObj.CountryName);
+                        cstate.SetText(returnObj.StateName);
+                        ccity.SetText(returnObj.CityName);
+                        ctWebSite.SetText(returnObj.WebSite);
+                        $("#txt_Address1").val(returnObj.Address1);
+                        $("#txt_Address2").val(returnObj.Address2);
+                        $("#txt_Landmark").val(returnObj.Landmark);
+
+                        $('#hdnpinid').val(returnObj.PinId);
+                        $('#hdncountryid').val(returnObj.CountryId);
+                        $('#hdnstateid').val(returnObj.StateId);
+                        $('#hdncityid').val(returnObj.CityId);
+                    }
+                    else {
+                        $('#hdnpinid').val('');
+                        $('#hdncountryid').val('');
+                        $('#hdnstateid').val('');
+                        $('#hdncityid').val('');
+
+                        cpin.SetText('');
+                        ccountry.SetText('');
+                        cstate.SetText('');
+                        ccity.SetText('');
+                        ctWebSite.SetText('');
+                        $("#txt_Address1").val('');
+                        $("#txt_Address2").val('');
+                        $("#txt_Landmark").val('');
+                    }
+                }
+            });
+        }
+        else {
+            $('#hdnpinid').val('');
+            $('#hdncountryid').val('');
+            $('#hdnstateid').val('');
+            $('#hdncityid').val('');
+
+            cpin.SetText('');
+            ccountry.SetText('');
+            cstate.SetText('');
+            ccity.SetText('');
+            ctWebSite.SetText('');
+            $("#txt_Address1").val('');
+            $("#txt_Address2").val('');
+            $("#txt_Landmark").val('');
+        }
+    }
+
+    function OpenQuatList() {
+        $('#QuotationModel').modal('show');
+    }
+
+    function OnStartCallback(s, e) {
+        e.customArgs["Account"] = $("#hdnAccountid").val();
+    }
+</script>
+
+<div class="panel-heading">
+    <div id="td_contact1" class="panel-title">
+        <h3>
+            <span id="lblHeadTitle">Entitlement  </span>
+        </h3>
+    </div>
+</div>
+<div class="form_main clearfix">
+    <div class="mTop5">
+        <button class="btn btn-success btn-radius " data-toggle="modal" data-target="#addaccount" data-backdrop="static" data-keyboard="true">
+            <span class="btn-icon"><i class="fa fa-plus"></i></span> Add Entitlement
+        </button>
+    </div>
+</div>
+
+
+<div class="modal fade pmsModal w90" id="addaccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Entitlement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+
+
+                <div class="clearfix text-center" style="margin-bottom:7px;">
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Owner</b></div>
+                                <div>
+                                    <div><select><option>Select</option></select></div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item" style="margin-right:0px;">
+                                <div class="ico"><i class="fa fa-user"></i></div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div><b>Assign To</b></div>
+                                <div><select><option>Select</option></select></div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item ">
+                                <div><b>Status</b></div>
+                                <div><select><option>Select</option></select></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection mRight20">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Est. Revenue</b></div>
+                                <div><input type="text" /></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="infoSection ">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div><b>Est. Close Date</b></div>
+                                <div><input type="text" /></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="Vtabs pmsForm">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-1">
+                            <ul class="nav nav-pills nav-stacked flex-column">
+                                <li class="active"><a href="#tab_a" data-toggle="pill">Summary</a></li>
+                                <li class=""><a href="#tab_b" data-toggle="pill">Channel</a></li>
+                                <li class=""><a href="#tab_c" data-toggle="pill">Products</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-11">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_a">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Entitlement Information <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label"> Name </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Primary Customer </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Start Date </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">End Date </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Restricted based on entitlement terms</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">SLA</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Owner</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Description</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Entitlement Terms <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Entity Type</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Allocation Type </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Decrease Remaining on </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Total Terms  </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Remaining Terms </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                               
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="tab_b">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Channel Grid <span class="bulet"></span></div>
+                                           
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_c">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="crmTAbhd">Products Grid <span class="bulet"></span></div>
+                                            
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+

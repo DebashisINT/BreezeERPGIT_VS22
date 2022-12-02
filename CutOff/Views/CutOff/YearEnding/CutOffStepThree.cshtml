@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "Cut Off Step Three";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+</style>
+
+<script>
+
+    $(document).ready(function () {
+        if (ViewData["BackupDone"] == "Yes") {
+            $("lblNotDone").addClass("btn-danger")
+            $("lblDone").addClass("btn-primary");
+        }
+        else {
+            $("lblNotDone").addClass("btn-primary")
+            $("lblDone").addClass("btn-danger");
+        }
+    });
+
+    function StartDbCreation() {
+
+
+
+
+
+        var obj = {};
+        obj.cutoffDate = '@ViewBag.CutoffDate';
+        obj.AuditDbname = '@ViewData["AuditDBName"]';
+        obj.Dbname = '@ViewData["Dbname"]';
+        LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/YearEnding/StartDbCreate",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                jAlert('You have to login again to proceed.', function () {
+                    window.location.href="/OMS/SignOff.aspx";
+                });
+
+                LoadingPanel.Hide();
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+                LoadingPanel.Hide();
+            }
+        });
+
+
+
+
+
+
+
+
+
+       // window.location.href = "/YearEnding/StartDbCreate?cutoffDate=" + " @ViewBag.CutoffDate &AuditDbname=@ViewData["AuditDBName"] &Dbname=@ViewData["Dbname"] ";
+    }
+
+    function btnCancelClick() {
+        window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+    }
+
+    function btnNextClick() {
+        window.location.href = "YearEnding/CutOffStepFour";
+    }
+    function btnExitClick() {
+        window.location.href = "/OMS/Management/ProjectMainPage.aspx";
+    }
+
+</script>
+
+<div id="dvStep3" class="flexContainer">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending Step 3 by 3</h3>
+        <div class="bordered">
+            <table width="70%">
+                <tr>
+                    <td>
+                        <label>Cut Off Date :</label>
+                    </td>
+                    <td>
+                       <label >@ViewBag.CutoffDate</label>
+
+                    </td>
+                </tr>
+                <tr style="display:none;">
+                    <td>
+                        <label>Backup Done :</label>
+                    </td>
+                    <td>
+                        <label id="lblDone">Done</label> 
+                        <label id="lblEsc" > || </label>
+                        <label id="lblNotDone">Not Done</label> 
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <div class="text-right mtop-2">
+                <button class="btn btn-info" id="btnstartdbCreation" onclick="StartDbCreation();">Start</button>
+                <button style="display:none;" class="btn btn-primary" id="btnStep4" onclick="btnExitClick();">Exit</button>
+                <button class="btn btn-danger hide" onclick="btnCancelClick();">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+    <input type="hidden" id="hdnAuditDB" value="@ViewData["AuditDBName"]" />
+    <input type="hidden" id="hdnDB" value="@ViewData["Dbname"]" />
+
+
+</div>
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID ="dvStep3";
+    }
+).GetHtml()
+

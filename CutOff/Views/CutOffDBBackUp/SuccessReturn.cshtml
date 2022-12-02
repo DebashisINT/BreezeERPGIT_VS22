@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .flexContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .itm {
+        width: 550px;
+    }
+
+        .itm .bordered {
+            border: 1px solid #d0d2c9;
+            border-radius: 20px;
+            min-height: 120px;
+            padding: 15px;
+            background: #f9f7f6;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .itm .hdr {
+            font-weight: 500;
+            margin-bottom: 10px !important;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    .mtop-2 {
+        margin-top: 10px;
+    }
+</style>
+<div class="flexContainer" id="dvStep2">
+
+    <div class="itm">
+        <h3 class="hdr">Year Ending CutOff</h3>
+        <div class="bordered">           
+            <div class="text-left mtop-2">
+                <div>@TempData["msg"]</div>
+            </div>
+        </div>
+    </div>
+</div>
