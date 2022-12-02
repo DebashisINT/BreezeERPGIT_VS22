@@ -1,0 +1,163 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridAttachmentList";
+
+    settings.CallbackRouteValues = new { Action = "GetAttachmentDocumentList", Controller = "Attachment" };
+
+    settings.KeyFieldName = "doc_id";
+    //settings.ClientSideEvents.EndCallback = "OnPOListEndCallback";
+    //settings.ClientSideEvents.BeginCallback = "OnPOListBeginCallback";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "BOMEntry", Action = "GetBOMEntryList" };
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.SettingsBehavior.ColumnResizeMode = DevExpress.Web.ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = false;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = false;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = false;
+    settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "doc_documentType";
+        x.Caption = "Document Type";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "doc_FileNo";
+        x.Caption = "Number";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "doc_documentName";
+        x.Caption = "Document Name";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "doc_receivedate";
+        x.Caption = "Attachement Date";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "doc_Note1";
+        x.Caption = "Remarks";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+    });
+
+
+
+   
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.FieldName = "doc_source";
+    //    x.Caption = "Attachment";
+    //    //x.VisibleIndex = 1;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    //    //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.;
+
+
+
+    //});
+
+    //settings.HtmlDataCellPrepared += (s, e) =>
+    //{
+
+    //    if (e.DataColumn.Caption == "Attachment")
+    //    {
+    //        DevExpress.Web.Mvc.MVCxGridView grid = (DevExpress.Web.Mvc.MVCxGridView)s;
+    //        var IMG_PATH = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "doc_source" });
+    //        //var Type = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Type" });
+
+    //        var buttonHtml = "";
+    //       // var img_folder = System.Configuration.ConfigurationSettings.AppSettings["img_folder_path"];
+    //        var siteurl = System.Configuration.ConfigurationSettings.AppSettings["SiteURL"];
+
+    //        if (IMG_PATH != "")
+    //        {
+    //            //if (Type == "Re-Visit")
+    //            //{
+    //            //    buttonHtml = string.Format(" <a class='example-image-link' href='{0}' data-lightbox='example-1'><img src='{0}' data-lightbox='{0}' alt='No Image Found' height='42' width='42'></a>", img_folder + IMG_PATH);
+    //            //}
+    //            //else
+    //            //{
+    //            buttonHtml = string.Format(" <a class='example-image-link' target='_blank' href='{0}' data-lightbox='example-1'>View Attachment</a>", siteurl + IMG_PATH);
+
+    //            //}
+    //        }
+    //        //else
+    //        //{
+    //        //    buttonHtml = string.Format("<span>No Image Found </span>", IMG_PATH);
+    //        //}
+
+    //        e.Cell.Text = buttonHtml;
+    //    }
+    //};
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "Actions";
+        //x.VisibleIndex = 16;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        x.SetDataItemTemplateContent(c =>
+        {
+            var IMG_PATH = Convert.ToString(DataBinder.Eval(c.DataItem, "doc_source")) ;
+            var siteurl = System.Configuration.ConfigurationSettings.AppSettings["SiteURL"];
+            string EnqRights = "";
+
+            EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"ViewAttachment('" + siteurl + IMG_PATH + "')\"><img src='/assests/images/viewIcon.png' title='View Document' class='mright8' /> </a>";
+
+            EnqRights = EnqRights + "&nbsp;" + "<a style='cursor:pointer' onclick=\"OpenAttachmentData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "doc_id")) + "')\"><img src='/assests/images/edit.png' title='Edit' class='mright8' /> </a>";
+           
+                EnqRights = EnqRights + "&nbsp;" +
+                    "<a style='cursor:pointer;' onclick=\"RemoveAttachmentData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "doc_id")) + "')\"> <img src='/assests/images/delete.png' title='Delete' class='' /> </a>";
+            
+
+
+            ViewContext.Writer.Write(EnqRights);
+        });
+    });
+
+
+
+}).Bind(Model).GetHtml()
+
+
+
+
+
+
+

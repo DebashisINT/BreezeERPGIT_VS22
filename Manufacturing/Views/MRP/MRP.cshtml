@@ -1,0 +1,620 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model Manufacturing.Models.ViewModel.BOMEntryModel.BOMEntryViewModel
+
+@{
+    ViewBag.Title = "Material Requirement Planning (MRP)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<link href="~/Views/BOM/BOMEntry/BOMEntryList.css" rel="stylesheet" />
+<style>
+    #LineProductionDetailsList_DXStatus {
+        display: none;
+    }
+
+   
+</style>
+
+<script>
+    var globalrowindex = 0;
+    function gridclick(s, e) {
+        globalrowindex = e.visibleIndex;
+    }
+   
+    function OnclickAddBOMRelation() {
+        var url = "/MRP/MRPAdd?ActionType=ADD";
+        window.location.href = url;
+    }
+    var load = 0;
+    function OpenBOMData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+             var url = "/MRP/MRPAdd?ActionType=EDIT&MRP_ID=" + detailsid;
+            window.location.href = url;
+        }
+    }
+
+    function ViewBOMData(detailsid) {
+         if (parseInt(detailsid) > 0) {
+             var url = "/MRP/MRPAdd?ActionType=View&MRP_ID=" + detailsid;
+            window.location.href = url;
+        }
+    }
+    function OnclickPreviewLineItems(detailsid) {
+        if (parseInt(detailsid) > 0) {
+        
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetMRPID", "MRP")",
+                data: { Details_ID: parseInt(detailsid) },
+                success: function (response) {
+
+              
+                $('#PreviewLineItemsModal').modal('show');
+              
+                setTimeout(function () {
+                    LineProductionDetailsList.Refresh();
+                }, 500);
+               
+            }
+        });
+        }
+    }
+    
+
+    function ClosedBOMData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            jConfirm('Do you want to close the BOM ?', 'Alert!', function (r) {
+                if (r) {
+                    $('#hdndetailsid').val(parseInt(detailsid));
+                    $('#ClosedModal').modal('show');
+                }
+            });
+        }
+    }
+
+    function StandardCostData(detailsid,BOMNO) {
+        if (parseInt(detailsid) > 0) {
+            $('#hdndetailsid').val(parseInt(detailsid));
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("getStandardCostData", "BOMEntry")",
+                data: { Details_ID: parseInt(detailsid) },
+                success: function (response) {
+
+                    //gridBOMProductEntryList.batchEditApi.EndEdit();
+
+
+                    $('#pStandardCost').text(BOMNO);
+                    $('#StandardCostModal').modal('show');
+                    $('#txtTotalStandardCost').val(response);
+
+                }
+            });
+        }
+    }
+    function ActualCostData(detailsid, BOMNO) {
+        if (parseInt(detailsid) > 0) {
+            $('#hdndetailsid').val(parseInt(detailsid));
+            $('#hdnBOMNo').val(parseInt(BOMNO));
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("getGetActualCostData", "BOMEntry")",
+                data: { Details_ID: parseInt(detailsid) },
+                success: function (response) {
+
+                    $('#pActualCost').text(BOMNO);
+
+                    $('#ActualCostModal').modal('show');
+                    $('#txtTotalActualCost').val(response);
+
+                }
+            });
+        }
+    }
+
+    function ClosedBOM() {
+        var txtClosedBOMRemarks = $('#txtClosedBOMRemarks').val();
+        var detailsid = $('#hdndetailsid').val();
+        if (txtClosedBOMRemarks != "" && parseInt(detailsid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ClosedBOMDataByID", "BOMEntry")",
+                data: { detailsid: detailsid, ClosedBOMRemarks: txtClosedBOMRemarks },
+                success: function (response) {
+                    if (response != null) {
+                        if (response.Success) {
+                            $('#ClosedModal').modal('hide');
+                            jAlert("BOM closed successfully");
+                            gridBOMList.Refresh();
+                            gridBOMList.Refresh();
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                            return false;
+                        }
+                    }
+                }
+            });
+        }
+        else {
+            jAlert("Please enter Remarks to close BOM!");
+            return false;
+        }
+    }
+
+
+    function RemoveBOMData(detailsid) {
+
+        jConfirm('Confirm delete?', 'Alert!', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveBOMDataByID", "MRP")",
+                    data: { detailsid: detailsid },
+                    success: function (response) {
+                        if (response != null) {
+                            jAlert(response.Message);
+                            if (response.Success) {
+                                gridBOMList.Refresh();
+                                gridBOMList.Refresh();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function OnBOMListEndCallback(s, e) {
+        makeThrough();
+    }
+
+    function OnBOMListBeginCallback(s, e) {
+
+    }
+
+    $(function () {
+        PopulateUnitList();
+        if (localStorage.getItem('FromDateBOM')) {
+            BomFromDate_dt.SetDate(new Date(localStorage.getItem('FromDateBOM')));
+        }
+        if (localStorage.getItem('ToDateBOM')) {
+            BomToDate_dt.SetDate(new Date(localStorage.getItem('ToDateBOM')));
+        }
+        $('#btnAddNew').focus();
+    });
+
+    function datevalidateTo() {
+
+        if (BomFromDate_dt.GetDate()) {
+            if (BomToDate_dt.GetDate() <= BomFromDate_dt.GetDate()) {
+                BomToDate_dt.SetValue(BomFromDate_dt.GetDate());
+                BomToDate_dt.SetMinDate(BomFromDate_dt.GetDate());
+            }
+        }
+    }
+
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "BOMEntry")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+                if (localStorage.getItem('BOMBranch')) {
+                    if ($("#ddlunitlist option[value=" + localStorage.getItem('BOMBranch') + "]").text() != "" && $("#ddlunitlist option[value=" + localStorage.getItem('BOMBranch') + "]").text() != null) {
+                        $('#ddlunitlist').val(localStorage.getItem('BOMBranch'));
+                    }
+                }
+
+            }
+        });
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function updateGridByDate() {
+        if (BomFromDate_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { BomFromDate_dt.Focus(); });
+        }
+        else if (BomToDate_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { BomToDate_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(BomFromDate_dt.GetValue());
+            var todate = GetServerDateFormat(BomToDate_dt.GetValue());
+            var unitid = $('#ddlunitlist option:selected').val();
+
+            localStorage.setItem("FromDateBOM", BomFromDate_dt.GetDate());
+            localStorage.setItem("ToDateBOM", BomToDate_dt.GetDate());
+            localStorage.setItem("BOMBranch", unitid);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetBOMDateFilter", "BOMEntry")",
+                data: { unitid: unitid, FromDate: fromdate, ToDate: todate },
+                success: function (response) {
+                    if (response) {
+                        gridBOMList.Refresh();
+                        gridBOMList.Refresh();
+                    }
+                }
+            });
+        }
+    }
+
+    var BOMId = 0;
+
+    function onPrintJv(id, RowIndex) {
+        BOMId = id;
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetBOMDesignerList", "BOMEntry")",
+            data: { ID: BOMId },
+            success: function (response) {
+                if (response) {
+
+                    if (response.length > 0) {
+                        var html = "";
+                        for (var i = 0; i < response.length; i++) {
+                            html = html + "<option value='" + response[i].reportValue + "'>" + response[i].name + "</option>";
+                        }
+                        $('#scldesign').html(html);
+
+                        $('#PrintModal').modal('show');
+                        $('#btnDegOK').focus();
+                    }
+                    else {
+                        jAlert('No design available!');
+                    }
+                }
+                else {
+                    jAlert('No design available!');
+                }
+            }
+        });
+
+        //jAlert('No design available!');
+    }
+
+    function ShowDesign() {
+        //var BankBranchID =
+        //var TotDocument = cSelectPanel.cpSuccess.split(',');
+        var reportName = $('#scldesign option:selected').val();
+        var module = 'ManufacturingBOM';
+        var isnotchecked = 0;
+        var PrintOriginal = $('#PrintOriginal').prop('checked');
+        var PrintDuplicate = $('#PrintDuplicate').prop('checked');
+        var PrintTriplicate = $('#PrintTriplicate').prop('checked');
+        if (PrintOriginal) {
+            isnotchecked = 1;
+            window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + BOMId + '&PrintOption=' + $('#PrintOriginal').val(), '_blank')
+        }
+        if (PrintDuplicate) {
+            isnotchecked = 1;
+            window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + BOMId + '&PrintOption=' + $('#PrintDuplicate').val(), '_blank')
+        }
+
+        if (PrintTriplicate) {
+            isnotchecked = 1;
+            window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + BOMId + '&PrintOption=' + $('#PrintTriplicate').val(), '_blank')
+        }
+
+        if (isnotchecked == 0) {
+            jAlert('Please check Original For Recipient and proceed.');
+        }
+
+    }
+
+    function OnclickViewAttachment(id) {
+        $('#hdnDocNo').val(id);
+        $('#AttachmentModal').modal('show');
+        setTimeout(function () { $('#documentType').focus(); }, 1000);
+    }
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+        if (exportid > 0) {
+            var url = '@Url.Action("ExportBOMGridList", "MRP", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+        }
+    }
+
+    function PreviewLinecmbExport_SelectedIndexChanged() {
+        var exportid = $('#PreviewLineexportlist option:selected').val();
+        $('#PreviewLineexportlist').val(0);
+        if (exportid > 0) {
+            var url = '@Url.Action("ExportPreviewLineGridList", "MRP", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+        }
+    }
+
+    $(document).ready(function () {
+
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 65 && event.altKey == true) {
+                var url = '@Url.Action("Index", "BOMEntry")';
+                window.location.href = url;
+            }
+        });
+
+    });
+    function gridRowclick(s, e) {
+        $('#gridBOMList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+    function makeThrough() {
+        $('.ClosedRowBOM').closest('tr').addClass('throughRed');
+    }
+    $(document).ready(function () {
+        $('.ClosedRowBOM').closest('tr').addClass('throughRed');
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridBOMList.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridBOMList.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridBOMList.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridBOMList.SetWidth(cntWidth);
+            }
+
+        });
+    });
+</script>
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="">
+            <label>Material Requirement Planning (MRP)</label>
+        </h3>
+        @*<div id="ApprovalCross" class="crossBtn"><a href=""><i class="fa fa-times"></i></a></div>*@
+    </div>
+
+</div>
+
+<div class="mainarea form_main">
+
+    @*<input type="hidden" value="@Url.Action("Index", "BOMEntry")" id="hdnBOMAddUpdate" />
+    <input type="hidden" value="@Url.Action("AttachmentDocument", "Attachment", new { module = "BOM" })" id="hdnAttachmentDocument" />*@
+    <input type="hidden" id="hdnBOMNo" />
+    @*<div>
+        @{
+            Html.RenderAction("AttachmentDocument", "Attachment", new { module = "BillOfMaterials", DocNo = "" });
+        }
+    </div>*@
+
+
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+            <div class="gridHeadersec">
+
+
+                <div class="clearfix">
+                    <div class="md-pull-left">
+                        @if (ViewBag.CanAdd)
+                        {
+                            @*<button type="button" id="btnAddNew" class="btn btn-success btn-radius" onclick="location.href='@Url.Action("MRPAdd", "MRP")'"><span class="btn-icon"><i class="fa fa-plus"></i></span><u>A</u>dd New</button>*@
+                           <button type="button" id="btnAddNew" class="btn btn-success  btn-radius" onclick="OnclickAddBOMRelation();">
+                               <span class="btn-icon"><i class="fa fa-plus"></i></span>MRP
+                           </button>
+                        
+                        
+                        }
+                        <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                            <option value="0">Export to</option>
+                            <option value="1">PDF</option>
+                            <option value="2">XLSX</option>
+                            <option value="3">RTF</option>
+                            <option value="4">CSV</option>
+                        </select>
+                    </div>
+                    <div class="md-pull-right">
+                        <table class="paddingTbl">
+                            <tr>
+                                <td>
+                                    From Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "BomFromDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+                                settings.Properties.UseMaskBehavior = true;
+
+                            }
+                        ).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    To Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "BomToDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+                                settings.Properties.UseMaskBehavior = true;
+
+                            }
+                        ).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    Unit
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        <select id="ddlunitlist" class="form-control"></select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" id="btnShowData" class="btn btn-primary" onclick="updateGridByDate()">Show</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div id="refreshgrid" class="relative">
+                @{
+                    Html.RenderAction("GetMRPEntryList", "MRP");
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- Print Modal -->
+    <div class="modal fade pmsModal w30" id="PrintModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Design(s)</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="detailsarea">
+
+                        <div id="chkPrint">
+                            <div>
+                                <input type="checkbox" id="PrintOriginal" value="1" /> <label>Original</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="PrintDuplicate" value="2" /> <label>Duplicate</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="PrintTriplicate" value="3" /> <label>Triplicate</label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <select id="scldesign" class="form-control"></select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" id="btnDegOK" class="btn btn-success btn-radius" onclick="ShowDesign()">Ok</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Print Modal -->
+
+    <div class="modal fade" id="PreviewLineItemsModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Preview Line Items</h4>
+                </div>
+                <div style="padding:5px">
+                    <select id="PreviewLineexportlist" class="btn btn-primary pull-right" onchange="PreviewLinecmbExport_SelectedIndexChanged()">
+                        <option value="0">Export to</option>
+                        <option value="1">PDF</option>
+                        <option value="2">XLSX</option>
+                        <option value="3">RTF</option>
+                        <option value="4">CSV</option>
+                    </select>
+                </div>
+                <div id="attachmentrefreshgrid">
+                    @{
+                        Html.RenderAction("GetMRPProductDetailsList", "MRP");
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  
+    
+

@@ -1,0 +1,2069 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model Manufacturing.Models.ViewModel.JobWorkOrderViewModel
+
+@{
+    ViewBag.Title = "Job Work Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+@*<script src="~/Scripts/SearchPopup.js"></script>*@
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
+<script src="~/Scripts/SearchPopupDatatable.js"></script>
+<style>
+    #gridFinishItemList .dxgvStatusBar_PlasticBlue {
+        display: none;
+    }
+</style>
+<script>
+
+
+    function btnAdd_ProductClick() {
+        var Order_Qty = $('#Order_Qty').val();
+        var JobWorkRate = $('#JobWorkRate').val();
+        if (JobWorkRate == null || JobWorkRate == "")
+        {
+            JobWorkRate = "0.00";
+        }
+       // var workcenter = $('#WorkCenterID').val();//WorkCenterGridLookup.gridView.currentSelectionState.InputText;
+        var PartNo = $("#hdnPartNo").val();
+        if ($("#hdnPartNo").val() == "") {
+            PartNo = $("#HdnPartProductId").val();
+        }
+
+
+        var OrderQuantity = $('#Order_Qty').val();
+        if (OrderQuantity == "" || parseFloat($('#Order_Qty').val()) == 0) {
+            jAlert("Please enter Order Qty.");
+            return false;
+        }
+
+        if (btnFinishedItem.GetValue() == null) {
+            jAlert("Please select Product");
+            return;
+        }
+        else {
+         
+            var Amount = parseFloat(Order_Qty).toFixed(4) * parseFloat(JobWorkRate).toFixed(4);
+
+            var data = {
+                Guids: $("#GuiIDS").val(),
+                FinishItemName: btnFinishedItem.GetValue(),
+                FinishItemDescription: $("#Description").val(),
+                FinishDrawingNo: $("#DrawingheaderNo").val(),
+                FinishItemRevNo: $('#ItemRevNo').val(),
+                Qty: Order_Qty,
+                FinishUOM:$("#FinishedUom").val(),
+                FinishPrice: JobWorkRate,
+                FinishAmount: parseFloat(Amount).toFixed(2),
+                FinishUpdateEdit: "1",
+                JobWorkID: $('#WorkOrderID').val(),
+                FinishUOMId: '',
+                FinishProductsID: PartNo,
+             
+
+            }
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddProduct", "JobWorkOrder")",
+                data: "{prod:" + JSON.stringify(data) + "}",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    if (response == "Duplicate") {
+                        $('#Order_Qty').val('0.0000');
+                        $('#JobWorkRate').val('0.00');
+                        $("#hdnPartNo").val('');
+                        $("#HdnPartProductId").val('');
+                        btnFinishedItem.SetValue('');
+                        $("#FinishedUom").val('');
+                        $("#Description").val('');
+                        $('#PartNoName').val('');
+                        $("#DrawingheaderNo").val('');
+                        $('#ItemRevNo').val('');
+                        $("#GuiIDS").val('');
+                        jAlert('Duplicate product not allow.');
+                    }
+                      else if (response != null) {
+                        gridFinishItemList.Refresh();
+                        gridFinishItemList.Refresh();
+
+                        $('#Order_Qty').val('0.0000');
+                       $('#JobWorkRate').val('0.00');
+                        $("#hdnPartNo").val('');
+                      $("#HdnPartProductId").val('');
+                      btnFinishedItem.SetValue('');
+                      $("#FinishedUom").val('');
+                      $("#Description").val('');
+                      $('#PartNoName').val('');
+                      $("#DrawingheaderNo").val('');
+                      $('#ItemRevNo').val('');
+                      $("#GuiIDS").val('');
+                    }
+                }
+            });
+        }
+
+    }
+
+    function EditData(values) {
+       
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("EditData", "JobWorkOrder")",
+            data: { HiddenID: values },
+        success: function (response) {
+            if (response != null) {
+                btnFinishedItem.SetValue(response.FinishItemName),
+                $("#hdnPartNo").val(response.FinishProductsID),
+                $("#HdnPartProductId").val(response.FinishProductsID),
+               $("#Description").val(response.FinishItemDescription),
+                $("#Order_Qty").val(response.Qty),
+                   $("#DrawingheaderNo").val(response.FinishDrawingNo);
+                $('#ItemRevNo').val(response.FinishItemRevNo);
+                $('#JobWorkRate').val(response.FinishPrice),
+               $("#FinishedUom").val(response.FinishUOM),
+              $("#GuiIDS").val(response.Guids)
+             
+
+            }
+        }
+    });
+    }
+   
+
+    function DeleteData(values) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DeleteData", "JobWorkOrder")",
+            data: { HiddenID: values },
+        success: function (response) {
+            if (response != null) {
+                gridFinishItemList.Refresh();
+            }
+        }
+    });
+    }
+
+    function ProjectStartCallback(s, e) {
+       // e.customArgs["DetailsID"] = $("#hdnDetailsID").val();
+        e.customArgs["Project_ID"] = '@ViewBag.ProjectID';
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Unit"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Unit"] = $('#ddlBankBranch option:selected').val();
+        }
+    }
+    var projectCode = [];
+    function ProjectSelectionChanged(s, e) {
+        var projId = ProjectGridLookup.GetValue();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getHierarchyID", "JobWorkOrder")",
+            data: { ProjID: projId },
+        success: function (response) {
+            if (response != null) {
+                $('#ddlHierarchy').val(response.Message);
+            }
+        }
+    });
+    }
+    function ProjectLookupValChange() {
+        //ProjectGridLookup.SetValue("");
+        //$('#ddlHierarchy').val("");
+        //ProjectGridLookup.GetGridView().Refresh();       
+    }
+
+    function btnPartNoList_Click(s, e) {
+        PartNolist('', 'PartNo');
+        setTimeout(function () { $("#txtPartNoCode").focus(); }, 500);
+        $('#PartNolistModel').modal('show');
+    }
+    function btnPartNo_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[PartNoIndex=0]"))
+                $("input[PartNoIndex=0]").focus();
+        }
+    }
+    function PartNolist(SearchKey, type) {
+        finishedproductlist = 1;
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.Action = type;
+        var HeaderCaption = [];
+        HeaderCaption.push("Product Code");
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetPartNoDetailsList", OtherDetails, "PartNoTable", HeaderCaption, "PartNoIndex", "SetPartNo");
+    }
+    function SetPartNo(Id, Name, e) {
+        finishedproductlist = 0;
+        var ProductID = Id;
+        var ProductCode = Name;
+        if (ProductID != "") {
+            var data = ProductID.split('|');
+            ProductID = data[0];
+            var DesignNo = data[2];
+            var RevisionNo = data[3];
+            $('#PartNolistModel').modal('hide');
+            btnPartNo.SetText(ProductCode);
+            $('#hdnPartNo').val(ProductID);
+            $('#DrawingheaderNo').val(DesignNo);
+            $('#ItemRevNo').val(RevisionNo);
+
+        }
+    }
+    function SetFocusItemRevNo() {
+        $('#ItemRevNo').focus();
+    }
+    function PartNoListkeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtPartNoCode").val() != '') {
+                PartNolist($("#txtPartNoCode").val(), 'PartNo');
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[PartNoIndex=0]"))
+                $("input[PartNoIndex=0]").focus();
+        }
+    }
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "PartNoIndex") {
+                    SetPartNo(Id, name, null);
+                }
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "PartNoIndex")
+                    $('#txtPartNoCode').focus();
+            }
+        }
+
+    }
+</script>
+<script>
+
+
+    function Productlist(SearchKey, type) {
+        finishedproductlist = 1;
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.Type = type;
+
+        var HeaderCaption = [];
+        // HeaderCaption.push("Product ID");
+        HeaderCaption.push("Product Code");
+        HeaderCaption.push("Product Name");
+        HeaderCaption.push("UOM");
+        HeaderCaption.push("Inventory");
+        HeaderCaption.push("HSN/SAC");
+        HeaderCaption.push("Brand");
+        HeaderCaption.push("Class");
+
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetJobOrderProductDetailsList", OtherDetails, "ProductTable", HeaderCaption, "ProductIndex", "SetProduct");
+    }
+
+
+    function btnProductList_Click(s, e) {
+        Productlist('', null);
+        setTimeout(function () { $("#txtProductName").focus(); }, 500);
+        $('#ProductlistModel').modal('show');
+    }
+
+    function SetFocusQty() {
+        $('#FinishedQty').select();
+        $('#FinishedQty').focus();
+    }
+
+    function btnPayStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ProductIndex=0]"))
+                $("input[ProductIndex=0]").focus();
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "ProductIndex") {
+                    SetProduct(Id, name, null);
+                }
+            
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "ProductIndex")
+                    $('#txtProductName').focus();
+               
+            }
+        }
+
+    }
+
+    var finishedproductlist = 0;
+    function SetProduct(Id, Name, e) {
+        finishedproductlist = 0;
+        var ProductID = Id;
+        var ProductName = Name;
+
+        if (ProductID != "") {
+
+            var data = ProductID.split('|');
+            ProductID = data[0];
+            var Description = data[3];
+            var DesignNo = data[4];
+            var RevisionNo = data[5];
+            $('#FinishedUom').val(data[1]);
+            $('#ProductlistModel').modal('hide');
+            btnFinishedItem.SetText(ProductName);
+            $('#hdnFinishedItem').val(ProductID);
+            document.getElementById('hdnProductID').value = Id;
+            $('#FinishedQty').select();
+            $('#FinishedQty').focus();
+            $('#Description').val(Description);
+            $('#PartNoName').val(ProductName);
+            $('#DrawingheaderNo').val(DesignNo);
+            $('#ItemRevNo').val(RevisionNo);
+            $('#hdnPartNo').val(ProductID);
+            $('#PartProductId').val(ProductID);
+            $('#HdnPartProductId').val(ProductID);
+            
+
+        }
+    }
+
+    function ProductListkeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtProductName").val() != '') {
+                Productlist($("#txtProductName").val(), null);
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ProductIndex=0]"))
+                $("input[ProductIndex=0]").focus();
+        }
+    }
+
+
+    function ChkDataDigitCount(e) {
+
+        var data = $(e).val();
+        $(e).val(parseFloat(data).toFixed(4));
+        if (data == '' || data == null) {
+            $(e).val(parseFloat(0).toFixed(4));
+        }
+    }
+
+
+    function ChkJobworkrateDigitCount(e)
+    {
+        var data = $(e).val();
+        $(e).val(parseFloat(data).toFixed(2));
+        if (data == '' || data == null) {
+            $(e).val(parseFloat(0).toFixed(2));
+        }
+    }
+
+    function Scheme_ValueChange() {
+        var val = $('#ddlSchema option:selected').val();
+        var schemetypeValue = val;
+        var schemetype = schemetypeValue.toString().split('~')[1];
+        var schemelength = schemetypeValue.toString().split('~')[2];
+        var branchID = (schemetypeValue.toString().split('~')[3] != null) ? schemetypeValue.toString().split('~')[3] : "";
+        var SchemaID = schemetypeValue.toString().split('~')[0];
+        $('#hdnSchemaId').val(SchemaID);
+        $('#ddlBankBranch').val(branchID);
+       
+        document.getElementById("OrderNo").maxLength = schemelength;
+
+        var fromdate = (schemetypeValue.toString().split('~')[5] != null) ? schemetypeValue.toString().split('~')[5] : "";
+        var todate = (schemetypeValue.toString().split('~')[6] != null) ? schemetypeValue.toString().split('~')[6] : "";
+
+        var dt = new Date();
+        OrderDate_dt.SetDate(dt);
+
+
+        if (dt < new Date(fromdate)) {
+            OrderDate_dt.SetDate(new Date(fromdate));
+        }
+
+        if (dt > new Date(todate)) {
+            OrderDate_dt.SetDate(new Date(todate));
+        }
+        OrderDate_dt.SetMinDate(new Date(fromdate));
+        OrderDate_dt.SetMaxDate(new Date(todate));
+
+
+        if (branchID > 0) {
+            //$('#ddlBankBranch').val(branchID);
+            //ProjectLookupValChange();
+            ProjectGridLookup.SetValue("");
+            $('#ddlHierarchy').val("");
+            ProjectGridLookup.gridView.UnselectRows(1);
+            ProjectGridLookup.GetGridView().Refresh();
+        }
+
+        if (schemetype == '0') {
+            $('#OrderNo').removeAttr("disabled");
+            $('#OrderNo').val('');
+
+            $('#OrderNo').focus();
+        }
+        else if (schemetype == '1') {
+            $('#OrderNo').attr("disabled", "disabled");
+            $('#OrderNo').val('Auto');
+
+            //$('#OrderNo').focus();
+
+        }
+        else if (schemetype == '2') {
+            $('#OrderNo').attr("disabled", "disabled");
+            $('#OrderNo').val('Datewise');
+
+            //$('#OrderNo').focus();
+
+        }
+        else if (schemetype == 'n') {
+            $('#OrderNo').attr("disabled", "disabled");
+            $('#OrderNo').val('');
+
+            //$('#OrderNo').focus();
+        }
+        else {
+            $('#OrderNo').attr("disabled", "disabled");
+            $('#OrderNo').val('');
+
+            //$('#OrderNo').focus();
+
+        }
+
+    }
+
+    function PopulateNumberingSchemeData() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getNumberingSchemeRecord", "JobWorkOrder")",
+            success: function (response) {
+                var html = "";
+                var hdnOrder_SchemaID = $('#hdnOrder_SchemaID').val();
+
+                for (var i = 0; i < response.length; i++) {
+                    if (hdnOrder_SchemaID != '' && hdnOrder_SchemaID>0) {
+                        html = html + "<option value='" + response[i].SchemaID + "' selected>" + response[i].SchemaName + "</option>";
+                    }
+                    else {
+                        html = html + "<option value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                    }
+                }
+                $('#ddlSchema').html(html);
+                $('#ddlSchema').focus();
+            }
+        });
+    }
+
+    var globalindexcheck = 0;
+    var globalindexcheck2 = 0;
+    var cpSelectedKeys = "";
+    var cpSelectedKeys2 = "";
+
+    function WorkCenterSelectionChanged(s, e) {
+
+        $('#lblWorkCenterName').text('');
+        if (e.isChangedOnServer) return;
+        globalindexcheck2 = WorkCenterGridLookup.gridView.focusedRowIndex;
+        var key = WorkCenterGridLookup.gridView.GetRowKey(globalindexcheck2)
+
+        if (key != null && globalindexcheck2 > -1) {
+
+            cpSelectedKeys2 = "";
+            var WorkCenterName = WorkCenterGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+            var WorkCenterDesc = WorkCenterGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+
+            $('#WorkCenterID').val(key);
+            cpSelectedKeys2 = key;
+            WorkCenterGridLookup.SetTextWithoutApply(WorkCenterName);
+            $('#lblWorkCenterName').text(WorkCenterDesc);
+        }
+        else {
+            cpSelectedKeys2 = "";
+            $('#WorkCenterID').val(0);
+            $('#lblWorkCenterName').text('');
+        }
+    }
+
+    function ProductionOrderSelectionChanged(s, e) {
+
+        if (e.isChangedOnServer) return;
+        globalindexcheck = ProductionOrderGridLookup.gridView.focusedRowIndex;
+        var key = ProductionOrderGridLookup.gridView.GetRowKey(globalindexcheck)
+        if (key != null && globalindexcheck > -1) {
+            cpSelectedKeys = "";
+            cpSelectedKeys = key;
+
+            var ProductionOrderno = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[1].innerHTML;
+            var bomno = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[2].innerHTML;
+            var revno = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[3].innerHTML;
+
+            var productitem = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[5].innerHTML;
+            var finisheduom = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[6].innerHTML;
+            var productqty = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[7].innerHTML;
+
+             var unit = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[8].innerHTML;
+            var warehouse = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[9].innerHTML;
+
+            cpSelectedKeys = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[11].innerHTML;
+
+            POdate = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[12].innerHTML;
+
+            var BalQty = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[13].innerHTML;
+
+            var ActualAdditionalCost = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[14].innerHTML;
+            if (ActualAdditionalCost == "&nbsp;" || ActualAdditionalCost == undefined) {
+                ActualAdditionalCost = "";
+            }
+            $('#txtActualAdditionalCost').val(ActualAdditionalCost);
+            var TotalResourceCost = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[15].innerHTML;
+            if (TotalResourceCost == "&nbsp;" || TotalResourceCost == undefined) {
+                TotalResourceCost = "";
+            }
+            $('#txtTotalResourceCost').val(TotalResourceCost);
+
+            var fromdate = new Date(POdate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+            OrderDate_dt.SetMinDate(fromdate);
+            if (OrderDate_dt.GetValue() < new Date(fromdate)) {
+                OrderDate_dt.SetDate(new Date(fromdate));
+            }
+
+            if (revno == "&nbsp;" || revno == undefined) {
+                revno = "";
+            }
+            $('#BOMNo').val(bomno);
+            $('#RevNo').val(revno);
+            $('#FinishedItem').val(productitem);
+            $('#FinishedUom').val(finisheduom);
+            $('#hdnProductQty').val(parseFloat(productqty).toFixed(4));
+
+            $('#hdnBalQty').val(parseFloat(BalQty).toFixed(4));
+            $('#txtProductionOrderQty').val(parseFloat(productqty).toFixed(4));
+            $('#Order_Qty').val(parseFloat(BalQty).toFixed(4));
+            $('#BRANCH_ID').val(unit);
+            $('#Warehouse').val(warehouse);
+            $('#Production_ID').val(key);
+            OrderDate_dt.SetFocus();
+
+
+            var PartNo = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[16].innerHTML;
+            var PartNoName = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[17].innerHTML;
+            var ItemRev_No = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[18].innerHTML;
+            var DEsign = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[19].innerHTML;
+            var Product_Name = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[20].innerHTML;
+
+            var Proj_Code = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[21].innerHTML;
+            var Hierarchy = ProductionOrderGridLookup.gridView.GetRow(globalindexcheck).children[22].innerHTML;
+
+            $('#Description').val(Product_Name);
+            $('#PartNoName').val(PartNoName);
+            $('#DrawingheaderNo').val(DEsign);
+            $('#ItemRevNo').val(ItemRev_No);
+            $('#hdnPartNo').val(PartNo);
+
+            if (Proj_Code == '&nbsp;') {
+                $('#Proj_Code').val('');
+            }
+            else {
+                $('#Proj_Code').val(Proj_Code);
+            }
+
+            if (Hierarchy == '&nbsp;') {
+                $('#Hierarchy').val('');
+            }
+            else {
+                $('#Hierarchy').val(Hierarchy);
+            }
+
+            ProductionOrderGridLookup.SetTextWithoutApply(ProductionOrderno);
+
+        }
+        else {
+            cpSelectedKeys = "";
+            $('#BOMNo').val('');
+            $('#RevNo').val('');
+            $('#FinishedItem').val('');
+            $('#FinishedUom').val('');
+            $('#Production_ID').val(0);
+            $('#hdnProductQty').val(parseFloat(0).toFixed(4));
+            $('#hdnBalQty').val(parseFloat(0).toFixed(4));
+            $('#Order_Qty').val(parseFloat(0).toFixed(4));
+
+            $('#Description').val('');
+            $('#PartNoName').val('');
+            $('#DrawingheaderNo').val('');
+            $('#ItemRevNo').val('');
+            $('#hdnPartNo').val('');
+
+            $('#Proj_Code').val('');
+            $('#Hierarchy').val('');
+
+        }
+        populateWOBOMProductList();
+    }
+
+    function populateWOBOMProductList() {
+        if (cpSelectedKeys > 0 && cpSelectedKeys != "" && cpSelectedKeys != null) {
+            var production_id = $('#Production_ID').val()
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetTempID", "JobWorkOrder")",
+                data: { DetailsID: cpSelectedKeys, Production_ID: production_id },
+                success: function (response) {
+                    if (response) {
+                        gridProductionBOMProductList.Refresh();
+                    }
+                }
+            });
+        }
+    }
+    $(document).ready(function () {
+        
+        if ('@ViewBag.TaggedData' == "YES") {
+           
+            $('#btnSaveAndNew').hide();
+            $('#saveandexit').hide();
+            $('#lbltaggedsms').show();
+        }
+        
+        if ('@ViewBag.TaggedData' == "NO") {
+           
+        }
+        
+        AddNewRowWithSl();
+        var WorkOrderID = $('#WorkOrderID').val();
+        if (WorkOrderID > 0) {
+            setTimeout(function () {
+                $("#btnAdd").focus();
+                //AddNewRowGridResources();
+            }, 200);
+        }
+        else {
+            setTimeout(function () {
+                $("#ddlSchema").focus();
+                //AddNewRowGridResources();
+            }, 200);
+        }
+        @*//'@ViewBag.ProjectShow' = 'Yes';*@
+        if ('@ViewBag.ProjectShow' == "Yes") {
+            $("#divProj").removeClass("hidden");
+            if($("#WorkOrderID").val()>0)
+            {
+                ProjectGridLookup.SetEnabled(false);
+            }
+        }
+        else {
+                $("#divProj").addClass("hidden");
+        }
+
+        if ('@ViewBag.Hierarchy' == "1") {
+            $('#divHierarchy').removeClass('hidden');
+        }
+        else {
+            $('#divHierarchy').addClass('hidden');
+        }
+    });
+
+    $(function () {
+
+
+        PopulateNumberingSchemeData();
+        ChkDataDigitCount($('#Order_Qty').val());
+        ChkJobworkrateDigitCount($('#JobWorkRate').val());
+        //var lookup = ASPxClientControl.GetControlCollection().GetByName("ProductionOrderGridLookup");
+        //lookup.GetGridView().Refresh();
+        //lookup.GetGridView().Refresh();
+
+        var lookup2 = ASPxClientControl.GetControlCollection().GetByName("WorkCenterGridLookup");
+        lookup2.GetGridView().Refresh();
+        lookup2.GetGridView().Refresh();
+
+
+        $(".decimalCheck").on("keypress keyup blur", function (event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 88 && event.altKey == true) { //  && myModal.GetVisible() == true
+
+                if ($('#hdnViewMode').val() != 1)
+                {
+                    WorkOrderSave('Exit');
+                }
+
+            }
+            if (event.keyCode == 83 && event.altKey == true) { //  && myModal.GetVisible() == true
+                if ($('#hdnViewMode').val() != 1) {
+                    WorkOrderSave('New');
+                }
+            }
+        });
+        PopulateDataInEditMode();
+    });
+
+    function ProductionOrderGotFocus(s, e) {
+        ProductionOrderGridLookup.ShowDropDownArea();
+    }
+
+    function WorkCenterGotFocus(s, e) {
+        WorkCenterGridLookup.ShowDropDownArea();
+    }
+
+    function PopulateDataInEditMode() {
+        var WorkOrderID = $('#WorkOrderID').val();
+        if (WorkOrderID > 0) {
+            var order_schemaid = $('#Order_SchemaID').val();
+            $('#hdnSchemaId').val(order_schemaid);
+            //$('#ddlSchema').val(order_schemaid);
+            $('#ddlSchema').attr("disabled", "disabled");
+            OrderDate_dt.SetEnabled(false);
+            $('#btnSaveAndNew').hide();
+            $('#Order_Qty').focus();
+            $('#Order_Qty').select();
+            var ProductionOrderNo = $('#ProductionOrderNo').val();
+            var Production_ID = $('#Production_ID').val();
+
+            //ProductionOrderGridLookup.SetEnabled(false);
+            //ProductionOrderGridLookup.SetValue(Production_ID);
+            //ProductionOrderGridLookup.SetTextWithoutApply(ProductionOrderNo);
+
+            var WorkCenterCode = $('#WorkCenterCode').val();
+            var WorkCenterID = $('#WorkCenterID').val();
+
+            var WorkCenterDesc = $('#WorkCenterDescription').val();
+
+            $('#lblWorkCenterName').text(WorkCenterDesc);
+            //rev 0024213
+            if ('@ViewBag.TaggedData' == "NO") {
+                WorkCenterGridLookup.SetEnabled(true);
+                //alert("Work Order")
+            }
+            if ('@ViewBag.TaggedData' == "YES") {
+                WorkCenterGridLookup.SetEnabled(false);
+                //alert("Work Order")
+            }
+            // WorkCenterGridLookup.SetEnabled(false);
+            //d of rev 0024213
+            WorkCenterGridLookup.SetValue(WorkCenterID);
+            WorkCenterGridLookup.SetTextWithoutApply(WorkCenterCode);
+
+            var TotalAm = $('#hdnBOMEntryProductsTotalAm').val();
+            $('#txtGridProductEntryTotalAmount').val(TotalAm);
+
+        }
+        else {
+            $('#WorkOrderID').val(0);
+            $('#btnSaveAndNew').show();
+            //$("#BOMNo").removeAttr("disabled");
+            $("#ddlSchema").removeAttr("disabled");
+            $('#lblWorkCenterName').text('');
+            //$("#slcbomtype").removeAttr("disabled");
+            $('#FinishedQty').removeAttr("disabled");
+            //$('#ddlBankBranch').removeAttr("disabled");
+            $('#ddlWarehouse').removeAttr("disabled");
+            OrderDate_dt.SetEnabled(true);
+           // ProductionOrderGridLookup.SetEnabled(true);
+            WorkCenterGridLookup.SetEnabled(true);
+            //RevisionDate_dt.SetEnabled(true);
+            //$('#Order_Qty').val(parseFloat(0).toFixed(4));
+            $('#ddlSchema').focus();
+        }
+    }
+
+    var globalrowindex = 0;
+    var Message = "";
+    function gridclick(s, e) {
+        globalrowindex = e.visibleIndex;
+    }
+
+    function WOBOMProductEndCallBack(s, e) {
+        //debugger;
+        var TotalAm = $('#hdnBOMEntryProductsTotalAm').val();
+        $('#txtGridProductEntryTotalAmount').val(TotalAm);
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function BOMGridSetAmount(s, e) {
+
+        gridProductionBOMProductList.batchEditApi.EndEdit();
+        gridProductionBOMProductList.batchEditApi.StartEdit();
+        var Price = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'Price');
+        var Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        if (Price != "" && Qty != "") {
+            var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 9);
+            gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
+            BOMGridSetTotalAmount("", "");
+        }
+    }
+
+    function BOMGridSetTotalAmount(s, e) {
+        //debugger;
+        gridProductionBOMProductList.batchEditApi.EndEdit();
+        gridProductionBOMProductList.batchEditApi.StartEdit();
+        var ToTalAmount = $('#txtGridProductEntryTotalAmount').val();
+
+        var Amountval = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'Amount');
+        if (ToTalAmount != "" || ToTalAmount != undefined || ToTalAmount != null) {
+            ToTalAmount = parseFloat(0).toFixed(2);
+        }
+        if (Amountval != "" && Amountval != null && Amountval != undefined) {
+            ToTalAmount = parseFloat(0).toFixed(2);
+            var calTotalAmount = parseFloat(parseFloat(ToTalAmount) + parseFloat(Amountval)).toFixed(2);
+            $('#txtGridProductEntryTotalAmount').val(calTotalAmount);
+        }
+
+    }
+
+    function OnStartCallback(s, e) {
+        //debugger;
+        var orderno = $('#OrderNo').val();
+        var OrderDate = GetServerDateFormat(OrderDate_dt.GetValue());
+        var Production_ID = $('#Production_ID').val();
+        var WorkCenterID = $('#WorkCenterID').val();
+        var WorkOrderID = $('#WorkOrderID').val();
+
+        var ProductionOrderID = Production_ID;
+        //var WorkCenterID = cpSelectedKeys2;
+
+        var hdnProductionOrderID = $('#hdnProductionOrderID').val();
+
+        var Order_Qty = $('#Order_Qty').val();
+        var JobWorkRate = $('#JobWorkRate').val();
+        var Unit = $('#ddlBankBranch option:selected').val();
+        var Order_SchemaID = $('#hdnSchemaId').val();
+        var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+        if (ActualAdditionalCost == '') {
+            ActualAdditionalCost = parseFloat(0).toFixed(2);
+            $('#txtActualAdditionalCost').val(ActualAdditionalCost);
+        }
+        var TotalCost = $('#txtGridProductEntryTotalAmount').val();
+
+        var strRemarks = $('#strRemarks').val();
+        var Description = $('#Description').val();
+        var DrawingheaderNo = $('#DrawingheaderNo').val();
+        var ItemRevNo = $('#ItemRevNo').val();
+        var PartNO = $('#hdnPartNo').val();
+        if ($("#hdnPartNo").val() == "") {
+            PartNo = $("#HdnPartProductId").val();
+        }
+        if (e != undefined) {
+            e.customArgs["ProductionOrderID"] = '';
+            e.customArgs["WorkOrderID"] = WorkOrderID;
+            e.customArgs["OrderNo"] = orderno;
+            e.customArgs["Order_SchemaID"] = Order_SchemaID;
+            e.customArgs["OrderDate"] = OrderDate;
+            e.customArgs["Order_Qty"] = Order_Qty;
+            e.customArgs["JobWorkRate"] = JobWorkRate;
+            e.customArgs["ActualAdditionalCost"] = ActualAdditionalCost;
+            e.customArgs["TotalCost"] = TotalCost;
+            e.customArgs["Production_ID"] = ProductionOrderID;
+            e.customArgs["WorkCenterID"] = WorkCenterID;
+            e.customArgs["BRANCH_ID"] = Unit;
+            e.customArgs["strRemarks"] = strRemarks;
+            e.customArgs["PartNo"] = PartNO;
+            e.customArgs["Description"] = Description;
+            e.customArgs["DrawingheaderNo"] = DrawingheaderNo;
+            e.customArgs["ItemRevNo"] = ItemRevNo;
+            e.customArgs["ProjectID"] = ProjectGridLookup.GetSelectedKeyFieldValues();
+        }
+
+
+
+    }
+
+    function WarehouseKeyDown(s, e) {
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+
+            s.OnButtonClick(0);
+
+            $('#ddlWarehouselist').focus();
+        }
+    }
+
+    function OpenWarehouseList(s, e) {
+        slno = gridProductionBOMProductList.GetDataRow(globalrowindex).children[0].innerHTML.trim();
+        gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 1);
+        var ProductName = gridProductionBOMProductList.GetEditor('ProductName').GetText();
+        if (ProductName == "") {
+            jAlert("Please select product before select warehouse!");
+            return false;
+        }
+        else {
+            GridWarehouselist();
+           // warehousefocus = 1;
+
+        }
+    }
+
+    function GridWarehouselist() {
+        var BankBranchID = $('#ddlBankBranch option:selected').val();
+        if (BankBranchID > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("getWarehouseRecord", "BOMEntry")",
+                data: { branchid: BankBranchID },
+            success: function (response) {
+                $('#ddlWarehouselist').html('');
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+                }
+                $('#ddlWarehouselist').html(html);
+                gridProductionBOMProductList.batchEditApi.EndEdit();
+                //$('#setWarehousegrid').focus();
+                $('#GridWarehouselistModel').modal('show');
+
+
+            }
+        });
+    }
+    else {
+            jAlert('Please select branch!');
+    $('#GridWarehouselistModel').modal('hide');
+    return false;
+      }
+    }
+
+    function SetWarehouseInGrid() {
+
+        var Warehouseid = $('#ddlWarehouselist option:selected').val();
+        var Warehousetxt = $('#ddlWarehouselist option:selected').text();
+        if (Warehousetxt != "") {
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 7);
+            gridProductionBOMProductList.GetEditor('Warehouse').SetText(Warehousetxt);
+
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 18);
+            gridProductionBOMProductList.GetEditor('GridWarehouseId').SetText(Warehouseid);
+            $('#GridWarehouselistModel').modal('hide');
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 8);
+        }
+        else {
+            jAlert("Please select warehouse!");
+        }
+    }
+
+    function SetWarehouseAfterProduct() {
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 6);
+    }
+
+
+    function OnEndCallback(s, e) {
+        //debugger;
+
+        var TotalAm = $('#hdnBOMEntryProductsTotalAm').val();
+        $('#txtGridProductEntryTotalAmount').val(TotalAm);
+
+        var orderno = s.cpOrderNo;
+        Message = s.cpMessage;
+        if (s.cpBatchUpdate == "1") {
+
+            s.cpBatchUpdate = "0";
+
+            $('#OrderNo').val('');
+            $('#strRemarks').val('');
+            //var BOMDate = GetServerDateFormat(BOMDate_dt.GetValue());
+            //var BOMDate = $('#BOMDate_dt').val();
+            $('#Production_ID').val(0);
+            $('#WorkCenterID').val(0);
+            $('#hdnDetails_ID').val(0);
+            $('#Order_Qty').val(parseFloat(0).toFixed(4));
+            $('#JobWorkRate').val(parseFloat(0).toFixed(2));
+            $('#hdnSchemaId').val('');
+            $('#hdnProductionOrderID').val(0);
+
+            //$('#ddlBankBranch option:selected').val($("#ddlBankBranch option:first").val());
+            //$('#ddlWarehouse option:selected').val($("#ddlWarehouse option:first").val());
+            $('#ddlSchema').val($("#ddlSchema option:first").val());
+            $('#ddlBankBranch').val($("#Unit option:first").val());
+            $('#Warehouse').val('');
+            cpSelectedKeys = "";
+            cpSelectedKeys2 = "";
+            $('#txtActualAdditionalCost').val(parseFloat(0).toFixed(4));
+            $('#txtGridProductEntryTotalAmount').val(parseFloat(0).toFixed(2));
+            $('#txtGridResourcesTotalAmount').val(parseFloat(0).toFixed(2));
+            WorkCenterGridLookup.gridView.UnselectAllRowsOnPage();
+            //ProductionOrderGridLookup.gridView.UnselectAllRowsOnPage();
+            $('#RevNo').val('');
+            $('#FinishedItem').val('');
+            $('#FinishedUom').val('');
+           // ProductionOrderGridLookup.OnClear();
+            WorkCenterGridLookup.OnClear();
+            gridProductionBOMProductList.Refresh();
+            gridProductionBOMProductList.Refresh();
+
+            if (orderno != "" && orderno != null) {
+
+                jAlert('Order Number : ' + orderno + ' Successfully saved.', 'Alert!', function (r) {
+                    if (r) {
+                        if (savemode == "Exit") {
+                            setTimeout(function () {
+                                var url = $('#hdnWorkOrderListPage').val();
+                                window.location.href = url;
+                            }, 500);
+                        }
+                    }
+
+                });
+            }
+            else {
+                savemode = "";
+                jAlert('Please try again later.');
+                return false;
+            }
+
+        }
+
+        if (Message == "duplicate") {
+            jAlert('This Order no already present!');
+
+            return false;
+        }
+        //else {
+        //AddNewRowWithSl();
+        //$('#txtGridProductEntryTotalAmount').val(parseFloat(0).toFixed(2));
+        //if (Message == "duplicate" && hasmsg == 0) {
+        //    jAlert('This BOM no already present!');
+        //    hasmsg = 1;
+        //    return false;
+        //}
+        ////else {
+        ////    jAlert('Please try again later.');
+        ////    return false;
+        ////}
+        ////}
+
+    }
+
+    function ChkMoneyDigitCount(e) {
+        var data = $(e).val();
+        $(e).val(parseFloat(data).toFixed(2));
+    }
+
+
+    function totalAmountSetLogic() {
+        //Logic For Set Total Amount 24-05-2019
+        var caltotalamount = 0;
+        gridProductionBOMProductList.batchEditApi.EndEdit();
+        for (var i = 500; i > -500; i--) {
+            if (gridProductionBOMProductList.GetRow(i)) {
+                var Amountval = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Amount');
+                if (Amountval != null && Amountval != "") {
+                    caltotalamount = caltotalamount + parseFloat(Amountval);
+                }
+            }
+            $('#txtGridProductEntryTotalAmount').val(caltotalamount);
+        }
+
+        //Logic For Set Total Amount 24-05-2019
+    }
+
+    function changeQtyValue(e) {
+
+        var newqty = $(e).val();
+        var hdnproductqty = $('#hdnProductQty').val();
+        var visiablerow = gridProductionBOMProductList.GetVisibleRowsOnPage();
+        if (visiablerow > 0) {
+            for (var i = 500; i > -500; i--) {
+                if (gridProductionBOMProductList.GetRow(i)) {
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 3);
+                    var Qty = 0;
+
+                    //if ($('#WorkOrderID').val() > 0) {
+                    Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'OLDQty');
+                    //}
+                    //else {
+                    //    Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
+                    //}
+                    if (parseFloat(Qty) > 0) {
+                        var calcqty = (parseFloat(Qty) * newqty) / hdnproductqty;
+                        gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat(calcqty).toFixed(4));
+                        globalrowindex = i;
+                        BOMGridSetAmount("", "");
+                    }
+                }
+            }
+            totalAmountSetLogic();
+        }
+    }
+
+    function setUpdateEditVlaueToGrid() {
+        var visiablerow = gridProductionBOMProductList.GetVisibleRowsOnPage();
+        if (visiablerow > 0) {
+            for (var i = 0; i < 1000; i++) {
+                if (gridProductionBOMProductList.GetRow(i)) {
+                    if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
+                        gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
+                    }
+                }
+            }
+
+            for (i = -1; i > -1000; i--) {
+                if (gridProductionBOMProductList.GetRow(i)) {
+                    if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
+                        gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
+                    }
+                }
+            }
+        }
+    }
+
+    function SuffleRows() {
+
+        for (var i = 0; i < 1000; i++) {
+            if (gridProductionBOMProductList.GetRow(i)) {
+                if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
+                    gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
+                }
+            }
+        }
+
+        for (i = -1; i > -1000; i--) {
+            if (gridProductionBOMProductList.GetRow(i)) {
+                if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
+                    gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
+                }
+            }
+        }
+    }
+
+    var savemode = "";
+    var hasmsg = 0;
+
+    function WorkOrderSave(mode) {
+        //alert(mode)
+        savemode = mode;
+        hasmsg = 0;
+        var WorkOrderID = $('#WorkOrderID').val()
+        //if (parseInt(WorkOrderID) == 0 || WorkOrderID == null || WorkOrderID == undefined || parseInt(WorkOrderID)< 0) {
+            setUpdateEditVlaueToGrid();
+      //  }
+      
+
+        
+        var orderno = $('#OrderNo').val();
+        var OrderNo = $('#OrderNo').val();
+        var OrderDate = GetServerDateFormat(OrderDate_dt.GetValue());
+        var Production_ID = $('#Production_ID').val();
+        //var Details_ID = $('#hdnDetails_ID').val();
+        var Unit = $('#ddlBankBranch option:selected').val();
+        var Order_Qty = $('#Order_Qty').val();
+        var JobWorkRate = $('#JobWorkRate').val();
+        var workcenter = $('#WorkCenterID').val();//WorkCenterGridLookup.gridView.currentSelectionState.InputText;
+        var PartNo = $("#hdnPartNo").val();
+        if ($("#hdnPartNo").val()=="")
+        {
+            PartNo = $("#HdnPartProductId").val();
+        }
+        var hdnBalQty = $('#hdnBalQty').val();
+
+        var Order_SchemaID = $('#hdnSchemaId').val();
+        if (Order_SchemaID == "")
+        {
+            Order_SchemaID = $('#hdnOrder_SchemaID').val();
+        }
+
+        var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+        if (ActualAdditionalCost == '') {
+            ActualAdditionalCost = parseFloat(0).toFixed(2);
+            $('#txtActualAdditionalCost').val(ActualAdditionalCost);
+        }
+        var ddlSchema = $('#ddlSchema option:selected').val();
+        var TotalCost = $('#txtGridProductEntryTotalAmount').val();
+        var Description = $('#Description').val();
+        var DrawingheaderNo = $('#DrawingheaderNo').val();
+        var ItemRevNo = $('#ItemRevNo').val();
+        //if (parseInt(WorkOrderID) == 0 || WorkOrderID == null || WorkOrderID == undefined || parseInt(WorkOrderID) < 0) {
+            SuffleRows();
+        // }
+            var OrderQuantity = $('#Order_Qty').val();
+            //if (OrderQuantity == "" || parseFloat($('#Order_Qty').val()) == 0)
+            //{
+            //    jAlert("Please enter Order Qty.");
+            //    return false;
+            //}
+            AddNewRowWithSl();
+        var visiablerow = gridProductionBOMProductList.GetVisibleRowsOnPage();
+        if (visiablerow > 0) {
+            if (orderno != '' && OrderDate != '' && Order_Qty != '' && workcenter > 0   && Unit != undefined) {
+
+
+                        gridProductionBOMProductList.UpdateEdit();
+                        gridProductionBOMProductList.UpdateEdit();
+                        $('#EddlSchema').hide();
+                        $('#EOrderNo').hide();
+                        $('#EOrderDate_dt').hide();
+                        $('#Eworkcenter').hide();
+                
+            }
+            else {
+                savemode = "";
+                if (ddlSchema == '') {
+                    $('#EddlSchema').show();
+                }
+                else {
+                    $('#EddlSchema').hide();
+                }
+                if (orderno == '') {
+                    $('#EOrderNo').show();
+                }
+                else {
+                    $('#EOrderNo').hide();
+                }
+                if (OrderDate == '') {
+                    $('#EOrderDate_dt').show();
+                }
+                else {
+                    $('#EOrderDate_dt').hide();
+                }
+                if (workcenter > 0) {
+                    $('#Eworkcenter').hide();
+                }
+                else {
+                    $('#Eworkcenter').show();
+                }
+                if (Unit == undefined || Unit == "") {
+                    $('#Eunit').show();
+                }
+                else {
+                    $('#Eunit').hide();
+                }
+
+                return false;
+            }
+        }
+        else {
+            jAlert('Please select  products!');
+            return false;
+        }
+    }
+
+    function SetDefaultDate(s, e) {
+        OrderDate_dt.SetValue(new Date());
+    }
+    var iindexprod = 0;
+    var finishedproductlist = 0;
+    var gridproductlist = 0;
+    var gridnonproductlist = 0;
+    var globalrowindex2 = 0;
+   // var globalrowindex = 0;
+    var gridtxtbox = '1';
+    var slno = 0;
+    var firsttime = 0;
+    var DetailsID = 0;
+    var ProductionID = 0;
+    var GBOMNo = "";
+    var Message = "";
+    var savemode = "";
+    var hasmsg = 0;
+    var rowtime = 0;
+    var rowtime2 = 0;
+    var typemodal = "";
+  
+    function SetGridProduct(Id, Name, e) {
+        gridproductlist = 0;
+        var ProductID = Id;
+        var ProductName = Name;
+
+        if (ProductID != "") {
+
+            var data = ProductID.split('|');
+            ProductID = data[0];
+
+            var amind = gridProductionBOMProductList.batchEditApi.GetColumnIndex('Amount');
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, amind);
+            gridProductionBOMProductList.GetEditor('Amount').SetText("0.00");
+
+            var qtyindex = gridProductionBOMProductList.batchEditApi.GetColumnIndex('ProductQty');
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, qtyindex);
+            gridProductionBOMProductList.GetEditor('ProductQty').SetText("0.00");
+
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 19);
+            gridProductionBOMProductList.GetEditor('BOMProductsID').SetText(ProductID);
+
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 1);
+            gridProductionBOMProductList.GetEditor('ProductName').SetText(ProductName);
+            //gridProductionBOMProductList.GetDataRow(globalrowindex).children[1].innerHTML = ProductName;
+
+            //$('#' + gridtxtbox + '_txtbox').val(ProductName);
+            $('#GridProductlistModel').modal('hide');
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 2);
+            gridProductionBOMProductList.GetEditor('ProductDescription').SetText(data[6]);
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 6);
+
+            gridProductionBOMProductList.GetEditor('ProductUOM').SetText(data[1]);
+            //$('#' + gridtxtbox + '_txtDescription').val(data[2]);
+            //$('#' + gridtxtbox + '_txtStockUOM').val(data[1]);
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 8);
+            gridProductionBOMProductList.GetEditor('Price').SetText(data[3]);
+            //gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 16);
+            //gridProductionBOMProductList.GetEditor('GridWarehouseId').SetText(data[4]);
+            //$('#' + gridtxtbox + '_txtPrice').val(data[3]);
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 7);
+            gridProductionBOMProductList.GetEditor('Warehouse').SetText(data[5]);
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 3);
+            gridProductionBOMProductList.GetEditor('DesignNo').SetText(data[7]);
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 4);
+            gridProductionBOMProductList.GetEditor('ItemRevisionNo').SetText(data[8]);
+
+            gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 17);
+            gridProductionBOMProductList.GetEditor('UOmId').SetText(data[10]);
+
+            //gridProductionBOMProductList.GetEditor('IsInventory').SetText(data[9]);
+
+        }
+    }
+
+
+    function GridProductListkeydown(e) {
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtGridProductName").val() != '') {
+                if (typemodal == 'nonInventory') {
+                    GridNonInventoryProductlist($("#txtGridProductName").val(), "nonInventory", globalrowindex2);
+                    gridnonproductlist = 1;
+                }
+                else {
+                    GridProductlist($("#txtGridProductName").val(), typemodal, null);
+                    gridproductlist = 1;
+                }
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[GridProductIndex=" + 0 + "]")) {
+                $("input[GridProductIndex=" + 0 + "]").focus();
+                iindexprod++;
+            }
+            if ($("input[NonIProductIndex=" + 0 + "]")) {
+                $("input[NonIProductIndex=" + 0 + "]").focus();
+                iindexprod++;
+            }
+        }
+    }
+    
+    function GridNonInventoryProductlist(SearchKey, type, txtid) {
+        gridnonproductlist = 1;
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.Type = type;
+        gridtxtbox = txtid;
+        var HeaderCaption = [];
+        // HeaderCaption.push("Product ID");
+        HeaderCaption.push("Product Code");
+        HeaderCaption.push("Product Name");
+        HeaderCaption.push("UOM");
+        HeaderCaption.push("Inventory");
+        HeaderCaption.push("HSN/SAC");
+        HeaderCaption.push("Brand");
+        HeaderCaption.push("Class");
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "NonIProductIndex", "SetGridNonInventoryProduct");
+        setTimeout(function () {
+            $('#txtGridProductName').focus();
+        }, 600);
+    }
+
+
+    function OpenProductList(s, e) {
+        if (gridProductionBOMProductList.GetDataRow(globalrowindex) != null) {
+            slno = gridProductionBOMProductList.GetDataRow(globalrowindex).children[0].innerHTML.trim();
+        }
+        GridProductlist("", "A", slno);
+        typemodal = "A";
+        $('#GridProductlistModel').modal('show');
+        $('#txtGridProductName').focus();
+    }
+    function GridProductlist(SearchKey, type, txtid) {
+        gridproductlist = 1;
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.Type = type;
+        gridtxtbox = txtid;
+        var HeaderCaption = [];
+        // HeaderCaption.push("Product ID");
+        HeaderCaption.push("Product Code");
+        HeaderCaption.push("Product Name");
+        HeaderCaption.push("UOM");
+        HeaderCaption.push("Inventory");
+        HeaderCaption.push("HSN/SAC");
+
+        HeaderCaption.push("Brand");
+        HeaderCaption.push("Class");
+
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetJobOrderProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "GridProductIndex", "SetGridProduct");
+
+        setTimeout(function () {
+            $('#txtGridProductName').focus();
+        }, 600);
+
+    }
+
+    function AddRowKeyDown(s, e) {
+        //console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+            //if ($('#hdnDetailsID').val() == 0) {
+                addNewRowTogrid();
+           // }
+            //else {
+            //    addNewRowToEditgrid();
+            //}
+        }
+        if (e.htmlEvent.key == "Tab") {
+            //var hdnDetailsID = $('#hdnDetailsID').val();
+            //if (hdnDetailsID > 0) {
+            //    if (globalrowindex == 0) {
+            //        tempindexcount = [];
+            //    }
+            //    var tempindex = (globalrowindex + 1);
+            //    if (gridBOMProductEntryList.batchEditApi.GetCellValue(tempindex, 'SlNO') != null && globalrowindex >= 0 && tempindexcount.includes(tempindex) == false) {
+            //        tempindexcount.push(tempindex);
+            //        gridBOMProductEntryList.batchEditApi.EndEdit();
+            //        setTimeout(function () {
+            //            var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductName');
+            //            gridBOMProductEntryList.batchEditApi.StartEdit(tempindex, localindex);
+            //        }, 500);
+
+            //        hasfoundindex = 1;
+            //    }
+            //    else {
+            //        var tempindex = -1;
+            //        if (gridBOMProductEntryList.batchEditApi.GetCellValue(tempindex, 'SlNO') != null && tempindexcount.includes(tempindex) == false) {
+            //            tempindexcount.push(tempindex);
+            //            gridBOMProductEntryList.batchEditApi.EndEdit();
+            //            setTimeout(function () {
+            //                var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductName');
+            //                gridBOMProductEntryList.batchEditApi.StartEdit(tempindex, localindex);
+            //            }, 500);
+
+
+            //        }
+            //    }
+
+            //}
+            //else {
+
+
+                var tempindex = (globalrowindex - 1);
+                if (gridProductionBOMProductList.batchEditApi.GetCellValue(tempindex, 'SlNO') != null) {
+                    gridProductionBOMProductList.batchEditApi.EndEdit();
+
+                    setTimeout(function () {
+                        var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductName');
+                        gridProductionBOMProductList.batchEditApi.StartEdit(tempindex, localindex);
+                    }, 500);
+
+                }
+                else {
+                    var tempindex = (globalrowindex - 1);
+                    if (gridProductionBOMProductList.batchEditApi.GetCellValue(tempindex, 'SlNO') != null) {
+
+                        gridProductionBOMProductList.batchEditApi.EndEdit();
+                        setTimeout(function () {
+                            var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductName');
+                            gridProductionBOMProductList.batchEditApi.StartEdit(tempindex, localindex);
+                        }, 500);
+                    }
+                }
+           // }
+        }
+    }
+    var index = 0;
+    function AddNewRowWithSl() {
+
+        gridProductionBOMProductList.batchEditApi.EndEdit();
+        gridProductionBOMProductList.AddNewRow();
+        index = globalrowindex;
+        resuffleSerial();
+
+        //setTimeout(function () {
+        //    gridProductionBOMProductList.batchEditApi.EndEdit();
+        //    gridProductionBOMProductList.batchEditApi.StartEdit(index, 1);
+        //}, 200);
+    }
+
+    function addNewRowTogrid() {
+        gridProductionBOMProductList.batchEditApi.EndEdit();
+         AddNewRowWithSl();
+        index = globalrowindex;
+
+
+        //setTimeout(function () {
+        //    gridProductionBOMProductList.batchEditApi.EndEdit();
+        //    gridProductionBOMProductList.batchEditApi.StartEdit(index, 1);
+        //}, 200);
+
+    }
+
+    function resuffleSerial() {
+
+        var sl = 1;
+        var visiablerow = gridProductionBOMProductList.GetVisibleRowsOnPage();
+        if (visiablerow > 0 && rowtime == 0) {
+            sl = visiablerow;
+            rowtime++;
+        }
+
+        for (var i = -1; i > -500; i--) {
+            if (gridProductionBOMProductList.GetRow(i)) {
+               gridProductionBOMProductList.batchEditApi.StartEdit(i, 0);
+                gridProductionBOMProductList.GetEditor('SlNO').SetText(sl);
+           
+               gridProductionBOMProductList.batchEditApi.StartEdit(i, 0);
+                sl = sl + 1;
+            }
+        }
+    }
+
+    function ProductKeyDown(s, e) {
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+
+            //if (gridBOMProductEntryList.focusedRowIndex != null && gridBOMProductEntryList.focusedRowIndex != undefined) {
+            //    globalrowindex = gridBOMProductEntryList.focusedRowIndex;
+            //}
+            s.OnButtonClick(0);
+            //OpenProductList(s, e);
+        }
+            //if (e.htmlEvent.key == "Tab") {
+            //    //if (gridBOMProductEntryList.focusedRowIndex != null && gridBOMProductEntryList.focusedRowIndex != undefined) {
+            //    //    globalrowindex = gridBOMProductEntryList.focusedRowIndex;
+            //    //}
+            //    s.OnButtonClick(0);
+            //    //OpenProductList(s, e);
+            //}
+        else if (e.code == "ArrowDown") {
+            if ($("input[GridProductIndex=0]"))
+                $("input[GridProductIndex=0]").focus();
+        }
+    }
+
+</script>
+<link href="~/Views/FGReceived/ProductionReceiptEntry.css" rel="stylesheet" />
+
+
+
+<div class="panel-title clearfix" id="myDiv">
+    <h3 class="pull-left">
+        <label>Job Work Order</label>
+    </h3>
+    <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("WorkOrderList", "JobWorkOrder")"><i class="fa fa-times"></i></a></div>
+</div>
+
+@*<input type="hidden" value="0" id="hdnSchemaId" />*@
+@Html.HiddenFor(x => x.WorkOrderID)
+@Html.HiddenFor(x => x.Production_ID)
+@Html.HiddenFor(x => x.WorkCenterID)
+@Html.HiddenFor(x => x.Order_SchemaID, new { @id = "hdnOrder_SchemaID" })
+@Html.HiddenFor(x => x.Order_SchemaID, new { @id = "hdnSchemaId" })
+@Html.HiddenFor(x => x.ProductionOrderNo)
+@Html.HiddenFor(x => x.WorkCenterCode)
+<input type="hidden" value="@Model.PartNo" id="hdnPartNo" />
+@*<input type="hidden" value="@Model.Order_SchemaID" id="hdnSchemaId" />*@
+<input type="hidden" value="@Model.FinishedItemName" id="hdnFinishedItemName" />
+<input type="hidden" value="@Model.FinishedItem" id="hdnFinishedItem" />
+@Html.HiddenFor(x => x.WorkCenterDescription)
+<input type="hidden" id="HdnPartWarehouseId" value="@ViewBag.HdnPartWarehouseId"  />
+<input type="hidden" id="HdnPartProductId" value="@ViewBag.HdnPartProductId" />
+<input type="hidden" id="hdnBalQty" value="0" />
+@Html.HiddenFor(x => x.Finished_Qty, new { @id = "hdnProductQty" })
+@*<input type="hidden" value="@Model.Finished_Qty" id="" />*@
+<input type="hidden" value="@Url.Action("WorkOrderList", "JobWorkOrder")" id="hdnWorkOrderListPage" />
+<input type="hidden" value="@ViewBag.IsView" id="hdnViewMode" />
+
+<div class="boxBorder">
+    <div class="styledBox">
+        <div class="row">
+            <div class="col-md-2">
+                <label>Numbering Scheme <span style="color:red">*</span></label>
+                <div class="relative">
+                    <select id="ddlSchema" class="form-control" onchange="Scheme_ValueChange()"></select>
+                    <span id="EddlSchema" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            @*<div class="col-sm-2">
+                    <label>BOM Type <span style="color:red">*</span></label>
+                    <select id="slcbomtype" class="form-control">
+                        <option value="Production">Production</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Assembly">Assembly</option>
+                    </select>
+                </div>*@
+
+            <div class=" col-sm-2">
+                <label>Work Order No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.OrderNo, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EOrderNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label>Work Order Date <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "OrderDate_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         //settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                         settings.Date = Convert.ToDateTime(@Model.dtOrderDate);
+                                         settings.Properties.ClientSideEvents.Init = "SetDefaultDate";
+                                         settings.Properties.UseMaskBehavior = true;
+                                     }
+                            ).GetHtml()
+                    <span id="EOrderDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label>Unit <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.DropDownListFor(x => x.BRANCH_ID, new SelectList(Model.UnitList, "BranchID", "BankBranchName"), new { @id = "ddlBankBranch", @class = "form-control", @disabled = "disabled", @onchange = "PopulateWareHouseData();" })
+                    @*@Html.TextBoxFor(m => m.Unit, new { @class = "form-control", @disabled = "disabled" })*@
+
+                    <span id="Eunit" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+                @*@Html.TextBoxFor(m => m.Unit, new { @class = "form-control" })*@
+            </div>
+
+            <div class="col-sm-2">
+                <label>Finished Item <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*@Html.TextBoxFor(m => m.FinishedItem, new { @class = "form-control", @disabled = "disabled" })*@
+                    @Html.DevExpress().ButtonEdit(
+                         settings =>
+                         {
+                             settings.Name = "btnFinishedItem";
+                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                             settings.Text = Model.FinishedItem;
+                             settings.ReadOnly = true;
+                             settings.Properties.Buttons.Add("...");
+                             settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnProductList_Click(s,e);}";
+                             settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayStructure_KeyDown(s,e);}";
+
+                         }).GetHtml()
+                </div>
+            </div>
+
+
+
+          
+        </div>
+
+        <div class="row">
+
+
+
+            <div class="col-sm-2">
+                <label class="mtop10">Order Qty <span style="color:red">*</span></label>
+
+                <div class="relative">
+
+                    <table style="width:100%" class="finishedQttable">
+                        <tr>
+                            <td>@Html.TextBoxFor(m => m.Order_Qty, new { @class = "form-control decimalCheck", @onchange = "ChkDataDigitCount(this); changeQtyValue(this);", @PlaceHolder = "0.0000"})</td>
+                            <td>@Html.TextBoxFor(m => m.FinishedUom, new { @class = "form-control", @disabled = "disabled" })</td>
+                        </tr>
+                    </table>
+                    <span id="EFinishedQty" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Description</label>
+                @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class=" col-sm-2" style="display:none">
+                <label class="mtop10">Item No:</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.PartNoName, new { @class = "form-control", @disabled = "disabled" })
+                    @*@Html.DevExpress().ButtonEdit(
+                    settings =>
+                    {
+                        settings.Name = "btnPartNo";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = Model.PartNoName;
+                        settings.ReadOnly = true;
+                        settings.Properties.Buttons.Add("...");
+                        settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPartNoList_Click(s,e);}";
+                        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPartNo_KeyDown(s,e);}";
+                    }).GetHtml()*@
+                    @*<span id="EbtnFinishedItem" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>*@
+                </div>
+
+                @*@Html.TextBoxFor(m => m.FinishedItem, new { @class = "form-control" })*@
+            </div>
+            <div class=" col-sm-2">
+                <label class="mtop10">Drawing No:</label>
+                @Html.TextBoxFor(m => m.DrawingheaderNo, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class=" col-sm-2">
+                <label class="mtop10">Drawing Rev. No:</label>
+                @Html.TextBoxFor(m => m.ItemRevNo, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+
+            <div class="col-sm-1">
+                <label class="mtop10">Rate</label>
+                @Html.TextBoxFor(m => m.JobWorkRate, new { @class = "form-control decimalCheck", @onchange = "ChkJobworkrateDigitCount(this);", @PlaceHolder = "0.00" })
+
+            </div>
+            <div class=" col-sm-1">
+                <label class="">&nbsp; </label>
+                <div class="relative" style="padding-top: 10px">
+                    <button type="button" id="btnAdd" onclick="btnAdd_ProductClick()" class="btn btn-success">Add Product</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div id="refreshgrid">
+                    <div class=" ">
+                        @*<span class="fullScreenTitle">Estimate</span>*@
+
+                        @{
+                            Html.RenderAction("GetWorkOrderFinishItemDetailsDetailsProductList", "JobWorkOrder");
+                        }
+                    </div>
+                </div>
+             
+            </div>
+
+
+        </div>
+
+        <div class="row">
+           
+            
+           
+            <div class=" col-sm-2" style="display:none">
+                <label class="mtop10">Warehouse </label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.Warehouse, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Work Center <span style="color:red">*</span></label>
+                <div class="relative">
+                    <div class="lookupTdHide">
+                        @Html.Action("GetWCList", "JobWorkOrder")
+                    </div>
+                    <span id="Eworkcenter" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Work Center Name </label>
+                <div class="relative">
+                    <label id="lblWorkCenterName" style="width: 100%; background: #fff; height: 24px; border: 1px solid #ccc; padding: 3px 5px; white-space: nowrap; overflow: hidden;"></label>
+                </div>
+            </div>
+
+            <div class=" col-sm-3">
+                <label class="mtop10">Remarks </label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.strRemarks, new { @class = "form-control" })
+                </div>
+            </div>
+
+        </div>
+
+       
+        <div class="row">
+           
+            <div class=" col-sm-2" id="divProj">
+                <label class="mtop10">Project Code:</label>
+                @Html.Action("GetProjectCode", "JobWorkOrder", new { Project_ID = ViewBag.ProjectID, Branchs = ViewBag.Unit, Hierarchy = @ViewBag.Hierarchy })
+            </div>
+            <div class=" col-sm-2" id="divHierarchy">
+                <label class="mtop10">Hierarchy:</label>
+                @*@Html.DropDownListFor(x => x.Hierarchy, new SelectList(Model.Hierarchy_List, "Hierarchy_id", "Hierarchy_Name"), new { @id = "ddlHierarchy", @class = "form-control", @disabled = "disabled" })*@
+            </div>
+
+        </div>
+        @*<div class="row">
+           
+        </div>*@
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div id="refreshgrid">
+                @{
+                    Html.RenderAction("GetWorkOrderDetailsProductList", "JobWorkOrder", new { DetailsID = Model.Details_ID });
+                }
+            </div>
+            <div class="clearfix footrGrider" style="display:none" >
+                <div class=" pull-left mTop5" style="margin-left:50%;">
+                    <table>
+                        <tr>
+                            <td class="pdRight10"><label>Total Amount </label></td>
+                            <td><input type="text" class="form-control" id="txtGridProductEntryTotalAmount" style=" width: 132px;" placeholder="0.00" disabled /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="clearfix">
+        @if (Convert.ToInt16(ViewBag.IsView) == 0)
+        {
+            <button type="button" class="inline-block addResourceBtn themeColor mRight5" id="btnSaveAndNew" onclick="WorkOrderSave('New');">
+                <div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div>
+                <span><u>S</u>ave and New</span>
+
+
+            </button>
+    <button type="button" class="inline-block addResourceBtn themeColor " id="saveandexit" onclick="WorkOrderSave('Exit');">
+        <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
+        <span>Save and E<u>x</u>it</span>
+    </button>
+             <label id="lbltaggedsms" style="color: red; display: none;font-size:medium">Already tagged in other module.</label>
+        }
+        <div class="inline-block pull-right" style="display:none">
+            <div class="inline-block mTop5">
+                <label class="stLbl "> Additional Cost</label>
+                <div><input type="text" value="@Model.ActualAdditionalCost" placeholder="0.00" id="txtActualAdditionalCost" disabled class="form-control decimalCheck" onchange="ChkMoneyDigitCount(this)" /></div>
+            </div>
+            <div class="inline-block mTop5">
+                <label class="stLbl ">Resource Cost</label>
+                <div class="disab"><input type="text" value="@Model.TotalResourceCost" placeholder="0.00" class="form-control" id="txtTotalResourceCost" disabled /></div>
+            </div>
+            <div class="inline-block mTop5">
+                <label class="stLbl"> Component Cost</label>
+                <div><input type="text" value="@Model.ActualComponentCost" placeholder="0.00" class="form-control" id="txtActualComponentCost" disabled /></div>
+
+            </div>
+            <div class="inline-block mTop5">
+                <label class="stLbl ">Production Order Qty</label>
+                <div><input type="text" value="@Model.ProductionOrderQty" placeholder="0.00" class="form-control" id="txtProductionOrderQty" disabled /></div>
+
+            </div>
+
+            <div class="inline-block mTop5">
+                <label class="stLbl ">FG Receipt Qty</label>
+                <div><input type="text" value="@Model.FGReceiptQty" placeholder="0.00" class="form-control" id="txtFGReceiptQty" disabled /></div>
+
+            </div>
+            <div class="inline-block mTop5">
+                <label class="stLbl "> Product Cost</label>
+                <div><input type="text" value="@Model.ActualProductCost" placeholder="0.00" class="form-control" id="txtActualProductCost" disabled /></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mTop10">
+
+    </div>
+    <!-- Product List -->
+    <div class="modal fade" id="PartNolistModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="SetFocusItemRevNo();">&times;</button>
+                    <h4 class="modal-title">Select Product</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" onkeydown="PartNoListkeydown(event)" id="txtPartNoCode" autofocus width="100%" placeholder="Search By Part No." />
+                    <div id="PartNoTable">
+                        <table border='1' width="100%" class="dynamicPopupTbl">
+                            <tbody>
+                                <tr class="HeaderStyle">
+                                    <th class="hide">id</th>
+                                    <th>Product Code</th>
+                                    <th>Product Name</th>
+                                    <th>Inventory</th>
+                                    <th>HSN/SAC</th>
+                                    <th>Brand</th>
+                                    <th>Class</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusItemRevNo();">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Product List-->
+
+    <div class="modal fade" id="ProductlistModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="SetFocusQty();">&times;</button>
+                    <h4 class="modal-title">Select Product</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" onkeydown="ProductListkeydown(event)" id="txtProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                    <div id="ProductTable">
+                        <table border='1' width="100%" class="dynamicPopupTbl">
+                            <tbody>
+                                <tr class="HeaderStyle">
+                                    <th class="hide">id</th>
+                                    <th>Product Code</th>
+                                    <th>Product Name</th>
+                                    <th>UOM</th>
+                                    <th>Inventory</th>
+                                    <th>HSN/SAC</th>
+                                    <th>Brand</th>
+                                    <th>Class</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusQty();">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Grid Product List -->
+    <div class="modal fade" id="GridProductlistModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Product</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" onkeydown="GridProductListkeydown(event)" id="txtGridProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                    <div id="GridProductTable">
+                        <table border='1' width="100%" class="dynamicPopupTbl">
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>UOM</th>
+                                <th>Inventory</th>
+                                <th>HSN/SAC</th>
+                                <th>Brand</th>
+                                <th>Class</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusDesc()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Grid Product List-->
+    <div class="modal fade pmsModal w30" id="GridWarehouselistModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="SetWarehouseAfterProduct()">&times;</button>
+                    <h4 class="modal-title">Select Warehouse</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="slcWarehouse">
+                        <select id="ddlWarehouselist" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn-radius" id="setWarehousegrid" onclick="SetWarehouseInGrid()">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Hidden("hdnProductID")
+    @*<input type="hidden" value="@Model.PartNo" id="hdnPartNo" />*@
+    <input type="hidden" value="@Model.FinishedItem" id="hdnFinishedItem" />
+    <input type="hidden" id="GuiIDS" />
+</div>

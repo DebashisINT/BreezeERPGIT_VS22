@@ -1,0 +1,233 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Name = "BOMGridLookup";
+        settings.KeyFieldName = "DetailsID";
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Properties.EnableClientSideAPI = true;
+        settings.Properties.ClientInstanceName = "BOMGridLookup";
+        settings.GridViewClientSideEvents.SelectionChanged = "BOMSelectionChanged";
+        settings.Properties.ClientSideEvents.ValueChanged = "BOMSelectionChanged";
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(6);
+       // settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        ////settings.GridViewProperties.SettingsPager.AlwaysShowPager = true;
+        // DO NOT COMMENT THIS
+        settings.GridViewProperties.SettingsPager.Visible = false;
+        settings.GridViewProperties.SettingsPager.PageSize = 2000;
+        settings.GridViewProperties.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;  
+        settings.GridViewProperties.Settings.VerticalScrollableHeight = 300;
+        // DO NOT COMMENT THIS
+        
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.None;
+        settings.Properties.DisplayFormatString = "{0}";
+        settings.Properties.DisplayFormatInEditMode = true;
+        //settings.Properties.ClientSideEvents.GotFocus = "BOMGotFocus";
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "BOMNo";
+            column.Caption = "BOM No.";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(180);
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "dtBOMDate";
+            column.Caption = "BOM Date";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(160);
+            column.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+            (column.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "RevisionNo";
+            column.Caption = "Rev No.";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(180);
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "dtREVDate";
+            column.Caption = "Rev Date";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(180);
+            column.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+            (column.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FinishedItemName";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FinishedUom";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FinishedQty";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "TotalResourceCost1";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ActualAdditionalCost";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "PartNo";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "PartNoName";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ItemRevNo";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DesignNo";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Description";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Proj_Code";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Hierarchy";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "strRemarks";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "WarehouseID";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        settings.Properties.Caption = " ";
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Single;
+        //  settings.Properties.TextFormatString = "{1}";
+        settings.Properties.MultiTextSeparator = ", ";
+        settings.Properties.SelectionMode = GridLookupSelectionMode.Single;
+        settings.Properties.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "ProductionOrder", Action = "GetBOMList" };
+        // settings.GridViewClientSideEvents.BeginCallback = "function(s,e){OnBeginCallback(s,e);}";
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 500;
+
+            //gridLookup.GridView.Settings.wi
+        };
+        
+        
+
+    }).BindList(Model).GetHtml()
+
+

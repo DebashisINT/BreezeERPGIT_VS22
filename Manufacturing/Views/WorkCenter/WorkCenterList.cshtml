@@ -1,0 +1,209 @@
+﻿@using System.Web.UI.WebControls
+@model Manufacturing.Models.ViewModel.WorkCenterViewModel
+
+@{
+    ViewBag.Title = "Work Center";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+
+<script>
+    var load = 0;
+    function OpenWCData(workcenterid) {
+        if (parseInt(workcenterid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetWorkCenterByID", "WorkCenter")",
+                data: { workcenterid: workcenterid },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnWCAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    function ViewWCData(workcenterid) {
+        if (parseInt(workcenterid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetWorkCenterByIDView", "WorkCenter")",
+                data: { workcenterid: workcenterid },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnWCAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    function RemoveWCData(workcenterid) {
+
+        jConfirm('Confirm delete?', 'Alert!', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveWCDataByID", "WorkCenter")",
+                    data: { workcenterid: workcenterid },
+                    success: function (response) {
+                        if (response != null) {
+                            jAlert("Deleted Successfully.");
+                            gridWCList.Refresh();
+                            gridWCList.Refresh();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function OnBOMListEndCallback(s, e) {
+
+    }
+
+    function OnBOMListBeginCallback(s, e) {
+
+    }
+
+    $(function () {
+        //gridWCList.Refresh();
+        //gridWCList.Refresh();
+
+        $('#btnAddNew').focus();
+    });
+
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+
+        if (exportid > 0) {
+
+            var url = '@Url.Action("ExportWCGridList", "WorkCenter", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+
+
+        }
+
+    }
+    function gridRowclick(s, e) {
+        $('#gridWCList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});    
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+    $(document).ready(function () {
+
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 65 && event.altKey == true) {
+                var url = '@Url.Action("WorkCenterEntry", "WorkCenter")';
+                window.location.href = url;
+            }
+        });
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridWCList.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridWCList.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridWCList.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridWCList.SetWidth(cntWidth);
+            }
+
+        });
+    });
+</script>
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="">
+            <label>Work Center</label>
+        </h3>
+    </div>
+
+</div>
+
+<div class="mainarea form_main">
+
+    <input type="hidden" value="@Url.Action("WorkCenterEntry", "WorkCenter")" id="hdnWCAddUpdate" />
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+            <div class="gridHeadersec">
+
+
+
+                <div class="clearfix">
+                    <div class="md-pull-left">
+                    @if (ViewBag.CanAdd) { 
+                        <button type="button" id="btnAddNew" class="btn btn-success  btn-radius" onclick="location.href='@Url.Action("WorkCenterEntry", "WorkCenter")'"><span class="btn-icon"><i class="fa fa-plus"></i></span><u>A</u>dd New</button>
+                    }
+                        <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                            <option value="0">Export to</option>
+                            <option value="1">PDF</option>
+                            <option value="2">XLSX</option>
+                            <option value="3">RTF</option>
+                            <option value="4">CSV</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+
+            </div>
+
+            <div id="refreshgrid" class="relative">
+                @{
+                    Html.RenderAction("GetWorkCenterList", "WorkCenter");
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

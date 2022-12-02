@@ -1,0 +1,75 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "ChildBOMGridLookup";
+        settings.KeyFieldName = "Details_ID";
+        settings.Properties.EnableClientSideAPI = true;
+        settings.GridViewClientSideEvents.BeginCallback = "ChildBOMStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "ChildBOMSelectionChanged";
+        settings.Properties.ClientInstanceName = "cChildBOMGridLookup";
+       // settings.Properties.ClientSideEvents.DropDown = "ChildBOMLookupValChange";
+        //settings.Properties.ClientSideEvents.GotFocus = "ProjectGotfocus";
+        // settings.Properties.ClientSideEvents.LostFocus = "ProjectLostFocus";
+        settings.Properties.TextFormatString = "{1}";
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Details_ID";
+            column.Caption = "Details_ID";
+            column.Width = 0;
+            column.Visible = false;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "BOM_No";
+            column.Caption = "BOM No";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProductsName";
+            column.Caption = "BOM FG";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "REVNo";
+            column.Caption = "BOM REV";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "BOMRelationship", Action = "GetChildBOM" };
+
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+
+        settings.GridViewClientSideEvents.SelectionChanged = "ChildBOMSelectionChanged";
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 600;
+        };
+
+
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.ChildBOMID != null)
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.GridView.Selection.SelectRowByKey(ViewBag.ChildBOMID);
+            }
+        };
+
+    }).BindList(Model).GetHtml()
+
+
+
+
+
+ 

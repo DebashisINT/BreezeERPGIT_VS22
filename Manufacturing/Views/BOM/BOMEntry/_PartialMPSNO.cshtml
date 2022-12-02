@@ -1,0 +1,69 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "MPSGridLookup";
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "BOMEntry", Action = "GetMPSNO" };
+        settings.KeyFieldName = "MPS_ID";
+        settings.Properties.EnableClientSideAPI = true;
+        settings.GridViewClientSideEvents.BeginCallback = "MPSStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "MPSSelectionChanged";
+       // settings.Properties.ClientSideEvents.DropDown = "MPSLookupValChange";
+        settings.Properties.TextFormatString = "{1}";
+
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        settings.GridViewProperties.SettingsPager.PageSize = 7;
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "MPS_ID";
+            column.Caption = "MPS_ID";
+            column.Width = 0;
+            column.Visible = false;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "MPS_No";
+            column.Caption = "MPS No";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "MPS_Date";
+            column.Caption = "MPS Date";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "BOMEntry", Action = "GetMPSNO" };
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+        settings.GridViewClientSideEvents.SelectionChanged = "MPSSelectionChanged";
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 600;
+        };
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.MPS_ID != null)
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.GridView.Selection.SelectRowByKey(ViewBag.MPS_ID);
+            }
+           
+        };
+
+    }).BindList(Model).GetHtml()
+
+
+
+
+
+
+
+

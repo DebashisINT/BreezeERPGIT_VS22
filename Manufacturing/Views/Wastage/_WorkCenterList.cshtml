@@ -1,0 +1,81 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "WorkCenterGridLookup";
+        settings.KeyFieldName = "WorkCenterID";
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Properties.EnableClientSideAPI = true;
+        settings.Properties.ClientInstanceName = "WorkCenterGridLookup";
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(6);
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.None;
+        settings.Properties.DisplayFormatString = "{0}";
+        settings.Properties.DisplayFormatInEditMode = true;
+        settings.Properties.ClientSideEvents.GotFocus = "WorkCenterGotFocus";
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "WorkCenterCode";
+            column.Caption = "Work Center Code";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(180);
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "WorkCenterDescription";
+            column.Caption = "Work Center Description";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(180);
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Remarks";
+            column.Caption = "Remarks";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(180);
+        });
+
+        settings.Properties.Caption = " ";
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Single;
+
+        //  settings.Properties.TextFormatString = "{1}";
+        settings.Properties.MultiTextSeparator = ", ";
+        settings.Properties.SelectionMode = GridLookupSelectionMode.Single;
+        settings.Properties.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "Wastage", Action = "GetWCList" };
+        // settings.GridViewClientSideEvents.BeginCallback = "function(s,e){OnBeginCallback(s,e);}";
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 500;
+
+            //gridLookup.GridView.Settings.wi
+        };
+
+
+
+    }).BindList(Model).GetHtml()
+
+
+
+
+
+
+
+
+
+

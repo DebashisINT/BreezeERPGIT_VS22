@@ -1,0 +1,1752 @@
+﻿@model Manufacturing.Models.ViewModel.MPSViewModel
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+
+@{
+    ViewBag.Title = "Master Production Schedule (MPS)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />open it when run in live*@
+@*<script src="~/Scripts/SearchPopup.js"></script>*@
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
+<script src="~/Scripts/SearchPopupDatatable.js"></script>
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+<script src="~/assests/js/MPS/MPS.js?v=2.1"></script>
+<script>
+    function BOMStartCallback(s, e) {
+
+        e.customArgs["BOMID"] = '@ViewBag.ParentBOMID';
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Unit"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Unit"] = $("#ddlBankBranch").val();
+        }
+    }
+    function datevalidateTo() {
+
+        if (EstimateDate_dt.GetDate()) {
+            //if (RevisionDate_dt.GetDate() <= EstimateDate_dt.GetDate()) {
+            //    if ($('#hdnDetailsID').val() != "") {
+            //        RevisionDate_dt.SetValue(EstimateDate_dt.GetDate());
+            //        RevisionDate_dt.SetMinDate(EstimateDate_dt.GetDate());
+            //    }
+            //}
+        }
+    }
+
+    function ProjectStartCallback(s, e) {
+        //debugger;
+        e.customArgs["Customer_ID"] = $("#CustomerId").val();
+        e.customArgs["Quotation_ID"] = $("#hdnProposal_ID").val();
+        e.customArgs["Project_ID"] = '@ViewBag.ProjectID';
+        // e.customArgs["Proj_Code"] = ProjectGridLookup.GetSelectedKeyFieldValues();
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Unit"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Unit"] = $("#ddlBankBranch").val();
+        }
+    }
+
+    function ProjectGotfocus(s, e) {
+        var ProjectId = (ProjectGridLookup.GetGridView().GetRowKey(ProjectGridLookup.GetGridView().GetFocusedRowIndex()));
+        $("#hdnProjectgotfocusId").val(ProjectId);
+    }
+
+    function CloseGridLookup() {
+        ContractGridLookup.ConfirmCurrentSelection();
+        ContractGridLookup.HideDropDown();
+    }
+
+    function ContractStartCallback(s, e) {
+        //debugger;
+        e.customArgs["Customer_ID"] = $("#CustomerId").val();
+        e.customArgs["ContractNo"] = '@ViewBag.ContractNo';
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Unit"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Unit"] = $("#ddlBankBranch").val();
+        }
+        // e.customArgs["ProjectID"] = ProjectGridLookup.GetSelectedKeyFieldValues();
+    }
+
+    var ContractID = [];
+    function ContractSelectionChanged(s, e) {
+        ContractGridLookup.gridView.GetSelectedFieldValues("Details_ID", GetContractSelectedFieldValuesCallback);
+    }
+
+    //function ProjectLookupValChange() {
+    //    ProjectGridLookup.GetGridView().Refresh();
+    //    //  ProjectGridLookup.GetGridView().Refresh();
+    //}
+
+    function ProjectSelectionChanged(s, e) {
+        //  debugger;
+        // ProjectGridLookup.gridView.GetSelectedFieldValues("Proj_Id", GetProjectSelectedFieldValuesCallback);
+        // ProjectGridLookup.gridView.GetSelectedFieldValues("Hierarchy_ID", GetProjectSelectedFieldValuesCallback);
+        //var ProductName = ProjectGridLookup.gridView.batchEditApi.GetCellValue(e.visibleIndex, 'Hierarchy_ID');
+        //alert(ProductName);
+        //debugger;
+
+        var ProjectId = (ProjectGridLookup.GetGridView().GetRowKey(ProjectGridLookup.GetGridView().GetFocusedRowIndex()));
+        if (ProjectId != $("#hdnProjectgotfocusId").val()) {
+            $("#hdnQuotation_ID").val("");
+            $('#hdnProposal_ID').val("");
+            btnProposal.SetText("");
+            ContractGridLookup.Clear();
+            Proposallist($("#txtProposalName").val());
+        }
+
+
+        var projId = ProjectGridLookup.GetValue();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getHierarchyID", "Estimate")",
+            data: { ProjID: projId },
+            async: false,
+            success: function (response) {
+                if (response != null) {
+                    //jAlert(response.Message);
+                    $('#ddlHierarchy').val(response.Message);
+                }
+            }
+        });
+    }
+
+    function ProjectLostFocus(s, e) {
+        var ProjectId = (ProjectGridLookup.GetGridView().GetRowKey(ProjectGridLookup.GetGridView().GetFocusedRowIndex()));
+        if (ProjectId != $("#hdnProjectgotfocusId").val()) {
+            $("#hdnQuotation_ID").val("");
+            $('#hdnProposal_ID').val("");
+            btnProposal.SetText("");
+            ContractGridLookup.Clear();
+        }
+    }
+
+    function ContractLookupValChange() {
+        ContractGridLookup.GetGridView().Refresh();
+        //ContractGridLookup.GetGridView().Refresh();
+    }
+
+    function PopulateNumberingSchemeData() {
+        var type = "";// $('#slcEstimatetype option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getNumberingSchemeRecord", "MPS")",
+            //url: "../Estimate/getNumberingSchemeRecord",
+            data: { type: type },
+            success: function (response) {
+                var html = "";
+                var hdnEstimate_SCHEMAID = $('#hdnEstimate_SCHEMAID').val();
+                for (var i = 0; i < response.length; i++) {
+                    if (hdnEstimate_SCHEMAID != '') {
+                        html = html + "<option value='" + response[i].SchemaID + "' selected>" + response[i].SchemaName + "</option>";
+                    }
+                    else {
+                        html = html + "<option value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                    }
+
+                }
+                $('#ddlSchema').html(html);
+                $('#ddlSchema').val('@Model.Estimate_SCHEMAID');
+
+                //$("#ddlSchema > option").each(function () {
+                //    var str = this.value;
+                //    var n = str.startsWith("1056");
+                //    alert(this.value);
+                //});
+            }
+        });
+    }
+
+    function PopulateAmountForData() {
+        var type = "";// $('#slcEstimatetype option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getAmountForRecord", "Estimate")",
+            //url: "../Estimate/getAmountForRecord",
+            data: { type: type },
+            success: function (response) {
+                var html = "";
+                var hdnEstimate_SCHEMAID = $('#hdnEstimate_SCHEMAID').val();
+                for (var i = 0; i < response.length; i++) {
+
+                    html = html + "<option value='" + response[i].taxGrp_Id + "'>" + response[i].taxGrp_Description + "</option>";
+                }
+                $('#ddl_AmountAre').html(html);
+                $('#ddl_AmountAre').val('@Model.TaxID');
+            }
+        });
+
+
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $("body").bind("keydown", function (event) {
+            if ('@ViewBag.View' != "View") {
+                if (hdnApprove != "Approve") {
+                    if (event.keyCode == 88 && event.altKey == true) {
+                        MPSSave('Exit');
+                    }
+                    //if (event.keyCode == 83 && event.altKey == true) {
+                    //    EstimateSave('New');
+                    //}
+
+                }
+            }
+            if (event.keyCode == 82 && event.altKey == true) {
+                $('#showResources').click();
+            }
+        });
+
+     
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID > 0) {
+           
+            $('#EstimateNo').attr("disabled", "disabled");
+            $('#ddlSchema').attr("disabled", "disabled");           
+            $('#ddlBankBranch').attr("disabled", "disabled");           
+            //EstimateDate_dt.SetEnabled(false);           
+            EstimateDate_dt.SetDate(new Date('@ViewBag.EstDate'));        
+
+            var EstimateProductsTotal = $('#hdnEstimateEntryProductsTotalAm').val();
+            if (EstimateProductsTotal != "" && EstimateProductsTotal != undefined) {
+                $('#txtGridProductEntryTotalAmount').val(parseFloat(EstimateProductsTotal).toFixed(2));
+            }
+           
+            var hdnEstimateResourcesTotalAm = $('#hdnEstimateResourcesTotalAm').val();
+            if (hdnEstimateResourcesTotalAm != "" && hdnEstimateResourcesTotalAm != undefined) {
+                $('#txtGridResourcesTotalAmount').val(parseFloat(hdnEstimateResourcesTotalAm).toFixed(2));
+            }
+            var cntNo = '@ViewBag.ContractNo';
+
+            ContractID = cntNo.split(',');
+
+            $("#ddl_AmountAre").prop('disabled', 'disabled');
+
+            //$('#btnSaveandNew').hide();
+
+            // debugger;
+            //ProjectGridLookup.gridView.Refresh()
+            //ProjectGridLookup.gridView.Refresh()
+            //var projCode = $('#hdnProjectCode').val();
+            //ProjectGridLookup.SetValue(projCode);
+            //ProjectGridLookup.SetText(projCode);
+            // $('#ddl_AmountAre').val('@Model.TaxID');
+            //if ($('#hdnRevisionRequiredEveryAfterApproval').val() == "No") {
+            //            $('#RevisionNo').removeAttr("disabled");
+
+            //}
+            //else{
+            //$('#RevisionNo').attr("disabled", "disabled");
+            //            	RevisionDate_dt.SetEnabled(false);
+            //}
+            // setTimeout(function () { var noofrow = gridEstimateResourcesList.GetVisibleRowsOnPage(); if (noofrow > 1) { $('#showResources').click(); } }, 800);
+
+        }
+        else {
+            //$("#EstimateNo").removeAttr("disabled");
+            $("#ddlSchema").removeAttr("disabled");
+            //$("#slcEstimatetype").removeAttr("disabled");
+            $('#FinishedQty').removeAttr("disabled");
+            $('#RevisionNo').removeAttr("disabled");
+            //$('#ddlBankBranch').removeAttr("disabled");
+            //$('#ddlWarehouse').removeAttr("disabled");
+            EstimateDate_dt.SetEnabled(true);
+            // RevisionDate_dt.SetEnabled(true);
+            //$('#btnSaveandNew').show();
+            // RevisionDate_dt.SetDate(null);
+            $('#hdnEstimate_SCHEMAID').val('');
+            // $("#ddl_AmountAre").removeAttr("disabled");
+            gridEstimateProductEntryList.batchEditApi.EndEdit();
+            // gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdProdNameIndex);
+            gridEstimateProductEntryList.CancelEdit();
+            setTimeout(function () {
+                $("#ddlSchema").focus();
+            }, 600);
+
+        }
+
+        @*if ('@ViewBag.Hierarchy' == "1") {
+            $('#divHierarchy').removeClass('hidden');
+        }
+        else {
+            $('#divHierarchy').addClass('hidden');
+        }*@
+
+        var hdnApprove = $('#hdnAprove').val();
+
+        @*if (hdnApprove == "Approve") {
+            //$('#btnSaveandNew').hide();
+            $('#btnSaveandExit').hide();
+            $('#btnApprove').show();
+            $('#btnReject').show();
+            $('#divApproveButton').removeClass('hidden');
+            $('#divApproveRemarks').removeClass('hidden');
+            if ($('#hdnRevisionRequiredEveryAfterApproval').val() == "No") {
+                $('#RevisionNo').attr("disabled", "disabled");
+                RevisionDate_dt.SetEnabled(false);
+            }
+            else {
+  		if ($('#hdnisFirstApprove').val() == "Yes" && hdnApprove == "Approve") {
+                $('#RevisionNo').removeAttr("disabled", "disabled");
+                RevisionDate_dt.SetEnabled(true);
+		}
+		else{
+		$('#RevisionNo').attr("disabled", "disabled");
+            	RevisionDate_dt.SetEnabled(false);
+		}
+            }
+            var rejct = '@ViewBag.ApproveStus';
+            if (rejct == '1') {
+                $('#btnApprove').hide();
+                $('#btnReject').hide();
+            }
+            else if (rejct == '2') {
+                $('#btnReject').hide();
+            }
+            setTimeout(function () {
+                $('#txt_ApproveRemarks').focus();
+            }, 1000);
+        }*@
+        //  else {
+        //$('#btnSaveandNew').show();
+        $('#btnSaveandExit').show();
+        $('#btnApprove').hide();
+        $('#btnReject').hide();
+        $('#divApproveRemarks').addClass('hidden');
+        // $('#RevisionNo').removeClass("hidden");
+        // RevisionDate_dt.SetEnabled(false);
+        // $("#lblApproveName").addClass('hidden');
+        // $('#divApproveButton').addClass('hidden');
+        // }
+
+        @*if ('@ViewBag.ApproveStusEdit' != "1" && '@ViewBag.ApproveStusEdit' != "") {
+
+            //$('#RevisionNo').attr("disabled", "disabled");
+            //RevisionDate_dt.SetEnabled(false);
+            if ($('#hdnRevisionRequiredEveryAfterApproval').val() == "No") {
+                $('#RevisionNo').attr("disabled", "disabled");
+                RevisionDate_dt.SetEnabled(false);
+            }
+            else {
+                if ($('#hdnisFirstApprove').val() == "Yes" && hdnApprove == "Approve") {
+                    $('#RevisionNo').removeAttr("disabled", "disabled");
+                    RevisionDate_dt.SetEnabled(true);
+                }
+              else{
+		$('#RevisionNo').attr("disabled", "disabled");
+            	RevisionDate_dt.SetEnabled(false);
+		}
+            }*@
+        //$('#btnSaveandNew').hide();
+        //}
+
+        @*if ('@ViewBag.ProjectShow' == "Yes") {
+            $("#divProj").removeClass("hidden");
+        }
+        else {
+            $("#divProj").addClass("hidden");
+        }*@
+
+        if ('@ViewBag.View' == "View") {
+            //$('#btnSaveandNew').hide();
+            $('#btnSaveandExit').hide();
+            $('#btnApprove').hide();
+            $('#btnReject').hide();
+            $('#divApproveRemarks').removeClass('hidden');
+            $("#lblApproveName").removeClass('hidden');
+            $('#divApproveButton').removeClass('hidden');
+
+            setTimeout(function () {
+                var noofrow = gridEstimateResourcesList.GetVisibleRowsOnPage();
+                if (noofrow > 1) {
+                    $('#showResources').removeClass('hidden');
+                }
+                else {
+                    $('#showResources').addClass('hidden');
+                }
+            }, 800);
+        }
+
+        $('#GridWarehouselistModel').on('shown.bs.modal', function () {
+            //$('#ddlWarehouselist').focus();
+        })
+        // LoadingPanel.Hide();
+
+
+
+        if ($('#hdnApproveRevSettings').val() == "Yes") {
+            $("#divRevDate").removeClass('hide');
+            $("#divRevNo").removeClass('hide');
+        }
+        else {
+            $("#divRevDate").addClass('hide');
+            $("#divRevNo").addClass('hide');
+        }
+
+
+    });
+
+    function Proposallist(SearchKey) {
+        finishedproductlist = 1;
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.CustomerId = $("#CustomerId").val();
+        OtherDetails.BranchId = $('#ddlBankBranch').val();
+        //OtherDetails.BranchId = $('#ddlBankBranch').val();
+        var HeaderCaption = [];
+        // HeaderCaption.push("Product ID");
+        HeaderCaption.push("Proposal No.");
+        HeaderCaption.push("Proposal Date");
+        var ProjectId = (ProjectGridLookup.GetGridView().GetRowKey(ProjectGridLookup.GetGridView().GetFocusedRowIndex()));
+        //callonServerScroll("../Models/PMS_WebServiceList.asmx/GetProposalList", OtherDetails, "ProposalTable", HeaderCaption, "ProposalIndex", "SetProposal");
+        if ('@ViewBag.ProjectShow' == "Yes" && ProjectId != null && ProjectId != "") {
+            OtherDetails.ProjectId = ProjectId;
+            callonServer("../Models/PMS_WebServiceList.asmx/GetProposalListWithProject", OtherDetails, "ProposalTable", HeaderCaption, "ProposalIndex", "SetProposal");
+        }
+        else {
+            callonServer("../Models/PMS_WebServiceList.asmx/GetProposalList", OtherDetails, "ProposalTable", HeaderCaption, "ProposalIndex", "SetProposal");
+        }
+    }
+    function BOMSelectionChanged(s, e) {
+        var ParentBOMId = (ParentBOMGridLookup.GetGridView().GetRowKey(ParentBOMGridLookup.GetGridView().GetFocusedRowIndex()));
+        if (ParentBOMId != null) {
+            cpSelectedKeys = ParentBOMId;
+            $('#hdnBOM_id').val(ParentBOMId);
+                 
+        }   
+    }
+
+    function btnAdd_ProductClick() {
+
+        var ProductQty = cProductQty.GetText();
+        if (btnProduct.GetValue() == null) {
+            jAlert("Please select Product");
+            return;
+        }
+        else if (ProductQty == "0.0000") {
+            jAlert("Please enter Quantity");
+            return;
+        }
+        else {
+            if ('@ViewBag.EntryType' == 'EDIT') {
+                if (parseFloat(ProductQty) < parseFloat($("#BalQty").val())) {
+                    jAlert("Quantity can not be less than tagged quantity.");
+                    cProductQty.SetText($("#BalQty").val());
+                    return;
+                }
+                else {
+                    cProductQty.GetText(ProductQty);
+                }
+            }
+            else {
+                cProductQty.GetText(ProductQty);
+            }
+
+            var data = {
+                ProductName: btnProduct.GetValue(),
+                ProductId: $("#hdnProdProductID").val(),
+                ProductDescription: $("#txtProductdescription").val(),
+                ProductQty: cProductQty.GetText(),
+                ProductUOM: $("#txt_ProdUOM").val(),
+                Price: cProductPrice.GetText(),
+                Amount: cProductAmount.GetText(),
+                Remarks: $("#txt_AddlRemarks").val(),
+                UpdateEdit: "1",
+                UOMID:$("#HdnUOMID").val(),
+                Guids: $("#GuiIDS").val(),
+                BOMID: $("#hdnBOM_id").val(),
+                BOMNO: ParentBOMGridLookup.GetValue()
+
+            }
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddProduct", "MPS")",              
+                data: "{prod:" + JSON.stringify(data) + "}",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        gridEstimateProductEntryList.Refresh();                           
+
+                        btnProduct.SetValue(''),
+                        $("#hdnProdProductID").val(''),
+                        $("#txtProductdescription").val(''),
+                        cProductQty.SetText("0.00"),
+                        $("#txt_ProdUOM").val(''),                       
+                        cProductPrice.SetText('0.00'),
+                        cProductAmount.SetText('0.00'),
+                        $("#txt_AddlRemarks").val(''),                       
+                        $("#GuiIDS").val(''),                        
+                        $("#ProductDetailsID").val(0);
+                        ParentBOMGridLookup.gridView.UnselectRows(1);
+                        gridEstimateProductEntryList.Refresh();
+
+                    }
+                }
+            });
+        }
+    }
+
+
+    function btnResAdd_ProductClick() {
+
+        var TaxTypeid = $('#ddlTaxTypelistResource').val();
+        var TaxTypetxt = $('#ddlTaxTypelistResource option:selected').text();
+        var ResProductQty = cResProductQty.GetText();
+        if (TaxTypetxt == "Select") {
+            TaxTypetxt = "";
+            TaxTypeid = 0;
+        }
+
+        if (btnResProduct.GetValue() == null) {
+            jAlert("Please select Resource");
+            return;
+        }
+        else {
+
+            if ('@ViewBag.EntryType' == 'EDIT') {
+                if (parseFloat(ResProductQty) < parseFloat($("#ResBalQty").val())) {
+                    jAlert("Quantity can not be less than tagged quantity.");
+                    cProductQty.SetText($("#ResBalQty").val());
+                    return;
+                }
+                else {
+                    cProductQty.GetText(ResProductQty);
+                }
+            }
+            else {
+                cProductQty.GetText(ResProductQty);
+            }
+
+
+            var data = {
+                ProductName: btnResProduct.GetValue(),
+                ProductId: $("#hdnResProductID").val(),
+                ProductDescription: $("#txtResProductdescription").val(),
+                ProductQty: cResProductQty.GetText(),
+                ProductUOM: $("#txt_ResProdUOM").val(),
+                //ProductsWarehouseID:
+                Price: cResProductPrice.GetText(),
+                Amount: cResProductAmount.GetText(),
+                Remarks: $("#txt_ResAddlRemarks").val(),
+                UpdateEdit: "1",
+                ResourceCharges: cResProductCharges.GetText(),
+                Discount: cResProductDiscount.GetText(),
+                NetAmount: cResProductNetAmount.GetText(),
+                BudgetedPrice: cResProductBudgetedPrice.GetText(),
+                TaxTypeID: TaxTypeid,
+                TaxType: TaxTypetxt,
+                ProdHSN: $("#hdnResHSN").val(),
+                AddlDesc: $("#txt_ResAddlDescProd").val(),
+                Guids: $("#ResGuiIDS").val(),
+                Sellable: btnResSellable.GetValue(),
+                SellableID: $("#hdnResSellableProductID").val(),
+                ProductDetailsID: $("#ResProductDetailsID").val(),
+                BalQty: $("#ResBalQty").val()
+
+            }
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddResources", "Estimate")",
+                //url: "../Estimate/AddResources",
+                data: "{prod:" + JSON.stringify(data) + "}",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        gridEstimateResourcesList.Refresh();
+                        
+
+                        btnResProduct.SetValue(''),
+                        $("#hdnResProductID").val(''),
+                        $("#txtResProductdescription").val(''),
+                        cResProductQty.SetText("0.00"),
+                        $("#txt_ResProdUOM").val(''),
+                        cResProductPrice.SetText('0.00'),
+                        cResProductAmount.SetText('0.00'),
+                        $("#txt_ResAddlRemarks").val(''),
+                        cResProductCharges.SetText('0.00'),
+                        cResProductDiscount.SetText('0.00'),
+                        cResProductNetAmount.SetText('0.00'),
+                        cResProductBudgetedPrice.SetText('0.00'),
+                        $("#ddlTaxTypelistResource").val(''),
+                        $("#hdnResHSN").val(''),
+                        $("#txt_ResAddlDescProd").val(''),
+                        $("#ResGuiIDS").val('');
+                        btnResSellable.SetText();
+                        $("#hdnResSellableProductID").val('');
+                        $("#ResProductDetailsID").val(0);
+                        $("#ResBalQty").val(0);
+                        gridEstimateResourcesList.Refresh();
+                    }
+                }
+            });
+        }
+    }
+
+
+    function MPSSave(mode) {
+        LoadingPanel.Show();
+        savemode = mode;
+        hasmsg = 0;
+        var Estimateno = $('#EstimateNo').val();
+        var EstimateDate = GetServerDateFormat(EstimateDate_dt.GetValue());
+        var Unit = $('#ddlBankBranch').val();
+        var SchemaID = $('#hdnSchemaId').val();
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        var oneproduct = "";
+        var visiablerow = gridEstimateProductEntryList.GetVisibleRowsOnPage();
+        if (visiablerow > 0) {
+            for (var i = 100; i > -500; i--) {
+                if (gridEstimateProductEntryList.GetRow(i)) {
+
+                    if (oneproduct == "" || oneproduct == null) {
+                        oneproduct = gridEstimateProductEntryList.batchEditApi.GetCellValue(i, 'ProductName');
+                    }
+                }
+            }
+        }
+        //var CustomerId = $('#CustomerId').val();
+        //if (CustomerId == "" || CustomerId == null) {
+        //    jAlert("Please select customer.");
+        //    LoadingPanel.Hide();
+        //    return false;
+        //}
+       
+        var strEstimateno = $('#EstimateNo').val();
+        var EstimateDate = GetServerDateFormat(EstimateDate_dt.GetValue());
+        var Unit = $('#ddlBankBranch option:selected').val();
+        var SchemaID = $('#hdnSchemaId').val();
+        var CustomerId = $('#CustomerId').val();
+        var OrderID = $('#hdnOrderID').val();
+        if (strEstimateno == "" || strEstimateno == null) {
+            jAlert("Please select Numbering scheme.");
+            LoadingPanel.Hide();
+            return false;
+        }
+        else if (oneproduct == "") {
+            jAlert("Please Add Product.");
+            LoadingPanel.Hide();
+            return false;
+        }
+
+        if (hdnDetailsID > 0) {
+            DetailsID = hdnDetailsID;         
+          
+        }
+        var EstimateStartDatedt = "", EstimateEndDatedt = "", ActualsStartDatedt = "", ActualsEndDatedt = "";
+        if (EstimateStartDate_dt.GetValue() != "")
+        {
+            EstimateStartDatedt = GetServerDateFormat(EstimateStartDate_dt.GetValue());
+        }
+        if (EstimateEndDate_dt.GetValue() != "") {
+             EstimateEndDatedt = GetServerDateFormat(EstimateEndDate_dt.GetValue());
+        }
+        if (ActualsStartDate_dt.GetValue() != "") {
+            ActualsStartDatedt = GetServerDateFormat(ActualsStartDate_dt.GetValue());
+        }
+        if (ActualsEndDate_dt.GetValue() != "") {
+           ActualsEndDatedt = GetServerDateFormat(ActualsEndDate_dt.GetValue());
+        }
+
+        var data = {
+            strEstimateNo: strEstimateno,
+            EstimateDate: EstimateDate,
+            Unit: Unit,
+            Estimate_SCHEMAID: SchemaID,
+            DetailsID: DetailsID,           
+            Customer_ID: CustomerId,
+            ContractNo: ContractID,
+            EstimateStartDate_dt: EstimateStartDatedt,
+            EstimateEndDate_dt: EstimateEndDatedt,
+            ActualsStartDate_dt: ActualsStartDatedt,
+            ActualsEndDate_dt: ActualsEndDatedt,
+            OrderID: OrderID
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveEstimate", "MPS")",
+            //url: "../Estimate/SaveEstimate",
+            data: "{Details:" + JSON.stringify(data) + "}",
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    var Message = response.split('~')[3];
+                    var DetailsID = response.split('~')[1];
+                   // var ProductionID = response.split('~')[2];
+                    var GEstimateNo = response.split('~')[2];
+                    var Sucess = response.split('~')[0];
+                    if (Message == "duplicate" && DetailsID == 0 ) {
+                        savemode = "";
+                        if (Message == "duplicate") {
+                            jAlert('This Estimate no already present!');
+                            return false;
+                            LoadingPanel.Hide();
+                        }
+                        else {
+                            jAlert('Please try again later.');
+                            return false;
+                            LoadingPanel.Hide();
+                        }
+                        Message = "";
+
+                    }
+                    else {
+                        if (DetailsID > 0  && GEstimateNo != "") {
+
+                            $('#EstimateNo').val('');
+                            var EstimateDate = GetServerDateFormat(EstimateDate_dt.GetValue());
+                          //  $('#RevisionNo').val('');
+                            $('#ddlBankBranch').val($("#ddlBankBranch option:first").val());
+                            $('#hdnSchemaId').val('');
+                          //  $('#txtActualAdditionalCost').val(parseFloat(0).toFixed(4));
+                            $('#txtGridProductEntryTotalAmount').val(parseFloat(0).toFixed(2));
+                          //  $('#txtGridResourcesTotalAmount').val(parseFloat(0).toFixed(2));
+
+
+                            $('#ddlSchema').val($("#ddlSchema option:first").val());
+                            $('#EstimateNo').val('');
+                            $('#EEstimateNo').hide();
+                            $('#EEstimateDate_dt').hide();
+                           // $('#EFinishedQty').hide();
+                          //  $('#EFinishedQty').hide();
+                         //   $('#ERevisionNo').hide();
+                          //  $('#ERevisionDate_dt').hide();
+                         //   $('#EddlBankBranch').hide();
+                          //  $('#FinishedUom').val('');
+                            $('#hdnDetailsID').val(0);
+
+                          //  $('#hdnProposal_ID').val('');
+                          //  $('#hdnQuotation_ID').val('');
+                        //    $('#txt_HeadRemarks').val('');
+                         //   $('#btnQuotation').val('');
+                        //    $('#btnProposal').val('');
+                        //    $("#txt_ApproveRemarks").val('');
+                            Scheme_ValueChange();
+
+
+
+                            
+                         
+                                jAlert('MPS Number : ' + GEstimateNo + ' saved successfully.', 'Alert!', function (r) {
+                                    if (r) {
+                                        if (savemode == "Exit") {
+                                            setTimeout(function () {
+                                                var url = $('#hdnEstimateListPage').val();
+                                                window.location.href = url;
+                                            }, 500);
+                                        }
+                                        else if (savemode == "New") {
+                                            var url = "/MPS/Index?ActionType=ADD";
+                                            window.location.href = url;
+                                        }
+                                    }
+                                });
+                           
+                            LoadingPanel.Hide();
+                           
+
+
+                        }
+                        else {
+                           
+                            DetailsID = 0;
+                            savemode = "";
+                            jAlert('Please try again later.');
+                            LoadingPanel.Hide();
+                            return false;
+
+                        }
+                        Message = "";
+                    }
+
+                }
+            }
+        });
+    }
+
+
+    function OnResourcesStartCallback(s, e) {
+        //debugger;
+        var strEstimateno = $('#EstimateNo').val();
+        var EstimateDate = GetServerDateFormat(EstimateDate_dt.GetValue());
+        //var EstimateDate = $('#EstimateDate_dt').val();
+        //var EstimateType = $('#slcEstimatetype option:selected').val();
+        var RevisionNo = $('#RevisionNo').val();
+        var RevisionDate = GetServerDateFormat(RevisionDate_dt.GetValue());
+        //var RevisionDate = $('#RevisionDate_dt').val();
+        var Unit = $('#ddlBankBranch option:selected').val();
+        //var WarehouseID = $('#ddlWarehouse option:selected').val();
+        var SchemaID = $('#hdnSchemaId').val();
+        var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+
+        var Proposal_ID = $('#hdnProposal_ID').val();
+        var Quotation_ID = $('#hdnQuotation_ID').val();
+        var HeadRemarks = $('#txt_HeadRemarks').val();
+
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID > 0) {
+            DetailsID = hdnDetailsID;
+        }
+        if (hdnDetailsID == "") {
+
+            RevisionDate = GetServerDateFormat(new Date);
+        }
+        var taxId = $('#ddl_AmountAre').val();
+        var CustomerId = $('#CustomerId').val();
+        var ApproveRemarks = $("#txt_ApproveRemarks").val();
+
+        var apprvRejt = "0";
+        var approveedval = '@ViewBag.ApproveStusEdit';
+        var EditAction = "";
+        if ($('#hdnApprove').val() != "") {
+            EditAction = $('#hdnApprove').val();
+            apprvRejt = approveedval;
+        }
+        else {
+            if (approveedval == "1" || approveedval == "") {
+                EditAction = "";
+                apprvRejt = "0";
+            }
+            else {
+                EditAction = "Approve";
+                apprvRejt = approveedval;
+            }
+        }
+
+
+
+        if ($("#hdnApproveReject").val() == "Approve") {
+            apprvRejt = "1";
+        }
+        else if ($("#hdnApproveReject").val() == "Reject") {
+            apprvRejt = "2";
+        }
+
+        if (e != undefined) {
+            e.customArgs["strEstimateNo"] = strEstimateno;
+            e.customArgs["EstimateDate"] = EstimateDate;
+            //e.customArgs["FinishedItem"] = FinishedItem;
+            //e.customArgs["FinishedQty"] = FinishedQty;
+
+            //e.customArgs["FinishedUom"] = FinishedUom;
+            //e.customArgs["EstimateType"] = EstimateType;
+            e.customArgs["RevisionNo"] = RevisionNo; //EmployeesCounterTargetList
+
+            e.customArgs["RevisionDate"] = RevisionDate;
+            e.customArgs["Unit"] = Unit;
+            // e.customArgs["WarehouseID"] = WarehouseID;
+            e.customArgs["Estimate_SCHEMAID"] = SchemaID;
+            e.customArgs["ActualAdditionalCost"] = ActualAdditionalCost;
+
+            e.customArgs["ProductionID"] = ProductionID;
+            e.customArgs["DetailsID"] = DetailsID;
+
+            e.customArgs["Proposal_ID"] = Proposal_ID;
+            e.customArgs["Quotation_ID"] = Quotation_ID;
+            e.customArgs["HeadRemarks"] = HeadRemarks;
+
+            e.customArgs["ContractNo"] = ContractID;//ContractGridLookup.GetSelectedKeyFieldValues();
+            e.customArgs["ProjectID"] = ProjectGridLookup.GetSelectedKeyFieldValues();
+            e.customArgs["TaxID"] = projectCode;
+            e.customArgs["ContractNo"] = ContractID;
+            e.customArgs["ApproveRemarks"] = ApproveRemarks;
+            e.customArgs["ApprvRejct"] = apprvRejt;
+            e.customArgs["Approve"] = EditAction;
+        }
+
+
+    }
+
+    function OnStartCallback(s, e) {
+        //debugger;
+        var strEstimateno = $('#EstimateNo').val();
+        var EstimateDate = GetServerDateFormat(EstimateDate_dt.GetValue());
+        //var EstimateType = $('#slcEstimatetype option:selected').val();
+        //  var RevisionNo = $('#RevisionNo').val();
+        //  var RevisionDate = GetServerDateFormat(RevisionDate_dt.GetValue());
+        //var RevisionDate = $('#RevisionDate_dt').val();
+        var Unit = $('#ddlBankBranch option:selected').val();
+        //var WarehouseID = $('#ddlWarehouse option:selected').val();
+        var SchemaID = $('#hdnSchemaId').val();
+        var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+
+        var hdnDetailsID = $('#hdnDetailsID').val();
+
+        var Proposal_ID = $('#hdnProposal_ID').val();
+        var Quotation_ID = $('#hdnQuotation_ID').val();
+        var HeadRemarks = $('#txt_HeadRemarks').val();
+
+        var CustomerId = $('#CustomerId').val();
+        var taxId = $('#ddl_AmountAre').val();
+
+        var ApproveRemarks = $("#txt_ApproveRemarks").val();
+
+        if (hdnDetailsID > 0) {
+            DetailsID = hdnDetailsID;
+        }
+
+        //if (hdnDetailsID == "") {
+
+        //    RevisionDate = GetServerDateFormat(new Date);
+        //}
+        var apprvRejt = "0";
+        var approveedval = '@ViewBag.ApproveStusEdit';
+        var EditAction = "";
+        if ($('#hdnApprove').val() != "") {
+            EditAction = $('#hdnApprove').val();
+            apprvRejt = approveedval;
+        }
+        else {
+            if (approveedval == "1" || approveedval == "") {
+                EditAction = "";
+                apprvRejt = "0";
+            }
+            else {
+                EditAction = "Approve";
+                apprvRejt = approveedval;
+            }
+        }
+
+        if ($("#hdnApproveReject").val() == "Approve") {
+            apprvRejt = "1";
+        }
+        else if ($("#hdnApproveReject").val() == "Reject") {
+            apprvRejt = "2";
+        }
+
+        if (e != undefined) {
+            e.customArgs["strEstimateNo"] = strEstimateno;
+            e.customArgs["EstimateDate"] = EstimateDate;
+            //e.customArgs["FinishedItem"] = FinishedItem;
+            //e.customArgs["FinishedQty"] = FinishedQty;
+
+            //e.customArgs["FinishedUom"] = FinishedUom;
+            // e.customArgs["EstimateType"] = EstimateType;
+            //   e.customArgs["RevisionNo"] = RevisionNo; //EmployeesCounterTargetList
+
+            //  e.customArgs["RevisionDate"] = RevisionDate;
+            e.customArgs["Unit"] = Unit;
+            // e.customArgs["WarehouseID"] = WarehouseID;
+            e.customArgs["Estimate_SCHEMAID"] = SchemaID;
+            //   e.customArgs["ActualAdditionalCost"] = ActualAdditionalCost;
+
+            e.customArgs["ProductionID"] = ProductionID;
+            e.customArgs["DetailsID"] = DetailsID;
+
+            //  e.customArgs["Proposal_ID"] = Proposal_ID;
+            //   e.customArgs["Quotation_ID"] = Quotation_ID;
+            //    e.customArgs["HeadRemarks"] = HeadRemarks;
+            e.customArgs["Customer_ID"] = CustomerId;
+
+            e.customArgs["ContractNo"] = ContractID;//ContractGridLookup.GetSelectedKeyFieldValues();
+            //  e.customArgs["ProjectID"] = ProjectGridLookup.GetSelectedKeyFieldValues();
+            //  e.customArgs["TaxID"] = taxId;
+            //  e.customArgs["ApproveRemarks"] = ApproveRemarks;
+            //   e.customArgs["ApprvRejct"] = apprvRejt;
+            //   e.customArgs["Approve"] = EditAction;
+        }
+    }
+
+
+    $(function () {
+        $('#refreshgrid2').hide();
+        $(".decimalCheck").on("keypress keyup blur", function (event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $('#showResources').click(function () {
+            $('#refreshgrid2').show();
+            //gridEstimateResourcesList.batchEditApi.StartEdit(globalrowindex2, ResProductNameIndex);
+            setTimeout(function () {
+                gridEstimateResourcesList.Refresh();
+                gridEstimateResourcesList.Refresh();
+            }, 100);
+
+            $(this).hide();
+        });
+
+        $('#closeResource').click(function () {
+            jConfirm('Are you sure to close? Clicking on "Yes" will clear the data from grid.', 'Alert!', function (r) {
+                if (r) {
+                    $('#refreshgrid2').hide();
+                    $('#showResources').show();
+                    for (var i = 500; i > -500; i--) {
+                        if (gridEstimateResourcesList.GetRow(i)) {
+                            gridEstimateResourcesList.DeleteRow(i);
+                        }
+                    }
+                    $("#txtGridResourcesTotalAmount").val('0.00');
+                    //AddNewRowGridResources();
+                }
+            });
+        });
+
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID == "") {
+            //  $('#redREV').hide();
+            //  $('#redREVDate').hide();
+            //  $('#RevisionNo').attr("disabled", "disabled");
+            // RevisionDate_dt.SetEnabled(false);
+        }
+    });
+</script>
+@Html.Hidden("hdnProductID")
+
+<input type="hidden" value="@Url.Action("MPSList", "MPS" )" id="hdnEstimateListPage" />
+<input type="hidden" value="@Model.DetailsID" id="hdnDetailsID" />
+
+<input type="hidden" value="@Model.Approve" id="hdnAprove" />
+
+@*<input type="hidden" value="@Model.EstimateType" id="hdnEstimateTYPE" />*@
+<input type="hidden" value="@Model.WarehouseID" id="hdnProductWarehouseID" />
+<input type="hidden" value="@Model.RevisionNo" id="hdnRevisionNo" />
+
+<input type="hidden" value="@Model.Proposal_ID" id="hdnProposal_ID" />
+<input type="hidden" value="@Model.Quotation_ID" id="hdnQuotation_ID" />
+
+<input type="hidden" value="@Model.Estimate_SCHEMAID" id="hdnEstimate_SCHEMAID" />
+
+<input type="hidden" value="@Model.ProjectID" id="hdnProjectID" />
+<input type="hidden" value="@Model.Proj_Code" id="hdnProjectCode" />
+<input type="hidden" value="@Model.Approve" id="hdnApprove" />
+
+<input type="hidden" id="hdnRevisionRequiredEveryAfterApproval" value="@Model.RevisionRequiredEveryAfterApproval" />
+<input type="hidden" value="@Model.isFirstApprove" id="hdnisFirstApprove" />
+
+<input type="hidden" id="hdnApproveReject" />
+<input type="hidden" value="@Model.BOMID" id="hdnBOM_id" />
+<input type="hidden" id="hdnProdAddlDescSl" />
+<input type="hidden" id="hdnResAddlDescSl" />
+<input type="hidden" id="hdnProjectgotfocusId" />
+<input type="hidden" value="@Model.OrderID" id="hdnOrderID" />
+<input type="hidden" value="@Model.ApprovRevSettings" id="hdnApproveRevSettings" />
+<style>
+    #gridEstimateProductEntryList_DXStatus {
+        display: none;
+    }    
+    .dxlp-loadingImage {
+        display: none;
+    }
+
+    #gridEstimateProductEntryList_LPV {
+        display: none;
+    }
+</style>
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Master Production Schedule (MPS)</label>
+        </h3>
+
+    </div>
+
+    <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("MPSlist", "MPS" )"><i class="fa fa-times"></i></a></div>
+</div>
+
+<input type="hidden" value="@Model.FinishedItem" id="hdnFinishedItem" />
+<input type="hidden" value="0" id="hdnSchemaId" />
+<div class="">
+    <div class="boxBorder">
+        <div class="styledBox">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Numbering Scheme <span style="color:red">*</span></label>
+                    <div class="relative">
+                        <select id="ddlSchema" class="form-control" onchange="Scheme_ValueChange()"></select>
+                        <span id="EddlSchema" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+
+                <div class=" col-sm-2">
+                    <label>MPS No. <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.TextBoxFor(m => m.EstimateNo, new { @class = "form-control", @disabled = "disabled" })
+                        <span id="EEstimateNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+
+                </div>
+                <div class=" col-sm-2">
+                    <label>MPS Date <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "EstimateDate_dt";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = Unit.Percentage(100);
+                           // settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.EstimateDate);
+                            //if (Model.EstimateDate !=null)
+                            //settings.Properties.MinDate = Convert.ToDateTime(Model.EstimateDate);
+                        }
+                        ).GetHtml()
+                        <span id="EEstimateDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label class="mtop10">Unit <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.DropDownListFor(x => x.Unit, new SelectList(Model.UnitList, "BranchID", "BankBranchName"), new { @id = "ddlBankBranch", @class = "form-control", @disabled = "disabled" })@*, @onchange = "PopulateWareHouseData();"*@
+                        <span id="EddlBankBranch" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+
+                <div class=" col-sm-2">
+                    <label>Customer </label>
+                    <div class="relative">
+                        @Html.DevExpress().ButtonEdit(
+                        settings =>
+                        {
+                            settings.Name = "CustomerTxt";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Text = Model.Customer;
+                            settings.ReadOnly = true;
+                            settings.Properties.Buttons.Add("...");
+                            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){CustomerButnClick(s,e);}";
+                            settings.Properties.ClientSideEvents.KeyDown = "function(s,e){Customer_KeyDown(s,e);}";
+
+                        }).GetHtml()
+
+                        <input type="hidden" id="txtContact_hidden">
+                        <input type="hidden" id="CustomerId" value="@Model.Customer_ID">
+                        <span id="EddlBankBranch" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                @*<div class=" col-sm-2">
+                    <label class="mtop10">Order </label>
+                    <div class="relative">
+                        @Html.Action("GetContractCode", "MPS", new { customer_id = ViewBag.Customer_id, Branchs = ViewBag.Unit })
+
+                    </div>
+                </div>*@
+                <div class=" col-sm-2">
+                    <label class="mtop10">Order </label>
+                    <div class="relative">
+                        @Html.DevExpress().ButtonEdit(
+                        settings =>
+                        {
+                            settings.Name = "btnOrder";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Text = Model.OrderNo;
+                            settings.ReadOnly = true;
+                            settings.Properties.Buttons.Add("...");
+                            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){OpenOrderList(s,e);}";
+                            settings.Properties.ClientSideEvents.KeyDown = "function(s,e){OrderKeyDown(s,e);}";
+
+                        }).GetHtml()
+                        <input type="hidden" id="hdnProdHSN" />
+                        <input type="hidden" id="hdnProdProductID" />
+                        <input type="hidden" id="GuiIDS" />
+                        <input type="hidden" id="HdnUOMID" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-sm-2">
+                    <label>Estimated Start Date </label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "EstimateStartDate_dt";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = Unit.Percentage(100);
+                         //   settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.EstimateStartDate_dt);
+                           
+                        }
+                        ).GetHtml()
+                        <span id="EEstimateDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label>Estimated End Date </label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "EstimateEndDate_dt";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = Unit.Percentage(100);
+                      //      settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.EstimateEndDate_dt);
+
+                        }
+                        ).GetHtml()
+                        <span id="EEstimateDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label>Actuals Start Date </label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "ActualsStartDate_dt";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = Unit.Percentage(100);
+                         //   settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.ActualsStartDate_dt);
+
+                        }
+                        ).GetHtml()
+                        <span id="EEstimateDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label>Actuals End Date </label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "ActualsEndDate_dt";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = Unit.Percentage(100);
+                      //      settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                            settings.Date = Convert.ToDateTime(Model.ActualsEndDate_dt);
+
+                        }
+                        ).GetHtml()
+                        <span id="EEstimateDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="styledBox">
+            <div class="row">
+                @*<hr />*@
+                <div class=" col-sm-2">
+                    <label class="mtop10">Product <span class="red">*</span></label>
+                    <div class="relative">
+                        @Html.DevExpress().ButtonEdit(
+                        settings =>
+                        {
+                            settings.Name = "btnProduct";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Text = Model.Proposal;
+                            settings.ReadOnly = true;
+                            settings.Properties.Buttons.Add("...");
+                            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){OpenProductList(s,e);}";
+                            settings.Properties.ClientSideEvents.KeyDown = "function(s,e){ProductKeyDown(s,e);}";
+
+                        }).GetHtml()
+                        <input type="hidden" id="hdnProdHSN" />
+                        <input type="hidden" id="hdnProdProductID" />
+                        <input type="hidden" id="GuiIDS" />
+                        <input type="hidden" id="HdnUOMID" />
+                    </div>
+                </div>
+                <div class=" col-sm-3">
+                    <label class="mtop10">Description </label>
+                    <div class="relative">
+                        <input type="text" id="txtProductdescription" class="form-control" disabled />
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <label class="mtop10">Qty.<span class="red">*</span></label>
+                    <div class="relative">
+                        @*<input type="text" class="form-control" maxlength="500" id="txt_ProdQty" />*@
+                        @Html.DevExpress().TextBoxFor(m => m.ProductQty,
+                        settings =>
+                        {
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientInstanceName = "cProductQty";
+                            settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..9999>";
+                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                            settings.ControlStyle.CssClass = "DEvInput";
+                            settings.Properties.ClientSideEvents.LostFocus = "function(s,e){EstimateGridSetAmountQty(s,e);}";
+                        }).GetHtml()
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <label class="mtop10">UOM</label>
+                    <div class="relative">
+                        <input type="text" class="form-control" maxlength="500" id="txt_ProdUOM" disabled />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label class="mtop10">Price</label>
+                    <div class="relative">
+                        @*<input type="text" class="form-control" maxlength="500" id="txt_ProdPrice" />*@
+                        @Html.DevExpress().TextBoxFor(m => m.ProductPrice,
+                        settings =>
+                        {
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientInstanceName = "cProductPrice";
+                            settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                            settings.ControlStyle.CssClass = "DEvInput";
+                            settings.Properties.ClientSideEvents.LostFocus = "function(s,e){EstimateGridSetAmount(s,e);}";
+                        }).GetHtml()
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label class="mtop10">Amount</label>
+                    <div class="relative">
+                        @*<input type="text" class="form-control" maxlength="500" id="txt_ProdAmount" />*@
+                        @Html.DevExpress().TextBoxFor(m => m.ProductAmount,
+                        settings =>
+                        {
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientInstanceName = "cProductAmount";
+                            settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                            ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                            ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                            settings.Properties.ClientSideEvents.LostFocus = "function(s,e){EstimateGridSetTotalAmount(s,e);}";
+                            settings.ControlStyle.CssClass = "DEvInput";
+                            settings.ClientEnabled = false;
+                        }).GetHtml()
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label class="mtop10">Remarks</label>
+                    <div class="relative">
+                        <textarea rows="2" class="form-control" maxlength="500" id="txt_AddlRemarks" style="resize:none"></textarea>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label class="mtop10">BOM No. </label>
+                    <div class="relative">
+                        @Html.Action("GetParentBOM", "MPS", new { @class = "form-control", ParentBOMID = ViewBag.ParentBOMID, Branchs = ViewBag.Unit })
+
+                    </div>
+                </div>
+
+
+                <div class=" col-sm-1">
+                    <label class="">&nbsp; </label>
+                    <div class="relative" style="padding-top: 10px">
+                        <button type="button" id="btnAdd" onclick="btnAdd_ProductClick()" class="btn btn-success">Add Product</button>
+                    </div>
+                </div>
+            </div>
+           
+        </div>        
+        <div class="row">
+            <div class="col-md-12">
+
+                <div id="refreshgrid">
+                    <div class=" ">
+
+
+                        @{
+                            Html.RenderAction("GetEstimateProductEntryList", "MPS");
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="">
+            <div class="clearfix">
+
+                @*<div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveandNew" onclick="EstimateSave('New');"><div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div><span>Save and <span><u>N</u></span>ew</span></div>*@
+                <div class="inline-block addResourceBtn themeColor " id="btnSaveandExit" onclick="MPSSave('Exit');"><div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div><span>Save and <span><u>E</u></span>xit</span></div>
+
+
+
+                <div class="inline-block pull-right">
+
+
+                </div>
+            </div>
+            <div class="">
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Product List -->
+<div class="modal fade" id="ProductlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetFocusQty();">&times;</button>
+                <h4 class="modal-title">Select Product</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="ProductListkeydown(event)" id="txtProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                <div id="ProductTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tbody>
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>UOM</th>
+                                <th>Inventory</th>
+                                <th>HSN/SAC</th>
+                                <th>Class</th>
+                                <th>Brand</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusQty();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product List-->
+<!-- Grid Product List -->
+<div class="modal fade" id="GridProductlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Product</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="GridProductListkeydown(event)" id="txtGridProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                <div id="GridProductTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Product Code</th>
+                            <th>Product Name</th>
+                            <th>UOM</th>
+                            <th>Inventory</th>
+                            <th>HSN/SAC</th>
+                            <th>Class</th>
+                            <th>Brand</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusDesc()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Product List-->
+
+
+<!-- Grid Order List -->
+<div class="modal fade" id="GridOrderlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Order</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="OrderListkeydown(event)" id="txtGridOrderName" autofocus width="100%" placeholder="Search By Order Number" />
+                <div id="OrderTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Order No.</th>
+                            <th>Contract Date</th>                            
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusDesc()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Product List-->
+
+
+
+
+<!-- Grid Warehouse List -->
+<div class="modal fade pmsModal w30" id="GridWarehouselistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetWarehouseAfterProduct()">&times;</button>
+                <h4 class="modal-title">Select Warehouse</h4>
+            </div>
+            <div class="modal-body">
+                <div id="slcWarehouse">
+                    <select id="ddlWarehouselist" class="form-control"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" id="setWarehousegrid" onclick="SetWarehouseInGrid()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Product List-->
+<!-- Grid Estimate List -->
+<div class="modal fade" id="GridEstimatelistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Estimate</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="GridEstimateListkeydown(event)" id="txtEstimateName" autofocus width="100%" placeholder="Search By Estimate Name" />
+                <div id="GridEstimateTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Estimate No.</th>
+                            <th>Estimate Date</th>
+                            <th>Revision No.</th>
+                            <th>Revision Date</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" data-dismiss="modal" onclick="SetEstimateFocusGrid()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Estimate List-->
+<!-- Proposal List -->
+<div class="modal fade" id="ProposallistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetFocusQty();">&times;</button>
+                <h4 class="modal-title">Select Proposal</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="ProposalListkeydown(event)" id="txtProposalName" autofocus width="100%" placeholder="Search By Proposal No." />
+                <div id="ProposalTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tbody>
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Proposal NO</th>
+                                <th>Proposal Date</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusQty();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Proposal List-->
+<!-- Quotation List -->
+<div class="modal fade" id="QuotationlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetFocusQty();">&times;</button>
+                <h4 class="modal-title">Select Quotation</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="QuotationListkeydown(event)" id="txtQuotationName" autofocus width="100%" placeholder="Search By Quotation No." />
+                <div id="QuotationTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tbody>
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Quotation NO</th>
+                                <th>Quotation Date</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusQty();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Quotation List-->
+<!--Customer List-->
+<div class="modal fade" id="CustModel" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Customer Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="Customerkeydown(event)" id="txtCustSearch" autofocus width="100%" placeholder="Search By Customer Name or Unique Id" />
+                <div id="CustomerTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Name</th>
+                            <th>Unique Id</th>
+                            <th>Address</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Customer List-->
+<!-- Grid Tax Type List -->
+<div class="modal fade pmsModal w30" id="GridTaxTypelistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetTaxTypeAfterProduct()">&times;</button>
+                <h4 class="modal-title">Select Tax Type</h4>
+            </div>
+            <div class="modal-body">
+                <div id="slcWarehouse">
+                    <select id="ddlTaxTypelist" class="form-control">
+                        <option value="1">SGST + CGST / UTGST</option>
+                        <option value="2">IGST</option>
+                        <option value="3">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" id="setTaxTypeid" onclick="SetTaxTypeInGrid()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Tax Type List-->
+<!-- Grid Resource Tax Type List -->
+<div class="modal fade pmsModal w30" id="RescTaxTypelistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetRescTaxTypeAfterProduct()">&times;</button>
+                <h4 class="modal-title">Select Tax Type</h4>
+            </div>
+            <div class="modal-body">
+                <div id="slcWarehouse">
+                    <select id="ddlRescTaxTypelist" class="form-control">
+                        <option value="1">SGST + CGST / UTGST</option>
+                        <option value="2">IGST</option>
+                        <option value="3">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" id="setRescTaxTypeid" onclick="SetRescTaxTypeInGrid()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Resource Tax Type List-->
+<!-- Grid Additional Description -->
+<div class="modal fade pmsModal w30" id="GridAddlDescModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetAddlDescClose()">&times;</button>
+                <h4 class="modal-title">Additional Description</h4>
+            </div>
+            <div class="modal-body">
+                <div id="slcWarehouse">
+                    <textarea rows="5" placeholder="Additional Description" class="form-control" maxlength="5000" id="txt_AddlDesc"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" id="setTaxTypeid" onclick="SetProdAddlDescGrid()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Additional Description-->
+<!-- Grid Resource Additional Description -->
+<div class="modal fade pmsModal w30" id="GridResAddlDescModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetResAddlDescClose()">&times;</button>
+                <h4 class="modal-title">Additional Description</h4>
+            </div>
+            <div class="modal-body">
+                <div id="slcWarehouse">
+                    <textarea rows="5" placeholder="Additional Description" class="form-control" maxlength="5000" id="txt_ResAddlDesc"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" id="setTaxTypeid" onclick="SetResAddlDescGrid()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Resource Additional Description-->
+
+<script>
+    $(document).ready(function () {
+        ParentBOMGridLookup.GetGridView().Refresh();
+        ParentBOMGridLookup.GetGridView().Refresh();
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID == "") {
+            $('#ddlSchema').focus();
+        }
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID > 0) {
+            var cntNo = '@ViewBag.ContractNo';
+            ContractID = cntNo.split(',');
+        }
+        setTimeout(function () {
+            LoadingPanel.Hide();
+        }, 1500);
+    });
+</script>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()
+@{
+    ViewBag.Title = "Index";
+}
+
+
+

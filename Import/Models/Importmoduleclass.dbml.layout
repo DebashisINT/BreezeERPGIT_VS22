@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Importmoduleclass">
+  <DataContextMoniker Name="/ImportmoduleclassDataContext" />
+  <nestedChildShapes>
+    <classShape Id="751969bc-3eb3-4914-a182-8c26f4087969" isExpanded="false" absoluteBounds="2.875, 0.875, 2, 0.45">
+      <DataClassMoniker Name="/ImportmoduleclassDataContext/v_PurchaseInvoiceList_Import" />
+      <nestedChildShapes>
+        <elementListCompartment Id="62666feb-087f-4913-973c-3e47bbbd7918" absoluteBounds="2.8899999999999997, 1.335, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8f7a77f6-63cc-487f-821f-f2088509570f" isExpanded="false" absoluteBounds="0.5, 0.875, 2, 0.45">
+      <DataClassMoniker Name="/ImportmoduleclassDataContext/v_PurchaseOrderList_Import" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fda20fe2-dfad-4085-a2fd-2130c3c1b31c" absoluteBounds="0.51499999999999968, 1.335, 1.9700000000000002, 5.4415283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bf5e59f3-be3a-4d91-9343-b0ba3c675203" isExpanded="false" absoluteBounds="0.875, 1.625, 2, 0.45">
+      <DataClassMoniker Name="/ImportmoduleclassDataContext/v_PurchaseOrderList_Import_BillEntry" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f18da01c-b89e-4e28-b301-a7d3fe8c3d4b" absoluteBounds="0.89000000000000057, 2.085, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="27f463f8-6983-493d-b807-77ddc70ee5fd" isExpanded="false" absoluteBounds="7.875, 0.875, 2, 0.45">
+      <DataClassMoniker Name="/ImportmoduleclassDataContext/v_PurchaseOrderList_Import_BillOfLading" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e42a335d-cdcd-4b8d-ab8c-847ad599fa73" absoluteBounds="7.8900000000000006, 1.335, 1.9700000000000002, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d1254fad-09fb-49a2-9feb-6718ef151b7e" isExpanded="false" absoluteBounds="5.25, 0.875, 2, 0.45">
+      <DataClassMoniker Name="/ImportmoduleclassDataContext/v_PurchaseOrderList_Import_Indent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e781c574-80c4-40dd-bcfc-57573573c6f4" absoluteBounds="5.265, 1.335, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a9c937c0-31cc-44eb-a2ee-e58a61307665" isExpanded="false" absoluteBounds="5.125, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/ImportmoduleclassDataContext/v_ImportStockReceiptList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dc4a4b29-0d4c-4b0d-954d-9000aac65029" absoluteBounds="5.14, 2.835, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a042d73e-8e6c-4534-916d-a6cfb9396a50" absoluteBounds="8.125, 2.5, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/ImportmoduleclassDataContext/v_LCEntryList_Import" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6519d189-9e75-46d5-90ba-f0534cd63ed3" absoluteBounds="8.14, 2.96, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

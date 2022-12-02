@@ -1,0 +1,2464 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model Manufacturing.Models.ViewModel.StockReceiptViewModel
+
+
+@{
+    ViewBag.Title = "Stock Receipt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+
+<script>
+    $(document).ready(function () {
+        if ('@ViewBag.ProjectShow' == "Yes") {
+            $("#divProj").removeClass("hidden");
+        }
+        else {
+            $("#divProj").addClass("hidden");
+        }
+        if ('@ViewBag.QualityControlModuleSkipped' == "Yes") {
+            $("#PONo").removeClass("hidden");
+            $("#QCNo").addClass("hidden");
+            $("#DivProductionReceipt").addClass("hidden");
+
+        }
+        else {
+            $("#PONo").addClass("hidden");
+            $("#QCNo").removeClass("hidden");
+            $("#DivProductionReceipt").removeClass("hidden");
+
+        }
+        if ('@ViewBag.WorkOrderModuleSkipped' == "No") {
+            $('#DivWorkOrder').removeClass("hidden");
+        }
+        else {
+            $('#DivWorkOrder').addClass("hidden");
+        }
+        if ('@ViewBag.Hierarchy' == "1") {
+            $('#divHierarchy').removeClass('hidden');
+        }
+        else {
+            $('#divHierarchy').addClass('hidden');
+        }
+    });
+    var globalindexcheck = 0;
+    var globalindexcheck2 = 0;
+    var cpSelectedKeys = "";
+    var cpSelectedKeys2 = "";
+
+    function StockReceiptSelectionChanged(s, e) {
+        if (e.isChangedOnServer) return;
+        globalindexcheck2 = StockReceiptGridLookup.gridView.focusedRowIndex;
+        var key = StockReceiptGridLookup.gridView.GetRowKey(globalindexcheck2)
+
+        if (key != null && globalindexcheck2 > -1) {
+            cpSelectedKeys2 = "";
+
+            if ('@ViewBag.QualityControlModuleSkipped' == "Yes") {
+
+                //var QC_No = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+                //var QualityControlDate = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+                //var Receipt_No = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[3].innerHTML;
+                //var Receipt_Date = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[4].innerHTML;
+                var ProductionIssueNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+                var ProductionIssueDate = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+                var FGQty = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[3].innerHTML;
+                var WorkOrderNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[4].innerHTML;
+                var ProductionOrderNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[5].innerHTML;
+                var BOMNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[6].innerHTML;
+                var RevNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[7].innerHTML;
+                var FinishedItem = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[8].innerHTML;
+                var ProductionIssueID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[9].innerHTML;
+                var Details_ID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[10].innerHTML;
+                var FinishedUom = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[11].innerHTML;
+                var ProductionIssueQty = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[12].innerHTML;
+                var Warehouse = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[13].innerHTML;
+                var ProductionOrderDate = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[14].innerHTML;
+                var ProductionOrderID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[15].innerHTML;
+                // var ProductionIssueID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[16].innerHTML;
+                var WorkCenterID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[17].innerHTML;
+                var WorkCenterCode = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[18].innerHTML;
+                var WorkCenterDescription = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[19].innerHTML;
+                var WorkOrderID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[20].innerHTML;
+                var FGPrice = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[21].innerHTML;
+                var TotalAmount = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[22].innerHTML;
+                var ProductDescription = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[23].innerHTML;
+                var strRemarks = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[24].innerHTML;
+                var FreshQuantity = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[25].innerHTML;
+                var RejectedQuantity = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[26].innerHTML;
+                var ProductionReceiptID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[27].innerHTML;
+
+                var Bal_Fresh_Qty = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[28].innerHTML;
+                var Bal_Rejected_Qty = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[29].innerHTML;
+
+                var QualityControlID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[30].innerHTML;
+
+                var ProductID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[31].innerHTML;
+
+                var InventoryType = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[32].innerHTML;
+
+                var WarehouseID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[33].innerHTML;
+
+                var Product_NegativeStock = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[34].innerHTML;
+
+                var AvlStk = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[35].innerHTML;
+
+
+                var PartNoName = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[36].innerHTML;
+                var ItemRev_No = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[37].innerHTML;
+                var DEsign = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[38].innerHTML;
+
+                var Proj_Code = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[39].innerHTML;
+                var Hierarchy = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[40].innerHTML;
+
+                var MetarialAmount = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[41].innerHTML;
+
+                StockReceiptGridLookup.SetTextWithoutApply(ProductionIssueNo);
+            }
+            else {
+                var QC_No = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+                var QualityControlDate = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+                var Receipt_No = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[3].innerHTML;
+                var Receipt_Date = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[4].innerHTML;
+                var ProductionIssueNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[5].innerHTML;
+                var ProductionIssueDate = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[6].innerHTML;
+                var FGQty = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[7].innerHTML;
+                var WorkOrderNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[8].innerHTML;
+                var ProductionOrderNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[9].innerHTML;
+                var BOMNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[10].innerHTML;
+                var RevNo = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[11].innerHTML;
+                var FinishedItem = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[12].innerHTML;
+                var ProductionIssueID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[13].innerHTML;
+                var Details_ID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[14].innerHTML;
+                var FinishedUom = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[15].innerHTML;
+                var ProductionIssueQty = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[16].innerHTML;
+                var Warehouse = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[17].innerHTML;
+                var ProductionOrderDate = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[18].innerHTML;
+                var ProductionOrderID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[19].innerHTML;
+                //  var ProductionIssueID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[20].innerHTML;
+                var WorkCenterID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[21].innerHTML;
+                var WorkCenterCode = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[22].innerHTML;
+                var WorkCenterDescription = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[23].innerHTML;
+                var WorkOrderID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[24].innerHTML;
+                var FGPrice = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[25].innerHTML;
+                var TotalAmount = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[26].innerHTML;
+                var ProductDescription = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[27].innerHTML;
+                var strRemarks = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[28].innerHTML;
+                var FreshQuantity = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[29].innerHTML;
+                var RejectedQuantity = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[30].innerHTML;
+                var ProductionReceiptID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[31].innerHTML;
+
+                var Bal_Fresh_Qty = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[32].innerHTML;
+                var Bal_Rejected_Qty = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[33].innerHTML;
+
+                var QualityControlID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[34].innerHTML;
+
+                var ProductID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[35].innerHTML;
+
+                var InventoryType = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[36].innerHTML;
+
+                var WarehouseID = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[37].innerHTML;
+
+                var Product_NegativeStock = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[38].innerHTML;
+
+                var AvlStk = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[39].innerHTML;
+
+
+                var PartNoName = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[40].innerHTML;
+                var ItemRev_No = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[41].innerHTML;
+                var DEsign = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[42].innerHTML;
+
+                var Proj_Code = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[43].innerHTML;
+                var Hierarchy = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[44].innerHTML;
+
+                var MetarialAmount = StockReceiptGridLookup.gridView.GetRow(globalindexcheck2).children[45].innerHTML;
+                $('#Receipt_No').val(Receipt_No);
+                StockReceiptGridLookup.SetTextWithoutApply(QC_No);
+
+            }
+
+            $('#PartNoName').val(PartNoName);
+
+            if (DEsign == '&nbsp;') {
+                $('#DesignNo').val('');
+            }
+            else {
+                $('#DesignNo').val(DEsign);
+            }
+
+            if (ItemRev_No == '&nbsp;') {
+                $('#ItemRevNo').val('');
+            }
+            else {
+                $('#ItemRevNo').val(ItemRev_No);
+            }
+
+            $('#ProductionIssueID').val(ProductionIssueID);
+
+            $('#Details_ID').val(Details_ID);
+
+            if (Proj_Code == '&nbsp;') {
+                $('#Proj_Code').val('');
+            }
+            else {
+                $('#Proj_Code').val(Proj_Code);
+            }
+
+            if (Hierarchy == '&nbsp;') {
+                $('#Hierarchy').val('');
+            }
+            else {
+                $('#Hierarchy').val(Hierarchy);
+            }
+
+            $('#AvlStk').val(AvlStk);
+
+            $('#Product_NegativeStock').val(Product_NegativeStock);
+            $('#BalFreshQuantity').val(Bal_Fresh_Qty);
+            $('#BalRejectedQuantity').val(Bal_Rejected_Qty);
+
+
+            $('#WorkOrderNo').val(WorkOrderNo);
+            //$('#ddlBankBranch').val(WorkOrderNo);
+            $('#BOMNo').val(BOMNo);
+
+            if (RevNo == '&nbsp;') {
+                $('#RevNo').val('');
+            }
+            else {
+                $('#RevNo').val(RevNo);
+            }
+
+
+            $('#WarehouseID').val(WarehouseID);
+            $('#ProductID').val(ProductID);
+
+            $('#ProductionOrderNo').val(ProductionOrderNo);
+            $('#FinishedItem').val(FinishedItem);
+            $('#FinishedItemName').val(FinishedItem);
+            $('#ProductDescription').val(ProductDescription);
+
+            $('#InventoryType').val(InventoryType);
+
+            $('#FreshQuantity').val(Bal_Fresh_Qty);
+            $('#RejectedQuantity').val(Bal_Rejected_Qty);
+
+            //$('#BalFreshQuantity').val(FreshQuantity);
+            //$('#BalRejectedQuantity').val(RejectedQuantity);
+
+            $('#FGReceiptQty').val(FGQty);
+            $('#FinishedUom').val(FinishedUom);
+            $('#Warehouse').val(Warehouse);
+            $('#FGPrice').val(FGPrice);
+            $('#TotalAmount').val(TotalAmount);
+
+            if (strRemarks == '&nbsp;') {
+                $('#strRemarks').val('');
+            }
+            else {
+                $('#strRemarks').val(strRemarks);
+            }
+
+            $('#QualityControlID').val(QualityControlID);
+            $('#WorkCenterID').val(WorkCenterID);
+            $('#ProductionReceiptID').val(ProductionReceiptID);
+
+            $('#MetarialAmount').val(MetarialAmount);
+
+            WorkCenterGridLookup.SetTextWithoutApply(WorkCenterCode);
+
+            setTimeout(function () {
+                WorkCenterGridLookup.SetEnabled(false);
+
+                $('#lblWorkCenterName').text(WorkCenterDescription);
+            }, 100);
+        }
+        else {
+            $('#AvlStk').val(0);
+
+            $('#Product_NegativeStock').val('');
+            $('#BalFreshQuantity').val(0);
+            $('#BalRejectedQuantity').val(0);
+            $('#Receipt_No').val('');
+            $('#WorkOrderNo').val('');
+            $('#BOMNo').val('');
+            $('#WarehouseID').val(0);
+            $('#InventoryType').val('');
+            $('#RevNo').val('');
+            $('#ProductID').val(0);
+            $('#ProductionOrderNo').val('');
+            $('#FinishedItem').val('');
+            $('#FinishedItemName').val('');
+            $('#ProductDescription').val('');
+
+            $('#FreshQuantity').val(parseFloat(0).toFixed(4));
+            $('#RejectedQuantity').val(parseFloat(0).toFixed(4));
+            $('#FGReceiptQty').val(parseFloat(0).toFixed(4));
+            $('#FinishedUom').val('');
+            $('#Warehouse').val('');
+            $('#FGPrice').val('');
+            $('#TotalAmount').val('');
+            $('#strRemarks').val('');
+            $('#QualityControlID').val(0);
+            $('#WorkCenterID').val(0);
+            $('#ProductionReceiptID').val(0);
+            cpSelectedKeys2 = "";
+            $('#lblWorkCenterName').text('');
+            WorkCenterGridLookup.SetEnabled(true);
+            WorkCenterGridLookup.SetTextWithoutApply('');
+
+            $('#PartNoName').val('');
+            $('#DesignNo').val('');
+            $('#ItemRevNo').val('');
+
+            $('#Proj_Code').val('');
+            $('#Hierarchy').val('');
+        }
+    }
+
+    function WorkCenterGotFocus(s, e) {
+        WorkCenterGridLookup.ShowDropDownArea();
+    }
+
+    function ddlWarehouse_ValueChange() {
+        var ProductsID = $('#ProductID').val();
+        var WarehouseID = $('#WarehouseID').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getBatchRecord", "StockReceipt")",
+            data: { warehouseid: WarehouseID, ProductID: ProductsID },
+            success: function (response) {
+                $('#ddlBatch').html('');
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].BatchID + "'>" + response[i].BatchName + "</option>";
+                }
+                $('#ddlBatch').html(html);
+
+                UpdateSerialNo();
+
+            }
+        });
+    }
+
+
+    function UpdateSerialNo() {
+        var productid = $('#ProductID').val();
+        var warehouse = $('#WarehouseID').val();
+        var Batch = $('#ddlBatch').val();
+        var IssueDate = GetServerDateFormat(SR_Date_dt.GetValue());
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getProductSerialNo", "IssueReturn")",
+            data: { productid: productid, warehouse: warehouse, Batch: Batch, PostingDate: IssueDate },
+            success: function (response) {
+
+                $('#checkComboBox').html('');
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].SerialValue + "'>" + response[i].SerialValue + "</option>";
+                }
+                $('#checkComboBox').html(html);
+            }
+        });
+    }
+
+
+    function PopulateProductWareHouseDetailsData() {
+        var BankBranchID = $('#ddlBankBranch option:selected').val();
+        var ProductsID = $('#ProductID').val();
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getProductWiseWarehouseRecord", "IssueReturn")",
+            data: { branchid: BankBranchID, productid: ProductsID },
+            success: function (response) {
+                $('#WHddlWarehouse').html('');
+                var html = "";
+                var hdnProductWarehouseID = $('#WarehouseID').val();
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+                }
+                $('#WHddlWarehouse').html(html);
+
+                UpdateSerialNo();
+            }
+        });
+    }
+
+    function removeRow(ID) {
+        var WarehouseID = ($('#WHddlWarehouse').val() != null) ? $('#WHddlWarehouse').val() : "0";
+        var BatchID = ($('#ddlBatch').val() != null) ? $('#ddlBatch').val() : "0";
+
+        var FifoExists = $("#hddnConfigVariable_Val").val();
+
+        var Qty = $("#ctxtMatchQty").val();
+        var hddnQty = $("#hddnWarehouseQty").val();
+
+        removeStockJson(StockOfProduct, function () { return this.SrlNo == ID; });
+        StockDeatils();
+    }
+
+
+    function removeStockJson(arr, func) {
+        for (var i = 0; i < arr.length; i++) {
+            if (func.call(arr[i])) {
+                arr.splice(i, 1);
+                return arr;
+            }
+        }
+    }
+
+    function GetDateFormat(today) {
+        if (today != "") {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = dd + '-' + mm + '-' + yyyy;
+        }
+
+        return today;
+    }
+
+    function SaveStock() {
+        var id = $('#hddWarehouseSLNO').val();
+        var WarehouseName = $("option:selected", '#WHddlWarehouse').text();
+        var WarehouseID = $('#WHddlWarehouse').val();
+        var Qty = $('#ctxtQuantity').val();
+        var Batch = $("#txtBatchName").val();
+        var ViewBatch = $("#txtBatchName").val();
+        var Branch = $('#hdfBranch').val();
+        var ProductID = $('#ProductID').val();
+        var ProductSrlNo = $('#hddWarehouseSLNO').val();
+        var StockType = $('#hdfProductType').val();
+        var UOM = $('#hdfUOM').val();
+        var MfgDate = txtMfgDate.GetValue();
+        var ExprieyDate = txtExprieyDate.GetValue();
+        var Serial = $("#txtserialID").val().trim();
+
+        MfgDate = GetDateFormat(MfgDate);
+        ExprieyDate = GetDateFormat(ExprieyDate);
+
+
+        if (StockType == "W" || StockType == "WS" || StockType == "WBS" || StockType == "WB" || StockType == "WC" || StockType == "WSC") {
+            if (WarehouseName == null || WarehouseName == "") {
+                $("#rfvWarehouse").css("display", "block");
+                return false;
+            }
+            else {
+                $("#rfvWarehouse").css("display", "none");
+            }
+        }
+
+        if (StockType == "B" || StockType == "BS" || StockType == "WBS" || StockType == "WB") {
+            if (Batch == "") {
+                $("#rfvBatch").css("display", "block");
+                return false;
+            }
+            else {
+                $("#rfvBatch").css("display", "none");
+            }
+        }
+
+        if (StockType == "BS" || StockType == "WBS" || StockType == "WS" || StockType == "S" || StockType == "WSC") {
+            if (Serial == "") {
+                $("#rfvSerial").css("display", "block");
+                return false;
+            }
+            else {
+                $("#rfvSerial").css("display", "none");
+            }
+        }
+
+        var productqty = 0;
+        if (id == "0") {
+            productqty = $('#RejectedQuantity').val();
+        }//gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        else {
+            productqty = $('#FreshQuantity').val();
+        }
+
+        if (StockType == "W" || StockType == "WB" || StockType == "B" || StockType == "WC") {
+            if (parseFloat(Qty) == 0 || Qty == "") {
+                $("#rfvQuantity").css("display", "block");
+                return false;
+            }
+            else {
+                if (parseFloat(Qty) > parseFloat(productqty)) {
+                    jAlert("Enter quantity is grater than Product quantity.");
+                    $("#rfvQuantity").css("display", "none");
+                    return false;
+                }
+                else {
+                    $("#rfvQuantity").css("display", "none");
+                }
+            }
+        }
+
+        var totalProductQty = 0;
+
+        var serialCriteria = [{ Field: "Product_SrlNo", Values: "" + (id) + "" }];
+        var tempStockOfProduct = flexFilter(StockOfProduct, serialCriteria);
+
+
+        for (var i = 0; i < tempStockOfProduct.length; i++) {
+            var objprod = {};
+            objprod = tempStockOfProduct[i];
+            if (objprod.Quantity != "") {
+                totalProductQty = totalProductQty + parseFloat(objprod.Quantity);
+            }
+        }
+        totalProductQty = (parseFloat(totalProductQty) + parseFloat(Qty));
+
+        if (parseFloat(totalProductQty) <= parseFloat(productqty)) {
+
+            if (StockType == "W" || StockType == "WC" || StockType == "WB" || StockType == "B" || StockType == "WBS") {
+                if (StockType == "WBS") {
+                    var serialCriteria = [{ Field: "SerialNo", Values: Serial }];
+                    var serialfilteredJson = flexFilter(StockOfProduct, serialCriteria);
+
+                    if (serialfilteredJson.length == 0) {
+                        saveStockData(StockType, ProductSrlNo, ProductID, UOM, WarehouseID, WarehouseName, Batch, ViewBatch, Qty, Serial,MfgDate, ExprieyDate);
+                    }
+                    else {
+                        jAlert("Duplicate Serial. Cannot Proceed.", "Alert", function () { SetFocus("Save"); });
+                    }
+                }
+                else {
+
+                    saveStockData(StockType, ProductSrlNo, ProductID, UOM, WarehouseID, WarehouseName, Batch, ViewBatch, Qty, Serial,MfgDate, ExprieyDate);
+                }
+            }
+        }
+        else {
+            jAlert("Product quantity balance excess!");
+            return false;
+        }
+    }
+
+    function getMax(array, propName) {
+        var max = 0;
+        var maxItem = null;
+        for (var i = 0; i < array.length; i++) {
+            var item = array[i];
+            if (item[propName] > max) {
+                max = item[propName];
+                maxItem = item;
+            }
+        }
+        return max;
+    }
+
+    function SetFocus(Time) {
+        var Warehousetype = $('#hdfProductType').val();
+
+        if (Time == "Add") {
+            if (Warehousetype == "W" || Warehousetype == "WB" || Warehousetype == "WBS" || Warehousetype == "WS" || Warehousetype == "WSC" || Warehousetype == "WC") {
+                setTimeout(function () { $("#WHddlWarehouse").focus(); }, 500);
+            }
+            else if (Warehousetype == "BS" || Warehousetype == "B") {
+                setTimeout(function () { $("#ddlBatch").focus(); }, 500);
+            }
+            else if (Warehousetype == "S") {
+            }
+        }
+        else if (Time == "Save") {
+            if (Warehousetype == "W" || Warehousetype == "B" || Warehousetype == "WB" || Warehousetype == "WC") {
+                $('#ctxtQty').val(0);
+                setTimeout(function () { $('#ctxtQuantity').focus(); }, 500);
+            }
+            else if (Warehousetype == "WS" || Warehousetype == "WBS" || Warehousetype == "BS" || Warehousetype == "S" || Warehousetype == "WSC") {
+            }
+        }
+    }
+
+    var SelectedWarehouseID = "0";
+    function grid_WarehouseDetailsClick(id) {
+        $('#hddWarehouseSLNO').val(id);
+        PopulateProductWareHouseDetailsData();
+        var SrlNo = id;
+        var ProductName = $('#FinishedItem').val();
+        var ProductsID = $('#ProductID').val();
+        var UOM = $('#FinishedUom').val();
+        var QuantityValue = (parseFloat($('#RejectedQuantity').val()));//gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        var InventoryType = $('#InventoryType').val();
+        var ProductDescription = $('#ProductDescription').val();
+        $('#hdfProductType').val(InventoryType);
+        var Ptype = InventoryType;
+        $('#hdfUOM').val(UOM);
+        var IsExits = true;
+        var FreshQuantity = (parseFloat($('#FreshQuantity').val()));
+        $("#spnCmbWarehouse").hide();
+        $("#spnCmbBatch").hide();
+        $("#spncheckComboBox").hide();
+        $("#spntxtQuantity").hide();
+        var LastFinYear = $('#LastFinancialYear').val();
+        var LastCompany = $('#LastCompany').val();
+        var Branch = $('#ddlBatch option:selected').val();
+
+        var data = '';
+
+        //if (ProductsID != "" || parseFloat(QuantityValue) != 0) {
+        if (ProductsID != "" && (parseFloat(QuantityValue) != 0 || parseFloat(FreshQuantity) != 0)) {
+            $.ajax({
+                type: "POST",
+                url: "/StockReceipt/GetConfigSettingRights",
+                data: JSON.stringify({ VariableName: 'IsFIFOExistsInOutModule' }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    //
+                    var data = msg;
+                    $("#hddnConfigVariable_Val").val(data);
+                    if (data == "1") {
+
+                        if (Ptype == "W") {
+                            $('#div_QtyMatch').hide();
+                        }
+                        else if (Ptype == "B") {
+                            $('#div_QtyMatch').hide();
+                        }
+                        else if (Ptype == "S") {
+                            $('#div_QtyMatch').show();
+                        }
+                        else if (Ptype == "WB") {
+                            $('#div_QtyMatch').hide();
+                        }
+                        else if (Ptype == "WS") {
+                            $('#div_QtyMatch').show();
+                        }
+                        else if (Ptype == "WBS") {
+                            $('#div_QtyMatch').show();
+                        }
+                        else if (Ptype == "BS") {
+                            $('#div_QtyMatch').show();
+                        }
+
+                    }
+                    else {
+                        $('#div_QtyMatch').hide();
+                    }
+                }
+            });
+
+            $('#lblProductName').text(ProductName);
+            $('#txt_SalesAmount').text(parseFloat(QuantityValue).toFixed(4));
+            $('#txt_SalesUOM').text(UOM);
+            $('#txt_StockAmount').text(parseFloat(QuantityValue).toFixed(4));
+            $('#txt_StockUOM').text(UOM);
+
+
+            $('#ProductID').val(ProductsID);
+
+            $('#hddWarehouseSLNO').val(SrlNo);
+            $('#hdnProductQuantity').val(parseFloat(QuantityValue).toFixed(4));
+
+            if (Ptype == "W") {
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+                $('#div_Warehouse').show();
+                $('#div_Batch').hide();
+                $('#div_Serial').hide();
+                $('#div_Quantity').show();
+
+                $("#ADelete").css("display", "block");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+            }
+            else if (Ptype == "B") {
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+
+                $('#div_Warehouse').hide();
+                $('#div_Batch').show();
+                $('#div_Serial').hide();
+                $('#div_Quantity').show();
+
+                $("#ADelete").css("display", "block");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+            }
+            else if (Ptype == "S") {
+
+                $('#div_Warehouse').hide();
+                $('#div_Batch').hide();
+                $('#div_Serial').show();
+                $('#div_Quantity').show();
+
+                $("#ADelete").css("display", "none");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+                UpdateSerialNo();
+            }
+            else if (Ptype == "WB") {
+
+                $('#div_Warehouse').show();
+                $('#div_Batch').show();
+                $('#div_Serial').hide();
+                $('#div_Quantity').show();
+
+                $("#ADelete").css("display", "block");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+            }
+            else if (Ptype == "WS") {
+                $('#div_Warehouse').show();
+                $('#div_Batch').hide();
+                $('#div_Serial').show();
+                $('#div_Quantity').hide();
+
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+
+                $("#ADelete").css("display", "none");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+                UpdateSerialNo();
+            }
+            else if (Ptype == "WBS") {
+
+                $('#div_Warehouse').show();
+                $('#div_Batch').show();
+                $('#div_Serial').show();
+                $('#div_Quantity').hide();
+
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+
+                SelectedWarehouseID = "0";
+                $("#ADelete").css("display", "none");
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+                UpdateSerialNo();
+
+            }
+            else if (Ptype == "BS") {
+
+                $('#div_Warehouse').hide();
+                $('#div_Batch').show();
+                $('#div_Serial').show();
+                $('#div_Quantity').hide();
+
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+
+                $("#ADelete").css("display", "none");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+                UpdateSerialNo();
+            }
+            else {
+
+                jAlert("No Warehouse or Batch or Serial is actived.");
+            }
+        }
+            // else if (ProductsID == "" && parseFloat(QuantityValue) == 0) {
+        else if (ProductsID != "" && (parseFloat(QuantityValue) == 0 && parseFloat(FreshQuantity) == 0)) {
+            jAlert('Fresh OR Rejected Qty is ZERO. Cannot select Stk Details');
+        }
+    }
+
+    function grid_WarehouseDetailsClickFresh(id) {
+
+        PopulateProductWareHouseDetailsData();
+        var SrlNo = id;
+        $('#hddWarehouseSLNO').val(id);
+        var ProductName = $('#FinishedItem').val();
+        var ProductsID = $('#ProductID').val();
+        var UOM = $('#FinishedUom').val();
+        var QuantityValue = (parseFloat($('#RejectedQuantity').val()));//gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        var InventoryType = $('#InventoryType').val();
+        var ProductDescription = $('#ProductDescription').val();
+        $('#hdfProductType').val(InventoryType);
+        var Ptype = InventoryType;
+        $('#hdfUOM').val(UOM);
+        var IsExits = true;
+        var FreshQuantity = (parseFloat($('#FreshQuantity').val()));
+        $("#spnCmbWarehouse").hide();
+        $("#spnCmbBatch").hide();
+        $("#spncheckComboBox").hide();
+        $("#spntxtQuantity").hide();
+        var LastFinYear = $('#LastFinancialYear').val();
+        var LastCompany = $('#LastCompany').val();
+        var Branch = $('#ddlBatch option:selected').val();
+
+        var data = '';
+
+        if (ProductsID != "" && (parseFloat(QuantityValue) != 0 || parseFloat(FreshQuantity) != 0)) {
+            $.ajax({
+                type: "POST",
+                url: "/StockReceipt/GetConfigSettingRights",
+                data: JSON.stringify({ VariableName: 'IsFIFOExistsInOutModule' }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    //
+                    var data = msg;
+                    $("#hddnConfigVariable_Val").val(data);
+                    if (data == "1") {
+
+                        if (Ptype == "W") {
+                            $('#div_QtyMatch').hide();
+                        }
+                        else if (Ptype == "B") {
+                            $('#div_QtyMatch').hide();
+                        }
+                        else if (Ptype == "S") {
+                            $('#div_QtyMatch').show();
+                        }
+                        else if (Ptype == "WB") {
+                            $('#div_QtyMatch').hide();
+                        }
+                        else if (Ptype == "WS") {
+                            $('#div_QtyMatch').show();
+                        }
+                        else if (Ptype == "WBS") {
+                            $('#div_QtyMatch').show();
+                        }
+                        else if (Ptype == "BS") {
+                            $('#div_QtyMatch').show();
+                        }
+
+                    }
+                    else {
+                        $('#div_QtyMatch').hide();
+                    }
+                }
+            });
+
+            $('#lblProductName').text(ProductName);
+            $('#txt_SalesAmount').text(parseFloat(FreshQuantity).toFixed(4));
+            $('#txt_SalesUOM').text(UOM);
+            $('#txt_StockAmount').text(parseFloat(FreshQuantity).toFixed(4));
+            $('#txt_StockUOM').text(UOM);
+
+
+            $('#ProductID').val(ProductsID);
+
+            $('#hddWarehouseSLNO').val(SrlNo);
+            $('#hdnProductQuantity').val(parseFloat(FreshQuantity).toFixed(4));
+
+            if (Ptype == "W") {
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+                $('#div_Warehouse').show();
+                $('#div_Batch').hide();
+                $('#div_Serial').hide();
+                $('#div_Quantity').show();
+
+                $("#ADelete").css("display", "block");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+            }
+            else if (Ptype == "B") {
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+
+                $('#div_Warehouse').hide();
+                $('#div_Batch').show();
+                $('#div_Serial').hide();
+                $('#div_Quantity').show();
+
+                $("#ADelete").css("display", "block");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+            }
+            else if (Ptype == "S") {
+
+                $('#div_Warehouse').hide();
+                $('#div_Batch').hide();
+                $('#div_Serial').show();
+                $('#div_Quantity').show();
+
+                $("#ADelete").css("display", "none");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+                UpdateSerialNo();
+            }
+            else if (Ptype == "WB") {
+
+                $('#div_Warehouse').show();
+                $('#div_Batch').show();
+                $('#div_Serial').hide();
+                $('#div_Quantity').show();
+
+                $("#ADelete").css("display", "block");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+            }
+            else if (Ptype == "WS") {
+                $('#div_Warehouse').show();
+                $('#div_Batch').hide();
+                $('#div_Serial').show();
+                $('#div_Quantity').hide();
+
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+
+                $("#ADelete").css("display", "none");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+                UpdateSerialNo();
+            }
+            else if (Ptype == "WBS") {
+
+                $('#div_Warehouse').show();
+                $('#div_Batch').show();
+                $('#div_Serial').show();
+                $('#div_Quantity').hide();
+
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+
+                SelectedWarehouseID = "0";
+                $("#ADelete").css("display", "none");
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+                UpdateSerialNo();
+
+            }
+            else if (Ptype == "BS") {
+
+                $('#div_Warehouse').hide();
+                $('#div_Batch').show();
+                $('#div_Serial').show();
+                $('#div_Quantity').hide();
+
+                ddlWarehouse_ValueChange();
+                PopulateWareHouseDetailsData();
+
+                $("#ADelete").css("display", "none");
+                SelectedWarehouseID = "0";
+                $('#WarehouseDetailsModal').modal('show');
+                StockDeatils();
+                $('#ctxtQuantity').val('');
+                UpdateSerialNo();
+            }
+            else {
+
+                jAlert("No Warehouse or Batch or Serial is actived.");
+            }
+        }
+        else if (ProductsID != "" && (parseFloat(QuantityValue) == 0 && parseFloat(FreshQuantity) == 0)) {
+            jAlert('Fresh OR Rejected Qty is ZERO. Cannot select Stk Details');
+        }
+    }
+
+    function FullnFinalSave() {
+        if (StockOfProduct.length > 0) {
+            var id = $('#hddWarehouseSLNO').val();
+            var SrlNo = id;
+            var Unit = $('#ddlBankBranch option:selected').val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("setStockWarehouseList", "StockReceipt")",
+                data: { items: StockOfProduct, SrlNo: SrlNo, Unit: Unit },
+                success: function (response) {
+                    var data = response.split('|');
+                    if (data[1] == "False") {
+                        $('#hdnStkMsg').val(0);
+                        // gridProductionBOMProductList.batchEditApi.SetCellValue(tempindex, 'StkMsg', '0', '');
+                    }
+
+                    if (data[0] == "True") {
+                        $('#hdnStkMsg').val(1);
+                        $('#WarehouseDetailsModal').modal('hide');
+                    }
+                    else {
+                        jAlert("Please try again later!");
+                    }
+                }
+            });
+        }
+    }
+
+    function flexFilter(arr, info) {
+        var matchesFilter, matches = [];
+
+        matchesFilter = function (item) {
+            var count = 0;
+            for (var n = 0; n < info.length; n++) {
+                if (info[n]["Values"] == item[info[n]["Field"]]) {
+                    count++;
+                }
+            }
+
+            return count == info.length;
+        }
+
+        // Loop through each item in the array
+        for (var i = 0; i < arr.length; i++) {
+            // Determine if the current item matches the filter criteria
+            if (matchesFilter(arr[i])) {
+                matches.push(arr[i]);
+            }
+        }
+
+        // Give us a new array containing the objects matching the filter criteria
+        return matches;
+    }
+
+    function saveStockData(StockType, ProductSrlNo, ProductID, UOM, WarehouseID, WarehouseName, Batch, ViewBatch, Qty, Serial, MfgDate, ExprieyDate) {
+
+        if (Serial == undefined || Serial == null) {
+            Serial = '';
+        }
+
+        var criteria = [
+                        { Field: "Product_SrlNo", Values: ProductSrlNo },
+                        { Field: "WarehouseID", Values: WarehouseID },
+                        { Field: "Batch", Values: Batch },
+                        { Field: "Serial", Values: Serial }
+        ];
+        var filteredJson = flexFilter(StockOfProduct, criteria);
+
+        var productid = $('#ProductID').val();
+
+
+        if (filteredJson.length == 0) {
+            // Save Data In Json
+            var _SrlNo = parseInt(getMax(StockOfProduct, "SrlNo")) + 1;
+            var _LoopID = parseInt(getMax(StockOfProduct, "LoopID")) + 1;
+            var _Quantity = "1.0000";
+
+            if (StockType == "WS" || StockType == "WBS" || StockType == "BS" || StockType == "S" || StockType == "WSC") {
+                _Quantity = "1.0000";
+            }
+            else {
+                _Quantity = Qty;
+            }
+
+            var ProductStock = {
+                Product_SrlNo: ProductSrlNo, SrlNo: _SrlNo, WarehouseID: WarehouseID, WarehouseName: WarehouseName,
+                Quantity: _Quantity, SalesQuantity: _Quantity + " " + UOM, Batch: Batch, ViewBatch: ViewBatch, SerialNo: Serial, //MfgDate: MfgDate, ExpiryDate: ExprieyDate, Rate: Rate,
+                //SerialNo: Serial, Barcode: "", ViewBatch: Batch, //ViewMfgDate: MfgDate, ViewExpiryDate: ExprieyDate, ViewRate: Rate,
+                IsOutStatus: "1", IsOutStatusMsg: "", LoopID: _LoopID, Status: "D", ProductID: productid
+                , ViewMfgDate: MfgDate, ViewExpiryDate: ExprieyDate
+            }
+            StockOfProduct.push(ProductStock);
+        }
+        else {
+            // Save Data In Json
+            var _SrlNo = parseInt(getMax(StockOfProduct, "SrlNo")) + 1;
+            var _LoopID = parseInt(getMax(filteredJson, "LoopID"));
+            var _Quantity = parseFloat(getMax(filteredJson, "Quantity")) + 1;
+
+            if (StockType == "WS" || StockType == "WSC" || StockType == "WBS" || StockType == "BS" || StockType == "S") {
+                $.grep(filteredJson, function (e) { e.Quantity = _Quantity; });
+
+                var ProductStock = {
+                    Product_SrlNo: ProductSrlNo, SrlNo: _SrlNo, WarehouseID: WarehouseID, WarehouseName: "",
+                    Quantity: _Quantity, SalesQuantity: "", Batch: Batch, ViewBatch: ViewBatch, SerialNo: Serial,//MfgDate: MfgDate, ExpiryDate: ExprieyDate, Rate: Rate,
+                    //SerialNo: Serial, Barcode: "", ViewBatch: "", ViewMfgDate: "", ViewExpiryDate: "", ViewRate: "",
+                    IsOutStatus: "1", IsOutStatusMsg: "", LoopID: _LoopID, Status: "D", ProductID: productid
+                    ,ViewMfgDate: MfgDate, ViewExpiryDate: ExprieyDate
+                }
+                StockOfProduct.push(ProductStock);
+
+                $.grep(filteredJson, function (e) { if (e.SalesQuantity != "") e.SalesQuantity = _Quantity + " " + UOM; });
+                $.grep(filteredJson, function (e) { if (e.SalesQuantity != "") e.ViewRate = Rate; });
+            }
+            else if (StockType == "WC") {
+                _Quantity = (parseFloat(getMax(filteredJson, "Quantity")) + parseFloat(Qty));
+
+                if (filteredJson.length == 1) {
+                    $.grep(filteredJson, function (e) { e.Quantity = _Quantity });
+                    $.grep(filteredJson, function (e) { e.SalesQuantity = _Quantity + " " + UOM;; });
+                }
+                else {
+                    $.grep(filteredJson, function (e) { if (e.SalesQuantity != "") e.SalesQuantity = _Quantity + " " + UOM; });
+                    $.grep(filteredJson, function (e) { if (e.SalesQuantity != "") e.ViewRate = Rate; });
+                    $.grep(filteredJson, function (e) { e.Quantity = _Quantity });
+                }
+            }
+            else {
+                _Quantity = (parseFloat(getMax(filteredJson, "Quantity")) + parseFloat(Qty));
+                var QuantityValue = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+
+                if (_Quantity <= parseFloat(QuantityValue)) {
+                    $.grep(filteredJson, function (e) { e.Quantity = _Quantity });
+                    $.grep(filteredJson, function (e) { e.SalesQuantity = _Quantity + " " + UOM;; });
+                }
+                else {
+                    jAlert("Entered quantity exceeds!");
+                    return;
+                }
+            }
+        }
+
+        StockDeatils();
+        SetFocus("Save");
+    }
+
+    function sortByMultipleKey(keys) {
+        return function (a, b) {
+            if (keys.length == 0) return 0;
+            key = keys[0];
+            if (a[key] < b[key]) return -1;
+            else if (a[key] > b[key]) return 1;
+            else return sortByMultipleKey(keys.slice(1))(a, b);
+        }
+    }
+
+    var StockOfProduct = [];
+    var GetserviceURL = "../Models/pManufacturing_WebServiceList.asmx/GetOpeningStockDetails";
+    var serviceURL = "../Models/pManufacturing_WebServiceList.asmx/CheckDuplicateSerial";
+
+    function StockDeatils() {
+
+        var IsBarcodeGenerator = $('#hdfIsBarcodeGenerator').val();
+        var StockType = $('#hdfProductType').val();
+        var ProductSrlNo = $('#hddWarehouseSLNO').val();
+        var StockDetails = $.grep(StockOfProduct, function (element, index) { return element.Product_SrlNo == ProductSrlNo });
+        var StockHearder = [];
+
+        if (StockType == "W") {
+            StockHearder = ["WarehouseName", "SalesQuantity"];
+        }
+        else if (StockType == "WC") {
+            StockHearder = ["WarehouseName", "SerialNo", "Barcode", "SalesQuantity"];
+        }
+        else if (StockType == "B") {
+            StockHearder = ["ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SalesQuantity"];
+        }
+        else if (StockType == "S") {
+            StockHearder = ["SalesQuantity", "SerialNo"];
+        }
+        else if (StockType == "WB") {
+            StockHearder = ["WarehouseName", "ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SalesQuantity"];
+        }
+        else if (StockType == "WS") {
+            StockHearder = ["WarehouseName", "SerialNo", "SalesQuantity"];
+        }
+        else if (StockType == "WBS") {
+            StockHearder = ["WarehouseName", "ViewBatch", "ViewMfgDate", "ViewExpiryDate","SerialNo", "SalesQuantity"];
+        }
+        else if (StockType == "WSC") {
+            StockHearder = ["WarehouseName", "SerialNo", "Barcode", "SalesQuantity"];
+        }
+        else if (StockType == "BS") {
+            StockHearder = ["ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SerialNo", "SalesQuantity"];
+        }
+
+        var IsRateExists = $('#hdfIsRateExists').value;
+        if (IsRateExists == "Y") {
+            var index = StockHearder.indexOf("SalesQuantity") + 1;
+            StockHearder.splice(index, 0, "Rate");
+        }
+
+        StockDetails.sort(sortByMultipleKey(['LoopID', 'SrlNo']));
+        var td_width = parseFloat(100 / StockHearder.length).toFixed(2) + "%";
+
+        // EXTRACT VALUE FOR HTML HEADER.
+        var col = [];
+
+        if (StockDetails.length > 0) {
+            var temp_col = [];
+
+            for (var i = 0; i < StockDetails.length; i++) {
+                for (var key in StockDetails[i]) {
+                    if (temp_col.indexOf(key) === -1) {
+                        if (StockHearder.indexOf(key) > -1) {
+                            temp_col.push(key);
+                        }
+                    }
+                }
+            }
+
+            for (var i = 0; i < StockHearder.length; i++) {
+                var key = StockHearder[i];
+                if (temp_col.indexOf(key) > -1) {
+                    col.push(key);
+                }
+            }
+        }
+        else {
+            var arrayLength = StockHearder.length;
+            for (var i = 0; i < arrayLength; i++) {
+                col.push(StockHearder[i]);
+            }
+        }
+        col.push("Action");
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+        table.setAttribute("class", "GridtypeTable");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+        var tr = table.insertRow(-1);
+
+        var header = table.createTHead();
+        var row = header.insertRow(0);
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");
+            th.width = td_width;
+
+            if (col[i] == "SalesQuantity") th.style.textAlign = "right";
+            else if (col[i] == "Rate") th.style.textAlign = "right";
+
+            if (col[i] == "WarehouseName") th.innerHTML = "Warehouse";
+            else if (col[i] == "SalesQuantity") th.innerHTML = "Quantity";
+            else if (col[i] == "ViewBatch") th.innerHTML = "Batch Number";
+            else if (col[i] == "ViewMfgDate") th.innerHTML = "Mfg Date";
+            else if (col[i] == "ViewExpiryDate") th.innerHTML = "Expiry Date";
+            else if (col[i] == "SerialNo") th.innerHTML = "Serial Number";
+            else th.innerHTML = col[i];
+
+            row.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        if (StockDetails.length > 0) {
+            for (var i = 0; i < StockDetails.length; i++) {
+                tr = table.insertRow(-1);
+
+                var ID = StockDetails[i]["SrlNo"];
+                var style = StockDetails[i]["IsOutStatus"];
+
+                for (var j = 0; j < col.length; j++) {
+                    var tabCell = tr.insertCell(-1);
+                    tabCell.width = td_width;
+
+                    if (col[j] == "Action") {
+                        //if (IsBarcodeGenerator == "N") {
+                        //    if (style == "display:none") {
+                        //        tabCell.innerHTML = "Used";
+                        //    }
+                        //    else {
+                        var EVENT = "removeRow(" + ID + ")";
+                        var anchor = document.createElement('a');
+                        anchor.setAttribute('onclick', EVENT);
+                        anchor.setAttribute('title', 'Delete');
+                        anchor.href = '#';
+
+                        var element = document.createElement("img");
+                        element.setAttribute("src", "/assests/images/crs.png");
+                        anchor.appendChild(element);
+
+                        tabCell.appendChild(anchor);
+                        //    }
+                        //}
+                    }
+                    else {
+                        if (col[j] == "SalesQuantity") tabCell.style.textAlign = "right";
+                        else if (col[j] == "Rate") tabCell.style.textAlign = "right";
+
+                        tabCell.innerHTML = StockDetails[i][col[j]];
+                    }
+                }
+            }
+        }
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+    }
+
+    function PopulateWareHouseDetailsData() {
+        var BankBranchID = $('#ddlBankBranch option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getWarehouseRecord", "IssueReturn")",
+            data: { branchid: BankBranchID },
+            success: function (response) {
+                $('#WHddlWarehouse').html('');
+                var html = "";
+                var hdnProductWarehouseID = $('#WarehouseID').val();
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+                }
+                $('#WHddlWarehouse').html(html);
+
+                ddlWarehouse_ValueChange();
+            }
+        });
+    }
+
+    function WorkCenterSelectionChanged(s, e) {
+
+        $('#lblWorkCenterName').text('');
+        if (e.isChangedOnServer) return;
+        globalindexcheck2 = WorkCenterGridLookup.gridView.focusedRowIndex;
+        var key = WorkCenterGridLookup.gridView.GetRowKey(globalindexcheck2)
+
+        if (key != null && globalindexcheck2 > -1) {
+
+            cpSelectedKeys2 = "";
+            var WorkCenterName = WorkCenterGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+            var WorkCenterDesc = WorkCenterGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+
+            $('#WorkCenterID').val(key);
+            cpSelectedKeys2 = key;
+            WorkCenterGridLookup.SetTextWithoutApply(WorkCenterName);
+            $('#lblWorkCenterName').text(WorkCenterDesc);
+        }
+        else {
+            cpSelectedKeys2 = "";
+            $('#WorkCenterID').val(0);
+            $('#lblWorkCenterName').text('');
+        }
+    }
+
+    //function StockReceiptGotFocus(s, e) {
+    //    StockReceiptGridLookup.ShowDropDownArea();
+    //}
+
+    function SetDefaultDate(s, e) {
+        SR_Date_dt.SetValue(new Date());
+    }
+
+    function Scheme_ValueChange() {
+        var val = $('#ddlSchema option:selected').val();
+        var schemetypeValue = val;
+        var schemetype = schemetypeValue.toString().split('~')[1];
+        var schemelength = schemetypeValue.toString().split('~')[2];
+        var branchID = (schemetypeValue.toString().split('~')[3] != null) ? schemetypeValue.toString().split('~')[3] : "";
+        var SchemaID = schemetypeValue.toString().split('~')[0];
+        $('#hdnSchemaId').val(SchemaID);
+        $('#ddlBankBranch').val(branchID);
+        // var fromdate = (schemetypeValue.toString().split('~')[4] != null) ? schemetypeValue.toString().split('~')[4] : "";
+        //var todate = (schemetypeValue.toString().split('~')[5] != null) ? schemetypeValue.toString().split('~')[5] : "";
+        document.getElementById("StockReceipt_No").maxLength = schemelength;
+        if (schemetype == '0') {
+            $('#StockReceipt_No').removeAttr("disabled");
+            $('#StockReceipt_No').val('');
+
+            $('#StockReceipt_No').focus();
+        }
+        else if (schemetype == '1') {
+            $('#StockReceipt_No').attr("disabled", "disabled");
+            $('#StockReceipt_No').val('Auto');
+        }
+        else if (schemetype == '2') {
+            $('#StockReceipt_No').attr("disabled", "disabled");
+            $('#StockReceipt_No').val('Datewise');
+        }
+        else if (schemetype == 'n') {
+            $('#StockReceipt_No').attr("disabled", "disabled");
+            $('#StockReceipt_No').val('');
+        }
+        else {
+            $('#StockReceipt_No').attr("disabled", "disabled");
+            $('#StockReceipt_No').val('');
+        }
+
+    }
+
+    $(function () {
+        PopulateNumberingSchemeData();
+
+        var lookup = ASPxClientControl.GetControlCollection().GetByName("StockReceiptGridLookup");
+        lookup.GetGridView().Refresh();
+        lookup.GetGridView().Refresh();
+
+        StockReceiptGridLookup.HideDropDownArea();
+        WorkCenterGridLookup.HideDropDownArea();
+
+        $(".decimalCheck").on("keypress keyup blur", function (event) {
+
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        PopulateData();
+
+        //var QualityControlID = $('#QualityControlID').val();
+        //if (QualityControlID == "0") {
+        //    //ClearData();
+        //}
+        //else {
+        //    $('#ddlSchema').attr("disabled", "disabled");
+        //    $('#QC_No').attr("disabled", "disabled");
+        //    var Receipt_No = $('#Receipt_No').val();
+        //    var WorkCenterCode = $('#WorkCenterCode').val();
+        //    //var QC_SchemaID = $('#QC_SchemaID').val();
+        //    //$('#ddlSchema option:selected').val(QC_SchemaID);
+        //    ProductionReciptGridLookup.SetTextWithoutApply(Receipt_No);
+        //    WorkCenterGridLookup.SetTextWithoutApply(WorkCenterCode);
+        //    QC_Date_dt.SetEnabled(false);
+        //    ProductionReciptGridLookup.SetEnabled(false);
+        //    WorkCenterGridLookup.SetEnabled(false);
+
+        //    $('#btnSaveAndNew').hide();
+        //}
+
+
+
+    });
+
+    function PopulateData() {
+        var StockReceiptID = $('#StockReceiptID').val();
+        if (StockReceiptID == "0") {
+            //ClearData();
+        }
+        else {
+            $('#ddlSchema').attr("disabled", "disabled");
+            $('#StockReceipt_No').attr("disabled", "disabled");
+            var QC_No = $('#QC_No').val();
+            var WorkCenterCode = $('#WorkCenterCode').val();
+            //var QC_SchemaID = $('#QC_SchemaID').val();
+            //$('#ddlSchema option:selected').val(QC_SchemaID);
+            StockReceiptGridLookup.SetTextWithoutApply(QC_No);
+            WorkCenterGridLookup.SetTextWithoutApply(WorkCenterCode);
+            SR_Date_dt.SetEnabled(false);
+            StockReceiptGridLookup.SetEnabled(false);
+            WorkCenterGridLookup.SetEnabled(false);
+
+            $('#btnSaveAndNew').hide();
+
+            PopulateStkWarehouseData();
+        }
+
+    }
+
+    function PopulateStkWarehouseData() {
+        var StockReceiptID = $('#StockReceiptID').val();
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetWarehouseList", "StockReceipt")",
+            data: { StockReceiptID: StockReceiptID },
+            success: function (response) {
+                if (response.length > 0) {
+                    GetBatchName(response[0].WarehouseID, response[0].Batch, response);
+                }
+            }
+        });
+    }
+
+    function GetBatchName(WarehouseID, Batch, response) {
+        var ProductsID = $('#ProductID').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getBatchRecord", "StockReceipt")",
+            data: { warehouseid: WarehouseID, ProductID: ProductsID },
+            success: function (response1) {
+                var BatchName = '';
+                if (response1.length > 0) {
+                    for (var i = 0; i < response1.length; i++) {
+                        if (response1[i].BatchID == Batch) {
+                            BatchName = response1[i].BatchName;
+                        }
+                    }
+                }
+
+                for (var i = 0; i < response.length; i++) {
+                    var ProductStock = {
+                        Product_SrlNo: response[i].Product_SrlNo, SrlNo: response[i].SrlNo, WarehouseID: response[i].WarehouseID, WarehouseName: response[i].WarehouseName,
+                        Quantity: response[i].Quantity, SalesQuantity: response[i].SalesQuantity, Batch: response[i].Batch, ViewBatch: response[i].Batch, SerialNo: response[i].SerialNo, //MfgDate: MfgDate, ExpiryDate: ExprieyDate, Rate: Rate,
+                        //SerialNo: Serial, Barcode: "", ViewBatch: Batch, //ViewMfgDate: MfgDate, ViewExpiryDate: ExprieyDate, ViewRate: Rate,
+                        IsOutStatus: response[i].IsOutStatus, IsOutStatusMsg: "", LoopID: response[i].LoopID, Status: response[i].Status, ProductID: response[i].ProductID
+                         , ViewMfgDate: response[i].MfgDate, ViewExpiryDate: response[i].ExpiryDate
+                    }
+                    StockOfProduct.push(ProductStock);
+                }
+                //return BatchName;
+
+                SetWareHouseData();
+
+            }
+        });
+    }
+
+    function SetWareHouseData() {
+        if (StockOfProduct.length > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("setStockWarehouseTempDataList", "StockReceipt")",
+                data: { items: StockOfProduct },
+                success: function (response) {
+                    //var data = response;
+                    //if (data[1] == "False") {
+                    //    $('#hdnStkMsg').val(0);
+                    //    // gridProductionBOMProductList.batchEditApi.SetCellValue(tempindex, 'StkMsg', '0', '');
+                    //}
+
+                    //if (data[0] == "True") {
+                    //    $('#hdnStkMsg').val(1);
+                    //    $('#WarehouseDetailsModal').modal('hide');
+                    //}
+                    //else {
+                    //    jAlert("Please try again later!");
+                    //}
+                }
+            });
+
+        }
+    }
+
+    function PopulateNumberingSchemeData() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getNumberingSchemeRecord", "StockReceipt")",
+            success: function (response) {
+
+                var QualityControlID = $('#QualityControlID').val();
+                var hdnSchemaId = $('#ReceiptSchemaID').val();
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    if (QualityControlID > 0) {
+                        if (hdnSchemaId == response[i].SchemaID.split('~')[0]) {
+                            html = html + "<option selected value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                        }
+                        else {
+                            html = html + "<option value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                        }
+                    }
+                    else {
+                        html = html + "<option value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                    }
+                }
+                $('#ddlSchema').html(html);
+                $('#ddlSchema').focus();
+
+
+            }
+        });
+    }
+
+    var savemode = "";
+    var hasmsg = 0;
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function StockReceiptSave(mode) {
+        savemode = mode;
+        hasmsg = 0;
+
+        var isprocess = 1;
+        var ReceiptSchemaID = $('#hdnSchemaId').val();
+        var Unit = $('#ddlBankBranch option:selected').val();
+        var StockReceipt_No = $('#StockReceipt_No').val();
+        var StockReceiptDate = GetServerDateFormat(SR_Date_dt.GetValue());
+        var WorkCenterID = $('#WorkCenterID').val();
+        var ProductionReceiptID = $('#ProductionReceiptID').val();
+        var QualityControlID = $('#QualityControlID').val();
+        var StockReceiptID = $('#StockReceiptID').val();
+
+        var FGQty = $('#FGReceiptQty').val();
+        var FreshQuantity = $('#FreshQuantity').val();
+        var RejectedQuantity = $('#RejectedQuantity').val();
+
+        var BalFreshQuantity = $('#BalFreshQuantity').val();
+        var BalRejectedQuantity = $('#BalRejectedQuantity').val();
+
+        var ProductID = $('#ProductID').val();
+        var ProductionIssueID = $('#ProductionIssueID').val();
+        var Details_ID = $('#Details_ID').val();
+        var Doctype = "";
+        if ('@ViewBag.QualityControlModuleSkipped' == "Yes") {
+            Doctype = "ProductionIssue";
+            QualityControlID = "0";
+        }
+        else {
+
+            Doctype = "QualityControl";
+        }
+
+        if (parseInt(StockReceiptID) > 0) {
+            //FullnFinalSave();
+        }
+
+        if (ReceiptSchemaID == "0" || ReceiptSchemaID == "") {
+            $('#EddlSchema').show();
+            isprocess = 0;
+        }
+        else {
+            $('#EddlSchema').hide();
+        }
+
+        if ('@ViewBag.QualityControlModuleSkipped' == "No") {
+            if (StockReceiptDate == '') {
+                $('#EIssue_Date').show();
+                isprocess = 0;
+            }
+            else {
+                $('#EIssue_Date').hide();
+            }
+        }
+
+        if (FreshQuantity == "") {
+            $('#EFreshQuantity').show();
+            isprocess = 0;
+        }
+        else {
+            $('#EFreshQuantity').hide();
+        }
+
+        if (RejectedQuantity == "") {
+            $('#ERejectedQuantity').show();
+            isprocess = 0;
+        }
+        else {
+            $('#ERejectedQuantity').hide();
+        }
+
+        if ('@ViewBag.QualityControlModuleSkipped' == "No") {
+            if (QualityControlID == "" || QualityControlID == "0") {
+                $('#EQCNo').show();
+                isprocess = 0;
+            }
+            else {
+                $('#EQCNo').hide();
+            }
+        }
+
+        if ((parseFloat(BalFreshQuantity) < parseFloat(FreshQuantity)) && isprocess == 1) {
+            jAlert("Fresh Quantity should not be greater than to balance Fresh Quantity!");
+            isprocess = 0;
+        }
+        else if ('@ViewBag.QualityControlModuleSkipped' == "No") {
+
+            if ((parseFloat(BalRejectedQuantity) < parseFloat(RejectedQuantity)) && isprocess == 1) {
+                jAlert("Rejected Quantity should not be greater than to balance Rejected Quantity!");
+                isprocess = 0;
+            }
+        }
+        else if ((parseFloat(FreshQuantity) == 0 && parseFloat(RejectedQuantity) == 0) && isprocess == 1) {
+            jAlert("Fresh & Rejected both Quantity should not be zero!");
+            isprocess = 0;
+        }
+        else if ('@ViewBag.QualityControlModuleSkipped' == "Yes") {
+            if ((parseFloat(BalFreshQuantity) < (parseFloat(FreshQuantity) + parseFloat(RejectedQuantity))) && isprocess == 1) {
+                jAlert("Fresh & Rejected Quantity should be equal to Balance Quantity!");
+                isprocess = 0;
+            }
+        }
+
+        var AvlStk = $('#AvlStk').val();//gridProductionBOMProductList.batchEditApi.GetCellValue(i, '');
+        var NegStock = $('#Product_NegativeStock').val();
+        var ProductName = $('#FinishedItem').val();
+
+        var FGPrice = $('#FGPrice').val();
+        var TotalAmount = $('#TotalAmount').val();
+
+        //if ((parseFloat(FGQty) != (parseFloat(FreshQuantity) + parseFloat(RejectedQuantity))) && isprocess == 1) {
+        //     jAlert("Fresh & Rejected Quantity should be equal to Quantity!");
+        //     isprocess = 0;
+        // }
+        var StkMsg = $('#hdnStkMsg').val();
+        if (StkMsg == "0") {
+            if (NegStock.trim() == 'W') {
+                isprocess = 0;
+                jConfirm('Product "' + ProductName + '" is going negative do you want to proceed?', 'Confirmation Dialog', function (r) {
+                    if (r == true) {
+                        $('#hdnStkMsg').val(1);
+                    }
+                    else {
+                        $('#hdnStkMsg').val(0);
+                    }
+
+                });
+                return false;
+            }
+        }
+
+        if (isprocess == 1) {
+            var obj = {};
+            obj.StockReceiptID = StockReceiptID;
+            obj.ReceiptSchemaID = ReceiptSchemaID;
+            obj.StockReceipt_No = StockReceipt_No;
+            obj.StockReceiptDate = StockReceiptDate;
+            obj.WorkCenterID = WorkCenterID;
+            obj.ProductionReceiptID = ProductionReceiptID;
+            obj.QualityControlID = QualityControlID;
+            obj.FGQty = FGQty;
+            obj.FreshQuantity = FreshQuantity;
+            obj.RejectedQuantity = RejectedQuantity;
+            obj.ProductID = ProductID;
+            obj.ProductionIssueID = ProductionIssueID;
+            obj.FGPrice = FGPrice;
+            obj.TotalAmount = TotalAmount;
+            obj.Details_ID = Details_ID;
+            obj.Doctype = Doctype;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("StockReceiptInsertUpdate", "StockReceipt")",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.Success) {
+
+                        jAlert('Stock Receipt Number : ' + response.Message + ' Successfully saved.', 'Alert!', function (r) {
+                            if (r) {
+                                ClearData();
+                                if (savemode == "Exit") {
+                                    setTimeout(function () {
+                                        var url = $('#hdnStockReceiptListPage').val();
+                                        window.location.href = url;
+                                    }, 500);
+                                }
+                                else if (savemode == "New") {
+                                    window.location.href = "StockReceiptEntry?key=Add";
+                                }
+                                setTimeout(function () {
+                                    StockReceiptGridLookup.HideDropDownArea();
+                                    WorkCenterGridLookup.HideDropDownArea();
+                                }, 500);
+                            }
+
+                        });
+
+
+                    }
+                    else {
+                        if (response.Message == "duplicate") {
+                            jAlert('This Stock Receipt no already present!');
+
+                            return false;
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                            return false;
+                        }
+                    }
+                }
+            });
+
+
+        }
+
+    }
+    function ClearData() {
+        $('#hdnSchemaId').val('');
+
+        $('#StockReceipt_No').val('');
+        var OrderDate = GetServerDateFormat(SR_Date_dt.GetValue());
+        $('#WorkCenterID').val('');
+        $('#ProductionReceiptID').val('');
+        $('#QualityControlID').val(0);
+        $('#Receipt_No').val('');
+        $('#FGQty').val(parseFloat(0).toFixed(4));
+        $('#FreshQuantity').val(parseFloat(0).toFixed(4));
+        $('#RejectedQuantity').val(parseFloat(0).toFixed(4));
+
+        $('#ddlSchema').val($("#ddlSchema option:first").val());
+        $('#ddlBankBranch').val($("#ddlBankBranch option:first").val());
+        $('#Warehouse').val('');
+
+        $('#ProductionIssueNo').val('');
+        $('#WorkOrderNo').val('');
+        $('#BOMNo').val('');
+        $('#RevNo').val('');
+
+        $('#ProductionOrderNo').val('');
+        $('#ItemName').val('');
+        $('#FinishedItem').val('');
+        $('#ProductDescription').val('');
+        $('#FGPrice').val(parseFloat(0).toFixed(4));
+        $('#TotalAmount').val(parseFloat(0).toFixed(4));
+        $('#FinishedUom').val('');
+        $('#Warehouse').val('');
+        $('#QC_No').removeAttr("disabled");
+        $('#strRemarks').val('');
+        $('#lblWorkCenterName').text('');
+        WorkCenterGridLookup.SetTextWithoutApply('');
+        StockReceiptGridLookup.SetTextWithoutApply('');
+        WorkCenterGridLookup.gridView.UnselectAllRowsOnPage();
+        StockReceiptGridLookup.gridView.UnselectAllRowsOnPage();
+        $('#ProductionReceiptID').val(0);
+        WorkCenterGridLookup.SetEnabled(true);
+        $('#FinishedItemName').val('');
+        cpSelectedKeys = "";
+        cpSelectedKeys2 = "";
+        StockReceiptGridLookup.OnClear();
+        WorkCenterGridLookup.OnClear();
+
+        StockReceiptGridLookup.HideDropDownArea();
+        WorkCenterGridLookup.HideDropDownArea();
+        $('#ddlSchema').focus();
+    }
+    function ChkDataDigitCount(e) {
+
+        var data = $(e).val();
+        $(e).val(parseFloat(data).toFixed(4));
+        if (data == '' || data == null) {
+            $(e).val(parseFloat(0).toFixed(4));
+        }
+    }
+    function AmountCalculation(e) {
+        var data = $(e).val();
+        var RejectedQuantity = $('#RejectedQuantity').val();
+        var MetarialAmount = $("#MetarialAmount").val();
+
+        var Price = parseFloat(MetarialAmount).toFixed(2) / (parseFloat(data).toFixed(4) + parseFloat(RejectedQuantity).toFixed(4));
+        var FGAmount = parseFloat(Price) * (parseFloat(data).toFixed(4) + parseFloat(RejectedQuantity).toFixed(4));
+        //   var FGAmount = parseFloat(Price) * (parseFloat(data).toFixed(4) + parseFloat(RejectedQuantity).toFixed(4));
+
+        $('#FGPrice').val(Price);
+        $('#TotalAmount').val(FGAmount);
+    }
+
+    function RQAmountCalculation(e) {
+        var data = $(e).val();
+        var FreshQuantity = $('#FreshQuantity').val();
+        var MetarialAmount = $("#MetarialAmount").val();
+
+        var Price = parseFloat(MetarialAmount).toFixed(2) / (parseFloat(data).toFixed(4) + parseFloat(FreshQuantity).toFixed(4));
+        var FGAmount = parseFloat(Price) * (parseFloat(data).toFixed(4) + parseFloat(FreshQuantity).toFixed(4));
+        //   var FGAmount = parseFloat(Price) * (parseFloat(data).toFixed(4) + parseFloat(RejectedQuantity).toFixed(4));
+
+        $('#FGPrice').val(Price);
+        $('#TotalAmount').val(FGAmount);
+    }
+
+
+</script>
+
+
+<div class="panel-title clearfix" id="myDiv">
+    <h3 class="pull-left">
+        <label>Stock Receipt</label>
+    </h3>
+    <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("StockReceiptList", "StockReceipt")"><i class="fa fa-times"></i></a></div>
+</div>
+
+<input type="hidden" value="@Model.ReceiptSchemaID" id="hdnSchemaId" />
+
+<input type="hidden" value="@Url.Action("StockReceiptList", "StockReceipt")" id="hdnStockReceiptListPage" />
+
+<input type="hidden" id="hdnStkMsg" value="0" />
+
+@Html.HiddenFor(x => x.WorkOrderID)
+@Html.HiddenFor(x => x.ProductionOrderID)
+@Html.HiddenFor(x => x.WorkCenterID)
+@Html.HiddenFor(x => x.Details_ID)
+@Html.HiddenFor(x => x.ProductionReceiptID)
+@Html.HiddenFor(x => x.QualityControlID)
+@Html.HiddenFor(x => x.StockReceiptID)
+@Html.HiddenFor(x => x.ProductID)
+@Html.HiddenFor(x => x.AvlStk)
+@Html.HiddenFor(x => x.ProductionIssueID)
+
+@Html.HiddenFor(x => x.WarehouseID)
+@Html.HiddenFor(x => x.WorkCenterCode)
+@Html.HiddenFor(x => x.QC_No)
+
+@Html.HiddenFor(x => x.ReceiptSchemaID)
+
+@Html.HiddenFor(x => x.BalFreshQuantity)
+@Html.HiddenFor(x => x.BalRejectedQuantity)
+
+@Html.HiddenFor(x => x.InventoryType)
+
+@Html.HiddenFor(x => x.Product_NegativeStock)
+
+
+<input type="hidden" id="MetarialAmount" />
+<input type="hidden" id="hdndefaultWarehouse" />
+<input type="hidden" id="hdfUOM" />
+<input type="hidden" id="hdfServiceURL" />
+<input type="hidden" id="hdfBranch" />
+
+<input type="hidden" id="hdfIsBarcodeGenerator" value="@ViewBag.hdfIsBarcodeGenerator" />
+<input type="hidden" id="hdfIsRateExists" />
+
+<input type="hidden" id="LastCompany" value="@ViewBag.LastCompany" />
+<input type="hidden" id="LastFinancialYear" value="@ViewBag.LastFinancialYear" />
+
+<input type="hidden" id="hdfProductType" />
+
+<input type="hidden" id="hddnConfigVariable_Val" />
+<input type="hidden" id="hdfProductSerialID" />
+<input type="hidden" id="hdnProductQuantity" />
+
+<input type="hidden" id="hddnWarehouseQty" />
+
+<input type="hidden" id="hddWarehouseSLNO" value="0" />
+
+
+<div class="boxBorder">
+    <div class="styledBox">
+        <div class="row">
+            <div class="col-md-2">
+                <label>Numbering Scheme <span style="color:red">*</span></label>
+                <div class="relative">
+                    <select id="ddlSchema" class="form-control" onchange="Scheme_ValueChange()"></select>
+                    <span id="EddlSchema" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label>Stock Receipt No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.StockReceipt_No, new { @class = "form-control" })
+                    <span id="EStockReceipt_No" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2">
+                <label>Stock Receipt Date <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "SR_Date_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Date = DateTime.Now;
+                                         settings.Date = Convert.ToDateTime(@Model.dtStockReceiptDate);
+                                         settings.Properties.ClientSideEvents.Init = "SetDefaultDate";
+
+                                     }
+                            ).GetHtml()
+                    <span id="EIssue_Date" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2">
+                <label id="PONo">Issue No. <span style="color:red">*</span></label>
+                <label id="QCNo">Ref. Quality Control No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    <div class="lookupTdHide">
+                        @Html.Action("GetQCList", "StockReceipt")
+                    </div>
+                    <span id="EQCNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2" id="DivProductionReceipt">
+                <label>Production Receipt No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.Receipt_No, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EOrderNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2" id="DivWorkOrder">
+                <label id="lblWO">Work Order No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.WorkOrderNo, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EOrderNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class=" col-sm-2">
+                <label class="mtop10">BOM No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.BOMNo, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EBOMNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Revision No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.RevNo, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="ERevNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Unit <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" />*@
+                    @Html.DropDownListFor(x => x.BRANCH_ID, new SelectList(Model.UnitList, "BranchID", "BankBranchName"), new { @id = "ddlBankBranch", @class = "form-control", @disabled = "disabled", @onchange = "PopulateWareHouseData();" })
+                    @*@Html.TextBoxFor(m => m.RevNo, new { @class = "form-control", @disabled = "disabled" })*@
+                    <span id="ERevNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Production Order </label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.ProductionOrderNo, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Finished Item </label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.FinishedItem, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Work Center <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.Action("GetWCList", "StockReceipt")
+                    <span id="Eworkcenter" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class=" col-sm-2">
+                <label class="mtop10">Work Center Name </label>
+                <div class="relative">
+                    <label id="lblWorkCenterName" style="width: 100%; background: #fff; height: 24px; border: 1px solid #ccc; padding: 3px 5px;">@Model.WorkCenterDescription</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="mtop10">
+        <label style="font-size: 16px; color: #4664d0;">Finished Item </label>
+
+    </div>
+    <div class="styledBox">
+        <div class="row">
+
+            <div class=" col-sm-2">
+                <label class="">Item</label>
+                <div class="relative">
+                    <input type="text" id="FinishedItemName" value="@Model.FinishedItem" class="form-control" disabled />
+                </div>
+            </div>
+
+            <div class=" col-sm-3">
+                <label class="">Description</label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+                    @Html.TextBoxFor(m => m.ProductDescription, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Quantity</label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+                    @Html.TextBoxFor(m => m.FGReceiptQty, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2 qtAddon">
+                <label class="">Fresh Qty</label>
+                <div class="input-group">
+
+                    @Html.TextBoxFor(m => m.FreshQuantity, new { @class = "form-control decimalCheck", @onchange = "{ChkDataDigitCount(this),AmountCalculation(this)}" })
+                    <div class="input-group-addon"><a class="example-image-link" style="cursor: pointer;" onclick="grid_WarehouseDetailsClickFresh(1)" data-lightbox="example-1"><img src="/assests/images/warehouse.png"></a></div>
+                </div>
+
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+
+                </div>
+            </div>
+
+
+
+            <div class=" col-sm-2 qtAddon">
+                <label class="">Rejected Qty</label>
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.RejectedQuantity, new { @class = "form-control decimalCheck", @onchange = "ChkDataDigitCount(this),RQAmountCalculation(this);" })
+                    <div class="input-group-addon"><a class="example-image-link" style="cursor: pointer;" onclick="grid_WarehouseDetailsClick(0)" data-lightbox="example-1"><img src="/assests/images/warehouse.png"></a></div>
+                </div>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class=" col-sm-2">
+                <label class="mtop10">UOM</label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+                    @Html.TextBoxFor(m => m.FinishedUom, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Warehouse</label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+                    @Html.TextBoxFor(m => m.Warehouse, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Price</label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+                    @Html.TextBoxFor(m => m.FGPrice, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Amount</label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+                    @Html.TextBoxFor(m => m.TotalAmount, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-5">
+                <label class="mtop10">Remarks</label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled />*@
+                    @Html.TextBoxFor(m => m.strRemarks, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class=" col-sm-2">
+                <label class="mtop10">Part No:</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.PartNoName, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class=" col-sm-2">
+                <label class="mtop10">Drawing No:</label>
+                @Html.TextBoxFor(m => m.DesignNo, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class=" col-sm-2">
+                <label class="mtop10">Drawing Rev. No:</label>
+                @Html.TextBoxFor(m => m.ItemRevNo, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class=" col-sm-2" id="divProj">
+                <label class="mtop10">Project Code:</label>
+                @Html.TextBoxFor(m => m.Proj_Code, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class=" col-sm-2" id="divHierarchy">
+                <label class="mtop10">Hierarchy:</label>
+                @Html.TextBoxFor(m => m.Hierarchy, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="clearfix">
+        @if (Convert.ToInt16(ViewBag.IsView) == 0)
+        {
+
+            <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveAndNew" onclick="StockReceiptSave('New');">
+                <div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div>
+                <span>Save and New</span>
+
+
+            </div>
+            <div class="inline-block addResourceBtn themeColor " onclick="StockReceiptSave('Exit');">
+                <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
+                <span>Save and Exit</span>
+            </div>
+    }
+
+    @*<div class="inline-block pull-right">
+
+            <div class="inline-block mTop5">
+                <label class="stLbl ">Actual Additional Cost</label>
+                <div>
+                    <input type="text" value="" placeholder="0.00" id="txtActualAdditionalCost" maxlength="12" class="form-control decimalCheck" onchange="ChkMoneyDigitCount(this);" onkeypress="return validateFloatKeyPress(this,event);" />
+                </div>
+            </div>
+            <div class="inline-block mTop5">
+                <label class="stLbl ">Actual Component Cost</label>
+                <div class="disab"><input type="text" value="" placeholder="0.00" class="form-control" id="txtActualComponentCost" disabled /></div>
+            </div>
+            <div class="inline-block mTop5">
+                <label class="stLbl ">Production Order Qty</label>
+                <div class="disab">
+                    <input type="text" value="" placeholder="0.00" class="form-control" id="txtProductionOrderQty" disabled />
+                </div>
+            </div>
+
+            <div class="inline-block mTop5">
+                <label class="stLbl ">FG Receipt Qty</label>
+                <div class="disab">
+                    <input type="text" value="" placeholder="0.00" class="form-control" id="txtFGReceiptQty" disabled />
+                </div>
+            </div>
+            <div class="inline-block mTop5">
+                <label class="stLbl ">Actual Product Cost</label>
+                <div class="disab">
+                    <input type="text" value="" placeholder="0.00" class="form-control" id="txtActualProductCost" disabled />
+                </div>
+            </div>
+        </div>*@
+
+</div>
+
+<div class="row mTop10">
+
+</div>
+</div>
+
+
+<!-- Warehouse Details Modal -->
+<div class="modal fade" id="WarehouseDetailsModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warehouse Details</h4>
+            </div>
+            <div class="modal-body">
+                <div id="content-5" class="pull-right wrapHolder content horizontal-images" style="width: 100%; margin-right: 0px;">
+                    <ul>
+                        <li>
+                            <div class="lblHolder">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Selected Product</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblProductName" runat="server"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="lblHolder">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Entered Quantity </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label id="txt_SalesAmount" />
+                                                <label id="txt_SalesUOM" />
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="lblHolder" id="divpopupAvailableStock" style="display: none;">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Available Stock</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblAvailableStock" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAvailableStockUOM" runat="server"></asp:Label>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                        <li style="display: none;">
+                            <div class="lblHolder">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Stock Quantity </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="txt_StockAmount" runat="server"></asp:Label>
+                                                <asp:Label ID="txt_StockUOM" runat="server"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="clearfix  modal-body" style="background: #fff; padding: 8px 0 8px 0; margin-bottom: 15px; margin-top: 15px; border-radius: 4px; border: 1px solid #ccc;">
+                    <div class="col-md-12">
+                        <div class="clearfix  row">
+                            <div class="col-md-3" id="div_Warehouse">
+                                <div>
+                                    Warehouse
+                                </div>
+                                <div class="Left_Content" style="">
+                                    <select id="WHddlWarehouse" class="form-control" onchange="ddlWarehouse_ValueChange()"></select>
+
+                                    @*<asp:DropDownList ID="ddlWarehouse" runat="server" Width="100%" DataTextField="WarehouseName" DataValueField="WarehouseID" onchange="ddlWarehouse_ValueChange()">
+                                        </asp:DropDownList>*@
+                                    <span id="spnCmbWarehouse" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
+                                </div>
+                            </div>
+                           
+                            <div class="clear" id="_div_Break" style="display:none;"></div>
+                            
+                            <div class="col-md-3" id="div_Batch">
+                                <div>
+                                    Batch/Lot
+                                </div>
+                                <div class="Left_Content" style="">
+                                    <input type="text" id="txtBatchName" placeholder="Batch" />
+                                    <span id="rfvBatch" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="div_Manufacture">
+                                <div>
+                                    Manufacture Date
+                                </div>
+                                <div class="Left_Content" style="">
+                                    @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "txtMfgDate";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Date = DateTime.Now;
+                                         //settings.Date = Convert.ToDateTime(@Model.dtStockReceiptDate);
+                                         //settings.Properties.ClientSideEvents.Init = "ctxtMfgDate";
+
+                                     }
+                            ).GetHtml()
+
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="div_Expiry">
+                                <div>
+                                    Expiry Date
+                                </div>
+                                <div class="Left_Content" style="">
+
+
+                                    @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "txtExprieyDate";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Date = DateTime.Now;
+                                         //settings.Date = Convert.ToDateTime(@Model.dtStockReceiptDate);
+                                         //settings.Properties.ClientSideEvents.Init = "ctxtExprieyDate";
+
+                                     }
+                            ).GetHtml()
+                                </div>
+                            </div>
+                            <div class="clear" id="div_Break"></div>
+                            <div class="col-md-3" id="div_Quantity">
+                                <div>
+                                    Quantity
+                                </div>
+                                <div class="Left_Content" style="">
+                                    <input type="text" class="form-control" style="text-align:right;" id="ctxtQuantity" maxlength="9999999" />
+
+                                    <span id="rfvQuantity" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="div_QtyMatch" style="display:none;">
+                                <div style="float:right;">
+                                    Match Quantity
+                                </div>
+                                <div class="Left_Content" style="">
+                                    <input type="text" class="form-control" style="text-align:right;" id="ctxtMatchQty" maxlength="99999999" />
+
+                                    <span id="spntxtQuantity" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
+
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-3" id="div_Serial">
+                                <div>
+                                    Serial No
+                                </div>
+                                <div class="Left_Content" style="">
+                                    <input type="text" class="form-control" style="text-align:right;" id="txtserialID"  />
+                                    <span id="rfvSerial" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                                </div>
+                            </div>
+
+                                <div class="col-md-3">
+                                    <div>
+                                    </div>
+                                    <div class="Left_Content" style="padding-top: 12px">
+                                        <input type="button" onclick="SaveStock()" value="Add" class="btn btn-primary" />
+                                        @*<input id="btnSecondUOM" type="button" onclick="AlternateUOMDetails('POE')" value="2nd UOM" class="btn btn-success" />*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="showData" class="gridStatic">
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <input type="button" onclick="FullnFinalSave()" value="Save & Exit" class="btn btn-success btn-radius" />
+        <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+    </div>
+</div>
+        </div>
+    </div>
+<!-- Warehouse Details Modal -->
