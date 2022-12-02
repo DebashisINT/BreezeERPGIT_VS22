@@ -110,3 +110,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\ServiceManagement\bin\ru\DevExpress.Sparkline.v15.
 E:\PROJECTS\BreezeERPGIT_VS22\ServiceManagement\obj\Debug\ServiceManagement.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\ServiceManagement\obj\Debug\ServiceManagement.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ServiceManagement\obj\Debug\ServiceManagement.pdb
+

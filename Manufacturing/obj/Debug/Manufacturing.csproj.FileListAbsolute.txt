@@ -159,3 +159,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\Manufacturing\bin\ru\DevExpress.Xpo.v15.1.resource
 E:\PROJECTS\BreezeERPGIT_VS22\Manufacturing\obj\Debug\Manufacturing.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\Manufacturing\obj\Debug\Manufacturing.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Manufacturing\obj\Debug\Manufacturing.pdb
+

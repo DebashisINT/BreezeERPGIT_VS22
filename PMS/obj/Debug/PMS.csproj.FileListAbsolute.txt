@@ -155,3 +155,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\PMS\bin\ru\DevExpress.Xpo.v15.1.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\PMS\obj\Debug\PMS.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\PMS\obj\Debug\PMS.dll
 E:\PROJECTS\BreezeERPGIT_VS22\PMS\obj\Debug\PMS.pdb
+

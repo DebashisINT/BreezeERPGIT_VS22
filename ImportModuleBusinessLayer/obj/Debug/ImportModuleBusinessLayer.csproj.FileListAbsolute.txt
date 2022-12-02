@@ -16,3 +16,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\ImportModuleBusinessLayer\bin\Debug\EntityLayer.pd
 E:\PROJECTS\BreezeERPGIT_VS22\ImportModuleBusinessLayer\obj\Debug\ImportModuleBusinessLayer.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\ImportModuleBusinessLayer\obj\Debug\ImportModuleBusinessLayer.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ImportModuleBusinessLayer\obj\Debug\ImportModuleBusinessLayer.pdb
+

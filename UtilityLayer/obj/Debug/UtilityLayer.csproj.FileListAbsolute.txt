@@ -12,3 +12,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\DataAccessLayer.pdb
 E:\PROJECTS\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.dll
 E:\PROJECTS\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.pdb
+

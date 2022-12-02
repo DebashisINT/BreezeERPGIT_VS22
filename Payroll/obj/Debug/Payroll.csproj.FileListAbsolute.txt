@@ -161,3 +161,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\Payroll\bin\de\DevExpress.Data.v15.1.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Payroll\bin\es\DevExpress.Data.v15.1.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Payroll\bin\ja\DevExpress.Data.v15.1.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Payroll\bin\ru\DevExpress.Data.v15.1.resources.dll
+

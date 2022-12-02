@@ -174,3 +174,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\CutOff\bin\ru\DevExpress.Xpo.v15.1.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\CutOff\obj\Debug\CutOff.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\CutOff\obj\Debug\CutOff.dll
 E:\PROJECTS\BreezeERPGIT_VS22\CutOff\obj\Debug\CutOff.pdb
+

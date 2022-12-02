@@ -3,3 +3,6 @@
 *.vsidx
 *.vsidx
 *.cache
+*.vsidx
+*.lock
+

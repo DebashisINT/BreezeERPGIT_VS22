@@ -201,3 +201,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\Import\bin\de\DevExpress.Sparkline.v15.1.Core.reso
 E:\PROJECTS\BreezeERPGIT_VS22\Import\bin\es\DevExpress.Sparkline.v15.1.Core.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Import\bin\ja\DevExpress.Sparkline.v15.1.Core.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Import\bin\ru\DevExpress.Sparkline.v15.1.Core.resources.dll
+

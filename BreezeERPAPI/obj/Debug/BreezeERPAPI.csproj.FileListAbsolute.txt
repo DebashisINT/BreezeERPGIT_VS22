@@ -14,3 +14,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\BreezeERPAPI\bin\Microsoft.Web.Infrastructure.xml
 E:\PROJECTS\BreezeERPGIT_VS22\BreezeERPAPI\obj\Debug\BreezeERPAPI.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\BreezeERPAPI\obj\Debug\BreezeERPAPI.dll
 E:\PROJECTS\BreezeERPGIT_VS22\BreezeERPAPI\obj\Debug\BreezeERPAPI.pdb
+

@@ -200,3 +200,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\OpeningEntry\bin\de\DevExpress.Data.v15.1.resource
 E:\PROJECTS\BreezeERPGIT_VS22\OpeningEntry\bin\es\DevExpress.Data.v15.1.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\OpeningEntry\bin\ja\DevExpress.Data.v15.1.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\OpeningEntry\bin\ru\DevExpress.Data.v15.1.resources.dll
+

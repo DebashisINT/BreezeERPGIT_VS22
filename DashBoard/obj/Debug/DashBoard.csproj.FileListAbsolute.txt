@@ -108,3 +108,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\DashBoard\bin\ru\DevExpress.Sparkline.v15.1.Core.r
 E:\PROJECTS\BreezeERPGIT_VS22\DashBoard\obj\Debug\DashBoard.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\DashBoard\obj\Debug\DashBoard.dll
 E:\PROJECTS\BreezeERPGIT_VS22\DashBoard\obj\Debug\DashBoard.pdb
+

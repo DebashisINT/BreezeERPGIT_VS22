@@ -13,3 +13,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\bin\EntityLayer.pdb
 E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\obj\Debug\ECommerce.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\obj\Debug\ECommerce.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ECommerce\obj\Debug\ECommerce.pdb
+

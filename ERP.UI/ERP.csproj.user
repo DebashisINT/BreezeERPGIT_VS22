@@ -16,6 +16,9 @@
         <WebProjectProperties>
           <StartPageUrl>OMS/Login.aspx</StartPageUrl>
           <StartAction>SpecificPage</StartAction>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
           <SilverlightDebugging>False</SilverlightDebugging>
           <NativeDebugging>False</NativeDebugging>

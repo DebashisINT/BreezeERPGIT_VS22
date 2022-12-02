@@ -37,3 +37,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\EmployeeSelfService\bin\System.Web.WebPages.Razor.
 E:\PROJECTS\BreezeERPGIT_VS22\EmployeeSelfService\obj\Debug\EmployeeSelfService.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\EmployeeSelfService\obj\Debug\EmployeeSelfService.dll
 E:\PROJECTS\BreezeERPGIT_VS22\EmployeeSelfService\obj\Debug\EmployeeSelfService.pdb
+

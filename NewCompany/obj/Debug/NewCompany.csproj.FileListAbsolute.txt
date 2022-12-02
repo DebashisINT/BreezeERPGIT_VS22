@@ -148,3 +148,4 @@ E:\PROJECTS\BreezeERPGIT_VS22\NewCompany\bin\ru\DevExpress.Xpo.v15.1.resources.d
 E:\PROJECTS\BreezeERPGIT_VS22\NewCompany\obj\Debug\NewCompany.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\NewCompany\obj\Debug\NewCompany.dll
 E:\PROJECTS\BreezeERPGIT_VS22\NewCompany\obj\Debug\NewCompany.pdb
+
