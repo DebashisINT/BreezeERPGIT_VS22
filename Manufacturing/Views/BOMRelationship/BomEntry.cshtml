@@ -1,0 +1,603 @@
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model Manufacturing.Models.ViewModel.BomRelationshipViewModel
+@{
+    ViewBag.Title = "BomEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
+<script>
+    $(document).ready(function () {
+        ParentBOMGridLookup.GetGridView().Refresh();
+        ParentBOMGridLookup.GetGridView().Refresh();
+        //ParentBOMGridLookup.GetGridView().Refresh();
+        setTimeout(function () {
+            $("#BomRelationshipNo").focus();
+        }, 200);
+        var BOMRelation_ID = $('#hdnBOMRelation_ID').val();
+        if (BOMRelation_ID >0)
+        {
+            $('#BomRelationshipNo').attr("disabled", "disabled");
+            ParentBOMGridLookup.SetEnabled(false);
+            if ('@ViewBag.View' == "View") {               
+                $('#btnSaveandExit').hide();
+            }
+            else {
+                $('#btnSaveandExit').show();
+            }
+        }
+    });
+    function fn_BomRelationshipNo_TextChanged() {
+        
+        var RelationshipNo = $("#BomRelationshipNo").val();
+        //jAlert(RelationshipNo);
+        
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("UniqueBomRelationshipNo", "BOMRelationship")",             
+            data: JSON.stringify({ RelationshipNo: RelationshipNo }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var data = msg.d;
+
+                if (data == "1") {
+                    jAlert("Please enter unique No.", "Alert", function () { $("#BomRelationshipNo").focus(); });
+                    $("#BomRelationshipNo").val("");
+                    return false;
+                }
+            }
+
+        });
+    }
+    $(function () {
+      //  PopulateParentBOM();
+    });
+    function BOMRelationSave(mode) {
+       LoadingPanel.Show();
+        savemode = mode;
+        hasmsg = 0;
+        var BomRelationshipNo = $('#BomRelationshipNo').val();      
+        var Unit = $('#ddlBankBranch').val();
+        var BomRelationshipName = $('#BomRelationshipName').val();
+        var hdnDetailsID = $('#hdnBOMRelationID').val();
+        var oneproduct = "";
+        var visiablerow = gridChildBOMList.GetVisibleRowsOnPage();
+        if (visiablerow > 0) {
+            for (var i = 100; i > -500; i--) {
+                if (gridChildBOMList.GetRow(i)) {
+
+                    if (oneproduct == "" || oneproduct == null) {
+                        oneproduct = gridChildBOMList.batchEditApi.GetCellValue(i, 'ChildBOM');
+                    }
+                }
+            }
+        }
+        
+        var ParentBOMId = (ParentBOMGridLookup.GetGridView().GetRowKey(ParentBOMGridLookup.GetGridView().GetFocusedRowIndex()));
+        var ParentBOMFG = $('#ParentBOMFG').val();
+        var ParentBOMREV = $('#ParentBOMREV').val();     
+       
+        if (BomRelationshipNo == "" || BomRelationshipNo == null) {
+            jAlert("Please Select Relationship No.");
+            LoadingPanel.Hide();
+            return false;
+        }
+        else if (ParentBOMId == "" || ParentBOMId == null) 
+        {
+            jAlert("Please select Parent BOM.");
+            LoadingPanel.Hide();
+            return false;
+        }
+        else if (oneproduct == "") {
+            jAlert("Please Add Child BOM.");
+            LoadingPanel.Hide();
+            return false;
+        }
+
+        if (hdnDetailsID > 0) {
+            DetailsID = hdnDetailsID;         
+          
+        }      
+
+        var data = {
+            BOMRelation_ID:$("#hdnBOMRelation_ID").val(),
+            BomRelationshipNo: BomRelationshipNo,
+            BomRelationshipName: BomRelationshipName,
+            Unit: Unit,
+            ParentBOMId: $("#hdnParent_id").val(),
+            ParentBOMFG: $("#ParentBOMFG").val(),
+            ParentBOMREV: $("#ParentBOMREV").val()
+            
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveBOMRelaton", "BOMRelationship")",           
+            data: "{Details:" + JSON.stringify(data) + "}",
+        async: true,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            if (response != null) {
+                // var Message = response.split('~')[1];
+                var DetailsID = response.split('~')[1];
+
+                var Sucess = response.split('~')[0];
+                if (DetailsID > 0) {
+
+                    $('#BomRelationshipNo').val('');
+                    $('#ddlBankBranch').val($("#ddlBankBranch option:first").val());
+                    $('#hdnSchemaId').val('');
+
+                    $('#BomRelationshipName').val('');
+                    $('#ParentBOMFG').val('');
+                    $('#ParentBOMREV').val('');
+                    $('#hdnBOMRelationID').val(0);
+                    ParentBOMGridLookup.gridView.UnselectRows(1);
+
+
+                    jAlert('BOM Relation saved successfully.', 'Alert!', function (r) {
+                        if (r) {
+                            if (savemode == "Exit") {
+                                setTimeout(function () {
+                                    var url = $('#hdnEstimateListPage').val();
+                                    window.location.href = url;
+                                }, 500);
+                            }
+                        }
+                    });
+
+                    LoadingPanel.Hide();
+
+                }
+                else if (DetailsID=="-10")
+                {
+                    DetailsID = 0;
+                    savemode = "";
+                    jAlert('Duplicate Child BOM not Allow.');
+                    LoadingPanel.Hide();
+                    return false;
+                }
+                else {
+
+                    DetailsID = 0;
+                    savemode = "";
+                    jAlert('Please try again later.');
+                    LoadingPanel.Hide();
+                    return false;
+                }
+
+            }
+        }
+            
+            });
+    
+    }
+
+    function PopulateParentBOM()
+    {
+        ParentBOMGridLookup.GetGridView().Refresh();
+        ParentBOMGridLookup.GetGridView().Refresh();
+    }
+    function ProjectStartCallback(s, e) {
+       
+        e.customArgs["ParentBOMID"] = '@ViewBag.ParentBOMID';     
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Unit"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Unit"] = $("#ddlBankBranch").val();
+        }
+    }
+    function ProjectSelectionChanged(s, e) {        
+
+        var ParentBOMId = (ParentBOMGridLookup.GetGridView().GetRowKey(ParentBOMGridLookup.GetGridView().GetFocusedRowIndex()));
+       // if (ProjectId != $("#hdnProjectgotfocusId").val()) {
+           
+            var ParentBOMValue = ParentBOMId;
+            var ProductID = ParentBOMValue.toString().split('~')[1];
+            var ProductName = ParentBOMValue.toString().split('~')[2];
+            var REVNO = (ParentBOMValue.toString().split('~')[3] != null) ? ParentBOMValue.toString().split('~')[3] : "";
+            var BOMDetailsID = ParentBOMValue.toString().split('~')[0];
+            $('#hdnParent_id').val(BOMDetailsID);
+            $('#ParentBOMFG').val(ProductName);
+            $('#ParentBOMREV').val(REVNO);
+
+            cChildBOMGridLookup.GetGridView().Refresh();
+            cChildBOMGridLookup.GetGridView().Refresh();
+      
+    }
+    function ProjectLookupValChange() {
+      //  ParentBOMGridLookup.GetGridView().Refresh();
+        //  ProjectGridLookup.GetGridView().Refresh();
+    }
+
+    function ChildBOMStartCallback(s, e) {
+
+        if ('@ViewBag.ParentBOMID' != "") {
+            e.customArgs["ParentBOMID"] = '@ViewBag.ParentBOMID';
+        }
+        else {
+            e.customArgs["ParentBOMID"] = $('#hdnParent_id').val();
+        }
+        if ('@ViewBag.ChildBOMID' != "") {
+            e.customArgs["ChildBOMID"] = '@ViewBag.ChildBOMID';
+        }
+        else {
+            e.customArgs["ChildBOMID"] = $('#hdnChild_id').val();
+        }
+         
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Unit"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Unit"] = $("#ddlBankBranch").val();
+        }
+    }
+    function ChildBOMSelectionChanged(s, e) {
+        var ChildBOMId = (cChildBOMGridLookup.GetGridView().GetRowKey(cChildBOMGridLookup.GetGridView().GetFocusedRowIndex()));
+        if (ChildBOMId != "" && ChildBOMId!=null) {
+
+
+            var ChildBOMValue = ChildBOMId;
+            var ProductID = ChildBOMValue.toString().split('~')[1];
+            var ProductName = ChildBOMValue.toString().split('~')[2];
+            var REVNO = (ChildBOMValue.toString().split('~')[3] != null) ? ChildBOMValue.toString().split('~')[3] : "";
+            var ChildBOM_ID = ChildBOMValue.toString().split('~')[0];
+
+            $('#hdnSingleChildId').val(ChildBOM_ID);
+            $('#hdnChild_id').val(ChildBOMId);
+            $('#ChildBOMFG').val(ProductName);
+            $('#ChildBOMREV').val(REVNO);
+            $('#hdnChildProductid').val(ProductID);
+            $('#txtChildBOMNO').val(ChildBOMValue.toString().split('~')[4]);
+            ParentBOMGridLookup.SetEnabled(false);
+           // $('#ParentBOMGridLookup_I').attr("disabled", "disabled");
+        }
+    }
+    function btnAdd_ProductClick() {
+
+        var ChildBOMId = (cChildBOMGridLookup.GetGridView().GetRowKey(cChildBOMGridLookup.GetGridView().GetFocusedRowIndex()));
+        if (ChildBOMId == null ) {
+            jAlert("Please select Child BOM");
+            return;
+        }
+        else if ($("#ChildBOMFG").val() == null) {
+            jAlert("Please select Child BOM FG");
+            return;
+        }
+       
+        else {
+            @*if ('@ViewBag.EntryType' == 'EDIT') {
+                if (parseFloat(ProductQty) < parseFloat($("#BalQty").val())) {
+                    jAlert("Quantity can not be less than tagged quantity.");
+                    cProductQty.SetText($("#BalQty").val());
+                    return;
+                }
+                else {
+                    cProductQty.GetText(ProductQty);
+                }
+            }
+            else {
+                cProductQty.GetText(ProductQty);
+            }*@
+
+            var data = {
+                BOMChildID: $("#hdnChild_id").val(),
+                ChildBOM: $("#txtChildBOMNO").val(),
+                ChildBOMFG: $("#ChildBOMFG").val(),
+                ChildBOMREV: $("#ChildBOMREV").val(),
+                ChildBOM_ID: $("#hdnSingleChildId").val()
+                
+            }
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddBOMChild", "BOMRelationship")",
+                data: "{prod:" + JSON.stringify(data) + "}",
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        gridChildBOMList.Refresh();
+                        gridChildBOMList.Refresh();
+
+                        cChildBOMGridLookup.gridView.UnselectRows(1);
+                        $("#hdnChild_id").val("");
+                       // $("#ddlChildBOM").val('');
+                        $("#ChildBOMFG").val('');
+                        $("#ChildBOMREV").val('');
+                        $("#GuiIDS").val('');
+
+
+                    }
+                }
+            });
+        }
+    }
+    @*function PopulateParentBOM() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ParentBOM", "BOMRelationship")",
+            //   data: { type: type },
+            success: function (response) {
+                var html = "";
+                var hdnParentBOMID = $('#hdnParentBOMID').val();
+                for (var i = 0; i < response.length; i++) {
+                    if (hdnParentBOMID != '') {
+                        html = html + "<option value='" + response[i].ID + "' selected>" + response[i].BOM_No + "</option>";
+                    }
+                    else {
+                        html = html + "<option value='" + response[i].ID + "'>" + response[i].BOM_No + "</option>";
+                    }
+                }
+                $('#ddlParentBOM').html(html);
+
+            }
+        });
+    }*@
+    function ParentBOM_ValueChange() {
+        var val = $('#ddlParentBOM option:selected').val();
+        var ParentBOMValue = val;
+        var ProductID = ParentBOMValue.toString().split('~')[1];
+        var ProductName = ParentBOMValue.toString().split('~')[2];
+        var REVNO = (ParentBOMValue.toString().split('~')[3] != null) ? ParentBOMValue.toString().split('~')[3] : "";
+        var BOMDetailsID = ParentBOMValue.toString().split('~')[0];
+        $('#hdnParent_id').val(BOMDetailsID);
+        $('#ParentBOMFG').val(ProductName);
+        $('#ParentBOMREV').val(REVNO);
+       // PopulateChildBOM();
+        ChildBOMGridLookup.GetGridView().Refresh();
+        ChildBOMGridLookup.GetGridView().Refresh();
+
+    }
+    function PopulateChildBOM() {
+
+        var BOMDEtailsID = $('#hdnParent_id').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ChildBOM", "BOMRelationship")",
+            data: { ParentBOMID: BOMDEtailsID },
+            success: function (response) {
+                var html = "";
+                // var hdnParentBOMID = $('#hdnChildBOMID').val();
+                for (var i = 0; i < response.length; i++) {
+                    //if (hdnParentBOMID != '') {
+                    //    html = html + "<option value='" + response[i].ID + "' selected>" + response[i].BOM_No + "</option>";
+                    //}
+                    //else {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].BOM_No + "</option>";
+                    //}
+                }
+                $('#ddlChildBOM').html(html);
+            }
+        });
+    }
+    //function ChildBOM_ValueChange() {
+    //    var val = $('#ddlChildBOM option:selected').val();
+    //    var ChildBOMValue = val;
+    //    var ProductID = ChildBOMValue.toString().split('~')[1];
+    //    var ProductName = ChildBOMValue.toString().split('~')[2];
+    //    var REVNO = (ChildBOMValue.toString().split('~')[3] != null) ? ChildBOMValue.toString().split('~')[3] : "";
+    //    var ChildBOMID = ChildBOMValue.toString().split('~')[0];
+
+    //    $('#hdnChild_id').val(ChildBOMValue);
+    //    $('#ChildBOMFG').val(ProductName);
+    //    $('#ChildBOMREV').val(REVNO);
+    //    $('#hdnChildProductid').val(ProductID);
+    //    $('#txtChildBOMNO').val(ChildBOMValue.toString().split('~')[4]);
+    //    $('#ddlParentBOM').attr("disabled", "disabled");
+    //}
+    function EditData(values) {       
+        $.ajax({
+            type: "POST",
+            //url: "@Url.Action("EditData", "BOMRelationship")",
+            url: "../BOMRelationship/EditData",
+            data: { HiddenID: values },
+            success: function (response) {
+                if (response != null) {
+                    var total = cChildBOMGridLookup.GetGridView().GetVisibleRowsOnPage();
+                    for (let i = 0; i < total; i++) {
+                        var rowkey = cChildBOMGridLookup.GetGridView().GetRowKey(i)
+                        //console.log("rowkey", rowkey)
+                        if (rowkey == response.BOMChildID) {
+                            //console.log("matched", i)
+                            cChildBOMGridLookup.GetGridView().SetFocusedRowIndex(i);
+                        }
+                    }
+                    $('#hdnChild_id').val(response.BOMChildID);
+                    $('#ChildBOMFG').val(response.ChildBOMFG);
+                    $('#ChildBOMREV').val(response.ChildBOMREV);
+                   // $('#hdnChildProductid').val(ProductID);
+                    $('#txtChildBOMNO').val(response.ChildBOM);
+                    $("#GuiIDS").val(response.Guids);
+                    //cChildBOMGridLookup.GetGridView().Refresh();
+                    //cChildBOMGridLookup.GetGridView().Refresh();
+                    }
+            }
+            
+        });
+    }
+
+    function DeleteData(values) {
+        $.ajax({
+            type: "POST",
+            //url: "@Url.Action("DeleteData", "BOMRelationship")",
+            url: "../BOMRelationship/DeleteData",
+            data: { HiddenID: values },
+            success: function (response) {
+                if (response != null) {
+                    gridChildBOMList.Refresh();
+                  //  gridEstimateProductEntryList.Refresh();
+                }
+            }
+        });
+    }
+</script>
+
+<script src="~/assests/pluggins/choosen/choosen.min.js"></script>
+<link href="~/assests/pluggins/choosen/choosen.min.css" rel="stylesheet" />
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+@*<link href="~/Views/WorkCenter/WorkCenterEntry.css" rel="stylesheet" />*@
+@*<div class="workOverlay"></div>*@
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label> Bom Relationship</label>
+        </h3>
+
+    </div>
+    <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOMRelationship", "BOMRelationship")"><i class="fa fa-times"></i></a></div>
+</div>
+<div class="boxBorder" >
+    <div class="styledBox">
+        <div class="row">
+            <div class="col-sm-3">
+                <label>Bom Relationship No <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.BomRelationshipNo, new { @class = "form-control", @onchange = "fn_BomRelationshipNo_TextChanged()" })
+                    <span id="EEstimateNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label>Bom Relationship Name </label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.BomRelationshipName, new { @class = "form-control" })
+                    <span id="EEstimateNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-3">
+                <label class="mtop10">Unit <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.DropDownListFor(x => x.Unit, new SelectList(Model.UnitList, "BranchID", "BankBranchName"), new { @id = "ddlBankBranch", @class = "form-control",@onchange ="PopulateParentBOM()" })@*, @onchange = "PopulateWareHouseData();"*@
+                    <span id="EddlBankBranch" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            @*<div class="col-sm-4">
+                <label>Parent BOM <span style="color:red">*</span></label>
+                <div class="relative">
+                    <select id="ddlParentBOM" class="form-control" onchange="ParentBOM_ValueChange()"></select>
+                    <span id="EParentBOM" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>*@
+
+
+            <div class=" col-sm-3" id="divProj">
+                <label class="mtop10">Parent BOM <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.Action("GetParentBOM", "BOMRelationship", new { @class = "form-control", ParentBOMID = ViewBag.ParentBOMID, Branchs = ViewBag.Unit })
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label style=" margin-top: 5px;">Parent BOM FG <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.ParentBOMFG, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EEstimateNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label style=" margin-top: 5px;">Parent BOM REV </label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.ParentBOMREV, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EEstimateNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="styledBox">
+        <div class="row">
+            @*<div class="col-sm-3">
+                <label>Child BOM </label>
+                <div class="relative">
+                    <select id="ddlChildBOM" class="form-control" onchange="ChildBOM_ValueChange()"></select>
+                    <span id="EChildBOM" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>*@
+            <div class=" col-sm-2" id="divProj">
+                <label class="mtop10">Child BOM <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.Action("GetChildBOM", "BOMRelationship", new { ParentBOMID = ViewBag.ParentBOMID, ChildBOMID = ViewBag.ChildBOMID, Branchs = ViewBag.Unit })
+
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <label>Child BOM FG </label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.ChildBOMFG, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <label>Child BOM REV </label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.ChildBOMREV, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label>&nbsp; </label>
+                <div class="relative">
+                    <button type="button" id="btnAdd" onclick="btnAdd_ProductClick()" class="btn btn-success">ADD</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div id="refreshgrid">
+                    <div class=" ">
+                        @{
+                            Html.RenderAction("GetChildBOMEntryList", "BOMRelationship");
+                        }
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="form-box-footer">
+        <div class="inline-block addResourceBtn themeColor " id="btnSaveandExit" onclick="BOMRelationSave('Exit');"><div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div><span>Save and <span><u>E</u></span>xit</span></div>
+
+    </div>
+</div>
+
+<input type="hidden" value="@Model.ParentBOMID" id="hdnParentBOMID" />
+<input type="hidden" value="@Model.ParentBOMID" id="hdnParent_id" />
+<input type="hidden" value="0" id="hdnChild_id" />
+<input type="hidden" value="0" id="hdnChildProductid" />
+<input type="hidden" value="" id="txtChildBOMNO" />
+<input type="hidden" id="hdnProjectgotfocusId" />
+<input type="hidden" value="@Model.BOMRelation_ID" id="hdnBOMRelationID" />
+<input type="hidden" value="0" id="hdnSingleChildId" />
+<input type="hidden" value="@Model.BOMRelation_ID" id="hdnBOMRelation_ID" />
+<input type="hidden" value="@Url.Action("BOMRelationship", "BomRelationship")" id="hdnEstimateListPage" />
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+      //  settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()
+@{
+    ViewBag.Title = "Index";
+}
+@*<input type="hidden" value="@Model.ChildBOMID" id="hdnChildBOMID" />*@
+
+
+
+
+
+
+

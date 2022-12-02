@@ -1,0 +1,274 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+
+@{
+    ViewBag.Title = "BOMRelationship";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(function () {
+        PopulateUnitList();
+        if (localStorage.getItem('FromDateMPS')) {
+            BOMRelFromDate_dt.SetDate(new Date(localStorage.getItem('FromDateMPS')));
+        }
+        if (localStorage.getItem('ToDateMPS')) {
+            BOMRelToDate_dt.SetDate(new Date(localStorage.getItem('ToDateMPS')));
+        }
+        $('#btnAddNew').focus();
+    });
+    function OnclickAddBOMRelation() {
+        var url = "/BOMRelationship/BOMEntry?ActionType=ADD";
+        window.location.href = url;
+    }
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+        if (exportid > 0) {
+            var url = '@Url.Action("ExportMPSGridList", "BOMRelationship", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+
+
+        }
+
+    }
+    function datevalidateTo() {
+
+        if (BOMRelFromDate_dt.GetDate()) {
+            if (BOMRelToDate_dt.GetDate() <= BOMRelFromDate_dt.GetDate()) {
+                BOMRelToDate_dt.SetValue(BOMRelFromDate_dt.GetDate());
+                //BOMRelToDate_dt.SetMinDate(BOMRelFromDate_dt.GetDate());
+            }
+        }
+    }
+    function gridRowclick(s, e) {
+        $('#gridBOMRelationshipList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+    function OpenEstimateData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            var url = "/BOMRelationship/BOMEntry?ActionType=EDIT&BOMRelationID=" + detailsid;
+            window.location.href = url;            
+        }
+    }
+
+    function ViewEstimateData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            var url = "/BOMRelationship/BOMEntry?ActionType=View&BOMRelationID=" + detailsid;
+            window.location.href = url;            
+        }
+    }
+
+    function RemoveEstimateData(detailsid) {
+
+        jConfirm('Confirm delete?', 'Alert!', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveEstimateDataByID", "BOMRelationship")",
+                    data: { detailsid: detailsid },
+                success: function (response) {
+                    if (response != null) {
+                        jAlert(response.Message);
+                        if (response.Success) {
+                            gridBOMRelationshipList.Refresh();
+                            gridBOMRelationshipList.Refresh();
+                        }
+                    }
+                }
+            });
+        }
+        });
+    }
+
+    
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "MPS")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+                if (localStorage.getItem('MPSBranch')) {
+                    if ($("#ddlunitlist option[value=" + localStorage.getItem('MPSBranch') + "]").text() != "" && $("#ddlunitlist option[value=" + localStorage.getItem('MPSBranch') + "]").text() != null) {
+                        $('#ddlunitlist').val(localStorage.getItem('MPSBranch'));
+                    }
+                }
+
+            }
+    });
+    }
+    function updateGridByDate() {
+        if (BOMRelFromDate_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { BOMRelFromDate_dt.Focus(); });
+        }
+        else if (BOMRelToDate_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { BOMRelToDate_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(BOMRelFromDate_dt.GetValue());
+            var todate = GetServerDateFormat(BOMRelToDate_dt.GetValue());
+            var unitid = $('#ddlunitlist option:selected').val();
+
+            localStorage.setItem("FromDateMPS", BOMRelFromDate_dt.GetDate());
+            localStorage.setItem("ToDateMPS", BOMRelToDate_dt.GetDate());
+            localStorage.setItem("MPSBranch", unitid);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetEstimateDateFilter", "BOMRelationship")",
+                data: { unitid: unitid, FromDate: fromdate, ToDate: todate },
+            success: function (response) {
+                if (response) {
+                    gridBOMRelationshipList.Refresh();
+                    gridBOMRelationshipList.Refresh();
+                }
+            }
+        });
+    }
+    }
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+</script>
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="">
+            <label>BOM Relationship</label>
+        </h3>
+    </div>
+
+</div>
+<div class="mainarea form_main">
+
+
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+            <div class="gridHeadersec">
+                <div class="clearfix">
+                    <div class="md-pull-left">
+                        <button type="button" id="btnAddNew" class="btn btn-success  btn-radius" onclick="OnclickAddBOMRelation();">
+                            <span class="btn-icon"><i class="fa fa-plus"></i></span>Bom Relationship
+                        </button>
+
+                        <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                            <option value="0">Export to</option>
+                            <option value="1">PDF</option>
+                            <option value="2">XLSX</option>
+                            <option value="3">RTF</option>
+                            <option value="4">CSV</option>
+                        </select>
+                    </div>
+                    <div class="md-pull-right">
+                        <table class="paddingTbl">
+                            <tr>
+                                <td>
+                                    From Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "BOMRelFromDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+
+                            }
+                        ).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    To Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "BOMRelToDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+
+                            }
+                        ).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    Unit
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        <select id="ddlunitlist" class="form-control"></select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" id="btnShowData" class="btn btn-primary btn-radius" onclick="updateGridByDate()">Show</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div id="refreshgrid" class="relative">
+                    @{
+                        Html.RenderAction("GetBomCenterList", "BOMRelationship");
+                    }
+                </div>
+        </div>
+    </div>
+
+</div>
+

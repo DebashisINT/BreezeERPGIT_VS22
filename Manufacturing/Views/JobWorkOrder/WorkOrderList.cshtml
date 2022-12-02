@@ -1,0 +1,552 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model Manufacturing.Models.ViewModel.JobWorkOrderViewModel
+
+@{
+    ViewBag.Title = "Job Work Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+
+<script>
+    var load = 0;
+    function OpenWOData(workorderid) {
+        if (parseInt(workorderid) > 0) {
+
+           
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetWODataByID", "JobWorkOrder")",
+                data: { workorderid: workorderid, IsView: 0 },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnWOAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+
+    function ClosedJobOrderData(workorderid) {
+        if (parseInt(workorderid) > 0) {
+            jConfirm('Do you want to close  Job Work Order?', 'Alert!', function (r) {
+                if (r) {
+                    $('#hdndetailsid').val(parseInt(workorderid));
+                    $('#ClosedModal').modal('show');
+                }
+            });
+        }
+    }
+
+    function Closedjob() {
+        var txtClosedJobWorkOrderRemarks = $('#txtClosedJobWorkOrderRemarks').val();
+        var detailsid = $('#hdndetailsid').val();
+        if (txtClosedJobWorkOrderRemarks != "" && parseInt(detailsid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ClosedJobDataByID", "JobWorkOrder")",
+                data: { detailsid: detailsid, ClosedJobRemarks: txtClosedJobWorkOrderRemarks },
+                success: function (response) {
+                if (response != null) {
+                    if (response.Success==1) {
+                        $('#ClosedModal').modal('hide');
+                        jAlert("Job Work Order closed successfully.");
+                        gridWOList.Refresh();
+                        gridWOList.Refresh();
+                    }
+                    else if (response.Success==2)
+                    {
+                        $('#ClosedModal').modal('hide');
+                        jAlert("No Order Qty  available for this order. Cannot proceed");
+                        gridWOList.Refresh();
+                        gridWOList.Refresh();
+                    }
+                    else {
+                        jAlert("Please try again later!");
+                        return false;
+                    }
+                }
+            }
+        });
+    }
+    else {
+            jAlert("Please enter Remarks to close Job Work Order!");
+    return false;
+    }
+    }
+
+
+    function ViewWOData(workorderid) {
+        if (parseInt(workorderid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetWODataByID", "JobWorkOrder")",
+                data: { workorderid: workorderid, IsView: 1 },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnWOAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    function RemoveWOData(workorderid) {
+        jConfirm('Confirm delete?', 'Alert!', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveWODataByID", "JobWorkOrder")",
+                    data: { workorderid: workorderid },
+                    success: function (response) {
+                        if (response != null) {
+                            jAlert(response.Message);
+                            if (response.Success) {
+                                gridWOList.Refresh();
+                                gridWOList.Refresh();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+    }
+    var BOMId = 0;
+    function onPrintJv(id, RowIndex) {
+        BOMId = id;
+        //jAlert('No design available!');
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetJobDesignerList", "JobWorkOrder")",
+            data: { ID: BOMId },
+        success: function (response) {
+            if (response) {
+
+                if (response.length > 0) {
+                    var html = "";
+                    for (var i = 0; i < response.length; i++) {
+                        html = html + "<option value='" + response[i].reportValue + "'>" + response[i].name + "</option>";
+                    }
+                    $('#scldesign').html(html);
+
+                    $('#PrintModal').modal('show');
+                    $('#btnDegOK').focus();
+                }
+                else {
+                    jAlert('No design available!');
+                }
+            }
+            else {
+                jAlert('No design available!');
+            }
+        }
+    });
+    }
+
+
+    function ShowDesign() {
+        //var BankBranchID =
+        //var TotDocument = cSelectPanel.cpSuccess.split(',');
+        var reportName = $('#scldesign option:selected').val();
+        var module = 'JobWorkOrder';
+        var isnotchecked = 0;
+        var PrintOriginal = $('#PrintOriginal').prop('checked');
+        var PrintDuplicate = $('#PrintDuplicate').prop('checked');
+        var PrintTriplicate = $('#PrintTriplicate').prop('checked');
+        if (PrintOriginal) {
+            isnotchecked = 1;
+            window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + BOMId + '&PrintOption=' + $('#PrintOriginal').val(), '_blank')
+        }
+        if (PrintDuplicate) {
+            isnotchecked = 1;
+            window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + BOMId + '&PrintOption=' + $('#PrintDuplicate').val(), '_blank')
+        }
+
+        if (PrintTriplicate) {
+            isnotchecked = 1;
+            window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + BOMId + '&PrintOption=' + $('#PrintTriplicate').val(), '_blank')
+        }
+
+        if (isnotchecked == 0) {
+            jAlert('Please check Original For Recipient and proceed.');
+        }
+
+    }
+
+    function OnclickViewAttachment(id,Name) {
+        $('#hdnDocNo').val(id);
+       
+        $('#AttachmentModal').modal('show');
+        setTimeout(function () {
+            $("#docNumber").val(Name);
+            $("#docFileName").val(Name);
+            $('#documentType').focus();
+        }, 1000);
+    }
+
+    $(function () {
+        $('#btnAddNew').focus();
+    });
+
+    $(document).ready(function () {
+
+        if (localStorage.getItem('FromDateWO')) {
+            FromDate_dt.SetDate(new Date(localStorage.getItem('FromDateWO')));
+        }
+        if (localStorage.getItem('ToDateWO')) {
+            ToDate_dt.SetDate(new Date(localStorage.getItem('ToDateWO')));
+        }
+
+        setTimeout(function () {
+            PopulateUnitList();
+        }, 500);
+
+
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 65 && event.altKey == true) {
+                var url = '@Url.Action("WorkOrderEntry", "JobWorkOrder")';
+                window.location.href = url;
+            }
+        });
+    });
+
+    function datevalidateTo() {
+
+        if (FromDate_dt.GetDate()) {
+            if (ToDate_dt.GetDate() <= FromDate_dt.GetDate()) {
+                ToDate_dt.SetValue(FromDate_dt.GetDate());
+                ToDate_dt.SetMinDate(FromDate_dt.GetDate());
+            }
+        }
+    }
+
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "BOMEntry")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+                if (localStorage.getItem('WOBranch')) {
+                    if ($("#ddlunitlist option[value=" + localStorage.getItem('WOBranch') + "]").text() != "" && $("#ddlunitlist option[value=" + localStorage.getItem('WOBranch') + "]").text() != null) {
+                        $('#ddlunitlist').val(localStorage.getItem('WOBranch'));
+                    }
+                }
+            }
+        });
+    }
+
+
+    function updateGridByDate() {
+        if (FromDate_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { FromDate_dt.Focus(); });
+        }
+        else if (ToDate_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { ToDate_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(FromDate_dt.GetValue());
+            var todate = GetServerDateFormat(ToDate_dt.GetValue());
+            var unitid = $('#ddlunitlist option:selected').val();
+
+            localStorage.setItem("FromDateWO", FromDate_dt.GetDate());
+            localStorage.setItem("ToDateWO", ToDate_dt.GetDate());
+            localStorage.setItem("WOBranch", unitid);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetBOMDateFilter", "JobWorkOrder")",
+                data: { unitid: unitid, FromDate: fromdate, ToDate: todate },
+                success: function (response) {
+                    if (response) {
+                        gridWOList.Refresh();
+                        gridWOList.Refresh();
+                    }
+                }
+            });
+        }
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+        if (exportid > 0) {
+            var url = '@Url.Action("ExportGridList", "JobWorkOrder", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+        }
+    }
+    function gridRowclick(s, e) {
+        $('#gridWOList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridWOList.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridWOList.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridWOList.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridWOList.SetWidth(cntWidth);
+            }
+
+        });
+    });
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Job Work Order</label>
+        </h3>
+        @*<div id="ApprovalCross" class="crossBtn"><a href=""><i class="fa fa-times"></i></a></div>*@
+
+    </div>
+</div>
+<div class="mainarea form_main">
+
+    <input type="hidden" value="@Url.Action("WorkOrderEntry", "JobWorkOrder")" id="hdnWOAddUpdate" />
+
+    <div>
+        @{
+            Html.RenderAction("AttachmentDocument", "Attachment", new { module = "JobWorkOrder", DocNo = "" });
+        }
+    </div>
+
+
+    <div class="clearfix">
+        <div class="md-pull-left">
+            @if (ViewBag.CanAdd)
+            {
+                @*<button type="button" class="btn btn-success" id="btnAddNew" onclick="location.href='@Url.Action("WorkOrderEntry", "WorkOrder")'"><u>A</u>dd New</button>*@
+
+                <button type="button" class="btn btn-success btn-radius" id="btnAddNew" onclick="location.href = '@Url.Action("WorkOrderEntry", "JobWorkOrder")'">
+                    <span class="btn-icon"><i class="fa fa-plus"></i></span>
+                    <u>A</u>dd New
+                </button>
+            }
+            <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">RTF</option>
+                <option value="4">CSV</option>
+            </select>
+        </div>
+        <div class="md-pull-right">
+            <table class="paddingTbl">
+                <tr>
+                    <td>From Date</td>
+                    <td>
+                        <div class="relative">
+                            @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "FromDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+                                settings.Properties.UseMaskBehavior = true;
+
+                            }
+                        ).GetHtml()
+                        </div>
+                    </td>
+                    <td>To Date</td>
+                    <td>
+                        <div class="relative">
+                            @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "ToDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+                                settings.Properties.UseMaskBehavior = true;
+
+                            }
+                        ).GetHtml()
+                        </div>
+                    </td>
+                    <td>Unit</td>
+                    <td style="width:180px">
+                        <div class="relative">
+                            <select id="ddlunitlist" class="form-control"></select>
+                        </div>
+                    </td>
+                    <td><button type="button" id="btnShowData" class="btn btn-primary btn-radius" style="    margin-top: 15px;" onclick="updateGridByDate()">Show</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+            <div class="gridHeadersec">
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+            </div>
+            <div id="refreshgrid" class="relative">
+                @{
+                    Html.RenderAction("GetWorkOrderList", "JobWorkOrder");
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Closed Modal -->
+    <div class="modal fade pmsModal w30" id="ClosedModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Close Job Work Order</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="detailsarea">
+
+                        <input type="hidden" id="hdndetailsid" value="0" />
+
+                        <div>
+                            <label>Remarks <span style="color:red">*</span></label>
+
+                            <textarea id="txtClosedJobWorkOrderRemarks" class="textareaBig"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" id="btnDegOK" class="btn btn-success btn-radius" onclick="Closedjob()">Ok</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Closed Modal -->
+
+    <!-- Print Modal -->
+    <div class="modal fade pmsModal w30" id="PrintModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Design(s)</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="detailsarea">
+
+                        <div id="chkPrint">
+                            <div>
+                                <input type="checkbox" id="PrintOriginal" value="1" /> <label>Original</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="PrintDuplicate" value="2" /> <label>Duplicate</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="PrintTriplicate" value="3" /> <label>Triplicate</label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <select id="scldesign" class="form-control"></select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" id="btnDegOK" class="btn btn-success btn-radius" onclick="ShowDesign()">Ok</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Print Modal -->
+</div>
+

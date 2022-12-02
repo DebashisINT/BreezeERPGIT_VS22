@@ -1,0 +1,899 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{764A2F3C-15CE-4C95-BB0D-0BACE612D3D9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Manufacturing</RootNamespace>
+    <AssemblyName>Manufacturing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v15.1.Core, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.ASPxTreeList.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.Mvc5.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v15.1.Web, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Start\FilterConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App_Start\RouteConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AttachmentController.cs" />
+    <Compile Include="Controllers\BOMEntryController.cs" />
+    <Compile Include="Controllers\BomRelationAddController.cs" />
+    <Compile Include="Controllers\BOMRelationshipController.cs" />
+    <Compile Include="Controllers\FGReceivedController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IssueReturnController.cs" />
+    <Compile Include="Controllers\JobWorkOrderController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ManufacturingProcessMasterController.cs" />
+    <Compile Include="Controllers\ManufacturingStagesController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\MaterialIssueController.cs" />
+    <Compile Include="Controllers\MfbomController.cs" />
+    <Compile Include="Controllers\MFProductionOrderController.cs" />
+    <Compile Include="Controllers\MPSController.cs" />
+    <Compile Include="Controllers\MRPController.cs" />
+    <Compile Include="Controllers\ProductionIssueController.cs" />
+    <Compile Include="Controllers\ProductionOrderController.cs" />
+    <Compile Include="Controllers\ProductionReceiptController.cs" />
+    <Compile Include="Controllers\QCController.cs" />
+    <Compile Include="Controllers\ReturnFGReceivedController.cs" />
+    <Compile Include="Controllers\ReturnMaterialsIssueController.cs" />
+    <Compile Include="Controllers\StockReceiptController.cs" />
+    <Compile Include="Controllers\StockReturnController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\WastageController.cs" />
+    <Compile Include="Controllers\WorkCenterController.cs" />
+    <Compile Include="Controllers\WorkOrderController.cs" />
+    <Compile Include="DAL\ExecProcedure.cs" />
+    <Compile Include="DAL\KeyObj.cs" />
+    <Compile Include="DAL\KeyValue.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\BOMEntryModel.cs" />
+    <Compile Include="Models\BomRelationshipModel.cs" />
+    <Compile Include="Models\customer.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customer.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerEF.cs" />
+    <Compile Include="Models\FGReceivedModel.cs" />
+    <Compile Include="Models\IssueReturnModel.cs" />
+    <Compile Include="Models\JobWorkOrderModel.cs" />
+    <Compile Include="Models\ManufacturingProcessMasterModel.cs" />
+    <Compile Include="Models\ManufacturingStagesModel.cs" />
+    <Compile Include="Models\MaterialIssueModel.cs" />
+    <Compile Include="Models\MPSModel.cs" />
+    <Compile Include="Models\MRPModel.cs" />
+    <Compile Include="Models\pManufacturing_WebServiceList.asmx.cs">
+      <DependentUpon>pManufacturing_WebServiceList.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Models\ProductionIssueModel.cs" />
+    <Compile Include="Models\ProductionOrderModel.cs" />
+    <Compile Include="Models\ProductionReceiptModel.cs" />
+    <Compile Include="Models\QualityControlModel.cs" />
+    <Compile Include="Models\ReturnFGReceivedModel.cs" />
+    <Compile Include="Models\ReturnMaterialIssueModel.cs" />
+    <Compile Include="Models\StockReceiptModel.cs" />
+    <Compile Include="Models\StockReturnModel.cs" />
+    <Compile Include="Models\ViewModel\BOMEntryModel\BOMEntryViewModel.cs" />
+    <Compile Include="Models\ViewModel\BomRelationshipViewModel.cs" />
+    <Compile Include="Models\ViewModel\FGReceivedViewModel.cs" />
+    <Compile Include="Models\ViewModel\IssueReturnViewModel.cs" />
+    <Compile Include="Models\ViewModel\JobWorkOrderViewModel.cs" />
+    <Compile Include="Models\ViewModel\ManufacturingProcessMasterViewModel.cs" />
+    <Compile Include="Models\ViewModel\ManufacturingStagesViewModel.cs" />
+    <Compile Include="Models\ViewModel\MaterialIssueViewModel.cs" />
+    <Compile Include="Models\ViewModel\MPSViewModel.cs" />
+    <Compile Include="Models\ViewModel\MRPViewModel.cs" />
+    <Compile Include="Models\ViewModel\ProductionIssueViewModel.cs" />
+    <Compile Include="Models\ViewModel\ProductionOrderViewModel.cs" />
+    <Compile Include="Models\ViewModel\ProductionReceiptViewModel.cs" />
+    <Compile Include="Models\ViewModel\QualityControlViewModel.cs" />
+    <Compile Include="Models\ViewModel\ReturnFGReceivedViewModel.cs" />
+    <Compile Include="Models\ViewModel\ReturnMaterialIssueViewModel.cs" />
+    <Compile Include="Models\ViewModel\StockReceiptViewModel.cs" />
+    <Compile Include="Models\ViewModel\StockReturnViewModel.cs" />
+    <Compile Include="Models\ViewModel\VMBom.cs" />
+    <Compile Include="Models\ViewModel\WastageViewModel.cs" />
+    <Compile Include="Models\ViewModel\WorkCenterViewModel.cs" />
+    <Compile Include="Models\ViewModel\WorkOrderViewModel.cs" />
+    <Compile Include="Models\WastageModel.cs" />
+    <Compile Include="Models\WorkCenterModel.cs" />
+    <Compile Include="Models\WorkOrderModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repostiory\IMaster.cs" />
+    <Compile Include="Repostiory\Master.cs" />
+    <Compile Include="Repostiory\PartialHeaderMenu\IPartialHeaderLayout.cs" />
+    <Compile Include="Repostiory\PartialHeaderMenu\PartialHeaderLayout.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assests\bootstrap\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="assests\bootstrap\css\bootstrap.css" />
+    <Content Include="assests\bootstrap\css\bootstrap.min.css" />
+    <Content Include="assests\bootstrap\css\MasterPage.css" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assests\bootstrap\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="assests\bootstrap\js\bootstrap.js" />
+    <Content Include="assests\bootstrap\js\bootstrap.min.js" />
+    <Content Include="assests\css\custom\AjaxStyle.css" />
+    <Content Include="assests\css\custom\demos.css" />
+    <Content Include="assests\css\custom\dhtmlgoodies_calendar.css" />
+    <Content Include="assests\css\custom\GenericCss.css" />
+    <Content Include="assests\css\custom\jquery.alerts.css" />
+    <Content Include="assests\css\custom\jquery.confirm.css" />
+    <Content Include="assests\css\custom\jquery.timeentry.css" />
+    <Content Include="assests\css\custom\main.css" />
+    <Content Include="assests\css\custom\menu-bar.css" />
+    <Content Include="assests\css\custom\menu-item.css" />
+    <Content Include="assests\css\custom\MultipleSelectionDDLCSS.css" />
+    <Content Include="assests\css\custom\newtheme.css" />
+    <Content Include="assests\css\custom\PageStyle.css" />
+    <Content Include="assests\css\custom\PMSStyles.css" />
+    <Content Include="assests\css\custom\style.css" />
+    <Content Include="assests\css\custom\sumoselect.css" />
+    <Content Include="assests\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="assests\css\jquery-ui.css" />
+    <Content Include="assests\css\login.css" />
+    <Content Include="assests\css\ManufacturingCSS\ProductionReceiptEntry.css" />
+    <Content Include="assests\css\SearchPopup.css" />
+    <Content Include="assests\fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="assests\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assests\images\1.png" />
+    <Content Include="assests\images\10.png" />
+    <Content Include="assests\images\11.png" />
+    <Content Include="assests\images\12.png" />
+    <Content Include="assests\images\13.png" />
+    <Content Include="assests\images\14.png" />
+    <Content Include="assests\images\15.png" />
+    <Content Include="assests\images\16.png" />
+    <Content Include="assests\images\17.png" />
+    <Content Include="assests\images\18.png" />
+    <Content Include="assests\images\19.png" />
+    <Content Include="assests\images\2.png" />
+    <Content Include="assests\images\20.png" />
+    <Content Include="assests\images\21.png" />
+    <Content Include="assests\images\22.png" />
+    <Content Include="assests\images\23.png" />
+    <Content Include="assests\images\24.png" />
+    <Content Include="assests\images\25.png" />
+    <Content Include="assests\images\26.png" />
+    <Content Include="assests\images\27.png" />
+    <Content Include="assests\images\28.png" />
+    <Content Include="assests\images\29.png" />
+    <Content Include="assests\images\3.png" />
+    <Content Include="assests\images\30.png" />
+    <Content Include="assests\images\31.png" />
+    <Content Include="assests\images\32.png" />
+    <Content Include="assests\images\33.png" />
+    <Content Include="assests\images\34.png" />
+    <Content Include="assests\images\35.png" />
+    <Content Include="assests\images\36.png" />
+    <Content Include="assests\images\37.png" />
+    <Content Include="assests\images\38.png" />
+    <Content Include="assests\images\39.png" />
+    <Content Include="assests\images\4.png" />
+    <Content Include="assests\images\40.png" />
+    <Content Include="assests\images\41.png" />
+    <Content Include="assests\images\42.png" />
+    <Content Include="assests\images\43.png" />
+    <Content Include="assests\images\44.png" />
+    <Content Include="assests\images\45.png" />
+    <Content Include="assests\images\46.png" />
+    <Content Include="assests\images\47.png" />
+    <Content Include="assests\images\48.png" />
+    <Content Include="assests\images\49.png" />
+    <Content Include="assests\images\5.png" />
+    <Content Include="assests\images\50.png" />
+    <Content Include="assests\images\51.png" />
+    <Content Include="assests\images\52.png" />
+    <Content Include="assests\images\53.png" />
+    <Content Include="assests\images\54.png" />
+    <Content Include="assests\images\55.png" />
+    <Content Include="assests\images\56.png" />
+    <Content Include="assests\images\6.png" />
+    <Content Include="assests\images\7.png" />
+    <Content Include="assests\images\8.png" />
+    <Content Include="assests\images\9.png" />
+    <Content Include="assests\images\activeState.png" />
+    <Content Include="assests\images\activity.png" />
+    <Content Include="assests\images\add-adress.png" />
+    <Content Include="assests\images\Add.png" />
+    <Content Include="assests\images\addmember.png" />
+    <Content Include="assests\images\addnew.gif" />
+    <Content Include="assests\images\ajax-loader.gif" />
+    <Content Include="assests\images\Animated_Email.gif" />
+    <Content Include="assests\images\arrow2.gif" />
+    <Content Include="assests\images\arrowright.jpg" />
+    <Content Include="assests\images\arrow_down.gif" />
+    <Content Include="assests\images\arrow_down.jpg" />
+    <Content Include="assests\images\arrow_up.gif" />
+    <Content Include="assests\images\arrow_up.jpg" />
+    <Content Include="assests\images\attach.png" />
+    <Content Include="assests\images\attachment.png" />
+    <Content Include="assests\images\av.jpg" />
+    <Content Include="assests\images\back.jpg" />
+    <Content Include="assests\images\back.png" />
+    <Content Include="assests\images\backhead.png" />
+    <Content Include="assests\images\bcktip.png" />
+    <Content Include="assests\images\bcktool.png" />
+    <Content Include="assests\images\bg.jpg" />
+    <Content Include="assests\images\bglogin.jpg" />
+    <Content Include="assests\images\bill.png" />
+    <Content Include="assests\images\blue.bmp" />
+    <Content Include="assests\images\blue_foward.png" />
+    <Content Include="assests\images\blue_reload.png" />
+    <Content Include="assests\images\blue_rewind.png" />
+    <Content Include="assests\images\blue_save.png" />
+    <Content Include="assests\images\border.png" />
+    <Content Include="assests\images\Box_Black.PNG" />
+    <Content Include="assests\images\Box_Blue.png" />
+    <Content Include="assests\images\Box_Green.png" />
+    <Content Include="assests\images\Box_Red.png" />
+    <Content Include="assests\images\branchassign.png" />
+    <Content Include="assests\images\btn-go.gif" />
+    <Content Include="assests\images\btnPinkActive.jpg" />
+    <Content Include="assests\images\calendar.jpg" />
+    <Content Include="assests\images\cash.png" />
+    <Content Include="assests\images\cashbudget.png" />
+    <Content Include="assests\images\Cash_BackSearch.jpg" />
+    <Content Include="assests\images\Cash_Home.jpeg" />
+    <Content Include="assests\images\Cash_Search-icon.jpg" />
+    <Content Include="assests\images\Cash_Search-icon.png" />
+    <Content Include="assests\images\change-dark.png" />
+    <Content Include="assests\images\change.png" />
+    <Content Include="assests\images\changeIcon.png" />
+    <Content Include="assests\images\changeP.png" />
+    <Content Include="assests\images\chart_display.gif" />
+    <Content Include="assests\images\close.gif" />
+    <Content Include="assests\images\Closed.png" />
+    <Content Include="assests\images\closePop.png" />
+    <Content Include="assests\images\close_over.gif" />
+    <Content Include="assests\images\cntrlogo_1.jpg" />
+    <Content Include="assests\images\cntrlogo_16.jpg" />
+    <Content Include="assests\images\cntrlogo_17.jpg" />
+    <Content Include="assests\images\cntrlogo_20.jpg" />
+    <Content Include="assests\images\cntrlogo_5.jpg" />
+    <Content Include="assests\images\cntrlogo_6.jpg" />
+    <Content Include="assests\images\contractimages.gif" />
+    <Content Include="assests\images\controls.png" />
+    <Content Include="assests\images\CrIcon.png" />
+    <Content Include="assests\images\crossT.png" />
+    <Content Include="assests\images\crs.png" />
+    <Content Include="assests\images\CurrencyImage1.jpg" />
+    <Content Include="assests\images\Delete.png" />
+    <Content Include="assests\images\disk.gif" />
+    <Content Include="assests\images\doc.png" />
+    <Content Include="assests\images\document.png" />
+    <Content Include="assests\images\down.gif" />
+    <Content Include="assests\images\downarrow.png" />
+    <Content Include="assests\images\download.png" />
+    <Content Include="assests\images\down_over.gif" />
+    <Content Include="assests\images\down_time.gif" />
+    <Content Include="assests\images\down_time_over.gif" />
+    <Content Include="assests\images\Edit.jpg" />
+    <Content Include="assests\images\Edit.png" />
+    <Content Include="assests\images\EHeaderBack.gif" />
+    <Content Include="assests\images\email.png" />
+    <Content Include="assests\images\endBG.JPG" />
+    <Content Include="assests\images\endlessLoading.gif" />
+    <Content Include="assests\images\endprogressBG.JPG" />
+    <Content Include="assests\images\error.png" />
+    <Content Include="assests\images\exportcsv.gif" />
+    <Content Include="assests\images\exportword.gif" />
+    <Content Include="assests\images\exportxls.gif" />
+    <Content Include="assests\images\eye.png" />
+    <Content Include="assests\images\feedback.png" />
+    <Content Include="assests\images\file.gif" />
+    <Content Include="assests\images\first.gif" />
+    <Content Include="assests\images\folder.gif" />
+    <Content Include="assests\images\footerbg.jpg" />
+    <Content Include="assests\images\full.jpg" />
+    <Content Include="assests\images\Go.gif" />
+    <Content Include="assests\images\Gradient.jpg" />
+    <Content Include="assests\images\green.bmp" />
+    <Content Include="assests\images\gridhead.gif" />
+    <Content Include="assests\images\headbg.jpg" />
+    <Content Include="assests\images\headerpanel.gif" />
+    <Content Include="assests\images\history.png" />
+    <Content Include="assests\images\icoaccts.gif" />
+    <Content Include="assests\images\icoactivity.gif" />
+    <Content Include="assests\images\icoexport.gif" />
+    <Content Include="assests\images\icohome.gif" />
+    <Content Include="assests\images\icopipe.gif" />
+    <Content Include="assests\images\icoprint.gif" />
+    <Content Include="assests\images\icosearch.gif" />
+    <Content Include="assests\images\icoxls.gif" />
+    <Content Include="assests\images\inactiveState.png" />
+    <Content Include="assests\images\indianrupee.jpg" />
+    <Content Include="assests\images\info-back.png" />
+    <Content Include="assests\images\info.png" />
+    <Content Include="assests\images\JournalEntry.jpeg" />
+    <Content Include="assests\images\l.jpg" />
+    <Content Include="assests\images\left.gif" />
+    <Content Include="assests\images\LeftNav.gif" />
+    <Content Include="assests\images\left_over.gif" />
+    <Content Include="assests\images\lightbox\bg-checker.png" />
+    <Content Include="assests\images\lightbox\box.png" />
+    <Content Include="assests\images\lightbox\bullet.gif" />
+    <Content Include="assests\images\lightbox\close.png" />
+    <Content Include="assests\images\lightbox\donate.png" />
+    <Content Include="assests\images\lightbox\favicon.gif" />
+    <Content Include="assests\images\lightbox\loading.gif" />
+    <Content Include="assests\images\lightbox\next.png" />
+    <Content Include="assests\images\lightbox\prev.png" />
+    <Content Include="assests\images\lightbox\speech-bubbles.png" />
+    <Content Include="assests\images\loader.gif" />
+    <Content Include="assests\images\loading.gif" />
+    <Content Include="assests\images\loading_background.png" />
+    <Content Include="assests\images\login-bg.gif" />
+    <Content Include="assests\images\login-head.gif" />
+    <Content Include="assests\images\login.gif" />
+    <Content Include="assests\images\logo-mini.png" />
+    <Content Include="assests\images\logo.bmp" />
+    <Content Include="assests\images\logo.jpg" />
+    <Content Include="assests\images\logo.png" />
+    <Content Include="assests\images\logo.png.jpg" />
+    <Content Include="assests\images\logo2.jpg" />
+    <Content Include="assests\images\logout.png" />
+    <Content Include="assests\images\logo_arin.png.jpg" />
+    <Content Include="assests\images\logo_test.bmp" />
+    <Content Include="assests\images\lprogressBG.JPG" />
+    <Content Include="assests\images\maintenance.jpg" />
+    <Content Include="assests\images\meeting.png" />
+    <Content Include="assests\images\Members.png" />
+    <Content Include="assests\images\menback.png" />
+    <Content Include="assests\images\menu-bar-gradient.jpg" />
+    <Content Include="assests\images\menu-bar-gradient1.JPG" />
+    <Content Include="assests\images\menu-bar-right-arrow.gif" />
+    <Content Include="assests\images\menu-bar-right-arrow.png" />
+    <Content Include="assests\images\menu_strip_bg.jpg" />
+    <Content Include="assests\images\menu_strip_bg1.JPG" />
+    <Content Include="assests\images\menu_strip_down_arrow.gif" />
+    <Content Include="assests\images\menu_strip_down_arrow.png" />
+    <Content Include="assests\images\menu_strip_separator.gif" />
+    <Content Include="assests\images\New_messag1.gif" />
+    <Content Include="assests\images\next.gif" />
+    <Content Include="assests\images\next_fast.gif" />
+    <Content Include="assests\images\not-verified.png" />
+    <Content Include="assests\images\ok.jpg" />
+    <Content Include="assests\images\onmouse_addnew.gif" />
+    <Content Include="assests\images\onmouse_exportcsv.gif" />
+    <Content Include="assests\images\onmouse_exportword.gif" />
+    <Content Include="assests\images\onmouse_exportxls.gif" />
+    <Content Include="assests\images\onmouse_search.gif" />
+    <Content Include="assests\images\open.gif" />
+    <Content Include="assests\images\PageSize.gif" />
+    <Content Include="assests\images\PDFICON.jpg" />
+    <Content Include="assests\images\pFirst.png" />
+    <Content Include="assests\images\phone_number.png" />
+    <Content Include="assests\images\picture.png" />
+    <Content Include="assests\images\pLast.png" />
+    <Content Include="assests\images\plusAdd.png" />
+    <Content Include="assests\images\pNext.png" />
+    <Content Include="assests\images\popuparrow.jpg" />
+    <Content Include="assests\images\pPrev.png" />
+    <Content Include="assests\images\prev.gif" />
+    <Content Include="assests\images\preview.jpg" />
+    <Content Include="assests\images\previous_disabled.gif" />
+    <Content Include="assests\images\previous_fast_disabled.gif" />
+    <Content Include="assests\images\print.gif" />
+    <Content Include="assests\images\print.png" />
+    <Content Include="assests\images\profile1.png" />
+    <Content Include="assests\images\progress.gif" />
+    <Content Include="assests\images\progressBG.JPG" />
+    <Content Include="assests\images\r.jpg" />
+    <Content Include="assests\images\reassign.png" />
+    <Content Include="assests\images\refresh1.jpg" />
+    <Content Include="assests\images\right.gif" />
+    <Content Include="assests\images\rightArrowHand.jpg" />
+    <Content Include="assests\images\RightNav.gif" />
+    <Content Include="assests\images\right_over.gif" />
+    <Content Include="assests\images\rupee.png" />
+    <Content Include="assests\images\sales.png" />
+    <Content Include="assests\images\schedule.png" />
+    <Content Include="assests\images\sdown.JPG" />
+    <Content Include="assests\images\search.gif" />
+    <Content Include="assests\images\show.png" />
+    <Content Include="assests\images\sms.png" />
+    <Content Include="assests\images\snext.JPG" />
+    <Content Include="assests\images\snext1.JPG" />
+    <Content Include="assests\images\subnavhov.gif" />
+    <Content Include="assests\images\subnavlink.gif" />
+    <Content Include="assests\images\success.png" />
+    <Content Include="assests\images\sup.JPG" />
+    <Content Include="assests\images\tip.png" />
+    <Content Include="assests\images\tow-truck.png" />
+    <Content Include="assests\images\transfer.png" />
+    <Content Include="assests\images\update_ttl.gif" />
+    <Content Include="assests\images\upload.png" />
+    <Content Include="assests\images\verified.png" />
+    <Content Include="assests\images\viewIcon.png" />
+    <Content Include="assests\images\viewt1.png" />
+    <Content Include="assests\images\warehouse.png" />
+    <Content Include="assests\images\Warning.png" />
+    <Content Include="assests\js\jquery-1.10.2.min.map" />
+    <None Include="assests\js\_references.js" />
+    <Content Include="assests\js\ajax-dynamic-list.js" />
+    <Content Include="assests\js\ajax-dynamic-list1.js" />
+    <Content Include="assests\js\ajax-dynamic-list1_rootfile.js" />
+    <Content Include="assests\js\ajax-dynamic-list1_wofolder.js" />
+    <Content Include="assests\js\ajax-dynamic-list_rootfile.js" />
+    <Content Include="assests\js\ajax-dynamic-list_wofolder.js" />
+    <Content Include="assests\js\ajaxList.js" />
+    <Content Include="assests\js\ajaxList_rootfile.js" />
+    <Content Include="assests\js\ajaxList_wofolder.js" />
+    <Content Include="assests\js\angular.min.js" />
+    <Content Include="assests\js\Date\datevalidate.js" />
+    <Content Include="assests\js\dhtmlgoodies_calendar.js" />
+    <Content Include="assests\js\floating-1.12.js" />
+    <Content Include="assests\js\GenericJScript.js" />
+    <Content Include="assests\js\gen_validatorv31.js" />
+    <Content Include="assests\js\init.js" />
+    <None Include="assests\js\jquery-1.10.2.intellisense.js" />
+    <Content Include="assests\js\jquery-1.10.2.js" />
+    <Content Include="assests\js\jquery-1.10.2.min.js" />
+    <Content Include="assests\js\jquery-1.12.4.min.js" />
+    <Content Include="assests\js\jquery-1.3.1.js" />
+    <Content Include="assests\js\jquery-1.3.2.js" />
+    <Content Include="assests\js\jquery-1.3.2.min.js" />
+    <Content Include="assests\js\jquery-2.2.3.min.js" />
+    <Content Include="assests\js\jquery-ui.min.js" />
+    <Content Include="assests\js\jquery.alerts.js" />
+    <Content Include="assests\js\jquery.colorbox-min.js" />
+    <Content Include="assests\js\jquery.colorbox.js" />
+    <Content Include="assests\js\jquery.confirm.min.js" />
+    <Content Include="assests\js\jquery.mask.min.js" />
+    <Content Include="assests\js\jquery.meio.mask.js" />
+    <Content Include="assests\js\jquery.min.js" />
+    <Content Include="assests\js\jquery.sumoselect.min.js" />
+    <Content Include="assests\js\jquery.timeentry.js" />
+    <None Include="assests\js\jquery.validate-vsdoc.js" />
+    <Content Include="assests\js\jquery.validate.js" />
+    <Content Include="assests\js\jquery.validate.min.js" />
+    <Content Include="assests\js\jquery.validate.unobtrusive.js" />
+    <Content Include="assests\js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="assests\js\jquery3.3.1.min.js" />
+    <Content Include="assests\js\loaddata.js" />
+    <Content Include="assests\js\loaddata1.js" />
+    <Content Include="assests\js\main.js" />
+    <Content Include="assests\js\MasterPage.js" />
+    <Content Include="assests\js\modalmsg.js" />
+    <Content Include="assests\js\modernizr-2.6.2.js" />
+    <Content Include="assests\js\MPS\MPS.js" />
+    <Content Include="assests\js\MultipleSelectionDDLJS.js" />
+    <Content Include="assests\js\PageMethods.js" />
+    <Content Include="assests\js\progress.js" />
+    <Content Include="assests\js\respond.js" />
+    <Content Include="assests\js\respond.min.js" />
+    <Content Include="assests\js\vendor\jquery-1.11.2.min.js" />
+    <Content Include="assests\js\wz_tooltip.js" />
+    <Content Include="assests\logoshort.png" />
+    <Content Include="assests\pluggins\choosen\choosen.min.css" />
+    <Content Include="assests\pluggins\choosen\choosen.min.js" />
+    <Content Include="assests\pluggins\choosen\chosen-sprite.png" />
+    <Content Include="assests\pluggins\choosen\chosen.css" />
+    <Content Include="assests\pluggins\customScroll\customScroll.js" />
+    <Content Include="assests\pluggins\customScroll\custoScroll.css" />
+    <Content Include="assests\pluggins\easyui\easyui.css" />
+    <Content Include="assests\pluggins\easyui\icon.css" />
+    <Content Include="assests\pluggins\easyui\images\tree_icons.png" />
+    <Content Include="assests\pluggins\easyui\jquery.easyui.min.js" />
+    <Content Include="assests\pluggins\jquery.alert\images\help.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\important.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\info.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\title.gif" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.alerts.css" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.alerts.js" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.ui.draggable.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\SearchPopup.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Site.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="assests\bootstrap\css\bootstrap.css.map" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assests\css\custom\style.css.bak" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assests\fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="assests\fonts\font-awesome\less\animated.less" />
+    <Content Include="assests\fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="assests\fonts\font-awesome\less\core.less" />
+    <Content Include="assests\fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="assests\fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="assests\fonts\font-awesome\less\icons.less" />
+    <Content Include="assests\fonts\font-awesome\less\larger.less" />
+    <Content Include="assests\fonts\font-awesome\less\list.less" />
+    <Content Include="assests\fonts\font-awesome\less\mixins.less" />
+    <Content Include="assests\fonts\font-awesome\less\path.less" />
+    <Content Include="assests\fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="assests\fonts\font-awesome\less\screen-reader.less" />
+    <Content Include="assests\fonts\font-awesome\less\stacked.less" />
+    <Content Include="assests\fonts\font-awesome\less\variables.less" />
+    <Content Include="assests\fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_core.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_list.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_path.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Global.asax" />
+    <Content Include="Models\pManufacturing_WebServiceList.asmx" />
+    <Content Include="Scripts\BOM\Bom.js" />
+    <Content Include="Scripts\SearchPopup.js" />
+    <Content Include="Scripts\SearchPopupDatatable.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="assests\css\ManufacturingCSS\BOMEntryList.css" />
+    <Content Include="assests\css\ManufacturingCSS\bomIndex.css" />
+    <Content Include="Views\FGReceived\ProductionReceiptEntry.css" />
+    <Content Include="Views\MPS\Estimate.css" />
+    <Content Include="Views\ProductionOrder\prodOrder.css" />
+    <Content Include="Views\QC\qcEntry.css" />
+    <Content Include="Views\ReturnFGReceived\ProductionReceiptEntry.css" />
+    <Content Include="Views\ReturnMaterialsIssue\MaterialIssueEntry.css" />
+    <Content Include="Views\StockReceipt\StockReceiptEntry.css" />
+    <Content Include="Views\StockReturn\stockReturnEntry.css" />
+    <Content Include="Views\Wastage\wastageEntry.css" />
+    <Content Include="Views\WorkCenter\WorkCenterEntry.css" />
+    <Content Include="Views\WorkOrder\workorderEntry.css" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Master\Index.cshtml" />
+    <Content Include="Views\Master\_PartialMenu.cshtml" />
+    <Content Include="Views\Master\_customerGrid.cshtml" />
+    <Content Include="Views\Master\_PartialHeaderLayout.cshtml" />
+    <Content Include="Views\BOM\BOMEntry\Index.cshtml" />
+    <Content Include="Views\BOM\BOMEntry\_BOMProductEntryGrid.cshtml" />
+    <Content Include="Views\BOM\BOMEntry\_BOMResourcesGrid.cshtml" />
+    <Content Include="Views\BOM\BOMEntry\BOMEntryList.cshtml" />
+    <Content Include="Views\BOM\BOMEntry\_BOMEntryDataList.cshtml" />
+    <Content Include="Views\ProductionOrder\ProductionOrderEntry.cshtml" />
+    <Content Include="Views\ProductionOrder\_ProductionBOMProductGrid.cshtml" />
+    <Content Include="Views\ProductionOrder\_BOMList.cshtml" />
+    <Content Include="Views\ProductionOrder\ProductionOrderList.cshtml" />
+    <Content Include="Views\ProductionOrder\_ProductionOrderDataList.cshtml" />
+    <Content Include="Views\WorkCenter\WorkCenterEntry.cshtml" />
+    <Content Include="Views\WorkCenter\WorkCenterList.cshtml" />
+    <Content Include="Views\WorkCenter\_WorkCenterDataList.cshtml" />
+    <Content Include="Views\WorkOrder\WorkOrderEntry.cshtml" />
+    <Content Include="Views\WorkOrder\_ProductionOrderList.cshtml" />
+    <Content Include="Views\WorkOrder\_WorkCenterList.cshtml" />
+    <Content Include="Views\WorkOrder\WorkOrderList.cshtml" />
+    <Content Include="Views\WorkOrder\_WorkOrderDataList.cshtml" />
+    <Content Include="Views\ProductionIssue\ProductionIssueList.cshtml" />
+    <Content Include="Views\ProductionIssue\ProductionIssueEntry.cshtml" />
+    <Content Include="Views\ProductionIssue\_WorkOrderList.cshtml" />
+    <Content Include="Views\Shared\_AttachmentDocument.cshtml" />
+    <Content Include="Views\WorkOrder\_WorkOrderBOMProductGrid.cshtml" />
+    <Content Include="Views\Shared\_AttachmentDocumentGrid.cshtml" />
+    <Content Include="Views\ProductionIssue\_WorkCenterList.cshtml" />
+    <Content Include="Views\ProductionIssue\_ProductionIssueBOMProductGrid.cshtml" />
+    <Content Include="Views\ProductionReceipt\ProductionReceiptEntry.cshtml" />
+    <Content Include="Views\ProductionReceipt\_ProductionReceiptBOMProductGrid.cshtml" />
+    <Content Include="Views\QC\QCEntry.cshtml" />
+    <Content Include="Views\StockReceipt\StockReceiptEntry.cshtml" />
+    <Content Include="Views\Wastage\_WastageProductGrid.cshtml" />
+    <Content Include="Views\Wastage\WastageEntry.cshtml" />
+    <Content Include="Views\IssueReturn\IssueReturnEntry.cshtml" />
+    <Content Include="Views\StockReturn\StockReturnEntry.cshtml" />
+    <Content Include="Views\ProductionIssue\_ProductionIssueDataList.cshtml" />
+    <Content Include="Views\IssueReturn\_WorkCenterList.cshtml" />
+    <Content Include="Views\IssueReturn\_ProductionIssueList.cshtml" />
+    <Content Include="Views\IssueReturn\_IssueReturnBOMProductGrid.cshtml" />
+    <Content Include="Views\IssueReturn\IssueReturnList.cshtml" />
+    <Content Include="Views\IssueReturn\_IssueReturnDataList.cshtml" />
+    <Content Include="Views\ProductionReceipt\_ProductionIssueList.cshtml" />
+    <Content Include="Views\ProductionReceipt\_WorkCenterList.cshtml" />
+    <Content Include="Views\ProductionReceipt\ProductionReceiptList.cshtml" />
+    <Content Include="Views\ProductionReceipt\_ProductionReceiptDataList.cshtml" />
+    <Content Include="Views\QC\_ProductionReciptList.cshtml" />
+    <Content Include="Views\QC\_WorkCenterList.cshtml" />
+    <Content Include="Views\QC\QCList.cshtml" />
+    <Content Include="Views\QC\_QCDataList.cshtml" />
+    <Content Include="Views\StockReceipt\_QualityControlList.cshtml" />
+    <Content Include="Views\StockReceipt\_WorkCenterList.cshtml" />
+    <Content Include="Views\StockReceipt\StockReceiptList.cshtml" />
+    <Content Include="Views\StockReceipt\_StockReceiptDataList.cshtml" />
+    <Content Include="Views\StockReturn\_StockReceiptList.cshtml" />
+    <Content Include="Views\StockReturn\_WorkCenterList.cshtml" />
+    <Content Include="Views\StockReturn\StockReturnList.cshtml" />
+    <Content Include="Views\StockReturn\_StockReturnDataList.cshtml" />
+    <Content Include="Views\Wastage\_WorkCenterList.cshtml" />
+    <Content Include="Views\Wastage\_StockReceiptList.cshtml" />
+    <Content Include="Views\Wastage\WastageList.cshtml" />
+    <Content Include="Views\Wastage\_WastageDataList.cshtml" />
+    <Content Include="Views\ProductionIssue\_GetPOList.cshtml" />
+    <Content Include="Views\BOM\BOMEntry\_PartialProjectCode.cshtml" />
+    <Content Include="Views\JobWorkOrder\_WorkCenterList.cshtml" />
+    <Content Include="Views\JobWorkOrder\_WorkOrderBOMProductGrid.cshtml" />
+    <Content Include="Views\JobWorkOrder\_WorkOrderDataList.cshtml" />
+    <Content Include="Views\JobWorkOrder\WorkOrderEntry.cshtml" />
+    <Content Include="Views\JobWorkOrder\WorkOrderList.cshtml" />
+    <Content Include="Views\JobWorkOrder\_PartialProjectCode.cshtml" />
+    <Content Include="Views\MaterialIssue\MaterialIssueEntry.cshtml" />
+    <Content Include="Views\MaterialIssue\MaterialIssueList.cshtml" />
+    <Content Include="Views\MaterialIssue\_GetPOList.cshtml" />
+    <Content Include="Views\MaterialIssue\_MaterialIssueBOMProductGrid.cshtml" />
+    <Content Include="Views\MaterialIssue\_MaterialIssueDataList.cshtml" />
+    <Content Include="Views\MaterialIssue\_WorkCenterList.cshtml" />
+    <Content Include="Views\MaterialIssue\_WorkOrderList.cshtml" />
+    <Content Include="Views\FGReceived\_ProductionIssueList.cshtml" />
+    <Content Include="Views\FGReceived\_ProductionReceiptBOMProductGrid.cshtml" />
+    <Content Include="Views\FGReceived\_ProductionReceiptDataList.cshtml" />
+    <Content Include="Views\FGReceived\_WorkCenterList.cshtml" />
+    <Content Include="Views\FGReceived\ProductionReceiptEntry.cshtml" />
+    <Content Include="Views\FGReceived\FGReceivedList.cshtml" />
+    <Content Include="Views\ReturnMaterialsIssue\_MaterialIssueBOMProductGrid.cshtml" />
+    <Content Include="Views\ReturnMaterialsIssue\_MaterialIssueDataList.cshtml" />
+    <Content Include="Views\ReturnMaterialsIssue\_WorkCenterList.cshtml" />
+    <Content Include="Views\ReturnMaterialsIssue\_WorkOrderList.cshtml" />
+    <Content Include="Views\ReturnMaterialsIssue\MaterialIssueEntry.cshtml" />
+    <Content Include="Views\ReturnMaterialsIssue\MaterialIssueList.cshtml" />
+    <Content Include="Views\ReturnFGReceived\_ProductionIssueList.cshtml" />
+    <Content Include="Views\ReturnFGReceived\_ProductionReceiptBOMProductGrid.cshtml" />
+    <Content Include="Views\ReturnFGReceived\_ProductionReceiptDataList.cshtml" />
+    <Content Include="Views\ReturnFGReceived\_WorkCenterList.cshtml" />
+    <Content Include="Views\ReturnFGReceived\FGReceivedList.cshtml" />
+    <Content Include="Views\ReturnFGReceived\ProductionReceiptEntry.cshtml" />
+    <Content Include="Views\JobWorkOrder\_JobFinishItemProductEntryGrid.cshtml" />
+    <Content Include="Views\MaterialIssue\_FinishItemMultiGrid.cshtml" />
+    <Content Include="Views\FGReceived\_FGFinishItem.cshtml" />
+    <Content Include="Views\ReturnMaterialsIssue\_ReturnIssueFinishItemGrid.cshtml" />
+    <Content Include="Views\ReturnFGReceived\_FinishItemGrid.cshtml" />
+    <Content Include="Views\BOMRelationship\BOMRelationship.cshtml" />
+    <Content Include="Views\BOMRelationship\_bomList.cshtml" />
+    <Content Include="Views\MPS\EstimateProductList.cshtml" />
+    <Content Include="Views\MPS\EstimateResourcesList.cshtml" />
+    <Content Include="Views\MPS\Index.cshtml" />
+    <Content Include="Views\MPS\MPSList.cshtml" />
+    <Content Include="Views\MPS\_BOMEntryDataList.cshtml" />
+    <Content Include="Views\MPS\_BOMProductEntryGrid.cshtml" />
+    <Content Include="Views\MPS\_BOMResourcesGrid.cshtml" />
+    <Content Include="Views\MPS\_PartialContractOrederList.cshtml" />
+    <Content Include="Views\BOMRelationship\_BOMProductEntryGrid.cshtml" />
+    <Content Include="Views\BOMRelationship\BOMEntry.cshtml" />
+    <Content Include="Views\MRP\MRP.cshtml" />
+    <Content Include="Views\MRP\MRPList.cshtml" />
+    <Content Include="Views\MRP\MRPAdd.cshtml" />
+    <Content Include="Views\BOMRelationship\_PartialParentBOM.cshtml" />
+    <Content Include="Views\BOMRelationship\_PartialChildBOM.cshtml" />
+    <Content Include="Views\MRP\_MRPProductEntryGrid.cshtml" />
+    <Content Include="Views\MRP\_BOMProductEntryGrid.cshtml" />
+    <Content Include="Views\MRP\_PartialParentBOM.cshtml" />
+    <Content Include="Views\BOM\BOMEntry\_PartialMPSNO.cshtml" />
+    <Content Include="Views\MRP\_PartialMPSNO.cshtml" />
+    <Content Include="Views\BOMEntry\_PartialGridMultiUom.cshtml" />
+    <Content Include="Views\MRP\_PartialPreviewLineItem.cshtml" />
+    <Content Include="Views\MPS\_PartialParentBOM.cshtml" />
+    <Content Include="Views\ProductionIssue\_ProductionOrderProductList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\BomRelationAdd\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <Content Include="Models\customer.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>customer.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{e0403ce7-71f7-4d02-85d1-1ee7125c1e75}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UtilityLayer\UtilityLayer.csproj">
+      <Project>{9f45f4c2-a1b9-4aea-9f77-72b9f864b593}</Project>
+      <Name>UtilityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
+      <Project>{ea505340-6c3f-4a45-8876-61c0c8a17a5f}</Project>
+      <Name>BusinessLogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityLayer\EntityLayer.csproj">
+      <Project>{d31c544e-8eb6-4a69-b0f2-9c46ff7fc533}</Project>
+      <Name>EntityLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\customer.dbml.layout">
+      <DependentUpon>customer.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2673</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2674/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

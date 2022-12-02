@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK14032019" Class="ImportmoduleclassDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=LABSERVER\MSSQLSERVERR2;Initial Catalog=PK14032019;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PK14032019ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.v_PurchaseInvoiceList_Import" Member="v_PurchaseInvoiceList_Imports">
+    <Type Name="v_PurchaseInvoiceList_Import">
+      <Column Name="PurchaseInvoice_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrderDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InvoiceAdd_addressType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ValueInBaseCurrency" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ValueInCurrency" Type="System.Decimal" DbType="Decimal(20,2)" CanBeNull="true" />
+      <Column Name="Currency_AlphaCode" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_IndentIds" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Indent_Numbers" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Indent_RequisitionDate" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftPartyName" Type="System.String" DbType="VarChar(252)" CanBeNull="true" />
+      <Column Name="Invoice_Number" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_Date" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsClosed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Doc_status" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_PurchaseOrderList_Import" Member="v_PurchaseOrderList_Imports">
+    <Type Name="v_PurchaseOrderList_Import">
+      <Column Name="PurchaseOrder_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrderDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderAdd_addressType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ValueInBaseCurrency" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ValueInCurrency" Type="System.Decimal" DbType="Decimal(20,2)" CanBeNull="true" />
+      <Column Name="Currency_AlphaCode" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_IndentIds" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Indent_Numbers" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Indent_RequisitionDate" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftPartyName" Type="System.String" DbType="VarChar(252)" CanBeNull="true" />
+      <Column Name="Invoice_Number" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_Date" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsClosed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Doc_status" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
+      <Column Name="PlaceOfSupply" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_PurchaseOrderList_Import_BillEntry" Member="v_PurchaseOrderList_Import_BillEntries">
+    <Type Name="v_PurchaseOrderList_Import_BillEntry">
+      <Column Name="PurchaseOrder_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrderDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderAdd_addressType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ValueInBaseCurrency" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ValueInCurrency" Type="System.Decimal" DbType="Decimal(20,2)" CanBeNull="true" />
+      <Column Name="Currency_AlphaCode" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_IndentIds" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Indent_Numbers" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Indent_RequisitionDate" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftPartyName" Type="System.String" DbType="VarChar(252)" CanBeNull="true" />
+      <Column Name="Invoice_Number" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_Date" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsClosed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Doc_status" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_PurchaseOrderList_Import_BillOfLading" Member="v_PurchaseOrderList_Import_BillOfLadings">
+    <Type Name="v_PurchaseOrderList_Import_BillOfLading">
+      <Column Name="PurchaseOrder_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrderDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderAdd_addressType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="ValueInBaseCurrency" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ValueInCurrency" Type="System.Decimal" DbType="Decimal(20,2)" CanBeNull="true" />
+      <Column Name="Currency_AlphaCode" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_IndentIds" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Tracking" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftPartyName" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_Number" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_Date" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsClosed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Doc_status" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_PurchaseOrderList_Import_Indent" Member="v_PurchaseOrderList_Import_Indents">
+    <Type Name="v_PurchaseOrderList_Import_Indent">
+      <Column Name="PurchaseOrder_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrderDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderAdd_addressType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ValueInBaseCurrency" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ValueInCurrency" Type="System.Decimal" DbType="Decimal(20,2)" CanBeNull="true" />
+      <Column Name="Currency_AlphaCode" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_IndentIds" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Indent_Numbers" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Indent_RequisitionDate" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftPartyName" Type="System.String" DbType="VarChar(252)" CanBeNull="true" />
+      <Column Name="Invoice_Number" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_Date" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsClosed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Doc_status" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_ImportStockReceiptList" Member="v_ImportStockReceiptLists">
+    <Type Name="v_ImportStockReceiptList">
+      <Column Name="GoodReceivedNote_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrder_Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrderDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseOrder_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PurchaseOrder_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GRNAdd_addressType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ValueInBaseCurrency" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ValueInCurrency" Type="System.Decimal" DbType="Decimal(20,2)" CanBeNull="true" />
+      <Column Name="Currency_AlphaCode" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="ShiftPartyName" Type="System.String" DbType="VarChar(252)" CanBeNull="true" />
+      <Column Name="Invoice_Number" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_Date" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_LCEntryList_Import" Member="v_LCEntryList_Imports">
+    <Type Name="v_LCEntryList_Import">
+      <Column Name="LCEntry_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="LCEntry_Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LCEntry_Dt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LCEntry_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LCEntry_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="LCEntry_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="branch_description" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="LCEntry_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VendorName" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="ValueInBaseCurrency" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ValueInCurrency" Type="System.Decimal" DbType="Decimal(20,2)" CanBeNull="true" />
+      <Column Name="Currency_AlphaCode" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,314 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "ProductionIssueGridLookup";
+        settings.KeyFieldName = "ProductionIssueID";
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Properties.EnableClientSideAPI = true;
+        settings.GridViewClientSideEvents.BeginCallback = "ProductionIssueStartCallback";
+        settings.Properties.ClientInstanceName = "ProductionIssueGridLookup";
+        settings.Properties.ClientSideEvents.GotFocus = "ProductissueGotFocus";
+        settings.GridViewClientSideEvents.SelectionChanged = "ProductionIssueSelectionChanged";
+        settings.Properties.ClientSideEvents.ValueChanged = "ProductionIssueSelectionChanged";
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(6);
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.None;
+        settings.Properties.DisplayFormatString = "{0}";
+        settings.Properties.DisplayFormatInEditMode = true;
+        settings.Properties.ClientSideEvents.GotFocus = "ProductionIssueGotFocus";
+
+        //1
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Issue_No";
+            column.Caption = "Material Issue No";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+        });
+        //2
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Issue_Date";
+            column.Caption = "Issue Date";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+            column.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+            (column.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+
+        });
+        //3
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "BalQty";
+            column.Caption = "FG Qty";
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+
+        });
+        //4
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "OrderNo";
+            column.Caption = "Work Order No";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+        });
+
+
+
+
+        //5
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FinishedItem";
+            column.Caption = "Product Name";
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+        });
+        //6
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Details_ID";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //7
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Issue_Date";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+            column.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+            (column.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        });
+        //8
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FinishedUom";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //9
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Issue_Qty";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //10
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Warehouse";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+
+
+        //11
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProductionIssueID";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+
+        //12
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "WorkCenterID";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+
+        });
+        //13
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "WorkCenterCode";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //14
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "WorkCenterDescription";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //15
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "WorkOrderID";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //16
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "BalQty";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //17
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "PartNoName";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //18
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ItemRevNo";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //19
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DesignNo";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //20
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Description";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //21
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Proj_Code";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //22
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Hierarchy";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        // Rev Sanchita
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProjectID";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        // End of Rev Sanchita
+        settings.Properties.Caption = " ";
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Single;
+
+        //  settings.Properties.TextFormatString = "{1}";
+        settings.Properties.MultiTextSeparator = ", ";
+        settings.Properties.SelectionMode = GridLookupSelectionMode.Single;
+        settings.Properties.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "FGReceived", Action = "GetPIList" };
+        // settings.GridViewClientSideEvents.BeginCallback = "function(s,e){OnBeginCallback(s,e);}";
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (DevExpress.Web.Mvc.MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 500;
+
+            //gridLookup.GridView.Settings.wi
+        };
+
+
+
+    }).BindList(Model).GetHtml()
+
+
+

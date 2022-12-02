@@ -1,0 +1,151 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridmultiuom";
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    //settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = false;
+    settings.Settings.ShowFilterRow = false;
+    settings.Settings.ShowGroupPanel = false;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.False;
+
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.False;
+
+    // settings.KeyFieldName = "UserName";
+
+    //settings.SetDataItemTemplateContent(cell =>
+    //{
+    //    ViewContext.Writer.Write("<span style=\"color:red\">" + cell.Text + "</span>");
+    //});
+
+    //settings.CallbackRouteValues = new { Action = "MultiUomList", Controller = "BOMEntry" };
+    //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    //settings.Columns.Add("UserName");
+    //settings.Columns.Add("total_shop_visited");
+    //settings.Columns.Add("total_time_spent_at_shop");
+    //settings.Columns.Add("gps");
+    //settings.Columns.Add("Ratio");
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Quantity";
+        x.Caption = "Quantity";
+        x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        x.PropertiesEdit.DisplayFormatString = "0.00";
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "UOM";
+        x.Caption = "UOM";
+        x.VisibleIndex = 2;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+
+
+    });
+
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BaseRate";
+        x.Caption = "Rate";
+        x.VisibleIndex = 3;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        x.PropertiesEdit.DisplayFormatString = "0.00";
+
+    });
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.FieldName = "inactive_hrs";
+    //    x.Caption = "GPS Inactive Duration()";
+    //    x.VisibleIndex = 4;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    //});
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "AltUOM";
+        x.Caption = "Alt. UOM";
+        x.VisibleIndex = 4;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.SetDataItemTemplateContent(c =>
+        //{
+        //    ViewContext.Writer.Write("<a style='cursor:pointer' onclick=\"OpenGPSVisitList('" + Convert.ToString(DataBinder.Eval(c.DataItem, "user_id")) + "')\">" + Convert.ToString(DataBinder.Eval(c.DataItem, "inactive_hrs")) + "</a>");
+        //});
+
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "AltQuantity";
+        x.Caption = "Alt. Quantity";
+
+        x.VisibleIndex = 5;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        x.PropertiesEdit.DisplayFormatString = "0.00";
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "AltRate";
+        x.Caption = "Rate";
+
+        x.VisibleIndex = 6;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        x.PropertiesEdit.DisplayFormatString = "0.00";
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "UpdateRow";
+        x.Caption = "Update Row";
+
+        x.VisibleIndex = 7;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        //x.PropertiesEdit.DisplayFormatString = "0.00";
+
+    });
+    
+    //settings.Columns.Add(x =>
+    //{
+    //    x.Caption = "Action";
+    //    x.VisibleIndex = 8;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    //    x.SetDataItemTemplateContent(c =>
+    //    {
+    //        ViewContext.Writer.Write("<a style='cursor:pointer' onclick=\"OpenSHopVisitList('" + Convert.ToString(DataBinder.Eval(c.DataItem, "user_id")) + "')\">View Details</a>");
+    //        ViewContext.Writer.Write("<a style='cursor:pointer' onclick=\"Delete_MultiUom('" + Convert.ToString(DataBinder.Eval(c.DataItem, "SrlNo")) + " title='Delete' ')\"><img src='/assests/images/crs.png' /></a>");
+    //        //ViewContext.Writer.Write("<a style='cursor:pointer' onclick=\"Delete_MultiUom('<%# Container.KeyValue %>','<%#Eval("SrlNo") %>')\" title='Delete'><img src="/assests/images/crs.png" /></a>
+
+                                          
+
+    //                                       <a href="javascript:void(0);" onclick="Edit_MultiUom('<%# Container.KeyValue %>','<%#Eval("MultiUOMSR") %>')" title="Edit">
+    //                                        <img src="/assests/images/Edit.png" /></a>");
+    //    });
+
+
+    //});
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.TopAndBottom;
+
+
+}).Bind(Model).GetHtml()
+
+

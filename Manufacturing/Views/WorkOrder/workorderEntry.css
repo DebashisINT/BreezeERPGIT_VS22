@@ -1,0 +1,92 @@
+﻿#gridProductionBOMProductList_DXStatus, #gridBOMResourcesList_DXStatus {
+        display: none;
+    }
+
+    .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+        background: white !important;
+    }
+
+    .finishedQttable > tbody > tr > td:first-child {
+        padding-right: 15px;
+    }
+
+    #gridBOMResourcesList #gridBOMResourcesList_DXMainTable > tbody > tr > td:nth-child(12), #gridBOMResourcesList #gridBOMResourcesList_DXMainTable > tbody > tr > td:nth-child(13) {
+        display: none;
+    }
+
+    .gridHeader {
+        font-size: 16px;
+        padding: 3px 10px;
+        background: #576cae;
+        /* color: #fff; */
+        border-radius: 4px 4px 0 0;
+        margin: 1px 1px -2px 1px;
+        background: #b7deed;
+        background: -moz-linear-gradient(top, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
+        background: -webkit-linear-gradient(top, #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%);
+        background: linear-gradient(to bottom, #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed',GradientType=0 );
+        background: #ffffff;
+        background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%);
+        background: -webkit-linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%);
+        background: linear-gradient(to bottom, #daecf9 0%,#b6d9f2 50%,#90c2e6 51%,#c8e3f7 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 );
+        border: 1px solid #87b8dc;
+    }
+
+    .ttAMt {
+        padding: 9px 0 0 15px;
+        margin-left: 29%;
+    }
+
+        .ttAMt table > tbody > tr > td {
+            padding-right: 15px;
+        }
+
+        .ttAMt.tw {
+            padding: 9px 0 0 15px;
+            margin-left: 67%;
+        }
+
+    .mtop10 {
+        margin-top: 10px;
+    }
+
+    .fa.fa-exclamation-circle:before {
+        font-family: FontAwesome;
+    }
+
+    .iconRed {
+        right: -19px;
+        top: 3px;
+        position: absolute;
+    }
+
+    .boxBorder {
+        border: 1px solid #ccc;
+        padding: 15px;
+    }
+
+    .styledBox {
+        border-radius: 6px;
+    }
+
+    .mtop10 {
+        margin-top: 10px;
+    }
+
+    .pdRight10 {
+        padding-right: 10px;
+    }
+
+    .mTop10 {
+        margin-top: 10px;
+    }
+
+    .inDrops {
+        display: inline-block;
+    }
+
+    .verticlTop {
+        vertical-align: top;
+    }

@@ -1,0 +1,902 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model Manufacturing.Models.ViewModel.QualityControlViewModel
+
+
+@{
+    ViewBag.Title = "Quality Control";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        if ('@ViewBag.ProjectShow' == "Yes") {
+            $("#divProj").removeClass("hidden");
+        }
+        else {
+            $("#divProj").addClass("hidden");
+        }
+        if ('@ViewBag.ReceiptFromProductionSkipped' == "Yes") {
+            $("#PONo").removeClass("hidden");
+            $("#ProdReceiptNo").addClass("hidden");
+            $("#DivReceiptDate").addClass("hidden");
+            $("#DivIssueNo").addClass("hidden");
+            $("#lblIssueDate").removeClass("hidden");
+            
+        }
+        else {
+            $("#PONo").addClass("hidden");
+            $("#ProdReceiptNo").removeClass("hidden");
+            $("#DivReceiptDate").removeClass("hidden");
+            $("#DivIssueNo").removeClass("hidden");
+            $("#lblIssueDate").addClass("hidden");
+        }
+
+        if ('@ViewBag.WorkOrderModuleSkipped' == "No") {
+            $('#DivWorkOrderNo').removeClass("hidden");
+        }
+        else
+        {
+            $('#DivWorkOrderNo').addClass("hidden");
+        }
+
+        if ('@ViewBag.Hierarchy' == "1") {
+            $('#divHierarchy').removeClass('hidden');
+        }
+        else {
+            $('#divHierarchy').addClass('hidden');
+        }
+    });
+    function Scheme_ValueChange() {
+        var val = $('#ddlSchema option:selected').val();
+        var schemetypeValue = val;
+        var schemetype = schemetypeValue.toString().split('~')[1];
+        var schemelength = schemetypeValue.toString().split('~')[2];
+        var branchID = (schemetypeValue.toString().split('~')[3] != null) ? schemetypeValue.toString().split('~')[3] : "";
+        var SchemaID = schemetypeValue.toString().split('~')[0];
+        $('#hdnSchemaId').val(SchemaID);
+        $('#ddlBankBranch').val(branchID);
+        // var fromdate = (schemetypeValue.toString().split('~')[4] != null) ? schemetypeValue.toString().split('~')[4] : "";
+        //var todate = (schemetypeValue.toString().split('~')[5] != null) ? schemetypeValue.toString().split('~')[5] : "";
+        document.getElementById("QC_No").maxLength = schemelength;
+        if (schemetype == '0') {
+            $('#QC_No').removeAttr("disabled");
+            $('#QC_No').val('');
+
+            $('#QC_No').focus();
+        }
+        else if (schemetype == '1') {
+            $('#QC_No').attr("disabled", "disabled");
+            $('#QC_No').val('Auto');
+        }
+        else if (schemetype == '2') {
+            $('#QC_No').attr("disabled", "disabled");
+            $('#QC_No').val('Datewise');
+        }
+        else if (schemetype == 'n') {
+            $('#QC_No').attr("disabled", "disabled");
+            $('#QC_No').val('');
+        }
+        else {
+            $('#QC_No').attr("disabled", "disabled");
+            $('#QC_No').val('');
+        }
+
+    }
+
+    function PopulateNumberingSchemeData() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getNumberingSchemeRecord", "QC")",
+            success: function (response) {
+
+                var QualityControlID = $('#QualityControlID').val();
+                var hdnSchemaId = $('#hdnSchemaId').val();
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    if (QualityControlID > 0) {
+                        if (hdnSchemaId == response[i].SchemaID.split('~')[0]) {
+                            html = html + "<option selected value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                        }
+                        else {
+                            html = html + "<option value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                        }
+                    }
+                    else {
+                        html = html + "<option value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                    }
+                }
+                $('#ddlSchema').html(html);
+                $('#ddlSchema').focus();
+
+
+            }
+        });
+    }
+
+    $(function () {
+        PopulateNumberingSchemeData();
+
+        var lookup = ASPxClientControl.GetControlCollection().GetByName("ProductionReciptGridLookup");
+        lookup.GetGridView().Refresh();
+        lookup.GetGridView().Refresh();
+
+        ProductionReciptGridLookup.HideDropDownArea();
+        WorkCenterGridLookup.HideDropDownArea();
+
+        $(".decimalCheck").on("keypress keyup blur", function (event) {
+
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+
+        var QualityControlID = $('#QualityControlID').val();
+        if (QualityControlID == "0") {
+            //ClearData();
+        }
+        else {
+            $('#ddlSchema').attr("disabled", "disabled");
+            $('#QC_No').attr("disabled", "disabled");
+            var Receipt_No = $('#Receipt_No').val();
+            var WorkCenterCode = $('#WorkCenterCode').val();
+            //var QC_SchemaID = $('#QC_SchemaID').val();
+            //$('#ddlSchema option:selected').val(QC_SchemaID);
+            ProductionReciptGridLookup.SetTextWithoutApply(Receipt_No);
+            WorkCenterGridLookup.SetTextWithoutApply(WorkCenterCode);
+            QC_Date_dt.SetEnabled(false);
+            ProductionReciptGridLookup.SetEnabled(false);
+            WorkCenterGridLookup.SetEnabled(false);
+
+            $('#btnSaveAndNew').hide();
+        }
+
+
+
+    });
+
+    var globalindexcheck = 0;
+    var globalindexcheck2 = 0;
+    var cpSelectedKeys = "";
+    var cpSelectedKeys2 = "";
+
+    function ProductionReciptSelectionChanged(s, e) {
+        if (e.isChangedOnServer) return;
+        globalindexcheck2 = ProductionReciptGridLookup.gridView.focusedRowIndex;
+        var key = ProductionReciptGridLookup.gridView.GetRowKey(globalindexcheck2)
+
+        if (key != null && globalindexcheck2 > -1) {
+            cpSelectedKeys2 = "";
+
+            if ('@ViewBag.ReceiptFromProductionSkipped' == "Yes") {
+              //  var Receipt_No = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+              //  var Receipt_Date = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+                var ProductionIssueNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+                var ProductionIssueDate = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+                var FGQty = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[3].innerHTML;
+                var WorkOrderNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[4].innerHTML;
+                var ProductionOrderNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[5].innerHTML;
+                var BOMNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[6].innerHTML;
+                var RevNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[7].innerHTML;
+                var FinishedItem = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[8].innerHTML;
+                var ProductionIssueID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[9].innerHTML;
+                var Details_ID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[10].innerHTML;
+                var FinishedUom = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[11].innerHTML;
+                var Issue_Qty = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[12].innerHTML;
+                var Warehouse = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[13].innerHTML;
+                var ProductionOrderDate = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[14].innerHTML;
+                var ProductionOrderID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[15].innerHTML;
+                var ProductionIssueID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[16].innerHTML;
+                var WorkCenterID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[17].innerHTML;
+                var WorkCenterCode = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[18].innerHTML;
+                var WorkCenterDescription = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[19].innerHTML;
+                var WorkOrderID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[20].innerHTML;
+                var FGPrice = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[21].innerHTML;
+                var TotalAmount = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[22].innerHTML;
+                var ProductDescription = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[23].innerHTML;
+                var strRemarks = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[24].innerHTML;
+                var PartNoName = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[25].innerHTML;
+                var ItemRev_No = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[26].innerHTML;
+                var DEsign = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[27].innerHTML;
+                var Proj_Code = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[28].innerHTML;
+                var Hierarchy = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[29].innerHTML;
+                ProductionReciptGridLookup.SetTextWithoutApply(ProductionIssueNo);
+                $('#ReceiptDate').val(ProductionIssueDate);
+            }
+            else {
+
+                var Receipt_No = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+                var Receipt_Date = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+                var ProductionIssueNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[3].innerHTML;
+                var ProductionIssueDate = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[4].innerHTML;
+                var FGQty = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[5].innerHTML;
+                var WorkOrderNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[6].innerHTML;
+                var ProductionOrderNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[7].innerHTML;
+                var BOMNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[8].innerHTML;
+                var RevNo = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[9].innerHTML;
+                var FinishedItem = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[10].innerHTML;
+                var ProductionIssueID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[11].innerHTML;
+                var Details_ID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[12].innerHTML;
+                var FinishedUom = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[13].innerHTML;
+                var Issue_Qty = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[14].innerHTML;
+                var Warehouse = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[15].innerHTML;
+                var ProductionOrderDate = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[16].innerHTML;
+                var ProductionOrderID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[17].innerHTML;
+                var ProductionIssueID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[18].innerHTML;
+                var WorkCenterID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[19].innerHTML;
+                var WorkCenterCode = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[20].innerHTML;
+                var WorkCenterDescription = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[21].innerHTML;
+                var WorkOrderID = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[22].innerHTML;
+                var FGPrice = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[23].innerHTML;
+                var TotalAmount = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[24].innerHTML;
+                var ProductDescription = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[25].innerHTML;
+                var strRemarks = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[26].innerHTML;
+                var PartNoName = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[27].innerHTML;
+                var ItemRev_No = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[28].innerHTML;
+                var DEsign = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[29].innerHTML;
+                var Proj_Code = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[30].innerHTML;
+                var Hierarchy = ProductionReciptGridLookup.gridView.GetRow(globalindexcheck2).children[31].innerHTML;
+                ProductionReciptGridLookup.SetTextWithoutApply(Receipt_No);
+                $('#ReceiptDate').val(Receipt_Date);
+            }
+
+            $('#PartNoName').val(PartNoName);
+            $('#DesignNo').val(DEsign);
+            $('#ItemRevNo').val(ItemRev_No);
+            
+            if (Proj_Code == '&nbsp;') {
+                $('#Proj_Code').val('');
+            }
+            else {
+                $('#Proj_Code').val(Proj_Code);
+            }
+
+            if (Hierarchy == '&nbsp;') {
+                $('#Hierarchy').val('');
+            }
+            else {
+                $('#Hierarchy').val(Hierarchy);
+            }
+
+           
+            $('#ProductionIssueNo').val(ProductionIssueNo);
+
+            if ('@ViewBag.WorkOrderModuleSkipped' == "No") {
+                $('#WorkOrderNo').val(WorkOrderNo);
+            }
+            $('#ProductionIssueID').val(ProductionIssueID);
+            
+            $('#BOMNo').val(BOMNo);
+            $('#RevNo').val(RevNo);
+
+            $('#ProductionOrderNo').val(ProductionOrderNo);
+            $('#ItemName').val(FinishedItem);
+            $('#FinishedItem').val(FinishedItem);
+            $('#ProductDescription').val(ProductDescription);
+            $('#FGQty').val(FGQty);
+            $('#FinishedUom').val(FinishedUom);
+            $('#Warehouse').val(Warehouse);
+            $('#FGPrice').val(FGPrice);
+            $('#TotalAmount').val(TotalAmount);
+            $('#strRemarks').val(strRemarks);
+            $('#ProductionReceiptID').val(key);
+
+           
+
+            WorkCenterGridLookup.SetTextWithoutApply(WorkCenterCode);
+
+            setTimeout(function () {
+                WorkCenterGridLookup.SetEnabled(false);
+
+                $('#lblWorkCenterName').text(WorkCenterDescription);
+            }, 100);
+        }
+        else {
+            $('#ProductionReceiptID').val(0);
+            $('#ProductionIssueID').val(0);
+            cpSelectedKeys2 = "";
+            $('#WorkOrderNo').val('');
+            $('#WorkOrderID').val(0);
+            $('#Details_ID').val(0);
+            $('#ProductionOrderDate').val('');
+            $('#ProductionOrderNo').val('');
+            $('#ProductionOrderID').val('');
+            $('#BOMNo').val('');
+            $('#RevNo').val('');
+            $('#FinishedItem').val('');
+            $('#FinishedUom').val('');
+            $('#Order_Qty').val('');
+            $('#Warehouse').val('');
+            $('#IssueDate').val('');
+            $('#hdnProductQty').val(parseFloat(0).toFixed(4));
+            $('#lblWorkCenterName').text('');
+            WorkCenterGridLookup.SetEnabled(true);
+            WorkCenterGridLookup.SetTextWithoutApply('');
+            $('#WorkCenterID').val(0);
+
+            $('#PartNoName').val('');
+            $('#DesignNo').val('');
+            $('#ItemRevNo').val('');
+            $('#Proj_Code').val('');
+            $('#Hierarchy').val('');
+        }
+    }
+
+
+
+    function ProductionReciptGotFocus(s, e) {
+        ProductionReciptGridLookup.ShowDropDownArea();
+    }
+
+    function WorkCenterSelectionChanged(s, e) {
+
+        $('#lblWorkCenterName').text('');
+        if (e.isChangedOnServer) return;
+        globalindexcheck2 = WorkCenterGridLookup.gridView.focusedRowIndex;
+        var key = WorkCenterGridLookup.gridView.GetRowKey(globalindexcheck2)
+
+        if (key != null && globalindexcheck2 > -1) {
+
+            cpSelectedKeys2 = "";
+            var WorkCenterName = WorkCenterGridLookup.gridView.GetRow(globalindexcheck2).children[1].innerHTML;
+            var WorkCenterDesc = WorkCenterGridLookup.gridView.GetRow(globalindexcheck2).children[2].innerHTML;
+
+            $('#WorkCenterID').val(key);
+            cpSelectedKeys2 = key;
+            WorkCenterGridLookup.SetTextWithoutApply(WorkCenterName);
+            $('#lblWorkCenterName').text(WorkCenterDesc);
+        }
+        else {
+            cpSelectedKeys2 = "";
+            $('#WorkCenterID').val(0);
+            $('#lblWorkCenterName').text('');
+        }
+    }
+
+    function WorkCenterGotFocus(s, e) {
+        WorkCenterGridLookup.ShowDropDownArea();
+    }
+
+    var savemode = "";
+    var hasmsg = 0;
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function QCSave(mode) {
+        savemode = mode;
+        hasmsg = 0;
+
+        var isprocess = 1;
+        var order_schemaid = $('#hdnSchemaId').val();
+        var Unit = $('#ddlBankBranch option:selected').val();
+        var QC_No = $('#QC_No').val();
+        var OrderDate = GetServerDateFormat(QC_Date_dt.GetValue());
+        var WorkCenterID = $('#WorkCenterID').val();
+        var ProductionReceiptID = $('#ProductionReceiptID').val();
+        var QualityControlID = $('#QualityControlID').val();
+        var ProductionIssueID = $('#ProductionIssueID').val();
+        var FGQty = $('#FGQty').val();
+        var FreshQuantity = $('#FreshQuantity').val();
+        var RejectedQuantity = $('#RejectedQuantity').val();
+
+        if (order_schemaid == "0") {
+            $('#EddlSchema').show();
+            isprocess = 0;
+        }
+        else {
+            $('#EddlSchema').hide();
+        }
+
+        if (OrderDate == '') {
+            $('#EIssue_Date').show();
+            isprocess = 0;
+        }
+        else {
+            $('#EIssue_Date').hide();
+        }
+
+        if (FreshQuantity == "") {
+            $('#EFreshQuantity').show();
+            isprocess = 0;
+        }
+        else {
+            $('#EFreshQuantity').hide();
+        }
+
+        if (RejectedQuantity == "") {
+            $('#ERejectedQuantity').show();
+            isprocess = 0;
+        }
+        else {
+            $('#ERejectedQuantity').hide();
+        }
+
+        if ('@ViewBag.ReceiptFromProductionSkipped' == "No") {
+            if (ProductionReceiptID == "" || ProductionReceiptID == "0") {
+                $('#EReceiptNo').show();
+                isprocess = 0;
+            }
+            else {
+                $('#EReceiptNo').hide();
+            }
+        }
+        else
+        {
+            if (ProductionIssueID == "" || ProductionIssueID == "0") {
+                $('#EReceiptNo').show();
+                isprocess = 0;
+            }
+            else {
+                $('#EReceiptNo').hide();
+            }
+        }
+
+        if ((FGQty == "" || FGQty == "0") && isprocess == 1) {
+            jAlert("Quantity cannot zero!");
+            isprocess = 0;
+        }
+        else if ((parseFloat(FGQty) != (parseFloat(FreshQuantity) + parseFloat(RejectedQuantity))) && isprocess == 1) {
+            jAlert("Fresh & Rejected Quantity should be equal to Quantity!");
+            isprocess = 0;
+        }
+
+        var DocType = "";
+        if ('@ViewBag.ReceiptFromProductionSkipped' == "Yes") {
+            DocType = "ProductionIssue";
+            ProductionReceiptID = "0";
+        }
+        else
+        {
+            DocType = "ProdductionReceipt";
+        }
+
+        if (isprocess == 1) {
+            var obj = {};
+            obj.Order_SchemaID = order_schemaid;
+            obj.QC_No = QC_No;
+            obj.OrderDate = OrderDate;
+            obj.WorkCenterID = WorkCenterID;
+            obj.ProductionReceiptID = ProductionReceiptID;
+            obj.QualityControlID = QualityControlID;
+            obj.FGQty = FGQty;
+            obj.FreshQuantity = FreshQuantity;
+            obj.RejectedQuantity = RejectedQuantity;
+            obj.DocType = DocType;
+            obj.ProductionIssueID = ProductionIssueID;
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("QCInsertUpdate", "QC")",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.Success) {
+
+                        jAlert('Quality Control Number : ' + response.Message + ' Successfully saved.', 'Alert!', function (r) {
+                            if (r) {
+                                ClearData();
+                                if (savemode == "Exit") {
+                                    setTimeout(function () {
+                                        var url = $('#hdnQualityControlListPage').val();
+                                        window.location.href = url;
+                                    }, 500);
+                                }
+                                setTimeout(function () {
+                                    ProductionReciptGridLookup.HideDropDownArea();
+                                    WorkCenterGridLookup.HideDropDownArea();
+                                }, 500);
+                            }
+
+                        });
+
+
+                    }
+                    else {
+                        if (response.Message == "duplicate") {
+                            jAlert('This Quality Control no already present!');
+
+                            return false;
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                            return false;
+                        }
+                    }
+                }
+            });
+
+
+        }
+
+    }
+
+    function ClearData() {
+        $('#hdnSchemaId').val('');
+
+        $('#QC_No').val('');
+        var OrderDate = GetServerDateFormat(QC_Date_dt.GetValue());
+        $('#WorkCenterID').val('');
+        $('#ProductionReceiptID').val('');
+        $('#QualityControlID').val(0);
+
+        $('#FGQty').val(parseFloat(0).toFixed(4));
+        $('#FreshQuantity').val(parseFloat(0).toFixed(4));
+        $('#RejectedQuantity').val(parseFloat(0).toFixed(4));
+
+        $('#ddlSchema').val($("#ddlSchema option:first").val());
+        $('#ddlBankBranch').val($("#ddlBankBranch option:first").val());
+        $('#Warehouse').val('');
+
+        $('#ProductionIssueNo').val('');
+        $('#WorkOrderNo').val('');
+        $('#BOMNo').val('');
+        $('#RevNo').val('');
+
+        $('#ProductionOrderNo').val('');
+        $('#ItemName').val('');
+        $('#FinishedItem').val('');
+        $('#ProductDescription').val('');
+        $('#FGPrice').val(parseFloat(0).toFixed(4));
+        $('#TotalAmount').val(parseFloat(0).toFixed(4));
+        $('#FinishedUom').val('');
+        $('#Warehouse').val('');
+        $('#QC_No').removeAttr("disabled");
+        $('#strRemarks').val('');
+        $('#lblWorkCenterName').text('');
+        WorkCenterGridLookup.SetTextWithoutApply('');
+        ProductionReciptGridLookup.SetTextWithoutApply('');
+        WorkCenterGridLookup.gridView.UnselectAllRowsOnPage();
+        ProductionReciptGridLookup.gridView.UnselectAllRowsOnPage();
+        $('#ProductionReceiptID').val(0);
+        WorkCenterGridLookup.SetEnabled(true);
+
+        cpSelectedKeys = "";
+        cpSelectedKeys2 = "";
+        ProductionReciptGridLookup.OnClear();
+        WorkCenterGridLookup.OnClear();
+
+        ProductionReciptGridLookup.HideDropDownArea();
+        WorkCenterGridLookup.HideDropDownArea();
+    }
+
+
+    function SetDefaultDate(s, e) {
+        QC_Date_dt.SetValue(new Date());
+    }
+
+    function ChkDataDigitCount(e) {
+
+        var data = $(e).val();
+        $(e).val(parseFloat(data).toFixed(4));
+        if (data == '' || data == null) {
+            $(e).val(parseFloat(0).toFixed(4));
+        }
+    }
+</script>
+<link href="~/Views/QC/qcEntry.css" rel="stylesheet" />
+
+
+@Html.HiddenFor(x => x.WorkCenterID)
+@Html.HiddenFor(x => x.ProductionReceiptID)
+@Html.HiddenFor(x => x.QualityControlID)
+
+@Html.HiddenFor(x => x.Receipt_No)
+
+@Html.HiddenFor(x => x.WorkCenterCode)
+
+@Html.HiddenFor(x => x.ProductionIssueID)
+
+
+
+
+
+<input type="hidden" value="@Url.Action("QCList", "QC")" id="hdnQualityControlListPage" />
+
+<div class="panel-title clearfix" id="myDiv">
+    <h3 class="pull-left">
+        <label>Quality Control</label>
+    </h3>
+    <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("QCList", "QC")"><i class="fa fa-times"></i></a></div>
+</div>
+
+<input type="hidden" value="@Model.QC_SchemaID" id="hdnSchemaId" />
+
+
+<div class="boxBorder">
+    <div class="styledBox">
+        <div class="row">
+            <div class="col-md-2">
+                <label>Numbering Scheme <span style="color:red">*</span></label>
+                <div class="relative">
+                    <select id="ddlSchema" class="form-control" onchange="Scheme_ValueChange()"></select>
+                    <span id="EddlSchema" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label>QC No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.QC_No, new { @class = "form-control" })
+                    <span id="EIssue_No" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2">
+                <label>QC Date <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "QC_Date_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Date = DateTime.Now;
+                                         settings.Date = Convert.ToDateTime(@Model.dtOrderDate);
+                                         settings.Properties.ClientSideEvents.Init = "SetDefaultDate";
+
+                                     }
+                            ).GetHtml()
+                    <span id="EIssue_Date" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2">
+                <label id="ProdReceiptNo">Prod. Receipt No. <span style="color:red">*</span></label>
+                <label id="PONo">Issue No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    <div class="lookupTdHide">
+                        @Html.Action("GetPRList", "QC")
+                    </div>
+                    <span id="EReceiptNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2" >
+                <label id="DivReceiptDate">Prod. Receipt Date <span style="color:red">*</span></label>
+                <label id="lblIssueDate">Issue Date <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.ReceiptDate, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EOrderNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2" id="DivIssueNo">
+                <label>Issue No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.ProductionIssueNo, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EOrderNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class=" col-sm-2" id="DivWorkOrderNo">
+                <label>Work Order No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.WorkOrderNo, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EOrderNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">BOM No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.BOMNo, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="EBOMNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Revision No. <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.RevNo, new { @class = "form-control", @disabled = "disabled" })
+                    <span id="ERevNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Unit <span style="color:red">*</span></label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.DropDownListFor(x => x.BRANCH_ID, new SelectList(Model.UnitList, "BranchID", "BankBranchName"), new { @id = "ddlBankBranch", @class = "form-control", @disabled = "disabled", @onchange = "PopulateWareHouseData();" })
+                    @*@Html.TextBoxFor(m => m.Unit, new { @class = "form-control", @disabled = "disabled" })*@
+                    <span id="ERevNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Production Order </label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.ProductionOrderNo, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Finished Item </label>
+                <div class="relative">
+                    @*<input type="text" class="form-control" disabled="disabled" />*@
+                    @Html.TextBoxFor(m => m.FinishedItem, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Work Center <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.Action("GetWCList", "QC")
+                    <span id="Eworkcenter" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Work Center Name </label>
+                <div class="relative">
+                    <label id="lblWorkCenterName" style="width: 100%; background: #fff; height: 24px; border: 1px solid #ccc; padding: 3px 5px;">@Model.WorkCenterDescription</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br />
+
+    <div class="">
+        <label style="font-size: 16px;">Finished Item </label>
+    </div>
+    <div class="styledBox">
+        <div class="row">
+
+            <div class=" col-sm-2">
+                <label class="">Item</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.FinishedItem, new { @id = "ItemName", @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-3">
+                <label class="">Description</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.ProductDescription, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Quantity</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.FGQty, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Fresh Qty</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.FreshQuantity, new { @class = "form-control decimalCheck",@onchange = "ChkDataDigitCount(this);" })
+
+                    <span id="EFreshQuantity" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="">Rejected Qty</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.RejectedQuantity, new { @class = "form-control decimalCheck" ,@onchange = "ChkDataDigitCount(this);" })
+
+                    <span id="ERejectedQuantity" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+
+
+            <div class=" col-sm-2">
+                <label class="">UOM</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.FinishedUom, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Warehouse</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.Warehouse, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Price</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.FGPrice, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Amount</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.TotalAmount, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class=" col-sm-2">
+                <label class="mtop10">Remarks</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.strRemarks, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+        </div>
+        <div class="row">         
+            <div class=" col-sm-2">
+                <label class="mtop10">Part No:</label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.PartNoName, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class=" col-sm-2">
+                <label class="mtop10">Drawing No:</label>
+                @Html.TextBoxFor(m => m.DesignNo, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class=" col-sm-2">
+                <label class="mtop10">Drawing Rev. No:</label>
+                @Html.TextBoxFor(m => m.ItemRevNo, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class=" col-sm-2" id="divProj">
+                <label class="mtop10">Project Code:</label>
+                @Html.TextBoxFor(m => m.Proj_Code, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class=" col-sm-2" id="divHierarchy">
+                <label class="mtop10">Hierarchy:</label>
+                @Html.TextBoxFor(m => m.Hierarchy, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="clearfix">
+        @if (Convert.ToInt16(ViewBag.IsView) == 0)
+        {
+            <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveAndNew" onclick="QCSave('New');">
+                <div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div>
+                <span>Save and New</span>
+
+
+            </div>
+            <div class="inline-block addResourceBtn themeColor " onclick="QCSave('Exit');">
+                <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
+                <span>Save and Exit</span>
+            </div>
+    }
+
+    </div>
+
+    <div class="row mTop10">
+
+    </div>
+</div>
+

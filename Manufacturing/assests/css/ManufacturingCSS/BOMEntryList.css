@@ -1,0 +1,21 @@
+﻿
+    .padTab > tbody > tr > td:not(:last-child) {
+        padding: 0;
+        padding-right: 15px;
+        vertical-align: middle;
+    }
+
+    .w150 {
+        width: 150px;
+    }
+
+    #gridBOMList_DXMainTable > tbody > tr > td:last-child, #gridBOMList_DXFooterTable > tbody > tr > td:last-child, #gridBOMList_DXHeaderTable > tbody > tr > td:last-child {
+        display: none;
+    }
+    .textareaBig {
+        min-height:120px !important;
+    }
+    .throughRed > td{
+        text-decoration:line-through;
+        color:red;
+    }

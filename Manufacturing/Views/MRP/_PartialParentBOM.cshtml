@@ -1,0 +1,137 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "ParentBOMGridLookup";
+        settings.KeyFieldName = "Details_ID";
+        settings.Properties.EnableClientSideAPI = true;
+        settings.GridViewClientSideEvents.BeginCallback = "BOMStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "BOMSelectionChanged";
+      //  settings.Properties.ClientSideEvents.DropDown = "ProjectLookupValChange";
+        settings.Width =System.Web.UI.WebControls.Unit.Percentage(100);
+        //settings.Properties.ClientSideEvents.GotFocus = "ProjectGotfocus";
+       // settings.Properties.ClientSideEvents.LostFocus = "ProjectLostFocus";       
+        settings.Properties.TextFormatString = "{1}";
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Details_ID";
+            column.Caption = "Details_ID";
+            column.Width = 0;
+            column.Visible = false;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "BOM_No";
+            column.Caption = "BOM No";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProductsName";
+            column.Caption = "BOM FG";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "REVNo";
+            column.Caption = "BOM REV";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "REVNo";
+        //    column.Caption = "Revision Date";
+        //    column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        //});
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "REVNo";
+        //    column.Caption = "";
+        //    column.CellStyle.CssClass = "hide";
+        //    column.HeaderStyle.CssClass = "hide";
+        //    column.Width = 0;
+
+        //});
+
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "REVNo";
+        //    column.Caption = "";
+        //    column.CellStyle.CssClass = "hide";
+        //    column.HeaderStyle.CssClass = "hide";
+        //    column.Width = 0;
+
+        //});
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "REVNo";
+        //    column.Caption = "";
+        //    column.CellStyle.CssClass = "hide";
+        //    column.HeaderStyle.CssClass = "hide";
+        //    column.Width = 0;
+
+        //});
+
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "REVNo";
+        //    column.Caption = "";
+        //    column.CellStyle.CssClass = "hide";
+        //    column.HeaderStyle.CssClass = "hide";
+        //    column.Width = 0;
+
+        //});
+        //settings.Columns.Add(x =>
+        //{
+        //    x.FieldName = "REVNo";
+        //    x.Caption = "";
+        //    x.CellStyle.CssClass = "hide";
+        //    x.HeaderStyle.CssClass = "hide";
+        //    x.Width = 0;
+
+        //});
+        //settings.Columns.Add(x =>
+        //{
+        //    x.FieldName = "REVNo";
+        //    x.Caption = "";
+        //    x.CellStyle.CssClass = "hide";
+        //    x.HeaderStyle.CssClass = "hide";
+        //    x.Width = 0;
+
+        //});
+
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "MRP", Action = "GetParentBOM" };
+        
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+
+        settings.GridViewClientSideEvents.SelectionChanged = "BOMSelectionChanged";
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 600;
+        };
+
+
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.ParentBOMID != null)
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.GridView.Selection.SelectRowByKey(ViewBag.ParentBOMID);
+            }           
+        };
+
+    }).BindList(Model).GetHtml()
+
+
+
+

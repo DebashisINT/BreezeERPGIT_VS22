@@ -1,0 +1,134 @@
+﻿@model IOrderedQueryable
+ 
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvDataBindingToLinq";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "Master", Action = "_customerGrid" };
+
+    settings.KeyFieldName = "cnt_id";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    //settings.Settings.ShowFooter = true;
+
+
+    //settings.Columns.Add(column =>
+    //  {
+    //      column.FieldName = "Code";
+    //      column.Caption = "Unique Id";
+    //      column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //  });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Name";
+        column.Caption = "Name";
+     //   column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+        
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "shortname";
+        column.Caption = "Branch Name";
+        column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    });
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "phf_phoneNumber";
+    //    column.Caption = "Phone Number";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "Code";
+    //    column.Caption = "Unique Id";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "PanNumber";
+    //    column.Caption = "Pan Number";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "city_name";
+    //    column.Caption = "City";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "Activetype";
+    //    column.Caption = "Status";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "Activetype";
+    //    column.Caption = "Status";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "Activetype";
+    //    column.Caption = "Status";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "EnterBy";
+    //    column.Caption = "Enter By";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "ModifyDateTime";
+    //    column.Caption = "Last Updated On";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "ModifyUser";
+    //    column.Caption = "Updated By";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "gstin";
+    //    column.Caption = "GSTIN";
+    //    column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+
+    //});
+
+
+
+
+
+    //settings.ClientSideEvents.Init = "function(s, e) { s.PerformCallback(); }";
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    //settings.ClientSideEvents.EndCallback = "function(s, e) { OnEndCallback(s, e); }";
+
+
+}).BindToEF(string.Empty, string.Empty, (s, e) =>
+{
+    
+    e.KeyExpression = "cnt_Id";
+    e.QueryableSource =(IOrderedQueryable) @Model;
+}).GetHtml()
+

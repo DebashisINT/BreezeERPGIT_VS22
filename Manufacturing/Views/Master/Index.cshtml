@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+
+<script>
+    function OnStartCallback(s, e) {
+        e.customArgs["FilterData"] = textBox1.GetText();
+    }
+
+    function OnClick() {
+        gvDataBindingToLinq.Refresh();
+       
+
+    }
+</script>
+<div>
+    <h2>Hello, @Session["username"]</h2>
+
+
+    <h2>Welcome To Manufacturing Module.</h2>
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="editor">
+                    @Html.DevExpress().TextBox(
+                settings =>
+                {
+                    settings.Name = "textBox1";
+                    //settings.Height = System.Web.UI.WebControls.Unit.Percentage(38);
+                    settings.Width = System.Web.UI.WebControls.Unit.Pixel(1000);
+                    //settings.ControlStyle.CssClass = "form-control";
+                    
+                    
+                }
+            ).GetHtml()
+
+
+                    <div class="input-group-addon">
+                        @Html.DevExpress().Button(
+                        settings=>
+                                 {
+                                     settings.Name = "btnImageAndText";
+                                     settings.Text = "";
+                                     settings.RenderMode = ButtonRenderMode.Link;
+                                     settings.Images.Image.Url = Url.Content("~/assests/images/update_ttl.gif");
+                                     settings.UseSubmitBehavior = false;
+                                     settings.ClientSideEvents.Click = "OnClick";
+                                     
+                                     
+                                 }
+                        
+                        
+                        ).GetHtml()
+                            
+                       
+                    </div>
+                </div>
+        </div>
+
+            <div class="container">
+                <div class="editor">
+                   @Html.DevExpress().DateEdit(
+                settings =>
+                {
+                    settings.Name = "dateEdit4";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Custom;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                    settings.Date = DateTime.Now;
+                    //settings.Properties.MinDate =Convert.ToDateTime(Session["date"].ToString());
+                    
+                   
+                }
+            ).GetHtml()
+                </div>
+            </div>
+            <div class="container">
+                <div class="editor">
+                    @Html.DevExpress().DateEdit(
+                settings =>
+                {
+                    settings.Name = "dateEdit5";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Custom;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                    settings.Date = DateTime.Now;
+                   // settings.Properties.MaxDate = Convert.ToDateTime(Session["date1"].ToString());
+                    
+
+
+                }
+            ).GetHtml()
+
+                    @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "comboBox2";
+                        settings.Width = 180;
+                        settings.SelectedIndex = 0;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "UserName";
+                        settings.Properties.ValueField = "UserName";
+                    }
+                ).BindList(ViewData["Products"]).GetHtml()
+                </div>
+            </div>
+
+
+
+        </div>
+
+    @*@Html.Action("_customerGrid")*@
+ 
+</div>
+
+
+
+

@@ -1,0 +1,352 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model Manufacturing.Models.ViewModel.StockReturnViewModel
+
+@{
+    ViewBag.Title = "Stock Return";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+
+
+<script type="text/javascript">
+
+    var load = 0;
+    function OpenData(stockreturnid) {
+        if (parseInt(stockreturnid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetSRDataByID", "StockReturn")",
+                data: { StockReturnID: stockreturnid, IsView: 0 },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnSRAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    function ViewData(stockreturnid) {
+        if (parseInt(stockreturnid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetSRDataByID", "StockReturn")",
+                data: { StockReturnID: stockreturnid, IsView: 1 },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnSRAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    $(document).ready(function () {
+
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 65 && event.altKey == true) {
+                var url = '@Url.Action("StockReturnEntry", "StockReturn")';
+                window.location.href = url;
+            }
+        });
+
+
+        if (localStorage.getItem('FromDateSRR')) {
+            FromDate_dt.SetDate(new Date(localStorage.getItem('FromDateSRR')));
+        }
+        if (localStorage.getItem('ToDateSRR')) {
+            ToDate_dt.SetDate(new Date(localStorage.getItem('ToDateSRR')));
+        }
+
+        setTimeout(function () {
+            PopulateUnitList();
+        }, 500);
+
+    });
+
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "BOMEntry")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+                if (localStorage.getItem('SRRBranch')) {
+                    if ($("#ddlunitlist option[value=" + localStorage.getItem('SRRBranch') + "]").text() != "" && $("#ddlunitlist option[value=" + localStorage.getItem('SRRBranch') + "]").text() != null) {
+                        $('#ddlunitlist').val(localStorage.getItem('SRRBranch'));
+                    }
+                }
+            }
+        });
+    }
+
+    function datevalidateTo() {
+
+        if (FromDate_dt.GetDate()) {
+            if (ToDate_dt.GetDate() <= FromDate_dt.GetDate()) {
+                ToDate_dt.SetValue(FromDate_dt.GetDate());
+                ToDate_dt.SetMinDate(FromDate_dt.GetDate());
+            }
+        }
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function updateGridByDate() {
+        if (FromDate_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { FromDate_dt.Focus(); });
+        }
+        else if (ToDate_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { ToDate_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(FromDate_dt.GetValue());
+            var todate = GetServerDateFormat(ToDate_dt.GetValue());
+            var unitid = $('#ddlunitlist option:selected').val();
+
+            localStorage.setItem("FromDateSRR", FromDate_dt.GetDate());
+            localStorage.setItem("ToDateSRR", ToDate_dt.GetDate());
+            localStorage.setItem("SRRBranch", unitid);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetSRDateFilter", "StockReturn")",
+                data: { unitid: unitid, FromDate: fromdate, ToDate: todate },
+                success: function (response) {
+                    if (response) {
+                        gridStockReturnList.Refresh();
+                        gridStockReturnList.Refresh();
+                    }
+                }
+            });
+        }
+    }
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+        if (exportid > 0) {
+            var url = '@Url.Action("ExportGridList", "StockReturn", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+        }
+    }
+
+
+    function RemoveData(stockreturnid) {
+
+        jConfirm('Confirm delete?', 'Alert!', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveSRDataByID", "StockReturn")",
+                    data: { StockReturnID: stockreturnid },
+                    success: function (response) {
+                        if (response) {
+                            jAlert("Deleted Successfully!");
+                            gridStockReturnList.Refresh();
+                            gridStockReturnList.Refresh();
+                        }
+                    }
+                });
+            }
+        });
+
+    }
+
+    function onPrintJv(id, RowIndex) {
+        jAlert('No design available!');
+    }
+
+    function OnclickViewAttachment(id) {
+        $('#hdnDocNo').val(id);
+        $('#AttachmentModal').modal('show');
+        setTimeout(function () { $('#documentType').focus(); }, 1000);
+    }
+    function gridRowclick(s, e) {
+        $('#gridStockReturnList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridStockReturnList.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridStockReturnList.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridStockReturnList.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridStockReturnList.SetWidth(cntWidth);
+            }
+
+        });
+    });
+</script>
+
+
+
+<div class="panel-heading">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Stock Return</label>
+        </h3>
+        @*<div id="ApprovalCross" class="crossBtn"><a href=""><i class="fa fa-times"></i></a></div>*@
+
+    </div>
+</div>
+<div class="mainarea form_main">
+
+    <input type="hidden" id="hdnSRAddUpdate" value="@Url.Action("StockReturnEntry", "StockReturn")"  />
+
+    <div>
+        @{
+            Html.RenderAction("AttachmentDocument", "Attachment", new { module = "StockReturn", DocNo = "" });
+        }
+    </div>
+
+    <div class="clearfix">
+        <div class="md-pull-left">
+            <button type="button" class="btn btn-success btn-radius" id="btnAddNew" onclick="location.href='@Url.Action("StockReturnEntry", "StockReturn")'">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span><u>A</u>dd New
+            </button>
+            <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">RTF</option>
+                <option value="4">CSV</option>
+            </select>
+        </div>
+        <div class="md-pull-right">
+            <table class="paddingTbl">
+                <tr>
+                    <td>From Date</td>
+                    <td>
+                        <div class="relative">
+                            @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Properties.EditFormat = EditFormat.Custom;
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Date = DateTime.Now;
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientInstanceName = "FromDate_dt";
+                                settings.Name = "FromDate_dt";
+                                settings.Properties.UseMaskBehavior = true;
+                            }
+                        ).GetHtml()
+                        </div>
+                    </td>
+                    <td>To Date</td>
+                    <td>
+                        <div class="relative">
+                            @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "ToDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+                                settings.Properties.EditFormat = EditFormat.Custom;
+                                settings.Properties.UseMaskBehavior = true;
+                            }
+                        ).GetHtml()
+                        </div>
+                    </td>
+                    <td>Unit</td>
+                    <td>
+                        <div class="relative">
+                            <select id="ddlunitlist" class="form-control"></select>
+                        </div>
+                    </td>
+                    <td><button type="button" id="btnShowData" class="btn btn-primary" style="margin-top: 15px;" onclick="updateGridByDate()">Show</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+            <div id="refreshgrid" class="relative">
+                @{
+                    Html.RenderAction("GetStockReturnList", "StockReturn");
+                }
+            </div>
+        </div>
+    </div>
+
+
+</div>
