@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="AccountsData" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="AccountsDataContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="v_YearEnding_CashBank" EntityType="AccountsData.v_YearEnding_CashBank" />
+    <EntitySet Name="v_YearEnding_Journal" EntityType="AccountsData.v_YearEnding_Journal" />
+  </EntityContainer>
+  <EntityType Name="v_YearEnding_CashBank">
+    <Key>
+      <PropertyRef Name="CashBank_ID" />
+      <PropertyRef Name="CashBank_TransactionType" />
+      <PropertyRef Name="Tax_Code" />
+    </Key>
+    <Property Name="CashBank_ID" Type="Int64" Nullable="false" />
+    <Property Name="CashBank_VoucherNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CashBank_FinYear" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="CashBank_TransactionDate" Type="DateTime" Precision="3" />
+    <Property Name="CashBank_TransactionType" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="CashBank_Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Tax_Code" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="branch_description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="v_YearEnding_Journal">
+    <Key>
+      <PropertyRef Name="JournalVoucher_ID" />
+    </Key>
+    <Property Name="JournalVoucher_ID" Type="Int64" Nullable="false" />
+    <Property Name="JournalVoucher_VoucherNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="JournalVoucher_FinYear" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="JournalVoucher_TransactionDate" Type="DateTime" Precision="3" />
+    <Property Name="JournalVoucher_Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="branch_description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+</Schema>

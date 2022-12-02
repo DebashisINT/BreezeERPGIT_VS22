@@ -1,0 +1,2 @@
+E:\PROJECTS\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CoreCompileInputs.cache

@@ -1,0 +1,2 @@
+E:\PROJECTS\BreezeERPGIT_VS22\Payroll\obj\Debug\Payroll.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\Payroll\obj\Debug\Payroll.csproj.CoreCompileInputs.cache

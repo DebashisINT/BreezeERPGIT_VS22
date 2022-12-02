@@ -28,6 +28,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -9260,7 +9262,6 @@
     </Compile>
     <Compile Include="OMS\Reports\transction.cs">
       <DependentUpon>transction.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="OMS\Reports\transction.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -1,0 +1,5 @@
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.AssemblyReference.cache
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\obj\Debug\PrintPLBS.resources
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.GenerateResource.cache
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.dll.licenses
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CoreCompileInputs.cache
