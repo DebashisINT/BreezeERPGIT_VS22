@@ -1,0 +1,353 @@
+﻿@model PMS.Models.ViewModel.RequirementViewModel
+@{
+    ViewBag.Title = "Requirement Status";
+}
+<script>
+    $(function () {
+        //  gridRequirementList.Refresh();
+
+        $('#ddlAppIds').on('change', function () {
+            if ($("#ddlAppIds option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlAppIds').prop("selectedIndex", 0);
+                var url = '@Url.Action("ExportRequirementStatuslist", "RequirementStatus", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+    function OnStartCallback(s, e) {
+
+    }
+
+    //var chkArr = "";
+
+    function OpenRequirementforEdit(obj) {
+        //alert(obj);
+        $("#Reqid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "RequirementStatus")",
+            data: { reqID: obj },
+            dataType: "json",
+            success: function (response) {
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("Edit Requirement Status");
+                    $("#ReqName").prop('disabled', true);
+                    $("#ReqName").val(status.ReqName);
+                    $("#ddlUnit").val(status.Branch);
+                    $("#ddlReqStatus").val(status.ReqStatus);
+                    $("#reqStatus").modal('toggle');
+                    $("#btnSave").removeClass('hide');
+                    setTimeout(function () {
+                        $('#ddlReqStatus').focus();
+                    }, 600);
+                }
+
+            },
+            error: function (response) {
+                jAlert("Please try again later.", "Alert", function () {
+                    setTimeout(function () {
+                        $('#ReqName').focus();
+                    }, 200);
+                });
+            }
+        });
+    }
+
+    function OpenRequirementforDelete(obj) {
+        jConfirm('Confirm Delete?', 'Alert', function (r) {
+            if (r) {
+                $("#Reqid").val(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteData", "RequirementStatus")",
+                    data: { reqID: obj },
+                    dataType: "json",
+                    success: function (response) {
+                        var status = response;
+                        jAlert(status);
+                        gridRequirementList.Refresh();
+                    },
+                    error: function (response) {
+                        // alert(response);
+                        jAlert("Please try again later.");
+                    }
+                });
+            }
+            else {
+                // alert("false");
+            }
+        });
+
+    }
+
+
+    function OpenRequirementforView(obj) {
+        //alert(obj);
+        $("#Reqid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "RequirementStatus")",
+            data: { reqID: obj },
+            dataType: "json",
+            success: function (response) {
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("View Requirement Status");
+                    $("#ReqName").prop('disabled', true);
+                    $("#ReqName").val(status.ReqName);
+                    $("#ddlUnit").val(status.Branch);
+                    $("#ddlReqStatus").val(status.ReqStatus);
+                    $("#btnSave").addClass('hide');
+                    $("#reqStatus").modal('toggle');
+                }
+
+            },
+            error: function (response) {
+                jAlert("Please try again later.", "Alert", function () {
+                    setTimeout(function () {
+                        $('#ReqName').focus();
+                    }, 200);
+                });
+            }
+        });
+    }
+
+    function ReqSave() {
+        var obj = {};
+        obj.ReqID = $("#Reqid").val();
+        obj.ReqName = $("#ReqName").val().trim();
+        var e = document.getElementById("ddlReqStatus");
+        obj.ReqStatus = e.options[e.selectedIndex].value;
+        var f = document.getElementById("ddlUnit");
+        obj.Branch = f.options[f.selectedIndex].value;
+
+
+        if (obj.ReqName != "") {
+            if (obj.ReqStatus != "0") {
+                if (obj.Branch != "") {
+                    LoadingPanel.Show();
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("SaveData", "RequirementStatus")",
+                        data: { Req: obj },
+                        success: function (response) {
+                            //jAlert(response);
+                            jAlert(response, "Alert", function () {
+                                setTimeout(function () {
+                                    $('#ReqName').focus();
+                                }, 200);
+                            });
+                            LoadingPanel.Hide();
+                            if (response == 'Saved Successfully.') {
+                                $("#Reqid").val('');
+                                $("#ReqName").val('');
+                                $("#ddlUnit").val(1);
+                                $("#ddlReqStatus").val(0);
+                                gridRequirementList.Refresh();
+                                gridRequirementList.Refresh();
+                                $("#btnSave").removeClass('hide');
+                                $("#reqStatus").modal('toggle');
+                            }
+                        },
+                        error: function (response) {
+                            //  alert(response);
+                            jAlert("Please try again later.", "Alert", function () {
+                                setTimeout(function () {
+                                    $('#ReqName').focus();
+                                }, 200);
+                            });
+                            LoadingPanel.Hide();
+                        }
+                    });
+                }
+                else {
+                    jAlert("Unit is Mandatory.", "Alert", function () {
+                        setTimeout(function () {
+                            $('#ddlUnit').focus();
+                        }, 200);
+                    });
+                }
+            }
+            else {
+                jAlert("Status is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        $('#ddlReqStatus').focus();
+                    }, 200);
+                });
+            }
+        }
+        else {
+            jAlert("Name is Mandatory.", "Alert", function () {
+                setTimeout(function () {
+                    $('#ReqName').focus();
+                }, 200);
+            });
+        }
+    }
+
+    function openModal() {
+        $("#Reqid").val('');
+        $("#ReqName").val('');
+        $("#ddlUnit").val(1);
+        $("#ddlReqStatus").val(0);
+        $("#ReqName").focus();
+        $("#btnSave").removeClass('hide');
+        $("#exampleModalLabel").html("Add Requirement Status");
+        $("#ReqName").prop('disabled', false);
+        setTimeout(function () {
+            $('#ReqName').focus();
+        }, 600);
+    }
+    function gridRowclick(s, e) {
+        $('#gridRequirementList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+</script>
+<style>
+    #gridRequirementList, #gridRequirementList > tbody > tr > td .dxgvCSD {
+        width: 100% !important;
+    }
+</style>
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Requirement Status</label>
+        </h3>
+    </div>
+
+
+</div>
+<div class="form_main">
+    <div class="padBot8 padTop8">
+        <div class="clearfix">
+            @if (ViewBag.CanAdd)
+            {
+                <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#reqStatus" data-backdrop="static" data-keyboard="true">
+                    <span class="btn-icon"><i class="fa fa-plus"></i></span> Requirement Status
+                </button>
+            }
+
+            @if (ViewBag.CanExport)
+            {
+                <select name="ddlAppIds" class="btn btn-primary btn-radius" id="ddlAppIds">
+                    <option value="0">Export to</option>
+                    <option value="1">PDF</option>
+                    <option value="2">XLSX</option>
+                    <option value="3">XLS</option>
+                    <option value="4">RTF</option>
+                    <option value="5">CSV</option>
+                </select>
+            }
+        </div>
+    </div>
+    <div class="scrooler">
+        <div id="refreshgrid" class="relative">
+            @{
+                Html.RenderAction("GetRequirementPartial", "RequirementStatus");
+            }
+        </div>
+    </div>
+</div>
+<input type="hidden" id="Reqid" />
+<div class="modal fade pmsModal w30" id="reqStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Requirement Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="openModal()">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Name <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<input type="text" class="form-control" id="" value="Susanta Kundu">*@
+                            @Html.TextBoxFor(m => m.ReqName, new { @class = "form-control", @id = "ReqName", @MaxLength = "100" })
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Status <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<select class="form-control" id="ddlReqStatus">
+                                    <option value="0">Select</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                    <option value="Committed">Committed</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Hard">Hard</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="On Break">On Break</option>
+                                    <option value="Proposed">Proposed</option>
+                                    <option value="Scheduled">Scheduled</option>
+                                    <option value="Soft">Soft</option>
+                                    <option value="Travelling">Travelling</option>
+                                </select>*@
+                            @Html.DropDownListFor(x => x.ReqStatusList, new SelectList(Model.ReqStatusList, "TypeID", "TypeNAME"), new { @id = "ddlReqStatus", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Unit <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                            @Html.DropDownListFor(x => x.BranchList, new SelectList(Model.BranchList, "branch_id", "branch_description"), new { @id = "ddlUnit", @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal" onclick="openModal()">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="btnSave" onclick="ReqSave()">Save & New</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()

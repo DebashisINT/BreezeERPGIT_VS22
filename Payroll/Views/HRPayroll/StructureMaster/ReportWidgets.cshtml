@@ -1,0 +1,600 @@
+﻿@model Payroll.Models.payrollStructureEngine
+
+<script src="~/Scripts/JS/jquery.tablednd.js"></script>
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+
+<style>
+    .tDnD_whileDrag td {
+        background-color: #c6d2ff;
+        -webkit-box-shadow: 6px 3px 5px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;
+    }
+
+        .tDnD_whileDrag td:last-child {
+            -webkit-box-shadow: 1px 8px 6px -4px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;
+        }
+
+    tr.myDragClass td {
+        color: yellow;
+        text-shadow: 0 0 10px black, 0 0 10px black, 0 0 8px black, 0 0 6px black, 0 0 6px black;
+        background-color: #999;
+        -webkit-box-shadow: 0 12px 14px -12px #111 inset, 0 -2px 2px -1px #333 inset;
+    }
+
+        tr.myDragClass td:first-child {
+            -webkit-box-shadow: 0 12px 14px -12px #111 inset, 12px 0 14px -12px #111 inset, 0 -2px 2px -1px #333 inset;
+        }
+
+        tr.myDragClass td:last-child {
+            -webkit-box-shadow: 0 12px 14px -12px #111 inset, -12px 0 14px -12px #111 inset, 0 -2px 2px -1px #333 inset;
+        }
+
+
+    .table-fixed thead {
+        width: 99%;
+    }
+
+    .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+
+        .table-fixed tbody td, .table-fixed thead > tr > th {
+            float: left;
+        }
+
+    .pure-table {
+        width: 100%;
+    }
+
+        .pure-table > thead > tr > th {
+            background: #425799;
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#596fb1+0,415698+100 */
+            background: #596fb1; /* Old browsers */
+            background: -moz-linear-gradient(top, #596fb1 0%, #415698 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #596fb1 0%,#415698 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #596fb1 0%,#415698 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#596fb1', endColorstr='#415698',GradientType=0 ); /* IE6-9 */
+            color: #fff;
+            border-right: 1px solid #394d8c;
+            padding: 9px 10px;
+            border-top: 1px solid #3b4e88;
+            box-shadow: inset 0px 1px 2px rgba(255,255,255,0.35);
+        }
+
+        .pure-table > tbody > tr > td {
+            padding: 5px 8px;
+            border: 1px solid #ccc;
+        }
+
+    /*.pure-table>tbody>tr:nth-child(odd)>td {
+        background: none repeat scroll 0 0 #f9f9f9;
+    }*/
+    /*.mtbl {
+        width: 100%;
+    }*/
+
+    .mtbl > tbody > tr > td {
+        padding-right: 25px;
+        position: relative;
+        padding-bottom: 5px;
+    }
+</style>
+<script>
+    var jsonAllowanceList = [];
+    var jsonDeductionList = [];
+    var jsonOthersist = [];
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "/StructureMaster/GetReportWidgets",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var ResponseCode = msg.ResponseCode;
+
+                if (ResponseCode == "Success") {
+                    if (msg.AllowanceHeadDetails!=null) jsonAllowanceList = msg.AllowanceHeadDetails;
+                    if (msg.DeductionHeadDetails != null) jsonDeductionList = msg.DeductionHeadDetails;
+                    if (msg.OthersHeadDetails != null) jsonOthersist = msg.OthersHeadDetails;
+
+                    document.getElementById('hdnInputType').value = "AL";
+                    bindPayHeadTable();
+
+                    document.getElementById('hdnInputType').value = "DT";
+                    bindPayHeadTable();
+
+                    document.getElementById('hdnInputType').value = "OT";
+                    bindPayHeadTable();
+                }
+                else {
+                    var txt = '';
+                    txt += "<table id='tbl' cellspacing='0' cellpadding='0' class='pure-table pure-table-bordered scroll display nowrap dataTable no-footer' width='100%'><thead><tr>";
+                    txt += "<th class='hide'>PayHeadID</th>";
+                    txt += "<th>Pay Head</th>";
+                    txt += "</tr></thead><tbody>";
+                    txt += "<tr><td class='hide'></td><td class='hide'></td><td>No data to display</td></tr>";
+                    txt += "</tbody></table>";
+
+                    document.getElementById("tblAllowance").innerHTML = txt;
+                    document.getElementById("tblDeduction").innerHTML = txt;
+                    document.getElementById("tblOthers").innerHTML = txt;
+                }
+            }
+        });
+    });
+</script>
+<script>
+    function btnAllowancePayHead_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnAllowancePayHead_Click(s, e) {
+        document.getElementById('hdnInputType').value = "AL";
+        document.getElementById("txtSearchBox").value = "";
+        $("#lblModelHeader").html("Allowance Pay Head");
+
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Pay Head Short Code</th><th>Pay Head Name</th></tr><table>";
+        document.getElementById("TableStructure").innerHTML = txt;
+
+        BindModalGrid('');
+        setTimeout(function () { $("#txtSearchBox").focus(); }, 500);
+        $('#ModelPopup').modal('show');
+    }
+
+    function btnDeductionPayHead_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnDeductionPayHead_Click(s, e) {
+        document.getElementById('hdnInputType').value = "DT";
+        document.getElementById("txtSearchBox").value = "";
+        $("#lblModelHeader").html("Deduction Pay Head");
+
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Pay Head Short Code</th><th>Pay Head Name</th></tr><table>";
+        document.getElementById("TableStructure").innerHTML = txt;
+
+        BindModalGrid('');
+        setTimeout(function () { $("#txtSearchBox").focus(); }, 500);
+        $('#ModelPopup').modal('show');
+    }
+
+    function btnOthersPayHead_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnOthersPayHead_Click(s, e) {
+        document.getElementById('hdnInputType').value = "OT";
+        document.getElementById("txtSearchBox").value = "";
+        $("#lblModelHeader").html("Others Pay Head");
+
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Pay Head Short Code</th><th>Pay Head Name</th></tr><table>";
+        document.getElementById("TableStructure").innerHTML = txt;
+
+        BindModalGrid('');
+        setTimeout(function () { $("#txtSearchBox").focus(); }, 500);
+        $('#ModelPopup').modal('show');
+    }
+
+    function txtSearchBoxkeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtSearchBox").val() != '') {
+                BindModalGrid($("#txtSearchBox").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[searchIndex=0]"))
+                $("input[searchIndex=0]").focus();
+        }
+    }
+
+    function BindModalGrid(SearchKey) {
+        var jsonObject = [];
+        var _PayHeadList = "";
+        var _PayHeadType = document.getElementById('hdnInputType').value;
+
+        if (_PayHeadType == "AL") jsonObject = jsonAllowanceList;
+        else if (_PayHeadType == "DT") jsonObject = jsonDeductionList;
+        else if (_PayHeadType == "OT") jsonObject = jsonOthersist;
+
+        if (jsonObject.length > 0) {
+            for (x in jsonObject) {
+                _PayHeadList += jsonObject[x]["PayHeadID"] + ",";
+            }
+        }
+       
+        var strVal = _PayHeadList;
+        var lastChar = strVal.slice(-1);
+        if (lastChar == ',') {
+            _PayHeadList = _PayHeadList.slice(0, -1);
+        }
+
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.PayHeadType = _PayHeadType;
+        OtherDetails.PayHeadList = _PayHeadList;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Pay Head Short Code");
+        HeaderCaption.push("Pay Head Name");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetPayHeadList", OtherDetails, "TableStructure", HeaderCaption, "searchIndex", "SetDropdownValue");
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+
+            if (Id) {
+                if (indexName == "searchIndex") {
+                    SetDropdownValue(Id, name, e.target.parentElement);
+                }
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            //if (thisindex < 10)
+            $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "searchIndex")
+                    $('#txtSearchBox').focus();
+            }
+        }
+    }
+
+    function SetDropdownValue(Id, name, e) {
+        var PayHeadType = document.getElementById('hdnInputType').value;
+
+
+        if (PayHeadType == "AL") {
+            btnAllowancePayHead.SetText("");
+            $('#ModelPopup').modal('hide');
+            setTimeout(function () { btnAllowancePayHead.Focus(); }, 500);
+
+            var serialCriteria = [{ Field: "PayHeadID", Values: Id }];
+            var serialfilteredJson = flexFilter(jsonAllowanceList, serialCriteria);
+            if (serialfilteredJson.length == 0) {
+                var jsonArray = { PayHeadID: Id, PayHeadName: name };
+
+                jsonAllowanceList.push(jsonArray);
+            }
+        }
+        else if (PayHeadType == "DT") {
+            btnDeductionPayHead.SetText("");
+            $('#ModelPopup').modal('hide');
+            setTimeout(function () { btnDeductionPayHead.Focus(); }, 500);
+
+            var serialCriteria = [{ Field: "PayHeadID", Values: Id }];
+            var serialfilteredJson = flexFilter(jsonDeductionList, serialCriteria);
+            if (serialfilteredJson.length == 0) {
+                var jsonArray = { PayHeadID: Id, PayHeadName: name };
+
+                jsonDeductionList.push(jsonArray);
+            }
+        }
+        else if (PayHeadType == "OT") {
+            btnOthersPayHead.SetText("");
+            $('#ModelPopup').modal('hide');
+            setTimeout(function () { btnOthersPayHead.Focus(); }, 500);
+
+            var serialCriteria = [{ Field: "PayHeadID", Values: Id }];
+            var serialfilteredJson = flexFilter(jsonOthersist, serialCriteria);
+            if (serialfilteredJson.length == 0) {
+                var jsonArray = { PayHeadID: Id, PayHeadName: name };
+
+                jsonOthersist.push(jsonArray);
+            }
+        }
+
+        bindPayHeadTable();
+    }
+
+    function bindPayHeadTable() {
+        var PayHeadType = document.getElementById('hdnInputType').value;
+        var jsonObject = [];
+
+        if (PayHeadType == "AL") jsonObject = jsonAllowanceList;
+        else if (PayHeadType == "DT") jsonObject = jsonDeductionList;
+        else if (PayHeadType == "OT") jsonObject = jsonOthersist;
+
+        var txt = '';
+        txt += "<table id='tbl" + PayHeadType + "' cellspacing='0' cellpadding='0' class='pure-table pure-table-bordered scroll display nowrap dataTable no-footer' width='100%'><thead><tr>";
+        txt += "<th class='hide'>PayHeadID</th>";
+        txt += "<th colspan='2'>Pay Head</th>";
+        txt += "</tr></thead><tbody>";
+
+        var IsDataExists = 0;
+        if (jsonObject.length > 0) {
+            IsDataExists = 1;
+            for (x in jsonObject) {
+                txt += "<tr><td class='hide'>" + jsonObject[x]["PayHeadID"] + "</td>";
+                txt += "<td width='95%'>" + jsonObject[x]["PayHeadName"] + "</td>";
+                txt += "<td width='5%'><a href='#' onclick=DeletePayHead('" + PayHeadType + "','" + jsonObject[x]["PayHeadID"] + "')><span class='glyphicon glyphicon-remove-sign'></span></a></td></tr>";
+            }
+        }
+        else {
+            txt += "<tr><td class='hide'></td><td class='hide'></td><td>No data to display</td></tr>";
+        }
+        txt += "</tbody></table>";
+
+        if (PayHeadType == "AL") {
+            document.getElementById("tblAllowance").innerHTML = txt;
+            if (IsDataExists == 1) $("#tblAL").tableDnD();
+        }
+        else if (PayHeadType == "DT") {
+            document.getElementById("tblDeduction").innerHTML = txt;
+            if (IsDataExists == 1) $("#tblDT").tableDnD();
+        }
+        else if (PayHeadType == "OT") {
+            document.getElementById("tblOthers").innerHTML = txt;
+            if (IsDataExists == 1) $("#tblOT").tableDnD();
+        }
+    }
+
+    function DeletePayHead(PayHeadType, PayHeadID) {
+        document.getElementById('hdnInputType').value = PayHeadType;
+
+        var TableName = '#tbl' + PayHeadType + ' tbody>tr';
+        var jsonTempList = [];
+
+        PropertyCount = 0;
+        $(TableName).each(function () {
+            var obj = [];
+            var j = 0;
+            PropertyCount++;
+
+            var TEMP_PayHeadID = "";
+            var TEMP_PayHeadName = "";
+
+            $('td', this).each(function () {
+                if (j == 0) TEMP_PayHeadID = $(this).text();
+                else if (j == 1) TEMP_PayHeadName = $(this).text();
+
+                j++;
+            });
+
+            if (PayHeadID != TEMP_PayHeadID) {
+                var jsonArray = { PayHeadID: TEMP_PayHeadID, PayHeadName: TEMP_PayHeadName };
+                jsonTempList.push(jsonArray);
+            }
+        });
+
+        if (PayHeadType == "AL") jsonAllowanceList = jsonTempList;
+        else if (PayHeadType == "DT") jsonDeductionList = jsonTempList;
+        else if (PayHeadType == "OT") jsonOthersist = jsonTempList;
+
+        bindPayHeadTable();
+    }
+</script>
+<script>
+    function btnWidgetsSave_Click() {
+        var Final_jsonAllowanceList = [];
+        var Final_jsonDeductionList = [];
+        var Final_jsonOthersist = [];
+        var PropertyCount = 0;
+
+        PropertyCount = 0;
+        $('#tblAL tbody>tr').each(function () {
+            var obj = [];
+            var j = 0;
+            PropertyCount++;
+
+            $('td', this).each(function () {
+                if (j == 0) {
+                    var jsonArray = { DisplayIndex: PropertyCount, PayHeadID: $(this).text() };
+                    Final_jsonAllowanceList.push(jsonArray);
+                }
+                j++;
+            });
+        });
+
+        PropertyCount = 0;
+        $('#tblDT tbody>tr').each(function () {
+            var obj = [];
+            var j = 0;
+            PropertyCount++;
+
+            $('td', this).each(function () {
+                if (j == 0) {
+                    var jsonArray = { DisplayIndex: PropertyCount, PayHeadID: $(this).text() };
+                    Final_jsonDeductionList.push(jsonArray);
+                }
+                j++;
+            });
+        });
+
+        PropertyCount = 0;
+        $('#tblOT tbody>tr').each(function () {
+            var obj = [];
+            var j = 0;
+            PropertyCount++;
+
+            $('td', this).each(function () {
+                if (j == 0) {
+                    var jsonArray = { DisplayIndex: PropertyCount, PayHeadID: $(this).text() };
+                    Final_jsonOthersist.push(jsonArray);
+                }
+                j++;
+            });
+        });
+
+        var OtherDetails = {}
+        OtherDetails.AllowancePayHeadList = Final_jsonAllowanceList;
+        OtherDetails.DeductionPayHeadList = Final_jsonDeductionList;
+        OtherDetails.OthersPayHeadList = Final_jsonOthersist;
+
+        $.ajax({
+            type: "POST",
+            url: "/StructureMaster/SaveReportWidgets",
+            data: JSON.stringify(OtherDetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    jAlert("Saved Successfully.");
+                }
+                else {
+                    jAlert(response.ResponseMessage);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later.");
+            }
+        });
+    }
+</script>
+<script>
+    function flexFilter(arr, info) {
+        var matchesFilter, matches = [];
+
+        matchesFilter = function (item) {
+            var count = 0;
+            for (var n = 0; n < info.length; n++) {
+                if (info[n]["Values"] == item[info[n]["Field"]]) {
+                    count++;
+                }
+            }
+
+            return count == info.length;
+        }
+
+        // Loop through each item in the array
+        for (var i = 0; i < arr.length; i++) {
+            // Determine if the current item matches the filter criteria
+            if (matchesFilter(arr[i])) {
+                matches.push(arr[i]);
+            }
+        }
+
+        // Give us a new array containing the objects matching the filter criteria
+        return matches;
+    }
+
+    function getMax(array, propName) {
+        var max = 0;
+        var maxItem = null;
+        for (var i = 0; i < array.length; i++) {
+            var item = array[i];
+            if (item[propName] > max) {
+                max = item[propName];
+                maxItem = item;
+            }
+        }
+        return max;
+    }
+
+    function removeStockJson(arr, func) {
+        for (var i = 0; i < arr.length; i++) {
+            if (func.call(arr[i])) {
+                arr.splice(i, 1);
+                return arr;
+            }
+        }
+    }
+</script>
+
+<div class="row">
+    <div class="col-md-4">
+        <label>Allowance Pay Head</label>
+        @Html.DevExpress().ButtonEdit(
+        settings =>
+        {
+            settings.Name = "btnAllowancePayHead";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Text = "";
+            settings.ReadOnly = true;
+            settings.Properties.Buttons.Add("..");
+            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnAllowancePayHead_Click(s,e);}";
+            settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnAllowancePayHead_KeyDown(s,e);}";
+        }).GetHtml()
+    </div>
+    <div class="col-md-4">
+        <label>Deduction Pay Head</label>
+        @Html.DevExpress().ButtonEdit(
+        settings =>
+        {
+            settings.Name = "btnDeductionPayHead";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Text = "";
+            settings.ReadOnly = true;
+            settings.Properties.Buttons.Add("..");
+            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnDeductionPayHead_Click(s,e);}";
+            settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnDeductionPayHead_KeyDown(s,e);}";
+        }).GetHtml()
+    </div>
+    <div class="col-md-4">
+        <label>Others Pay Head</label>
+        @Html.DevExpress().ButtonEdit(
+        settings =>
+        {
+            settings.Name = "btnOthersPayHead";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.Text = "";
+            settings.ReadOnly = true;
+            settings.Properties.Buttons.Add("..");
+            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnOthersPayHead_Click(s,e);}";
+            settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnOthersPayHead_KeyDown(s,e);}";
+        }).GetHtml()
+    </div>
+    <div class="clear"><br /></div>
+    <div class="col-md-4">
+        <div id="tblAllowance">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div id="tblDeduction">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div id="tblOthers">
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="col-md-12" style="padding-top: 6px;">
+        <label> </label>
+        <div>
+            <input id="btnWidgetsSave" type="button" class="btn btn-primary" onclick="btnWidgetsSave_Click()" value="Report Widget Save" />
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModelPopup" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span id="lblModelHeader">test</span></h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="txtSearchBoxkeydown(event)" id="txtSearchBox" autofocus width="100%" placeholder="Search By Pay Head Name or Short Name" />
+                <div id="TableStructure">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.Hidden("hdnInputType")
+</div>

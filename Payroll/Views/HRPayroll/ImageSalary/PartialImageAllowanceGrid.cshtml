@@ -1,0 +1,46 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "AllowancegridView";
+    settings.CallbackRouteValues = new { Controller = "DefaultSalary", Action = "PartialAllowanceGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.ClientSideEvents.BeginCallback = "OnStartAllowanceCallback";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.KeyFieldName = "serial";
+
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Type";
+        column.Caption = "Type";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(70);
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayHeadName";
+        column.Caption = "Pay Head";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(70);
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayValue";
+        column.Caption = "Pay Value";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(70);
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+    });
+}).Bind(Model).GetHtml()
+
+

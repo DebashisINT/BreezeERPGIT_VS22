@@ -1,0 +1,33 @@
+﻿
+
+
+
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvFoundationInnerGrid" + ViewData["RID"];
+    settings.SettingsDetail.MasterGridName = "gvFoundationMasterOuter";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "FoundationMaster", Action = "partialFoundationMasterInnerGrid", CODE = ViewData["RID"] };
+    settings.KeyFieldName = "Code";
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Columns.Add(column =>
+           {
+               column.FieldName = "CODE";
+               column.Caption = "Code";
+               column.Visible = false;
+               column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+           });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DESC";
+        column.Caption = "Description";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+
+
+
+}).Bind(Model).GetHtml()

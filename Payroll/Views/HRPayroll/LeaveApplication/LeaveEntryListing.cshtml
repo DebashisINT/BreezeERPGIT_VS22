@@ -1,0 +1,599 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@model Payroll.Models.LeaveRegisterViewModel
+
+@{
+   ViewBag.Title = "Leave Listing";
+   Layout = "";
+}
+
+<style>
+    .floatedBtnArea.insideGrid {
+        top:6px
+    }
+</style>
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="/assests/pluggins/choosen/choosen.min.js"></script>
+<script src="~/Scripts/JS/SearchPopupMulti.js"></script>
+
+
+      
+
+<script type="text/javascript">
+    function SetSelectedValues(Id, Name, ArrName) {
+        if (ArrName == 'EmpSource') {
+            var key = Id;
+            if (key != null && key != '') {
+                $('#EmpModel').modal('hide');
+                btnEmployeeCode1.SetText(Name);
+                GetObjectID('hdnEmpId').value = key;
+             
+            }
+            else {
+                btnEmployeeCode1.SetText('');
+                GetObjectID('hdnEmpId').value = '';
+            }
+        }
+
+    }
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#EmpModel').on('shown.bs.modal', function () {
+            $('#txtEmpSearch').focus();
+        })
+    })
+    var EmpArr = new Array();
+    $(document).ready(function () {
+        debugger;
+        var EmpObj = new Object();
+        EmpObj.Name = "EmpSource";
+        EmpObj.ArraySource = EmpArr;
+        arrMultiPopup.push(EmpObj);
+      
+    })
+    function VendorButnClick(s, e) {
+
+        $('#EmpModel').modal('show');
+    }
+
+    function Emp_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#EmpModel').modal('show');
+        }
+    }
+
+    function Empkeydown(e) {
+
+        var OtherDetails = {}
+
+        if ($.trim($("#txtEmpSearch").val()) == "" || $.trim($("#txtEmpSearch").val()) == null) {
+            return false;
+        }
+        OtherDetails.SearchKey = $("#txtEmpSearch").val();
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+
+            var HeaderCaption = [];
+            HeaderCaption.push("Employee Name");
+
+            if ($("#txtEmpSearch").val() != "") {
+
+                callonServerM("../Models/p_WebServiceList.asmx/GetEmpLeaveRegisterLists", OtherDetails, "EmpTable", HeaderCaption, "dPropertyIndex", "SetSelectedValues", "EmpSource");
+              
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[dPropertyIndex=0]"))
+                $("input[dPropertyIndex=0]").focus();
+        }
+    }
+
+
+    function SetfocusOnseach(indexName) {
+        if (indexName == "dPropertyIndex")
+            $('#txtEmpSearch').focus();
+        else
+            $('#txtEmpSearch').focus();
+    }
+</script>
+
+
+
+<script>
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+
+        if (exportid > 0) {
+
+            var url = '@Url.Action("ExportLeaveListingGridList", "LeaveApplication", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+
+
+        }
+
+    }
+
+    function updateGridByDate() {
+
+        if (FromDate_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { FromDate_dt.Focus(); });
+        }
+        else if (ToDate_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { ToDate_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(FromDate_dt.GetValue());
+            var todate = GetServerDateFormat(ToDate_dt.GetValue());
+            var employeeid = hdnEmpId.value;
+
+            localStorage.setItem("FromDatePO", FromDate_dt.GetDate());
+            localStorage.setItem("ToDatePO", ToDate_dt.GetDate());
+            localStorage.setItem("EmpID", hdnEmpId.value);
+            gvPaging.Refresh();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetLeaveListingFilter", "LeaveApplication")",
+                data: { EmpIds: hdnEmpId.value, FromDate: fromdate, ToDate: todate },
+                success: function (response) {
+                    if (response) {
+                        debugger;
+                        gvPaging.Refresh();
+                        gvPaging.Refresh();
+
+
+                    }
+                }
+            });
+        }
+    }
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+
+  
+ 
+  
+    
+
+
+
+    function OpenViewData(docid) {
+        debugger;
+        if (parseInt(docid) != "") {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetLeaveDataByID", "LeaveApplication")",
+                data: { DocID: docid },
+                success: function (response) {
+                    debugger;
+                    if (response != null && response == true) {
+                     
+                        GetLeaveList();
+                        $('.buttonPosition').attr('style', 'display:none');
+                
+                  
+                }
+                else {
+                    jAlert('Please try again later.');
+                    return false;
+                }
+            }
+        });
+    }
+    }
+
+    function OpenLeaveData(docid) {
+        debugger;
+        if (parseInt(docid) != "") {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetLeaveDataByID", "LeaveApplication")",
+                data: { DocID: docid },
+            success: function (response) {
+                debugger;
+                if (response != null && response == true) {
+                    GetLeaveList();
+                    $('.buttonPosition').attr('style', 'display:block');
+                   
+                    
+                  
+                }
+                else {
+                    jAlert('Please try again later.');
+                    return false;
+                }
+            }
+        });
+    }
+    }
+
+    function GetLeaveList()
+    {
+        
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetListingOfLeaveRegisterEditData", "LeaveApplication")",
+            data: {},
+            success: function (response) {
+                debugger;
+                var html = "";
+                if (response.length>0) {
+                    debugger;
+                    $('#LeavePopupEdit').modal('show');
+                    var item = response;
+                    document.getElementById('hdnEmployeeID').value = item[0].EMPLOYEECODE;
+                    document.getElementById('hdnStructureID').value = item[0].STRUCTURECODE;
+                    BindLeaveDropdownEd(item[0].LeaveID);
+                    txtApplicationNoEd.value = item[0].ApplicationNo;
+                    txtLeaveApplicationDetailsEd.value = item[0].ApplicationDetails;
+                    ddlDayPart.value = item[0].Day_Part;
+                    hdApplicationNo.value = item[0].DocID;
+                 
+                  
+
+                    from_dtEd_I.value = item[0].LEV_DATE_FROM;
+                    to_dtEd_I.value = item[0].LEV_DATE_TO;
+                    txtLeaveDaysEd.value = item[0].LEAVEDAYS;
+                    txtLeaveBalanceEd.value = 10;
+                    txtLeaveReasonEd.value = item[0].ReasonForLeave;
+                    txtLeaveBalanceEd.value = item[0].Balance;
+                   
+                    html += "<table id='tbl_leave' class='table table-bordered table-striped' width='100%'><thead><tr>";
+                    html += "<th width='15%'>Leave</th><th width='10%'>From</th><th width='10%'>To</th><th width='10%'>Days</th><th width='15%'>Part Of Day</th><th width='50%'>Reason</th>";
+                    html += "</tr></thead>"
+
+                    html += "<tbody><tr>" +
+                         "<td>" + item[0].LEAVENAME + "</td>" + "<td>" + item[0].LEV_DATE_FROM + "</td>" +  "<td>" + item[0].LEV_DATE_TO + "</td>" +
+                          "<td>" + item[0].LEAVEDAYS + "</td>" + "<td>" + "Select" + "</td>" + "<td>" + item[0].ReasonForLeave + "</td>";
+
+                    html += "</tr></tbody></table>";
+
+                    $('#div_leaveEdit').html(html);
+                    var mainDetails = {
+                        ApplicationID: item[0].DocID,
+                        EmployeeID: document.getElementById('hdnEmployeeID').value, LeaveStructureID: document.getElementById('hdnStructureID').value,
+                        LeaveApplicationNo: item[0].ApplicationNo, LeaveApplicationDetails: item[0].ApplicationDetails, LeaveID: item[0].LeaveID, DayPart: item[0].Day_Part,
+                        LeaveFromDate: item[0].LEV_DATE_FROM, LeaveToDate: item[0].LEV_DATE_TO, ApplyDays: item[0].LEAVEDAYS, LeaveReason: item[0].ReasonForLeave
+                    }
+                    json_MainLeaveDetailsEd.push(mainDetails);
+                     
+
+                    hdAction.value = "Edit";
+                   
+                 
+
+                }
+                else {
+                    jAlert('Please try again later.');
+                    return false;
+                }
+            }
+        });
+
+    }
+    var jsonLeaveBalance = [];
+    function BindLeaveDropdownEd(LeaveID) {
+        debugger;
+        var OtherDetails = {}
+        OtherDetails.EmployeeID = document.getElementById('hdnEmployeeID').value;
+        OtherDetails.StructureID = document.getElementById('hdnStructureID').value;
+
+        $('#ddlLeaveTypeEd').empty();
+        $("#ddlLeaveTypeEd").append($("<option></option>").val("0").html("Select"));
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(OtherDetails),
+            url: "../Models/p_WebServiceList.asmx/PopulateLeaveTypeWithBalance",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (res) {
+                var jsonLeaveObject = res.d;
+
+                for (x in jsonLeaveObject) {
+                    var _LeaveID = jsonLeaveObject[x]["LeaveID"];
+                    var _LeaveName = jsonLeaveObject[x]["LeaveName"];
+                    var _Balance = jsonLeaveObject[x]["Balance"];
+                    var _Active_DayPart = jsonLeaveObject[x]["Active_DayPart"];
+                    var _Is_AllowLeaveCaseZeroBalance = jsonLeaveObject[x]["Is_AllowLeaveCaseZeroBalance"];
+
+                    $("#ddlLeaveTypeEd").append($("<option></option>").val(_LeaveID).html(_LeaveName));
+
+                    $("#ddlLeaveTypeEd").val(LeaveID);
+                    var _LeaveBalance = { LeaveID: _LeaveID, Balance: _Balance, Active_DayPart: _Active_DayPart, Is_AllowLeaveCaseZeroBalance: _Is_AllowLeaveCaseZeroBalance }
+                    jsonLeaveBalance.push(_LeaveBalance);
+                }
+            }
+        });
+    }
+
+    function OnClickViewForm(DocID) {
+        debugger;
+        $('#LeavePopupEdit').modal('show');
+        OpenViewData(DocID);
+      
+
+
+    }
+
+    function OnClickEditForm(DocID) {
+      
+        $('#LeavePopupEdit').modal('show');
+        OpenLeaveData(DocID);
+       
+
+    }
+    function DefineAccount(id) {
+        window.location.href = '/PayrollSettings/Index/?StructureID=' + id;
+    }
+
+
+    function OnClickDeleteForm(DocID) {
+        debugger;
+        var OtherDetails = {};
+        OtherDetails.DocID=DocID
+
+         
+
+        jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+            if (r == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "/LeaveApplication/DeletLeaveApplication",
+                    data: JSON.stringify(OtherDetails),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        debugger;
+                        if (response == "Success") {
+                            gvPaging.Refresh();
+                            jAlert("Deleted successfully");
+                        }
+                        else {
+                            jAlert(response.ResponseMessage);
+                        }
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+        });
+    }
+    function gridRowclick(s, e) {
+        $('#gvPaging').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+     
+</script>
+
+
+
+
+    <div class="panel-heading">
+        <div class="panel-title clearfix">
+            <h3 class="pull-left">Leave Listing</h3>
+        </div>
+    </div>
+ 
+<div class="form_main">
+  
+
+
+<div class="col-md-4" >
+    <div class="row">
+        <label class="col-md-12 mtop8">From</label>
+        <div class="col-md-6">
+            @Html.DevExpress().DateEdit(settings =>
+                           {
+                               settings.Name = "FromDate_dt";
+                               settings.Properties.NullText = "";
+                               settings.Properties.EditFormatString = "dd-MM-yyyy";
+                               settings.Properties.EditFormatString = "dd-MM-yyyy";
+                               settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Width = Unit.Percentage(100);
+                              
+
+                               if (ViewBag.Disb_Date != null)
+                               {
+                                   settings.Date = ViewBag.Disb_Date;
+                               }
+                               else
+                               {
+                                   settings.Date = DateTime.Now;
+                               }
+
+
+
+
+                           }).GetHtml()
+            <span id="MandatoryfrmDt" style="display: none" class="_validclass">
+                <img id="imgMandatoryfrmDt" class="dxEditors_edtError_PlasticBlue MandatoryfrmDt" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+        <div class="col-md-6">
+            @Html.DevExpress().DateEdit(settings =>
+                           {
+                               settings.Name = "ToDate_dt";
+                               settings.Properties.NullText = "";
+                               settings.Properties.EditFormatString = "dd-MM-yyyy";
+                               settings.Properties.EditFormatString = "dd-MM-yyyy";
+                               settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+                               if (ViewBag.Disb_Date != null)
+                               {
+                                   settings.Date = ViewBag.Disb_Date;
+                               }
+                               else
+                               {
+                                   settings.Date = DateTime.Now;
+                               }
+
+
+
+
+                           }).GetHtml()
+            <span id="MandatoryToDt" style="display: none" class="_validclass">
+                <img id="imgMandatoryToDt" class="dxEditors_edtError_PlasticBlue MandatoryToDt" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+
+   
+    </div>
+   
+</div>
+    <script>
+        function OnStartCallback(s, e) {
+            e.customArgs["EmployeeCode"] = document.getElementById('hdnEmpId').value;;
+           
+        }
+    </script>
+
+<div class="col-md-2">
+    <label>Employee Name</label>
+    <div>
+        @Html.DevExpress().ButtonEdit(
+                settings =>
+                {
+                    settings.Name = "btnEmployeeCode1";
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Text = "";
+                    settings.ReadOnly = true;
+                    settings.Properties.Buttons.Add("..");
+                    settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){VendorButnClick(s,e);}";
+                    settings.Properties.ClientSideEvents.KeyDown = "function(s,e){Emp_KeyDown(s,e);}";
+                }).GetHtml()
+        <span id="MandatoryEmployeeCode" style="display: none" class="d_validclass">
+            <img id="imgMandatoryEmployeeCode" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+        </span>
+    </div>
+</div>
+
+    <div class="col-md-2">
+        <label> </label>
+        <div>
+            <input id="btnLeaveAdd" type="button" class="btn btn-success" onclick="updateGridByDate()" value="Show" />
+            <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">RTF</option>
+                <option value="4">CSV</option>
+            </select>
+        </div>
+    </div>
+   </div>
+
+
+
+
+<div class="modal fade" id="EmpModel" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Employee Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="Empkeydown(event)" id="txtEmpSearch" width="100%" placeholder="Search By Employee Name" />
+                <div id="EmpTable">
+                    <table border='1' width="100%">
+
+                        <tr class="HeaderStyle" style="font-size:small">
+                            <th>Select</th>
+                            <th class="hide">id</th>
+                            <th>Employee Name</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnOkformultiselection btn-default" onclick="DeSelectAll('EmpSource')">Deselect All</button>
+                <button type="button" class="btnOkformultiselection btn-default" data-dismiss="modal" onclick="OKPopup('EmpSource')">OK</button>
+                @*<%--<button type="button" class="btnOkformultiselection btn-default" data-dismiss="modal">Close</button>--%>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="LeavePopupEdit" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Leave Application Details</h4>
+            </div>
+            <div id="divLeaveApplication">
+                @{
+                    Html.RenderAction("PartialLeaveApplicationEdit", "LeaveApplication");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    
+
+<div class="GridViewArea relative">
+    @{
+        Html.RenderAction("GetListingOfLeaveRegisterData", "LeaveApplication");
+    }
+</div>
+<input type="hidden" value="" id="hdnEmpId" />
+<input type="hidden" value="" id="hdnEmployeeID" />
+<input type="hidden" value="" id="hdnStructureID" />
+<input type="hidden" value="Add" id="hdAction" />

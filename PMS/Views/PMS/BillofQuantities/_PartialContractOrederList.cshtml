@@ -1,0 +1,127 @@
+﻿
+@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "ContractGridLookup";
+        settings.KeyFieldName = "Details_ID";
+        //settings.CommandColumn.Visible = true;
+        //settings.CommandColumn.ShowSelectCheckbox = true;
+        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Properties.EnableClientSideAPI = true;
+        settings.Properties.ClientInstanceName = "ContractGridLookup";
+        settings.GridViewClientSideEvents.SelectionChanged = "ContractSelectionChanged";
+        settings.GridViewClientSideEvents.BeginCallback = "ContractStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "ContractSelectionChanged";
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        settings.Properties.ClientSideEvents.DropDown = "ContractLookupValChange";
+        settings.Properties.TextFormatString = "{1}";
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Details_ID";
+            column.Caption = "Details_ID";
+            column.Width = 0;
+            column.Visible = false;
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ContractNo";
+            column.Caption = "Oreder No.";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+        });
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "ContractDate";
+            x.Caption = "Oreder Date";
+            x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+            (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+          //  x.FixedStyle = GridViewColumnFixedStyle.Left;
+        });
+
+        if (ViewBag.ApprovRevSettings == "Yes")
+        {
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "RevNo";
+                column.Caption = "Revision No";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+
+            });
+
+            settings.Columns.Add(x =>
+            {
+                x.FieldName = "RevDate";
+                x.Caption = "Revision Date";
+                x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+                x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+                x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+                x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+                x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+                (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+                // x.FixedStyle = GridViewColumnFixedStyle.Left;
+            });
+        }
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostomerName";
+            column.Caption = "Customer Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+
+        settings.Properties.Caption = " ";
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Multiple;
+
+        settings.Properties.TextFormatString = "{1}";
+        settings.Properties.MultiTextSeparator = ", ";
+        settings.Properties.SelectionMode = GridLookupSelectionMode.Multiple;
+       // settings.Properties.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "BillofQuantities", Action = "GetContractCode" };
+        // settings.GridViewClientSideEvents.BeginCallback = "function(s,e){OnBeginCallback(s,e);}";
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (DevExpress.Web.Mvc.MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 500;
+
+            //gridLookup.GridView.Settings.wi
+        };
+
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.ContractNo != null)
+            {
+                String Contract = ViewBag.ContractNo;
+                string[] conmtractList = Contract.Split(',');
+
+                MVCxGridLookup l = s as MVCxGridLookup;
+                foreach (string str in conmtractList)
+                {
+                    l.GridView.Selection.SelectRowByKey(str);
+                }
+
+            }
+        };
+
+    }).BindList(Model).GetHtml()

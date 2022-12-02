@@ -1,0 +1,140 @@
+﻿@model PMS.Models.ViewModel.BookingStatusViewModel
+@{
+    ViewBag.Title = "Booking Status";
+    //var itemslist = Model.BranchList(x => new SelectListItem
+    //{
+    //    Value = x.branch_id.ToString(),
+    //    Text = x.branch_desciption.ToString()
+    //});
+}
+
+@*<h2>BookingStatusIndex</h2>*@
+
+<script src="~/Views/PMS/BookingStatus/Bookingstatus.js"></script>
+<style>
+    #gridBookingStatusList {
+        width: 100% !important;
+    }
+</style>
+
+
+
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Booking Status</label>
+        </h3>
+    </div>
+
+    @*<div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOMEntryList", "BOMEntry")"><i class="fa fa-times"></i></a></div>*@
+</div>
+<div class="form_main">
+    <div class="clearfix">
+        @if (ViewBag.CanAdd)
+        {
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#bookingSatus" data-backdrop="static" onclick="Close()" data-keyboard="true">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span> Booking Status
+            </button>
+        }
+        @if (ViewBag.CanExport)
+        {
+            <select name="ddlAppIds" class="btn btn-primary btn-radius" id="ddlAppIds">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="4">RTF</option>
+                <option value="5">CSV</option>
+
+            </select>
+        }
+    </div>
+    <div class="scrooler ">
+        <div id="refreshgrid" class="relative">
+            @{
+                Html.RenderAction("GetBookingStatusPartial", "BookingStatus");
+            }
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="BOOKING_ID" />
+<div class="modal fade pmsModal w40" id="bookingSatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Booking Staus</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="Close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Name <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            @*<input type="text" class="form-control" id="" value="Susanta Kundu">*@
+                            @Html.TextBoxFor(m => m.BOOKING_NAME, new { @class = "form-control", @id = "BOOKING_NAME", @MaxLength = "100" })
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Type <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            @*@Html.DropDownListFor(x => x.BOOKING_TYPEList, new SelectList(Model.BOOKING_TYPEList, "TYPEID", "TYPENAME"), new { @id = "ddlType", @class = "form-control", @onchange = "PopulateStatusData();" })*@
+                            @Html.DropDownListFor(x => x.BOOKING_TYPEList, new SelectList(Model.BOOKING_TYPEList, "TYPEID", "TYPENAME"), new { @id = "ddlType", @class = "form-control", @onchange = "PopulateStatusData();" })
+
+                            @*@Html.DropDownListFor(x => x.BOOKING_TYPEList, itemslist((ienurable<SelectList>), "All"), new { @id = "ddlType", @class = "form-control", @onchange = "PopulateStatusData();" })*@
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Status <span style="color:red">*</span></label>
+                        <div class="col-sm-9" id="statusdiv">
+                            @Html.DropDownListFor(x => x.STATUSList, new SelectList(Model.STATUSList, "STATUS_ID", "STATUS_NAME"), new { @id = "ddlStatus", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Description <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            @Html.TextAreaFor(m => m.DESCRIPTION, new { @class = "form-control", @id = "DESCRIPTION", @MaxLength = "500" })
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Unit <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            @Html.DropDownListFor(x => x.BranchList, new SelectList(Model.BranchList, "branch_id", "branch_description"), new { @id = "ddlBranch", @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Color <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="color" id="txtColor" name="head" value="#4b406b" style="width:100%; height: 34px;">  @*471px*@
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal" onclick="Close()">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="btnSave" onclick="BookingSave()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()

@@ -1,0 +1,333 @@
+﻿@model PMS.Models.ViewModel.TranscationCategoryViewModel
+@{
+    ViewBag.Title = "Transactions Category";
+}
+
+<script>
+    $(function () {
+        gridTransCattegoryList.Refresh();
+
+        $('#ddlAppIds').on('change', function () {
+            if ($("#ddlAppIds option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlAppIds').prop("selectedIndex", 0);
+                var url = '@Url.Action("ExportTransactions", "TranscationCategory", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+    function gridRowclick(s, e) {
+        $('#gridTransCattegoryList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});    
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+    function SaveTrans() {
+        var obj = {};
+        var localSkill = [];
+        obj.Trans_id = $("#Transid").val();
+        obj.TransName = $("#TransName").val().trim();
+        var e = document.getElementById("ddlBillingType");
+        obj.BillingType = e.options[e.selectedIndex].value;
+        var f = document.getElementById("ddlBranch");
+        obj.Branch = f.options[f.selectedIndex].value;
+
+        if (obj.TransName != "") {
+            if (obj.Branch != "") {
+                if (obj.BillingType != "0") {
+                    LoadingPanel.Show();
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("SaveData", "TranscationCategory")",
+                        data: { Trans: obj },
+                        success: function (response) {
+                            jAlert(response, "Alert", function () {
+                                setTimeout(function () {
+                                    $('#TransName').focus();
+                                }, 200);
+                            });
+                            LoadingPanel.Hide();
+                            if (response == 'Saved Successfully.') {
+                                LoadingPanel.Hide();
+                                $("#transCat").modal('toggle');
+                                $("#Transid").val('');
+                                $("#TransName").val('');
+                                $("#ddlBillingType").val(0);
+                                $("#ddlBranch").val(0);
+                                gridTransCattegoryList.Refresh();
+                                $("#btnSave").removeClass('hide');
+                            }
+                        },
+                        error: function (response) {
+                            jAlert("Please try again later.", "Alert", function () {
+                                setTimeout(function () {
+                                    $('#TransName').focus();
+                                }, 200);
+                            });
+                            LoadingPanel.Hide();
+                        }
+                    });
+                }
+                else {
+                    jAlert("Billing Type is Mandatory.", "Alert", function () {
+                        setTimeout(function () {
+                            $('#ddlBillingType').focus();
+                        }, 200);
+                    });
+                }
+            }
+            else {
+                jAlert("Unit is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        $('#ddlBranch').focus();
+                    }, 200);
+                });
+            }
+        }
+        else {
+            jAlert("Name is Mandatory.", "Alert", function () {
+                setTimeout(function () {
+                    $('#TransName').focus();
+                }, 200);
+            });
+        }
+    }
+
+    function OnStartCallback(s, e) {
+
+    }
+
+    function OpenTransCategryforEdit(obj) {
+        //alert(obj);
+        $("#Transid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "TranscationCategory")",
+            data: { Trans_id: obj },
+            dataType: "json",
+            success: function (response) {
+
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("Edit Transaction Category");
+                    $("#TransName").prop('disabled', true);
+                    $("#TransName").val(status.TransName);
+                    $("#ddlBranch").val(status.Branch);
+                    $("#ddlBillingType").val(status.BillingType);
+                    $("#btnSave").removeClass('hide');
+                    $("#transCat").modal('toggle');
+                }
+            },
+            error: function (response) {
+                // alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+
+
+    function OpenTransCategryforDelete(obj) {
+        jConfirm('Confirm Delete?', 'Alert', function (r) {
+            if (r) {
+                $("#Transid").val(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteData", "TranscationCategory")",
+                    data: { Trans_id: obj },
+                    dataType: "json",
+                    success: function (response) {
+                        var status = response;
+                        jAlert(status);
+                        gridTransCattegoryList.Refresh();
+                    },
+                    error: function (response) {
+                        // alert(response);
+                        jAlert("Please try again later.");
+                    }
+                });
+            }
+            else {
+                // alert("false");
+            }
+        });
+
+    }
+
+
+
+    function OpenTransCategryforView(obj) {
+        //alert(obj);
+        $("#Transid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "TranscationCategory")",
+            data: { Trans_id: obj },
+            dataType: "json",
+            success: function (response) {
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("View Transaction Category");
+                    $("#TransName").prop('disabled', true);
+                    $("#TransName").val(status.TransName);
+                    $("#ddlBranch").val(status.Branch);
+                    $("#ddlBillingType").val(status.BillingType);
+                    $("#transCat").modal('toggle');
+                    $("#btnSave").addClass('hide');
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later.");
+            }
+        });
+    }
+
+
+    function openModal() {
+        $("#Transid").val('');
+        $("#TransName").val('');
+        $("#ddlBillingType").val(0);
+        $("#ddlBranch").val(0);
+        $("#btnSave").removeClass('hide');
+        $("#TransName").prop('disabled', false);
+        $("#exampleModalLabel").html("Add Transaction Category");
+    }
+</script>
+<style>
+    #gridTransCattegoryList, #gridTransCattegoryList > tbody > tr > td .dxgvCSD {
+        width: 100% !important;
+    }
+</style>
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Transactions Category</label>
+        </h3>
+    </div>
+
+</div>
+<input type="hidden" id="Transid" />
+<div class="form_main">
+    <div class="padBot8 padTop8">
+        <div class="clearfix">
+            @if (ViewBag.CanAdd)
+            {
+                <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#transCat" onclick="openModal()" data-backdrop="static" data-keyboard="true">
+                    <span class="btn-icon"><i class="fa fa-plus"></i></span> Transaction Category</button>
+            }
+            @if (ViewBag.CanExport)
+            {
+            <select name="ddlAppIds" class="btn btn-primary btn-radius" id="ddlAppIds">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="4">RTF</option>
+                <option value="5">CSV</option>
+            </select>
+            }
+        </div>
+    </div>
+    <div class="scrooler">
+        <div id="refreshgrid" class="relative">
+            @{
+                Html.RenderAction("GetTransCategoryPartial", "TranscationCategory");
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade pmsModal w30" id="transCat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Transaction Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Name <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<input type="text" class="form-control" id="" value="Susanta Kundu">*@
+                            @Html.TextBoxFor(m => m.TransName, new { @class = "form-control", @id = "TransName", @MaxLength = "100" })
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Unit <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                            @Html.DropDownListFor(x => x.BranchList, new SelectList(Model.BranchList, "branch_id", "branch_description"), new { @id = "ddlBranch", @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    @*<div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Default Unit</label>
+                            <div class="col-sm-8">
+                               <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                                @Html.DropDownListFor(x => x.DefaultUnitList, new SelectList(Model.DefaultUnitList, "BillingID", "BillingName"), new { @id = "ddlBillingType", @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="formLine"></div>*@
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Billing Type <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                            @Html.DropDownListFor(x => x.BillingTypeList, new SelectList(Model.BillingTypeList, "BillingID", "BillingName"), new { @id = "ddlBillingType", @class = "form-control" })
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="btnSave" onclick="SaveTrans()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()

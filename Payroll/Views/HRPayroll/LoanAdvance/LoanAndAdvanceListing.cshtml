@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Loan And Advance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function AddLoan() {
+        window.location.href = "/LoanAdvance/LoanIndex?Key=Add";
+    }
+    function OnClickEditForm(id) {
+        window.location.href = "/LoanAdvance/LoanIndex?Key=" + id + "";
+
+    }
+
+    function gridRowclick(s, e) {
+        $('#GVPartialLoan').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});    
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+</script>
+
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Loan & Advance</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="clearfix">
+        <button type="button" class="btn btn-success btn-radius" onclick="AddLoan()">
+            <span class="btn-icon"><i class="fa fa-plus"></i></span>
+            Add New
+        </button>
+        @*<a href="javascript:void(0);" onclick="AddRoster()" class="btn btn-primary"><span>Add New</span> </a>*@
+    </div>
+</div>
+<div class="GridViewArea relative">
+    @{
+        Html.RenderAction("PartialLoanGrid", "LoanAdvance");
+    }
+</div>
+
+
+
+

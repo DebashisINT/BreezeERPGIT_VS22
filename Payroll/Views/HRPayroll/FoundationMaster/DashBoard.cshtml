@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function validateMaster()
+    {
+        var x = true;
+        var desc = $("#txt_desc").val();
+        if (desc == "" || desc == null) {
+            $("#Mandatorydesc").show();
+            x = false;
+        }
+        else {
+            $("#Mandatorydesc").hide();
+        }
+        if (x == false) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function OnClickAdd(code, desc) {
+        $("#txt_desc").val('');
+        $("#Mandatorydesc").hide();
+        $('#FormulaModel').find('.modal-title').text(desc);
+        $('#FormulaModel').modal('show');
+        $('#hdn_code').val(code);
+
+        setTimeout(function () { $("#txt_desc").focus(); }, 500);
+    }
+
+    function SaveMaster() {
+       
+        if (validateMaster()) {
+
+            
+                var obj = {};
+
+                obj.desc = $("#txt_desc").val();
+                obj.code = $("#hdn_code").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/FoundationMaster/SaveProllMaster",
+                    data: JSON.stringify(obj),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        if (response.response_msg == "Success") {
+                            jAlert("Saved Successfully", "Alert", function () {
+                                $('#FormulaModel').modal('hide');
+                                gvFoundationMasterOuter.Refresh();
+
+                            });
+
+
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+
+    }
+
+    function OnClickDeleteForm(code,gvfoundationinner)
+    {
+        var url = '/FoundationMaster/DeleteMaster/';
+
+        jConfirm("Confirm Delete?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'DeleteMaster', 'code': code }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.response_msg == "Success") {
+                            jAlert("Successfully Deleted");
+                            //ASPxClientControl.GetControlCollection().GetByName("gvfoundationinner").Refresh()
+                            gvFoundationMasterOuter.Refresh();
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    }
+    
+
+</script>
+<style>
+ 
+    .validclass {
+        position: absolute;
+        right: 6px;
+        top: 5px;
+    }
+    .ui-widget-overlay {
+        z-index:1050 !important;
+    }
+    .ui-dialog {
+        z-index:1055 !important;
+    }
+</style>
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Foundation Master</h3>
+    </div>
+</div>
+@*<div class="form_main">
+        <div class="clearfix">
+            <a href="javascript:void(0);" onclick="AddClass()" class="btn btn-primary"><span>Add Class</span> </a>
+        </div>
+    </div>*@
+<div class="GridViewArea">
+    @{
+        Html.RenderAction("partialFoundationMasterOuterGrid", "FoundationMaster");
+    }
+</div>
+
+<div class="modal fade" id="FormulaModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="clearfix">
+                    <div class="col-md-12">
+                        <label>Description<span style="color: red">*</span></label>
+                        <input type="text" id="txt_desc" maxlength="100" />
+                        <span id="Mandatorydesc" style="display: none" class="validclass">
+                            <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                        </span>
+                        <input type="hidden" id="hdn_code" />
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <input type="button" class="btn btn-default" onclick="SaveMaster()" value="Save" />
+                </div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

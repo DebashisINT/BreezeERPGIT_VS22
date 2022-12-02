@@ -1,0 +1,302 @@
+﻿@model Payroll.Models.PayStructureEngine
+
+<style>
+    .focusrow {
+        background-color: #3CA5DF;
+        color: #ffffff;
+    }
+
+        .focusrow > td input {
+            color: white;
+        }
+
+    .HeaderStyle {
+        background-color: #180771d9;
+        color: #f5f5f5;
+        height: 23px;
+        font-size: 15px;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -4px;
+        top: 35px;
+    }
+</style>
+
+<script>
+    function CallFormulaPopup(strType) {
+        if (strType == "CL") {
+            $.ajax({
+                type: "GET",
+                url: "/Structure/PopulatePayHead",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var myObj = response.PayHeadList;
+                    if (myObj.length > 0) {
+                        $('#ddl_CalPayHeadID').html('');
+
+                        var options = '<option value="Select">Select</option>';
+                        for (var i = 0; i < myObj.length; i++) {
+                            options += '<option value="' + myObj[i].PayHeadID + '">' + myObj[i].PayHead + '</option>';
+                        }
+                        $('#ddl_CalPayHeadID').append(options);
+                        document.getElementById("ddl_CalPayHeadID").style.Width = "80%";
+                    }
+
+                    $('#FormulaModel').modal('show');
+                }
+            });
+        }
+    }
+
+    function CallCalculationfunc(strFormula) {
+        var PayHeadID = $("#ddl_CalPayHeadID").val();
+        var PayHeadName = $("#ddl_CalPayHeadID :selected").text();
+
+        // Display Formula
+        var Formula = $("#txtFormulaField").val();
+        Formula = Formula + "[" + PayHeadName + "]";
+        document.getElementById('txtFormulaField').value = Formula;
+
+        // Calculate Formula
+        var _Formula = $("#hdnFormulaField").val();
+        _Formula = _Formula + "[" + PayHeadID + "]";
+        document.getElementById('hdnFormulaField').value = _Formula;
+    }
+
+    function blockChar(e) {
+        var k;
+        document.all ? k = e.keyCode : k = e.which;
+        if ((k >= 48 && k <= 57) || k == 46 || k == 40 || k == 41 || k == 42 || k == 43 || k == 45 || k == 47) {
+            // Calculate Formula
+            var _Formula = $("#hdnFormulaField").val();
+            _Formula = _Formula + e.key;
+            document.getElementById('hdnFormulaField').value = _Formula;
+        }
+
+        return ((k >= 48 && k <= 57) || k == 46 || k == 40 || k == 41 || k == 42 || k == 43 || k == 45 || k == 47);
+    }
+
+    function isValidKey(e) {
+        var charCode = e.keyCode || e.which;
+        if (charCode == 8 || charCode == 46)
+            return false;
+
+        return true;
+    }
+
+    function ValidateFormula() {
+        var Formula = $("#hdnFormulaField").val();
+
+        $.ajax({
+            type: "GET",
+            data: { Formula: Formula },
+            url: "/Structure/CheckFormula",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Error") {
+                    jAlert("Please check formula");
+                }
+            }
+        });
+        $('#FormulaModel').modal('show');
+    }
+
+    function SaveHeads() {
+        var IsValid = true;
+        var PayHeadName = $("#txtPayHeadName").val();
+        var PayHeadShortName = $("#txtPayHeadCode").val();
+        var PayType = $("#ddlPayHeadType").val();
+        var CalculationType = $("#ddlCalculationType").val();
+        var RoundOffType = $("#ddlRoundOffType").val();
+
+        var obj = {};
+        obj.PayHeadName = PayHeadName;
+        obj.PayHeadShortName = PayHeadShortName;
+        obj.PayType = PayType;
+        obj.CalculationType = CalculationType;
+        obj.RoundOffType = RoundOffType;
+        obj.StructureID = "@ViewData["StructureID"]";
+
+        if (PayHeadName.trim() == '') {
+            $('#MandatoryPayHeadName').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryPayHeadName').attr('style', 'display:none');
+        }
+
+        if (PayHeadShortName.trim() == '') {
+            $('#MandatoryPayHeadCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryPayHeadCode').attr('style', 'display:none');
+        }
+
+        if (IsValid == true) {
+            $.ajax({
+                type: "POST",
+                url: "/Structure/PayHeadsSubmit",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {
+                        document.getElementById('txtPayHeadName').value = "";
+                        document.getElementById('txtPayHeadCode').value = "";
+                        document.getElementById('ddlPayHeadType').value = "AL";
+                        document.getElementById('ddlCalculationType').value = "EO";
+                        document.getElementById('ddlRoundOffType').value = "NR";
+
+                        $("#txtPayHeadName").focus();
+
+                        var myObj = response.AllowanceDetails;
+
+                        var txt = "<table border='1' width='100%' class='dynamicPopupTbl '><tr class='HeaderStyle newcol'> <th class='hide'>id</th>";
+                        txt += " <th>Pay Head</th><th>Short Name</th><th>Pay Type</th><th>Calculation Type</th><th>Round Off</th>";
+
+                        for (x in myObj) {
+                            txt += "<tr>";
+                            for (key in myObj[0]) {
+                                if (key == "PayHead") txt += "<td width='30%'>" + myObj[x][key] + "</td>"
+                                else if (key == "ShortName") txt += "<td width='30%'>" + myObj[x][key] + "</td>"
+                                else if (key == "PayType") txt += "<td> width='10%'>" + myObj[x][key] + "</td>"
+                                else if (key == "CalculationType") txt += "<td width='15%'>" + myObj[x][key] + "</td>"
+                                else if (key == "RoundOffType") txt += "<td width='15%'>" + myObj[x][key] + "</td>"
+                            }
+                            txt += "</tr>";
+                        }
+                        txt += "</table>"
+                        document.getElementById('DetailsTable').innerHTML = txt;
+                    }
+                    else {
+                        jAlert(response.ResponseMessage);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    }
+</script>
+
+<div class="row">
+    <div class="col-md-3">
+        <label>Pay Head</label>
+        <div>
+            @Html.TextBoxFor(model => model.PayHeadName, new { Id = "txtPayHeadName" })
+            <span id="MandatoryPayHeadName" style="display: none" class="validclass">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label>Short Name</label>
+        <div>
+            @Html.TextBoxFor(model => model.PayHeadShortName, new { Id = "txtPayHeadCode" })
+            <span id="MandatoryPayHeadCode" style="display: none" class="validclass">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label>Type</label>
+        <div>
+            @Html.DropDownListFor(m => m.PayType, Model.PayHeadTypeList, new { style = "width: 100%;", Id = "ddlPayHeadType" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label>Calculation Type</label>
+        <div>
+            @Html.DropDownListFor(m => m.CalculationType, Model.CalculationTypeList, new { style = "width: 100%;", Id = "ddlCalculationType", onchange = "CallFormulaPopup(this.value)" })
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="col-md-3">
+        <label>Rounding Off</label>
+        <div>
+            @Html.DropDownListFor(m => m.RoundOffType, Model.RoundOffTypeList, new { style = "width: 100%;", Id = "ddlRoundOffType" })
+        </div>
+    </div>
+    <div class="col-md-6" style="padding-top: 26px;">
+        <label></label>
+        <button type="submit" class="btn btn-primary" onclick="SaveHeads()">Save & New</button>
+    </div>
+    <div style="clear: both;"><br /></div>
+    <div id="DetailsTable">
+        <table border='1' width="100%" class="dynamicPopupTbl">
+            <tr class="HeaderStyle newcol">
+                <th>Pay Head</th>
+                <th>Short Name</th>
+                <th>Pay Type</th>
+                <th>Calculation Type</th>
+                <th>Round Off</th>
+            </tr>
+            @if (Model != null)
+            {
+                if (Model.AllowanceDetails != null)
+                {
+                    foreach (var item in Model.AllowanceDetails)
+                    {
+                        <tr>
+                            <td width="30%">
+                                @item.PayHead
+                            </td>
+                            <td width="30%">
+                                @item.ShortName
+                            </td>
+                            <td width="10">
+                                @item.PayType
+                            </td>
+                            <td width="15%">
+                                @item.CalculationType
+                            </td>
+                            <td width="15%">
+                                @item.RoundOffType
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="FormulaModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Calculate Pay Head</h4>
+            </div>
+            <div class="modal-body">
+                <div class="clearfix">
+                    <div class="col-md-12">
+                        <label>Formuls</label>
+                        @Html.TextBoxFor(model => model.Cal_DisplayFormula, new { style = "height: 150px;", Id = "txtFormulaField", onkeypress = "return blockChar(event)", onkeydown = "return isValidKey(event)" })
+                    </div>
+                    <div style="clear: both;"></div>
+                    <div class="col-md-3">
+                        <label>Pay Head</label>
+                        <div>
+                            @Html.DropDownListFor(m => m.Cal_PayHeadID, new List<SelectListItem> { }, new { style = "width: 100%;", Id = "ddl_CalPayHeadID", onchange = "CallCalculationfunc(this.value)" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" onclick="ValidateFormula()" value="Validate" />
+                </div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.HiddenFor(model => model.Cal_CalculateFormula, new { Id = "hdnFormulaField" })
+</div>

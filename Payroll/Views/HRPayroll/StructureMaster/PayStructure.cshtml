@@ -1,0 +1,105 @@
+﻿@model Payroll.Models.payrollStructureEngine
+
+<script>
+    function blockspclChar(event)
+    {
+        var regex = new RegExp("^[a-zA-Z0-9_]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+        return true;
+    }
+
+    function SaveStructure() {
+        var IsValid = true;
+        var StructureName = $("#txtStructureName").val();
+        var StructureCode = $("#txtStructureCode").val();
+        var pclass = $("#ddlPayClassName").val();
+        var obj = {};
+        obj.StructureName = StructureName;
+        obj.StructureCode = StructureCode;
+        obj._PClassId = pclass
+            
+        if (StructureName.trim() == '') {
+            $('#MandatoryName').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryName').attr('style', 'display:none');
+        }
+
+        if (StructureName.trim() == '') {
+            $('#MandatoryCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryCode').attr('style', 'display:none');
+        }
+
+        if (IsValid == true) {
+            $.ajax({
+                type: "POST",
+                url: "/StructureMaster/PayStructureSubmit",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {
+                        $('a[href="#tab1"]').parent('li').removeClass('active');
+                        $('#tab1').removeClass(' in active');
+
+                        $('a[href="#tab2"]').attr("data-toggle", "tab");
+                        $('a[href="#tab2"]').parent('li').addClass('active');
+                        $('#tab2').addClass(' in active');
+                        $("#txtPayHeadName").focus();
+                    }
+                    else {
+                        jAlert(response.ResponseMessage);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    }
+</script>
+
+<div class="row">
+    <div class="col-md-3">
+        <label>Pay Structure Name</label>
+        <div>
+            @Html.TextBoxFor(model => model.StructureName, new { Id = "txtStructureName" })
+            <span id="MandatoryName" style="display: none" class="validclass">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label>Short Name</label>
+        <div>
+            @Html.TextBoxFor(model => model.StructureCode, new { Id = "txtStructureCode", style = "text-transform:uppercase", onkeypress = "return blockspclChar(event)" })
+            <span id="MandatoryCode" style="display: none" class="validclass">
+                <img id="imgMandatoryCode" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label>Class Name</label>
+        <div>
+            @Html.DropDownListFor(m => m._PClassId, Model._PClassName, new { style = "width: 100%;", Id = "ddlPayClassName" })
+            <span id="MandatoryCode" style="display: none" class="validclass">
+                <img id="imgMandatoryCode" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+
+    <div class="col-md-3" style="padding-top: 26px;" id="buttonDIV">
+        <label></label>
+        <button type="submit" class="btn btn-primary" onclick="SaveStructure()">Pay Heads ></button>
+    </div>
+</div>
+
+

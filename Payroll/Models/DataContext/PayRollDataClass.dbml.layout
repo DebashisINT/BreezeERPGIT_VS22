@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.25, 15.75" name="PayRollDataClass">
+  <DataContextMoniker Name="/PayRollDataClassDataContext" />
+  <nestedChildShapes>
+    <classShape Id="6004bfff-1bc5-407b-aea6-b52cd7956fe4" absoluteBounds="5.5, 0.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_TableFormulaInnerList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ee90c8cb-452b-4dd7-b1e5-4b70d79af1b9" absoluteBounds="5.515, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="90dc5e74-f7c9-4169-90b0-a465c77d2f82" absoluteBounds="8.5, 0.5, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_TableFormulaList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4089b16f-a634-4020-81cd-2368b2dae87f" absoluteBounds="8.515, 0.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5fdb4aa9-9c2e-4304-a3e8-6be4fa236426" absoluteBounds="0.75, 3.375, 2, 1.9631982421875">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_TableFormulaOuterList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="148fab06-5887-47d8-a593-65d8ccb53cfe" absoluteBounds="0.76499999999999968, 3.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1e6ae985-5930-4805-8397-7c2f38948eb4" absoluteBounds="6.625, 3.375, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_ClassGenerationList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="acfcc81b-7434-4487-8154-90cc9f14e15a" absoluteBounds="6.64, 3.835, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2458d857-60a3-409d-983e-3aca39d4baab" absoluteBounds="9, 3.375, 2, 1.3862939453125">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_FoundationMasterOuterList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ed075ac8-71a0-444d-a343-4d6b624e4053" absoluteBounds="9.015, 3.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2327d9c3-ac49-4cfe-8627-5f21125cdf42" absoluteBounds="0.875, 5.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_FoundationMasterInnerList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a90e5538-903b-4c85-8334-6ad66ac8ae70" absoluteBounds="0.88999999999999968, 5.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ecae5f03-491e-4b6d-809b-e342a145eb2f" absoluteBounds="3.625, 3, 2, 1.9631982421875">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_PeriodGenerationList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fd9bcf57-8a4c-4c36-8c54-f7bbd9559e1d" absoluteBounds="3.6399999999999997, 3.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="eb6d2c5e-9707-4270-81f1-86be2b9aa968" absoluteBounds="0.5, 0.5, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_PayStructureMasterList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="80567923-2ad4-4565-9539-30bfbb77cbea" absoluteBounds="0.51499999999999968, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8bf0539b-ffb1-4305-845e-e90ce0d44eec" absoluteBounds="3, 0.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_EmployeeList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4a3204a6-35b1-4f05-8f10-fed354d83dcd" absoluteBounds="3.0149999999999997, 0.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="19da1049-4b07-4009-9f12-be2a47af7eb6" absoluteBounds="3.625, 5.25, 2, 3.1170068359375">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_EmployeeAttachment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b25d194b-d2f7-4264-9a25-5f385bd60b75" absoluteBounds="3.6399999999999997, 5.71, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="18ef0205-bb3e-4e84-ab79-51965df88895" absoluteBounds="6.5, 6.875, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_Dflt_Salary" />
+      <nestedChildShapes>
+        <elementListCompartment Id="10539c06-694d-49fc-94ba-c89d0f6a057d" absoluteBounds="6.515, 7.3350000000000009, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6db4ef98-b065-4962-8058-191483ff3b4e" absoluteBounds="8.875, 5.125, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_Salary_AllowanceDeduction" />
+      <nestedChildShapes>
+        <elementListCompartment Id="76684af0-3c7d-4b86-8ba1-4d1acccb1adb" absoluteBounds="8.89, 5.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d2fad03c-b1d9-4472-aef6-766f54ee35d0" absoluteBounds="0.75, 6.25, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_SalaryImage_AllowanceDeduction" />
+      <nestedChildShapes>
+        <elementListCompartment Id="de5d9c6d-e421-47a4-91eb-495d944b2d69" absoluteBounds="0.76499999999999968, 6.7100000000000009, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="af0b0298-b990-44e5-b1d4-4949a0564752" absoluteBounds="1.125, 8.875, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_PayHeadList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="49771d2a-b443-4941-a63a-ea53eaf0b556" absoluteBounds="1.1399999999999997, 9.335, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9629ace4-8cd5-4b1b-876e-6256503db518" absoluteBounds="8.75, 7.625, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_LeaveStructureList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bf52cc2c-345b-4cda-b4c4-4ffd09c5a53a" absoluteBounds="8.765, 8.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f235df04-ca17-4c23-b717-96780d5ce5e0" absoluteBounds="3.5, 9, 2, 1.9631982421875">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_LeaveDefinationList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="37f544af-33df-4a99-ac14-b46496cb5e1d" absoluteBounds="3.5149999999999997, 9.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c945dbb9-8c03-4c84-8204-a5140b86af07" absoluteBounds="6.25, 3, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_prollLeaveBalance" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5797665e-4c7f-41f0-91d3-b0fd8f9e3dd7" absoluteBounds="6.265, 3.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="44bcb732-fbcc-4c3b-baca-d2cefe4e9464" absoluteBounds="3, 11.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_RosterMasterList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bc1f4dbe-9eee-4890-9506-708187746cb2" absoluteBounds="3.0150000000000006, 12.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1f0770be-b395-4c59-bb94-aeb67804cf20" absoluteBounds="6.375, 10, 2, 3.6939111328124996">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_ShiftList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ade13c37-31f8-4f1d-942e-358b8468f168" absoluteBounds="6.3900000000000006, 10.46, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a21a3eee-3056-4246-b48c-7c7913fa5c8b" isExpanded="false" absoluteBounds="5, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_proll_PayHeadImportLogList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3e056009-7c30-4aa5-b355-3194cbf34dd7" absoluteBounds="5.015, 2.835, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c4f00996-0586-4f42-8ba4-de2d11c07671" absoluteBounds="5, 11.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/V_LOANADVANCE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6f557071-18d2-4712-b311-37e9067e8f1f" absoluteBounds="5.015, 11.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ca115dbb-cceb-47c3-9ff8-4c24517a1675" isExpanded="false" absoluteBounds="3, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/V_PayrollSetting" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8dd12712-7fb3-40de-9414-c981ea0d8478" absoluteBounds="3.0149999999999997, 2.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="298c0457-de93-4a22-ba0f-277890ea5a47" absoluteBounds="8.5, 12.625, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/v_LeaveRegister" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6b98c56a-6904-454b-a750-de369952a3ca" absoluteBounds="8.515, 13.085, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8a93b284-4172-4519-a6a3-fdb91c0dad14" isExpanded="false" absoluteBounds="8.875, 9.875, 2, 0.45">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/VIEWLEAVEREGISTER_REPORT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c0e3546c-18de-44a8-9d3b-226ad2793adc" absoluteBounds="8.89, 10.335, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="05a90591-d237-4461-bc26-42261b0052bf" isExpanded="false" absoluteBounds="7.875, 2.625, 2, 0.45">
+      <DataClassMoniker Name="/PayRollDataClassDataContext/VIEWLEAVEREGISTER_LISTINGREPORT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f0ce623c-45cb-492a-948b-c20113c90bd4" absoluteBounds="7.89, 3.085, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

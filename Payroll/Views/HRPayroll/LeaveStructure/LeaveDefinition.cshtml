@@ -1,0 +1,1656 @@
+﻿@model Payroll.Models.LeaveStructureEngine
+
+
+<style>
+    .fieldset {
+        border: 1px solid #ddd;
+        margin-top: 1em;
+        padding-left: 15px;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+    }
+
+        .fieldset span.legend {
+            color: #222;
+            font-size: 1em;
+            text-align: left;
+            display: inline;
+            background: #fff;
+            padding: 5px 10px;
+            position: relative;
+            top: -.8em;
+        }
+
+    .bac {
+        background: #fff;
+        border: 1px solid #cecece;
+        padding: 8px;
+        margin: 7px 15px;
+        border-radius: 4px;
+    }
+
+    .backg {
+        background: #f3f3f3;
+        padding: 10px 15px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+    }
+
+    .padTbl select {
+        margin: 0 !important;
+    }
+
+    .padTbl > tbody > tr > td {
+        padding-right: 8px;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -1px;
+        top: 35px;
+    }
+
+    ul.multiselect-container > li > a:hover {
+        color: #333 !important;
+    }
+</style>
+<link href="~/assests/pluggins/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/assests/pluggins/bootstrap-multiselect/bootstrap-multiselect.min.js"></script>
+
+<script>
+
+
+    $(function () {
+        $('#multiselect').multiselect({
+            includeSelectAllOption: true
+            // SerialList.push();
+        });
+    });
+
+    var LeaveStructureId;
+    function OnStartCallback(s, e) {
+        //alert(1)
+        e.customArgs["LeaveStructureId"] = LeaveStructureId;
+    }
+    function OnClickEdit(LeaveID, LeaveStructureID) {
+        var url = '/LeaveStructure/EditLeaveDefination/';
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify({ 'LeaveStructureID': LeaveStructureID, 'LeaveId': LeaveID }),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    var div_RuleRule = document.getElementById("div_RuleRule");
+                    div_RuleRule.style.display = "block";
+
+                    $("#hdnleaveid").val(response.LeaveID);
+                    $("#txtLeaveName").val(response.LeaveName);
+                    $("#txtLeaveCode").val(response.LeaveCode)
+                    $('input[name="ApplicableForCode"][value="' + response.ApplicableForCode + '"]').prop('checked', true);
+                    $('input[name="LeaveTypeCode"][value="' + response.LeaveTypeCode + '"]').prop('checked', true);
+                    $("#chk_IncludeWeeklyOff").prop('checked', response.is_WeeklyOff);
+                    $("#chk_IncludePublicHoliday").prop('checked', response.is_IncludePublicHoliday);
+                    if (response.is_WeeklyOff == true) {
+                        $('input[name="HolidayRuleCode"][value="' + response.HolidayRuleCode + '"]').prop('checked', true);
+
+                        $('input[name="HolidayRuleCode"]').removeAttr("disabled");
+                    }
+                    else {
+                        $('input[name="HolidayRuleCode"]').attr("disabled", "disabled");
+                        $('input[name="HolidayRuleCode"]').prop('checked', false);
+                    }
+
+                    $("#chk_EligibilityConfirmation").prop('checked', response.is_onconfirmation);
+                    $("#chk_EligibilityNoticePeriod").prop('checked', response.is_noticeperiod);
+                    $("#chk_EligibilityProbation").prop('checked', response.is_probationperiod);
+                    $("#chkEncashable").prop('checked', response.is_encashable);
+                    $("#chkAdjustLeave").prop('checked', response.is_adjstleave);
+                    $("#chkEntitlement").prop('checked', response.is_chkEntitlement);
+                    if (response.is_chkEntitlement == true) {
+                        txtLeaveDays_Add.SetEnabled(true);
+
+                        txtLeaveDays_Per.SetEnabled(true);
+
+                    }
+                    else {
+                        txtLeaveDays_Add.SetEnabled(false);
+
+                        txtLeaveDays_Per.SetEnabled(false);
+                    }
+                    txtLeaveDays_Add.SetText(response.LeaveDaysAdd);
+                    txtLeaveDays_Per.SetText(response.DaysPer)
+                    $("#ddlEntitlementBase").val(response.ddlEntitlementBase)
+                    $("#chkCarryForward").prop('checked', response.is_carryforward);
+                    if (response.is_carryforward == true) {
+                        txtCarryForwardDays.SetEnabled(true);
+
+                        txtMaximumDays.SetEnabled(true);
+                    }
+                    else {
+                        txtCarryForwardDays.SetEnabled(false);
+
+                        txtMaximumDays.SetEnabled(false);
+                    }
+
+
+                    txtCarryForwardDays.SetText(response.DaysForMaximum);
+                    txtMaximumDays.SetText(response.Years);
+                    $("#chkServiceLengthDepends").prop('checked', response.is_lengthofservice);
+                    if (response.is_lengthofservice == true) {
+                        txtYears.SetEnabled(true);
+
+                        txtMonths.SetEnabled(true);
+
+                        txtDays.SetEnabled(true);
+
+                    }
+                    else {
+                        txtYears.SetEnabled(false);
+
+                        txtMonths.SetEnabled(false);
+
+                        txtDays.SetEnabled(false);
+
+                    }
+                    txtYears.SetText(response.ServiceYears)
+                    txtMonths.SetText(response.ServiceMonths);
+                    txtDays.SetText(response.ServiceDays);
+
+
+                    //$("#chk_periodbasis").prop('checked', response.is_periodbasis);
+                    //$("#chk_weeklyoffperperiod").prop('checked', response.is_weeklyoffperperiod);
+                    //$("#chk_publicholidayinperiod").prop('checked', response.is_publicholidayinperiod);
+                    //$("#chk_carryforwardtonextperiod").prop('checked', response.is_carryforwardtonextperiod);
+
+
+                    $('input[name="BasicCode"][value="' + response.BasicCode + '"]').prop('checked', true);
+                    $('input[name="Unavailed"][value="' + response.Unavailed + '"]').prop('checked', true);
+                    $("#ddlHoliDays").val(response._PHoliday);
+                    if (response._SamePeriod != '0.0' && response._SamePeriod != '') {
+                        txtSamePeriod.SetEnabled(true);
+                        txtSamePeriod.SetText(response._SamePeriod);
+                        $("#chkSamePeriod").prop('checked', true);
+                        $("#chkSamePeriod").prop('disabled', false);
+
+                    }
+                    else {
+                        txtSamePeriod.SetText(0.0);
+                        $("#chkSamePeriod").prop('checked', false);
+                        txtSamePeriod.SetEnabled(false);
+
+                    }
+                    if (response._EndLeavePeriod != '0.0' && response._EndLeavePeriod != '') {
+                        txtEndLeavePeriod.SetEnabled(true);
+                        txtEndLeavePeriod.SetText(response._EndLeavePeriod);
+                        $("#chkLeavePeriod").prop('checked', true);
+                        $("#chkLeavePeriod").prop('disabled', false);
+                    }
+                    else {
+                        txtEndLeavePeriod.SetText(0.0);
+                        $("#chkLeavePeriod").prop('checked', false);
+                        txtEndLeavePeriod.SetEnabled(false);
+                    }
+
+                    var strWeeklyOffDays = response.WeeklyOffDays;
+                    if (strWeeklyOffDays != "") {
+                        var valArr = strWeeklyOffDays.split(',');
+                        var i = 0;
+                        var size = valArr.length;
+                        for (i; i < size; i++) {
+                            //$("#multiselect").find(":checkbox[value='" + valArr[i] + "']").attr("checked", "checked");
+                            //$("#multiselect option[value='" + valArr[i] + "']").attr("selected", 1);
+                            $("#multiselect").find(":checkbox[value='" + valArr[i] + "']").attr("checked", true);
+                            $("#multiselect option[value='" + valArr[i] + "']").attr("selected", true);
+                            $("#multiselect").multiselect("refresh");
+                        }
+                    }
+                    else {
+
+                        if ($('#multiselect').val() != '' && $('#multiselect').val() != null) {
+                            var strWeeklyOffDays = $('#multiselect').val().join(",");
+                            if (strWeeklyOffDays != "") {
+                                var valArr = strWeeklyOffDays.split(',');
+                                var i = 0;
+                                var size = valArr.length;
+                                console.log("size", size)
+                                for (i; i < size; i++) {
+                                    $("#multiselect").find(":checkbox[value='" + valArr[i] + "']").attr("checked", false);
+                                    $("#multiselect option[value='" + valArr[i] + "']").attr('selected', false);
+                                    $("#multiselect").multiselect("refresh");
+                                }
+                            }
+                        }
+                    }
+
+                    var is_periodbasis = $("#chk_periodbasis").is(':checked');
+                    if (is_periodbasis == true) {
+                        $('.secPeriodBasisDetails').show();
+                    }
+                    else {
+                        $('.secPeriodBasisDetails').hide();
+                        $('#MandatoryPeriodBasis').hide();
+                    }
+
+                    if (response.BasicCode == "WO") {
+                        $("#ddlHoliDays").prop("disabled", true);
+                    }
+
+
+                    if (response.Unavailed == "NP") {
+                        $("#chkLeavePeriod").prop('disabled', true);
+                        $("#chkSamePeriod").prop('disabled', true);
+
+                    }
+                    else {
+                        $("#chkLeavePeriod").prop('disabled', false);
+                        $("#chkSamePeriod").prop('disabled', false);
+                    }
+                    
+                    if (response.chkFixed == true) {
+                        txtNumber.SetEnabled(true);
+                        $("#ChkProrataBasis").prop('disabled', false);
+                        $("#chkNotCrWeekoffDays").prop('disabled', false);
+                        $("#chkNotCrPublicHolidays").prop('disabled', false);
+                        $("#chkFixdCF").prop('disabled', false);                        
+                        $("#dtCredited").prop('disabled', false);                       
+                    }
+
+                    if (response.chkFixdCF == true) {
+
+                        $("#ddlCarryUpto").prop('disabled', false);
+                        $("#chkMaximumBal").prop('disabled', false);
+                        txtMaximumNumber.SetEnabled(true);
+                       // $("#chkAllowLeaveZeroBalance").prop('disabled', false);
+                        txtUptoDays.SetEnabled(true);
+                        txtUptoMonths.SetEnabled(true);
+                        txtUptoYears.SetEnabled(true);
+                    }
+                    if (response.chkMaximumBal == true) {
+                        txtMaximumNumber.SetEnabled(false);
+                        txtMaximumNumber.SetText("0.0");
+                    }
+                    if (response.chkEntitled == true) {
+                        $("#ddlEntitled").prop('disabled', false);
+                    }
+                    if (response.chkEligeableAvail == true) {
+                        $("#ddlEligeableAvail").prop('disabled', false);
+                    }
+                    if (response.chkApplyFor == true) {
+                        txtApplyForMin.SetEnabled(true);
+                        txtApplyForMax.SetEnabled(true);
+                    }
+                    
+
+
+                    $("#chkFixed").prop('checked', response.chkFixed);                   
+                    txtNumber.SetText(response.txtNumber);
+                    $("#ChkProrataBasis").prop('checked', response.ChkProrataBasis);
+                    $("#dtCredited").val(response.dtCredited);
+                  
+                    $("#chkNotCrWeekoffDays").prop('checked', response.chkNotCrWeekoffDays);
+                    $("#chkNotCrPublicHolidays").prop('checked', response.chkNotCrPublicHolidays);
+                    $("#chkEntitled").prop('checked', response.chkEntitled);
+                    $("#ddlEntitled").val(response.ddlEntitled);
+                    $("#chkEligeableAvail").prop('checked', response.chkEligeableAvail);
+                    $("#ddlEligeableAvail").val(response.ddlEligeableAvail);
+                    $("#chkApplyFor").prop('checked', response.chkApplyFor);
+                    txtApplyForMin.SetText(response.txtApplyForMin);
+                    txtApplyForMax.SetText(response.txtApplyForMax);
+                    $("#chkFixdCF").prop('checked', response.chkFixdCF);
+                    $("#ddlCarryUpto").val(response.ddlCarryUpto);
+                    $("#chkMaximumBal").prop('checked', response.chkMaximumBal);
+                    txtMaximumNumber.SetText(response.txtMaximumNumber);
+                    $("#chkAllowLeaveZeroBalance").prop('checked', response.chkAllowLeaveZeroBalance);
+                    txtUptoDays.SetText(response.txtUptoDays);
+                    txtUptoMonths.SetText(response.txtUptoMonths);
+                    txtUptoYears.SetText(response.txtUptoYears);
+                    $("#FixedEncashable").prop('checked', response.FixedEncashable);
+                    if (response.ddlEncashableAt != "")
+                    {
+                        $("#ddlEncashableAt").val(response.ddlEncashableAt);
+                    }
+                    if (response.ddlEncashableBalance != "")
+                    {
+                        $("#ddlEncashableBalance").val(response.ddlEncashableBalance);
+                    }                   
+                    
+                    $("#ConsiderBeforeCF").prop('checked', response.ConsiderBeforeCF);
+
+                    $("#ConjuncAllowedOtherLeaves").prop('checked', response.ConjuncAllowedOtherLeaves);
+                    $("#chkAdjustableOtherLeaves").prop('checked', response.chkAdjustableOtherLeaves);
+
+                    
+                    
+                    
+
+                    $("#chkAutoAdjusted").prop('checked', response.is_AutoAdjusted);
+                    $("#chkAdjustLeaveApproval").prop('checked', response.is_AdjustLeaveApproval);
+                    $("#chkAdjustLeaveConsider").prop('checked', response.is_AdjustLeaveConsider);
+
+
+
+                  
+                }
+                else {
+                    jAlert(response.ResponseMessage);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+    function OnClickDelete(LeaveID, LeaveStructureID) {
+        var url = '/LeaveStructure/LeaveDefinationDelete/';
+
+        jConfirm("Confirm Delete?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'DeleteLeaveDefination', 'LeaveID': LeaveID }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.response_msg == "Success") {
+                            jAlert("Deleted Successfully.");
+                            gvLeaveDefination.Refresh();
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    }
+
+    function SaveLeaveDefination() {
+        var IsValid = true;
+        obj = {};
+        obj.LeaveName = $("#txtLeaveName").val();
+        obj.LeaveCode = $("#txtLeaveCode").val();
+        obj.LeaveID = $("#hdnleaveid").val();
+        obj.StructureID = $("#hdnleavestructid").val();
+        obj.ApplicableForCode = $("input:radio[name='ApplicableForCode']:checked").val();
+        obj.LeaveTypeCode = $("input:radio[name='LeaveTypeCode']:checked").val();
+        obj.is_IncludePublicHoliday = $("#chk_IncludePublicHoliday").is(':checked')
+        obj.is_WeeklyOff = $("#chk_IncludeWeeklyOff").is(':checked')
+        obj.HolidayRuleCode = $("input:radio[name='HolidayRuleCode']:checked").val();
+        obj.is_onconfirmation = $("#chk_EligibilityConfirmation").is(':checked')
+        obj.is_noticeperiod = $("#chk_EligibilityNoticePeriod").is(':checked')
+        obj.is_probationperiod = $("#chk_EligibilityProbation").is(':checked')
+        obj.is_encashable = $("#chkEncashable").is(':checked')
+        obj.is_adjstleave = $("#chkAdjustLeave").is(':checked')
+        obj.is_chkEntitlement = $("#chkEntitlement").is(':checked')
+        obj.LeaveDaysAdd = txtLeaveDays_Add.GetText();
+        obj.DaysPer = txtLeaveDays_Per.GetText();
+        obj.ddlEntitlementBase = $("#ddlEntitlementBase").val();
+        obj.is_carryforward = $("#chkCarryForward").is(':checked')
+        obj.DaysForMaximum = txtCarryForwardDays.GetText();
+        obj.Years = txtMaximumDays.GetText();
+        obj.is_lengthofservice = $("#chkServiceLengthDepends").is(':checked')
+        obj.ServiceYears = txtYears.GetText();
+        obj.ServiceMonths = txtMonths.GetText();
+        obj.ServiceDays = txtDays.GetText();
+
+        obj.is_periodbasis = $("#chk_periodbasis").is(':checked');
+        obj.is_weeklyoffperperiod = $("#chk_weeklyoffperperiod").is(':checked');
+        obj.is_publicholidayinperiod = $("#chk_publicholidayinperiod").is(':checked');
+        obj.is_carryforwardtonextperiod = $("#chk_carryforwardtonextperiod").is(':checked');
+
+        if ($('#multiselect').val() != '' && $('#multiselect').val() != null) {
+            obj.WeeklyOffDays = $('#multiselect').val().join(",");
+        }
+        else {
+            obj.WeeklyOffDays = "";
+        }
+
+
+        obj.BasicCode = $("input:radio[name='BasicCode']:checked").val();
+        obj._PHoliday = $("#ddlHoliDays").val();
+        obj.Unavailed = $("input:radio[name='Unavailed']:checked").val();
+        obj._SamePeriod = txtSamePeriod.GetText();
+        obj._EndLeavePeriod = txtEndLeavePeriod.GetText();
+
+
+
+        obj.chkFixed = $("#chkFixed").is(':checked');
+        obj.txtNumber = txtNumber.GetText(); 
+        obj.ChkProrataBasis = $("#ChkProrataBasis").is(':checked');
+        obj.dtCredited = $("#dtCredited").val();
+        obj.chkNotCrWeekoffDays = $("#chkNotCrWeekoffDays").is(':checked');
+        obj.chkNotCrPublicHolidays = $("#chkNotCrPublicHolidays").is(':checked');
+        obj.chkEntitled = $("#chkEntitled").is(':checked');
+        obj.ddlEntitled = $("#ddlEntitled").val();
+        obj.chkEligeableAvail = $("#chkEligeableAvail").is(':checked');
+        obj.ddlEligeableAvail = $("#ddlEligeableAvail").val();
+        obj.chkApplyFor = $("#chkApplyFor").is(':checked');
+        obj.txtApplyForMin = txtApplyForMin.GetText(); 
+        obj.txtApplyForMax = txtApplyForMax.GetText(); 
+        obj.chkFixdCF = $("#chkFixdCF").is(':checked');
+        obj.ddlCarryUpto = $("#ddlCarryUpto").val();
+        obj.chkMaximumBal = $("#chkMaximumBal").is(':checked');
+        obj.txtMaximumNumber = txtMaximumNumber.GetText();
+        obj.chkAllowLeaveZeroBalance = $("#chkAllowLeaveZeroBalance").is(':checked');
+        obj.txtUptoDays = txtUptoDays.GetText(); 
+        obj.txtUptoMonths = txtUptoMonths.GetText(); 
+        obj.txtUptoYears = txtUptoYears.GetText(); 
+        obj.FixedEncashable = $("#FixedEncashable").is(':checked');
+        obj.ddlEncashableAt = $("#ddlEncashableAt").val();
+        obj.ddlEncashableBalance = $("#ddlEncashableBalance").val();
+        obj.ConsiderBeforeCF = $("#ConsiderBeforeCF").is(':checked');
+        obj.ConjuncAllowedOtherLeaves = $("#ConjuncAllowedOtherLeaves").is(':checked');
+        obj.chkAdjustableOtherLeaves = $("#chkAdjustableOtherLeaves").is(':checked');
+
+        obj.is_AutoAdjusted = $("#chkAutoAdjusted").is(':checked')
+        obj.is_AdjustLeaveApproval = $("#chkAdjustLeaveApproval").is(':checked')
+        obj.is_AdjustLeaveConsider = $("#chkAdjustLeaveConsider").is(':checked')
+        
+
+
+        if ($("#txtLeaveName").val() == '') {
+            $('#MandatoryLeaveName').show();
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryLeaveName').hide();
+        }
+
+        if ($("input:radio[name='BasicCode']:checked").val() == "WO" && obj.WeeklyOffDays == '') {
+            //$('#MandatoryWeeklyOffDays').show();
+            jAlert("Select a Week Off Day");
+            IsValid = false;
+            return false;
+        }
+        else {
+            $('#MandatoryWeeklyOffDays').hide();
+        }
+
+        if ($("input:radio[name='BasicCode']:checked").val() == "PH" && $("#ddlHoliDays").val() == "0") {
+
+            jAlert("Select a HoliDay");
+            IsValid = false;
+            return false;
+        }
+        else {
+            $('#MandatoryWeeklyOffDays').hide();
+        }
+        if ($("input:radio[name='Unavailed']:checked").val() == "EN" && $("#chkSamePeriod").is(':checked') == true) {
+
+            if (txtSamePeriod.GetText() == "") {
+                jAlert("Enter Number of Days");
+                IsValid = false;
+                return false;
+            }
+        }
+        if ($("input:radio[name='Unavailed']:checked").val() == "EN" && $("#chkLeavePeriod").is(':checked') == true) {
+
+            if (txtEndLeavePeriod.GetText() == "") {
+                jAlert("Enter Number of Days");
+                IsValid = false;
+                return false;
+            }
+        }
+
+        if ($("#chk_periodbasis").is(':checked') == true && ($("#chk_weeklyoffperperiod").is(':checked') == false && $("#chk_publicholidayinperiod").is(':checked') == false)) {
+            $('#MandatoryPeriodBasis').show();
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryPeriodBasis').hide();
+        }
+
+        if ($("#txtLeaveCode").val() == '') {
+            $('#MandatoryLeaveCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryLeaveCode').attr('style', 'display:none');
+        }
+
+        if (IsValid == true) {
+            if (!$("input:radio[name='ApplicableForCode']:checked").val()) {
+                jAlert('Please select atleast one leave applicabe');
+                IsValid = false;
+            }
+        }
+
+        if (IsValid == true) {
+            if (!$("input:radio[name='LeaveTypeCode']:checked").val()) {
+                jAlert('Please select atleast one leave type');
+                IsValid = false;
+            }
+        }
+
+        if (IsValid == true) {
+            $.ajax({
+                type: "POST",
+                url: "/LeaveStructure/LeaveDefinationSubmit",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    if (response.ResponseCode == "Success") {
+                        LeaveStructureId = $("#hdnleavestructid").val();
+                        ClearLeaveDefination();
+                        gvLeaveDefination.Refresh();
+                        gvLeaveDefination.Refresh();
+                        $("#txtLeaveName").focus();
+                    }
+                    else {
+                        jAlert(response.ResponseMessage);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+
+    }
+
+    function ClearLeaveDefination() {
+        $("#hdnleaveid").val('');
+        $("#txtLeaveName").val('');
+        $("#txtLeaveCode").val('')
+        $('input[name="ApplicableForCode"]').prop('checked', false);
+        $('input[name="LeaveTypeCode"]').prop('checked', false);
+        $("#chk_IncludeWeeklyOff").prop('checked', false);
+        $("#chk_IncludePublicHoliday").prop('checked', false);
+        $('input[name="HolidayRuleCode"]').prop('checked', false);
+        $("#chk_EligibilityConfirmation").prop('checked', false);
+        $("#chk_EligibilityNoticePeriod").prop('checked', false);
+        $("#chk_EligibilityProbation").prop('checked', false);
+        $("#chkEncashable").prop('checked', false);
+        $("#chkAdjustLeave").prop('checked', false);
+        $("#chkEntitlement").prop('checked', false);
+        txtLeaveDays_Add.SetText('');
+        txtLeaveDays_Per.SetText('')
+        $("#ddlEntitlementBase").val('DY')
+        $("#chkCarryForward").prop('checked', false);
+        txtCarryForwardDays.SetText('');
+        txtMaximumDays.SetText('');
+        $("#chkServiceLengthDepends").prop('checked', false);
+        txtYears.SetText('')
+        txtMonths.SetText('');
+        txtDays.SetText('');
+
+        var div_RuleRule = document.getElementById("div_RuleRule");
+        div_RuleRule.style.display = "none";
+
+        $('input[name="BasicCode"]').prop('checked', false);
+        $('input[name="Unavailed"]').prop('checked', false);
+        txtSamePeriod.SetText('');
+        txtEndLeavePeriod.SetText();
+
+        if ($('#multiselect').val() != '' && $('#multiselect').val() != null) {
+
+            var strWeeklyOffDays = $('#multiselect').val().join(",");
+            if (strWeeklyOffDays != "") {
+                var valArr = strWeeklyOffDays.split(',');
+                var i = 0;
+                var size = valArr.length;
+                console.log("size", size)
+                for (i; i < size; i++) {
+                    $("#multiselect").find(":checkbox[value='" + valArr[i] + "']").attr("checked", false);
+                    $("#multiselect option[value='" + valArr[i] + "']").prop('selected', false);
+                    $("#multiselect").multiselect("refresh");
+                }
+            }
+        }
+        //$("#multiselect").prop("checked", false);
+
+        $("#ddlHoliDays").val("0");
+
+        txtSamePeriod.SetEnabled(false);
+        txtEndLeavePeriod.SetEnabled(false);
+
+        $("#chkLeavePeriod").prop("checked", false);
+        $("#chkSamePeriod").prop("checked", false);
+
+        $("#chkFixed").prop("checked", false);
+        $("#txtNumber").val("0");
+        $("#ChkProrataBasis").prop("checked", false);
+        $("#dtCredited").val('0');
+        $("#chkNotCrWeekoffDays").prop("checked", false);
+        $("#chkNotCrPublicHolidays").prop("checked", false);
+        $("#chkEntitled").prop("checked", false);
+        $("#ddlEntitled").val('0');
+        $("#chkEligeableAvail").prop("checked", false);
+        $("#chkApplyFor").prop("checked", false);
+        $("#ddlEligeableAvail").val('0');
+        $("#txtApplyForMin").val("0");
+        $("#txtApplyForMax").val("0");
+        $("#chkFixdCF").prop("checked", false);
+        $("#ddlCarryUpto").val('0');
+        $("#chkMaximumBal").prop("checked", false);
+        $("#txtMaximumNumber").val("0");
+       // $("#chkAllowLeaveZeroBalance").prop("checked", false);
+        $("#txtUptoDays").val("0");
+        $("#txtUptoMonths").val("0");
+        $("#txtUptoYears").val("0");
+        $("#FixedEncashable").prop("checked", false);
+        $("#ddlEncashableAt").val('0');
+        $("#ddlEncashableBalance").val('0');
+        $("#ConsiderBeforeCF").prop("checked", false);
+        $("#ConjuncAllowedOtherLeaves").prop("checked", false);
+        $("#chkAdjustableOtherLeaves").prop("checked", false);      
+        
+        $("#chkAutoAdjusted").prop('checked', false);
+        $("#chkAdjustLeaveApproval").prop('checked', false);
+        $("#chkAdjustLeaveConsider").prop('checked', false);
+
+    }
+</script>
+<script>
+    function ViewRule() {
+        var div_RuleRule = document.getElementById("div_RuleRule");
+        div_RuleRule.style.display = "block";
+    }
+
+    function handleClick(cd) {
+        if (cd.checked == true) {
+            $('input[name="HolidayRuleCode"]').removeAttr("disabled");
+        }
+        else {
+            if ($("#chk_IncludeWeeklyOff").is(':checked')) {
+                $('input[name="HolidayRuleCode"]').removeAttr("disabled");
+            }
+            else {
+                $('input[name="HolidayRuleCode"]').attr("disabled", "disabled");
+                $('input[name="HolidayRuleCode"]').prop('checked', false);
+            }
+        }
+    }
+
+    function handleClick1(cb) {
+        if (cb.checked == true) {
+            $('input[name="HolidayRuleCode"]').removeAttr("disabled");
+        }
+        else {
+            if ($("#chk_IncludePublicHoliday").is(':checked')) {
+                $('input[name="HolidayRuleCode"]').removeAttr("disabled");
+            }
+            else {
+                $('input[name="HolidayRuleCode"]').attr("disabled", "disabled");
+                $('input[name="HolidayRuleCode"]').prop('checked', false);
+            }
+        }
+    }
+
+    function handleClickEntitlmnt(cd) {
+        if (cd.checked == true) {
+            txtLeaveDays_Add.SetEnabled(true);
+            txtLeaveDays_Add.SetText("0");
+
+            txtLeaveDays_Per.SetEnabled(true);
+            txtLeaveDays_Per.SetText("0");
+        }
+        else {
+            txtLeaveDays_Add.SetEnabled(false);
+            txtLeaveDays_Add.SetText("0");
+
+            txtLeaveDays_Per.SetEnabled(false);
+            txtLeaveDays_Add.SetText("0");
+        }
+    }
+
+    function handleClickCarryForward(cd) {
+        if (cd.checked == true) {
+            txtCarryForwardDays.SetEnabled(true);
+            txtCarryForwardDays.SetText("0");
+
+            txtMaximumDays.SetEnabled(true);
+            txtMaximumDays.SetText("0");
+        }
+        else {
+            txtCarryForwardDays.SetEnabled(false);
+            txtCarryForwardDays.SetText("0");
+
+            txtMaximumDays.SetEnabled(false);
+            txtMaximumDays.SetText("0");
+        }
+    }
+
+    function handleClickSrvcLength(cd) {
+        if (cd.checked == true) {
+            txtYears.SetEnabled(true);
+            txtYears.SetText("0");
+
+            txtMonths.SetEnabled(true);
+            txtMonths.SetText("0");
+
+            txtDays.SetEnabled(true);
+            txtDays.SetText("0");
+        }
+        else {
+            txtYears.SetEnabled(false);
+            txtYears.SetText("0");
+
+            txtMonths.SetEnabled(false);
+            txtMonths.SetText("0");
+
+            txtDays.SetEnabled(false);
+            txtDays.SetText("0");
+        }
+
+    }
+
+    function periodbasisClick(e) {
+        var is_periodbasis = $("#chk_periodbasis").is(':checked');
+        if (is_periodbasis == true) {
+            $('.secPeriodBasisDetails').show();
+        }
+        else {
+            $('.secPeriodBasisDetails').hide();
+            $('#MandatoryPeriodBasis').hide();
+            $("#chk_weeklyoffperperiod").prop("checked", false);
+            $("#chk_publicholidayinperiod").prop("checked", false);
+            $("#chk_carryforwardtonextperiod").prop("checked", false);
+            $('#MandatoryWeeklyOffDays').hide();
+
+        }
+    }
+    function carryforwardtonextperiodClick(e) {
+        txtSamePeriod.SetText('');
+        txtEndLeavePeriod.SetText('');
+        $("#chkLeavePeriod").prop('checked', false);
+        $("#chkSamePeriod").prop('checked', false);
+
+        txtSamePeriod.SetEnabled(false);
+        txtEndLeavePeriod.SetEnabled(false);
+
+        $("#chkLeavePeriod").prop('disabled', true);
+        $("#chkSamePeriod").prop('disabled', true);
+
+
+    }
+
+    function EncashableClick() {
+        $("#chkLeavePeriod").prop('disabled', false);
+        $("#chkSamePeriod").prop('disabled', false);
+
+    }
+    function chkSamePeriod_click() {
+        var is_chkSamePeriod = $("#chkSamePeriod").is(':checked');
+        if (is_chkSamePeriod == true) {
+            txtSamePeriod.SetEnabled(true);
+        }
+        else {
+            txtSamePeriod.SetEnabled(false);
+        }
+    }
+    function chkLeavePeriod_click() {
+        var is_chkLeavePeriod = $("#chkLeavePeriod").is(':checked');
+        if (is_chkLeavePeriod == true) {
+            txtEndLeavePeriod.SetEnabled(true);
+        }
+        else {
+            txtEndLeavePeriod.SetEnabled(false);
+        }
+    }
+    function chkMaximumBal_click()
+    {
+        var is_chkMaximumBal = $("#chkMaximumBal").is(':checked');
+        if (is_chkMaximumBal == true)
+        {
+            txtMaximumNumber.SetEnabled(false);
+            txtMaximumNumber.SetText("0.0");
+        }
+        else {
+            txtMaximumNumber.SetEnabled(true);
+        }
+    }
+    function chkFixdCF_click()
+    {
+        var is_chkFixdCF = $("#chkFixdCF").is(':checked');
+        if (is_chkFixdCF == true) {
+            $("#ddlCarryUpto").prop('disabled', false);
+            $("#chkMaximumBal").prop('disabled', false);
+            txtMaximumNumber.SetEnabled(true);
+           // $("#chkAllowLeaveZeroBalance").prop('disabled', false);
+            
+            txtUptoDays.SetEnabled(true);
+            txtUptoMonths.SetEnabled(true);
+            txtUptoYears.SetEnabled(true);
+        }
+        else {
+            $("#ddlCarryUpto").prop('disabled', true);
+            $("#chkMaximumBal").prop('disabled', true);
+            txtMaximumNumber.SetEnabled(false);
+           // $("#chkAllowLeaveZeroBalance").prop('disabled', true);
+
+            txtUptoDays.SetEnabled(false);
+            txtUptoMonths.SetEnabled(false);
+            txtUptoYears.SetEnabled(false);
+        }
+       
+    }
+    function chkEntitled_click()
+    {
+        var is_chkEntitled = $("#chkEntitled").is(':checked');
+        if (is_chkEntitled == true) {
+            $("#ddlEntitled").prop('disabled', false);
+        }
+        else
+        {
+            $("#ddlEntitled").prop('disabled', true);
+        }        
+    }
+    function chkEligeableAvail_click()
+    {
+        var is_chkEligeableAvail = $("#chkEligeableAvail").is(':checked');
+        if (is_chkEligeableAvail == true) {
+            $("#ddlEligeableAvail").prop('disabled', false);
+        }
+        else {
+            $("#ddlEligeableAvail").prop('disabled', true);
+        }
+    }
+    function chkApplyFor_click()
+    {
+        var is_chkApplyFor = $("#chkApplyFor").is(':checked');
+        if (is_chkApplyFor == true) {
+            txtApplyForMin.SetEnabled(true);
+            txtApplyForMax.SetEnabled(true);            
+        }
+        else {
+            txtApplyForMin.SetEnabled(false);
+            txtApplyForMax.SetEnabled(false);
+        }
+    }
+    function chkFixed_click() {
+        var is_chkFixed = $("#chkFixed").is(':checked');
+        if (is_chkFixed == true) {
+            txtNumber.SetEnabled(true);
+            $("#ChkProrataBasis").prop('disabled', false);
+            $("#chkNotCrWeekoffDays").prop('disabled', false);
+            $("#chkNotCrPublicHolidays").prop('disabled', false);
+
+            $("#chkFixdCF").prop('disabled', false);
+            //$("#chkMaximumBal").prop('disabled', false);
+            //$("#chkAllowLeaveZeroBalance").prop('disabled', false);        
+
+            //txtMaximumNumber.SetEnabled(true);
+            //txtUptoDays.SetEnabled(true);
+            //txtUptoMonths.SetEnabled(true);
+            //txtUptoYears.SetEnabled(true);
+
+            $("#dtCredited").prop('disabled', false);
+            //$("#ddlCarryUpto").prop('disabled', false);
+            
+            
+        }
+        else {
+            txtNumber.SetEnabled(false);
+            txtMaximumNumber.SetEnabled(false);
+            txtUptoDays.SetEnabled(false);
+            txtUptoMonths.SetEnabled(false);
+            txtUptoYears.SetEnabled(false);
+            $("#ChkProrataBasis").prop('disabled', true);
+            $("#chkNotCrWeekoffDays").prop('disabled', true);
+            $("#chkNotCrPublicHolidays").prop('disabled', true);
+
+            $("#chkFixdCF").prop('disabled', true);
+            //$("#chkMaximumBal").prop('disabled', true);
+            //$("#chkAllowLeaveZeroBalance").prop('disabled', true);
+            ////$("#chkMaximumBal").prop('disabled', true);
+            $("#dtCredited").prop('disabled', true);
+            //$("#ddlCarryUpto").prop('disabled', true);
+
+        }
+    }
+
+    function PublicHolidayClick() {
+        if ($('#multiselect').val() != '' && $('#multiselect').val() != null) {
+
+            var strWeeklyOffDays = $('#multiselect').val().join(",");
+            if (strWeeklyOffDays != "") {
+                var valArr = strWeeklyOffDays.split(',');
+                var i = 0;
+                var size = valArr.length;
+                console.log("size", size)
+                for (i; i < size; i++) {
+                    $("#multiselect").find(":checkbox[value='" + valArr[i] + "']").attr("checked", false);
+                    $("#multiselect option[value='" + valArr[i] + "']").prop('selected', false);
+                    $("#multiselect").multiselect("refresh");
+                }
+            }
+        }
+
+        //$("#multiselect").prop("checked", false);
+        // $('#multiselect').multiselect('disable');
+        $("#ddlHoliDays").prop("disabled", false);
+
+    }
+    function WeekOffsClick() {
+        $("#ddlHoliDays").val("0");
+        $("#ddlHoliDays").prop("disabled", true);
+        // $('#multiselect').multiselect('enable');
+
+    }
+</script>
+<style>
+    #ddlHoliDays {
+        border-radius: 4px;
+        min-height: 31px;
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,f3f3f3+50,ededed+51,ffffff+100;White+Gloss+%232 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    }
+
+    .lpad {
+        margin-left: 24px;
+    }
+
+        .lpad > tbody > tr > td {
+            padding: 2px 5px;
+        }
+
+    #multiselect + .btn-group {
+        margin-left: 10px;
+    }
+
+    .mbot0 {
+        margin-bottom: 0;
+    }
+
+    #ddlHoliDays {
+        display: inline-block;
+        width: 150px !important;
+        margin: 11px;
+    }
+
+    .tblInRow > tbody > tr > td {
+        padding-right: 15px;
+    }
+
+    .tblInRow input[type="text"], .tblInRow select {
+        margin: 0 !important;
+    }
+</style>
+<div class="row">
+    <div class="col-md-3">
+        <label>Leave Name</label>
+        <div>
+            @Html.TextBoxFor(model => model.LeaveName, new { Id = "txtLeaveName" })
+            <input type="hidden" id="hdnleaveid" />
+            <span id="MandatoryLeaveName" style="display: none" class="validclass">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label>Leave Code</label>
+        <div>
+            @Html.TextBoxFor(model => model.LeaveCode, new { Id = "txtLeaveCode" })
+            <span id="MandatoryLeaveCode" style="display: none" class="validclass">
+                <img id="imgMandatoryCode" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="fieldset">
+            <span class="legend">Applicable For</span>
+            <p>
+                @foreach (var _ApplicableForList in Model.ApplicableForList)
+                {
+                    @Html.RadioButtonFor(m => m.ApplicableForCode, _ApplicableForList.Value)@Html.Label(@_ApplicableForList.Text)
+                    <br />
+                }
+                <span id="Mandatoryapplcbl" style="display: none" class="validclassvalidclass">
+                    <img id="imgMandatoryapplcbl" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </p>
+
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="fieldset">
+            <span class="legend">Type</span>
+            <p>
+                @foreach (var _LeaveTypeList in Model.LeaveTypeList)
+                {
+                    @Html.RadioButtonFor(m => m.LeaveTypeCode, _LeaveTypeList.Value)@Html.Label(@_LeaveTypeList.Text)
+                    <br />
+                }
+            </p>
+            <span id="Mandatoryleavetype" style="display: none" class="validclassvalidclass">
+                <img id="imgMandatoryapplcbl" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <label></label>
+        <button type="submit" class="btn btn-primary" onclick="ViewRule()">Rule> ></button>
+    </div>
+    <div style="clear: both;"></div>
+    <div id="div_RuleRule" class="row" style="display:none">
+        <div class="col-md-12">
+            <div class="bac clearfix">
+                <div class="col-md-3">
+                    <div class="fieldset">
+                        <span class="legend">Include/Exclude Holiday</span>
+                        <p>
+                            @Html.CheckBoxFor(m => m.is_IncludePublicHoliday, new { id = "chk_IncludePublicHoliday", onclick = "handleClick(this)" }) Include Public Holidays
+                            <br />
+                            @Html.CheckBoxFor(m => m.is_WeeklyOff, new { id = "chk_IncludeWeeklyOff", onclick = "handleClick1(this)" }) Include Weekly Off
+                        </p>
+                    </div>
+                    <div class="fieldset" style="margin-top:20px">
+                        <span class="legend">Eligibility</span>
+                        <p>
+                            @Html.CheckBoxFor(m => m.is_onconfirmation, new { id = "chk_EligibilityConfirmation" }) On Confirmation
+                            <br />
+                            @Html.CheckBoxFor(m => m.is_noticeperiod, new { id = "chk_EligibilityNoticePeriod" }) Notice Period
+                            <br />
+                            @Html.CheckBoxFor(m => m.is_probationperiod, new { id = "chk_EligibilityProbation" }) Probation Period
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="fieldset">
+                        <span class="legend">Holiday Inclusion Rule</span>
+                        <p>
+                            @foreach (var _HolidayRuleList in Model.HolidayRuleList)
+                            {
+                                @Html.RadioButtonFor(m => m.HolidayRuleCode, _HolidayRuleList.Value, new { disabled = "disabled" }) @Html.Label(@_HolidayRuleList.Text)
+                                <br />
+                            }
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="fieldset">
+                        <span class="legend">Basis</span>
+                        <p>
+                            <div style="display:none;">
+                                @Html.CheckBoxFor(m => m.is_periodbasis, new { id = "chk_periodbasis", onclick = "periodbasisClick(this)" }) Accumulate Leave on Period Basis
+                                <span id="MandatoryPeriodBasis" style="display: none" class="validclass">
+                                    <img id="imgMandatoryPeriodBasis" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                </span>
+                            </div>
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td>@Html.RadioButtonFor(m => m.BasicCode, "WO", new { id = "WeeksOff", onclick = "WeekOffsClick(this)" }) <label for="always">Number of Week Offs in a Period</label> </td>
+                                        <td>
+                                            @Html.DropDownList("ddlWeeklyOffDays", new SelectList(Model.WeeklyOffDaysList, "Text", "Value"), new { @id = "multiselect", @class = "form-control", @multiple = "multiple" })
+                                            <span id="MandatoryWeeklyOffDays" style="display: none" class="validclass">
+                                                <img id="imgMandatoryWeeklyOffDays" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                            </span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.RadioButtonFor(m => m.BasicCode, "PH", new { id = "PublicHoliday", onclick = "PublicHolidayClick(this)" })<label for="always">Number of Public Holiday in a Period</label></td>
+                                        <td>@Html.DropDownList("ddlHoliDays", new SelectList(Model._PHoliDayBind, "Value", "Text"), new { style = "width: 100%;", Id = "ddlHoliDays" })</td>
+                                    </tr>
+                                </table>
+                                @*@foreach (var _BasicList in Model.BasicList)
+                                    {
+                                        @Html.RadioButtonFor(m => m.BasicCode, _BasicList.Value, new { onclick = "BasicClick(this)" }) @Html.Label(@_BasicList.Text)
+                                        <br />
+                                    }*@
+                                @*@Html.RadioButtonFor(m => m.BasicCode, "WO", new { id = "WeeksOff", @checked = "true" }) <label for="always">Number of Weeks Off in a Period</label>*@
+
+                                <br />
+                            </div>
+                        </p>
+                    </div>
+                    <div class="fieldset" style="margin-top: 14px;">
+                        <span class="legend">Unavailed</span>
+                        <div>
+                            <p class="mbot0">
+                                @Html.RadioButtonFor(m => m.Unavailed, "EN", new { id = "Encashable", onclick = "EncashableClick(this)" }) <label for="always">Encashable</label>
+                                <label for="male"></label>
+                            </p>
+
+                            <table class="lpad">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkSamePeriod" name="" value="" onclick="chkSamePeriod_click()" disabled="disabled">
+                                    </td>
+                                    <td>Same Period</td>
+                                    <td>
+
+                                        @Html.DevExpress().TextBox(settings =>
+                                        {
+                                            settings.Name = "txtSamePeriod";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                            settings.ClientEnabled = false;
+                                            settings.Properties.MaskSettings.Mask = "<0..999999999999999999>.<0..99>";
+
+                                        }).GetHtml()
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkLeavePeriod" name="" value="" onclick="chkLeavePeriod_click()" disabled="disabled">
+                                    </td>
+                                    <td>End of the Leave Period</td>
+                                    <td>
+
+                                        @Html.DevExpress().TextBox(settings =>
+                                        {
+                                            settings.Name = "txtEndLeavePeriod";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                            settings.ClientEnabled = false;
+                                            settings.Properties.MaskSettings.Mask = "<0..999999999999999999>.<0..99>";
+
+
+                                        }).GetHtml()
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            @Html.RadioButtonFor(m => m.Unavailed, "NP", new { id = "is_carryforwardtonextperiod", onclick = "carryforwardtonextperiodClick(this)" }) <label for="always">Carry Forward to Next Period</label>
+                            @*@Html.CheckBoxFor(m => m.is_carryforwardtonextperiod, new { id = "chk_carryforwardtonextperiod" }) Carry Forward to Next Period*@
+                            <p></p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div style="margin-top:10px">                       
+                        <div>
+                            @Html.CheckBoxFor(m => m.is_AutoAdjusted, new { id = "chkAutoAdjusted" }) Auto adjusted 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div style="margin-top:10px">                      
+                        <div>
+                            @Html.CheckBoxFor(m => m.is_AdjustLeaveApproval, new { id = "chkAdjustLeaveApproval" }) Approval Required for Leave Application
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div style="margin-top:10px">                    
+                        <div>
+                            @Html.CheckBoxFor(m => m.is_AdjustLeaveConsider, new { id = "chkAdjustLeaveConsider" }) Consider in Working Days
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div style="margin-top:10px">                      
+                        <div>
+                            @Html.CheckBoxFor(m => m.is_adjstleave, new { id = "chkAdjustLeave" }) Adjustable with other leaves
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="backg">
+                                <table class="padTbl">
+                                    <tr>
+                                        <td>
+                                            @Html.CheckBoxFor(m => m.is_chkEntitlement, new { id = "chkEntitlement", onclick = "handleClickEntitlmnt(this)" })
+                                        </td>
+                                        <td>
+                                            Entitlement
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().TextBox(settings =>
+                            {
+                                settings.Name = "txtLeaveDays_Add";
+                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+                                settings.ClientEnabled = false;
+                                settings.Text = "0";
+                            }).GetHtml()
+                                        </td>
+                                        <td>
+                                            Days Per
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().TextBox(settings =>
+                            {
+                                settings.Name = "txtLeaveDays_Per";
+                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+                                settings.ClientEnabled = false;
+                                settings.Text = "0";
+                            }).GetHtml()
+                                        </td>
+
+                                        <td>
+                                            @Html.DropDownListFor(m => m.ddlEntitlementBase, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="Days", Value = "DY" },
+                                new SelectListItem{ Text="Month", Value = "HR" }
+                             }, new { style = "width: 100%;", id = "ddlEntitlementBase" })
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="backg">
+                                <table class="padTbl">
+                                    <tr>
+                                        <td>
+                                            @Html.CheckBoxFor(m => m.is_carryforward, new { id = "chkCarryForward", onclick = "handleClickCarryForward(this)" })
+                                        </td>
+                                        <td>
+                                            Carry Forward For
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().TextBox(settings =>
+                            {
+                                settings.Name = "txtCarryForwardDays";
+                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+                                settings.ClientEnabled = false;
+                                settings.Text = "0";
+                            }).GetHtml()
+                                        </td>
+                                        <td>
+                                            Days for Maximum
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().TextBox(settings =>
+                            {
+                                settings.Name = "txtMaximumDays";
+                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+                                settings.ClientEnabled = false;
+                                settings.Text = "0";
+                            }).GetHtml()
+                                        </td>
+                                        <td>
+                                            Years
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="backg">
+                                <table class="padTbl">
+                                    <tr>
+                                        <td>
+                                            @Html.CheckBoxFor(m => m.is_lengthofservice, new { id = "chkServiceLengthDepends", onclick = "handleClickSrvcLength(this)" })
+                                        </td>
+                                        <td>
+                                            Depends on the Length of Service
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().TextBox(settings =>
+                            {
+                                settings.Name = "txtYears";
+                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+                                settings.ClientEnabled = false;
+                                settings.Text = "0";
+                            }).GetHtml()
+                                        </td>
+                                        <td>
+                                            Years
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().TextBox(settings =>
+                            {
+                                settings.Name = "txtMonths";
+                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+                                settings.ClientEnabled = false;
+                                settings.Text = "0";
+                            }).GetHtml()
+                                        </td>
+                                        <td>
+                                            Months
+                                        </td>
+                                        <td>
+                                            @Html.DevExpress().TextBox(settings =>
+                            {
+                                settings.Name = "txtDays";
+                                settings.Width = System.Web.UI.WebControls.Unit.Pixel(40);
+                                settings.ClientEnabled = false;
+                                settings.Text = "0";
+                            }).GetHtml()
+                                        </td>
+                                        <td>
+                                            Days
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- new section add Susanta 21-06-21-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="border: 1px dashed #ddd; margin: 10px 15px; padding: 5px 8px;">
+                            <div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="" id="chkFixed" onclick="chkFixed_click()">Fixed</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div style="border: 1px solid #efeeee; padding: 0px 15px; padding-bottom: 5px;">
+                                        <table class="tblInRow">
+                                            <tr>
+                                                <td>Number</td>
+                                                @*<td><input type="number" placeholder="0.0" id="txtNumber" /></td>*@
+                                                <td>
+                                                    @Html.DevExpress().TextBox(settings =>
+                                                {
+                                                    settings.Name = "txtNumber";
+                                                    settings.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+                                                    settings.Properties.MaskSettings.Mask = "<0..999999999999999999>.<0..99>";
+                                                    settings.ClientEnabled = false;
+                                                }).GetHtml()
+
+                                                </td>
+
+                                                <td colspan="2">
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" id="ChkProrataBasis" disabled="disabled">Prorata Basis</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Credited</td>
+                                                <td>
+                                                    <select class="form-control" id="dtCredited" disabled="disabled">
+                                                        <option value="0">Select</option>
+                                                        <option value="At the Begining Of Leave Period">At the Begining Of Leave Period</option>
+                                                        <option value="Every Month">Every Month</option>
+                                                        <option value="Every Quater">Every Quater</option>
+                                                        <option value="Every Six Months">Every Six Months</option>
+                                                    </select>
+                                                </td>
+                                                @*<td>Number</td>
+                                                    <td>@Html.DropDownList("ddlNumber", new SelectList(Model._NumberBind, "Value", "Text"), new { style = "width: 100%;", Id = "ddlNumber" })</td>*@
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" id="chkNotCrWeekoffDays" disabled="disabled">Do not Credit on Week off Days </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" id="chkNotCrPublicHolidays" disabled="disabled">Do not Credit on Public Holidays</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="border: 1px solid #efeeee; padding: 0px 15px;padding-bottom:5px;margin-bottom:10px">
+                                        <table class="tblInRow">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" id="chkEntitled" onclick="chkEntitled_click()">Entitled</label>
+                                                    </div>
+                                                </td>
+                                                <td colspan="2">
+                                                    <select class="form-control" id="ddlEntitled" disabled="disabled">
+                                                        <option value="0">Select</option>
+                                                        <option value="On Appointment">On Appointment</option>
+                                                        <option value="On Confirmation">On Confirmation</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" id="chkEligeableAvail" onclick="chkEligeableAvail_click()">Eligeable to avail</label>
+                                                    </div>
+                                                </td>
+                                                <td colspan="2">
+                                                    <select class="form-control" id="ddlEligeableAvail" disabled="disabled">
+                                                        <option value="0">Select</option>
+                                                        <option value="On Appointment">On Appointment</option>
+                                                        <option value="On Confirmation">On Confirmation</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" id="chkApplyFor" onclick="chkApplyFor_click()">Apply For</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Min</td>
+                                                @*<td><input type="text" placeholder="0.0" id="txtApplyForMin" /></td>*@
+                                                <td>
+                                                    @Html.DevExpress().TextBox(settings =>
+                                                {
+                                                    settings.Name = "txtApplyForMin";
+                                                    settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                                    settings.Properties.MaskSettings.Mask = "<0..999999999999999999>.<0..99>";
+                                                    settings.ClientEnabled = false;
+                                                }).GetHtml()
+
+                                                </td>
+
+                                                <td>Max</td>
+                                                @*<td><input type="text" placeholder="0.0" id="txtApplyForMax" /></td>*@
+                                                <td>
+                                                    @Html.DevExpress().TextBox(settings =>
+                                                {
+                                                    settings.Name = "txtApplyForMax";
+                                                    settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                                    settings.Properties.MaskSettings.Mask = "<0..999999999999999999>.<0..99>";
+                                                    settings.ClientEnabled = false;
+                                                }).GetHtml()
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="border: 1px dashed #ddd; margin: 10px 15px; padding: 5px 8px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="tblInRow">
+                                        <tr>
+                                            <td style="width: 125px; ">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" id="chkFixdCF" disabled="disabled" onclick="chkFixdCF_click()">Carry Forward</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="ddlCarryUpto" disabled="disabled">
+                                                    <option value="0">Select</option>
+                                                    <option value="Next Period">Next Period</option>
+                                                    <option value="Next Leave Period">Next Leave Period</option>
+                                                    <option value="Upto Separation">Upto Separation</option>
+                                                </select>
+                                            </td>
+                                            <td style="width: 86px;">Maximum</td>
+                                            <td style="width: 125px; ">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" id="chkMaximumBal" disabled="disabled" onclick="chkMaximumBal_click()">Balance</label>
+                                                </div>
+                                            </td>
+                                            @*<td><input type="text" placeholder="0.0" id="txtMaximumNumber" /></td>*@
+                                            <td>
+                                                @Html.DevExpress().TextBox(settings =>
+                                                {
+                                                    settings.Name = "txtMaximumNumber";
+                                                    settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                                    settings.Properties.MaskSettings.Mask = "<0..999999999999999999>.<0..99>";
+                                                    settings.ClientEnabled = false;
+                                                }).GetHtml()
+
+                                            </td>
+                                            <td colspan="2">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" id="chkAllowLeaveZeroBalance" >Allow Leave in Case of Zero Balance</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" style="background: #eee; padding: 3px 5px;">Upto</td>
+                                        </tr>
+                                        <tr>
+                                            <td style=" padding-top: 3px;">
+                                            @*<input type="text" placeholder="0" id="txtUptoDays" />*@
+                                            @Html.DevExpress().TextBox(settings =>
+                                                {
+                                                    settings.Name = "txtUptoDays";
+                                                    settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                                    settings.Properties.MaskSettings.Mask = "<0..999999999999999999>.<0..99>";
+                                                    settings.ClientEnabled = false;
+                                                }).GetHtml()
+                                            </td>
+                                            <td>Days</td>
+                                            @*<td><input type="text" placeholder="0" id="txtUptoMonths" /></td>*@
+                                            <td>
+                                                @Html.DevExpress().TextBox(settings =>
+                                                {
+                                                    settings.Name = "txtUptoMonths";
+                                                    settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                                    settings.Properties.MaskSettings.Mask = "<0..999999999999999999>.<0..99>";
+                                                    settings.ClientEnabled = false;
+                                                }).GetHtml()
+
+                                            </td>
+                                            <td>Months</td>
+                                            @*<td><input type="text" placeholder="0" id="txtUptoYears" /></td>*@
+                                            <td>
+                                                @Html.DevExpress().TextBox(settings =>
+                                                {
+                                                    settings.Name = "txtUptoYears";
+                                                    settings.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+                                                    settings.Properties.MaskSettings.Mask = "<0..9999>";
+                                                    settings.ClientEnabled = false;
+                                                }).GetHtml()
+
+                                            </td>
+                                            <td>Years</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="border: 1px dashed #ddd; margin: 10px 15px; padding: 5px 8px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="tblInRow">
+                                        <tr>
+                                            <td>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" id="FixedEncashable">Encashable</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="ddlEncashableAt">
+                                                    <option value="0">Select</option>
+                                                    <option value="In the Same Period">In the Same Period</option>
+                                                    <option value="In the Same Payroll Period">In the Same Payroll Period</option>
+                                                    <option value="At Separation">At Separation</option>
+                                                </select>
+                                            </td>
+
+                                            <td>
+                                                <select class="form-control" id="ddlEncashableBalance">
+                                                    <option value="0">Select</option>
+                                                    <option value="Balance">Balance</option>
+                                                    <option value="Balance After Carry Forward">Balance After Carry Forward</option>
+
+                                                </select>
+                                            </td>
+                                            @*<td>Payhead</td>
+                                                <td>@Html.DropDownList("ddlPayhead", new SelectList(Model._PayHeadBind, "Value", "Text"), new { style = "width: 100%;", Id = "ddlPayhead" })</td>*@
+                                            <td>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" id="ConsiderBeforeCF">Consider Before Carry Forward</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" id="ConjuncAllowedOtherLeaves">Conjunction allowed with other Leaves</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" id="chkAdjustableOtherLeaves">Adjustable with Other Leaves</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--End of new section add Susanta 21-06-21-->
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-2" style="padding-top: 26px;" id="buttonDIV">
+        <label></label>
+        <button type="submit" class="btn btn-primary" onclick="SaveLeaveDefination()">Save</button>
+    </div>
+</div>
+
+<div class="GridViewArea">
+    @*Html.RenderAction("PartialLeaveDefinationGrid", "LeaveStructure", new { LeaveStructureId = Model.StructureID });*@
+    @{
+
+        Html.RenderAction("PartialLeaveDefinationGrid", "LeaveStructure");
+    }
+</div>

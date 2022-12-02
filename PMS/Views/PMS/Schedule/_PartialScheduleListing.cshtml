@@ -1,0 +1,249 @@
+﻿@if (Model != null)
+{
+    @Html.DevExpress().GridView(
+   settings =>
+   {
+       // settings = null;
+       settings.Name = "gridPMSWBS";
+       settings.CallbackRouteValues = new { Controller = "Schedule", Action = "WBSList" };
+       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+       settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+       settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+       settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+       //settings.SettingsSearchPanel.Visible = true;
+       settings.Settings.ShowFilterRow = true;
+       settings.Settings.ShowGroupPanel = true;
+       settings.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+       //settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+       settings.SettingsSearchPanel.Visible = true;
+       settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+       settings.Styles.Row.Cursor = "pointer";
+       settings.Settings.ShowFooter = true;
+       settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+       settings.KeyFieldName = "WBS_ID";
+
+       settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+       settings.SettingsPager.PageSizeItemSettings.Visible = true;
+       settings.SettingsPager.PageSize = 10;
+       settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+       settings.Settings.ShowFilterRowMenu = true;
+
+				
+		
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "ID";
+           x.FieldName = "WBS_ID";
+           x.Visible = false;
+           x.ShowInCustomizationForm = false;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Code";
+           x.FieldName = "WBS_Code";
+           //x.Visible = false;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+           x.ShowInCustomizationForm = false;
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Name";
+           x.FieldName = "WBS_Name";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+       });
+           settings.Columns.Add(x =>
+       {
+           x.Caption = "Branch";
+           x.FieldName = "branch_description";
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+       });   
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Start Date";
+           x.FieldName = "WBS_StartDate";
+           x.ColumnType = MVCxGridViewColumnType.DateEdit;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+           x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+           
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "End Time";
+           x.FieldName = "WBS_EndTime";
+           x.ColumnType = MVCxGridViewColumnType.DateEdit;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+           x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+       });
+
+       // Rev Sayantani
+     
+              settings.Columns.Add(x =>
+       {
+           x.Caption = "Work Unit";
+           x.FieldName = "WBS_Workunit";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+       });
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Duration";
+           x.FieldName = "WBS_Duration";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+       });
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Effort";
+           x.FieldName = "Effort";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+       });
+       
+       
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Description";
+           x.FieldName = "WBS_Description";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+       });
+
+       // End of Rev Sayantani
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Project Name";
+           x.FieldName = "Proj_Name";
+           x.ColumnType =MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+       });
+       
+              settings.Columns.Add(x =>
+       {
+           x.Caption = "Hierarchy";
+           x.FieldName = "H_Name";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+       });
+       
+                     settings.Columns.Add(x =>
+       {
+           x.Caption = "Created By";
+           x.FieldName = "CREATED";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+       });
+       
+                        settings.Columns.Add(x =>
+       {
+           x.Caption = "Last Updated On";
+           x.FieldName = "LAST_MODIFIED";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+           x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+       });   
+       
+                              settings.Columns.Add(x =>
+       {
+           x.Caption = "Updated By";
+           x.FieldName = "MODIFIED";
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+       });     
+
+       settings.Columns.Add(x =>
+       {
+           x.Caption = "Action";
+           x.Width = 0;
+           x.ColumnType = MVCxGridViewColumnType.TextBox;
+           x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       
+       
+       
+       
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+       
+       
+       
+       
+       
+       
+       
+      
+
+       settings.ClientSideEvents.RowClick = "gridcrmLeadclick";
+       //This is Used For Add or hide column from column chooser
+       settings.SettingsBehavior.EnableCustomizationWindow = true;
+       settings.SettingsBehavior.EnableRowHotTrack = true;
+       settings.SettingsCookies.Enabled = false;
+       settings.SettingsCookies.StorePaging = true;
+       settings.SettingsCookies.StoreColumnsVisiblePosition = true;
+       //This is Used For Add or hide column from column chooser
+
+       settings.HtmlDataCellPrepared += (s, e) =>
+           {
+               if (e.DataColumn.Caption == "Action")
+               {
+                   MVCxGridView grid = (MVCxGridView)s;
+                   Int64 ID = Convert.ToInt64(grid.GetRowValues(e.VisibleIndex, new string[] { "WBS_ID" }));
+
+                   var buttonHtml = "<div class='floatedBtnArea'>";
+                   buttonHtml += string.Format("<a onclick=\"EditClick('" + ID + "');\" title=\"\" class='ed '><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+                   buttonHtml += string.Format("<a onclick=\"DeleteClick('" + ID + "');\" title=\"\" class='ed '><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+                   buttonHtml += string.Format("<a onclick=\"getGrantt('" + ID + "');\" title=\"\" class='ed '><span class='ico colorSix'><i class='fa fa-bar-chart' aria-hidden='true'></i></span><span class='hidden-xs'>Chart</span></a>");
+                   buttonHtml += "</div>";
+                   e.Cell.Text = buttonHtml;
+               }
+
+           };
+
+
+
+
+
+
+   }).Bind(Model).GetHtml()
+
+}
+    @*<style>
+            #gridsalesman_DXHeadersRow0 > td {
+                width: 200px !important;
+            }
+        </style>*@

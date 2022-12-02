@@ -1,0 +1,91 @@
+﻿@*@model IOrderedQueryable*@
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvAttachment";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "EmployeeAttachment", Action = "PartialAttachmentGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+    settings.KeyFieldName = "ID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EmployeeUniqueCode";
+        column.Caption = "Employee Code";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Employee_Name";
+        column.Caption = "Employee Name";
+    });
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayStructureName";
+        column.Caption = "Pay Structure";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Pay_ApplicationFrom";
+        column.Caption = "Applicable From";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Pay_ApplicationTo";
+        column.Caption = "Applicable To";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeaveStructureName";
+        column.Caption = "Leave Structure";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Leave_ApplicationFrom";
+        column.Caption = "Applicable From";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Leave_ApplicationTo";
+        column.Caption = "Applicable To";
+    });
+
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            ViewContext.Writer.Write(
+               "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "ID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/info.png\" /></a>"
+           );
+            ViewContext.Writer.Write(
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "ID") + "')\" class=\"pad\" title=\"Delete\"><img src=\"../../../assests/images/Delete.png\" /></a>"
+            );
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.False;
+        c.Width = 70;
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });    
+}).Bind(Model).GetHtml()
+
+@*}).BindToEF(string.Empty, string.Empty, (s, e) =>
+    {
+
+        e.KeyExpression = "StructureID";
+        e.QueryableSource = (IOrderedQueryable)@Model;
+    }).GetHtml()*@

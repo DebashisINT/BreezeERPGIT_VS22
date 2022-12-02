@@ -1,0 +1,222 @@
+﻿@model Payroll.Models.PayStructureEngine
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .panel.with-nav-tabs .panel-heading {
+        padding: 5px 5px 0 5px;
+    }
+
+    .panel.with-nav-tabs .nav-tabs {
+        border-bottom: none;
+    }
+
+    .panel.with-nav-tabs .nav-justified {
+        margin-bottom: -1px;
+    }
+    /********************************************************************/
+
+    /*** PANEL PRIMARY ***/
+    .with-nav-tabs.panel-primary .nav-tabs > li > a,
+    .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+    .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+        color: #fff;
+    }
+
+        .with-nav-tabs.panel-primary .nav-tabs > .open > a,
+        .with-nav-tabs.panel-primary .nav-tabs > .open > a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs > .open > a:focus,
+        .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+            color: #fff;
+            background-color: #3071a9;
+            border-color: transparent;
+        }
+
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a,
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
+        color: #428bca;
+        background-color: #fff;
+        border-color: #428bca;
+        border-bottom-color: transparent;
+    }
+
+    .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu {
+        background-color: #428bca;
+        border-color: #3071a9;
+    }
+
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a {
+            color: #fff;
+        }
+
+            .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
+            .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
+                background-color: #3071a9;
+            }
+
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a,
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
+            background-color: #4a9fe9;
+        }
+    /********************************************************************/
+</style>
+<style>
+    .tabTotal {
+        border: none;
+    }
+
+        .tabTotal .tabHead {
+            background: transparent !important;
+        }
+
+        .tabTotal .panel-body {
+            border: 1px solid #ccc;
+            border-top: 3px solid #3D5294;
+        }
+
+        .tabTotal .tabHead > ul > li > a {
+            height: 27px;
+            padding: 5px 10px 4px 10px;
+            border-radius: 0;
+            color: #333 !important;
+        }
+
+        .tabTotal .tabHead > ul > li > a {
+            border: 1px solid #d8d8d8;
+            border-bottom: 1px solid #002D96 !important;
+            background-color: #f9f9f9 !important;
+        }
+
+            .tabTotal .tabHead > ul > li > a:hover {
+                border: 1px solid #d8d8d8 !important;
+                border-bottom: 1px solid #002D96 !important;
+                background-color: #f1efef !important;
+            }
+
+        .tabTotal .tabHead > ul > li.active > a,
+        .tabTotal .tabHead > ul > li.active > a:hover {
+            border-top: 1px solid #002D96 !important;
+            border-right: 1px solid #002D96 !important;
+            border-bottom: 1px none #002D96 !important;
+            border-left: 1px solid #002D96 !important;
+            color: #fff !important;
+            background-color: #45599B !important;
+            -moz-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            -webkit-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+        }
+
+    .dynamicPopupTbl {
+        border: 1px solid #ccc;
+    }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            overflow: hidden;
+            border-bottom: 1px solid #d9d9d9;
+            border-right: 1px solid #d9d9d9;
+            /* border-top-width: 0; */
+            border-left-width: 0;
+            padding: 4px 6px 5px;
+            font: 12px Tahoma, Geneva, sans-serif;
+        }
+
+        .dynamicPopupTbl > tbody > tr > th {
+            font: 12px Tahoma, Geneva, sans-serif;
+            padding: 7px 6px 7px 6px;
+            border-right: 1px solid #2a2067;
+            border-top: 1px solid #2a2067;
+            border-bottom: 1px solid #2a2067;
+        }
+
+            .dynamicPopupTbl > tbody > tr > th:first-child {
+                border-left: 1px solid #2a2067;
+            }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            cursor: pointer;
+        }
+
+            .dynamicPopupTbl > tbody > tr > td input {
+                border: none !important;
+                cursor: pointer;
+                background: transparent !important;
+                height: 14px;
+                margin-bottom: 0;
+                font: 12px Tahoma, Geneva, sans-serif;
+            }
+
+    #DetailsTable {
+        padding: 0 15px;
+    }
+
+    .HeaderStyle.newcol {
+        background-color: #45599b;
+    }
+
+    .dynamicPopupTbl > tbody > tr > th {
+        border-right: 1px solid #4f42a0;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('a[href="#tab1"]').parent('li').addClass('active');
+        $('#tab1').addClass(' in active');
+
+        var StructureID = '@Session["StructureID"]';
+        if (StructureID == "") {
+            $('a[href="#tab2"]').attr('href', '#');
+        }
+        else {
+            $('a[href="#"]').attr('href', '#tab2');
+
+            document.getElementById("txtStructureCode").readOnly = true;
+            document.getElementById("txtStructureName").readOnly = true;
+            document.getElementById("buttonDIV").style.display = "none";
+        }
+
+        $("#txtStructureName").focus();
+    });
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">@Model.StructureHeaderName</h3>
+        <div id="divcross" class="crossBtn"><a href="/payrollStructure/Dashboard"><i class="fa fa-times"></i></a></div>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-primary tabTotal">
+                <div class="panel-heading tabHead">
+                    <ul class="nav nav-tabs">
+                        <li><a href="#tab1" data-toggle="tab">Pay Structure</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Pay Heads</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="tab1">
+                            @{
+                                Html.RenderAction("PayStructure", "payrollStructure");
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="tab2">
+                            @{
+                                Html.RenderAction("PayHeads", "payrollStructure");
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

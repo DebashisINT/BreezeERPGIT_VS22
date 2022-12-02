@@ -1,0 +1,377 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model PMS.Models.ViewModel.QuotationViewModel
+
+@{
+    ViewBag.Title = "Project Quotation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+
+<script src="~/Views/Quotation/quotation.js?v1.0.1"></script>
+<link href="~/Views/Quotation/quotation.css" rel="stylesheet" />
+
+
+@Html.Hidden("hdnProductID")
+
+<input type="hidden" value="@Url.Action("QuotationList", "Quotation")" id="hdnBOMListPage" />
+<input type="hidden" value="@Model.DetailsID" id="hdnDetailsID" />
+
+<input type="hidden" value="@Model.BOMType" id="hdnBOMTYPE" />
+<input type="hidden" value="@Model.WarehouseID" id="hdnProductWarehouseID" />
+<input type="hidden" value="@Model.RevisionNo" id="hdnRevisionNo" />
+
+<input type="hidden" value="@Model.BOM_SCHEMAID" id="hdnBOM_SCHEMAID" />
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Project Quotation</label>
+        </h3>
+        
+    </div>
+    
+    <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("QuotationList", "Quotation")"><i class="fa fa-times"></i></a></div>
+</div>
+
+<input type="hidden" value="@Model.FinishedItem" id="hdnFinishedItem" />
+<input type="hidden" value="0" id="hdnSchemaId" />
+<div class="">
+    <div class="boxBorder">
+        <div class="styledBox">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Select BOM Type <span style="color:red">*</span></label>
+                    <select id="slcbomtype" class="form-control" onchange="PopulateNumberingSchemeData();">
+                       
+                        <option value="Production">Production</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Assembly">Assembly</option>
+                        @*<option value="Bill of Quantity(BOQ)">Bill of Quantity(BOQ)</option>*@
+                    </select>
+
+                </div>
+                <div class="col-md-2">
+                    <label>Numbering Scheme <span style="color:red">*</span></label>
+                    <div class="relative">
+                        <select id="ddlSchema" class="form-control" onchange="Scheme_ValueChange()"></select>
+                        <span id="EddlSchema" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+
+                <div class=" col-sm-2">
+                    <label>BOM No. <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.TextBoxFor(m => m.BOMNo, new { @class = "form-control", @disabled = "disabled" })
+                        <span id="EBOMNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+
+                </div>
+                <div class=" col-sm-2">
+                    <label>BOM Date <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "BOMDate_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                         settings.Date = Convert.ToDateTime(@Model.BOMDate);
+
+                                     }
+                            ).GetHtml()
+                        <span id="EBOMDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label>Revision No. <span style="color:red" id="redREV">*</span></label>
+                    <div class="relative">
+                        @Html.TextBoxFor(m => m.RevisionNo, new { @class = "form-control" })
+                        <span id="ERevisionNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+
+                <div class=" col-sm-2">
+                    <label>Revision Date <span style="color:red" id="redREVDate">*</span></label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                  settings =>
+                  {
+                      settings.Name = "RevisionDate_dt";
+                      settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                      settings.Properties.EditFormatString = "dd-MM-yyyy";
+                      settings.Width = Unit.Percentage(100);
+                      settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                      settings.Date = Convert.ToDateTime(@Model.RevisionDate);
+                      settings.Properties.MinDate = Convert.ToDateTime(@Model.BOMDate);
+
+                  }
+         ).GetHtml()
+                        <span id="ERevisionDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+
+
+
+                <div class=" col-sm-2">
+                    <label class="mtop10">Select Finished Item <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.DevExpress().ButtonEdit(
+         settings =>
+         {
+             settings.Name = "btnFinishedItem";
+             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+             settings.Text = Model.FinishedItemName;
+             settings.ReadOnly = true;
+             settings.Properties.Buttons.Add("...");
+             settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnProductList_Click(s,e);}";
+             settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayStructure_KeyDown(s,e);}";
+
+         }).GetHtml()
+                        <span id="EbtnFinishedItem" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+
+                    @*@Html.TextBoxFor(m => m.FinishedItem, new { @class = "form-control" })*@
+                </div>
+                <div class="col-sm-2">
+                    <label class="mtop10">Finished Qty <span style="color:red">*</span></label>
+
+                    <div class="relative">
+
+                        <table style="width:100%" class="finishedQttable">
+                            <tr>
+                                <td>@Html.TextBoxFor(m => m.FinishedQty, new { @class = "form-control decimalCheck", @onchange = "ChkDataDigitCount(this)", @PlaceHolder = "0.0000" })</td>
+                                <td>@Html.TextBoxFor(m => m.FinishedUom, new { @class = "form-control", @disabled = "disabled" })</td>
+                            </tr>
+                        </table>
+                        <span id="EFinishedQty" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label class="mtop10">Unit <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.DropDownListFor(x => x.Unit, new SelectList(Model.UnitList, "BranchID", "BankBranchName"), new { @id = "ddlBankBranch", @class = "form-control", @onchange = "PopulateWareHouseData();", @disabled = "disabled" })
+                        <span id="EddlBankBranch" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                    @*@Html.TextBoxFor(m => m.Unit, new { @class = "form-control" })*@
+                </div>
+                <div class=" col-sm-2">
+                    <label class="mtop10">Select Warehouse <span style="color:red">*</span></label>
+                    <div class="relative">
+                        <select id="ddlWarehouse" class="form-control"></select>
+                        <span id="EddlWarehouse" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                    @*@Html.TextBoxFor(m => m.Warehouse, new { @class = "form-control" })*@
+                </div>
+
+
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div id="refreshgrid">
+                    @{
+                        Html.RenderAction("GetBOMProductEntryList", "Quotation");
+                    }
+                </div>
+                @*@{
+
+                        Html.Partial("~/Views/BOM/BOMEntry/_BOMProductEntryGrid.cshtml");
+                        //Html.RenderPartial("_BOMProductEntryGrid");
+                    }*@
+                <div class="clearfix footrGrider">
+
+                    <div class="ttAMt pull-left">
+                        <table>
+                            <tr>
+                                <td><label>Total Amount</label></td>
+                                <td><input type="text" class="form-control text-right" id="txtGridProductEntryTotalAmount" style="width: 132px;" placeholder="0.00" disabled /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        @* Rev 1.1 New grid like POS module *@
+        <div class="row relative" id="refreshgrid2">
+            <div class="col-md-12 relative">
+                <h4>Resources <i class="fa fa-reply backwords"></i>
+                    <span id="closeResource" class="pull-right"><i class="fa fa-close"></i></span>
+                    <span id="slideResource" class="pull-right"><i class="fa fa-chevron-up"></i><i class="fa fa-chevron-down"></i></span>
+                </h4>
+                
+            </div>
+            
+            <div class="col-md-12 mTop10">
+                <div id="slideDiv">
+                    <div>
+                        @{
+                            Html.RenderAction("GetBOMResources", "Quotation");
+                        }
+                    </div>
+                    <div class="clearfix footrGrider">
+
+                        <div class="ttAMt tw">
+                            <table>
+                                <tr>
+                                    <td><label>Total Amount</label></td>
+                                    <td><input type="text" class="form-control text-right" id="txtGridResourcesTotalAmount" style=" width: 132px;" placeholder="0.00" disabled /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            <div class="clearfix">
+                <div class="inline-block addResourceBtn mRight5" id="showResources"><div class="addEdcircleBtn"><i class="fa fa-plus"></i></div><span>Add Resources</span></div>
+                <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveandNew" onclick="BOMEntrySave('New');"><div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div><span>Save and New</span></div>
+                <div class="inline-block addResourceBtn themeColor " onclick="BOMEntrySave('Exit');"><div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div><span>Save and Exit</span></div>
+                <div class="inline-block pull-right">
+
+                    <div class="inline-block mTop5">
+                        <label class="stLbl ">Actual Additional Cost</label>
+                        <div>
+                            <input type="text" value="@Model.ActualAdditionalCost" placeholder="0.00" id="txtActualAdditionalCost" maxlength="12" class="form-control decimalCheck" onchange="ChkMoneyDigitCount(this);" onkeypress="return validateFloatKeyPress(this,event);" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+            </div>
+        </div>
+      
+    </div>
+</div>
+<!-- Product List -->
+<div class="modal fade" id="ProductlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetFocusQty();">&times;</button>
+                <h4 class="modal-title">Select Product</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="ProductListkeydown(event)" id="txtProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                <div id="ProductTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tbody>
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Inventory</th>
+                                <th>HSN/SAC</th>
+                                <th>Class</th>
+                                <th>Brand</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusQty();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product List-->
+<!-- Grid Product List -->
+<div class="modal fade" id="GridProductlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Product</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="GridProductListkeydown(event)" id="txtGridProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                <div id="GridProductTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Product Code</th>
+                            <th>Product Name</th>
+                            <th>Inventory</th>
+                            <th>HSN/SAC</th>
+                            <th>Class</th>
+                            <th>Brand</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusDesc()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Product List-->
+<!-- Grid Warehouse List -->
+<div class="modal fade pmsModal w30" id="GridWarehouselistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetWarehouseAfterProduct()">&times;</button>
+                <h4 class="modal-title">Select Warehouse</h4>
+            </div>
+            <div class="modal-body">
+                <div id="slcWarehouse">
+                    <select id="ddlWarehouselist" class="form-control"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" id="setWarehousegrid"  onclick="SetWarehouseInGrid()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Product List-->
+<!-- Grid BOM List -->
+<div class="modal fade" id="GridBOMlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select BOM</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="GridBomListkeydown(event)" id="txtBOMName" autofocus width="100%" placeholder="Search By BOM Name" />
+                <div id="GridBOMTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>BOM No.</th>
+                            <th>BOM Date</th>
+                            <th>Revision No.</th>
+                            <th>Revision Date</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" data-dismiss="modal" onclick="SetBOMFocusGrid()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid BOM List-->

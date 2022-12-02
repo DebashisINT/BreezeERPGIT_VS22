@@ -1,0 +1,37 @@
+﻿@model DevExpress.XtraReports.UI.XtraReport
+@using DevExpress.DataAccess.ConnectionParameters
+@using DevExpress.DataAccess.Sql
+
+
+<script src="https://github.com/DevExpress/bower-devextreme/blob/master/js/dx.all.js" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.6.0/globalize.min.js" integrity="sha512-xmNma3vthw8da3LJNEyrfGcTV/WQEItryAdTPHNVZgOOcV7oE7usmNGcjnkpOPMO0ODYgWWQVhkZMSO6wd53JQ==" crossorigin="anonymous"></script>
+
+</script>
+@Html.DevExpress().ReportDesigner(settings =>
+{
+    settings.Name = "ReportDesigner";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100); 
+
+    // Create a SQL data source with specified connection parameters.
+
+    // DevExpress.DataAccess.Sql.SqlDataSource ds = new DevExpress.DataAccess.Sql.SqlDataSource(Session["ErpConnection"].ToString());
+    CustomStringConnectionParameters connectionParameters = new CustomStringConnectionParameters(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+    DevExpress.DataAccess.Sql.SqlDataSource result = new DevExpress.DataAccess.Sql.SqlDataSource(connectionParameters);
+    //
+    //result.Connection.ProviderKey=
+    // Create a SelectQuery to access all columns of the Products data table.
+    result.Queries.Add(new CustomSqlQuery("Header","EXEC PRC_PAYROLL_PAYSLIP"));
+    result.RebuildResultSchema();
+
+    //// Create a JSON data source.
+    //JsonDataSource jsonDataSource = new JsonDataSource();
+
+    //// Specify the data source location.
+    //jsonDataSource.JsonSource = new UriJsonSource(new Uri("https://raw.githubusercontent.com/DevExpress-Examples/DataSources/master/JSON/customers.json"));
+
+    // Retrieve data from the JSON data source to the Report Designer's Field List.
+    // jsonDataSource.Fill();
+
+    // Add the created data sources to the list of default data sources.
+    settings.DataSources.Add("Northwind", result);
+}).Bind(Model).GetHtml()

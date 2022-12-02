@@ -1,0 +1,83 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "GVPartialLoan";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "LoanAdvance", Action = "PartialLoanGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.KeyFieldName = "LoanID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TYPE";
+        column.Caption = "Type";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CODE";
+        column.Caption = "Code";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "NAME";
+        column.Caption = "Name";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Employee_Name";
+        column.Caption = "Employee";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Amount";
+        column.Caption = "Disbursed Amount";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Due_Amount";
+        column.Caption = "Outstanding";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    
+
+    settings.Columns.Add(c =>
+       {
+           c.SetDataItemTemplateContent(tc =>
+           {
+               ViewContext.Writer.Write(
+                   "<div class='floatedBtnArea'><a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "LoanID") + "')\" class=\"\" title=\"Edit\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>" +
+                    "&nbsp;" +
+                   "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "LoanID") + "')\" class=\"\" title=\"Delete\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>" +
+                "&nbsp;" +
+               "<a href=\"javascript:void(0);\" onclick=\"OnClickCopy('" + DataBinder.Eval(tc.DataItem, "LoanID") + "')\" class=\"\" title=\"Copy\"><span class='ico editColor'><i class='fa fa-files-o' aria-hidden='true'></i></span><span class='hidden-xs'>Copy</span></a></div>"
+                   );
+           });
+           c.Settings.AllowDragDrop = DefaultBoolean.False;
+           c.Settings.AllowSort = DefaultBoolean.False;
+           c.Width = 1;
+           c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+       });
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+}).Bind(Model).GetHtml()

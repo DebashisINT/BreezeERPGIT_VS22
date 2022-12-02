@@ -1,0 +1,23 @@
+﻿
+    .boxedLayoutCard {
+        border: 1px solid #ddd;
+        padding: 9px;
+        border-radius: 2px;
+        background: #f9f9f9;
+    }
+
+    .ms-options-wrap > button {
+        padding: 2px 3px;
+        margin: 0;
+    }
+    .floatedBtnArea.insideGrid {
+        top:6px;
+    }
+    .dxgvLoadingPanel_PlasticBlue {
+        display:none !important;
+    }
+    .ms-options-wrap > button {
+        border-radius: 4px;
+        min-height: 28px;
+        margin-top: 0;
+    }

@@ -1,0 +1,125 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaging";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "LeaveApplication", Action = "GetListingOfLeaveRegisterData" };
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+
+    settings.KeyFieldName = "DOCID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EmployeeCode";
+        column.Caption = "Employee ID";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EMPLOYEENAME";
+        column.Caption = "Employee Name";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LEAVENAME";
+        column.Caption = "Leave Type";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LEV_DATE_FROM";
+        column.Caption = "Leave Start Date";
+          
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+       
+
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LEV_DATE_TO";
+        column.Caption = "Leave End Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+       column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy HH:mm:ss";
+        (column.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LEAVEDAYS";
+        column.Caption = "Leave Days";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LEAVEAPPLIEDON";
+        column.Caption = "Leave Applied on";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "STATUS";
+        column.Caption = "Status";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ENTEREDBY";
+        column.Caption = "Entered By";
+    });
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "CreatedBy";
+    //    column.Caption = "Approved By";
+    //});
+
+
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+
+             string EnqRights = "<div class='floatedBtnArea'>";
+           if (ViewBag.CanView)
+            {
+                EnqRights = EnqRights + "<a href=\"javascript:void(0);\" onclick=\"OnClickViewForm('" + DataBinder.Eval(tc.DataItem, "DOCID") + "')\" class=\"\" title=\"View\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>";
+            }
+            if (ViewBag.CanEdit  && Convert.ToString(DataBinder.Eval(tc.DataItem, "EXPSTATUS")) != "Close")
+            {
+                EnqRights = EnqRights + "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "DOCID") + "')\" class=\"\" title=\"Edit\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>";
+            }
+         if(ViewBag.CanDelete && Convert.ToString(DataBinder.Eval(tc.DataItem, "EXPSTATUS")) != "Close")
+            {
+                EnqRights = EnqRights +
+                    "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "DOCID") + "')\" class=\"\" title=\"Delete\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>";
+            }
+            EnqRights = EnqRights + "</div>";
+            ViewContext.Writer.Write(EnqRights);
+
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.False;
+        c.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+        c.Caption = "";
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+}).Bind(Model).GetHtml()

@@ -1,0 +1,70 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvLeaveApplication";
+    settings.KeyFieldName = "PayHeadID";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "LeaveApplication", Action = "PartialLeaveApplyGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.Settings.ShowFilterRow = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FromDate";
+        column.Caption = "From";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ToDate";
+        column.Caption = "To";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Leave";
+        column.Caption = "Leave";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Days";
+        column.Caption = "LeaveDay";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DayPart";
+        column.Caption = "Part Of Day";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    //settings.Columns.Add(c =>
+    //{
+    //    c.SetDataItemTemplateContent(tc =>
+    //    {
+    //        ViewContext.Writer.Write(
+    //            "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "PayHeadID") + "')\" class=\"pad\" title=\"Delete\"><img src=\"../../../assests/images/info.png\" /></a>" +
+    //             "&nbsp;" +
+    //            "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "PayHeadID") + "')\" class=\"pad\" title=\"Delete\"><img src=\"../../../assests/images/Delete.png\" /></a>"
+    //        );
+    //    });
+    //    c.Settings.AllowDragDrop = DefaultBoolean.False;
+    //    c.Settings.AllowSort = DefaultBoolean.False;
+    //    c.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+    //    c.Caption = "Action";
+    //    c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //});
+}).Bind(Model).GetHtml()

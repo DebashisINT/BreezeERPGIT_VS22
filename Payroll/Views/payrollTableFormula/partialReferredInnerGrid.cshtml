@@ -1,0 +1,46 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvReferredInnerGrid" + ViewData["TableBreakup_ID"];
+    settings.SettingsDetail.MasterGridName = "gvreferpaging";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "payrollTableFormula", Action = "partialReferredInnerGrid", TableBreakup_ID = ViewData["TableBreakup_ID"] };
+    settings.KeyFieldName = "TableFormulaCode";
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRow = true;
+
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TableBreakup_ID";
+        column.Caption = "BreakUpId";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = false;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LowValue";
+        column.Caption = "Low Value";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "HighValue";
+        column.Caption = "High Value";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ResultValue";
+        column.Caption = "Value";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+    });
+
+
+}).Bind(Model).GetHtml()
+

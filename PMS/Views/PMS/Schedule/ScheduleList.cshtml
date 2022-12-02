@@ -1,0 +1,344 @@
+﻿@{
+    ViewBag.Title = "Schedule (WBS)";
+}
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>*@
+<script src="~/assests/pluggins/tether.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,500,600,700,800,900&display=swap" rel="stylesheet">
+<link href="~/assests/pluggins/jsgnatt/JSgnattNew.css" rel="stylesheet" />
+<script src="~/assests/pluggins/jsgnatt/JSgnattNew.js"></script>
+
+
+
+<script>
+    let dataurl;
+    let jsonObj;
+    let g;
+    function start(data) {
+        
+        g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'days');
+        //console.log(data);
+       
+            
+            //const newDataurl = data;
+            const vDebug = document.querySelector('#debug:checked') ? true : false;
+            //vDebug = true;
+            const vEditable = document.querySelector('#editable:checked') ? true : false;
+            //const vUseSort = document.querySelector('#sort:checked') ? true : false;
+            //const newtooltiptemplate = document.getElementById('tooltiptemplate').value ? document.getElementById('tooltiptemplate').value : null;
+            //let vColumnOrder;
+            //if (document.querySelector('#vColumnOrder').value) {
+            //    vColumnOrder = document.querySelector('#vColumnOrder').value.split(',')
+            //}
+            const vScrollTo = 'today'; // or new Date() or a Date object with a specific date
+            // SET LANG FROM INPUT
+            g.setOptions({
+                vCaptionType: 'Complete', // Set to Show Caption : None,Caption,Resource,Duration,Complete,
+                vQuarterColWidth: 36,
+                vDateTaskDisplayFormat: 'day dd month yyyy', // Shown in tool tip box
+                vDayMajorDateDisplayFormat: 'mon yyyy - Week ww', // Set format to display dates in the "Major" header of the "Day" view
+                vWeekMinorDateDisplayFormat: 'dd mon', // Set format to display dates in the "Minor" header of the "Week" view
+                vLang: 'en',
+                vUseSingleCell: 1000, // Set the threshold at which we will only use one cell per table row (0 disables).  Helps with rendering performance for large charts.
+                vShowRes: 0,
+                vShowCost: 0,
+                vShowAddEntries: 0,
+                vShowComp: 0,
+                vShowDur: 0,
+                vShowStartDate: 1,
+                vShowEndDate: 1,
+                vShowPlanStartDate: 0,
+                vShowPlanEndDate: 0,
+                vAdditionalHeaders: 0,
+                vTotalHeight: 500,
+                vEventClickRow: console.log,
+                vShowTaskInfoLink: 0, // Show link in tool tip (0/1)
+                vShowEndWeekDate: 1, // Show/Hide the date for the last day of the week in header for daily view (1/0)
+                vShowWeekends: 1, // Show weekends days in the vFormat day
+                vTooltipDelay: 150,
+                vDebug: false,
+                vEditable: false,
+                
+                //vColumnOrder,
+                //vScrollTo,
+                // vUseSort,
+                vFormat: 'day',
+                vFormatArr: ['Day', 'Week', 'Month', 'Quarter'], // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
+            });
+            g.setDayColWidth(70);
+            g.setWeekColWidth(300);
+            g.setMonthColWidth(350);
+            g.setQuarterColWidth(250);
+            g.setRowHeight(50);
+            g.setDateInputFormat("mm/dd/yyyy");
+            g.addLang('en2', { 'format': 'Select', 'comp': 'Complete' });
+            data = JSON.parse(data);
+
+            //g.AddTaskItem(new JSGantt.TaskItem(1, 'Task Objects', '', '', 'ggroupblack', '', 0, 'Shlomy', 40, 1, 0, '', '', '', '', g));
+            //g.AddTaskItem(new JSGantt.TaskItem(121, 'Constructor Proc', '2019-08-20', '2020-03-06', 'gtaskblue', '', 0, 'Brian T.', 60, 0, 1, 1, '', '', '', g));
+            //g.AddTaskItem(new JSGantt.TaskItem(122, 'Task Variables', '2019-08-20', '2020-03-06', 'gtaskred', '', 0, 'Brian', 60, 0, 1, 1, 121, '', '', g));
+            //g.AddTaskItem(new JSGantt.TaskItem(123, 'Task by Minute/Hour', '2019-08-20', '2020-03-06 12:00', 'gtaskyellow', '', 0, 'Ilan', 60, 0, 1, 1, '', '', '', g));
+            //g.AddTaskItem(new JSGantt.TaskItem(124, 'Task Functions', '2019-08-20', '2020-03-06', 'gtaskred', '', 0, 'Anyone', 60, 0, 1, 1, '123', 'This is a caption', null, g));
+
+            //g.AddTaskItem(new JSGantt.TaskItem(data[0].pID, data[0].pName, data[0].pStart, data[0].pEnd, data[0].pClass, '', 0, 'Brian', 0, 1, 0, 1, '', '', 'Some Notes text', g));
+            
+            //for (var i = 0; i < data.length; i++) {
+            //    g.AddTaskItem(new JSGantt.TaskItem(data[0].pID, data[0].pName, data[0].pStart, data[0].pEnd, data[0].pClass, '', 0, data[0].pID, 60, 0, 1, 1, data[0].pDepend, data[0].pCaption, null, g));
+            //}
+
+
+
+
+           // JSGantt.parseJSON(data, g);
+            //JSGantt.parseJSON(data, g).then(function(j){
+            //    jsonObj = j
+            //})
+            //JSGantt.parseJSON(data);
+         
+            JSGantt.addJSONTask(g, data)
+            g.Draw();
+            //JSGantt.criticalPath(jsonObj)
+
+        }
+
+    $(document).ready(function () {
+
+       // start();
+    })
+    
+    
+    // async tooltip for level 3 and below
+    // return new Promise((resolve, reject) => {
+    //     const delay = Math.random() * 3000;
+    //     setTimeout(() => {
+    //         console.log(`Generated dynamic async template for '${task.getName()}'`);
+    //         resolve(`Tooltip content from the promise after ${Math.round(delay)}ms`);
+    //     }, delay);
+    // });
+
+    
+</script>
+<script>
+
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+
+        if (exportid > 0) {
+
+            var url = '@Url.Action("ExportScheduleGridList", "Schedule", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+
+
+        }
+
+    }
+
+
+
+
+
+
+    function EditClick(id) {
+        //alert(id);
+        var url = '@Url.Action("ScheduleView", "Schedule")?id=' + id;
+        window.location.href = url;
+    }
+
+    function DeleteClick(id) {
+            $.ajax({
+            type: "POST",
+            url: "@Url.Action("DeleteSchedule", "Schedule")",
+            data: { id: id },
+            success: function (response) {
+                    jAlert(response, 'Alert');
+                    gridPMSWBS.Refresh();
+            }
+    });
+    }
+
+
+
+    function gridcrmLeadclick(s, e) {
+        $('#gridPMSWBS').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+
+    function getGrantt(id) {
+        $('#gnatt-wrap, #gnatt-wrap-backdrop').show();
+        $.ajax({
+            type: "POST",
+                url: "@Url.Action("getGranttData", "Schedule")",
+                data: { id: id },
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                success: function (response) {
+                    console.log('gnatt', response);
+
+                    start(response);
+                }
+        });
+    }
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        "use strict";
+        $('#gnatt-wrap, #gnatt-wrap-backdrop').hide();
+
+        $('.closeGnatt').click(function () {
+            $(this).parent('#gnatt-wrap').hide();
+            $('#gnatt-wrap-backdrop').hide();
+        });
+    });
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridPMSWBS.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridPMSWBS.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridPMSWBS.SetWidth(cntWidth);
+                console.log(cntWidth)
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridPMSWBS.SetWidth(cntWidth);
+                console.log(cntWidth)
+            }
+
+        });
+    });
+
+</script>
+<style>
+    #gnatt-wrap {
+        padding: 3px 20px 0 20px;
+        display: block;
+        position: fixed;
+        top: 10vh;
+        width: 90%;
+        left: 50%;
+        min-height:80vh;
+        transform: translateX(-50%);
+        z-index: 99;
+        background: #fff;
+        border-radius: 4px;
+    }
+
+    #gnatt-wrap-backdrop {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        background: rgba(0,0,0,0.7);
+        z-index: 97;
+    }
+
+    .closeGnatt {
+        position: absolute;
+        right: 19px;
+        top: 15px;
+        width: 25px;
+        height: 25px;
+        line-height: 26px;
+        background: #f34a4a;
+        text-align: center;
+        border-radius: 50%;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        .closeGnatt:hover {
+            opacity: 0.6;
+        }
+    .gnattTitle {
+        font-size:18px;
+        margin-top:15px;
+    } #gnatt-wrap .gantt {
+        margin-top: 5px;
+        border: 5px solid #ddd;
+    }
+    .floatedBtnArea {
+        right:8px !important;
+    }
+    .gTaskInfo > .gTILine.gTId {
+        display:none;
+    }
+</style>
+
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Schedule (WBS)</label>
+        </h3>
+
+    </div>
+
+    @*<div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOMEntryList", "BOMEntry")"><i class="fa fa-times"></i></a></div>*@
+</div>
+<div class=" form_main">
+    <div class="clearfix">
+        <button type="button" id="btnAddNew" class="btn btn-success btn-radius" onclick="location.href='@Url.Action("ScheduleView", "Schedule")'"><span class="btn-icon"><i class="fa fa-plus"></i></span> Add Schedule</button>
+        <select id="exportlist" class="btn btn-primary" onchange="cmbExport_SelectedIndexChanged()">
+            <option value="0">Export to</option>
+            <option value="1">PDF</option>
+            <option value="2">XLSX</option>
+            <option value="3">RTF</option>
+            <option value="4">CSV</option>
+        </select>
+    
+    
+    </div>
+
+
+    <div class="relative" >
+        @{
+            Html.RenderAction("WBSList", "Schedule");
+        }
+
+
+        </div>
+    <div class="clearfix" id="gnatt-wrap">
+        <div class="closeGnatt"><i class="fa fa-close"></i></div>
+        <div class="clearfix">
+            <h5 class="gnattTitle">Chart Data</h5>
+            
+        </div>
+        <div class="gantt" id="GanttChartDIV" style="margin-top:20px"></div>
+    </div>
+    <div id="gnatt-wrap-backdrop"></div>
+
+
+
+    </div>
+
+
+
+<script>
+
+
+</script>

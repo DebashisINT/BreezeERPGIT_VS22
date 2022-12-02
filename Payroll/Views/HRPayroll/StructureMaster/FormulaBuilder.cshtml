@@ -1,0 +1,220 @@
+﻿@model Payroll.Models.payrollStructureEngine
+
+<script>
+    $(function () {
+        $("#lstHeadSelection").removeAttr('multiple');
+        $("#lstHeadSelection").click(HeadSelection_Changed);
+
+        $("#JoiningDate").click(VariableSelection_Changed);
+        $("#LoanAmount").click(VariableSelectionLoanAmount_Changed);
+        $("#Leave_Encashment").click(VariableSelectionLeave_Changed);
+
+        
+
+        $("#lstFunctionSelection").removeAttr('multiple');
+        $("#lstFunctionSelection").click(FunctionSelection_Changed);
+
+        $("#lstTableSelection").removeAttr('multiple');
+        $("#lstTableSelection").click(TableSelection_Changed);
+
+        var _Formula = $("#hdnFormulaField").val();
+        var txtarea = document.getElementById("txtFormula");
+        txtarea.value = _Formula;
+    });
+
+    function HeadSelection_Changed() {
+        var PayheadID = $("#lstHeadSelection option:selected").val();
+        var Payhead = $("#lstHeadSelection option:selected").text();
+
+        InsertFormula(PayheadID);
+    }
+    function VariableSelection_Changed() {
+        var JOININGDATE = "PAYROLL_DOJ";       
+        InsertFormula(JOININGDATE);
+    }
+
+    function VariableSelectionLeave_Changed() {
+        var ENCASHMENT = "LEAVE_ENCASHMENT";
+        InsertFormula(ENCASHMENT);
+    }
+
+    function VariableSelectionLoanAmount_Changed() {
+        var LoanAmount = "LOAN_AMOUNT";
+        InsertFormula(LoanAmount);
+    }
+
+    function FunctionSelection_Changed() {
+        var FunctionID = $("#lstFunctionSelection option:selected").val();
+        var Function = $("#lstFunctionSelection option:selected").text();
+
+        InsertFormula(FunctionID);
+    }
+
+    function TableSelection_Changed() {
+        var TableID = $("#lstTableSelection option:selected").val();
+        var Table = $("#lstTableSelection option:selected").text();
+
+        InsertFormula('{' + TableID + '}');
+    }
+
+    function InsertFormula(text) {
+        $("label[for='lblErrorMsg']").html("");
+        $('#btnValidate').removeClass();
+        $('#btnValidate').addClass('btn btn-default')
+
+        var txtarea = document.getElementById("txtFormula");
+        if (!txtarea) {
+            return;
+        }
+
+        var scrollPos = txtarea.scrollTop;
+        var strPos = 0;
+        var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
+          "ff" : (document.selection ? "ie" : false));
+        if (br == "ie") {
+            txtarea.focus();
+            var range = document.selection.createRange();
+            range.moveStart('character', -txtarea.value.length);
+            strPos = range.text.length;
+        } else if (br == "ff") {
+            strPos = txtarea.selectionStart;
+        }
+
+        var front = (txtarea.value).substring(0, strPos);
+        var back = (txtarea.value).substring(strPos, txtarea.value.length);
+        txtarea.value = front + text + back;
+        strPos = strPos + text.length;
+        if (br == "ie") {
+            txtarea.focus();
+            var ieRange = document.selection.createRange();
+            ieRange.moveStart('character', -txtarea.value.length);
+            ieRange.moveStart('character', strPos);
+            ieRange.moveEnd('character', 0);
+            ieRange.select();
+        } else if (br == "ff") {
+            txtarea.selectionStart = strPos;
+            txtarea.selectionEnd = strPos;
+            txtarea.focus();
+        }
+
+        txtarea.scrollTop = scrollPos;
+    }
+
+    function ValidateFormula() {
+        var Formula = document.getElementById("txtFormula").value;
+
+        if (Formula != "") {
+            $.ajax({
+                type: "GET",
+                data: { Formula: Formula },
+                url: "/StructureMaster/CheckFormula",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Error") {
+                        $("label[for='lblErrorMsg']").html("Provide a Valid Formula for this Pay Head.");
+                        $('#btnValidate').removeClass();
+                        $('#btnValidate').addClass('btn btn-danger')
+                    }
+                    else {
+                        $("label[for='lblErrorMsg']").html("");
+                        $('#btnValidate').removeClass();
+                        $('#btnValidate').addClass('btn btn-success')
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+<style>
+    .card-info {
+        background: #fff;
+        border: 1px solid #b8b8b8;
+        padding: 5px;
+        min-height: 150px;
+    }
+
+    .c1, .c2, .c3, .c4 {
+        font-weight: 600 !important;
+    }
+
+    .c1 {
+        color: #f32b2b;
+    }
+
+    .c2 {
+        color: #1e7936;
+    }
+
+    .c3 {
+        color: #da740a;
+    }
+
+    .c4 {
+        color: #da0aca;
+    }
+    #JoiningDate {
+        cursor:pointer
+    }
+    #LoanAmount, #Leave_Encashment {
+        cursor: pointer;,
+    }
+    .warpWord>div {
+        word-break:break-all
+    }
+</style>
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Formula Builder</h4>
+    </div>
+    <div class="modal-body">
+        <div class="clearfix">
+            <div class="col-md-12">
+                <label class="c1">Formula</label>
+                @Html.TextAreaFor(m => m.Cal_CalculateFormula, new { style = "height: 180px;", Id = "txtFormula" })
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="col-md-3">
+                <label class="c2">Pay Head</label>
+                <div>
+                    @Html.ListBox("lstHeadSelection", Model.PayHeadDetails, new { style = "Width: 100%;Height: 150px !important;", size = @Model.PayHeadDetails.Count })
+                </div>
+            </div>
+            <div class="col-md-4 lblmTop8">
+                <label class="c3">Function</label>
+                <div>
+                    @Html.ListBox("lstFunctionSelection", Model.FunctionDetails, new { style = "Width: 100%;Height: 150px !important;", size = @Model.FunctionDetails.Count })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label class="c4">Table</label>
+                <div>
+                    @Html.ListBox("lstTableSelection", Model.TableDetails, new { style = "Width: 100%;Height: 150px !important;", size = @Model.TableDetails.Count })
+                </div>
+            </div>
+            <div class="col-md-3 lblmTop8">
+                <label class="c1">Info</label>
+                <div class="card-info warpWord">
+                    <div id="JoiningDate">PAYROLL_DOJ</div>
+                    <div id="LoanAmount">LOAN_AMOUNT</div>
+                    <div id="Leave_Encashment">LEAVE_ENCASHMENT</div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="col-md-12">
+                <label for="lblErrorMsg" style="color:red;"></label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-left">
+            <input id="btnValidate" type="button" class="btn btn-default" onclick="ValidateFormula()" value="Validate" />
+        </div>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>

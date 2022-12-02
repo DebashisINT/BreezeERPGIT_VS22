@@ -1,0 +1,47 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvLeaveHistory";
+    settings.KeyFieldName = "LeaveID";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "LeaveApplication", Action = "PartialLeaveHistroyGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+        
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeaveName";
+        column.Caption = "Leave Name";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(55);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Opening";
+        column.Caption = "Opening";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Availed";
+        column.Caption = "Availed";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Balance";
+        column.Caption = "Balance";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        column.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+    });
+}).Bind(Model).GetHtml()

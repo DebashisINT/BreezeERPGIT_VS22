@@ -1,0 +1,52 @@
+﻿@*@model List<Payroll.Models.TableFormulaHeadBreakup>*@
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvFoundationMasterOuter";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "FoundationMaster", Action = "partialFoundationMasterOuterGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.KeyFieldName = "CODE";
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+    settings.SettingsDetail.ShowDetailRow = true;
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CODE";
+        column.Caption = "Code";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DESC";
+        column.Caption = "Description";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+
+   settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+    settings.SettingsDetail.ShowDetailRow = true;
+
+    settings.SetDetailRowTemplateContent(c =>
+    {
+
+        Html.RenderAction("partialFoundationMasterInnerGrid", new { CODE = DataBinder.Eval(c.DataItem, "CODE") });
+    });
+    settings.PreRender = (sender, e) =>
+    {
+        //((MVCxGridView)sender).DetailRows.ExpandRow(0);
+    };
+
+}).Bind(Model).GetHtml()
+
+

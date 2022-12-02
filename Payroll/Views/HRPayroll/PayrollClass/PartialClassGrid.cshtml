@@ -1,0 +1,105 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPagingClass";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "PayrollClass", Action = "PartialClassGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.KeyFieldName = "PayrollClassID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayrollClassID";
+        column.Caption = "Payroll Class ID";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayrollClassName";
+        column.Caption = "Class Name";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+     {
+         column.FieldName = "PeriodFrom";
+         column.Caption = "Period From Date";
+         column.ColumnType = MVCxGridViewColumnType.DateEdit;
+         column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+
+     });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PeriodTo";
+        column.Caption = "Period To Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Unit";
+        column.Caption = "Payroll Unit";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Generation";
+        column.Caption = "Payroll Generation";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CreatedBy";
+        column.Caption = "Created By";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CreatedDateTime";
+        column.Caption = "Created Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "UpdatedBy";
+        column.Caption = "Updated By";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+   
+
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            ViewContext.Writer.Write(
+                 "<div class='floatedBtnArea'><a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "PayrollClassID") + "')\" class=\"pad\" title=\"Edit\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>" +
+                 "&nbsp;" +
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "PayrollClassID") + "')\" class=\"pad\" title=\"Delete\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a></div>"
+            );
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.False;
+        c.Width = 1;
+        c.Caption = "";
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+}).Bind(Model).GetHtml()

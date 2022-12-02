@@ -1,0 +1,96 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@using DevExpress.Web.Mvc.UI;
+@using DevExpress.Web;
+@using DevExpress.XtraPrinting;
+@using DevExpress.Export;
+@using DevExpress.Web.Mvc;
+
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+
+        //settings.Name = "LocationGridView";
+        settings.Name = "grid";
+
+        settings.KeyFieldName = "Id";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.CallbackRouteValues = new { Controller = "CompanyStructure", Action = "DataViewPertial" };
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "structure";
+            x.Caption = "Unit Name";
+            x.VisibleIndex = 0;
+            x.Width =System.Web.UI.WebControls.Unit.Percentage(20);
+
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "City";
+            column.Caption = "Location";
+            column.VisibleIndex = 1;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            column.EditFormSettings.Caption = "City";
+
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Name";
+            column.Caption = "Employee Name";
+            column.VisibleIndex = 3;
+            //column.Index = 2;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "desig";
+            column.Caption = "Designation";
+            column.VisibleIndex = 4;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "super";
+            column.Caption = "Supervisor";
+            column.VisibleIndex = 5;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "phone";
+            column.Caption = "Work Phone";
+            column.VisibleIndex = 6;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "email";
+            column.Caption = "Email";
+            column.VisibleIndex = 7;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        });
+
+
+
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+
+@grid.Bind(Model).GetHtml()

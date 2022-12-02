@@ -1,0 +1,526 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.DevExpress().GetStyleSheets(
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
+                 new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
+                 new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit },
+            //new StyleSheet { ExtensionSuite = ExtensionSuite.SpellChecker }
+    )
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/assests/bootstrap/css/MasterPage.css" rel="stylesheet" />
+    <link href="~/assests/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/assests/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/assests/pluggins/customScroll/custoScroll.css" rel="stylesheet" />
+    <link href="~/assests/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assests/css/custom/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assests/css/custom/newtheme.css" />
+    <link rel="stylesheet" href="/assests/css/custom/PMSStyles.css" />
+    <link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+
+    <script src="~/assests/js/jquery.min.js"></script>
+    @Html.DevExpress().GetScripts(
+            //new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            //new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
+            //new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+            //new Script { ExtensionSuite = ExtensionSuite.Editors },
+            //new Script { ExtensionSuite = ExtensionSuite.Chart },
+            //new Script { ExtensionSuite = ExtensionSuite.Report },
+            //new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+            //new Script { ExtensionSuite = ExtensionSuite.TreeList },
+            //new Script { ExtensionSuite = ExtensionSuite.Spreadsheet },
+            //new Script { ExtensionSuite = ExtensionSuite.RichEdit },
+            ////new Script { ExtensionSuite = ExtensionSuite.SpellChecker }
+    )
+    @*<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>*@
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='~/assests/js/jquery.min.js'><\/script>")
+    </script>
+
+    <script type="text/javascript" src="~/assests/js/jquery-ui.min.js"></script>
+
+    @*<script type="text/javascript">
+        window.jQuery || document.write("<script src='~/assests/js/jquery-ui.min.js'><\/script>")
+        </script>*@
+
+    @*<script src="~/assests/js/init.js"></script>
+        <script src="~/assests/js/ajax-dynamic-list.js"></script>*@
+
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+    <script src="~/assests/js/modalmsg.js"></script>
+    <script src="~/assests/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="~/assests/js/main.js"></script>
+    <script src="~/assests/js/MasterPage.js"></script>
+    <style>
+        .HelpMasterClass {
+            font-size: 24px;
+            display: inline-block;
+            margin: 16px;
+            color: white;
+            cursor: pointer;
+        }
+        /* Calculator part */
+        .chat_container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            right: 0;
+            left: 0;
+            width: 60%;
+            height: 70%;
+            z-index: 9999;
+        }
+
+            .chat_container .chat {
+                position: absolute;
+                width: 93%;
+                height: 98%;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                left: 0;
+                right: 0;
+                background: white;
+                border-radius: 10px;
+                transform: scale(0);
+                box-shadow: 0 5px 60px 10px rgba(0, 0, 0, 0.12);
+            }
+
+                .chat_container .chat::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-left: 15px solid rgba(0, 0, 0, 0);
+                    border-bottom: 15px solid rgba(0, 0, 0, 0);
+                    border-top: 15px solid rgba(0, 0, 0, 0);
+                    border-right: 15px solid white;
+                    left: -25px;
+                    top: 7px;
+                }
+
+                .chat_container .chat .textbox {
+                    position: absolute;
+                    width: 100%;
+                    height: 50px;
+                    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.07);
+                    bottom: 0;
+                }
+
+                    .chat_container .chat .textbox .input {
+                        width: 82%;
+                        height: 35px;
+                        display: block;
+                        position: relative;
+                        float: left;
+                        margin-left: 10px;
+                        border: none;
+                        padding: 3px;
+                        border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+                    }
+
+                    .chat_container .chat .textbox .send {
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        width: 50px;
+                        height: 50px;
+                        text-align: center;
+                        line-height: 50px;
+                        font-size: 40px;
+                        color: #1E88E5;
+                    }
+
+        .bubble {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            position: fixed;
+            top: 50%;
+            right: -15px;
+            text-align: center;
+            box-shadow: 0 0px 20px rgba(0, 0, 0, 0.19), 0 0px 6px rgba(0, 0, 0, 0.23);
+            background: white;
+            background-size: cover;
+            cursor: pointer;
+        }
+
+            .bubble > img {
+                max-width: 38px;
+                margin: 15px 0 7px 1px;
+            }
+
+            .bubble:hover {
+                transition: all 0.3s;
+                transform: scale(1.1);
+            }
+
+        .bubble__span {
+            position: absolute;
+            left: 70px;
+            background: #333;
+            border-radius: 10px;
+            padding: 5px;
+            color: white;
+            font-family: "Roboto";
+            opacity: 0;
+        }
+
+        .bubble:active {
+            transform: scale(1.2);
+            transition: all 0.3s;
+        }
+
+        .chat-thread {
+            padding: 20px;
+            margin: 10px;
+            list-style: none;
+            overflow-x: hidden;
+        }
+
+            .chat-thread li {
+                position: relative;
+                clear: both;
+                display: inline-block;
+                padding: 10px 20px 10px 15px;
+                margin-bottom: 10px;
+                font-family: "Roboto";
+                font: 14px;
+                border-radius: 25px;
+            }
+
+            .chat-thread .message-mit {
+                background: #1E88E5;
+                float: right;
+                color: white;
+            }
+
+            .chat-thread .message-dest {
+                background: #CFD8DC;
+                float: left;
+            }
+
+            .chat-thread .loading .material-icons {
+                color: rgba(200, 200, 200, 0.8);
+                font-size: 8px;
+                padding: 1px;
+                margin-bottom: 5px;
+            }
+
+                .chat-thread .loading .material-icons:nth-child(1) {
+                    animation: writing 1.2s infinite alternate;
+                }
+
+                .chat-thread .loading .material-icons:nth-child(2) {
+                    animation: writing 1.2s infinite 0.2s alternate;
+                }
+
+                .chat-thread .loading .material-icons:nth-child(3) {
+                    animation: writing 1.2s infinite 0.3s alternate;
+                }
+
+        .bouncein {
+            animation: bounce 0.4s ease-out forwards 0.2s;
+        }
+
+        .bounceout {
+            animation: bounce 0.25s ease-out forwards reverse;
+        }
+
+
+        .Calcheader {
+            font-size: 18px;
+            padding: 15px 25px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+            .Calcheader > span {
+                font-weight: 300;
+                color: #0083c9;
+            }
+
+        .tilesContent {
+            padding: 15px 25px;
+        }
+
+        .textbox {
+            padding: 10px 15px;
+        }
+
+        .AboutPop {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.62);
+            display: none;
+            z-index: 55;
+        }
+
+        .AboutBox {
+            width: 400px;
+            margin: auto;
+            background: #fff;
+            margin-top: 152px;
+            padding: 6px 15px 15px 15px;
+            border-radius: 4px;
+            border: 3px solid #309dff;
+            box-shadow: 0px 0px 0px 1px #094780;
+        }
+
+        .AbtImage {
+            -webkit-transform: translateX(-17px);
+            -moz-transform: translateX(-17px);
+            -o-transform: translateX(-17px);
+            transform: translateX(-17px);
+            margin-bottom: 14px;
+        }
+
+        .abtContent {
+            padding: 20px 0 0 0;
+        }
+
+        .AboutPop .CrossIconAbout {
+            position: absolute;
+            right: 7px;
+            top: 4px;
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+            .AboutPop .CrossIconAbout:hover {
+                color: #094e8c;
+            }
+
+        #CRSAbtButton {
+            border: 1px solid #ccc;
+            background: #e6e6e6;
+            padding: 4px 14px;
+            float: right;
+        }
+
+            #CRSAbtButton:hover {
+                border: 1px solid #adabab;
+                background: #d2d2d2;
+            }
+
+        .AboutBoxHeader {
+            font-size: 16px;
+            border-bottom: 1px solid #f1eded;
+            padding-bottom: 5px;
+        }
+        /*End of Calculator*/
+        /*Menu design changes*/
+        .fixedMenuNew {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            background: #272b3c;
+            width: 167px;
+            z-index: 55;
+            -webkit-transition: all 0.3s ease-in;
+            -moz-transition: all 0.3s ease-in;
+            transition: all 0.3s ease-in;
+        }
+
+        .mini-navbar .fixedMenuNew {
+            width: 51px;
+        }
+
+        #header {
+            margin-left: 167px;
+        }
+
+        .mini-navbar #header {
+            margin-left: 50px;
+        }
+
+        .fixedMenuNew .leftLogowrap {
+            height: 60px;
+            float: none !important;
+        }
+        /*.fixedMenuNew .sidebar {
+            position:static;
+        }*/
+
+        /*hover on mini*/
+        .mini-navbar .fixedMenuNew:hover .sidebar {
+            width: 167px !important;
+        }
+
+            .mini-navbar .fixedMenuNew:hover .sidebar .navfltext {
+                width: auto;
+                opacity: 1;
+                display: inline-block;
+            }
+
+        .mini-navbar .fixedMenuNew:hover .bigLogo {
+            display: block;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .miniLogo {
+            display: none;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav li > a {
+            font-size: inherit;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .leftLogowrap {
+            width: 100%;
+        }
+
+        .mini-navbar .fixedMenuNew:hover {
+            width: 167px;
+        }
+
+        .mini-navbar .sidebar .navfltext {
+            display: none;
+            width: 0px;
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-in;
+            -moz-transition: all 0.3s ease-in;
+            transition: all 0.3s ease-in;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav > ul > li > a .dpvsl {
+            display: block;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .pwred {
+            display: block;
+        }
+
+        .fixedMenuNew .sidenav > ul > li:last-child {
+            margin-bottom: 20px;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav ul li {
+            font-size: 12px;
+        }
+
+        .mini-navbar #header {
+            width: calc(100% - 50px);
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            //About section
+            $('#showAbout').click(function () {
+                $(".AboutPop").show();
+            });
+            $('.CrossIconAbout, #CRSAbtButton').click(function () {
+                $(".AboutPop").hide();
+            });
+
+
+            var WindowHeight = $(window).height();
+            var SetmenuHeight = WindowHeight - 120;
+
+            $('.fixedMenuNew .sidenav > ul').css({ 'max-height': SetmenuHeight });
+            //$('.mini-navbar .fixedMenuNew').mouseover(function () {
+            //    setTimeout(function () {
+            //        $('.fixedMenuNew .sidebar .navfltext').css({ 'width': 'auto', 'opacity': '1', 'display': 'inline-block' })
+            //    }, 1000);
+
+            //});
+        });
+        $(window).resize(function () {
+            var WindowHeight = $(window).height();
+            var SetmenuHeight = WindowHeight - 120;
+            $('.fixedMenuNew .sidenav > ul').css({ 'max-height': SetmenuHeight });
+        })
+    </script>
+
+
+</head>
+<body>
+    @*--About section--*@
+    <div class="AboutPop">
+        <div class="AboutBox relative">
+            <div class="AboutBoxHeader">About BreezeERP</div>
+
+            <span class="CrossIconAbout"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+            <div class="abtContent clearfix">
+                <div><img src="../../../assests/images/logo.png" style="width: 170px;" class="AbtImage" /></div>
+                <div class="aboutText">
+                    <p>Version : <b id="lblVersion">@Convert.ToString(HttpContext.Current.Session["LastVersion"])</b></p>
+                    <p><i class="fa fa-copyright" aria-hidden="true"></i> Copyright 2019 Indus Net Technologies </p>
+                    <p>Application best viewed at 1280 x 720 resolution in Google Chrome <b>59 or above</b> </p>
+                    <button type="button" id="CRSAbtButton">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*--About section--*@
+
+    <div class="fixedMenuNew">
+        <div class="leftLogowrap transit">
+
+            @{
+                if (Convert.ToString(Session["biglogo"]) == "(unknown)")
+                {
+                    <img src='@Convert.ToString(Session["biglogo"])' class="img-responsive bigLogo" align="middle" />
+                    <img src='@Convert.ToString(Session["minilogo"])' class="img-responsive miniLogo" align="middle" />
+                }
+                else
+                {
+                    <img src='@Convert.ToString(Session["biglogo"])' class="img-responsive bigLogo" align="middle" />
+                    <img src='@Convert.ToString(Session["minilogo"])' class="img-responsive miniLogo" align="middle" />
+                }
+
+                }
+
+        </div>
+        <div class="sidebar transit">
+            <nav class="sidenav">
+                @{
+                    Html.RenderAction("_PartialMenu", "PMSMaster");
+                }
+            </nav>
+        </div>
+        <div class="text-center pwred">
+            <div class="divNav">
+                <a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx" class="pas" data-toggle="tooltip" title="" data-original-title="change password"><i class="fa fa-key"></i></a>
+                <a href="/OMS/SignOff.aspx" class="logout" data-toggle="tooltip" title="" data-original-title="logout"><i class="fa fa-power-off"></i></a>
+            </div>
+            <div>Powered by BreezeERP </div>
+        </div>
+    </div>
+    <div class="mainWraper">
+        <header id="header" class="clearfix transit">
+            @{
+                Html.RenderAction("_PartialHeaderLayout", "PMSMaster");
+            }
+        </header>
+
+
+        <section class="rightSide transit clearfix" style="min-height: 415px;">
+            @RenderBody()
+        </section>
+        <script src="~/assests/pluggins/customScroll/customScroll.js"></script>
+    </div>
+
+</body>
+</html>

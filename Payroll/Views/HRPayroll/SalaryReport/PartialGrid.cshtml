@@ -1,0 +1,94 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "SalaryReportgridView";
+    settings.KeyFieldName = "EmployeeCode";
+    settings.Settings.ShowFilterRow = true;
+    settings.CallbackRouteValues = new { Controller = "SalaryReport", Action = "PartialGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto; 
+    
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+
+    //Mantis Issue 24246
+    settings.ClientSideEvents.CustomizationWindowCloseUp = "grid_CustomizationWindowCloseUp";
+    settings.SettingsBehavior.EnableCustomizationWindow = true;
+    settings.SettingsContextMenu.Enabled = true;
+    // End of Mantis Issue 24246
+
+        
+    settings.DataBound = (sender, e) =>
+    {
+        MVCxGridView gv = sender as MVCxGridView;
+        var TotalColumns = gv.Columns.Count;
+        
+        foreach (GridViewColumn column in gv.Columns)
+        {
+            var dataColumn = column as GridViewDataTextColumn;
+
+            if (TotalColumns==1)
+            {
+                dataColumn.Width = System.Web.UI.WebControls.Unit.Percentage(100);     
+            }
+            else
+            { 
+                var FieldName = dataColumn.FieldName;
+                var DataType = FieldName.Substring(FieldName.Length - 2);
+                var Caption = FieldName.Remove(FieldName.Length - 2);
+
+                if (DataType == "NM")
+                {
+                    dataColumn.Caption = Caption;
+                    dataColumn.Width = 200;
+                  //  dataColumn.PropertiesEdit.DisplayFormatString = "#####,##,##,###0.00";
+                    dataColumn.PropertiesTextEdit.DisplayFormatString = "0.00";
+                    //PropertiesEdit.DisplayFormatString = "0.00";
+                    dataColumn.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+                    dataColumn.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+                   
+                    //dataColumn.PropertiesTextEdit.= "0.00";
+                    //<PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>;
+
+                    //var editProperties = (TextBoxProperties)dataColumn.PropertiesEdit;
+                    //editProperties.MaskSettings.Mask = "&lt;-999999999..999999999&gt;.&lt;00..99&gt;";
+                    
+                    // Mantis Issue 24246
+                    if (ViewBag.RetentionColumn != null)
+                    {
+                        System.Data.DataRow[] row = ViewBag.RetentionColumn.Select("ColumnName='" + FieldName + "'");
+                        if (row != null && row.Length > 0)  /// Check now
+                        {
+                           // dataColumn.PropertiesEdit.DisplayFormatString = "#####,##,##,###0.00";
+                            dataColumn.Visible = false;
+                        }
+                        else
+                        {
+                           // dataColumn.PropertiesEdit.DisplayFormatString = "#####,##,##,###0.00";
+                            dataColumn.Visible = true;
+                            dataColumn.Width = 200;
+                            dataColumn.PropertiesTextEdit.DisplayFormatString = "0.00";
+                        }
+                        
+                    }
+                    // End of Mantis Issue 24246
+                    
+                }
+                else
+                {
+                    dataColumn.Caption = Caption;
+                    dataColumn.Width = 200;
+                    dataColumn.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+                    dataColumn.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+                    if (Caption=="Employee Name")
+                    {
+                        dataColumn.FixedStyle = GridViewColumnFixedStyle.Left;        
+                    }
+                         
+                }
+            }
+        }
+    };
+}).Bind(Model).GetHtml()

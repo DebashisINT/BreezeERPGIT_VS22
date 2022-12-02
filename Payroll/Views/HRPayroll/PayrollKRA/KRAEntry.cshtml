@@ -1,0 +1,481 @@
+﻿
+@{
+    ViewBag.Title = "KRA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/css/payrollCss/PayrollKRA.css" rel="stylesheet" />
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left"> KRA (Key Responsibility Areas)</h3>
+    </div>
+</div>
+<div class="form_main">
+    <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#KRApopup" data-backdrop="static" data-keyboard="true">Add KRA</button>
+</div>
+
+
+<div class="modal fade pmsModal w80" id="KRApopup" tabindex="-1" role="dialog" aria-labelledby="KRApopup" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add KRA </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="Vtabs">
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2 col-lg-1">
+                            <ul class="nav nav-pills nav-stacked flex-column">
+                                <li class="active"><a href="#tab_a" data-toggle="pill">Summary</a></li>
+                                <li><a href="#tab_b" data-toggle="pill">Goals Setting</a></li>
+                                <li><a href="#tab_c" data-toggle="pill">Competencies</a></li>
+                                <li><a href="#tab_d" data-toggle="pill">Performance</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-11">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_a">
+                                    <div class="clearfix row">
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="crmTAbhd">KRA Based Appraisal Form <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Employee Name </label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control" disabled>
+                                                                <option>Susanta kundu</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mTop5">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Employee Code </label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control" disabled>
+                                                                <option>0123456</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-12 mTop5">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-12 col-form-label">Designation </label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control" disabled>
+                                                                <option>QA</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-8">
+                                            <div class="crmTAbhd">Indus Net Technologies Pvt Ltd <span class="bulet"></span></div>
+                                            <div class=" pmsForm slick clearfix bxStyle2">
+                                                <div class="col-md-6">
+                                                    <div class="WrapBox clearfix">
+                                                        <label for="" class="labelHead"><b>Review Period</b> </label>
+                                                        <div class="labelBody clearfix">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label for="" class="col-sm-12 col-form-label">From </label>
+                                                                    <div class="col-sm-12">
+                                                                        <input type="text" class="form-control" placeholder="01.01.2019"  />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label for="" class="col-sm-12 col-form-label">To </label>
+                                                                    <div class="col-sm-12">
+                                                                        <input type="text" class="form-control" placeholder="01.03.2019"  />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="WrapBox clearfix">
+                                                        <label for="" class="labelHead"><b>Financial Period</b> </label>
+                                                        <div class="labelBody clearfix">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label for="" class="col-sm-12 col-form-label">From </label>
+                                                                    <div class="col-sm-12">
+                                                                        <input type="text" class="form-control" placeholder="01.04.2019" disabled />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label for="" class="col-sm-12 col-form-label">To </label>
+                                                                    <div class="col-sm-12">
+                                                                        <input type="text" class="form-control" placeholder="31.03.2020" disabled / >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group row mTop5">
+                                                        <label for="" class="col-sm-12 col-form-label mTop5">Unit </label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group row mTop5">
+                                                        <label for="" class="col-sm-12 col-form-label mTop5">Function</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-4">
+                                                    <div class="form-group row mTop5">
+                                                        <label for="" class="col-sm-12 col-form-label mTop5">Level/ Grade </label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                                <option>Approve</option>
+                                                                <option>Reject</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="clear"></div>
+                                                
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="clear"></div>
+                                    <div class="clearfix mTop5">
+                                        <div class="">
+                                            <table class="kraTbl mTop5 radius">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Rating </th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>OUTSTANDING performance and SIGNIFICANTLY EXCEEDED expectation in achievement of  KRA in terms of KPI</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>GOOD performance and MET expectations in  achievement of  KRA in terms of KPI</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>SATISFACTORY performance but PARTIALLY MET expectations in  achievement of  KRA in terms of KPI</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>NEEDS IMPROVEMENT - PARTIALLY MET expectations in  achievement of KRA in terms of  KPI with REPEATED FOLLOW UP</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Performance is UNACCEPTABLE - DID NOT MEET EXPECTATION in  achievement of  KRA in terms of  KPI</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_b">
+                                    <div class="clearfix row">
+                                        <div class="clearfix mTop5">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12">
+                                                    <div class="merun">* All Goals must be <b>SMART</b> : Specific-Measurable-Achievable-Relevant-Timebound</div>
+                                                    <table class="kraTbl mTop5">
+
+                                                        <thead>
+                                                            <tr class="tblHeading">
+                                                                <td colspan="3">
+                                                                    <div>TARGET SETTING   </div>
+                                                                    <div>[Determining Key Result Areas(KRAs) & their Key Performance Indicators (KPIs)]</div>
+                                                                </td>
+                                                                <td colspan="2">
+
+                                                                    <div>PERFORMANCE APPRAISAL & EVALUATION</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>KRA </th>
+                                                                <th>KPI</th>
+                                                                <th>Range</th>
+                                                                <th>Achievement</th>
+                                                                <th>Rating</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td> </td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td width="80px"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="4"><b>OVERALL PERFORMANCE RATING (Average)</b></td>
+                                                                
+                                                                <td><input type="text" disabled /></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                     
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_c">
+                                    <div class="clearfix row">
+                                        <div class="clearfix mTop5">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12">
+                                                    <table class="kraTbl ">
+
+                                                        <thead class="">
+                                                            <tr class="tblHeading" >
+                                                                <td colspan="2">
+                                                                    <div>APPRAISAL OF COMPETENCIES DEMONSTRATED ON THE JOB</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="tblHeading">
+                                                                <td colspan="2">
+                                                                    <div>Competency Rating Scale</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="width:50px;">Rating </th>
+                                                                <th>Description</th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width:50px;">1</td>
+                                                                <td>Inadequate</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>Needs Improvement</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>Partially Meets Expectations</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>4</td>
+                                                                <td>Meets Expectations</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5</td>
+                                                                <td>Exceeds Expectations</td>
+                                                            </tr>
+                                                            
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-12 mTop25">
+                                                    <div class="merun">* Please refer to the leadership competency descriptors and mention core strengths and areas of development for each leadership competency in totality</div>
+                                                    <table class="kraTbl mTop5">
+
+                                                        <thead class="">
+                                                            
+                                                            <tr>
+                                                                <th>Competencies </th>
+                                                                <th>Rating</th>
+                                                                <th>Core Strengths</th>
+                                                                <th>Areas of Development</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Innovation</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Change Orientation</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Process Orientation</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Teamwork</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Achievement Orientation</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td width="80px;"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3"><b>OVERALL  LEADERSHIP COMPETENCY RATING (Average)</b></td>
+                                                                <td><input type="text" disabled /></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_d">
+                                    <div class="clearfix row">
+                                        <div class="clearfix mTop5">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12">
+                                                   
+                                                    <div class="crmTAbhd">Consolidated Rating For The Performance Period <span class="bulet"></span></div>
+                                                    <div class=" pmsForm slick  bxStyle2 clearfix">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-sm-12 col-form-label">Overall Performance Rating </label>
+                                                                <div class="col-sm-12">
+                                                                    <select class="form-control" disabled="">
+                                                                        <option>Susanta kundu</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 mTop5">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-sm-12 col-form-label">Overall Competency Rating </label>
+                                                                <div class="col-sm-12">
+                                                                    <select class="form-control" disabled="">
+                                                                        <option>0123456</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="col-md-4 mTop5">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-sm-12 col-form-label">Overall Rating </label>
+                                                                <div class="col-sm-12">
+                                                                    <select class="form-control" disabled="">
+                                                                        <option>QA</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                        <div class="col-md-12 mTop5">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-sm-12 col-form-label">Appraiser’s Comments overall performance and on areas of development with suggested Development Action Plan</label>
+                                                                <div class="col-sm-12">
+                                                                    <textarea class="form-control" rows="5" style="height:150px"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mTop5">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-sm-12 col-form-label">Reviewer’s Comments, if any:</label>
+                                                                <div class="col-sm-12">
+                                                                    <textarea class="form-control" rows="5" style="height:150px"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <table class="kraTbl mTop5">
+
+                                                        <thead class="">
+
+                                                            <tr>
+                                                                <th> </th>
+                                                                <th>NAME</th>
+                                                                <th>SIGNATURE</th>
+                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>APPRAISER</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>REVIEWER</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>HR</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>APPRAISEE</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal" onclick="Close()">Close</button>
+                <button type="button" class="btn btn-success btn-radius" onclick="ExpenceSave()" id="btnSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

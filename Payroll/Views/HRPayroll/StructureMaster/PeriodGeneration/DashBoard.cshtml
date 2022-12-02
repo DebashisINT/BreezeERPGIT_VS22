@@ -1,0 +1,287 @@
+﻿@{
+    ViewBag.Title = "Period Open/Close";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+
+<style>
+    .mtbl {
+        width: 100%;
+    }
+
+        .mtbl > tbody > tr > td {
+            padding-right: 25px;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        .abc{
+            display:none;
+        }
+</style>
+<script>
+    var checksum = true;
+    function SaveActivePrev() {
+        checksum = true;
+        var url = '/PeriodGeneration/setActivePrevNext/';
+        var PayClassID = document.getElementById('hdnPayClassID').value;
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify({ 'ActionType': 'activePrev', 'PayClassID': PayClassID }),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response.response_msg == "Success") {
+
+                    PeriodgridView.Refresh();
+                }
+                else {
+                    jAlert(response.response_msg);
+                }
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+
+
+    }
+
+    function SaveActiveNxt() {
+        checksum = true;
+        var url = '/PeriodGeneration/setActivePrevNext/';
+        var PayClassID = document.getElementById('hdnPayClassID').value;
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify({ 'ActionType': 'activeNxt', 'PayClassID': PayClassID }),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+
+                if (response.response_msg == "Success") {
+
+                    PeriodgridView.Refresh();
+                }
+                else {
+                    jAlert(response.response_msg);
+                }
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    }
+
+</script>
+<script type="text/javascript">
+    function btnPayClass_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnPayClass_Click(s, e) {
+        checksum = true;
+        var searchkey = btnPayClassName.GetText();
+        if (searchkey == '' || searchkey==null)
+            BindPayClass('');
+        else
+        {
+            BindPayClass(searchkey);
+        }
+        setTimeout(function () { $("#txtPayClass").focus(); }, 500);
+        $('#PayClassModel').modal('show');
+    }
+
+    function PayClasskeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtPayClass").val() != '') {
+                BindPayClass($("#txtPayClass").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[PayClassIndex=0]"))
+                $("input[PayClassIndex=0]").focus();
+        }
+    }
+    function BindPayClass(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Pay Class Name");
+        HeaderCaption.push("Period From");
+        HeaderCaption.push("Period To");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetPayClassList", OtherDetails, "PayClassTable", HeaderCaption, "PayClassIndex", "SetPayClass");
+    }
+
+    function SetPayClass(Id, Name) {
+        var PayClassID = Id;
+        var PayClassName = Name;
+
+        if (PayClassID != "") {
+            $('#PayClassModel').modal('hide');
+            btnPayClassName.SetText(PayClassName);
+            document.getElementById('hdnPayClassID').value = Id;
+            PeriodgridView.Refresh();
+            PeriodgridView.Refresh();
+            var ParentObj = $.grep(mycallonServerObj, function (e) { return e.PayrollClassID == Id })
+            $("#txt_frmDt").val(ParentObj[0]["PeriodFrom"]);
+            $("#txt_toDt").val(ParentObj[0]["PeriodTo"]);
+            $("#txt_actvmnth").val('@ViewBag.Activated');
+            //for(var i=0;i<PeriodgridView.GetVisibleRowsOnPage();i++)
+            //{
+            //    console.log(PeriodgridView.GetRow(i).children[1].innerText)
+            //}
+
+
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "PayClassIndex") {
+                    SetPayClass(Id, name);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "PayClassIndex")
+                    $('#txtPayClass').focus();
+            }
+        }
+
+    }
+    function OnStartCallback(s, e) {
+        e.customArgs["PayClassID"] = document.getElementById('hdnPayClassID').value;
+    }
+    
+    function OnEndCallback()
+    {
+        for(var i=0;i<PeriodgridView.GetVisibleRowsOnPage();i++)
+        {
+            if (PeriodgridView.GetRow(i).children[1].innerText == "True" && checksum)
+            {
+                //PeriodgridView.GetRow(1).children[0].children[0].className.includes("CheckBoxchecked")
+                console.log(PeriodgridView.GetRow(i).children[2].innerText  )
+                $("#txt_actvmnth").val(PeriodgridView.GetRow(i).children[2].innerText);
+                checksum = false;
+            }
+                
+        }
+    }
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Period Open/Close</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix mtop-8">
+        <div class="col-md-5">
+            <table class="mtbl">
+                <tr>
+                    <td style="width: 150px;">Payroll Class Name<span style="color: red">*</span></td>
+                    <td colspan="3" style="padding-right: 0;">
+                        @Html.DevExpress().ButtonEdit(
+                    settings =>
+                    {
+                        settings.Name = "btnPayClassName";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = "";
+                        settings.ReadOnly = true;
+                        settings.Properties.Buttons.Add("..");
+                        settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPayClass_Click(s,e);}";
+                        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayClass_KeyDown(s,e);}";
+                    }).GetHtml()
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">From Date</td>
+                    <td><input type="text" id="txt_frmDt" disabled style="width:65%" /></td>
+
+                </tr>
+                <tr>
+                    <td style="width: 150px;">To Date</td>
+                    <td><input type="text" id="txt_toDt" disabled style="width:65%" /></td>
+
+                </tr>
+                <tr>
+                    <td style="width: 150px;">Activated Month</td>
+                    <td><input type="text" id="txt_actvmnth" disabled style="width:65%" /></td>
+
+                </tr>
+            </table>
+        </div>
+        <div class="clear"><br /></div>
+        <div class="col-md-5">
+            @{
+                Html.RenderAction("PartialPeriodGeneration", "PeriodGeneration");
+            }
+        </div>
+        <div class="clear"><br /></div>
+        <div class="col-md-5">
+            <div class="">
+                <button class="btn btn-primary" onclick="SaveActivePrev()">Open</button>
+                <button class="btn btn-primary" onclick="SaveActiveNxt()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay Class -->
+<div class="modal fade" id="PayClassModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay Class</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="PayClasskeydown(event)" id="txtPayClass" autofocus width="100%" placeholder="Search By Pay Class Name or Short Name" />
+                <div id="PayClassTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Pay Class Name</th>
+                            <th>Period From</th>
+                            <th>Period To</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay Class-->
+<div>
+    @Html.Hidden("hdnPayClassID")
+</div>

@@ -1,0 +1,126 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "ProjectGridLookup";
+        settings.KeyFieldName = "OrderId";
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Properties.EnableClientSideAPI = true;
+        settings.Properties.ClientInstanceName = "ProjectGridLookup";
+        settings.GridViewClientSideEvents.SelectionChanged = "ProjectSelectionChanged";
+        settings.GridViewClientSideEvents.BeginCallback = "ProjectStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "ProjectSelectionChanged";
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        settings.Properties.ClientSideEvents.DropDown = "ProjectLookupValChange";
+
+        settings.CommandColumn.Visible = true;
+        //settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        settings.Properties.TextFormatString = "{0}";
+
+       // settings.Properties.Columns("OrderId").Visible = false; 
+        
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "SalesDocumentNumber";
+            column.Caption = "Document Number";
+            column.VisibleIndex = 1;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(15);
+
+        });
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Order_Date";
+            x.Caption = "SO Date";
+            x.VisibleIndex = 2;
+            x.Width = 120;
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+            (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        });
+
+        settings.Columns.Add(x =>
+    {
+        x.FieldName = "Branch";
+        x.Caption = "Branch";
+        x.VisibleIndex = 3;
+        x.Width = 150;
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+        
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CustomerName";
+            column.Caption = "Customer";
+            column.VisibleIndex = 4;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Order_RevisionNo";
+            column.Caption = "Revision No.";
+            column.VisibleIndex = 5;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+
+        });
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Order_RevisionDate";
+            x.Caption = "Revision Date";
+            x.VisibleIndex = 6;
+            x.Width = 120;
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+            (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy hh:mm:ss";
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            // x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        });
+        settings.Properties.Caption = " ";
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Multiple;
+
+        //  settings.Properties.TextFormatString = "{1}";
+        settings.Properties.MultiTextSeparator = ", ";
+        settings.Properties.SelectionMode = GridLookupSelectionMode.Multiple;
+        settings.Properties.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "Project", Action = "GetSalesOrderList" };
+        // settings.GridViewClientSideEvents.BeginCallback = "function(s,e){OnBeginCallback(s,e);}";
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+
+
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 700;
+
+            //gridLookup.GridView.Settings.wi
+        };
+
+    }).BindList(Model).GetHtml()
+
+
+
+

@@ -1,0 +1,718 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model PMS.Models.ViewModel.EstimateViewModel
+
+@{
+    ViewBag.Title = "Estimate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<style>
+    .padTab > tbody > tr > td:not(:last-child) {
+        padding: 0;
+        padding-right: 15px;
+        vertical-align: middle;
+    }
+
+    .w150 {
+        width: 150px;
+    }
+
+    #gridBOMList_DXMainTable > tbody > tr > td:last-child, #gridBOMList_DXFooterTable > tbody > tr > td:last-child, #gridBOMList_DXHeaderTable > tbody > tr > td:last-child {
+        display: none;
+    }
+</style>
+<script>
+    var load = 0;
+    function OpenEstimateData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            var url = "/Estimate/Index?ActionType=EDIT&DetailsID=" + detailsid;
+            window.location.href = url;
+            @*$.ajax({
+                type: "POST",
+                url: "@Url.Action("SetEstimateDataByID", "Estimate")",
+                data: { detailsid: detailsid, Approve: "", View: "" },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        // var url = $('#hdnEstimateAddUpdate').val();
+
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });*@
+        }
+    }
+
+    function ViewEstimateData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            var url = "/Estimate/Index?ActionType=View&DetailsID=" + detailsid;
+            window.location.href = url;
+            @*$.ajax({
+                type: "POST",
+                url: "@Url.Action("SetEstimateDataByID", "Estimate")",
+                data: { detailsid: detailsid, Approve: "", View: "View" },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        //var url = $('#hdnEstimateAddUpdate').val();
+                        //window.location.href = url;
+
+                        var url = "/Estimate/Index?ActionType=View&DetailsID=" + detailsid;
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });*@
+        }
+    }
+
+    function RemoveEstimateData(detailsid) {
+
+        jConfirm('Confirm delete?', 'Alert!', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveEstimateDataByID", "Estimate")",
+                    data: { detailsid: detailsid },
+                    success: function (response) {
+                        if (response != null) {
+                            jAlert(response.Message);
+                            if (response.Success) {
+                                gridEstimateList.Refresh();
+                                gridEstimateList.Refresh();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function OnEstimateListEndCallback(s, e) {
+
+    }
+
+    function OnEstimateListBeginCallback(s, e) {
+
+    }
+
+    $(function () {
+        PopulateUnitList();
+        if (localStorage.getItem('FromDateEstimate')) {
+            EstimateFromDate_dt.SetDate(new Date(localStorage.getItem('FromDateEstimate')));
+        }
+        if (localStorage.getItem('ToDateEstimate')) {
+            EstimateToDate_dt.SetDate(new Date(localStorage.getItem('ToDateEstimate')));
+        }
+        $('#btnAddNew').focus();
+    });
+
+    function datevalidateTo() {
+
+        if (EstimateFromDate_dt.GetDate()) {
+            if (EstimateToDate_dt.GetDate() <= EstimateFromDate_dt.GetDate()) {
+                EstimateToDate_dt.SetValue(EstimateFromDate_dt.GetDate());
+                EstimateToDate_dt.SetMinDate(EstimateFromDate_dt.GetDate());
+            }
+        }
+    }
+
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "Estimate")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+                if (localStorage.getItem('EstimateBranch')) {
+                    if ($("#ddlunitlist option[value=" + localStorage.getItem('EstimateBranch') + "]").text() != "" && $("#ddlunitlist option[value=" + localStorage.getItem('EstimateBranch') + "]").text() != null) {
+                        $('#ddlunitlist').val(localStorage.getItem('EstimateBranch'));
+                    }
+                }
+
+            }
+        });
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function updateGridByDate() {
+        if (EstimateFromDate_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { EstimateFromDate_dt.Focus(); });
+        }
+        else if (EstimateToDate_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { EstimateToDate_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(EstimateFromDate_dt.GetValue());
+            var todate = GetServerDateFormat(EstimateToDate_dt.GetValue());
+            var unitid = $('#ddlunitlist option:selected').val();
+
+            localStorage.setItem("FromDateEstimate", EstimateFromDate_dt.GetDate());
+            localStorage.setItem("ToDateEstimate", EstimateToDate_dt.GetDate());
+            localStorage.setItem("EstimateBranch", unitid);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetEstimateDateFilter", "Estimate")",
+                data: { unitid: unitid, FromDate: fromdate, ToDate: todate },
+                success: function (response) {
+                    if (response) {
+                        gridEstimateList.Refresh();
+                        gridEstimateList.Refresh();
+                    }
+                }
+            });
+        }
+    }
+
+
+    //function onPrintJv(id, RowIndex) {
+    //    jAlert('No design available!');
+    //}
+
+
+
+    var EstimateId = 0;
+
+    function onPrintJv(id, RowIndex) {
+        EstimateId = id;
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetEstimateDesignerList", "Estimate")",
+            data: { ID: EstimateId },
+            success: function (response) {
+                if (response) {
+
+                    if (response.length > 0) {
+                        var html = "";
+                        for (var i = 0; i < response.length; i++) {
+                            html = html + "<option value='" + response[i].reportValue + "'>" + response[i].name + "</option>";
+                        }
+                        $('#scldesign').html(html);
+
+                        $('#PrintModal').modal('show');
+                        $('#btnDegOK').focus();
+                    }
+                    else {
+                        jAlert('No design available!');
+                    }
+                }
+                else {
+                    jAlert('No design available!');
+                }
+            }
+        });
+
+        //jAlert('No design available!');
+    }
+
+    function ShowDesign() {
+        //var BankBranchID =
+        //var TotDocument = cSelectPanel.cpSuccess.split(',');
+        var reportName = $('#scldesign option:selected').val();
+        var module = 'EstimateCosting';
+        var isnotchecked = 0;
+        //var PrintOriginal = $('#PrintOriginal').prop('checked');
+        //var PrintDuplicate = $('#PrintDuplicate').prop('checked');
+        //var PrintTriplicate = $('#PrintTriplicate').prop('checked');
+        //if (PrintOriginal) {
+        isnotchecked = 1;
+        window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + EstimateId, '_blank')
+        //}
+        //if (PrintDuplicate) {
+        //    isnotchecked = 1;
+        //    window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + EstimateId + '&PrintOption=' + $('#PrintDuplicate').val(), '_blank')
+        //}
+
+        //if (PrintTriplicate) {
+        //    isnotchecked = 1;
+        //    window.open("../../OMS/Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + EstimateId + '&PrintOption=' + $('#PrintTriplicate').val(), '_blank')
+        //}
+
+        if (isnotchecked == 0) {
+            jAlert('Please check Original For Recipient and proceed.');
+        }
+
+    }
+
+    function OnclickViewAttachment(id) {
+        // alert(id)
+        $('#hdnDocNo').val(id);
+        $('#AttachmentModal').modal('show');
+        $('#hdndoc_id').val(id);
+
+        setTimeout(function () { $('#documentType').focus(); }, 1000);
+    }
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+
+        if (exportid > 0) {
+
+            var url = '@Url.Action("ExportEstimateGridList", "Estimate", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+
+
+        }
+
+    }
+
+    $(document).ready(function () {
+
+        @*document.onkeydown = function (e) {
+            if (event.keyCode == 83 && event.altKey == true) {
+                var url = '@Url.Action("Index", "Estimate")';
+                window.location.href = url;
+            }
+        }*@
+
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 83 && event.altKey == true) {
+                var url = '@Url.Action("Index", "Estimate")';
+                window.location.href = url;
+            }
+        });
+    });
+    function gridRowclick(s, e) {
+        $('#gridEstimateList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+    //});
+</script>
+
+<script>
+    function EstimateCancel(obj) {
+        jConfirm('Do you want to cancel the Estimate?', 'Confirm Dialog', function (r) {
+            if (r == true) {
+                $("#EstIdCancel").val(obj);
+                $("#CloseModal").modal('toggle');
+                setTimeout(function () {
+                    $("#txtCanCelRemarks").focus();
+                }, 600);
+            }
+            else {
+                return false;
+            }
+        });
+    }
+
+
+    function CancelRemarks_save() {
+        var flag = true;
+        if ($("#txtCanCelRemarks").val() == "") {
+            flag = false;
+            $("#txtCanCelRemarks").focus();
+        }
+        else {
+            var detailsid = $("#EstIdCancel").val();
+            var CancelRemarks = $("#txtCanCelRemarks").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("CalcelEstimateDataByID", "Estimate")",
+                data: { detailsid: detailsid, Cancel_Remarks: CancelRemarks },
+                success: function (response) {
+                    if (response != null) {
+                        jAlert(response.Message);
+                        if (response.Success) {
+                            $("#EstIdCancel").val('');
+                            gridEstimateList.Refresh();
+                            gridEstimateList.Refresh();
+                            $("#CloseModal").modal('toggle');
+                            $("#txtCanCelRemarks").val('');
+
+                        }
+                    }
+                }
+            });
+        }
+
+        return flag;
+    }
+
+
+    function EstimateReOpen(obj) {
+        jConfirm('Do you want to re-open Estimate?', 'Confirm Dialog', function (r) {
+            if (r == true) {
+                $("#EstIdCancel").val(obj);
+                $("#ReOpenModal").modal('toggle');
+                setTimeout(function () {
+                    $("#txtReOpenRemarks").focus();
+                }, 600);
+            }
+            else {
+                return false;
+            }
+        });
+    }
+
+
+    function ReOpenRemarks_save() {
+        var flag = true;
+        if ($("#txtReOpenRemarks").val() == "") {
+            flag = false;
+            $("#txtReOpenRemarks").focus();
+        }
+        else {
+            var detailsid = $("#EstIdCancel").val();
+            var ReOpenRemarks = $("#txtReOpenRemarks").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ReOpenEstimateDataByID", "Estimate")",
+                data: { detailsid: detailsid, Cancel_Remarks: ReOpenRemarks },
+                success: function (response) {
+                    if (response != null) {
+                        jAlert(response.Message);
+                        if (response.Success) {
+                            $("#EstIdCancel").val('');
+                            gridEstimateList.Refresh();
+                            gridEstimateList.Refresh();
+                            $("#ReOpenModal").modal('toggle');
+                            $("#txtReOpenRemarks").val('');
+                        }
+                    }
+                }
+            });
+        }
+
+        return flag;
+    }
+
+    function EstimateApprove(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            @*$.ajax({
+                type: "POST",
+                url: "@Url.Action("SetEstimateDataByID", "Estimate")",
+                data: { detailsid: detailsid, Approve: "Approve", View: "" },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnEstimateAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });*@
+            if ($("#hdnIsMultiuserApprovalRequired").val() == "Yes") {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("EstimateApproval", "Estimate")",
+                    data: { detailsid: detailsid },
+                    success: function (response) {
+                        if (response != null && response == true) {
+                            var url = "/Estimate/Index?ActionType=Approve&DetailsID=" + detailsid;
+                            window.location.href = url;
+                        }
+                        else {
+                            jAlert('You dont have permission.');
+                            return false;
+                        }
+                    }
+                });
+            }
+            else {
+                var url = "/Estimate/Index?ActionType=Approve&DetailsID=" + detailsid;
+                window.location.href = url;
+            }
+        }
+    }
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridEstimateList.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridEstimateList.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridEstimateList.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridEstimateList.SetWidth(cntWidth);
+            }
+
+        });
+
+        $("#hdnIsMultiuserApprovalRequired").val('@ViewBag.IsMultiuserApprovalRequired');
+    });
+
+    function OnclickAddEstimate() {
+        var url = "/Estimate/Index?ActionType=ADD";
+        window.location.href = url;
+    }
+
+</script>
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="">
+            <label>Estimate</label>
+        </h3>
+        @*<div id="ApprovalCross" class="crossBtn"><a href=""><i class="fa fa-times"></i></a></div>*@
+    </div>
+
+</div>
+
+<div class="mainarea form_main">
+
+    <input type="hidden" value="@Url.Action("Index", "Estimate")" id="hdnEstimateAddUpdate" />
+    <input type="hidden" value="@Url.Action("AttachmentDocument", "CRMAttachment", new { module = "Estimate" })" id="hdnAttachmentDocument" />
+
+    <div class="relative">
+        @*@{
+            Html.RenderAction("AttachmentDocument", "CRMAttachment", new { module = "Estimate", DocNo = "" });
+        }*@
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+            <div class="gridHeadersec">
+
+
+
+                <div class="clearfix">
+                    <div class="md-pull-left">
+                        @if (ViewBag.CanAdd)
+                        {
+                        <button type="button" id="btnAddNew" class="btn btn-success btn-radius" onclick="OnclickAddEstimate();">
+                            @*onclick="location.href='@Url.Action("Index", "Estimate")'"*@
+                        <span class="btn-icon"><i class="fa fa-plus"></i></span><span>E<u>s</u>timate & Costing</span>
+                    </button>
+                        }
+                        <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                            <option value="0">Export to</option>
+                            <option value="1">PDF</option>
+                            <option value="2">XLSX</option>
+                            <option value="3">RTF</option>
+                            <option value="4">CSV</option>
+                        </select>
+                    </div>
+                    <div class="md-pull-right">
+                        <table class="paddingTbl">
+                            <tr>
+                                <td>
+                                    From Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "EstimateFromDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+
+                            }
+                        ).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    To Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "EstimateToDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+
+                            }
+                        ).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    Unit
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        <select id="ddlunitlist" class="form-control"></select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" id="btnShowData" class="btn btn-primary btn-radius" onclick="updateGridByDate()">Show</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+
+            <div id="refreshgrid" class="relative">
+                @{
+                    Html.RenderAction("GetEstimateEntryList", "Estimate");
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<input type="hidden" id="EstIdCancel" />
+<div id="CloseModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Reason For Cancel</h4>
+            </div>
+            <div class="modal-body">
+                <label>Reason<span style="color:red">*</span></label>
+                <div><textarea id="txtCanCelRemarks" class="form-control" maxlength="500" style="margin: 0px -2px 5px 0px; width: 479px; height: 88px;"></textarea></div>
+            </div>
+            <div class="modal-footer" style="padding-bottom: 8px; padding-top:11px;">
+
+                <button class="btn btn-success btn-radius" id="btnCancelRemarks" onclick="CancelRemarks_save()">Save</button>
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="ReOpenModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Reason For Re-Open</h4>
+            </div>
+            <div class="modal-body">
+                <label>Reason<span style="color:red">*</span></label>
+                <div><textarea id="txtReOpenRemarks" class="form-control" maxlength="500" style="margin: 0px -2px 5px 0px; width: 479px; height: 88px;"></textarea></div>
+            </div>
+            <div class="modal-footer" style="padding-bottom: 8px; padding-top:11px;">
+
+                <button class="btn btn-success btn-radius" id="btnReopenRemarks" onclick="ReOpenRemarks_save()">Save</button>
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Print Modal -->
+<div class="modal fade pmsModal w30" id="PrintModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Design(s)</h4>
+            </div>
+            <div class="modal-body">
+                <div class="detailsarea">
+
+                    @*<div id="chkPrint">
+                            <div>
+                                <input type="checkbox" id="PrintOriginal" value="1" /> <label>Original</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="PrintDuplicate" value="2" /> <label>Duplicate</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="PrintTriplicate" value="3" /> <label>Triplicate</label>
+                            </div>
+                        </div>*@
+
+                    <div>
+                        <select id="scldesign" class="form-control"></select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" id="btnDegOK" class="btn btn-success btn-radius" onclick="ShowDesign()">Ok</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Print Modal -->
+
+<input type="hidden" id="hdnIsMultiuserApprovalRequired" value="@ViewBag.IsMultiuserApprovalRequired" />

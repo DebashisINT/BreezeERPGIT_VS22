@@ -1,0 +1,71 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "BranchGridLookup";
+        settings.KeyFieldName = "Br_id";
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Properties.EnableClientSideAPI = true;
+        settings.Properties.ClientInstanceName = "BranchGridLookup";
+        settings.GridViewClientSideEvents.SelectionChanged = "BranchSelectionChanged";
+        settings.GridViewClientSideEvents.BeginCallback = "BranchStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "BranchSelectionChanged";
+        settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        settings.Properties.ClientSideEvents.DropDown = "BranchLookupValChange";
+
+        settings.CommandColumn.Visible = true;
+        //settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        settings.Properties.TextFormatString = "{0}";
+
+        // settings.Properties.Columns("OrderId").Visible = false;
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Br_description";
+            column.Caption = "Branch Description";
+            column.VisibleIndex = 1;
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(15);
+
+        });
+
+        settings.Properties.Caption = " ";
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Multiple;
+
+        //  settings.Properties.TextFormatString = "{1}";
+        settings.Properties.MultiTextSeparator = ", ";
+        settings.Properties.SelectionMode = GridLookupSelectionMode.Multiple;
+        settings.Properties.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "Project", Action = "GetBranchList" };
+        // settings.GridViewClientSideEvents.BeginCallback = "function(s,e){OnBeginCallback(s,e);}";
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+
+
+
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 700;
+
+            //gridLookup.GridView.Settings.wi
+        };
+
+    }).BindList(Model).GetHtml()
+
+
+
+
+
+

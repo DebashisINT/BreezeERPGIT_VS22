@@ -1,0 +1,185 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridProficiencyList";
+    settings.CallbackRouteValues = new { Action = "GetProficiencyPartial", Controller = "Proficiency" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+    //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Visible;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProficiencyNAME";
+        x.Caption = "Proficiency Name";
+        x.VisibleIndex = 1;
+        //x.Width = 200;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Ratable_Entity";
+        x.Caption = "Ratable Entity";
+        x.VisibleIndex = 2;
+        //x.Width = 150;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Min_Rate";
+        x.Caption = "Min Rate";
+        x.VisibleIndex = 3;
+        //x.Width = 100;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Max_Rate";
+        x.Caption = "Max Rate";
+        x.VisibleIndex = 4;
+        //x.Width = 100;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.FieldName = "RatingName";
+    //    x.Caption = "Rating Name";
+    //    x.VisibleIndex = 5;
+    //    //x.Width = 100;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    //});
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.FieldName = "Rating_Value";
+    //    x.Caption = "Rating Value";
+    //    x.VisibleIndex = 6;
+    //    //x.Width = 100;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    //});
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.FieldName = "IsDefault";
+    //    x.Caption = "Status";
+    //    x.VisibleIndex = 7;
+    //    //x.Width = 100;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    //});
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CREATE_NAME";
+        x.Caption = "Entered By";
+        x.VisibleIndex = 8;
+        //x.Width = 100;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Create_Date";
+        x.Caption = "Entered On";
+        x.VisibleIndex = 9;
+        //x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+    settings.Columns.Add(x =>
+       {
+           x.FieldName = "UPDATE_NAME";
+           x.Caption = "Modified By";
+           x.VisibleIndex = 10;
+           //x.Width = 100;
+           x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+       });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Update_Date";
+        x.Caption = "Modified On";
+        x.VisibleIndex = 11;
+        //x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy hh:mm:ss";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "";
+        x.VisibleIndex = 12;
+        x.Width = 0;
+        x.SetDataItemTemplateContent(c =>
+        {
+            ViewContext.Writer.Write("<div class='floatedBtnArea'>");
+            if (ViewBag.CanEdit)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenProficiencyforEdit('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ProficiencyID")) + "')\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+            }
+            if (ViewBag.CanView)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenProficiencyforView('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ProficiencyID")) + "')\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>");
+            }
+            if (ViewBag.CanDelete)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenProficiencyforDelete('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ProficiencyID")) + "')\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+            }
+            ViewContext.Writer.Write("</div>");
+            // ViewContext.Writer.Write("<a style='cursor:pointer' onclick=\"OpenProductWindow('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ROLE_ID")) + "')\">" + Convert.ToString(DataBinder.Eval(c.DataItem, "Order_Number")) + "</a>");
+        });
+        //x.Width = 100;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        
+    });
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Order_Value"); ;
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Delivered_Value");
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "countactivity").DisplayFormat = "0";
+
+}).Bind(Model).GetHtml()
+

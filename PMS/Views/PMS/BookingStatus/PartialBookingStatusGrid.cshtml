@@ -1,0 +1,187 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridBookingStatusList";
+    settings.CallbackRouteValues = new { Action = "GetBookingStatusPartial", Controller = "BookingStatus" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    //  settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.TopAndBottom;
+    //settings.Settings.ShowFilterRowMenu = true;
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BOOKING_NAME";
+        x.Caption = "Name";
+        x.VisibleIndex = 1;
+        //x.Width = 250;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "TYPENAME";
+        x.Caption = "Type";
+        x.VisibleIndex = 2;
+        //x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "STATUS_NAME";
+        x.Caption = "Status";
+        x.VisibleIndex = 3;
+        // x.Width = 100;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "DESCRIPTION";
+        x.Caption = "Description";
+        x.VisibleIndex = 4;
+        //x.Width = 100;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BRANCH_NAME";
+        x.Caption = "Unit";
+        x.VisibleIndex = 5;
+        // x.Width = 200;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "COLOR";
+        x.Caption = "Color";
+        x.VisibleIndex = 6;
+        //x.Width = 100;
+
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CREATE_NAME";
+        x.Caption = "Entered By";
+        x.VisibleIndex = 7;
+        //x.Width = 100;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CREATE_DATE";
+        x.Caption = "Entered On";
+        x.VisibleIndex = 8;
+        // x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+    settings.Columns.Add(x =>
+       {
+           x.FieldName = "UPDATE_NAME";
+           x.Caption = "Modified By";
+           x.VisibleIndex = 9;
+           //x.Width = 100;
+           x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+       });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "UPDATE_DATE";
+        x.Caption = "Modified On";
+        x.VisibleIndex = 10;
+        // x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy hh:mm:ss";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "";
+        x.VisibleIndex = 11;
+        x.Width = 0;
+        x.SetDataItemTemplateContent(c =>
+        {
+            ViewContext.Writer.Write("<div class='floatedBtnArea'>");
+            if (ViewBag.CanEdit)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenBookingforEdit('" + Convert.ToString(DataBinder.Eval(c.DataItem, "BOOKING_ID")) + "')\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+            }
+            if (ViewBag.CanView)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenBookingStatusorView('" + Convert.ToString(DataBinder.Eval(c.DataItem, "BOOKING_ID")) + "')\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>");
+            }
+            if (ViewBag.CanDelete)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenBookingforDelete('" + Convert.ToString(DataBinder.Eval(c.DataItem, "BOOKING_ID")) + "')\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+            }
+            ViewContext.Writer.Write("</div>");
+        });
+        // x.Width = 120;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+
+    settings.HtmlDataCellPrepared = (s, e) =>
+    {
+        if (e.DataColumn.FieldName != "COLOR") return;
+
+        if (e.VisibleIndex >= 0)
+        { // Add this condition
+            string color = e.CellValue.ToString();
+            e.Cell.BackColor = System.Drawing.ColorTranslator.FromHtml(color);
+            e.Cell.ForeColor = System.Drawing.ColorTranslator.FromHtml(color);
+        }
+
+    };
+
+
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Order_Value"); ;
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Delivered_Value");
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "countactivity").DisplayFormat = "0";
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+}).Bind(Model).GetHtml()
+

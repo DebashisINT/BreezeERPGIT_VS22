@@ -1,0 +1,782 @@
+﻿@model PMS.Models.ViewModel.ProficiencyViewModel
+@{
+    ViewBag.Title = "Proficiency Model";
+}
+
+
+
+<script>
+    $(function () {
+        gridProficiencyList.Refresh();
+
+        $("#Rating_Value").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#Min_Rate").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $('#ddlAppIds').on('change', function () {
+            if ($("#ddlAppIds option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlAppIds').prop("selectedIndex", 0);
+                var url = '@Url.Action("ExportProficiencylist", "Proficiency", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+        $(".navbar-minimalize").click(function () {
+            gridProficiencyList.Refresh();
+            // alert("grod call");
+        });
+    });
+
+    function OnStartCallback(s, e) {
+
+        //e.customArgs["Employee"] = empId;
+        //e.customArgs["allEmployee"] = checkBox;
+        //e.customArgs["Ispageload"] = 1;
+    }
+
+    var chkArr = "";
+
+    function OpenProficiencyforEdit(obj) {
+        //alert(obj);
+        $("#Prefid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "Proficiency")",
+            data: { ProficiencyID: obj },
+            dataType: "json",
+            success: function (response) {
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("Edit Proficiency Model");
+                    $('#ProficiencyNAME').attr("disabled", true);
+                    $("#ProficiencyNAME").val(status.ProficiencyNAME);
+                    $("#Min_Rate").val(status.Min_Rate);
+                    $("#Ratable_Entity").val(status.Ratable_Entity);
+                    //$("#RatingName").val(status.RatingName);
+                    //$("#Rating_Value").val(status.Rating_Value);
+                    //if (status.IsDefault == "True") {
+                    //    document.getElementById("exampleCheck1").checked = true;
+                    //}
+                    //else {
+                    //    document.getElementById("exampleCheck1").checked = false;
+                    //}
+                    $('#RatingName1').val(status.RATING1);
+                    $('#RatingName2').val(status.RATING2);
+                    $('#RatingName3').val(status.RATING3);
+                    $('#RatingName4').val(status.RATING4);
+                    $('#RatingName5').val(status.RATING5);
+                    $('#RatingName6').val(status.RATING6);
+                    $('#RatingName7').val(status.RATING7);
+                    $('#RatingName8').val(status.RATING8);
+                    $('#RatingName9').val(status.RATING9);
+                    $('#RatingName10').val(status.RATING10);
+
+                    var checkvalue = status.DEFAULTVALU;
+
+                    for (i = 0; i <= 10; i++) {
+                        if (i == checkvalue) {
+                            $('#exampleCheck' + i).prop('checked', true);
+                        }
+                    }
+                    $("#ddlMax_RateList").val(status.Max_Rate);
+
+                    $('#cntNer').show();
+                    $('#ratingRepeater> div').hide();
+                    // var ThisValue = $(this).val();
+                    for (i = 0; i < status.Max_Rate; i++) {
+                        var vl = i + 1;
+                        // console.log('el' + vl)
+                        $('#repeater' + vl).show();
+                    }
+
+                    // gridProficiencyList.Refresh();
+                    $("#btnSave").removeClass('hide');
+                    $("#profModal").modal('toggle');
+                }
+            },
+            error: function (response) {
+                // alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function OpenProficiencyforDelete(obj) {
+        jConfirm('Confirm Delete?', 'Alert', function (r) {
+            if (r) {
+                $("#Prefid").val(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteData", "Proficiency")",
+                    data: { ProficiencyID: obj },
+                    dataType: "json",
+                    success: function (response) {
+                        var status = response;
+                        jAlert(status);
+                        $("#Prefid").val('');
+                        gridProficiencyList.Refresh();
+                    },
+                    error: function (response) {
+                        //alert(response);
+                        jAlert("Please try again later.");
+                    }
+                });
+            }
+            else {
+                // alert("false");
+            }
+        });
+
+    }
+
+
+    function OpenProficiencyforView(obj) {
+        //alert(obj);
+        $("#Prefid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "Proficiency")",
+            data: { ProficiencyID: obj },
+            dataType: "json",
+            success: function (response) {
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("View Proficiency Model");
+                    $("#ProficiencyNAME").val(status.ProficiencyNAME);
+                    $('#ProficiencyNAME').attr("disabled", true);
+                    $("#Min_Rate").val(status.Min_Rate);
+                    $("#Ratable_Entity").val(status.Ratable_Entity);
+                    //$("#RatingName").val(status.RatingName);
+                    //$("#Rating_Value").val(status.Rating_Value);
+                    //if (status.IsDefault == "True") {
+                    //    document.getElementById("exampleCheck1").checked = true;
+                    //}
+                    //else {
+                    //    document.getElementById("exampleCheck1").checked = false;
+                    //}
+                    $("#ddlMax_RateList").val(status.Max_Rate);
+                    // gridProficiencyList.Refresh();
+
+                    $('#RatingName1').val(status.RATING1);
+                    $('#RatingName2').val(status.RATING2);
+                    $('#RatingName3').val(status.RATING3);
+                    $('#RatingName4').val(status.RATING4);
+                    $('#RatingName5').val(status.RATING5);
+                    $('#RatingName6').val(status.RATING6);
+                    $('#RatingName7').val(status.RATING7);
+                    $('#RatingName8').val(status.RATING8);
+                    $('#RatingName9').val(status.RATING9);
+                    $('#RatingName10').val(status.RATING10);
+
+                    var checkvalue = status.DEFAULTVALU;
+
+                    for (i = 0; i <= 10; i++) {
+                        if (i == checkvalue) {
+                            $('#exampleCheck' + i).prop('checked', true);
+                        }
+                    }
+                    $('#cntNer').show();
+                    $('#ratingRepeater> div').hide();
+                    // var ThisValue = $(this).val();
+                    for (i = 0; i < status.Max_Rate; i++) {
+                        var vl = i + 1;
+                        // console.log('el' + vl)
+                        $('#repeater' + vl).show();
+                    }
+
+                    $("#btnSave").addClass('hide');
+                    $("#profModal").modal('toggle');
+                }
+
+            },
+            error: function (response) {
+                // alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function checkboxcheck(checkid) {
+        for (i = 0; i <= 10; i++) {
+            if (('exampleCheck' + i) != checkid) {
+                $('#exampleCheck' + i).prop('checked', false);
+            }
+        }
+    }
+
+    function ProfSave() {
+        var obj = {};
+        obj.ProficiencyID = $("#Prefid").val();
+        obj.ProficiencyNAME = $("#ProficiencyNAME").val().trim();
+        obj.Min_Rate = $("#Min_Rate").val().trim();
+        var F = document.getElementById("Ratable_Entity");
+        var Ratable = F.options[F.selectedIndex].value;
+        obj.Ratable_Entity = Ratable;
+        //obj.RatingName = $("#RatingName").val().trim();
+        //var ratvalu = $("#Rating_Value").val().trim();
+        //obj.Rating_Value = ratvalu;
+        //var IsDefault = $("#exampleCheck1").val();
+        obj.IsDefault = $("#exampleCheck1").is(":checked");
+        //if (IsDefault.isCheck)
+        //obj.IsDefault = "";
+        var e = document.getElementById("ddlMax_RateList");
+        var maxRate = e.options[e.selectedIndex].value;
+        obj.Max_Rate = maxRate;
+        //alert(obj.Max_Rate + " " + obj.Rating_Value);
+        obj.RATING1 = $('#RatingName1').val();
+        obj.RATING2 = $('#RatingName2').val();
+        obj.RATING3 = $('#RatingName3').val();
+        obj.RATING4 = $('#RatingName4').val();
+        obj.RATING5 = $('#RatingName5').val();
+        obj.RATING6 = $('#RatingName6').val();
+        obj.RATING7 = $('#RatingName7').val();
+        obj.RATING8 = $('#RatingName8').val();
+        obj.RATING9 = $('#RatingName9').val();
+        obj.RATING10 = $('#RatingName10').val();
+
+        var txtid ;
+        var msg = "";
+        var valid = true;
+        //for (i = 0; i <= maxRate; i++) {
+        //    if ($('#RatingName' + i).val() == "") {
+        //        msg = 'Rating Name' + i + ' is blank.';
+        //        txtid = $('#RatingName' + i);
+        //        //jAlert('Rating Name' + i + ' is blank.');
+        //        valid = false;
+        //        return
+        //    }
+        //}
+
+        for (i = 0; i <= maxRate; i++) {
+            if ($('#exampleCheck' + i).prop('checked') == true) {
+                //jAlert('exampleCheck' + i + ' is check.');
+                obj.DEFAULTVALU = i;
+                //   return
+            }
+        }
+
+
+
+        if (obj.ProficiencyNAME != "") {
+            if (obj.Min_Rate != "") {
+                if (obj.Ratable_Entity != 0) {
+                    // if (obj.RatingName != "") {
+                    // if (obj.Rating_Value != "") {
+                    //if (parseInt(maxRate) >= parseInt(ratvalu)) {
+                    //    if (parseInt(ratvalu) >= parseInt(obj.Min_Rate)) {
+                    for (i = 0; i <= maxRate; i++) {
+                        if ($('#RatingName' + i).val() == "") {
+                            msg = 'Rating Name ' + i + ' is blank.';
+                            txtid = $('#RatingName' + i);
+                           // jAlert('Rating Name' + i + ' is blank.');
+                            $('#RatingName' + i).focus();
+                            valid = false;
+                            break;
+                        }
+                    }
+                    if (valid) {
+                        LoadingPanel.Show();
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("SaveData", "Proficiency")",
+                            data: { prof: obj },
+                            success: function (response) {
+                                jAlert(response);
+                                $("#ProficiencyNAME").focus();
+                                LoadingPanel.Hide();
+                                if (response == 'Saved Successfully.' || response == 'Update Successfully.') {
+                                    $("#Prefid").val('');
+
+                                    //$("#RatingName").val('');
+                                    //$("#Rating_Value").val('');
+                                    //$("#exampleCheck1").val();
+                                    gridProficiencyList.Refresh();
+                                    $("#profModal").modal('toggle');
+                                }
+                            },
+                            error: function (response) {
+                                // alert(response);
+                                jAlert("Please try again later.", "Alert", function () {
+                                    setTimeout(function () {
+                                        $('#ProficiencyNAME').focus();
+                                    }, 200);
+                                });
+                                LoadingPanel.Hide();
+                            }
+                        });
+                    }
+                    else {
+                        jAlert( msg, "Alert", function () {
+                            setTimeout(function () {
+                                txtid.focus();
+                            }, 200);
+                        });
+                    }
+                    //    }
+                    //    else {
+                    //        jAlert("Rating Value can not less than min Rating.", "Alert", function () {
+                    //            setTimeout(function () {
+                    //                $('#ddlMax_RateList').focus();
+                    //            }, 200);
+                    //        });
+                    //    }
+                    //}
+                    //else {
+                    //    jAlert("Rating Value can not grater than max Rating.", "Alert", function () {
+                    //        setTimeout(function () {
+                    //            $('#ddlMax_RateList').focus();
+                    //        }, 200);
+                    //    });
+                    //}
+                    //}
+                    //else {
+                    //    jAlert("Rating Value is Mandatory.", "Alert", function () {
+                    //        setTimeout(function () {
+                    //            $('#Rating_Value').focus();
+                    //        }, 200);
+                    //    });
+                    //}
+                    //}
+                    //else {
+                    //    jAlert("Rating Name is Mandatory.", "Alert", function () {
+                    //        setTimeout(function () {
+                    //            $('#RatingName').focus();
+                    //        }, 200);
+                    //    });
+
+                    //}
+                }
+                else {
+                    jAlert("Ratable Entity is Mandatory.", "Alert", function () {
+                        setTimeout(function () {
+                            $('#Ratable_Entity').focus();
+                        }, 200);
+                    });
+
+                }
+            }
+            else {
+                jAlert("Min Rating Value is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        $('#Min_Rate').focus();
+                    }, 200);
+                });
+
+            }
+        }
+        else {
+            jAlert("Proficiency Name is Mandatory.", "Alert", function () {
+                setTimeout(function () {
+                    $('#ProficiencyNAME').focus();
+                }, 200);
+            });
+
+        }
+    }
+
+    function openPop() {
+        $("#Prefid").val('');
+        $("#ProficiencyNAME").val('');
+        $("#Min_Rate").val(1);
+        //$("#RatingName").val('');
+        //$("#Rating_Value").val('');
+        $("#ddlMax_RateList").val(1);
+        //$("#exampleCheck1").val();
+        $("#Ratable_Entity").val(0);
+        $("#btnSave").removeClass('hide');
+        $('#ProficiencyNAME').focus();
+        $("#exampleModalLabel").html("Add Proficiency Model");
+        $('#ProficiencyNAME').attr("disabled", false);
+        $('#RatingName1').val('');
+        $('#RatingName2').val('');
+        $('#RatingName3').val('');
+        $('#RatingName4').val('');
+        $('#RatingName5').val('');
+        $('#RatingName6').val('');
+        $('#RatingName7').val('');
+        $('#RatingName8').val('');
+        $('#RatingName9').val('');
+        $('#RatingName10').val('');
+
+        for (i = 0; i <= 10; i++) {
+            $('#exampleCheck' + i).prop('checked', false);
+        }
+        ShowTextRating(1);
+        //$('#cntNer').show();
+        //$('#repeater1').show();
+    }
+
+    function gridRowclick(s, e) {
+        $('#gridProficiencyList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+    $(document).ready(function () {
+      
+        $('#ddlMax_RateList').change(function () {
+            var ThisValue = $(this).val();
+            ShowTextRating(ThisValue);
+        })
+       // $('#repeater1').show();
+    });
+
+    function ShowTextRating(value) {
+        $('#ratingRepeater> div, #cntNer').hide();
+        $('#cntNer').show();
+        $('#ratingRepeater> div').hide();
+        for (i = 0; i < value; i++) {
+            var vl = i + 1;
+            console.log('el' + vl)
+            $('#repeater' + vl).show();
+        }
+    }
+
+</script>
+
+<style>
+    #gridProficiencyList, #gridProficiencyList > tbody > tr > td .dxgvCSD {
+        width: 100% !important;
+    }
+
+    .inb {
+        display: inline-block;
+        text-align: right;
+    }
+</style>
+
+
+<link href="/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Proficiency Model</label>
+        </h3>
+
+    </div>
+
+    @*<div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOMEntryList", "BOMEntry")"><i class="fa fa-times"></i></a></div>*@
+</div>
+<div class="form_main">
+    <div class="padTop8 padBot8">
+        <div class="clearfix">
+            @if (ViewBag.CanAdd)
+            {
+                <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#profModal" data-backdrop="static" onclick="openPop()" data-keyboard="true">
+                    <span class="btn-icon"><i class="fa fa-plus"></i></span> Proficiency Model
+                </button>
+            }
+            @if (ViewBag.CanExport)
+            {
+                <select name="ddlAppIds" class="btn btn-radius btn-primary" id="ddlAppIds">
+                    <option value="0">Export to</option>
+                    <option value="1">PDF</option>
+                    <option value="2">XLSX</option>
+                    <option value="3">XLS</option>
+                    <option value="4">RTF</option>
+                    <option value="5">CSV</option>
+                </select>
+            }
+        </div>
+    </div>
+
+    <div class="scrooler">
+        <div id="refreshgrid" class="relative">
+            @{
+                Html.RenderAction("GetProficiencyPartial", "Proficiency");
+            }
+        </div>
+    </div>
+</div>
+<input type="hidden" id="Prefid" />
+<div class="modal fade pmsModal w50" id="profModal" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Proficiency Model </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="openPop()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="pmsForm horizontalLbl boxModel clearfix">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-12 col-form-label">Proficiency Name <span class="asterix">*</span></label>
+                                        <div class="col-sm-12">
+                                            @*<input type="text" class="form-control" id="" value="">*@
+                                            @Html.TextBoxFor(m => m.ProficiencyNAME, new { @class = "form-control", @id = "ProficiencyNAME", @maxlength = "100" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @*<div class="col-sm-12">*@
+                                    <div class="col-sm-4">
+                                        <label for="" class="col-sm-12 col-form-label">Min Rating Value <span class="asterix">*</span></label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" id="Min_Rate" maxlength="2" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="" class="col-sm-12 col-form-label">Max Rating Value <span class="asterix">*</span></label>
+                                        <div class="col-sm-12">
+                                            @Html.DropDownListFor(x => x.Max_RateList, new SelectList(Model.Max_RateList, "RATING_ID", "RATING"), new { @id = "ddlMax_RateList", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="" class="col-sm-12 col-form-label">Ratable Entity <span class="asterix">*</span></label>
+                                        <div class="col-sm-12">
+                                            @*<select class="form-control" id="Ratable_Entity">
+                                                <option value="Select">Select</option>
+                                                <option value="Skill">Skill</option>
+                                                <option value="Certification">Certification</option>
+                                            </select>*@
+                                            @Html.DropDownListFor(x => x.CharacteristicTypeList, new SelectList(Model.CharacteristicTypeList, "Characteristic_ID", "Characteristic"), new { @id = "Ratable_Entity", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    @*</div>*@
+                                </div>
+                                @*<div class="col-sm-12">
+                                        <div class="form-group row">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group row">
+
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-12" id="cntNer">
+                        <h5>Rating Values</h5>
+                        <div class="pmsForm horizontalLbl boxModel">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group row">
+                                        <div class="clearfix" id="ratingRepeater">
+                                            <div class="col-md-3" id="repeater1">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">1 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" onchange="checkboxcheck('exampleCheck1')" id="exampleCheck1">
+                                                        <label class="form-check-label" for="exampleCheck1" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING1, new { @class = "form-control", @id = "RatingName1", @maxlength = "100" }) 
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater2">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">2 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck2" onchange="checkboxcheck('exampleCheck2')">
+                                                        <label class="form-check-label" for="exampleCheck2" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING2, new { @class = "form-control", @id = "RatingName2", @maxlength = "100" })
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater3">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">3 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck3" onchange="checkboxcheck('exampleCheck3')">
+                                                        <label class="form-check-label" for="exampleCheck3" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING3, new { @class = "form-control", @id = "RatingName3", @maxlength = "100" })
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater4">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">4 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck4" onchange="checkboxcheck('exampleCheck4')">
+                                                        <label class="form-check-label" for="exampleCheck4" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING4, new { @class = "form-control", @id = "RatingName4", @maxlength = "100" })
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater5">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">5 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck5" onchange="checkboxcheck('exampleCheck5')">
+                                                        <label class="form-check-label" for="exampleCheck5" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING5, new { @class = "form-control", @id = "RatingName5", @maxlength = "100" })
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater6">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">6 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck6" onchange="checkboxcheck('exampleCheck6')">
+                                                        <label class="form-check-label" for="exampleCheck6" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING6, new { @class = "form-control", @id = "RatingName6", @maxlength = "100" })
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater7">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">7 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck7" onchange="checkboxcheck('exampleCheck7')">
+                                                        <label class="form-check-label" for="exampleCheck7" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING7, new { @class = "form-control", @id = "RatingName7", @maxlength = "100" })
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater8">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">8 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck8" onchange="checkboxcheck('exampleCheck8')">
+                                                        <label class="form-check-label" for="exampleCheck8" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING8, new { @class = "form-control", @id = "RatingName8", @maxlength = "100" })
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater9">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">9 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck9" onchange="checkboxcheck('exampleCheck9')">
+                                                        <label class="form-check-label" for="exampleCheck9" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING9, new { @class = "form-control", @id = "RatingName9", @maxlength = "100" })
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="repeater10">
+                                                <label for="" class="col-sm-8 col-form-label mTop5 pdLeft0">10 <span class="asterix">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check inb">
+                                                        <input type="checkbox" class="form-check-input customCheck" id="exampleCheck10" onchange="checkboxcheck('exampleCheck10')">
+                                                        <label class="form-check-label" for="exampleCheck10" title="Make Default"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    @Html.TextBoxFor(m => m.RATING10, new { @class = "form-control", @id = "RatingName10", @maxlength = "100" })
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*<div class="col-sm-4">
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-12 col-form-label">Value <span class="asterix">*</span></label>
+                                            <div class="col-sm-12">
+                                                @*<input type="text" class="form-control" id="" value="">
+                                                @Html.TextBoxFor(m => m.Rating_Value, new { @class = "form-control", @id = "Rating_Value", @maxlength = "2" })
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                            </div>
+
+
+
+                            @*<div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Rating Model</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal" onclick="openPop()">Close</button>
+                <button type="button" class="btn btn-success btn-radius" onclick="ProfSave()" id="btnSave">Save & New</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()

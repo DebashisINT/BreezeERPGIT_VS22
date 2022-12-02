@@ -1,0 +1,219 @@
+﻿<script src="~/assests/js/Date/datepicker.js"></script>
+<style>
+    .ui-datepicker-title {
+        color:#fff
+    }
+</style>
+<script>
+    $(function () {
+        
+        
+        //$('#checker').on('change', function () {
+        //    showHidediv();
+        //    alert('');
+        //});
+        $('#checker').on('change', function () {
+            var a = $(this).val();
+            //console.log(a);
+            if (a == '1') {
+                $('#form_type2').hide();
+                $('#form_type1').show();
+            } else if (a == '2') {
+                
+                $('#form_type1').hide();
+                $('#form_type2').show();
+            } else if (a == '3') {
+                
+                $('#form_type1').hide();
+                $('#form_type2').show();
+            } else if (a == '4') {
+                
+                $('#form_type1').hide();
+                $('#form_type2').show();
+            } else if (a == '5') {
+                
+                $('#form_type1').hide();
+                $('#form_type2').show();
+            } else {
+                $('#form_type1, #form_type2').hide();
+            }
+        });     
+
+    });
+    
+    
+</script>
+<div class="panel-heading">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Period List </label>
+        </h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#periodModal" data-backdrop="static"  data-keyboard="true">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span> Add Period
+            </button>
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                Html.RenderAction("periodGrid", "PeriodList");
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pmsModal w40" id="periodModal" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Add Period </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm horizontalLbl clearfix">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Period Name <span class="asterix">*</span></label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="Min_Rate" maxlength="2" value="">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Period Type <span class="asterix">*</span></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="checker">
+                                        <option value="1">N/A</option>
+                                        <option value="2">Monthly</option>
+                                        <option value="3">Quarterly</option>
+                                        <option value="4">Half Yearly</option>
+                                        <option value="5">Yearly</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Description <span class="asterix">*</span></label>
+                                <div class="col-sm-12">
+                                   <textarea class="form_control"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="boxModel clearfix mTop5" id="form_type1">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-12 col-form-label">Start Date <span class="asterix">*</span></label>
+                                            <div class="input-group col-sm-12">
+                                                <input type="text" class="form-control fc-datepicker" id="" placeholder="">
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-12 col-form-label">End Date <span class="asterix">*</span></label>
+                                            <div class="input-group col-sm-12">
+                                                <input type="text" class="form-control fc-datepicker" id="" placeholder="">
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="boxModel clearfix mTop5" id="form_type2" style="display:none">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label for="" class=" col-form-label">Select Year <span class="asterix">*</span></label>
+                                            <div class="">
+                                                <select class="form-control">
+                                                    <option>Select</option>
+                                                    <option>2016</option>
+                                                    <option>2017</option>
+                                                    <option>2018</option>
+                                                    <option>2019</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label for="" class=" col-form-label">Select Period <span class="asterix">*</span></label>
+                                            <div class="">
+                                                <select class="form-control">
+                                                    <option>N/A</option>
+                                                    <option>Monthly</option>
+                                                    <option>Quarterly</option>
+                                                    <option>Half Yearly</option>
+                                                    <option>Yearly</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-12 col-form-label">Start Date <span class="asterix">*</span></label>
+                                            <div class="input-group col-sm-12">
+                                                <input type="text" class="form-control fc-datepicker" id="" placeholder="">
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-12 col-form-label">End Date <span class="asterix">*</span></label>
+                                            <div class="input-group col-sm-12">
+                                                <input type="text" class="form-control fc-datepicker" id="" placeholder="">
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="btnSave">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+
+    });
+</script>

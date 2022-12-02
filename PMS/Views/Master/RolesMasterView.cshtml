@@ -1,0 +1,377 @@
+﻿@model PMS.Models.ViewModel.RolesMasterViewModel
+@{
+   // ViewBag.Title = "Roles";
+}
+<script>
+    $(function () {
+        gridRoleMasterList.Refresh();
+        PopulateWareHouseData();
+    });
+
+    function OnStartCallback(s, e) {
+
+        //e.customArgs["Employee"] = empId;
+        //e.customArgs["allEmployee"] = checkBox;
+        //e.customArgs["Ispageload"] = 1;
+    }
+
+    var chkArr ="";
+
+    function OpenRoleMasterforEdit(obj) {
+        //alert(obj);
+        $("#Roleid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewData", "Master")",
+            data: { roleID: obj },
+            dataType: "json",
+            success: function (response) {
+                // jAlert(response.ROLE_NAME);
+                // $("#exampleModal").modal('toggle');
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#RoleName").val(status.ROLE_NAME);
+                    $("#Description").val(status.DESCRIPTION);
+                    $("#ddlBillingType").val(status.BILLING_NAME);
+                    $("#ddlUnit").val(status.UnitName);
+                    $("#ddlSkillCate").val(status.SkillCategoryName);
+                    $("#exampleModal").modal('toggle');
+                }
+
+            },
+            error: function (response) {
+                alert(response);
+                jAlert("Please try again later");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function OpenRoleMasterforDelete(obj) {
+        jConfirm('Are you sure want to Delete ?', 'Alert', function (r) {
+            if (r) {
+                $("#Roleid").val(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteData", "Master")",
+                    data: { roleID: obj },
+                    dataType: "json",
+                    success: function (response) {
+                        var status = response;
+                        jAlert(status);
+                        gridRoleMasterList.Refresh();
+                    },
+                    error: function (response) {
+                        alert(response);
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+            else {
+                // alert("false");
+            }
+        });
+
+    }
+
+
+    function OpenRoleMasterforView(obj) {
+        //alert(obj);
+        $("#Roleid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewData", "Master")",
+            data: { roleID: obj },
+            dataType: "json",
+            success: function (response) {
+                // jAlert(response.ROLE_NAME);
+                // $("#exampleModal").modal('toggle');
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#RoleName").val(status.ROLE_NAME);
+                    $("#Description").val(status.DESCRIPTION);
+                    $("#ddlBillingType").val(status.BILLING_NAME);
+                    $("#ddlUnit").val(status.UnitName);
+                    $("#ddlSkillCate").val(status.SkillCategoryName);
+                    // $("#btnSave").attr("Display:none");
+                    document.getElementById("btnSave").style.display = "none";
+                    $("#exampleModal").modal('toggle');
+                }
+
+            },
+            error: function (response) {
+                alert(response);
+                jAlert("Please try again later");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function RoleSave() {
+        var obj = {};
+        obj.RoleID = $("#Roleid").val();
+        obj.RoleName = $("#RoleName").val();
+        obj.Description = $("#Description").val();
+        var e = document.getElementById("ddlBillingType");
+        obj.BillingType = e.options[e.selectedIndex].value;
+        var f = document.getElementById("ddlUnit");
+        obj.Unit = f.options[f.selectedIndex].value;
+        var g = document.getElementById("ddlSkillCate");
+        obj.SkillCategory = g.options[g.selectedIndex].value;
+        obj.SkillSet = chkArr;
+        // alert(obj.SkillCategory + "-" + obj.Unit + "-" + obj.BillingType);
+        if (RoleName != "") {
+            if (Description != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveData", "Master")",
+                    // contentType: "application/json; charset=utf-8",
+                    data: { role: obj }, //, VehicleNo: Gridr
+
+                    // dataType: "json",
+                    //async: false,
+                    success: function (response) {
+                        jAlert(response);
+                        $("#exampleModal").modal('toggle');
+                        // LoadingPanel.Hide();
+                        if (response == 'Data Save') {
+                            $("#invid").val('');
+                            $("#RoleName").val('');
+                            $("#Description").val('');
+                            $("#Roleid").val('');
+                            $("#ddlBillingType").val(0);
+                            $("#ddlUnit").val(0);
+                            $("#ddlSkillCate").val(0);
+                            gridRoleMasterList.Refresh();
+                            chkArr = "";
+                            unCheckClick();
+                        }
+                    },
+                    error: function (response) {
+                        alert(response);
+                        jAlert("Please try again later");
+                        //LoadingPanel.Hide();
+                    }
+                });
+            }
+            else {
+                alert("Please Enter Description");
+
+            }
+        }
+        else {
+            alert("Please Enter Roles");
+
+        }
+    }
+
+    function CheckChange(e, eee) {
+        iCheckClick();
+        //alert($(e).val());
+    }
+
+
+
+    function iCheckClick() {
+        var table = document.getElementsByClassName('checkWraper');
+
+        var rowLength = table[0].children.length;
+        chkArr = "";
+
+        for (var i = 0; i < rowLength; i += 1) {
+            if ($(table[0].children[i].children[0]).prop('checked')) {
+                var obj = {};
+                if (chkArr == "") {
+                    chkArr =  $(table[0].children[i].children[0]).val();
+                }
+                else {
+                    chkArr = chkArr + ',' + $(table[0].children[i].children[0]).val();
+                }
+                //obj.CheckedID = $(table[0].children[i].children[0]).val();
+                //chkArr.push(obj);
+            }
+        }
+        //debugger;
+    }
+
+
+    function unCheckClick() {
+        var table = document.getElementsByClassName('checkWraper');
+
+        var rowLength = table[0].children.length;
+        chkArr = "";
+
+        for (var i = 0; i < rowLength; i += 1) {
+            if ($(table[0].children[i].children[0]).prop('checked')) {
+                //var obj = {};
+                //if (chkArr == "") {
+                //    chkArr = $(table[0].children[i].children[0]).val();
+                //}
+                //else {
+                //    chkArr = chkArr + ',' + $(table[0].children[i].children[0]).val();
+                //}
+                //obj.CheckedID = $(table[0].children[i].children[0]).val();
+                //chkArr.push(obj);
+                $(table[0].children[i].children[0]).prop('checked', false);
+            }
+        }
+        //debugger;
+    }
+
+    function PopulateWareHouseData() {
+        var BankBranchID = $('#ddlSkillCate option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewSkillSet", "Master")",
+            data: { SkillID: BankBranchID },
+        success: function (response) {
+            var html = "";
+            //var hdnProductWarehouseID = $('#hdnProductWarehouseID').val();
+            //for (var i = 0; i < response.length; i++) {
+            //    if (hdnProductWarehouseID > 0) {
+            //        if (hdnProductWarehouseID == response[i].WarehouseID) {
+            //            html = html + "<option value='" + response[i].WarehouseID + "' selected>" + response[i].WarehouseName + "</option>";
+            //        }
+            //        else {
+            //            html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+            //        }
+            //    }
+            //    else {
+            //        html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+            //    }
+
+            //}
+            //$('#ddlWarehouse').html(html);
+
+        }
+    });
+    }
+
+</script>
+
+<link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="~/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+
+<section class="rightSide transit clearfix pmsRight" style="min-height: 415px;">
+    <div class="panel-heading clearfix pmsHeader">
+        <div class="panel-title clearfix pull-left" id="myDiv">
+            <h3 class="pull-left">
+                <label>Roles Master</label>
+            </h3>
+        </div>
+
+        @*<div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOMEntryList", "BOMEntry")"><i class="fa fa-times"></i></a></div>*@
+    </div>
+    <div class="pmsContent">
+        <div class="clearfix">
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#exampleModal">Roles</button>
+            @*<button class="btn btn-success btn-radius" data-toggle="modal" data-target="#bookingSatus">Booking Status</button>
+                <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#skillPopup">Booking Status</button>*@
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <input type="hidden" id="Roleid" />
+
+    <div class="modal fade pmsModal w40" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Roles</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control", @id = "RoleName" })
+                                @*<input type="text" class="form-control" id="staticEmail" value="email@example.com">*@
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "Description" })
+                                @*<textarea rows="5" ></textarea>*@
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Billing Type</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownListFor(x => x.BillingTypeList, new SelectList(Model.BillingTypeList, "BillingID", "BillingName"), new { @id = "ddlBillingType", @class = "form-control" })  @*, @onchange = "PopulateWareHouseData();"*@
+                                @*<select class="form-control">
+                                        <option>Select</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Unit</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownListFor(x => x.UnitList, new SelectList(Model.UnitList, "branch_id", "branch_description"), new { @id = "ddlUnit", @class = "form-control" })
+
+                                @*<select class="form-control">
+                                        <option>Select</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Skill Category</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownListFor(x => x.SkillCategoryList, new SelectList(Model.SkillCategoryList, "SkillCategoryID", "SkillCategoryName"), new { @id = "ddlSkillCate", @class = "form-control", @onchange = "PopulateWareHouseData();" })
+                                @*<select class="form-control">
+                                        <option>Select</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Skillset</label>
+                            <div class="col-sm-10">
+                                <div class="checkWraper">
+                                    @foreach (PMS.Models.ViewModel.SkillSets course in Model.SkillSetList)
+                                    {
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox_@course.SkillSetID" onclick="CheckChange(this,event);" value="@course.SkillSetID">@course.SkillSetName
+                                        </label>
+                                    }
+                                    @*<label class="checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox2" value="option2"> SQL
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox3" value="option3"> MVC
+                                        </label>*@
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button id="btnSave" type="button" class="btn btn-success btn-radius" onclick="RoleSave()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="scrooler">
+        <div id="refreshgrid">
+            @{
+                Html.RenderAction("GetRoleMasterPartial", "Master");
+            }
+        </div>
+    </div>
+</section>

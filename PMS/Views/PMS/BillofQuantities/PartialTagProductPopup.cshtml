@@ -1,0 +1,110 @@
+﻿@*//@model CRM.Models.crmActivity*@
+
+<script>
+    $(function () {
+
+        debugger;
+
+        @*if ('@ViewBag.ddlContactType' != "")
+            $("#ddlContactType").val(@ViewBag.ddlContactType);
+            $("#AssignTo").val(@ViewBag.AssignTo);
+        if ('@ViewBag.Duration' != "")
+            $("#Duration").val(@ViewBag.Duration);
+        if ('@ViewBag.ddlPriority' != "")
+            $("#ddlPriority").val(@ViewBag.ddlPriority);*@
+
+
+    })
+
+</script>
+
+<style>
+    #tbodyActivityProduct > td {
+        padding: 2px 25px;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th:not(:last-child) {
+        border-right: #333;
+    }
+
+    .boxStyle {
+        padding: 5px;
+        background: #f7f7f7;
+        margin: 0 15px 8px 15px;
+        border: 1px solid #ccc;
+    }
+
+    .link {
+        cursor: pointer;
+    }
+
+    .pdLeft0 {
+        padding-left: 0 !important;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner, #dataTbl_wrapper .dataTables_scrollHeadInner table {
+        width: 100% !important;
+    }
+
+        #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th {
+            background: #337ab7;
+            color: #fff;
+            padding: 2px 15px;
+        }
+
+    #tbodyActivityProduct > td {
+        padding: 2px 25px;
+    }
+
+    #dataTbl_wrapper .dataTables_scrollHeadInner table > thead > tr > th:not(:last-child) {
+        border-right: #333;
+    }
+
+    .modal-footer .btn {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .dataTable > thead > tr > th {
+        background: #285e8e;
+        color: #fff;
+    }
+</style>
+
+
+
+<div class="clear"></div>
+<div style="background:#fff">
+    <div class="clearfix"></div>
+
+
+    <div class="col-md-12">
+        <div class="visF">
+            <div style="padding: 7px 0;">
+                <input type="button" value="Select All Products" onclick="ChangeState('SelectAll')" class="btn btn-primary" />
+                <input type="button" value="De-select All Products" onclick="ChangeState('UnSelectAll')" class="btn btn-primary" />
+                <input type="button" value="Revert" onclick="ChangeState('Revart')" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+    <div class="col-md-12">
+        <div class="visF">
+            <div id="td_Type">
+                <div class="visF">
+                    @Html.Action("GetTagProductCode", "BillofQuantities", new { Estimatecode = ViewBag.Estimate_code, Module = ViewBag.Module })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix">
+    <input type="hidden" id="hdnEntityID" />
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btnOkformultiselection btn btn-success" onclick="SetTagProduct()">OK</button>
+    @*<button type="button" class="btnOkformultiselection btn btn-danger" onclick="CancelActivity()">Cancel</button>*@
+</div>

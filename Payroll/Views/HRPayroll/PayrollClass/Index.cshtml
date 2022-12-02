@@ -1,0 +1,372 @@
+﻿@model Payroll.Models.PClassGenerationEngine
+@using System.Web.UI.WebControls
+
+@using DevExpress.Web.Mvc
+@{
+    ViewBag.Title = ViewBag.title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        var IsGenerate = '@ViewBag.IsGenerate';
+        var GenerateLastDate = '@ViewBag.GenerateLastDate';
+        var classid='@Model._PClassId';
+
+        if (classid != ''){
+            period_frm_dt.SetEnabled(false);
+        }
+        if(IsGenerate=='Y')
+        {
+            cmb_prollunit.SetEnabled(false);
+            cmb_prolgen.SetEnabled(false);
+        }
+
+        if (GenerateLastDate != "") {
+            GenerateLastDate = new Date(GenerateLastDate);
+            period_to_dt.SetMinDate(GenerateLastDate);
+        }
+    });
+
+    function datevalidate() {
+        period_to_dt.SetMinDate(period_frm_dt.GetDate());
+    }
+
+    function datevalidateTo() {
+        period_frm_dt.SetMaxDate(period_to_dt.GetDate());
+    }
+
+    function validateclass() {
+        var x = true;
+        var class_nm = $("#txt_clsnm").val().trim();
+        var period_frm = period_frm_dt.GetDate();
+        var period_to = period_to_dt.GetDate();
+        if (class_nm == "" || class_nm == null) {
+            $("#Mandatoryclsnm").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryclsnm").hide();
+        }
+
+        if (period_frm == "" || period_frm == null) {
+            $("#Mandatoryfrmdt").show();
+            x = false;
+        }
+        else {
+            $("#Mandatoryfrmdt").hide();
+        }
+
+        if (period_to == "" || period_to == null) {
+            $("#Mandatorytodt").show();
+            x = false;
+        }
+        else {
+            $("#Mandatorytodt").hide();
+        }
+
+        if (x == false) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function save_new() {
+        if (validateclass())
+        {
+            var apply = {
+                _PClassName: $("#txt_clsnm").val(),
+                _PClassId: $("#hdnclass_id").val(),
+                _PeriodFrm: period_frm_dt.GetDate(),
+                _PeriodTo: period_to_dt.GetDate(),
+                _PUnit: cmb_prollunit.GetValue(),
+                _PGeneration: cmb_prolgen.GetValue(),
+                _PBranchUnit: cmb_branchunit.GetValue(),
+                _PHoliday: cmb_HoliDayList.GetValue(),
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/PayrollClass/SaveProllClass",
+                data: "{apply:" + JSON.stringify(apply) + "}",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.response_msg == "Success") {
+                        jAlert("Saved Successfully", "Alert", function () {
+                            var url = '/PayrollClass/Dashboard';
+                            window.location.href = url;
+
+                        });
+
+
+                    }
+                    else {
+                        jAlert(response.response_msg);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+
+    }
+</script>
+<style>
+    .mtbl>tbody>tr>td {
+        padding-right:25px;
+        position: relative;
+        padding-bottom:5px;
+    }
+    .validclass {
+        position:absolute;
+        right: 6px;
+        top: 5px;
+    }
+</style>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">@ViewBag.classheadername</h3>
+    </div>
+    <div id="ApprovalCross" class="crossBtn"><a href="/PayrollClass/Dashboard"><i class="fa fa-times"></i></a></div>
+</div>
+<div class="form_main">
+    <div class="form-horizontal">
+        <table class="mtbl">
+            <tr>
+                <td>Payroll Class Name<span style="color: red">*</span></td>
+                <td colspan="2">
+                    <input type="text" id="txt_clsnm" style="width:100%" value="@Model._PClassName" />
+                    <input type="hidden" name="hdnclass_id" id="hdnclass_id" value="@Model._PClassId" />
+                    <span id="Mandatoryclsnm" style="display: none" class="validclass">
+                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>Payroll Period<span style="color: red">*</span></td>
+                <td>
+                    @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "period_frm_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormat = EditFormat.Custom;
+                                         settings.Properties.UseMaskBehavior = true;
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Properties.ClientSideEvents.DateChanged = "datevalidate";
+                                         settings.Properties.ShowOutOfRangeWarning = false;
+                                         settings.Date = Convert.ToDateTime(@Model._PeriodFrm);
+                                     }
+                            ).GetHtml()
+                    <span id="Mandatoryfrmdt" style="display: none" class="validclass">
+                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </td>
+                <td>
+                    @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "period_to_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormat = EditFormat.Custom;
+                                         settings.Properties.ValidationSettings.Display = Display.None;
+                                         settings.Properties.UseMaskBehavior = true;
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                         settings.Properties.ShowOutOfRangeWarning = false;
+                                         settings.Date = Convert.ToDateTime(@Model._PeriodTo);
+
+                                     }
+                            ).GetHtml()
+                    <span id="Mandatorytodt" style="display: none" class="validclass">
+                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Payroll Unit</td>
+                <td>
+                    @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmb_prollunit";
+                        settings.Width = Unit.Percentage(100);
+                       // settings.SelectedIndex = 0;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "Text";
+                        settings.Properties.ValueField = "Value";
+
+                        settings.PreRender = (s, e) =>
+                        {                           
+                            if (Model._PUnit != null)
+                            {
+                                if (Model._PClassUnit.Any(x => x.Value == Model._PUnit))
+                                {
+                                    MVCxComboBox c = s as MVCxComboBox;
+                                    c.Value = (Model._PUnit);
+                                }
+                            }
+                            else
+                            {
+                                if (Model._PClassUnit.Any(x => x.Value == "DY"))
+                                {
+                                    MVCxComboBox c = s as MVCxComboBox;
+                                    c.Value = "DY";
+                                }     
+                            }
+                        };
+                    }
+                ).BindList(Model._PClassUnit).GetHtml()
+                    <span id="Mandatoryclsnm" style="display: none" class="validclass">
+                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Payroll Generation</td>
+                <td>
+                    @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmb_prolgen";
+                        settings.Width = Unit.Percentage(100);
+                       // settings.SelectedIndex = 1;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "Text";
+                        settings.Properties.ValueField = "Value";
+
+                        settings.PreRender = (s, e) =>
+                        {                            
+                            if (Model._PGeneration != null)
+                            {
+                                if (Model._PClassGen.Any(x => x.Value == Model._PGeneration))
+                                {
+                                    MVCxComboBox c = s as MVCxComboBox;
+                                    c.Value = (Model._PGeneration);
+                                }
+                            }
+                            else
+                            {
+                                if (Model._PClassGen.Any(x => x.Value == "MN"))
+                                {
+                                    MVCxComboBox c = s as MVCxComboBox;
+                                    c.Value = "MN";
+                                }                    
+                            }
+                        };
+                    }
+                         ).BindList(Model._PClassGen).GetHtml()
+                    <span id="Mandatoryclsnm" style="display: none" class="validclass">
+                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>Branch</td>
+                <td>
+                    @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmb_branchunit";
+                        settings.Width = Unit.Percentage(100);
+                        // settings.SelectedIndex = 0;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "Text";
+                        settings.Properties.ValueField = "Value";
+
+                        settings.PreRender = (s, e) =>
+                        {
+                            if (Model._PBranchUnit != null || Model._PBranchUnit != "")
+                            {
+                                MVCxComboBox c = s as MVCxComboBox;
+                                c.Value = (Model._PBranchUnit);
+                            }                           
+                        };
+                    }
+                         ).BindList(Model._PClassBranchUnit).GetHtml()
+                    <span id="Mandatoryclsnm" style="display: none" class="validclass">
+                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Holiday</td>
+                <td>
+                    @Html.DevExpress().ComboBox(
+                    
+                    settings =>
+                    {                        
+                        settings.Name = "cmb_HoliDayList";
+                        settings.Width = Unit.Percentage(100);
+                        // settings.SelectedIndex = 0;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "Text";
+                        settings.Properties.ValueField = "Value";
+
+                        settings.PreRender = (s, e) =>
+                        {
+                            if (Model._PHoliday != null || Model._PHoliday != "")
+                            {
+                                MVCxComboBox c = s as MVCxComboBox;
+                                c.Value = (Model._PHoliday);
+                            }
+                        };
+                    }
+                                  ).BindList(Model._PHoliDayBind).GetHtml()
+                    <span id="Mandatoryclsnm" style="display: none" class="validclass">
+                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </td>
+                <td></td>
+            </tr>
+
+
+
+            <tr>
+                <td></td>
+                <td colspan="2">
+                    @Html.DevExpress().Button(
+                        settings =>
+                        {
+                            settings.Name = "btn_save_new";
+                            settings.Text = "Save & Exit";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-primary";
+                            settings.UseSubmitBehavior = false;
+                            settings.ClientSideEvents.Click = "save_new";
+                        }
+                        ).GetHtml()
+                </td>
+            </tr>
+
+        </table>
+
+
+     
+        
+
+    </div>
+    <div style="clear: both;"></div>
+    <div>
+        
+    </div>
+</div>
+

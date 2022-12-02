@@ -1,0 +1,57 @@
+﻿
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+
+@{
+    ViewBag.Title = "Pay Structure-Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/payrollCss/index.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $('a[href="#tab1"]').parent('li').addClass('active');
+        $('#tab1').addClass(' in active');
+
+       
+    });
+
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+      
+        <div id="divcross" class="crossBtn"><a href="/StructureMaster/Dashboard"><i class="fa fa-times"></i></a></div>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-primary tabTotal">
+                <div class="panel-heading tabHead">
+                    <ul class="nav nav-tabs">
+                        <li><a href="#tab1" data-toggle="tab">Leave Listing</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Leave</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="tab1">
+                            @{
+                                Html.RenderAction("LeaveEntryListing", "LeaveApplication");
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="tab2">
+                         
+                            @{
+                                Html.RenderAction("Dashboard", "LeaveApplication");
+                            }
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

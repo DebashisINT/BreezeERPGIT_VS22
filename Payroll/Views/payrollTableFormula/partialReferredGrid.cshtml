@@ -1,0 +1,58 @@
+﻿@*@model List<Payroll.Models.TableFormulaHeadBreakup>*@
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvreferpaging";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "payrollTableFormula", Action = "partialReferredGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.KeyFieldName = "TableBreakup_ID";
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+    settings.SettingsDetail.ShowDetailRow = true;
+
+    
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TableName";
+        column.Caption = "Table Name";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApplicatedFrom";
+        column.Caption = "Applicable From";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApplicatedTo";
+        column.Caption = "Applicable To";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+    });
+
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+    settings.SettingsDetail.ShowDetailRow = true;
+
+    settings.SetDetailRowTemplateContent(c =>
+    {
+
+        Html.RenderAction("partialReferredInnerGrid", new { TableBreakup_ID = DataBinder.Eval(c.DataItem, "TableBreakup_ID") });
+    });
+    settings.PreRender = (sender, e) =>
+    {
+        //((MVCxGridView)sender).DetailRows.ExpandRow(0);
+    };
+   
+}).Bind(Model).GetHtml()

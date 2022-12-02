@@ -1,0 +1,500 @@
+﻿@{
+    ViewBag.Title = "Shift";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>*@
+
+<script>
+    var LateRule = [];
+    var EarlyLeaving = [];
+    var RotationalShift = [];
+    function AddClass() {
+        RotationalShift = [];
+        EarlyLeaving = [];
+        var route = '@Url.Action("PartialShiftEntry", "ShiftMaster")';
+        $('#ShiftAddModel').modal('show');
+        $('#partialShiftEntry').load(route);
+        setTimeout(function () {
+            $('#RotationalMandatoryShiftStart').attr('style', 'display:none');
+            $('#RotationalMandatoryShiftEnd').attr('style', 'display:none');
+            $('#idShiftType').val("0");
+            $('#normalShiftSec').show();
+            $('#Rotationalshiftsec').hide();
+        }, 800);
+        //ResetShiftEntry();
+    }
+
+    function OnClickEditForm(shiftId, Shift_Type)
+    {
+        var route = '@Url.Action("PartialShiftByID", "ShiftMaster")?ShiftId=' + shiftId
+        $('#ShiftAddModel').modal('show');
+        $('#partialShiftEntry').load(route);
+
+        //var hdnShift_Type = $('#hdnShift_Type').val();
+        
+        if (Shift_Type == "0") {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LeavingLateShiftByID", "ShiftMaster")',
+                data: JSON.stringify({ 'id': shiftId }),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.ResponseMessage == "Success") {
+                        LateRule = response.LateRules;
+                        EarlyLeaving = response.EarlyLeavingRules;
+                        setTimeout(function () {
+                            LateRuleTable(); EarlyLeavingTable();
+                            if (EarlyLeaving.length > 0 || LateRule.length > 0) {
+                                $('#AdvanceShiftRule').attr('checked', 'checked');
+                                ShowHideAdvanceRule();
+                            }
+                        }, 800);
+                    }
+
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+        else if (Shift_Type == "1") {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("RotationalShiftShiftByID", "ShiftMaster")',
+                data: JSON.stringify({ 'id': shiftId }),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.ResponseMessage == "Success") {
+                        RotationalShift = response.RotationalShift;
+                       
+                        setTimeout(function () {
+                            $('#idShiftType').val(Shift_Type);
+                            //$('#Rotationalshiftsec').show();
+                            //$('#normalShiftSec').hide();
+                            RotationalShiftTable();
+                          
+                        }, 800);
+                    }
+
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
+    }
+
+
+    function OnClickDeleteForm(ShiftId) {
+        var url = '/ShiftMaster/ShiftDelete/';
+
+        jConfirm("Confirm Delete?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'Delete', 'id': ShiftId }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.response_msg == "Success") {
+                            jAlert("Successfully Deleted");
+                            GVPartialShift.Refresh();
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    }
+
+    function AddEdit()
+    {
+        var IsValid = true;
+        var Shift_Code = $("#txtShiftCode").val();
+        var Shift_Name = $("#txtShiftName").val();
+        var Shift_Start = $("#txtShiftStart").val();
+        var Shift_End = $("#txtShiftEnd").val();
+
+        var AdvanceShiftRules = $('#AdvanceShiftRule').prop('checked');
+        var txtConsAttenAfter = $('#txtConsAttenAfter').val();
+
+        var intimeafter = $('#intimeafter').prop('checked');
+        var txtintimeafter = $('#txtintimeafter').val();
+
+        var OutTimeBefore = $('#OutTimeBefore').prop('checked');
+        var txtOutTimeBefore = $('#txtOutTimeBefore').val();
+
+        var InOutTimeDiff = $('#InOutTimeDiff').prop('checked');
+        var txtInOutTimeDiff = $('#txtInOutTimeDiff').val();
+
+        var DeductLeave = $('#deductrule').prop('checked');
+        var latedaycount = $('#latedaycount').val();
+        var laterulecount = $('#laterulecount').val();
+        var lateruleaftercount = $('#lateruleaftercount').val();
+
+        var Shift_EndDay = $('#Shift_EndDay option:selected').val();
+
+
+        var ShiftType = $("#idShiftType option:selected").val();
+        var TotalShiftTime = $("#txtShiftTime").val();
+
+        var Shift_Break_Time = $("#txtShift_Break_Time").val();
+
+        if (ShiftType == 0) {
+
+            if (Shift_Code.trim() == '') {
+                $('#MandatoryShiftCode').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryShiftCode').attr('style', 'display:none');
+            }
+
+            if (Shift_Name.trim() == '') {
+                $('#MandatoryShiftName').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryShiftName').attr('style', 'display:none');
+            }
+
+            if (Shift_Start.trim() == '') {
+                $('#MandatoryShiftStart').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryShiftStart').attr('style', 'display:none');
+            }
+
+            if (Shift_End.trim() == '') {
+                $('#MandatoryShiftEnd').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryShiftEnd').attr('style', 'display:none');
+            }
+
+            if (AdvanceShiftRules && (txtConsAttenAfter == "" || EarlyLeaving.length == 0 || LateRule.length == 0)) {
+                IsValid = false;
+                jAlert("Please fill advance shift rules section.");
+            }
+        }
+        else {
+            if (Shift_Code.trim() == '') {
+                $('#MandatoryShiftCode').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryShiftCode').attr('style', 'display:none');
+            }
+
+            if (Shift_Name.trim() == '') {
+                $('#MandatoryShiftName').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryShiftName').attr('style', 'display:none');
+            }
+
+            if (TotalShiftTime.trim() == '') {
+                $('#MandatoryTotalShiftTime').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryTotalShiftTime').attr('style', 'display:none');
+            }
+
+            if (Shift_Break_Time.trim() == '') {
+                $('#MandatoryShiftBreakTime').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryShiftBreakTime').attr('style', 'display:none');
+            }
+
+            if (RotationalShift.length == 0) {
+                IsValid = false;
+                jAlert("Please fill shift rules section.");
+            }
+        }
+        
+
+
+        if (IsValid == true) {
+            var obj = {};
+            obj.Shift_Id = $("#hdn_id").val();
+            obj.Shift_Code = $("#txtShiftCode").val();
+            obj.Shift_Name = $("#txtShiftName").val();
+
+            obj.Shift_Start = $("#txtShiftStart").val();
+            obj.Shift_End = $("#txtShiftEnd").val();
+
+            //obj.Consider_LateAfter = $("#txtConsLateAfter").val();
+            obj.Consider_AttendanceAfter = $("#txtConsAttenAfter").val();
+            obj.AdvanceShiftRules = AdvanceShiftRules;
+            obj.IsInTimeAfter = intimeafter;
+            obj.InTimeAfter = txtintimeafter;
+
+            obj.IsOutTimeAfter = OutTimeBefore;
+            obj.OutTimeAfter = txtOutTimeBefore;
+
+            obj.IsInOutTimeDiff = InOutTimeDiff;
+            obj.InOutTimeDiff = txtInOutTimeDiff;
+
+            obj.IsDeductLeave = DeductLeave;
+            obj.LateDayCount = latedaycount;
+            obj.LateRuleCount = laterulecount;
+            obj.LateRuleAfterCount = lateruleaftercount;
+
+            obj.EarlyLeavingRules = EarlyLeaving;
+            obj.LateRules = LateRule;
+
+            obj.Shift_EndDay = Shift_EndDay;
+
+            obj.Break = $("#txtShiftBreak").val();
+
+            obj.Shift_Break_Time = $("#txtShift_Break_Time").val();
+
+            //obj.Consider_HalfDayAfter = $("#txtConsHalfDayAfter").val();
+            //obj.Consider_HalfDayBefore = $("#txtConsHalfDayBefore").val();
+            //obj.OneLateAfter = $("#txtOneLateAfter").val();
+            //obj.TwoLateAfter = $("#txttwoLateAfter").val();
+            //obj.ThreeLateAfter = $("#txtthreeLateAfter").val();
+            //obj.Break = $("#txtBreak").val();
+
+            // obj.ID = document.getElementById('hdnAttachmentID').value;
+
+            obj.Shift_Type = ShiftType;
+            obj.RotationalShift = RotationalShift;
+            obj.Shift_Time = TotalShiftTime;
+
+            $.ajax({
+                type: "POST",
+                url: "/ShiftMaster/ShiftMasterSubmit",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {
+                        $('#ShiftAddModel').modal('hide');
+                        // var url = '/EmployeeAttachment/Dashboard';
+
+                        if ($("#hdn_id").val()== "")
+                        {
+                            jAlert("Shift created successfully", 'Alert Dialog: [Message]', function (r) {
+                                if (r == true) {
+                                    GVPartialShift.Refresh();
+                                    ///window.location.href = url;
+                                }
+                            });
+                        }
+                        else
+                        {
+                            jAlert("Shift Modify successfully", 'Alert Dialog: [Message]', function (r) {
+                                if (r == true) {
+                                    GVPartialShift.Refresh();
+                                    ///window.location.href = url;
+                                }
+                            });
+                        }
+
+
+                    }
+                    else {
+                        document.getElementById('lblErrorMessage').innerHTML = response.ResponseMessage;
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    }
+
+   
+</script>
+<script>
+    function validateHhMm(inputField) {
+        var InputValue = inputField.value;
+        var Time = "";
+
+        if (InputValue.includes(":")) {
+            var BeforeColon = InputValue.split(":")[0].trim();
+            var AfterColon = InputValue.split(":")[1].trim();
+
+            if (BeforeColon == "" || BeforeColon == "00") {
+                if (AfterColon.length == 0) {
+                    Time = "00:00";
+                }
+                else if (AfterColon.length == 1) {
+                    Time = "00:" + AfterColon + "0";
+                }
+                else {
+                    Time = InputValue;
+                }
+            }
+            else {
+                if (AfterColon.length == 0) {
+                    Time = BeforeColon + ":00";
+                }
+                else if (AfterColon.length == 1) {
+                    Time = BeforeColon + ":" + AfterColon + "0";
+                }
+                else {
+                    Time = InputValue;
+                }
+            }
+        }
+        else {
+            var BeforeColon = InputValue.split(":")[0].trim();
+            if (BeforeColon.length == 2) {
+                Time = InputValue + ":00"
+            }
+            else if (BeforeColon.length == 1) {
+                Time = "0"+InputValue + ":00"
+            }
+            else {
+                Time = InputValue + ":00"
+            }
+        }
+
+        var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(Time);  //Actual regex which will validate
+        if (!isValid) {
+            inputField.value = "";
+        }
+        else {
+            inputField.value = Time;
+        }
+
+        return isValid;
+    }
+
+    $("#txtShiftStart").bind("keyup change", function (e) {
+        var value = $('#txtShiftStart').val();
+        if (value.length == 2) {
+            $('#txtShiftStart').val($('#txtShiftStart').val() + ":")
+        } else if ((value.length) % 3 == 2 && value.length != 1 && value.length < 5) {
+            $('#txtShiftStart').val($('#txtShiftStart').val())
+        }
+    });
+
+    function ChangeShiftByType() {
+        $('#normalShiftSec').hide();
+        $('#Rotationalshiftsec').hide();
+        var idShiftType = $('#idShiftType option:selected').val();
+        if (idShiftType == 0) {
+            $('#normalShiftSec').show();
+        }
+        else if (idShiftType == 1) {
+            $('#Rotationalshiftsec').show();
+        }
+    }
+
+    function checkTimeHours(e) {
+        var time = $(e).val();
+        
+    }
+
+    $(document).ready(function () {
+        $('#txtShiftTime').mask('00:00');
+    });
+    
+    function gridRowclick(s, e) {
+        $('#GVPartialShift').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});    
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+</script>
+<style>
+    .borderpad {
+        border: 1px solid #ccc;
+        padding: 21px 0 11px 0;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+        .borderpad > span {
+            display: inline-block;
+            background: #edf3f4;
+            position: absolute;
+            top: -11px;
+            left: 12px;
+            padding: 6px 15px 6px 4px;
+            font-weight: 600;
+        }
+
+    .validclass {
+        position: absolute;
+        right: 0px;
+        top: 26px;
+    }
+</style>
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Shift Master</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="clearfix">
+
+        <button type="button" class="btn btn-success btn-radius" onclick="AddClass()">
+            <span class="btn-icon"><i class="fa fa-plus"></i></span>
+            Add New
+        </button> 
+
+        @*<a href="javascript:void(0);" onclick="AddClass()" class="btn btn-primary"><span>Add New</span> </a>*@
+    </div>
+</div>
+<div class="GridViewArea relative">
+    @{
+        Html.RenderAction("PartialShiftGrid", "ShiftMaster");
+    }
+</div>
+
+
+
+
+<div class="modal fade" id="ShiftAddModel" role="dialog">
+    <div class="modal-dialog" style="max-width:850px">
+        <div class="modal-content">
+            <div id="partialShiftEntry"></div>
+        </div>
+    </div>
+</div>
+

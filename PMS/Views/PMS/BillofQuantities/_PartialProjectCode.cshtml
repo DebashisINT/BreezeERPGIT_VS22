@@ -1,0 +1,116 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "ProjectGridLookup";
+        settings.KeyFieldName = "Proj_Id";
+        //settings.CommandColumn.Visible = true;
+        //settings.CommandColumn.ShowSelectCheckbox = true;
+        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Properties.EnableClientSideAPI = true;
+        //settings.Properties.ClientInstanceName = "ProjectGridLookup";
+        ////settings.GridViewClientSideEvents.SelectionChanged = "ProjectSelectionChanged";
+        settings.GridViewClientSideEvents.BeginCallback = "ProjectStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "ProjectSelectionChanged";
+        //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        //settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        settings.Properties.ClientSideEvents.DropDown = "ProjectLookupValChange";
+
+        ////settings.CommandColumn.Visible = true;
+        ////settings.CommandColumn.ShowSelectCheckbox = true;
+        //settings.CommandColumn.ShowClearFilterButton = true;
+        //settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+        settings.Properties.TextFormatString = "{1}";
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Proj_Id";
+            column.Caption = "Proj_Id";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(0); 
+            column.Visible = false;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProjectCode";
+            column.Caption = "Project Code";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProjectName";
+            column.Caption = "Project Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostomerName";
+            column.Caption = "Customer Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Hierarchy_Name";
+            column.Caption = "Hierarchy Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+
+        //settings.Properties.Caption = " ";
+        //settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        //settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Multiple;
+
+        //settings.Properties.TextFormatString = "{1}";
+        //settings.Properties.MultiTextSeparator = ", ";
+        //settings.Properties.SelectionMode = GridLookupSelectionMode.Multiple;
+        //settings.Properties.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+
+
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "BillofQuantities", Action = "GetProjectCode" };
+        // settings.GridViewClientSideEvents.BeginCallback = "function(s,e){OnBeginCallback(s,e);}";
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+        settings.GridViewClientSideEvents.SelectionChanged = "ProjectSelectionChanged";
+
+
+        settings.DataBinding = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 600;
+            if (ViewBag.ProjectTagID!=null)
+            {
+                MVCxGridLookup l = sender as MVCxGridLookup;
+                l.GridView.Selection.SelectRowByKey(ViewBag.ProjectTagID);
+                l.ClientEnabled = false;
+            }
+        };
+
+        
+
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.ProjectID != null)
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.GridView.Selection.SelectRowByKey(ViewBag.ProjectID);
+                l.ClientEnabled = false;
+            }
+            
+            if (ViewBag.Hierarchy == "0")
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.Columns["Hierarchy_Name"].Visible = false;
+            }
+            else
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.Columns["Hierarchy_Name"].Visible = true;
+            }
+        };
+
+    }).BindList(Model).GetHtml()

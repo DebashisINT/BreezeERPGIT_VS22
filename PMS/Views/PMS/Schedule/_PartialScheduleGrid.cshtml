@@ -1,0 +1,281 @@
+﻿
+@Html.DevExpress().TreeList(settings =>
+{
+    settings.Name = "gridScheduleEntryList";
+    settings.CallbackRouteValues = new { Action = "ScheduleEntryView", Controller = "Schedule" };
+    settings.KeyFieldName = "Slno";
+    settings.ParentFieldName = "ParentId";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    //settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Schedule", Action = "grid_Batchupdate" };
+    settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    //settings.Settings.VerticalScrollableHeight = 200;
+    settings.Height = System.Web.UI.WebControls.Unit.Pixel(200);
+    //settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
+    settings.SettingsBehavior.AllowSort = false;
+    //settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
+
+    //settings.SettingsEditing.BatchEditSettings.EditMode = DevExpress.Web.GridViewBatchEditMode.Row;
+    //settings.SettingsEditing.BatchEditSettings.StartEditAction = DevExpress.Web.GridViewBatchStartEditAction.Click;
+    //settings.SettingsEditing.NewItemRowPosition = DevExpress.Web.GridViewNewItemRowPosition.Bottom;
+
+    settings.SettingsPager.PageSizeItemSettings.Visible = false;
+    settings.SettingsPager.PageSize = 100000;
+    settings.Settings.GridLines = System.Web.UI.WebControls.GridLines.Both;
+    //settings.ClientSideEvents.RowClick = "gridclick";
+    //settings.ClientSideEvents.BatchEditStartEditing = "gridclick";
+
+    //settings.SettingsEditing.BatchEditSettings.AllowValidationOnEndEdit = false;
+    //settings.SettingsEditing.BatchEditSettings.AllowEndEditOnValidationError = false;
+
+    settings.ClientSideEvents.EndCallback = "OnEndCallback";
+    
+
+
+
+    settings.HtmlDataCellPrepared += (s, e) =>
+    {
+
+        if (e.Column.Caption == " ")
+        {
+            var buttonHtml = "";
+            var ID = e.NodeKey;
+            buttonHtml = string.Format(" <a class='example-image-link' style='cursor: pointer;' onclick='grid_CustomButtonClick(" + ID + ")' data-lightbox='example-1'><img src='/assests/images/crs.png'></a><a class='example-image-link' style='cursor: pointer;' onclick='grid_EditButtonClick(" + ID + ")' data-lightbox='example-1'><img src='/assests/images/edit.png'></a>");
+            e.Cell.ID = "DeleteProduct";
+            e.Cell.Text = buttonHtml;
+        }
+    };
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Slno";
+        x.Caption = "Sl#";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(7);
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.ReadOnly = true;
+    });
+
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ActivityName";
+        x.Caption = "Activity Name";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.ReadOnly = false;
+    });
+
+    settings.Columns.Add(x =>
+    {
+
+        x.FieldName = "Effort";
+        x.Caption = "Effort";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..9999>.<0..99>";
+
+        
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.EditCellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        txtEditProperties.MaskSettings.AllowMouseWheel = false;
+        txtEditProperties.ClientSideEvents.LostFocus = "EffortLostFocus";
+
+        x.ReadOnly = false;
+        
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "StartDate";
+        x.Caption = "Start Date";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        x.ColumnType = MVCxTreeListColumnType.DateEdit;
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        var deProperties = x.PropertiesEdit as DevExpress.Web.DateEditProperties;
+        //deProperties.AllowUserInput = false;
+        deProperties.DisplayFormatInEditMode = true;
+        deProperties.EditFormat = DevExpress.Web.EditFormat.Custom;
+        deProperties.EditFormatString = "dd-MM-yyyy";
+        deProperties.DisplayFormatString = "dd-MM-yyyy";
+        deProperties.ValidationSettings.CausesValidation = false;
+        deProperties.UseMaskBehavior = true;
+        deProperties.AllowNull = false;
+        deProperties.ValidationSettings.CausesValidation = false;
+        x.ReadOnly = false;
+        
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "EndDate";
+        x.Caption = "End Date";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        x.ColumnType = MVCxTreeListColumnType.DateEdit;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.ReadOnly = false;
+        var deProperties = x.PropertiesEdit as DevExpress.Web.DateEditProperties;
+        //deProperties.AllowUserInput = false;
+        deProperties.DisplayFormatInEditMode = true;
+        deProperties.EditFormat = DevExpress.Web.EditFormat.Custom;
+        deProperties.EditFormatString = "dd-MM-yyyy";
+        deProperties.DisplayFormatString = "dd-MM-yyyy";
+        deProperties.ValidationSettings.CausesValidation = false;
+        deProperties.UseMaskBehavior = true;
+        deProperties.AllowNull = false;
+        deProperties.ValidationSettings.CausesValidation = false;
+        x.ReadOnly = false;
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Predecessor";
+        x.Caption = "Predecessor";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(13);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;        
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        txtEditProperties.ClientSideEvents.LostFocus = "PredecessorLostFocus";
+        x.ReadOnly = false;
+        
+
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Duration";
+        x.Caption = "Duration(Days)";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..9999>.<0..99>";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.EditCellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        txtEditProperties.MaskSettings.AllowMouseWheel = false;
+        x.ReadOnly = true;
+        
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Resources";
+        x.Caption = "Resources";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.ButtonEdit;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        //DevExpress.Web.ButtonEditProperties ButtonEditProperties = x.PropertiesEdit as DevExpress.Web.ButtonEditProperties;
+        //ButtonEditProperties.Buttons.Add("...");
+        //ButtonEditProperties.ClientSideEvents.ButtonClick = "ResourcseBtnClick";
+        //ButtonEditProperties.ClientSideEvents.KeyDown = "ResourcseKeyDown";
+        x.ReadOnly = true;
+       
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Description";
+        x.Caption = "Description";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        //DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        //txtEditProperties.ClientSideEvents.KeyDown = "DescriptionKeyDown";
+        //x.ReadOnly = false;
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "";
+        x.Caption = " ";
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "UpdateEdit";
+        x.Caption = "UpdateEdit";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+        x.ReadOnly = false;
+    });
+    
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        DevExpress.Web.ASPxEdit editor = (DevExpress.Web.ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = DevExpress.Web.Display.None;
+
+    };
+
+
+    settings.DataBinding = (s, e) =>
+    {
+        DevExpress.Web.Mvc.MVCxTreeList tr = s as DevExpress.Web.Mvc.MVCxTreeList;
+        tr.ExpandAll();
+
+    };
+
+
+
+
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.ClientSideEvents.EndCallback = "OnEndCallback";
+
+    settings.CustomJSProperties = (s, e) =>
+    {
+        if (ViewBag.Output != null && ViewBag.Output !="")
+        {
+           e.Properties["cpBatchUpdate"] = ViewBag.Output;
+        }
+        e.Properties["cpID"] = ViewBag.OutputID;
+    };
+
+
+    settings.Init = (s, e) =>
+    {
+        ASPxTreeList tree = s as ASPxTreeList;
+        tree.ExpandAll();
+        tree.SettingsSelection.Enabled = false;
+    };
+
+    settings.BeforeGetCallbackResult = (s, e) =>
+    {
+        ASPxTreeList tree = s as ASPxTreeList;
+        tree.ExpandAll();
+        tree.SettingsSelection.Enabled = false;
+    };
+
+    settings.DataBinding = (s, e) =>
+    {
+        ASPxTreeList tree = s as ASPxTreeList;
+        tree.ExpandAll();
+        tree.SettingsSelection.Enabled = false;
+    };
+
+}).Bind(Model).GetHtml()
+
+
+
+<input type="hidden" value="@ViewData["EstimateEntryProductsTotalAm"]" id="hdnEstimateEntryProductsTotalAm" />

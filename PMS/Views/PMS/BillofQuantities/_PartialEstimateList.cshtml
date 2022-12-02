@@ -1,0 +1,98 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "EstimateGridLookup";
+        settings.KeyFieldName = "Estimate_Id";
+        settings.GridViewClientSideEvents.BeginCallback = "EstimateStartCallback";
+        settings.Properties.ClientSideEvents.DropDown = "EstimateLookupValChange";
+        //settings.GridViewClientSideEvents.SelectionChanged = "EstimateSelectionChanged";
+        settings.Properties.ClientSideEvents.ValueChanged = "EstimateSelectionChanged";
+        settings.Properties.TextFormatString = "{1}";
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+        settings.Properties.SelectionMode = GridLookupSelectionMode.Single;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Single;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Estimate_Id";
+            column.Caption = "Estimate_Id";
+            column.Width = 0;
+            column.Visible = false;
+        });
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "EstimateCode";
+            column.Caption = "Doc. No.";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        });
+
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "EstimateDate";
+            x.Caption = "Doc. Date";
+            x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+            (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+            //  x.FixedStyle = GridViewColumnFixedStyle.Left;
+        });
+
+        if (ViewBag.ApprovRevSettings == "Yes")
+        {
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "RevNo";
+                column.Caption = "Rev. No.";
+                column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+            });
+        }
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostomerName";
+            column.Caption = "Customer Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProjectName";
+            column.Caption = "Project Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "BillofQuantities", Action = "GetEstimateCode" };
+
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 600;
+        };
+
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.Estimateid != null)
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.GridView.Selection.SelectRowByKey(ViewBag.Estimateid);
+                l.ClientEnabled = false;
+            }
+            
+           
+            
+        };
+
+    }).BindList(Model).GetHtml()

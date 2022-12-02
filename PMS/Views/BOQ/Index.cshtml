@@ -1,0 +1,2583 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model PMS.Models.ViewModel.BOQViewModel
+
+@{
+    ViewBag.Title = "Bill of Quantities (BOQ)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
+
+<script>
+
+    var globalrowindex2 = 0;
+    var globalrowindex = 0;
+    var gridtxtbox = '1';
+    var slno = 0;
+    var firsttime = 0;
+    var DetailsID = 0;
+    var ProductionID = 0;
+    var GBOMNo = "";
+    var Message = "";
+    var savemode = "";
+    var hasmsg = 0;
+    var rowtime = 0;
+    var rowtime2 = 0;
+    function btnProductList_Click(s, e) {
+        Productlist('', null);
+        setTimeout(function () { $("#txtProductName").focus(); }, 500);
+        $('#ProductlistModel').modal('show');
+        
+
+    }
+
+    $(document).ready(function () {
+        setTimeout(function () { AddNewRowWithSl(); AddNewRowGridResources(); }, 200);
+
+
+    });
+
+    function AddNewRowGridResources() {
+        //gridBOMResourcesList.batchEditApi.StartEdit(index, 1);
+        gridBOMResourcesList.batchEditApi.EndEdit();
+        gridBOMResourcesList.AddNewRow();
+        index = globalrowindex2;
+        resufflegrid2Serial();
+
+        setTimeout(function () {
+            gridBOMResourcesList.batchEditApi.EndEdit();
+            gridBOMResourcesList.batchEditApi.StartEdit(index, 1);
+        }, 200);
+    }
+
+    function resufflegrid2Serial() {
+        var sl = 1;
+        var visiablerow = gridBOMResourcesList.GetVisibleRowsOnPage();
+        if (visiablerow > 0 && rowtime2 == 0) {
+            sl = visiablerow;
+            rowtime2++;
+        }
+        for (var i = -1; i > -500; i--) {
+            if (gridBOMResourcesList.GetRow(i)) {
+                gridBOMResourcesList.batchEditApi.StartEdit(i, 1);
+                gridBOMResourcesList.GetEditor('SlNO').SetText(sl);
+                gridBOMResourcesList.batchEditApi.StartEdit(i, 1);
+                sl = sl + 1;
+            }
+        }
+    }
+
+    function addNewRowToEditgrid() {
+        gridBOMProductEntryList.batchEditApi.EndEdit();
+        gridBOMProductEntryList.AddNewRow();
+
+        var sl = 1;
+        var visiablerow = gridBOMProductEntryList.GetVisibleRowsOnPage();
+        if (visiablerow > 0) {
+            sl = visiablerow;
+        }
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 1);
+        gridBOMProductEntryList.GetEditor('SlNO').SetText(sl);
+
+
+        setTimeout(function () {
+            gridBOMProductEntryList.batchEditApi.EndEdit();
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+        }, 200);
+       
+
+    }
+
+    function addNewRowToEditResourcegrid() {
+        gridBOMResourcesList.batchEditApi.EndEdit();
+        gridBOMResourcesList.AddNewRow();
+
+        var sl = 1;
+        var visiablerow = gridBOMResourcesList.GetVisibleRowsOnPage();
+        if (visiablerow > 0) {
+            sl = visiablerow;
+        }
+        gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 1);
+        gridBOMResourcesList.GetEditor('SlNO').SetText(sl);
+
+        setTimeout(function () {
+            gridBOMResourcesList.batchEditApi.EndEdit();
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 2);
+        }, 200);
+     
+
+    }
+
+    function DeleteRowProductGrid(edit) {
+        var sl = 1;
+        gridBOMProductEntryList.batchEditApi.EndEdit();
+        for (var i = 0; i < 500; i++) {
+            if (gridBOMProductEntryList.GetRow(i) && i != edit) {
+                var tr = gridBOMProductEntryList.GetRow(i);
+                if (tr.style.display != "none") {
+
+                    gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
+                    gridBOMProductEntryList.GetEditor('SlNO').SetText(sl);
+                    //if (grid.GetEditor('low').GetText() == "") {
+                    //    grid.GetEditor('low').SetText(0);
+                    //    grid.GetEditor('high').SetText(0);
+                    //    grid.GetEditor('value').SetText(0);
+                    //}
+                    gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
+                    sl = sl + 1;
+                }
+            }
+        }
+
+        for (var i = -1; i > -500; i--) {
+            if (gridBOMProductEntryList.GetRow(i) && i != edit) {
+
+                var tr = gridBOMProductEntryList.GetRow(i);
+                if (tr.style.display != "none") {
+
+                    gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
+                    gridBOMProductEntryList.GetEditor('SlNO').SetText(sl);
+                    //if (grid.GetEditor('low').GetText() == "") {
+                    //    grid.GetEditor('low').SetText(0);
+                    //    grid.GetEditor('high').SetText(0);
+                    //    grid.GetEditor('value').SetText(0);
+                    //}
+                    gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
+                    sl = sl + 1;
+                }
+            }
+        }
+    }
+
+    function DeleteRowResourceGrid(edit) {
+        var sl = 1;
+        gridBOMResourcesList.batchEditApi.EndEdit();
+        for (var i = 0; i < 500; i++) {
+            if (gridBOMResourcesList.GetRow(i) && i != edit) {
+                var tr = gridBOMResourcesList.GetRow(i);
+                if (tr.style.display != "none") {
+
+                    gridBOMResourcesList.batchEditApi.StartEdit(i, 1);
+                    gridBOMResourcesList.GetEditor('SlNO').SetText(sl);
+                    //if (grid.GetEditor('low').GetText() == "") {
+                    //    grid.GetEditor('low').SetText(0);
+                    //    grid.GetEditor('high').SetText(0);
+                    //    grid.GetEditor('value').SetText(0);
+                    //}
+                    gridBOMResourcesList.batchEditApi.StartEdit(i, 1);
+                    sl = sl + 1;
+                }
+            }
+        }
+
+        for (var i = -1; i > -500; i--) {
+            if (gridBOMResourcesList.GetRow(i) && i != edit) {
+
+                var tr = gridBOMResourcesList.GetRow(i);
+                if (tr.style.display != "none") {
+
+                    gridBOMResourcesList.batchEditApi.StartEdit(i, 1);
+                    gridBOMResourcesList.GetEditor('SlNO').SetText(sl);
+                    //if (grid.GetEditor('low').GetText() == "") {
+                    //    grid.GetEditor('low').SetText(0);
+                    //    grid.GetEditor('high').SetText(0);
+                    //    grid.GetEditor('value').SetText(0);
+                    //}
+                    gridBOMResourcesList.batchEditApi.StartEdit(i, 1);
+                    sl = sl + 1;
+                }
+            }
+        }
+    }
+
+    /*---------------Arindam*----------*/
+    function AddNewRowWithSl() {
+        
+        gridBOMProductEntryList.batchEditApi.EndEdit();
+        gridBOMProductEntryList.AddNewRow();
+        index = globalrowindex;
+        resuffleSerial();
+
+        setTimeout(function () {
+            gridBOMProductEntryList.batchEditApi.EndEdit();
+            gridBOMProductEntryList.batchEditApi.StartEdit(index, 1);
+        }, 200);
+    }
+
+
+    function resuffleSerial() {
+
+        var sl = 1;
+        var visiablerow = gridBOMProductEntryList.GetVisibleRowsOnPage();
+        if (visiablerow > 0 && rowtime == 0) {
+            sl = visiablerow;
+            rowtime++;
+        }
+
+        for (var i = -1; i > -500; i--) {
+            if (gridBOMProductEntryList.GetRow(i)) {
+                gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
+                gridBOMProductEntryList.GetEditor('SlNO').SetText(sl);
+                //if (grid.GetEditor('low').GetText() == "") {
+                //    grid.GetEditor('low').SetText(0);
+                //    grid.GetEditor('high').SetText(0);
+                //    grid.GetEditor('value').SetText(0);
+                //}
+                gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
+                sl = sl + 1;
+            }
+        }
+    }
+
+
+    function grid_CustomButtonGridResourcesClick() {
+        //if (e.buttonID == "Delete") {
+            var noofvisiblerows = gridBOMResourcesList.GetVisibleRowsOnPage();
+            
+            if (noofvisiblerows != 1) {
+                gridBOMResourcesList.DeleteRow(globalrowindex2);
+
+                if ($('#hdnDetailsID').val() == 0) {
+                    resufflegrid2Serial();
+                }
+                else {
+                    DeleteRowResourceGrid(globalrowindex2);
+                }
+
+                BOMGridResourceSetTotalAmount();
+            }
+        //}
+        //e.processOnServer = false;
+
+    }
+
+    function grid_CustomButtonClick() {
+       // if (e.buttonID == "DeleteProduct") {
+            var noofvisiblerows = gridBOMProductEntryList.GetVisibleRowsOnPage();
+
+            if (noofvisiblerows != 1) {
+                gridBOMProductEntryList.DeleteRow(globalrowindex);
+
+                if ($('#hdnDetailsID').val() == 0) {
+
+                    resuffleSerial();
+                }
+                else{
+                    DeleteRowProductGrid(globalrowindex);
+                }
+
+                BOMGridSetTotalAmount();
+            }
+        //}
+        //e.processOnServer = false;
+    }
+
+
+    function BatchStartEditing(s, e) {
+        globalrowindex = e.visibleIndex;
+    }
+
+    function ResourceBatchStartEditing(s, e) {
+        globalrowindex2 = e.visibleIndex;
+    }
+
+    var typemodal = "";
+    function OpenNonInventoryProductList(s, e) {
+        slno = gridBOMResourcesList.GetDataRow(globalrowindex2).children[0].innerHTML.trim();
+        GridNonInventoryProductlist("", "nonInventory", slno);
+        typemodal = "nonInventory";
+        $('#GridProductlistModel').modal('show');
+        $('#txtGridProductName').focus();
+
+        setTimeout(function () {
+            $('#txtGridProductName').focus();
+        }, 600);
+    }
+
+    function GridNonInventoryProductlist(SearchKey, type, txtid) {
+        gridnonproductlist = 1;
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.Type = type;
+        gridtxtbox = txtid;
+        var HeaderCaption = [];
+        // HeaderCaption.push("Product ID");
+        HeaderCaption.push("Product Code");
+        HeaderCaption.push("Product Name");
+        HeaderCaption.push("Inventory");
+        HeaderCaption.push("HSN/SAC");
+        HeaderCaption.push("Class");
+        HeaderCaption.push("Brand");
+
+        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "NonIProductIndex", "SetGridNonInventoryProduct");
+
+
+        setTimeout(function () {
+            $('#txtGridProductName').focus();
+        }, 600);
+    }
+
+    function OpenProductList(s, e) {
+        if (gridBOMProductEntryList.GetDataRow(globalrowindex) != null) {
+            slno = gridBOMProductEntryList.GetDataRow(globalrowindex).children[0].innerHTML.trim();
+        }
+        GridProductlist("", "A", slno);
+        typemodal = "A";
+        $('#GridProductlistModel').modal('show');
+        $('#txtGridProductName').focus();
+    }
+
+    function OpenWarehouseList(s, e) {
+        slno = gridBOMProductEntryList.GetDataRow(globalrowindex).children[0].innerHTML.trim();
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+        var ProductName = gridBOMProductEntryList.GetEditor('ProductName').GetText();
+        if (ProductName == "") {
+            jAlert("Please select product before select warehouse!");
+            return false;
+        }
+        else {
+            GridWarehouselist();
+            warehousefocus = 1;
+            
+        }
+    }
+
+    function GridWarehouselist() {
+        var BankBranchID = $('#ddlBankBranch option:selected').val();
+        if (BankBranchID > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("getWarehouseRecord", "BOMEntry")",
+                data: { branchid: BankBranchID },
+                success: function (response) {
+                    $('#ddlWarehouselist').html('');
+                    var html = "";
+                    for (var i = 0; i < response.length; i++) {
+                        html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+                    }
+                    $('#ddlWarehouselist').html(html);
+                    gridBOMProductEntryList.batchEditApi.EndEdit();
+                    //$('#setWarehousegrid').focus();
+                    $('#GridWarehouselistModel').modal('show');
+                    
+
+                }
+            });
+        }
+        else {
+            jAlert('Please select branch!');
+            $('#GridWarehouselistModel').modal('hide');
+            return false;
+        }
+    }
+
+    function SetWarehouseInGrid() {
+
+        var Warehouseid = $('#ddlWarehouselist option:selected').val();
+        var Warehousetxt = $('#ddlWarehouselist option:selected').text();
+        if (Warehousetxt != "") {
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 6);
+            gridBOMProductEntryList.GetEditor('Warehouse').SetText(Warehousetxt);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 14);
+            gridBOMProductEntryList.GetEditor('ProductsWarehouseID').SetText(Warehouseid);
+            $('#GridWarehouselistModel').modal('hide');
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 7);
+        }
+        else {
+            jAlert("Please select warehouse!");
+        }
+    }
+
+    function SetWarehouseAfterProduct() {
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 7);
+    }
+
+    var globalrowindex = 0;
+    function gridclick(s, e) {
+        globalrowindex = e.visibleIndex;
+    }
+
+    function gridResourceclick(s, e) {
+        globalrowindex2 = e.visibleIndex;
+    }
+
+    var bomlinkindex = 0;
+    function OpenBOMList(s, e) {
+        slno = gridBOMProductEntryList.GetDataRow(globalrowindex).children[0].innerHTML.trim();
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+        var ProductName = gridBOMProductEntryList.GetEditor('ProductName').GetText();
+        if (ProductName == "") {
+            jAlert("Please select product before select BOM!");
+            return false;
+        }
+        else {
+            GetBOMList('', slno);
+            bomlinkindex = 1;
+            setTimeout(function () { $("#txtBOMName").focus(); }, 500);
+            $('#GridBOMlistModel').modal('show');
+
+        }
+    }
+
+    function GetBOMList(SearchKey, slno) {
+        var productid = gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 'ProductId');
+        var OtherDetails = {}
+        var BOMDate = GetServerDateFormat(BOMDate_dt.GetValue());
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.ProductID = productid;
+        OtherDetails.BOMDate = BOMDate;
+        OtherDetails.BranchID = $('#ddlBankBranch option:selected').val();
+        var HeaderCaption = [];
+        HeaderCaption.push("BOM No.");
+        HeaderCaption.push("BOM Date");
+        HeaderCaption.push("Revision No.");
+        HeaderCaption.push("Revision Date");
+
+        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetBOMList", OtherDetails, "GridBOMTable", HeaderCaption, "BOMIndex", "SetGridBOMProduct");
+
+    }
+
+    function GridProductlist(SearchKey, type, txtid) {
+        gridproductlist = 1;
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.Type = type;
+        gridtxtbox = txtid;
+        var HeaderCaption = [];
+        // HeaderCaption.push("Product ID");
+        HeaderCaption.push("Product Code");
+        HeaderCaption.push("Product Name");
+        HeaderCaption.push("Inventory");
+        HeaderCaption.push("HSN/SAC");
+        HeaderCaption.push("Class");
+        HeaderCaption.push("Brand");
+
+        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "GridProductIndex", "SetGridProduct");
+
+        setTimeout(function () {
+            $('#txtGridProductName').focus();
+        }, 600);
+       
+    }
+
+    function Productlist(SearchKey, type) {
+        finishedproductlist = 1;
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+        OtherDetails.Type = type;
+
+        var HeaderCaption = [];
+        // HeaderCaption.push("Product ID");
+        HeaderCaption.push("Product Code");
+        HeaderCaption.push("Product Name");
+        HeaderCaption.push("Inventory");
+        HeaderCaption.push("HSN/SAC");
+        HeaderCaption.push("Class");
+        HeaderCaption.push("Brand");
+
+        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "ProductTable", HeaderCaption, "ProductIndex", "SetProduct");
+    }
+
+    function SetGridNonInventoryProduct(Id, Name, e) {
+        gridnonproductlist = 0;
+        var ProductID = Id;
+        var ProductName = Name;
+        //alert('');
+        if (ProductID != "") {
+
+            var data = ProductID.split('|');
+            ProductID = data[0];
+
+            var amind = gridBOMResourcesList.batchEditApi.GetColumnIndex('Amount');
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, amind);
+            gridBOMResourcesList.GetEditor('Amount').SetText("0.00");
+
+            var qtyindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductQty');
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, qtyindex);
+            gridBOMResourcesList.GetEditor('ProductQty').SetText("0.00");
+
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 10);
+            gridBOMResourcesList.GetEditor('ProductId').SetText(ProductID);
+
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 2);
+            gridBOMResourcesList.GetEditor('ProductName').SetText(ProductName);
+            //gridBOMResourcesList.GetDataRow(globalrowindex).children[1].innerHTML = ProductName;
+
+            //$('#' + gridtxtbox + '_txtbox').val(ProductName);
+            $('#GridProductlistModel').modal('hide');
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 3);
+            gridBOMResourcesList.GetEditor('ProductDescription').SetText(data[6]);
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 5);
+
+            gridBOMResourcesList.GetEditor('ProductUOM').SetText(data[1]);
+            //$('#' + gridtxtbox + '_txtDescription').val(data[2]);
+            //$('#' + gridtxtbox + '_txtStockUOM').val(data[1]);
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 7);
+            gridBOMResourcesList.GetEditor('Price').SetText(data[3]);
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 12);
+            gridBOMResourcesList.GetEditor('ProductsWarehouseID').SetText(data[4]);
+            //$('#' + gridtxtbox + '_txtPrice').val(data[3]);
+            //gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 6);
+            //gridBOMResourcesList.GetEditor('Warehouse').SetText(data[5]);
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 4);
+            //btnFinishedItem.SetText(ProductName);
+            //document.getElementById('hdnProductID').value = Id;
+        }
+    }
+
+    function SetProduct(Id, Name, e) {
+        finishedproductlist = 0;
+        var ProductID = Id;
+        var ProductName = Name;
+
+        if (ProductID != "") {
+
+            var data = ProductID.split('|');
+            ProductID = data[0];
+            $('#FinishedUom').val(data[1]);
+            $('#ProductlistModel').modal('hide');
+            btnFinishedItem.SetText(ProductName);
+            $('#hdnFinishedItem').val(ProductID);
+            document.getElementById('hdnProductID').value = Id;
+            $('#FinishedQty').select();
+            $('#FinishedQty').focus();
+        }
+    }
+
+    function SetGridProduct(Id, Name, e) {
+        gridproductlist = 0;
+        var ProductID = Id;
+        var ProductName = Name;
+       
+        if (ProductID != "") {
+
+            var data = ProductID.split('|');
+            ProductID = data[0];
+
+            var amind = gridBOMProductEntryList.batchEditApi.GetColumnIndex('Amount');
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, amind);
+            gridBOMProductEntryList.GetEditor('Amount').SetText("0.00");
+
+            var qtyindex = gridBOMProductEntryList.batchEditApi.GetColumnIndex('ProductQty');
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, qtyindex);
+            gridBOMProductEntryList.GetEditor('ProductQty').SetText("0.00");
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 13);
+            gridBOMProductEntryList.GetEditor('ProductId').SetText(ProductID);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+            gridBOMProductEntryList.GetEditor('ProductName').SetText(ProductName);
+            //gridBOMProductEntryList.GetDataRow(globalrowindex).children[1].innerHTML = ProductName;
+
+            //$('#' + gridtxtbox + '_txtbox').val(ProductName);
+            $('#GridProductlistModel').modal('hide');
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 3);
+            gridBOMProductEntryList.GetEditor('ProductDescription').SetText(data[2]);
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 5);
+
+            gridBOMProductEntryList.GetEditor('ProductUOM').SetText(data[1]);
+            //$('#' + gridtxtbox + '_txtDescription').val(data[2]);
+            //$('#' + gridtxtbox + '_txtStockUOM').val(data[1]);
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 7);
+            gridBOMProductEntryList.GetEditor('Price').SetText(data[3]);
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 15);
+            gridBOMProductEntryList.GetEditor('ProductsWarehouseID').SetText(data[4]);
+            //$('#' + gridtxtbox + '_txtPrice').val(data[3]);
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 6);
+            gridBOMProductEntryList.GetEditor('Warehouse').SetText(data[5]);
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 4);
+            //btnFinishedItem.SetText(ProductName);
+            //document.getElementById('hdnProductID').value = Id;
+
+            
+        }
+    }
+
+    function BOMGridSetTotalAmount(s, e) {
+        ////debugger;
+
+        var ToTalAmount = 0;
+        for (var i = 500; i > -500; i--) {
+            if (gridBOMProductEntryList.GetRow(i)) {
+                var Amountval = gridBOMProductEntryList.batchEditApi.GetCellValue(i, 'Amount');
+                if (Amountval != "" && Amountval != null && Amountval != undefined) {
+                    var ToTalAmount = parseFloat(parseFloat(ToTalAmount) + parseFloat(Amountval)).toFixed(2);
+                    $('#txtGridProductEntryTotalAmount').val(ToTalAmount);
+                }
+            }
+        }
+
+        //var ToTalAmount = $('#txtGridProductEntryTotalAmount').val();
+        //var Amountval = gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 'Amount');
+        //if (ToTalAmount != "" || ToTalAmount != undefined || ToTalAmount != null) {
+        //    ToTalAmount = parseFloat(0).toFixed(2);
+        //}
+        //if (Amountval != "" && Amountval != null && Amountval != undefined) {
+        //    var calTotalAmount = parseFloat(parseFloat(ToTalAmount) + parseFloat(Amountval)).toFixed(2);
+        //    $('#txtGridProductEntryTotalAmount').val(calTotalAmount);
+        //}
+
+    }
+
+    function BOMGridResourceSetTotalAmount(s, e) {
+
+        var ToTalAmount = 0;
+        for (var i = 500; i > -500; i--) {
+            if (gridBOMResourcesList.GetRow(i)) {
+                var Amountval = gridBOMResourcesList.batchEditApi.GetCellValue(i, 'Amount');
+                if (Amountval != "" && Amountval != null && Amountval != undefined) {
+                    var ToTalAmount = parseFloat(parseFloat(ToTalAmount) + parseFloat(Amountval)).toFixed(2);
+                    $('#txtGridResourcesTotalAmount').val(ToTalAmount);
+                }
+            }
+        }
+
+
+        //var ToTalAmount = $('#txtGridResourcesTotalAmount').val();
+        //var Amountval = gridBOMResourcesList.batchEditApi.GetCellValue(globalrowindex2, 'Amount');
+        //if (ToTalAmount != "" || ToTalAmount != undefined || ToTalAmount != null) {
+        //    ToTalAmount = parseFloat(0).toFixed(2);
+        //}
+        //if (Amountval != "" && Amountval != null && Amountval != undefined) {
+        //    var calTotalAmount = parseFloat(parseFloat(ToTalAmount) + parseFloat(Amountval)).toFixed(2);
+        //    $('#txtGridResourcesTotalAmount').val(calTotalAmount);
+        //}
+    }
+
+    function SetGridBOMProduct(Id, Name, e) {
+        //debugger;
+        if (Id != "") {
+            var data = Id.split('|');
+            var Details_ID = data[0];
+            var Production_ID = data[1];
+            var BOM_No = data[2];
+            var REV_No = data[3];
+            var BOM_Date = data[4];
+            var Rate = data[5];
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 9);
+            gridBOMProductEntryList.GetEditor('BOMNo').SetText(BOM_No);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 10);
+            gridBOMProductEntryList.GetEditor('RevNo').SetText(REV_No);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 11);
+            gridBOMProductEntryList.GetEditor('RevDate').SetText(BOM_Date);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 7);
+            gridBOMProductEntryList.GetEditor('Price').SetText(Rate);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 16);
+            gridBOMProductEntryList.GetEditor('Tag_Details_ID').SetText(Details_ID);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 17);
+            gridBOMProductEntryList.GetEditor('Tag_Production_ID').SetText(Production_ID);
+
+            BOMGridSetAmount("", "");
+
+            setTimeout(function () {
+                gridBOMProductEntryList.batchEditApi.EndEdit();
+                gridBOMProductEntryList.batchEditApi.StartEdit();
+                BOMGridSetTotalAmount("", "");
+            }, 1000);
+
+        }
+        $('#GridBOMlistModel').modal('hide');
+
+    }
+
+    //function OnInit(s, e) {
+    //   //debugger;
+    //    //var grid = MVCxClientGridView.Cast(s);
+    //    //grid.batchEditApi.ValidateRows();
+    //}
+
+    function OnGridViewEndCallback(s, e) {
+        //debugger;
+        if (gridBOMResourcesList.batchEditApi.HasChanges()) {
+            gridBOMResourcesList.UpdateEdit();
+        }
+    }
+
+    function OnResourcesEndCallback() {
+        //debugger;
+        AddNewRowGridResources();
+
+        $('#BOMNo').val('');
+        var BOMDate = GetServerDateFormat(BOMDate_dt.GetValue());
+        //var BOMDate = $('#BOMDate_dt').val();
+        $('#hdnFinishedItem').val('');
+        $('#FinishedQty').val(parseFloat(0).toFixed(4));
+        $('#FinishedUom').val('');
+        $('#slcbomtype').val($("#slcbomtype option:first").val());
+        $('#RevisionNo').val('');
+        $('#ddlBankBranch').val($("#ddlBankBranch option:first").val());
+        $('#ddlWarehouse').val($("#ddlWarehouse option:first").val());
+        $('#hdnSchemaId').val('');
+        $('#txtActualAdditionalCost').val(parseFloat(0).toFixed(4));
+        $('#txtGridProductEntryTotalAmount').val(parseFloat(0).toFixed(2));
+        $('#txtGridResourcesTotalAmount').val(parseFloat(0).toFixed(2));
+
+        
+        $('#ddlSchema').val($("#ddlSchema option:first").val());
+        $('#BOMNo').val('');
+        $('#EbtnFinishedItem').hide();
+        $('#EBOMNo').hide();
+        $('#EBOMDate_dt').hide();
+        $('#EbtnFinishedItem').hide();
+        $('#EFinishedQty').hide();
+        $('#EFinishedQty').hide();
+        $('#ERevisionNo').hide();
+        $('#ERevisionDate_dt').hide();
+        $('#EddlBankBranch').hide();
+        btnFinishedItem.Clear();
+        $('#FinishedUom').val('');
+        $('#hdnDetailsID').val(0);
+        Scheme_ValueChange();
+        ////debugger;
+        if (Message == "duplicate" && DetailsID == 0 && ProductionID == 0) {
+            savemode = "";
+            if (Message == "duplicate") {
+                jAlert('This BOM no already present!');
+                return false;
+            }
+            else {
+                jAlert('Please try again later.');
+                return false;
+            }
+            Message = "";
+
+        }
+        else {
+            if (DetailsID > 0 && ProductionID > 0 && GBOMNo != "") {
+                ProductionID = 0;
+                DetailsID = 0;
+                jAlert('BOM Number : ' + GBOMNo + ' saved successfully.', 'Alert!', function (r) {
+                    if (r) {
+                        if (savemode == "Exit") {
+                            setTimeout(function () {
+                                var url = $('#hdnBOMListPage').val();
+                                window.location.href = url;
+                            }, 500);
+                        }
+                    }
+
+                });
+               // jAlert('BOM Number : ' + GBOMNo + ' Successfully saved.');
+                
+                
+            }
+            else {
+                ProductionID = 0;
+                DetailsID = 0;
+                savemode = "";
+                jAlert('Please try again later.');
+                return false;
+            }
+            Message = "";
+        }
+
+    }
+
+    function OnEndCallback(s, e) {
+        ////debugger;
+        DetailsID = s.cpDetailsID;
+        ProductionID = s.cpProductionID;
+        GBOMNo = s.cpBOMNo;
+        Message = s.cpMessage;
+        $('#hdnDetailsID').val(DetailsID);
+        if (s.cpBatchUpdate == "1") {
+
+            s.cpBatchUpdate = "0";
+
+            if (gridBOMResourcesList.batchEditApi.HasChanges()) {
+                gridBOMResourcesList.UpdateEdit();
+
+                setTimeout(function () {
+                    OnResourcesEndCallback();
+                }, 1500);
+
+            }
+        }
+        //else {
+        AddNewRowWithSl();
+        $('#txtGridProductEntryTotalAmount').val(parseFloat(0).toFixed(2));
+        if (Message == "duplicate" && hasmsg == 0) {
+            jAlert('This BOM no already present!');
+            hasmsg = 1;
+            return false;
+        }
+        //else {
+        //    jAlert('Please try again later.');
+        //    return false;
+        //}
+        //}
+
+    }
+
+    function ProductListkeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtProductName").val() != '') {
+                Productlist($("#txtProductName").val(), null);
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ProductIndex=0]"))
+                $("input[ProductIndex=0]").focus();
+        }
+    }
+
+    var iindexprod = 0;
+    var finishedproductlist = 0;
+    var gridproductlist = 0;
+    var gridnonproductlist = 0;
+    function GridProductListkeydown(e) {
+        
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtGridProductName").val() != '') {
+                if (typemodal == 'nonInventory') {
+                    GridNonInventoryProductlist($("#txtGridProductName").val(), "nonInventory", globalrowindex2);
+                    gridnonproductlist = 1;
+                }
+                else {
+                    GridProductlist($("#txtGridProductName").val(), typemodal, null);
+                    gridproductlist = 1;
+                }
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[GridProductIndex=" + 0 + "]")) {
+                $("input[GridProductIndex=" + 0 + "]").focus();
+                iindexprod++;
+            }
+            if ($("input[NonIProductIndex=" + 0 + "]")) {
+                $("input[NonIProductIndex=" + 0 + "]").focus();
+                iindexprod++;
+            }
+        }
+    }
+
+    function GridBomListkeydown() {
+
+    }
+
+    $(function () {
+        PopulateWareHouseData();
+        PopulateNumberingSchemeData();
+
+        $(document).keyup(function (e) {
+            if (e.key === "Escape") {
+               
+                if (finishedproductlist == 1) {
+                    finishedproductlist = 0;
+                    setTimeout(function () {
+                        $('#FinishedQty').select();
+                        $('#FinishedQty').focus();
+                    }, 500);
+                   
+                }
+
+                if (warehousefocus == 1) {
+                    warehousefocus = 0;
+                    $('#GridWarehouselistModel').modal('hide');
+                    setTimeout(function () {
+                        var localcolumn = gridBOMProductEntryList.batchEditApi.GetColumnIndex('Price');
+                        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, localcolumn);
+                    }, 500);
+
+                }
+
+                
+                if (bomlinkindex == 1) {
+                    bomlinkindex = 0;
+                    setTimeout(function () {
+                        var localcolumn = gridBOMProductEntryList.batchEditApi.GetColumnIndex('Remarks');
+                        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, localcolumn);
+                    }, 500);
+
+                }
+
+                if (gridproductlist == 1) {
+                    gridproductlist = 0;
+                    setTimeout(function () {
+                        var localcolumn = gridBOMProductEntryList.batchEditApi.GetColumnIndex('ProductQty');
+                        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, localcolumn);
+                    }, 500);
+
+                }
+
+                if (gridnonproductlist == 1) {
+                    gridnonproductlist = 0;
+                    setTimeout(function () {
+                        var localcolumn = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductQty');
+                        gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, localcolumn);
+                    }, 500);
+
+                }
+            }
+            //alert(e.keyCode + "|" + e.altKey);
+            if (e.keyCode == 88 && e.altKey == true) {
+                BOMEntrySave('Exit');
+            }
+
+            if (event.keyCode == 83 && event.altKey == true) { 
+                BOMEntrySave('New');
+            }
+        });
+
+
+    });
+
+    function PopulateWareHouseData() {
+        var BankBranchID = $('#ddlBankBranch option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getWarehouseRecord", "BOMEntry")",
+            data: { branchid: BankBranchID },
+            success: function (response) {
+                $('#ddlWarehouse').html('');
+                var html = "";
+                var hdnProductWarehouseID = $('#hdnProductWarehouseID').val();
+                for (var i = 0; i < response.length; i++) {
+                    if (hdnProductWarehouseID > 0) {
+                        if (hdnProductWarehouseID == response[i].WarehouseID) {
+                            html = html + "<option value='" + response[i].WarehouseID + "' selected>" + response[i].WarehouseName + "</option>";
+                        }
+                        else {
+                            html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+                        }
+                    }
+                    else {
+                        html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+                    }
+
+                }
+                $('#ddlWarehouse').html(html);
+
+            }
+        });
+    }
+
+    function PopulateNumberingSchemeData() {
+        var type = $('#slcbomtype option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getNumberingSchemeRecord", "BOMEntry")",
+            data: { type: type },
+            success: function (response) {
+                var html = "";
+                var hdnBOM_SCHEMAID = $('#hdnBOM_SCHEMAID').val();
+                for (var i = 0; i < response.length; i++) {
+                    if (hdnBOM_SCHEMAID != '') {
+                        html = html + "<option value='" + response[i].SchemaID + "' selected>" + response[i].SchemaName + "</option>";
+                    }
+                    else {
+                        html = html + "<option value='" + response[i].SchemaID + "'>" + response[i].SchemaName + "</option>";
+                    }
+                   
+                }
+                $('#ddlSchema').html(html);
+
+
+                //$("#ddlSchema > option").each(function () {
+                //    var str = this.value;
+                //    var n = str.startsWith("1056");
+                //    alert(this.value);
+                //});
+            }
+        });
+    }
+
+    function addNewRowTogridResources() {
+        gridBOMResourcesList.batchEditApi.EndEdit();
+        AddNewRowGridResources();
+        index = globalrowindex2;
+        setTimeout(function () {
+            gridBOMResourcesList.batchEditApi.EndEdit();
+            gridBOMResourcesList.batchEditApi.StartEdit(index, 1);
+        }, 200);
+
+    }
+
+    function addNewRowTogrid() {
+        gridBOMProductEntryList.batchEditApi.EndEdit();
+        //gridBOMProductEntryList.AddNewRow();
+        // gridBOMProductEntryList.AddNewRow();
+        //
+
+        AddNewRowWithSl();
+        index = globalrowindex;
+
+
+        setTimeout(function () {
+            gridBOMProductEntryList.batchEditApi.EndEdit();
+            gridBOMProductEntryList.batchEditApi.StartEdit(index, 1);
+        }, 200);
+
+    }
+
+    function BOMGridSetAmount(s, e) {
+        gridBOMProductEntryList.batchEditApi.EndEdit();
+        //var Price = s.GetValueString();
+        var Price = gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 'Price');
+        var Qty = gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        if (Price != "" && Qty != "") {
+            var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 8);
+            gridBOMProductEntryList.GetEditor('Amount').SetText(amount);
+
+            if (gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 9) == null) {
+                gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 9);
+                gridBOMProductEntryList.GetEditor('BOMNo').SetText(" ");
+            }
+
+            if (gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 10) == null) {
+                gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 10);
+                gridBOMProductEntryList.GetEditor('RevNo').SetText(" ");
+            }
+
+            if (gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 11) == null) {
+                gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 11);
+                gridBOMProductEntryList.GetEditor('RevDate').SetText(" ");
+            }
+        }
+        //else {
+        //    gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 7);
+        //}
+        //gridBOMProductEntryList.batchEditApi.EndEdit();
+        //gridBOMProductEntryList.batchEditApi.StartEdit();
+        //BOMGridSetTotalAmount(s, e);
+        BOMGridSetTotalAmount("", "");
+    }
+
+    function BOMGridSetAmountQty(s, e) {
+        gridBOMProductEntryList.batchEditApi.EndEdit();
+        //var Price = s.GetValueString();
+        var Price = gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 'Price');
+        var Qty = gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        if (Price != "" && Qty != "") {
+            var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 8);
+            gridBOMProductEntryList.GetEditor('Amount').SetText(amount);
+
+            if (gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 9) == null) {
+                gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 9);
+                gridBOMProductEntryList.GetEditor('BOMNo').SetText(" ");
+            }
+
+            if (gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 10) == null) {
+                gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 10);
+                gridBOMProductEntryList.GetEditor('RevNo').SetText(" ");
+            }
+
+            if (gridBOMProductEntryList.batchEditApi.GetCellValue(globalrowindex, 11) == null) {
+                gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 11);
+                gridBOMProductEntryList.GetEditor('RevDate').SetText(" ");
+            }
+
+
+        }
+
+
+        BOMGridSetTotalAmount("", "");
+
+        gridBOMProductEntryList.batchEditApi.EndEdit();
+        var localindex = gridBOMProductEntryList.batchEditApi.GetColumnIndex('ProductUOM');
+
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, localindex);
+        //else {
+        //    gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 7);
+        //}
+        //gridBOMProductEntryList.batchEditApi.EndEdit();
+        //gridBOMProductEntryList.batchEditApi.StartEdit();
+        //BOMGridSetTotalAmount(s, e);
+
+    }
+
+    function BOMResourceGridSetAmount(s, e) {
+        gridBOMResourcesList.batchEditApi.EndEdit();
+        //var Price = s.GetValueString();
+        var Price = gridBOMResourcesList.batchEditApi.GetCellValue(globalrowindex2, 'Price');
+        var Qty = gridBOMResourcesList.batchEditApi.GetCellValue(globalrowindex2, 'ProductQty');
+        if (Price != "" && Qty != "") {
+            var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 8);
+            gridBOMResourcesList.GetEditor('Amount').SetText(amount);
+        }
+
+        BOMGridResourceSetTotalAmount("","");
+    }
+
+    function BOMResourceGridUOMFocus(s, e) {
+
+        if (e.htmlEvent.key == "Tab" && e.htmlEvent.shiftKey) {
+            gridBOMResourcesList.batchEditApi.EndEdit();
+            var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductQty');
+
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, localindex);
+        }
+    }
+
+    function BOMResourceGridSetAmountQty(s, e) {
+        gridBOMResourcesList.batchEditApi.EndEdit();
+        //var Price = s.GetValueString();
+        var Price = gridBOMResourcesList.batchEditApi.GetCellValue(globalrowindex2, 'Price');
+        var Qty = gridBOMResourcesList.batchEditApi.GetCellValue(globalrowindex2, 'ProductQty');
+        if (Price != "" && Qty != "") {
+            var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 8);
+            gridBOMResourcesList.GetEditor('Amount').SetText(amount);
+        }
+
+        BOMGridResourceSetTotalAmount("", "");
+
+       // gridBOMProductEntryList.batchEditApi.EndEdit();
+        var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductUOM');
+
+        gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, localindex);
+    }
+
+    //function FocusGrid() {
+    //    gridBOMProductEntryList.batchEditApi.StartEdit(-1,0);
+    //}
+    
+    //function RemarksLostFocus(s, e) {
+    //    //gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 13);
+    //    //$('.addEdcircleBtn').focus();
+    //    debugger;
+      
+
+    //}
+
+    var warehousefocus = 0;
+    function WarehouseKeyDown(s, e) {
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+
+            s.OnButtonClick(0);
+           
+            $('#ddlWarehouselist').focus();
+        }
+    }
+
+    function PriceKeyDown(s, e) {
+      
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Tab" && e.htmlEvent.shiftKey) {
+            gridBOMProductEntryList.batchEditApi.EndEdit();
+            WarehouseGotFocus();
+        }
+    }
+
+    function WarehouseGotFocus() {
+        
+        var localindex = gridBOMProductEntryList.batchEditApi.GetColumnIndex('Warehouse');
+
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, localindex);
+
+    }
+
+    function AddRowResourceKeyDown(s, e) {
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+            if ($('#hdnDetailsID').val() == 0) {
+                addNewRowTogridResources();
+            }
+            else {
+                addNewRowToEditResourcegrid();
+            }
+        }
+    }
+
+    var tempindexcount = [];
+    function AddRowKeyDown(s, e) {
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+            if ($('#hdnDetailsID').val() == 0) {
+                addNewRowTogrid();
+            }
+            else {
+                addNewRowToEditgrid();
+            }
+        }
+        if (e.htmlEvent.key == "Tab") {
+            var hdnDetailsID = $('#hdnDetailsID').val();
+            if (hdnDetailsID > 0) {
+                if (globalrowindex == 0) {
+                    tempindexcount = [];
+                }
+                var tempindex = (globalrowindex + 1);
+                if (gridBOMProductEntryList.batchEditApi.GetCellValue(tempindex, 'SlNO') != null && globalrowindex >= 0 && tempindexcount.includes(tempindex) == false) {
+                    tempindexcount.push(tempindex);
+                    gridBOMProductEntryList.batchEditApi.EndEdit();
+                    setTimeout(function () {
+                        var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductName');
+                        gridBOMProductEntryList.batchEditApi.StartEdit(tempindex, localindex);
+                    }, 500);
+                   
+                    hasfoundindex = 1;
+                }
+                else {
+                    var tempindex = -1;
+                    if (gridBOMProductEntryList.batchEditApi.GetCellValue(tempindex, 'SlNO') != null && tempindexcount.includes(tempindex) == false) {
+                        tempindexcount.push(tempindex);
+                        gridBOMProductEntryList.batchEditApi.EndEdit();
+                        setTimeout(function () {
+                            var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductName');
+                            gridBOMProductEntryList.batchEditApi.StartEdit(tempindex, localindex);
+                        }, 500);
+                        
+
+                    }
+                }
+
+            }
+            else {
+               
+
+                var tempindex = (globalrowindex - 1);
+                if (gridBOMProductEntryList.batchEditApi.GetCellValue(tempindex, 'SlNO') != null ) {
+                    gridBOMProductEntryList.batchEditApi.EndEdit();
+                   
+                    setTimeout(function () {
+                        var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductName');
+                        gridBOMProductEntryList.batchEditApi.StartEdit(tempindex, localindex);
+                    }, 500);
+                   
+                }
+                else {
+                    var tempindex = (globalrowindex - 1);
+                    if (gridBOMProductEntryList.batchEditApi.GetCellValue(tempindex, 'SlNO') != null ) {
+                       
+                        gridBOMProductEntryList.batchEditApi.EndEdit();
+                        setTimeout(function () {
+                            var localindex = gridBOMResourcesList.batchEditApi.GetColumnIndex('ProductName');
+                            gridBOMProductEntryList.batchEditApi.StartEdit(tempindex, localindex);
+                        }, 500);
+                    }
+                }
+            }
+        }
+    }
+
+    function BOMKeyDown(s, e) {
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+
+            s.OnButtonClick(0);
+        }
+        //if (e.htmlEvent.key == "Tab") {
+           
+        //    s.OnButtonClick(0);
+        //}
+    }
+
+    function ProductKeyDown(s, e) {
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+          
+            //if (gridBOMProductEntryList.focusedRowIndex != null && gridBOMProductEntryList.focusedRowIndex != undefined) {
+            //    globalrowindex = gridBOMProductEntryList.focusedRowIndex;
+            //}
+            s.OnButtonClick(0);
+            //OpenProductList(s, e);
+        }
+        //if (e.htmlEvent.key == "Tab") {
+        //    //if (gridBOMProductEntryList.focusedRowIndex != null && gridBOMProductEntryList.focusedRowIndex != undefined) {
+        //    //    globalrowindex = gridBOMProductEntryList.focusedRowIndex;
+        //    //}
+        //    s.OnButtonClick(0);
+        //    //OpenProductList(s, e);
+        //}
+        else if (e.code == "ArrowDown") {
+            if ($("input[GridProductIndex=0]"))
+                $("input[GridProductIndex=0]").focus();
+        }
+    }
+
+    function SetBOMFocusGrid() {
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 12);
+    }
+
+    function NonIProductKeyDown(s, e) {
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+
+            s.OnButtonClick(0);
+        }
+        //if (e.htmlEvent.key == "Tab") {
+
+        //    s.OnButtonClick(0);
+        //}
+        else if (e.code == "ArrowDown") {
+            if ($("input[NonIProductIndex=0]"))
+                $("input[NonIProductIndex=0]").focus();
+        }
+    }
+
+    function btnPayStructure_KeyDown(s, e) {
+     
+        console.log(e.htmlEvent.key);
+        if (e.htmlEvent.key == "Enter") {
+
+            s.OnButtonClick(0);
+        }
+        //if (e.htmlEvent.key == "Tab") {
+
+        //    s.OnButtonClick(0);
+        //}
+        else if (e.code == "ArrowDown") {
+            if ($("input[ProductIndex=0]"))
+                $("input[ProductIndex=0]").focus();
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        
+        if (e.code == "Enter") {
+
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "ProductIndex") {
+                    SetProduct(Id, name,null);
+                }
+                else if (indexName == "BOMIndex") {
+                    SetGridBOMProduct(Id, name,null);
+                }
+                else if (indexName == "GridProductIndex") {
+                    SetGridProduct(Id, name,null);
+                }
+                else if (indexName == "NonIProductIndex") {
+                    SetGridNonInventoryProduct(Id, name, null);
+                }
+                //else if (indexName == "customeraddressIndex") {
+                //    SetCustomeraddress(Id, name);
+                //}
+                //else {
+                //    SetCustomer(Id, name);
+                //}
+            }
+
+
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "ProductIndex")
+                    $('#txtProductName').focus();
+                else if (indexName == "BOMIndex")
+                    $('#txtBOMName').focus();
+                else if (indexName == "GridProductIndex")
+                    $('#txtGridProductName').focus();
+                else if (indexName == "NonIProductIndex")
+                    ('#txtGridProductName').focus();
+                //else
+                //    $('#txtCustSearch').focus();
+            }
+        }
+
+    }
+
+    function SetFocusDesc() {
+        gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 3);
+        gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 3);
+    }
+
+    function BOMEntrySave(mode) {
+      
+        savemode = mode;
+        hasmsg = 0;
+        var bomno = $('#BOMNo').val();
+        var BOMDate = GetServerDateFormat(BOMDate_dt.GetValue());
+        var FinishedItem = $('#hdnFinishedItem').val();
+        var FinishedQty = $('#FinishedQty').val();
+        var FinishedUom = $('#FinishedUom').val();
+        var BOMType = $('#slcbomtype option:selected').val();
+        var RevisionNo = $('#RevisionNo').val();
+        var RevisionDate = GetServerDateFormat(RevisionDate_dt.GetValue());
+        var Unit = $('#ddlBankBranch option:selected').val();
+        var WarehouseID = $('#ddlWarehouse option:selected').val();
+        var SchemaID = $('#hdnSchemaId').val();
+        var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+        if (ActualAdditionalCost == '') {
+            ActualAdditionalCost = parseFloat(0).toFixed(2);
+            $('#txtActualAdditionalCost').val(ActualAdditionalCost);
+        }
+      
+        var hdnRevisionNo = $('#hdnRevisionNo').val();
+        var hdnDetailsID = $('#hdnDetailsID').val();
+
+
+        var oneproduct = "";
+        var visiablerow = gridBOMProductEntryList.GetVisibleRowsOnPage();
+        if (visiablerow > 0) {
+            for (var i = 100; i > -500; i--) {
+                if (gridBOMProductEntryList.GetRow(i)) {
+                   
+                    if (oneproduct == "" || oneproduct == null) {
+                        oneproduct = gridBOMProductEntryList.batchEditApi.GetCellValue(i, 'ProductName');
+                    }
+                }
+            }
+        }
+        if (hdnDetailsID == "") {
+            RevisionNo = " ";
+            RevisionDate = GetServerDateFormat(new Date);
+        }
+
+        if (oneproduct != "" && oneproduct != null) {
+
+            if (hdnDetailsID > 0 && hdnRevisionNo == RevisionNo) {
+                jAlert("Please enter new revision number to save.");
+                return false;
+            }
+            else {
+                if (FinishedQty <= 0) {
+                    $("html, body").animate({ scrollTop: 0 }, 600);
+                    jAlert("Finished qty should be greater than zero!");
+                    return false;
+                }
+                else {
+
+                    if (bomno != '' && BOMDate != '' && FinishedItem != '' && FinishedQty != '' && FinishedUom != '' && BOMType != '' && RevisionNo != '' && RevisionDate != '' && Unit != '' && ActualAdditionalCost != '') {
+
+                        if (hdnDetailsID > 0 && RevisionNo != "") {
+
+                            $.ajax({
+                                type: "POST",
+                                url: "@Url.Action("ProcessWithRevisionNumber", "BOMEntry")",
+                                data: { detailsid: hdnDetailsID, RevisionNo: RevisionNo },
+                                success: function (response) {
+
+                                    if (response) {
+
+                                        SuffleRows();
+                                        SuffleRowsGrid2();
+                                        gridBOMProductEntryList.UpdateEdit();
+                                        gridBOMProductEntryList.UpdateEdit();
+                                    }
+                                    else {
+                                        jAlert("Please enter new revision number to save.");
+                                        return false;
+                                    }
+
+                                }
+                            });
+
+                        }
+                        else {
+
+                            SuffleRows();
+                            SuffleRowsGrid2();
+                            gridBOMProductEntryList.UpdateEdit();
+                            gridBOMProductEntryList.UpdateEdit();
+                        }
+                    }
+                    else {
+                        savemode = "";
+                        if (bomno == '') {
+                            $('#EBOMNo').show();
+                        }
+                        else {
+                            $('#EBOMNo').hide();
+                        }
+                        if (BOMDate == '') {
+                            $('#EBOMDate_dt').show();
+                        }
+                        else {
+                            $('#EBOMDate_dt').hide();
+                        }
+                        if (FinishedItem == '') {
+                            $('#EbtnFinishedItem').show();
+                        }
+                        else {
+                            $('#EbtnFinishedItem').hide();
+                        }
+                        if (FinishedQty == '') {
+                            $('#EFinishedQty').show();
+                        }
+                        else {
+                            $('#EFinishedQty').hide();
+                        }
+                        if (FinishedUom == '') {
+                            $('#EFinishedQty').show();
+                        }
+                        else {
+                            $('#EFinishedQty').hide();
+                        }
+                        if (RevisionNo == '') {
+                            $('#ERevisionNo').show();
+                        }
+                        else {
+                            $('#ERevisionNo').hide();
+                        }
+                        if (RevisionDate == '') {
+                            $('#ERevisionDate_dt').show();
+                        }
+                        else {
+                            $('#ERevisionDate_dt').hide();
+                        }
+                        if (Unit == '') {
+                            $('#EddlBankBranch').show();
+                        }
+                        else {
+                            $('#EddlBankBranch').hide();
+                        }
+
+                        $("html, body").animate({ scrollTop: 0 }, 600);
+                        return false;
+                    }
+                }
+            }
+        }
+        else {
+            $("html, body").animate({ scrollTop: 0 }, 600);
+            savemode = "";
+            if (bomno == '') {
+                $('#EBOMNo').show();
+            }
+            else {
+                $('#EBOMNo').hide();
+            }
+            if (BOMDate == '') {
+                $('#EBOMDate_dt').show();
+            }
+            else {
+                $('#EBOMDate_dt').hide();
+            }
+            if (FinishedItem == '') {
+                $('#EbtnFinishedItem').show();
+            }
+            else {
+                $('#EbtnFinishedItem').hide();
+            }
+            if (FinishedQty == '') {
+                $('#EFinishedQty').show();
+            }
+            else {
+                $('#EFinishedQty').hide();
+            }
+            if (FinishedUom == '') {
+                $('#EFinishedQty').show();
+            }
+            else {
+                $('#EFinishedQty').hide();
+            }
+            if (RevisionNo == '') {
+                $('#ERevisionNo').show();
+            }
+            else {
+                $('#ERevisionNo').hide();
+            }
+            if (RevisionDate == '') {
+                $('#ERevisionDate_dt').show();
+            }
+            else {
+                $('#ERevisionDate_dt').hide();
+            }
+            if (Unit == '') {
+                $('#EddlBankBranch').show();
+            }
+            else {
+                $('#EddlBankBranch').hide();
+            }
+
+            jAlert('Cannot Save. You must enter atleast one Product to save this entry.');
+           
+            return false;
+        }
+    }
+
+    function OnResourcesStartCallback(s, e) {
+
+        var strbomno = $('#BOMNo').val();
+        var BOMDate = GetServerDateFormat(BOMDate_dt.GetValue());
+        //var BOMDate = $('#BOMDate_dt').val();
+        var FinishedItem = $('#hdnFinishedItem').val();
+        var FinishedQty = $('#FinishedQty').val();
+        var FinishedUom = $('#FinishedUom').val();
+        var BOMType = $('#slcbomtype option:selected').val();
+        var RevisionNo = $('#RevisionNo').val();
+        var RevisionDate = GetServerDateFormat(RevisionDate_dt.GetValue());
+        //var RevisionDate = $('#RevisionDate_dt').val();
+        var Unit = $('#ddlBankBranch option:selected').val();
+        var WarehouseID = $('#ddlWarehouse option:selected').val();
+        var SchemaID = $('#hdnSchemaId').val();
+        var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+        
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID > 0) {
+            DetailsID = hdnDetailsID;
+        }
+        if (hdnDetailsID == "") {
+
+            RevisionDate = GetServerDateFormat(new Date);
+        }
+       
+
+        if (e != undefined) {
+            e.customArgs["strBOMNo"] = strbomno;
+            e.customArgs["BOMDate"] = BOMDate;
+            e.customArgs["FinishedItem"] = FinishedItem;
+            e.customArgs["FinishedQty"] = FinishedQty;
+
+            e.customArgs["FinishedUom"] = FinishedUom;
+            e.customArgs["BOMType"] = BOMType;
+            e.customArgs["RevisionNo"] = RevisionNo; //EmployeesCounterTargetList
+
+            e.customArgs["RevisionDate"] = RevisionDate;
+            e.customArgs["Unit"] = Unit;
+            e.customArgs["WarehouseID"] = WarehouseID;
+            e.customArgs["BOM_SCHEMAID"] = SchemaID;
+            e.customArgs["ActualAdditionalCost"] = ActualAdditionalCost;
+
+            e.customArgs["ProductionID"] = ProductionID;
+            e.customArgs["DetailsID"] = DetailsID;
+        }
+
+
+    }
+
+    function OnStartCallback(s, e) {
+
+        var strbomno = $('#BOMNo').val();
+        var BOMDate = GetServerDateFormat(BOMDate_dt.GetValue());
+        //var BOMDate = $('#BOMDate_dt').val();
+        var FinishedItem = $('#hdnFinishedItem').val();
+        var FinishedQty = $('#FinishedQty').val();
+        var FinishedUom = $('#FinishedUom').val();
+        var BOMType = $('#slcbomtype option:selected').val();
+        var RevisionNo = $('#RevisionNo').val();
+        var RevisionDate = GetServerDateFormat(RevisionDate_dt.GetValue());
+        //var RevisionDate = $('#RevisionDate_dt').val();
+        var Unit = $('#ddlBankBranch option:selected').val();
+        var WarehouseID = $('#ddlWarehouse option:selected').val();
+        var SchemaID = $('#hdnSchemaId').val();
+        var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID > 0) {
+            DetailsID = hdnDetailsID;
+        }
+
+        if (hdnDetailsID == "") {
+
+            RevisionDate = GetServerDateFormat(new Date);
+        }
+
+        if (e != undefined) {
+            e.customArgs["strBOMNo"] = strbomno;
+            e.customArgs["BOMDate"] = BOMDate;
+            e.customArgs["FinishedItem"] = FinishedItem;
+            e.customArgs["FinishedQty"] = FinishedQty;
+
+            e.customArgs["FinishedUom"] = FinishedUom;
+            e.customArgs["BOMType"] = BOMType;
+            e.customArgs["RevisionNo"] = RevisionNo; //EmployeesCounterTargetList
+
+            e.customArgs["RevisionDate"] = RevisionDate;
+            e.customArgs["Unit"] = Unit;
+            e.customArgs["WarehouseID"] = WarehouseID;
+            e.customArgs["BOM_SCHEMAID"] = SchemaID;
+            e.customArgs["ActualAdditionalCost"] = ActualAdditionalCost;
+
+            e.customArgs["ProductionID"] = ProductionID;
+            e.customArgs["DetailsID"] = DetailsID;
+        }
+
+
+
+    }
+
+    function Scheme_ValueChange() {
+        var val = $('#ddlSchema option:selected').val();
+        var schemetypeValue = val;
+        var schemetype = schemetypeValue.toString().split('~')[1];
+        var schemelength = schemetypeValue.toString().split('~')[2];
+        var branchID = (schemetypeValue.toString().split('~')[3] != null) ? schemetypeValue.toString().split('~')[3] : "";
+        var SchemaID = schemetypeValue.toString().split('~')[0];
+        $('#hdnSchemaId').val(SchemaID);
+        var fromdate = (schemetypeValue.toString().split('~')[5] != null) ? schemetypeValue.toString().split('~')[5] : "";
+        var todate = (schemetypeValue.toString().split('~')[6] != null) ? schemetypeValue.toString().split('~')[6] : "";
+
+        var dt = new Date();
+        document.getElementById("BOMNo").maxLength = schemelength;
+        BOMDate_dt.SetDate(dt);
+
+        if (dt < new Date(fromdate)) {
+            BOMDate_dt.SetDate(new Date(fromdate));
+        }
+
+        if (dt > new Date(todate)) {
+            BOMDate_dt.SetDate(new Date(todate));
+        }
+
+
+
+
+        BOMDate_dt.SetMinDate(new Date(fromdate));
+        BOMDate_dt.SetMaxDate(new Date(todate));
+
+        //BOMDate_dt.focus();
+
+        if (branchID > 0) {
+            $('#ddlBankBranch').val(branchID);
+        }
+
+        if (schemetype == '0') {
+            $('#BOMNo').removeAttr("disabled");
+            $('#BOMNo').val('');
+
+            $('#BOMNo').focus();
+        }
+        else if (schemetype == '1') {
+            $('#BOMNo').attr("disabled", "disabled");
+            $('#BOMNo').val('Auto');
+
+            //$('#BOMNo').focus();
+
+        }
+        else if (schemetype == '2') {
+            $('#BOMNo').attr("disabled", "disabled");
+            $('#BOMNo').val('Datewise');
+
+            //$('#BOMNo').focus();
+
+        }
+        else if (schemetype == 'n') {
+            $('#BOMNo').attr("disabled", "disabled");
+            $('#BOMNo').val('');
+
+            //$('#BOMNo').focus();
+        }
+        else {
+            $('#BOMNo').attr("disabled", "disabled");
+            $('#BOMNo').val('');
+
+            //$('#BOMNo').focus();
+
+        }
+
+    }
+
+    function SuffleRows() {
+        for (var i = 0; i < 1000; i++) {
+            if (gridBOMProductEntryList.GetRow(i)) {
+                if (gridBOMProductEntryList.GetRow(i).style.display != "none") {
+                    gridBOMProductEntryList.batchEditApi.StartEdit(i, 15);
+                    gridBOMProductEntryList.GetEditor("UpdateEdit").SetText(i);
+                }
+            }
+        }
+
+        for (i = -1; i > -1000; i--) {
+            if (gridBOMProductEntryList.GetRow(i)) {
+                if (gridBOMProductEntryList.GetRow(i).style.display != "none") {
+                    gridBOMProductEntryList.batchEditApi.StartEdit(i, 15);
+                    gridBOMProductEntryList.GetEditor("UpdateEdit").SetText(i);
+                }
+            }
+        }
+    }
+
+    function SuffleRowsGrid2() {
+        for (var i = 0; i < 1000; i++) {
+            if (gridBOMResourcesList.GetRow(i)) {
+                if (gridBOMResourcesList.GetRow(i).style.display != "none") {
+                    gridBOMResourcesList.batchEditApi.StartEdit(i, 12);
+                    gridBOMResourcesList.GetEditor("UpdateEdit").SetText(i);
+                }
+            }
+        }
+
+        for (i = -1; i > -1000; i--) {
+            if (gridBOMResourcesList.GetRow(i)) {
+                if (gridBOMResourcesList.GetRow(i).style.display != "none") {
+                    gridBOMResourcesList.batchEditApi.StartEdit(i, 12);
+                    gridBOMResourcesList.GetEditor("UpdateEdit").SetText(i);
+                }
+            }
+        }
+    }
+
+    function parseDate(str) {
+        var mdy = str.split('-');
+        return new Date(mdy[2], mdy[1] - 1, mdy[0]);
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function ChkDataDigitCount(e) {
+
+        var data = $(e).val();
+        $(e).val(parseFloat(data).toFixed(4));
+        if (data == '' || data == null) {
+            $(e).val(parseFloat(0).toFixed(4));
+        }
+    }
+
+    function ChkMoneyDigitCount(e) {
+        var data = $(e).val();
+        $(e).val(parseFloat(data).toFixed(2));
+    }
+
+    $(document).ready(function () {
+        var hdnBOMTYPE = $('#hdnBOMTYPE').val();
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnBOMTYPE != '' && hdnDetailsID > 0) {
+            $('#slcbomtype option:selected').val(hdnBOMTYPE);
+            $('#BOMNo').attr("disabled", "disabled");
+            $('#ddlSchema').attr("disabled", "disabled");
+            $('#slcbomtype').attr("disabled", "disabled");
+
+            //$('#BOMDate_dt').attr("disabled", "disabled");
+            //btnFinishedItem.SetButtonVisible(0, '');
+            //$('#FinishedQty').attr("disabled", "disabled");
+            $('#ddlBankBranch').attr("disabled", "disabled");
+            //$('#ddlWarehouse').attr("disabled", "disabled");
+            BOMDate_dt.SetEnabled(false);
+            //RevisionDate_dt.SetEnabled(false);
+            var BOMResourcesTotal = $('#BOMResourcesTotalAm').val();
+            if (BOMResourcesTotal != "" && BOMResourcesTotal != undefined) {
+                $('#txtGridResourcesTotalAmount').val(parseFloat(BOMResourcesTotal).toFixed(2));
+            }
+
+            var BOMEntryProductsTotal = $('#hdnBOMEntryProductsTotalAm').val();
+            if (BOMEntryProductsTotal != "" && BOMEntryProductsTotal != undefined) {
+                $('#txtGridProductEntryTotalAmount').val(parseFloat(BOMEntryProductsTotal).toFixed(2));
+            }
+            //$('#ddlSchema').val($('#hdnBOM_SCHEMAID').val());
+            var hdnBOMResourcesTotalAm = $('#hdnBOMResourcesTotalAm').val();
+            if (hdnBOMResourcesTotalAm != "" && hdnBOMResourcesTotalAm != undefined) {
+                $('#txtGridResourcesTotalAmount').val(parseFloat(hdnBOMResourcesTotalAm).toFixed(2));
+            }
+           
+            
+            $('#btnSaveandNew').hide();
+
+            setTimeout(function () { var noofrow = gridBOMResourcesList.GetVisibleRowsOnPage(); if (noofrow > 1) { $('#showResources').click();} }, 800);
+            
+        }
+        else {
+            //$("#BOMNo").removeAttr("disabled");
+            $("#ddlSchema").removeAttr("disabled");
+            $("#slcbomtype").removeAttr("disabled");
+            $('#FinishedQty').removeAttr("disabled");
+            //$('#ddlBankBranch').removeAttr("disabled");
+            $('#ddlWarehouse').removeAttr("disabled");
+            BOMDate_dt.SetEnabled(true);
+            RevisionDate_dt.SetEnabled(true);
+            $('#btnSaveandNew').show();
+            RevisionDate_dt.SetDate(null);
+            $('#hdnBOM_SCHEMAID').val('');
+        }
+
+
+        $('#GridWarehouselistModel').on('shown.bs.modal', function () {
+            $('#ddlWarehouselist').focus();
+        })
+
+    });
+
+
+    function datevalidateTo() {
+
+        if (BOMDate_dt.GetDate()) {
+            if (RevisionDate_dt.GetDate() <= BOMDate_dt.GetDate()) {
+                if ($('#hdnDetailsID').val() != "") {
+                    RevisionDate_dt.SetValue(BOMDate_dt.GetDate());
+                    RevisionDate_dt.SetMinDate(BOMDate_dt.GetDate());
+                }
+            }
+        }
+    }
+
+
+    function validateFloatKeyPress(el, evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        var number = el.value.split('.');
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        //just one dot (thanks ddlab)
+        if (number.length > 1 && charCode == 46) {
+            return false;
+        }
+        //get the carat position
+        var caratPos = getSelectionStart(el);
+        var dotPos = el.value.indexOf(".");
+        if (caratPos > dotPos && dotPos > -1 && (number[1].length > 1)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    function getSelectionStart(o) {
+        if (o.createTextRange) {
+            var r = document.selection.createRange().duplicate()
+            r.moveEnd('character', o.value.length)
+            if (r.text == '') return o.value.length
+            return o.value.lastIndexOf(r.text)
+        } else return o.selectionStart
+    }
+
+</script>
+
+<script>
+    $(function () {
+        $('#refreshgrid2').hide();
+        $(".decimalCheck").on("keypress keyup blur", function (event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $('#showResources').click(function () {
+            $('#refreshgrid2').show();
+            gridBOMResourcesList.batchEditApi.StartEdit(globalrowindex2, 2);
+           
+            $(this).hide();
+        });
+
+        $('#closeResource').click(function () {
+            jConfirm('Are you sure to close? Clicking on "Yes" will clear the data from grid.', 'Alert!', function (r) {
+                if (r) {
+                    $('#refreshgrid2').hide();
+                    $('#showResources').show();
+                    for (var i = 500; i > -500; i--) {
+                        if (gridBOMResourcesList.GetRow(i)) {
+                            gridBOMResourcesList.DeleteRow(i);
+                        }
+                    }
+                    AddNewRowGridResources();
+                }
+            });
+        });
+
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID == "") {
+            $('#redREV').hide();
+            $('#redREVDate').hide();
+            $('#RevisionNo').attr("disabled", "disabled");
+            RevisionDate_dt.SetEnabled(false);
+        }
+    });
+
+
+    document.onkeydown = function (e) {
+
+        if (event.keyCode == 88 && event.altKey == true) { //  && myModal.GetVisible() == true
+            BOMEntrySave('Exit');
+        }
+        if (event.keyCode == 83 && event.altKey == true) { //  && myModal.GetVisible() == true
+            BOMEntrySave('New');
+        }
+    }
+
+    $(document).ready(function () {
+        
+        
+        var hdnDetailsID = $('#hdnDetailsID').val();
+        if (hdnDetailsID == "") {
+            $('#FinishedQty').val(parseFloat(0).toFixed(4));
+            setTimeout(function () { RevisionDate_dt.SetDate(null); $('#slcbomtype').focus(); }, 900);
+           
+
+            $("#slcbomtype").focusout(function () {
+                $('#ddlSchema').focus();
+            })
+        }
+        $('#slideResource').click(function () {
+            //$('#slideDiv').slideUp();
+            if (!$('#slideDiv').hasClass('out')) {
+                
+                $('#slideDiv').addClass('out');
+                $('#slideDiv').slideUp();
+                $('#slideResource .fa-chevron-up').hide();
+                $('#slideResource .fa-chevron-down').show();
+            } else {
+                
+                $('#slideDiv').removeClass('out')
+                $('#slideDiv').addClass('in');
+                $('#slideDiv').slideDown();
+                $('#slideResource .fa-chevron-up').show();
+                $('#slideResource .fa-chevron-down').hide();
+            }
+        })
+
+        $("#ddlWarehouse").focusout(function () {
+            gridBOMProductEntryList.batchEditApi.EndEdit();
+            gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+        });
+    });
+
+    function SetFocusQty() {
+        $('#FinishedQty').select();
+        $('#FinishedQty').focus();
+    }
+</script>
+
+<style>
+    #gridBOMProductEntryList, #gridBOMProductEntryList > tbody > tr > td > div.dxgvHSDC > div {
+        width: 100% !important;
+    }
+
+    #gridBOMProductEntryList_DXStatus, #gridBOMResourcesList_DXStatus {
+        display: none;
+    }
+
+    .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+        background: white !important;
+    }
+
+    .finishedQttable > tbody > tr > td:first-child {
+        padding-right: 15px;
+    }
+
+    #gridBOMResourcesList #gridBOMResourcesList_DXMainTable > tbody > tr > td:nth-child(12), #gridBOMResourcesList #gridBOMResourcesList_DXMainTable > tbody > tr > td:nth-child(13) {
+        display: none;
+    }
+
+    .gridHeader {
+        font-size: 16px;
+        padding: 3px 10px;
+        background: #576cae;
+        /* color: #fff; */
+        border-radius: 4px 4px 0 0;
+        margin: 1px 1px -2px 1px;
+        background: #b7deed;
+        background: -moz-linear-gradient(top, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
+        background: -webkit-linear-gradient(top, #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%);
+        background: linear-gradient(to bottom, #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed',GradientType=0 );
+        background: #ffffff;
+        background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%);
+        background: -webkit-linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%);
+        background: linear-gradient(to bottom, #daecf9 0%,#b6d9f2 50%,#90c2e6 51%,#c8e3f7 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 );
+        border: 1px solid #87b8dc;
+    }
+
+    .ttAMt {
+        padding: 4px 0 0 15px;
+        margin-left: 46%;
+       
+    }
+
+        .ttAMt table > tbody > tr > td {
+            padding-right: 15px;
+        }
+
+        .ttAMt.tw {
+          
+            left: 76%;
+        }
+
+    .mtop10 {
+        margin-top: 10px;
+    }
+
+    .fa.fa-exclamation-circle:before {
+        font-family: FontAwesome;
+    }
+
+    .iconRed {
+        right: -19px;
+        top: 3px;
+        position: absolute;
+    }
+
+    .mTop10 {
+        margin-top: 10px;
+    }
+
+    .boxBorder {
+        border: 1px solid #ccc;
+        padding: 15px;
+    }
+
+   
+
+    .dxeErrorCellSys{display:none!important;}
+    .addEdcircleBtn {
+        width: 35px;
+        height: 35px;
+        text-align: center;
+        background: #3db382;
+        color: #fff;
+        border-radius: 50%;
+        /* margin: -10px 10px 0; */
+        line-height: 37px;
+        font-size: 21px;
+        margin: 0 auto;
+    }
+    .translate {
+        -webkit-transform: translateY(-16px);
+        -moz-transform: translateY(-16px);
+        transform: translateY(-16px);
+    }
+    .addResourceBtn {
+        background: #fff;
+        border: 1px solid #ccc;
+        text-align: center;
+        padding: 6px 18px;
+        border-radius: 5px;
+        margin-top: 7px;
+        cursor:pointer;
+    }
+    .addResourceBtn:hover {
+        background: #3db382;
+        border: 1px solid #3db382;
+        color:#fff;
+    }
+    .addResourceBtn.themeColor:hover {
+        background: #54749d;
+        border: 1px solid #54749d;
+        color: #fff;
+    }
+    .addResourceBtn:hover > .addEdcircleBtn, .addResourceBtn.themeColor:hover > .addEdcircleBtn {
+        background: #f5fffb;
+        color: #333;
+    }
+    .addResourceBtn.themeColor {
+        border: 1px solid #617590;
+    }
+    .addResourceBtn.themeColor .addEdcircleBtn {
+        background: #54749d;
+    }
+    .mRight5 {
+        margin-right:5px;
+    }
+    
+    .backwords {
+        -webkit-transform: rotateX(14deg) rotateY(180deg) rotate(-49deg);
+        -moz-transform: rotateX(14deg) rotateY(180deg) rotate(-49deg);
+        transform: rotateX(14deg) rotateY(180deg) rotate(-49deg);
+    }
+    /*.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background: #fff;
+        border: 1px solid #e4e3e3;
+        box-shadow: none;
+    }*/
+    .dxeButtonEditButton_PlasticBlue.dxeButtonDisabled_PlasticBlue {
+        opacity:0.4;
+    }
+    .styledBox {
+        border-radius:6px;
+    }
+    .dynamicPopupTbl > thead > tr > th {
+        font: 12px Tahoma, Geneva, sans-serif !important;
+        padding: 7px 6px 7px 6px;
+        border-right: 1px solid #2a2067;
+        border-top: 1px solid #2a2067;
+        border-bottom: 1px solid #2a2067;
+        font-size:13px;
+    }
+    #slideResource .fa-chevron-up {
+        -webkit-transform: translateY(-2px);
+        -moz-transform: translateY(-2px);
+        transform: translateY(-2px);
+    }
+</style>
+
+@Html.Hidden("hdnProductID")
+
+<input type="hidden" value="@Url.Action("BOQEntryList", "BOQ")" id="hdnBOMListPage" />
+<input type="hidden" value="@Model.DetailsID" id="hdnDetailsID" />
+
+<input type="hidden" value="@Model.BOMType" id="hdnBOMTYPE" />
+<input type="hidden" value="@Model.WarehouseID" id="hdnProductWarehouseID" />
+<input type="hidden" value="@Model.RevisionNo" id="hdnRevisionNo" />
+
+<input type="hidden" value="@Model.BOM_SCHEMAID" id="hdnBOM_SCHEMAID" />
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Bill of Quantities (BOQ)</label>
+        </h3>
+        
+    </div>
+    
+    <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOQEntryList", "BOQ")"><i class="fa fa-times"></i></a></div>
+</div>
+
+<input type="hidden" value="@Model.FinishedItem" id="hdnFinishedItem" />
+<input type="hidden" value="0" id="hdnSchemaId" />
+<div class="">
+    <div class="boxBorder">
+        <div class="styledBox">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Select BOM Type <span style="color:red">*</span></label>
+                    <select id="slcbomtype" class="form-control" onchange="PopulateNumberingSchemeData();">
+                       
+                        <option value="Production">Production</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Assembly">Assembly</option>
+                        @*<option value="Bill of Quantity(BOQ)">Bill of Quantity(BOQ)</option>*@
+                    </select>
+
+                </div>
+                <div class="col-md-2">
+                    <label>Numbering Scheme <span style="color:red">*</span></label>
+                    <div class="relative">
+                        <select id="ddlSchema" class="form-control" onchange="Scheme_ValueChange()"></select>
+                        <span id="EddlSchema" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+
+                <div class=" col-sm-2">
+                    <label>BOM No. <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.TextBoxFor(m => m.BOMNo, new { @class = "form-control", @disabled = "disabled" })
+                        <span id="EBOMNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+
+                </div>
+                <div class=" col-sm-2">
+                    <label>BOM Date <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "BOMDate_dt";
+                                         settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                         settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                         settings.Date = Convert.ToDateTime(@Model.BOMDate);
+
+                                     }
+                            ).GetHtml()
+                        <span id="EBOMDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label>Revision No. <span style="color:red" id="redREV">*</span></label>
+                    <div class="relative">
+                        @Html.TextBoxFor(m => m.RevisionNo, new { @class = "form-control" })
+                        <span id="ERevisionNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+
+                <div class=" col-sm-2">
+                    <label>Revision Date <span style="color:red" id="redREVDate">*</span></label>
+                    <div class="relative">
+                        @Html.DevExpress().DateEdit(
+                  settings =>
+                  {
+                      settings.Name = "RevisionDate_dt";
+                      settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                      settings.Properties.EditFormatString = "dd-MM-yyyy";
+                      settings.Width = Unit.Percentage(100);
+                      settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                      settings.Date = Convert.ToDateTime(@Model.RevisionDate);
+                      settings.Properties.MinDate = Convert.ToDateTime(@Model.BOMDate);
+
+                  }
+         ).GetHtml()
+                        <span id="ERevisionDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+
+
+
+                <div class=" col-sm-2">
+                    <label class="mtop10">Select Finished Item <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.DevExpress().ButtonEdit(
+         settings =>
+         {
+             settings.Name = "btnFinishedItem";
+             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+             settings.Text = Model.FinishedItemName;
+             settings.ReadOnly = true;
+             settings.Properties.Buttons.Add("...");
+             settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnProductList_Click(s,e);}";
+             settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayStructure_KeyDown(s,e);}";
+
+         }).GetHtml()
+                        <span id="EbtnFinishedItem" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+
+                    @*@Html.TextBoxFor(m => m.FinishedItem, new { @class = "form-control" })*@
+                </div>
+                <div class="col-sm-2">
+                    <label class="mtop10">Finished Qty <span style="color:red">*</span></label>
+
+                    <div class="relative">
+
+                        <table style="width:100%" class="finishedQttable">
+                            <tr>
+                                <td>@Html.TextBoxFor(m => m.FinishedQty, new { @class = "form-control decimalCheck", @onchange = "ChkDataDigitCount(this)", @PlaceHolder = "0.0000" })</td>
+                                <td>@Html.TextBoxFor(m => m.FinishedUom, new { @class = "form-control", @disabled = "disabled" })</td>
+                            </tr>
+                        </table>
+                        <span id="EFinishedQty" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <label class="mtop10">Unit <span style="color:red">*</span></label>
+                    <div class="relative">
+                        @Html.DropDownListFor(x => x.Unit, new SelectList(Model.UnitList, "BranchID", "BankBranchName"), new { @id = "ddlBankBranch", @class = "form-control", @onchange = "PopulateWareHouseData();", @disabled = "disabled" })
+                        <span id="EddlBankBranch" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                    @*@Html.TextBoxFor(m => m.Unit, new { @class = "form-control" })*@
+                </div>
+                <div class=" col-sm-2">
+                    <label class="mtop10">Select Warehouse <span style="color:red">*</span></label>
+                    <div class="relative">
+                        <select id="ddlWarehouse" class="form-control"></select>
+                        <span id="EddlWarehouse" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                    </div>
+                    @*@Html.TextBoxFor(m => m.Warehouse, new { @class = "form-control" })*@
+                </div>
+
+
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div id="refreshgrid">
+                    @{
+                        Html.RenderAction("GetBOMProductEntryList", "BOQ");
+                    }
+                </div>
+                @*@{
+
+                        Html.Partial("~/Views/BOM/BOMEntry/_BOMProductEntryGrid.cshtml");
+                        //Html.RenderPartial("_BOMProductEntryGrid");
+                    }*@
+                <div class="clearfix footrGrider">
+
+                    <div class="ttAMt pull-left">
+                        <table>
+                            <tr>
+                                <td><label>Total Amount</label></td>
+                                <td><input type="text" class="form-control text-right" id="txtGridProductEntryTotalAmount" style="width: 132px;" placeholder="0.00" disabled /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        @* Rev 1.1 New grid like POS module *@
+        <div class="row relative" id="refreshgrid2">
+            <div class="col-md-12 relative">
+                <h4>Resources <i class="fa fa-reply backwords"></i>
+                    <span id="closeResource" class="pull-right"><i class="fa fa-close"></i></span>
+                    <span id="slideResource" class="pull-right"><i class="fa fa-chevron-up"></i><i class="fa fa-chevron-down"></i></span>
+                </h4>
+                
+            </div>
+            
+            <div class="col-md-12 mTop10">
+                <div id="slideDiv">
+                    <div>
+                        @{
+                            Html.RenderAction("GetBOMResources", "BOQ");
+                        }
+                    </div>
+                    <div class="clearfix footrGrider">
+
+                        <div class="ttAMt tw">
+                            <table>
+                                <tr>
+                                    <td><label>Total Amount</label></td>
+                                    <td><input type="text" class="form-control text-right" id="txtGridResourcesTotalAmount" style=" width: 132px;" placeholder="0.00" disabled /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            <div class="clearfix">
+                <div class="inline-block addResourceBtn mRight5" id="showResources"><div class="addEdcircleBtn"><i class="fa fa-plus"></i></div><span>Add Resources</span></div>
+                <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveandNew" onclick="BOMEntrySave('New');"><div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div><span>Save and New</span></div>
+                <div class="inline-block addResourceBtn themeColor " onclick="BOMEntrySave('Exit');"><div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div><span>Save and Exit</span></div>
+                <div class="inline-block pull-right">
+
+                    <div class="inline-block mTop5">
+                        <label class="stLbl ">Actual Additional Cost</label>
+                        <div>
+                            <input type="text" value="@Model.ActualAdditionalCost" placeholder="0.00" id="txtActualAdditionalCost" maxlength="12" class="form-control decimalCheck" onchange="ChkMoneyDigitCount(this);" onkeypress="return validateFloatKeyPress(this,event);" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+            </div>
+        </div>
+      
+    </div>
+</div>
+<!-- Product List -->
+<div class="modal fade" id="ProductlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetFocusQty();">&times;</button>
+                <h4 class="modal-title">Select Product</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="ProductListkeydown(event)" id="txtProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                <div id="ProductTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tbody>
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Inventory</th>
+                                <th>HSN/SAC</th>
+                                <th>Class</th>
+                                <th>Brand</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusQty();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product List-->
+<!-- Grid Product List -->
+<div class="modal fade" id="GridProductlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Product</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="GridProductListkeydown(event)" id="txtGridProductName" autofocus width="100%" placeholder="Search By Product Name or Short Name" />
+                <div id="GridProductTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Product Code</th>
+                            <th>Product Name</th>
+                            <th>Inventory</th>
+                            <th>HSN/SAC</th>
+                            <th>Class</th>
+                            <th>Brand</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusDesc()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Product List-->
+<!-- Grid Warehouse List -->
+<div class="modal fade pmsModal w30" id="GridWarehouselistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="SetWarehouseAfterProduct()">&times;</button>
+                <h4 class="modal-title">Select Warehouse</h4>
+            </div>
+            <div class="modal-body">
+                <div id="slcWarehouse">
+                    <select id="ddlWarehouselist" class="form-control"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" id="setWarehousegrid"  onclick="SetWarehouseInGrid()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid Product List-->
+<!-- Grid BOM List -->
+<div class="modal fade" id="GridBOMlistModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select BOM</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="GridBomListkeydown(event)" id="txtBOMName" autofocus width="100%" placeholder="Search By BOM Name" />
+                <div id="GridBOMTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>BOM No.</th>
+                            <th>BOM Date</th>
+                            <th>Revision No.</th>
+                            <th>Revision Date</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-radius" data-dismiss="modal" onclick="SetBOMFocusGrid()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Grid BOM List-->

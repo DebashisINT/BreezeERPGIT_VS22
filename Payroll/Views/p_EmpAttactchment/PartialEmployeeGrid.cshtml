@@ -1,0 +1,23 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridView";
+    settings.CallbackRouteValues = new { Controller = "p_EmpAttactchment", Action = "PartialEmployeeGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+    settings.Settings.VerticalScrollableHeight = 380;
+    settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+    settings.SettingsPager.PageSize = 20;
+    
+    settings.KeyFieldName = "Employee_Code";
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.Width = 50;
+    settings.CommandColumn.Caption = " ";
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Employee_Name";
+        column.Caption = "Employee Name";
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+    });
+}).Bind(Model).GetHtml()

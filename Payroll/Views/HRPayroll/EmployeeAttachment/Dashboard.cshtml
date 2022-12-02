@@ -1,0 +1,1194 @@
+﻿@{
+    ViewBag.Title = "Employee Attachment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () { gridView.PerformCallback(); gridView.PerformCallback(); }, 500);
+
+    });
+
+</script>
+<script type="text/javascript">
+    function btnPayStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnPayStructure_Click(s, e) {
+        BindPayStructure('');
+        setTimeout(function () { $("#txtPayStructure").focus(); }, 500);
+        $('#PayStructureModel').modal('show');
+    }
+
+    function PayStructurekeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtPayStructure").val() != '') {
+                BindPayStructure($("#txtPayStructure").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[PayStructureIndex=0]"))
+                $("input[PayStructureIndex=0]").focus();
+        }
+    }
+
+    function BindPayStructure(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Pay Structure Name");
+        HeaderCaption.push("Payroll Class");
+        HeaderCaption.push("Period From");
+        HeaderCaption.push("Period To");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetPayStructureDetailsList", OtherDetails, "PayStructureTable", HeaderCaption, "PayStructureIndex", "SetPayStructure");
+    }
+
+    function SetPayStructure(Id, Name, e) {
+        var PayStructureID = Id;
+        var PayStructureName = Name;
+
+        if (PayStructureID != "") {
+            $('#PayStructureModel').modal('hide');
+            btnPayStructure.SetText(PayStructureName);
+            document.getElementById('hdnPayStructureID').value = Id;
+
+            var _PeriodFrom = e.parentElement.cells[3].innerText;
+            var _PeriodTo = e.parentElement.cells[4].innerText
+
+            var PeriodFrom = new Date(GetClientDateFormat(_PeriodFrom));
+            var PeriodTo = new Date(GetClientDateFormat(_PeriodTo));
+
+            dtPayFrom.SetValue(null);
+            dtPayFrom.SetMinDate(PeriodFrom);
+            dtPayFrom.SetMaxDate(PeriodTo);
+
+            dtPayTo.SetValue(null);
+            dtPayTo.SetMinDate(PeriodFrom);
+            dtPayTo.SetMaxDate(PeriodTo);
+
+            dtRosterFrom.SetValue(null);
+            dtRosterFrom.SetMinDate(PeriodFrom);
+            dtRosterFrom.SetMaxDate(PeriodTo);
+
+            dtRosterTo.SetValue(null);
+            dtRosterTo.SetMinDate(PeriodFrom);
+            dtRosterTo.SetMaxDate(PeriodTo);
+
+
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "PayStructureIndex") {
+                    SetPayStructure(Id, name, e.target.parentElement);
+                }
+                else if (indexName == "LeaveStructureIndex") {
+                    SetLeaveStructure(Id, name, e.target.parentElement);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            //if (thisindex < 10)
+            $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "PayStructureIndex")
+                    $('#txtPayStructure').focus();
+                else if (indexName == "LeaveStructureIndex")
+                    $('#txtLeaveStructure').focus();
+            }
+        }
+
+    }
+</script>
+<script type="text/javascript">
+    
+
+    function btnModifyLeaveStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnModifyLeaveStructure_Click(s, e) {
+        BindModifyLeaveStructure('');
+        setTimeout(function () { $("#txtLeaveStructure").focus(); }, 500);
+        $('#LeaveStructureModel').modal('show');
+    }
+
+    function LeaveModifyStructurekeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtLeaveStructure").val() != '') {
+                BindModifyLeaveStructure($("#txtPayStructure").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ModifyLeaveStructureIndex=0]"))
+                $("input[ModifyLeaveStructureIndex=0]").focus();
+        }
+    }
+    function BindModifyLeaveStructure(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Structure Short Code");
+        HeaderCaption.push("Structure Name");
+        HeaderCaption.push("Period From");
+        HeaderCaption.push("Period To");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetLeaveStructureDetailsList", OtherDetails, "LeaveStructureTable", HeaderCaption, "ModifyLeaveStructureIndex", "SetModifyLeaveStructure");
+    }
+
+    function SetModifyLeaveStructure(Id, Name, e) {
+        var LeaveStructureID = Id;
+        var LeaveStructureName = Name;
+
+        if (LeaveStructureID != "") {
+            $('#LeaveStructureModel').modal('hide');
+            btnModifyLeaveStructure.SetText(LeaveStructureName);
+            document.getElementById('hdnLeaveStructureID').value = Id;
+
+            var _PeriodFrom = e.parentElement.cells[3].innerText;
+            var _PeriodTo = e.parentElement.cells[4].innerText
+
+            var PeriodFrom = new Date(GetClientDateFormat(_PeriodFrom));
+            var PeriodTo = new Date(GetClientDateFormat(_PeriodTo));
+
+            dtLeaveFromModify.SetValue(null);
+            dtLeaveFromModify.SetMinDate(PeriodFrom);
+            dtLeaveFromModify.SetMaxDate(PeriodTo);
+
+            dtLeaveToModify.SetValue(null);
+            dtLeaveToModify.SetMinDate(PeriodFrom);
+            dtLeaveToModify.SetMaxDate(PeriodTo);
+        }
+    }
+
+    function btnLeaveStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnLeaveStructure_Click(s, e) {
+        BindLeaveStructure('');
+        setTimeout(function () { $("#txtLeaveStructure").focus(); }, 500);
+        $('#LeaveStructureModel').modal('show');
+    }
+
+    function LeaveStructurekeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtLeaveStructure").val() != '') {
+                BindLeaveStructure($("#txtPayStructure").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[LeaveStructureIndex=0]"))
+                $("input[LeaveStructureIndex=0]").focus();
+        }
+    }
+    
+
+    function btnModifyRoster_Click(s, e) {
+        ModifyBindRoster('');
+        setTimeout(function () { $("#txtRoster").focus(); }, 500);
+        $('#RosterModel').modal('show');
+    }
+
+    function btnModifyRoster_KeyDown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtRoster").val() != '') {
+                ModifyBindRoster($("#txtRoster").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ModifyRosterIndex=0]"))
+                $("input[ModifyRosterIndex=0]").focus();
+        }
+    }
+
+    function ModifyBindRoster(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        //HeaderCaption.push("Roster ID");
+        HeaderCaption.push("Roster Code");
+        HeaderCaption.push("Roster Name");
+        HeaderCaption.push("Roster Type");
+        HeaderCaption.push("Class ID");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetRosterDetailsList", OtherDetails, "RosterTable", HeaderCaption, "ModifyRosterIndex", "SetModifyRoster");
+    }
+
+    function SetModifyRoster(Id, Name, e) {
+        var RosterID = Id;
+        var RosterName = Name;
+
+        if (RosterID != "") {
+            $('#RosterModel').modal('hide');
+            btnModifyRoster.SetText(RosterName);
+            document.getElementById('hdnRosterID').value = Id;
+
+            var _PeriodFrom = dtPayFrom.GetValue();
+            var _PeriodTo = dtPayTo.GetValue();         
+            
+            dtRosterFromModify.SetValue(null);
+            dtRosterFromModify.SetMinDate(_PeriodFrom);
+            dtRosterFromModify.SetMaxDate(_PeriodTo);
+           
+
+            dtRosterToModify.SetValue(null);
+            dtRosterToModify.SetMinDate(_PeriodFrom);
+            dtRosterToModify.SetMaxDate(_PeriodTo);
+            dtRosterToModify.SetDate(new Date(response.RosterTo));
+        }
+    }
+
+    function btnRoster_Click(s, e) {
+        BindRoster('');
+        setTimeout(function () { $("#txtRoster").focus(); }, 500);
+        $('#RosterModel').modal('show');
+    }
+
+    function Rosterkeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtRoster").val() != '') {
+                BindRoster($("#txtRoster").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[RosterIndex=0]"))
+                $("input[RosterIndex=0]").focus();
+        }
+    }
+
+    function BindLeaveStructure(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Structure Short Code");
+        HeaderCaption.push("Structure Name");
+        HeaderCaption.push("Period From");
+        HeaderCaption.push("Period To");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetLeaveStructureDetailsList", OtherDetails, "LeaveStructureTable", HeaderCaption, "LeaveStructureIndex", "SetLeaveStructure");
+    }
+
+    function BindRoster(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        //HeaderCaption.push("Roster ID");
+        HeaderCaption.push("Roster Code");
+        HeaderCaption.push("Roster Name");
+        HeaderCaption.push("Roster Type");
+        HeaderCaption.push("Class ID");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetRosterDetailsList", OtherDetails, "RosterTable", HeaderCaption, "RosterIndex", "SetRoster");
+    }
+
+    function SetLeaveStructure(Id, Name, e) {
+        var LeaveStructureID = Id;
+        var LeaveStructureName = Name;
+
+        if (LeaveStructureID != "") {
+            $('#LeaveStructureModel').modal('hide');
+            btnLeaveStructure.SetText(LeaveStructureName);
+            document.getElementById('hdnLeaveStructureID').value = Id;
+
+            var _PeriodFrom = e.parentElement.cells[3].innerText;
+            var _PeriodTo = e.parentElement.cells[4].innerText
+
+            var PeriodFrom = new Date(GetClientDateFormat(_PeriodFrom));
+            var PeriodTo = new Date(GetClientDateFormat(_PeriodTo));
+
+            dtLeaveFrom.SetValue(null);
+            dtLeaveFrom.SetMinDate(PeriodFrom);
+            dtLeaveFrom.SetMaxDate(PeriodTo);
+
+            dtLeaveTo.SetValue(null);
+            dtLeaveTo.SetMinDate(PeriodFrom);
+            dtLeaveTo.SetMaxDate(PeriodTo);
+        }
+    }
+
+    function SetRoster(Id, Name, e) {
+        var RosterID = Id;
+        var RosterName = Name;
+
+        if (RosterID != "") {
+            $('#RosterModel').modal('hide');
+            btnRoster.SetText(RosterName);
+            document.getElementById('hdnRosterID').value = Id;
+
+            var _PeriodFrom = dtPayFrom.GetValue();
+            var _PeriodTo = dtPayTo.GetValue();
+
+            //var PeriodFrom = new Date(GetClientDateFormat(_PeriodFrom));
+            //var PeriodTo = new Date(GetClientDateFormat(_PeriodTo));
+
+            //dtLeaveFrom.SetValue(null);
+            //dtLeaveFrom.SetMinDate(PeriodFrom);
+            //dtLeaveFrom.SetMaxDate(PeriodTo);
+
+            //dtLeaveTo.SetValue(null);
+            //dtLeaveTo.SetMinDate(PeriodFrom);
+            //dtLeaveTo.SetMaxDate(PeriodTo);
+
+            dtRosterFrom.SetValue(null);
+            dtRosterFrom.SetMinDate(_PeriodFrom);
+            dtRosterFrom.SetMaxDate(_PeriodTo);
+
+            dtRosterTo.SetValue(null);
+            dtRosterTo.SetMinDate(_PeriodFrom);
+            dtRosterTo.SetMaxDate(_PeriodTo);
+        }
+    }
+</script>
+<script type="text/javascript">
+    function Cancel() {
+        var url = '/EmployeeAttachment/Dashboard';
+        window.location.href = url;
+    }
+
+    function Save() {
+        var IsValid = true;
+        var PayStructure = btnPayStructure.GetValue();
+        var LeaveStructure = btnLeaveStructure.GetValue();
+        var EmployeeList = ""; //gridView.GetSelectedKeysOnPage();
+
+        var selectted = "";
+        gridView.GetSelectedFieldValues("Employee_Code", function (str) {
+            EmployeeList = str.join(",");
+            var Roster = btnRoster.GetValue();
+
+            if (btnPayStructure.GetValue() == '' || btnPayStructure.GetValue() == null) {
+                $('#MandatoryPayStructure').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryPayStructure').attr('style', 'display:none');
+            }
+
+            //if (btnLeaveStructure.GetValue() == '' || btnLeaveStructure.GetValue() == null) {
+            //    $('#MandatoryLeaveStructure').attr('style', 'display:block');
+            //    IsValid = false;
+            //}
+            //else {
+            //    $('#MandatoryLeaveStructure').attr('style', 'display:none');
+            //}
+
+            //if (btnRoster.GetValue() == '' || btnRoster.GetValue() == null) {
+            //    $('#MandatoryRoster').attr('style', 'display:none');
+            //    IsValid = true;
+            //}
+            //else {
+            //    $('#MandatoryRoster').attr('style', 'display:none');
+            //}
+
+            if (EmployeeList == "") {
+                jAlert("Please select an Employee");
+            }
+
+            if (IsValid == true) {
+                var obj = {};
+                obj.PayStructureCode = $("#hdnPayStructureID").val();
+                obj.Pay_ApplicationFrom = GetServerDateFormat(dtPayFrom.GetValue());
+                obj.Pay_ApplicationTo = GetServerDateFormat(dtPayTo.GetValue());
+                obj.LeaveStructureCode = $("#hdnLeaveStructureID").val();
+                obj.Leave_ApplicationFrom = GetServerDateFormat(dtLeaveFrom.GetValue());
+                obj.Leave_ApplicationTo = GetServerDateFormat(dtLeaveTo.GetValue());
+                obj.EmployeeList = EmployeeList.toString();
+                obj.RosterID = $("#hdnRosterID").val();
+                obj.RosterFrom = GetServerDateFormat(dtRosterFrom.GetValue());
+                obj.RosterTo = GetServerDateFormat(dtRosterTo.GetValue());
+
+                $.ajax({
+                    type: "POST",
+                    url: "/EmployeeAttachment/AttactchmentSubmit",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.ResponseCode == "Success") {
+                            var url = '/EmployeeAttachment/Dashboard';
+
+                            jAlert("Employee successfully assigned", 'Alert Dialog: [Message]', function (r) {
+                                if (r == true) {
+                                    window.location.href = url;
+                                }
+                            });
+                        }
+                        else {
+                            jAlert(response.ResponseMessage);
+                        }
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+        })
+    }
+
+    function Modify() {
+        var obj = {};
+        obj.Leave_ApplicationFrom = GetServerDateFormat(dtLeaveFromModify.GetValue());
+        obj.Leave_ApplicationTo = GetServerDateFormat(dtLeaveToModify.GetValue());
+        obj.Pay_ApplicationFrom = GetServerDateFormat(dtPayFromModify.GetValue());
+        obj.Pay_ApplicationTo = GetServerDateFormat(dtPayToModify.GetValue());
+        obj.ID = document.getElementById('hdnAttachmentID').value;
+
+        obj.RosterFrom = GetServerDateFormat(dtRosterFromModify.GetValue());
+        obj.RosterTo = GetServerDateFormat(dtRosterToModify.GetValue());
+
+        obj.LeaveStructureCode = $("#hdnLeaveStructureID").val();
+        obj.RosterID = $("#hdnRosterID").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeAttachment/AttactchmentModify",
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    $('#ModifyAttachmentModel').modal('hide');
+                    var url = '/EmployeeAttachment/Dashboard';
+
+                    jAlert("Employee Updated successfully", 'Alert Dialog: [Message]', function (r) {
+                        if (r == true) {
+                            gvAttachment.Refresh();
+                            ///window.location.href = url;
+                        }
+                    });
+                }
+                else {
+                    jAlert(response.ResponseMessage);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+
+
+
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function GetClientDateFormat(today) {
+        if (today != "" && today != null) {
+            var DateList = today.split('-');
+
+            var dd = DateList[0];
+            var mm = DateList[1]; //January is 0!
+            var yyyy = DateList[2];
+
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+    function ToJavaScriptDate(value) {
+        var m_names = new Array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
+
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        //return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear
+        return dt.getDate() + "-" + m_names[(dt.getMonth())] + "-" + dt.getFullYear();
+    }
+</script>
+<script>
+    function OnClickEditForm(ID) {
+        document.getElementById('hdnAttachmentID').value = ID;
+
+        $.ajax({
+            type: "POST",
+            url: "/EmployeeAttachment/EditAttachment",
+            //data: JSON.stringify({ 'ActionType': 'EditPayHead', 'id': id }),
+            data: JSON.stringify({ 'ID': ID }),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    dtPayFromModify.SetDate(new Date(response.Pay_ApplicationFrom));
+                    dtPayToModify.SetDate(new Date(response.Pay_ApplicationTo));
+                   // dtPayToModify.SetMinDate(new Date(response.Pay_ApplicationTo));
+
+                    if (response.Leave_ApplicationFrom != "" && response.Leave_ApplicationFrom != null) {
+                        //dtLeaveFromModify.SetEnabled(false);
+                        dtLeaveFromModify.SetDate(new Date(response.Leave_ApplicationFrom));
+                    }
+                    else {
+                        dtLeaveFromModify.SetEnabled(true);
+                    }
+                    if (response.Leave_ApplicationTo != "" && response.Leave_ApplicationTo != null) {
+                        dtLeaveToModify.SetEnabled(true);
+                        dtLeaveToModify.SetDate(new Date(response.Leave_ApplicationTo));
+                        //dtLeaveToModify.SetMinDate(new Date(response.Leave_ApplicationTo));
+                    }
+
+                    if (response.RosterFrom != "" && response.RosterFrom != null) {
+                       // dtRosterFromModify.SetEnabled(false);
+                        dtRosterFromModify.SetDate(new Date(response.RosterFrom));
+                    }
+                    else {
+                        dtRosterFromModify.SetEnabled(true);
+                    }
+                    if (response.RosterTo != "" && response.RosterTo != null) {
+                        dtRosterToModify.SetEnabled(true);
+                        dtRosterToModify.SetDate(new Date(response.RosterTo));
+                       // dtRosterToModify.SetMinDate(new Date(response.RosterTo));
+                    }
+
+
+                    btnModifyLeaveStructure.SetText(response.LeaveStructureName);
+                    btnModifyRoster.SetText(response.RosterName);
+                    $("#hdnLeaveStructureID").val(response.LeaveStructureCode);
+                    $("#hdnRosterID").val(response.RosterID);
+
+                }
+            }
+        });
+
+        $('#ModifyAttachmentModel').modal('show');
+
+
+    }
+
+    function OnClickDeleteForm(ID) {
+        var obj = {};
+        obj.ID = ID;
+
+        jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+            if (r == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "/EmployeeAttachment/DeleteAttachment",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.ResponseCode == "Success") {
+                            gvAttachment.Refresh();
+                            jAlert("Deleted successfully");
+                        }
+                        else if (response.ResponseCode == "AllReadyUsed") {
+                            jAlert("Salary already generated for this employee.");
+                        }
+                        else {
+                            jAlert(response.ResponseMessage);
+                        }
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+        });
+    }
+
+    function DateValidateFrom() {
+        if (dtPayTo.GetDate()) {
+            if (dtPayTo.GetDate() < dtPayFrom.GetDate()) {
+                dtPayTo.SetValue(null);
+            }
+        }
+    }
+
+    function _DateValidateFrom() {
+        if (dtLeaveTo.GetDate()) {
+            if (dtLeaveTo.GetDate() < dtLeaveFrom.GetDate()) {
+                dtLeaveTo.SetValue(null);
+            }
+        }
+    }
+    function _DateValidateFromModify() {
+        if (dtLeaveFromModify.GetDate()) {
+            if (dtLeaveFromModify.GetDate() < dtLeaveFromModify.GetDate()) {
+                dtLeaveFromModify.SetValue(null);
+            }
+        }
+    }
+    function DateValidateTo() {
+        if (dtPayFrom.GetDate()) {
+            if (dtPayTo.GetDate() < dtPayFrom.GetDate()) {
+                dtPayTo.SetValue(null);
+            }
+        }
+    }
+    function _DateValidateTo() {
+        if (dtPayFrom.GetDate()) {
+            if (dtLeaveTo.GetDate() < dtLeaveFrom.GetDate()) {
+                dtLeaveTo.SetValue(null);
+            }
+        }
+    }
+
+    function _DateValidateToModify() {
+        if (dtPayFromModify.GetDate()) {
+            if (dtLeaveToModify.GetDate() < dtLeaveFromModify.GetDate()) {
+                dtLeaveToModify.SetValue(null);
+            }
+        }
+    }
+    function DateValidatePayToModify() {
+        if (dtPayFromModify.GetDate()) {
+            if (dtPayToModify.GetDate() < dtLeaveFromModify.GetDate()) {
+                dtPayToModify.SetValue(null);
+            }
+        }
+    }
+
+    function _RosterDateValidateToModify() {
+        if (dtRosterFromModify.GetDate()) {
+            if (dtRosterToModify.GetDate() < dtLeaveFromModify.GetDate()) {
+                dtRosterToModify.SetValue(null);
+            }
+        }
+    }
+    function _RosterDateValidateFromModify() {
+        if (dtRosterFromModify.GetDate()) {
+            if (dtRosterToModify.GetDate() < dtLeaveFromModify.GetDate()) {
+                dtRosterToModify.SetValue(null);
+            }
+        }
+    }
+
+
+    function DateValidatePayFromModify() {
+        if (dtPayFromModify.GetDate()) {
+            if (dtPayFromModify.GetDate() < dtLeaveFromModify.GetDate()) {
+                dtPayFromModify.SetValue(null);
+            }
+        }
+    }
+
+    function _RosterDateValidateTo() {
+        if (dtRosterFrom.GetDate()) {
+            if (dtRosterTo.GetDate() < dtRosterFrom.GetDate()) {
+                dtRosterTo.SetValue(null);
+            }
+        }
+    }
+    function _RosterDateValidateFrom() {
+        if (dtRosterTo.GetDate()) {
+            if (dtRosterTo.GetDate() < dtRosterFrom.GetDate()) {
+                dtRosterTo.SetValue(null);
+            }
+        }
+    }
+
+</script>
+<link href="~/assests/css/payrollCss/EmployeeAttachment.css" rel="stylesheet" />
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Attachment - Employee</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-primary tabTotal">
+                <div class="panel-heading tabHead">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab1" data-toggle="tab">Attachment</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Attachment Details</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1">
+                            <div class="row clearfix mtop-8">
+                                <div class="col-md-6">
+                                    @{
+                                        Html.RenderAction("PartialEmployeeGrid", "EmployeeAttachment");
+                                    }
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-6 bacB">
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Pay structure</label>
+                                            @Html.DevExpress().ButtonEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "btnPayStructure";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Text = "";
+                                                settings.ReadOnly = true;
+                                                settings.Properties.Buttons.Add("..");
+                                                settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPayStructure_Click(s,e);}";
+                                                settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayStructure_KeyDown(s,e);}";
+                                            }).GetHtml()
+                                            <span id="MandatoryPayStructure" style="display: none" class="validclass">
+                                                <img id="imgPayStructure" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                            </span>
+                                        </div>
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Applicable from</label>
+                                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtPayFrom";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateFrom";
+                                            }).GetHtml()
+                                        </div>
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Applicable to</label>
+                                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtPayTo";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateTo";
+                                            }).GetHtml()
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <div class="col-md-6 bacB">
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Leave structure</label>
+                                            @Html.DevExpress().ButtonEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "btnLeaveStructure";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Text = "";
+                                                settings.ReadOnly = true;
+                                                settings.Properties.Buttons.Add("..");
+                                                settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnLeaveStructure_Click(s,e);}";
+                                                settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnLeaveStructure_KeyDown(s,e);}";
+                                            }).GetHtml()
+                                            <span id="MandatoryLeaveStructure" style="display: none" class="validclass">
+                                                <img id="imgMandatoryLeaveStructure" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                            </span>
+                                        </div>
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Applicable from</label>
+                                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtLeaveFrom";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "_DateValidateFrom";
+                                            }).GetHtml()
+                                        </div>
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Applicable to</label>
+                                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtLeaveTo";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                // settings.Properties.ClientSideEvents.DateChanged = "_DateValidateTo";
+                                            }).GetHtml()
+                                        </div>
+
+                                    </div>
+
+                                    <div class="clear"></div>
+                                    <div class="col-md-6 bacB">
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Roster</label>
+                                            @Html.DevExpress().ButtonEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "btnRoster";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Text = "";
+                                                settings.ReadOnly = true;
+                                                settings.Properties.Buttons.Add("..");
+                                                settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnRoster_Click(s,e);}";
+                                                settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnRoster_KeyDown(s,e);}";
+                                            }).GetHtml()
+                                            <span id="MandatoryRoster" style="display: none" class="validclass">
+                                                <img id="imgMandatoryRoster" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                            </span>
+                                        </div>
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Applicable from</label>
+                                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtRosterFrom";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "_RosterDateValidateFrom";
+                                            }).GetHtml()
+                                        </div>
+                                        <div class="col-md-12 mbot-5">
+                                            <label>Applicable to</label>
+                                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtRosterTo";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "_RosterDateValidateTo";
+                                            }).GetHtml()
+                                        </div>
+
+                                    </div>
+
+                                    <div class="clear"></div>
+                                    <div class="">
+                                        <button class="btn btn-primary" onclick="Save()">Save </button>
+                                        <button class="btn btn-danger" onclick="Cancel()">Cancel </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab2">
+                            @{
+                                Html.RenderAction("PartialAttachmentGrid", "EmployeeAttachment");
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pay structure -->
+    <div class="modal fade" id="PayStructureModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Pay Structure</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" onkeydown="PayStructurekeydown(event)" id="txtPayStructure" autofocus width="100%" placeholder="Search By Pay Structure Name or Short Name" />
+                    <div id="PayStructureTable">
+                        <table border='1' width="100%" class="dynamicPopupTbl">
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Pay Structure Name</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pay structure-->
+    <!-- Leave structure -->
+    <div class="modal fade" id="LeaveStructureModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Leave Structure</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" onkeydown="LeaveStructurekeydown(event)" id="txtLeaveStructure" autofocus width="100%" placeholder="Search By Leave Structure Name or Short Name" />
+                    <div id="LeaveStructureTable">
+                        <table border='1' width="100%" class="_dynamicPopupTbl">
+                            <tr class="HeaderStyle">
+                                <th class="hide">id</th>
+                                <th>Leave Structure Name</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Leave structure-->
+    <!-- Roster -->
+    <div class="modal fade" id="RosterModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Roster</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" onkeydown="Rosterkeydown(event)" id="txtRoster" autofocus width="100%" placeholder="Search By Leave Structure Name or Short Name" />
+                    <div id="RosterTable">
+                        <table border='1' width="100%" class="_dynamicPopupTbl">
+                            <tr class="HeaderStyle">
+                                <th class="hide">Roster ID</th>
+                                <th>Roster Code</th>
+                                <th>Roster Name</th>
+                                <th>Roster Type</th>
+                                <th>Class ID</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Roster -->
+
+    <div class="modal fade" id="ModifyAttachmentModel" role="dialog">
+        <div class="modal-dialog" style="width:500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modify Attachment</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="borderpad clearfix">
+                        <span class="">Pay Structure</span>
+
+                        <div class="col-md-6 mbot-5">
+                            <label>Applicable from</label>
+                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtPayFromModify";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "DateValidatePayFromModify";
+                                                settings.ClientEnabled = false;
+                                            }).GetHtml()
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label>Applicable to</label>
+                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtPayToModify";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "DateValidatePayToModify";
+                                            }).GetHtml()
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="borderpad clearfix">
+                        <span class="">Leave Structure</span>
+                        <div class="col-md-12 mbot-5">
+                            <label>Leave structure</label>
+                            @Html.DevExpress().ButtonEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "btnModifyLeaveStructure";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Text = "";
+                                                settings.ReadOnly = true;
+                                                settings.Properties.Buttons.Add("..");
+                                                settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnModifyLeaveStructure_Click(s,e);}";
+                                                settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnModifyLeaveStructure_KeyDown(s,e);}";
+                                            }).GetHtml()
+                            <span id="MandatoryLeaveStructure" style="display: none" class="validclass">
+                                <img id="imgMandatoryLeaveStructure" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                            </span>
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label>Applicable from</label>
+                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtLeaveFromModify";
+                                                settings.Properties.ClientInstanceName = settings.Name;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "_DateValidateFromModify";
+                                               // settings.ClientEnabled = false;
+                                            }).GetHtml()
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label>Applicable to</label>
+                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtLeaveToModify";
+                                                settings.Properties.ClientInstanceName = settings.Name;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "_DateValidateToModify";
+                                            }).GetHtml()
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="borderpad clearfix">
+                        <span class="">Roster</span>
+                        <div class="col-md-12 mbot-5">
+                            <label>Roster</label>
+                            @Html.DevExpress().ButtonEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "btnModifyRoster";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Text = "";
+                                                settings.ReadOnly = true;
+                                                settings.Properties.Buttons.Add("..");
+                                                settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnModifyRoster_Click(s,e);}";
+                                                settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnModifyRoster_KeyDown(s,e);}";
+                                            }).GetHtml()
+                            <span id="MandatoryRoster" style="display: none" class="validclass">
+                                <img id="imgMandatoryRoster" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                            </span>
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label>Applicable from</label>
+                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtRosterFromModify";
+                                                settings.Properties.ClientInstanceName = settings.Name;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "_RosterDateValidateFromModify";
+                                              //  settings.ClientEnabled = false;
+                                            }).GetHtml()
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label>Applicable to</label>
+                            @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+                                                settings.Name = "dtRosterToModify";
+                                                settings.Properties.ClientInstanceName = settings.Name;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.ShowOutOfRangeWarning = false;
+                                                settings.Properties.ClientSideEvents.DateChanged = "_RosterDateValidateToModify";
+                                            }).GetHtml()
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="Modify()">Update </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div>
+        @Html.Hidden("hdnPayStructureID")
+        @Html.Hidden("hdnLeaveStructureID")
+        @Html.Hidden("hdnAttachmentID")
+        @Html.Hidden("hdnRosterID")
+    </div>
+</div>

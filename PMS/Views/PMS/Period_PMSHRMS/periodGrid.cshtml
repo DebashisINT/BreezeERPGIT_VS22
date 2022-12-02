@@ -1,0 +1,67 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridProficiencyList";
+    settings.CallbackRouteValues = new { Action = "periodGrid", Controller = "PeriodList" };
+   
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+    //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.TopAndBottom;
+    settings.Settings.ShowFilterRowMenu = true;
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Visible;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Period_Name";
+        x.Caption = "Period Name";
+        x.VisibleIndex = 1;
+        //x.Width = 200;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Period_Type";
+        x.Caption = "Period Type ";
+        x.VisibleIndex = 2;
+        //x.Width = 150;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Type_Detail";
+        x.Caption = "Type Detail";
+        x.VisibleIndex = 3;
+        //x.Width = 100;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(40);
+
+    });
+
+    
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Order_Value"); ;
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Delivered_Value");
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "countactivity").DisplayFormat = "0";
+
+}).Bind(Model).GetHtml()
+
+

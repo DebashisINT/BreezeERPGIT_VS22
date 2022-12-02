@@ -1,0 +1,507 @@
+﻿@model PMS.Models.ViewModel.RolesMasterViewModel
+@{
+    ViewBag.Title = "Role Master";
+}
+<script type="text/javascript">
+    $(function () {
+        gridRoleMasterList.Refresh();
+        PopulateSkillSetData();
+        $('#ddlAppIds').on('change', function () {
+            if ($("#ddlAppIds option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlAppIds').prop("selectedIndex", 0);
+                var url = '@Url.Action("ExportLocationlist", "RolesMaster", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+    function OnStartCallback(s, e) {
+
+    }
+
+    var chkArr = "";
+    var SKILL_SET = "";
+
+    function OpenRoleMasterforEdit(obj) {
+        //alert(obj);
+        $("#Roleid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDatashow", "RolesMaster")",
+            data: { roleID: obj },
+            dataType: "json",
+            success: function (response) {
+                // jAlert(response.ROLE_NAME);
+                // $("#exampleModal").modal('toggle');
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#RoleName").prop('disabled', true);
+                    $("#lblHeading").html("Edit Role");
+                    $("#RoleName").val(status.ROLE_NAME);
+                    $("#Description").val(status.DESCRIPTION);
+                    $("#ddlBillingType").val(status.BILLING_NAME);
+                    $("#ddlUnit").val(status.UnitName);
+                    $("#ddlSkillCate").val(status.SkillCategoryName);
+                    $("#exampleModal").modal('toggle');
+                    $("#btnSave").removeClass('hide');
+                    PopulateSkillSetData();
+                    SKILL_SET = status.SKILL_SET;
+                    // iCheckClick();
+                    chkArr = status.SKILL_SET;
+                }
+
+            },
+            error: function (response) {
+                // alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function OpenRoleMasterforDelete(obj) {
+        jConfirm('Confirm Delete?', 'Alert', function (r) {
+            if (r) {
+                $("#Roleid").val(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteData", "RolesMaster")",
+                    data: { roleID: obj },
+                    dataType: "json",
+                    success: function (response) {
+                        var status = response;
+                        jAlert(status);
+                        gridRoleMasterList.Refresh();
+                    },
+                    error: function (response) {
+                        // alert(response);
+                        jAlert("Please try again later.");
+                    }
+                });
+            }
+            else {
+                // alert("false");
+            }
+        });
+
+    }
+
+
+    function OpenRoleMasterforView(obj) {
+        //alert(obj);
+        $("#Roleid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDatashow", "RolesMaster")",
+            data: { roleID: obj },
+            dataType: "json",
+            success: function (response) {
+                // jAlert(response.ROLE_NAME);
+                // $("#exampleModal").modal('toggle');
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#RoleName").prop('disabled', true);
+                    $("#lblHeading").html("View Role");
+                    $("#RoleName").val(status.ROLE_NAME);
+                    $("#Description").val(status.DESCRIPTION);
+                    $("#ddlBillingType").val(status.BILLING_NAME);
+                    $("#ddlUnit").val(status.UnitName);
+                    $("#ddlSkillCate").val(status.SkillCategoryName);
+                    $("#btnSave").addClass('hide');
+                    $("#exampleModal").modal('toggle');
+                    PopulateSkillSetData();
+                    SKILL_SET = status.SKILL_SET;
+                    //EditCheckClick(status.SKILL_SET);
+                }
+
+            },
+            error: function (response) {
+                // alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function RoleSave() {
+        var obj = {};
+        obj.RoleID = $("#Roleid").val();
+        obj.RoleName = $("#RoleName").val().trim();
+        obj.Description = $("#Description").val().trim();
+        var e = document.getElementById("ddlBillingType");
+        obj.BillingType = e.options[e.selectedIndex].value;
+        var f = document.getElementById("ddlUnit");
+        obj.Unit = f.options[f.selectedIndex].value;
+        var g = document.getElementById("ddlSkillCate");
+        obj.SkillCategory = g.options[g.selectedIndex].value;
+        obj.SkillSet = chkArr;
+        // alert(obj.SkillCategory + "-" + obj.Unit + "-" + obj.BillingType);
+        if (obj.RoleName != "") {
+            if (obj.Description != "") {
+                if (obj.BillingType != "0") {
+                    if (obj.SkillCategory != "0") {
+                        if (obj.SkillSet != "") {
+                            LoadingPanel.Show();
+                            $.ajax({
+                                type: "POST",
+                                url: "@Url.Action("SaveData", "RolesMaster")",
+                                // contentType: "application/json; charset=utf-8",
+                                data: { role: obj }, //, VehicleNo: Gridr
+
+                                // dataType: "json",
+                                //async: false,
+                                success: function (response) {
+                                    jAlert(response);
+
+                                    LoadingPanel.Hide();
+                                    if (response == 'Saved Successfully.') {
+                                        $("#invid").val('');
+                                        $("#RoleName").val('');
+                                        $("#Description").val('');
+                                        $("#Roleid").val('');
+                                        $("#ddlBillingType").val(0);
+                                        $("#ddlUnit").val(0);
+                                        $("#ddlSkillCate").val(0);
+                                        gridRoleMasterList.Refresh();
+                                        chkArr = "";
+                                        unCheckClick();
+                                        $("#exampleModal").modal('toggle');
+                                    } else if (response == 'Name already exists.') {
+                                        setTimeout(function () {
+                                            $("#RoleName").focus();
+                                        }, 500);
+                                    }
+                                },
+                                error: function (response) {
+                                    //alert(response);
+                                    jAlert("Please try Again Later.");
+                                    LoadingPanel.Hide();
+                                }
+                            });
+                        }
+                        else {
+                            jAlert("Please Select Skill Set. ", "Alert", function () {
+                                setTimeout(function () {
+                                    $('#checkWraper').focus();
+                                }, 200);
+                            });
+                        }
+                    }
+                    else {
+                        jAlert("Skill Category is Mandatory.", "Alert", function () {
+                            setTimeout(function () {
+                                $('#ddlSkillCate').focus();
+                            }, 200);
+                        });
+                    }
+                }
+                else {
+                    jAlert("Billing Type is Mandatory.", "Alert", function () {
+                        setTimeout(function () {
+                            $('#ddlBillingType').focus();
+                        }, 200);
+                    });
+                }
+            }
+            else {
+                jAlert("Description is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        $('#Description').focus();
+                    }, 200);
+                });
+            }
+        }
+        else {
+            jAlert("Name is Mandatory.", "Alert", function () {
+                setTimeout(function () {
+                    $('#RoleName').focus();
+                }, 200);
+            });
+        }
+    }
+
+    function CheckChange(e, eee) {
+        iCheckClick();
+        //alert($(e).val());
+    }
+
+
+
+    function iCheckClick() {
+        var table = document.getElementsByClassName('checkWraper');
+
+        var rowLength = table[0].children.length;
+        chkArr = "";
+
+        for (var i = 0; i < rowLength; i += 1) {
+            if ($(table[0].children[i].children[0]).prop('checked')) {
+                var obj = {};
+                if (chkArr == "") {
+                    chkArr = $(table[0].children[i].children[0]).val();
+                }
+                else {
+                    chkArr = chkArr + ',' + $(table[0].children[i].children[0]).val();
+                }
+                //obj.CheckedID = $(table[0].children[i].children[0]).val();
+                //chkArr.push(obj);
+            }
+        }
+        //debugger;
+    }
+
+
+    function EditCheckClick(val) {
+        var arr = val.split(',');
+        for (var i = 0; i < arr.length; i++) {
+            //$('#chk' + arr[i]).checked = true;
+            var ids = '#chk' + arr[i];
+            //$(ids).checked = true;
+            $(ids).prop("checked", true)
+        }
+    }
+
+    function PopulateSkillSetData() {
+        var BankBranchID = $('#ddlSkillCate option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewSkillSet", "RolesMaster")",
+            data: { SkillID: BankBranchID },
+            success: function (response) {
+                var html = "";
+                var status = "";
+                for (var i = 0; i < response.length; i++) {
+                    status = status + '<label class="checkbox-inline">';
+                    status = status + '<input type="checkbox" id=chk' + response[i].SkillSetID + ' onclick="CheckChange(this,event);" value=' + response[i].SkillSetID + '>' + response[i].SkillSetName + '';
+                    status = status + '</label>';
+                }
+                $('#skillDiv').html(status);
+
+                EditCheckClick(SKILL_SET);
+                SKILL_SET = "";
+
+            }
+        });
+    }
+
+    function Close() {
+        $("#invid").val('');
+        $("#RoleName").val('');
+        $("#Description").val('');
+        $("#Roleid").val('');
+        $("#ddlBillingType").val(0);
+        $("#ddlUnit").val(0);
+        $("#ddlSkillCate").val(0);
+        $("#btnSave").removeClass('hide');
+        $("#RoleName").prop('disabled', false);
+        gridRoleMasterList.Refresh();
+        chkArr = "";
+        unCheckClick();
+        PopulateSkillSetData();
+    }
+
+
+    function unCheckClick() {
+        var table = document.getElementsByClassName('checkWraper');
+
+        var rowLength = table[0].children.length;
+        chkArr = "";
+
+        for (var i = 0; i < rowLength; i += 1) {
+            if ($(table[0].children[i].children[0]).prop('checked')) {
+                //var obj = {};
+                //if (chkArr == "") {
+                //    chkArr = $(table[0].children[i].children[0]).val();
+                //}
+                //else {
+                //    chkArr = chkArr + ',' + $(table[0].children[i].children[0]).val();
+                //}
+                //obj.CheckedID = $(table[0].children[i].children[0]).val();
+                //chkArr.push(obj);
+                $(table[0].children[i].children[0]).prop('checked', false);
+            }
+        }
+        //debugger;
+    }
+    function gridRowclick(s, e) {
+        $('#gridRoleMasterList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+</script>
+
+<style>
+    #gridRoleMasterList, #gridRoleMasterList > tbody > tr > td .dxgvCSD {
+        width: 100% !important;
+    }
+</style>
+
+
+<link href="/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<script src="/assests/pluggins/tagsinput/bootstrap-tagsinput.js"></script>
+
+<div class="panel-heading clearfix">
+    @*pmsHeader*@
+    <div class="panel-title clearfix" id="myDiv">
+        @*pull-left*@
+        <h3 class="pull-left">
+            <label>Role</label>
+        </h3>
+    </div>
+
+
+</div>
+<div class="form_main">
+    @*<div class="pmsContent">*@
+    <div class="padBot8 padTop8">
+        <div class="clearfix">
+            @if (ViewBag.CanAdd)
+            {
+                <button class="btn btn-success btn-radius" data-toggle="modal" onclick="Close()" data-target="#exampleModal" data-backdrop="static" data-keyboard="true">
+                    <span class="btn-icon"><i class="fa fa-plus"></i></span> Role
+                </button>
+            }
+            @if (ViewBag.CanExport)
+            {
+                <select name="ddlAppIds" class="btn btn-sm btn-primary btn-radius" id="ddlAppIds">
+                    <option value="0">Export to</option>
+                    <option value="1">PDF</option>
+                    <option value="2">XLSX</option>
+                    <option value="3">XLS</option>
+                    <option value="4">RTF</option>
+                    <option value="5">CSV</option>
+                </select>
+            }
+        </div>
+    </div>
+    <div class="scrooler">
+        <div id="refreshgrid" class="relative">
+            @{
+                Html.RenderAction("GetRoleMasterPartial", "RolesMaster");
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<input type="hidden" id="Roleid" />
+
+<div class="modal fade pmsModal w40" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><label id="lblHeading">Add Role</label></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Name <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control", @id = "RoleName", @MaxLength = "100" })
+                            @*<input type="text" class="form-control" id="staticEmail" value="email@example.com">*@
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Description <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "Description", @MaxLength = "500" })
+                            @*<textarea rows="5" ></textarea>*@
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Billing Type <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            @Html.DropDownListFor(x => x.BillingTypeList, new SelectList(Model.BillingTypeList, "BillingID", "BillingName"), new { @id = "ddlBillingType", @class = "form-control" })  @*, @onchange = "PopulateWareHouseData();"*@
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Unit</label>
+                        <div class="col-sm-9">
+                            @Html.DropDownListFor(x => x.UnitList, new SelectList(Model.UnitList, "branch_id", "branch_description"), new { @id = "ddlUnit", @class = "form-control" })
+
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Skill Category <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            @Html.DropDownListFor(x => x.SkillCategoryList, new SelectList(Model.SkillCategoryList, "SkillCategoryID", "SkillCategoryName"), new { @id = "ddlSkillCate", @class = "form-control", @onchange = "PopulateSkillSetData();" })
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Skillset <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                            <div class="checkWraper" id="skillDiv">
+                                @*@foreach (PMS.Models.ViewModel.SkillSets course in Model.SkillSetList)
+                                    {
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox_@course.SkillSetID" onclick="CheckChange(this,event);" value="@course.SkillSetID">@course.SkillSetName
+                                        </label>
+                                    }*@
+                                @*<label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox2" value="option2"> SQL
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox3" value="option3"> MVC
+                                    </label>*@
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal" onclick="Close()">Close</button>
+                <button id="btnSave" type="button" class="btn btn-success btn-radius" onclick="RoleSave()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()

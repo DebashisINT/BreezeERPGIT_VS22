@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Period Open/Close";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+
+<style>
+    .mtbl {
+        width: 100%;
+    }
+
+        .mtbl > tbody > tr > td {
+            padding-right: 25px;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        .abc{
+            display:none;
+        }
+</style>
+
+<script src="~/assests/js/payrollJs/periodGeneration.js"></script>
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Period Open/Close</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix mtop-8">
+        <div class="col-md-5">
+            <table class="mtbl">
+                <tr>
+                    <td style="width: 150px;">Payroll Class Name<span style="color: red">*</span></td>
+                    <td colspan="3" style="padding-right: 0;">
+                        @Html.DevExpress().ButtonEdit(
+                    settings =>
+                    {
+                        settings.Name = "btnPayClassName";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = "";
+                        settings.ReadOnly = true;
+                        settings.Properties.Buttons.Add("..");
+                        settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPayClass_Click(s,e);}";
+                        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayClass_KeyDown(s,e);}";
+                    }).GetHtml()
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">From Date</td>
+                    <td><input type="text" id="txt_frmDt" disabled style="width:65%" /></td>
+
+                </tr>
+                <tr>
+                    <td style="width: 150px;">To Date</td>
+                    <td><input type="text" id="txt_toDt" disabled style="width:65%" /></td>
+
+                </tr>
+                <tr>
+                    <td style="width: 150px;">Activated Month</td>
+                    <td><input type="text" id="txt_actvmnth" disabled style="width:65%" /></td>
+
+                </tr>
+            </table>
+        </div>
+        <div class="clear"><br /></div>
+        <div class="col-md-5">
+            @{
+                Html.RenderAction("PartialPeriodGeneration", "PeriodGeneration");
+            }
+        </div>
+        <div class="clear"><br /></div>
+        <div class="col-md-5">
+            <div class="">
+                <button class="btn btn-primary" onclick="SaveActivePrev()">Open</button>
+                <button class="btn btn-primary" onclick="SaveActiveNxt()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay Class -->
+<div class="modal fade" id="PayClassModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay Class</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="PayClasskeydown(event)" id="txtPayClass" autofocus width="100%" placeholder="Search By Pay Class Name or Short Name" />
+                <div id="PayClassTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Pay Class Name</th>
+                            <th>Period From</th>
+                            <th>Period To</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay Class-->
+<div>
+    @Html.Hidden("hdnPayClassID")
+</div>

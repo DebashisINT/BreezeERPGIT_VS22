@@ -1,0 +1,244 @@
+﻿<script src="~/assests/js/Date/datepicker.js"></script>
+<style>
+    .ui-datepicker-title {
+        color: #fff;
+    }
+    .spacer5 {
+        padding: 5px;
+    }
+    .optionTable {
+        width:100%;
+        background:#fff;
+    }
+    .optionTable>tbody>tr>td {
+        padding:8px 10px;
+    }
+    .optionAdd {
+        font-size: 20px;
+        color: #3fb148;
+        cursor:pointer;
+    }
+    .optionMinus {
+        font-size: 20px;
+        color: #F14C30;
+        cursor: pointer;
+    }
+    .optionTable > tbody > tr:last-child .optionAdd {
+        display: none;
+    }
+    .optionTable > tbody > tr:not(:last-child) .optionAdd {
+        display:block;
+    }
+    
+    .optionTable > tbody > tr:not(:last-child) .optionMinus {
+        display: none;
+    }
+
+    .optionTable > tbody > tr:last-child .optionMinus {
+        display: block;
+    }
+    .optionTable > tbody > tr:first-child .optionAdd {
+        display: block;
+    }
+</style>
+<script>
+    $(function () {
+
+
+        //$('#checker').on('change', function () {
+        //    showHidediv();
+        //    alert('');
+        //});
+        $('#checker').on('change', function () {
+            var a = $(this).val();
+            //console.log(a);
+            if (a == '1') {
+                $('#form_type2').hide();
+                $('#form_type1').show();
+            } else if (a == '2') {
+
+                $('#form_type1').show();
+                $('#form_type2').hide();
+            } else if (a == '3') {
+
+                $('#form_type1').hide();
+                $('#form_type2').show();
+            } else {
+                $('#form_type1, #form_type2').hide();
+            }
+        });
+        $('.optionMinus').on('click', function () {
+            alert('');
+            $(this).closest('tr').remove();
+        });
+        $('.optionAdd').on('click', function () {
+            var thisTr = $(this).closest('tr');
+            $(this).closest('.tr_clone')
+                    .clone()
+                    .insertAfter(thisTr);
+           
+           
+        })
+    });
+
+
+</script>
+<div class="panel-heading">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Question List </label>
+        </h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#QuestionModal" data-backdrop="static" data-keyboard="true">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span> Add Question
+            </button>
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                Html.RenderAction("questionGrid", "Question");
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pmsModal w40" id="QuestionModal" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Add Question </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm horizontalLbl clearfix">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Type of Qusetion <span class="asterix">*</span></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="checker">
+                                        <option value="1">Single Select</option>
+                                        <option value="2">Multi Select</option>
+                                        <option value="3">Star Rating</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Type Question <span class="asterix">*</span></label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" value="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="boxModel clearfix mTop5" id="form_type1">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table>
+                                            <tr>
+                                                <td style="padding-right:30px"><b>Total weight for the question</b></td>
+                                                <td><input type="text" class="form-control" id="" placeholder=""></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="spacer5"></div>
+
+                                    <div class="col-md-12">
+                                        <table class="optionTable">
+                                            <tr class="tr_clone">
+                                                <td style="padding-right:30px"><b>Option 1</b></td>
+                                                <td>
+                                                    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Option Value text">
+                                                </td>
+                                                <td width="80px"><input type="text" class="form-control" id="exampleInputPassword3" placeholder="Weight"></td>
+                                                <td><i class="fa fa-plus optionAdd"></i></td>
+                                            </tr>
+                                            <tr class="tr_clone">
+                                                <td style="padding-right:30px"><b>Option 1</b></td>
+                                                <td>
+                                                    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Option Value text">
+                                                </td>
+                                                <td width="80px"><input type="text" class="form-control" id="exampleInputPassword3" placeholder="Weight"></td>
+                                                <td><i class="fa fa-plus optionAdd"></i><i class="fa fa-minus optionMinus"></i></td>
+                                            </tr>
+                                            <tr class="tr_clone">
+                                                <td style="padding-right:30px"><b>Option 1</b></td>
+                                                <td>
+                                                    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Option Value text">
+                                                </td>
+                                                <td width="80px"><input type="text" class="form-control" id="exampleInputPassword3" placeholder="Weight"></td>
+                                                <td><i class="fa fa-plus optionAdd"></i><i class="fa fa-minus optionMinus"></i></td>
+                                            </tr>
+                                            <tr class="tr_clone">
+                                                <td style="padding-right:30px"><b>Option 1</b></td>
+                                                <td>
+                                                    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Option Value text">
+                                                </td>
+                                                <td width="80px"><input type="text" class="form-control" id="exampleInputPassword3" placeholder="Weight"></td>
+                                                <td><i class="fa fa-plus optionAdd"></i><i class="fa fa-minus optionMinus"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="boxModel clearfix mTop5" id="form_type2" style="display:none">
+                                <div class="row">
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label for="" class=" col-form-label">Total Star <span class="asterix">*</span></label>
+                                            <div class="">
+                                                <select class="form-control">
+                                                    <option>5</option>
+                                                    <option>10</option>
+                                                   
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="btnSave">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+
+    });
+</script>
+

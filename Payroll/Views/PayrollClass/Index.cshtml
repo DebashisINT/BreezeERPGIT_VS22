@@ -1,0 +1,152 @@
+﻿@using System.Web.UI.WebControls
+
+@using DevExpress.Web.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Payroll Class</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="form-horizontal">
+
+        <div class="form-group">
+
+            <div class="col-md-2">
+                Payroll Class Name
+            </div>
+            <div class="col-md-4">
+                <input type="text" id="txt_clsnm" style="width:72%" />
+                <span id="Mandatoryclsnm" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+            <div class="col-md-6"></div>
+
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-2">
+                Payroll Period
+            </div>
+            <div class="col-md-3">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "period_frm_dt";
+                                         settings.Properties.DisplayFormatString = "dd/MM/yyyy";
+                                         settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         //settings.Properties.ClientSideEvents.DateChanged = "datevalidate";
+
+
+
+                                     }
+                            ).GetHtml()
+
+                        </td>
+                        <td>
+                            @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "period_to_dt";
+                                         settings.Properties.DisplayFormatString = "dd/MM/yyyy";
+                                         settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                         //settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+
+                                     }
+                            ).GetHtml()
+
+                        </td>
+                    </tr>
+                </table>
+
+
+
+                <span id="Mandatorytodt" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+                <span id="Mandatoryfrmdt" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+            <div class="col-md-7"></div>
+
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-2">
+                Payroll Unit
+            </div>
+            <div class="col-md-4">
+                @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmb_prollunit";
+                        settings.Width = 120;
+                        settings.SelectedIndex = 0;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "UserName";
+                        settings.Properties.ValueField = "UserName";
+                    }
+                ).BindList(ViewData["Products"]).GetHtml()
+                <span id="Mandatoryclsnm" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+            <div class="col-md-6"></div>
+
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-2">
+                Payroll Generation
+            </div>
+            <div class="col-md-4">
+                @Html.DevExpress().ComboBox(
+                    settings =>
+                    {
+                        settings.Name = "cmb_prolgen";
+                        settings.Width = 120;
+                        settings.SelectedIndex = 0;
+                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        settings.Properties.TextField = "UserName";
+                        settings.Properties.ValueField = "UserName";
+                    }
+                ).BindList(ViewData["Products"]).GetHtml()
+                <span id="Mandatoryclsnm" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+            <div class="col-md-6"></div>
+
+        </div>
+
+    </div>
+    <div style="clear: both;"></div>
+    <div>
+        @Html.DevExpress().Button(
+                        settings =>
+                        {
+                            settings.Name = "btn_save_new";
+                            settings.Text = "Save & New";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-primary";
+                            settings.UseSubmitBehavior = false;
+                            settings.ClientSideEvents.Click = "save_new";
+                        }
+                        ).GetHtml()
+    </div>
+</div>
+

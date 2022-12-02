@@ -1,0 +1,601 @@
+﻿@model Payroll.Models.LeaveApplicationEngine
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+
+<style>
+    .backg {
+        background: #f3f3f3;
+        padding: 10px 15px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+    }
+
+    .ptop5 {
+        padding-top: 0px;
+    }
+
+    .buttonPosition {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        vertical-align: middle;
+    }
+
+    .a_validclass {
+        position: absolute;
+        right: -4px;
+        top: 35px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        debugger;
+       
+        $("#txtApplicationNo").val("Leave Deduction");
+        document.getElementById("txtApplicationNo").disabled = true;
+     
+    });
+    var jsonLeaveBalance = [];
+    var jsonLeaveDetails = [];
+    var json_MainLeaveDetails = [];
+
+    function LeaveAddition() {
+        debugger;
+        var IsValid = true;
+        $("label[for='lblErrorMsg']").html("");
+
+        var ApplicationNo = $("#txtApplicationNo").val();
+        var LeaveDetails = $("#txtLeaveApplicationDetails").val();
+
+        var LeaveTypeID = $("#ddlLeaveType").val();
+        var _ddlLeaveType = document.getElementById("ddlLeaveType");
+        var LeaveType = _ddlLeaveType.options[_ddlLeaveType.selectedIndex].text;
+
+        var DayPartID = $("#ddlDayPart").val();
+        var _ddlDayPart = document.getElementById("ddlDayPart");
+        var DayPart = _ddlDayPart.options[_ddlDayPart.selectedIndex].text;
+
+        var _FromDate = from_dt.GetValue();
+        var _ToDate = to_dt.GetValue();
+
+        var FromDate = GetClientDateFormat(from_dt.GetValue());
+        var ToDate = GetClientDateFormat(to_dt.GetValue());
+
+        var Server_FromDate = GetServerDateFormat(from_dt.GetValue());
+        var Server_ToDate = GetServerDateFormat(to_dt.GetValue());
+
+        var LeaveDays = $("#txtLeaveDays").val();
+        var LeaveBalance = $("#txtLeaveBalance").val();
+        var LeaveReason = $("#txtLeaveReason").val();
+
+        if (ApplicationNo.trim() == '') {
+            $('#MandatoryApplicationNo').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryApplicationNo').attr('style', 'display:none');
+        }
+
+        if (LeaveTypeID == '0') {
+            $('#MandatoryLeaveType').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryLeaveType').attr('style', 'display:none');
+        }
+
+        if (FromDate == '') {
+            $('#MandatoryFromDate').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryFromDate').attr('style', 'display:none');
+        }
+
+        if (ToDate == '') {
+            $('#MandatoryToDate').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryToDate').attr('style', 'display:none');
+        }
+
+        if (LeaveReason.trim() == '') {
+            $('#MandatoryLeaveReason').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryLeaveReason').attr('style', 'display:none');
+        }
+
+        if (parseFloat(LeaveBalance) < parseFloat(LeaveDays)) {
+            var Is_AllowLeaveCaseZeroBalance = $.grep(jsonLeaveBalance, function (e) { return e.LeaveID == LeaveTypeID; })[0].Is_AllowLeaveCaseZeroBalance;
+            if (Is_AllowLeaveCaseZeroBalance == true)
+            {
+
+            }
+            else
+            {
+                $("label[for='lblErrorMsg']").html("Leave balance already exhausted.");
+                IsValid = false;
+            }
+           
+        }
+
+        for (x in json_MainLeaveDetails) {
+            var LeaveFromDate =  new Date(json_MainLeaveDetails[x]["LeaveFromDate"]);
+            var LeaveToDate =  new Date(json_MainLeaveDetails[x]["LeaveToDate"]);
+
+            if (!((_FromDate >= LeaveFromDate && _FromDate <= LeaveToDate) && (_ToDate >= LeaveFromDate && _ToDate <= LeaveToDate)
+                && (LeaveFromDate <= _FromDate && LeaveFromDate >= _ToDate))) {
+                $("label[for='lblErrorMsg']").html("Another leave already exists in same date range.");
+                IsValid = false;
+            }
+        }
+
+        if (IsValid == true) {
+            var Details = {
+                LeaveType: LeaveType, FromDate: FromDate, ToDate: ToDate, LeaveDays: LeaveDays, DayPart: DayPart, LeaveReason: LeaveReason
+            }
+            jsonLeaveDetails.push(Details);
+
+            var mainDetails = {
+                ApplicationID: "",
+                EmployeeID: document.getElementById('hdnEmployeeID').value, LeaveStructureID: document.getElementById('hdnStructureID').value,
+                LeaveApplicationNo: ApplicationNo, LeaveApplicationDetails: LeaveDetails, LeaveID: LeaveTypeID, DayPart: DayPartID,
+                LeaveFromDate: Server_FromDate, LeaveToDate: Server_ToDate, ApplyDays: LeaveDays, LeaveReason: LeaveReason
+            }
+            json_MainLeaveDetails.push(mainDetails);
+
+            if (jsonLeaveDetails.length > 0) {
+                var txt = '';
+                txt += "<table id='tbl_leave' class='table table-bordered table-striped' width='100%'><thead><tr>";
+                txt += "<th width='15%'>Leave</th><th width='10%'>From</th><th width='10%'>To</th><th width='10%'>Days</th><th width='15%'>Part Of Day</th><th width='50%'>Reason</th>";
+                txt += "</tr></thead><tbody>"
+
+                for (x in jsonLeaveDetails) {
+                    txt += "<tbody><tr>";
+                    PropertyCount = 0;
+
+                    for (key in jsonLeaveDetails[0]) {
+                        var value = jsonLeaveDetails[x][key];
+                        txt += " <td>" + jsonLeaveDetails[x][key] + "</td>";
+                        PropertyCount++;
+                    }
+                    txt += "</tr>";
+                }
+                txt += "</tbody></table>"
+
+                document.getElementById("div_leave").innerHTML = txt;
+            }
+
+            clearDetails();
+            $("#txtApplicationNo").focus();
+        }
+    }
+
+    function clearDetails() {
+       // document.getElementById('txtApplicationNo').value = "";
+        document.getElementById('txtLeaveApplicationDetails').value = "";
+        document.getElementById('ddlLeaveType').value = "0";
+        document.getElementById('ddlDayPart').value = "FH";
+        document.getElementById("ddlDayPart").disabled = true;
+        from_dt.SetDate(null);
+        to_dt.SetDate(null);
+        document.getElementById('txtLeaveDays').value = "0.00";
+        document.getElementById('txtLeaveBalance').value = "0.00";
+        document.getElementById('txtLeaveReason').value = "";
+    }
+
+    function clearAllDetails() {
+       // document.getElementById('txtApplicationNo').value = "";
+        document.getElementById('txtLeaveApplicationDetails').value = "";
+        document.getElementById('ddlLeaveType').value = "0";
+        document.getElementById('ddlDayPart').value = "FH";
+        document.getElementById("ddlDayPart").disabled = true;
+        from_dt.SetDate(null);
+        to_dt.SetDate(null);
+        document.getElementById('txtLeaveDays').value = "0.00";
+        document.getElementById('txtLeaveBalance').value = "0.00";
+        document.getElementById('txtLeaveReason').value = "";
+
+        jsonLeaveDetails = [];
+        json_MainLeaveDetails = [];
+        jsonLeaveBalance = [];
+
+        var txt = '';
+        txt += "<table id='tbl_leave' class='table table-bordered table-striped' width='100%'><thead><tr>";
+        txt += "<th width='15%'>Leave</th><th width='10%'>From</th><th width='10%'>To</th><th width='10%'>Days</th><th width='15%'>Part Of Day</th><th width='50%'>Reason</th>";
+        txt += "</tr></thead></table>"
+        document.getElementById("div_leave").innerHTML = txt;
+    }
+</script>
+<script>
+    function DateValidateFrom() {
+        var LeaveTypeID = $("#ddlLeaveType").val();
+        var Active_DayPart = $.grep(jsonLeaveBalance, function (e) { return e.LeaveID == LeaveTypeID; })[0].Active_DayPart;
+
+        if (to_dt.GetDate()) {
+            if (to_dt.GetDate() < from_dt.GetDate()) {
+                to_dt.SetValue(null);
+            }
+            else {
+                var FromDate = from_dt.GetValue();
+                var ToDate = to_dt.GetValue();
+                var diffDays = parseFloat(date_diff_indays(FromDate, ToDate) + 1).toFixed(2);
+
+                if (Active_DayPart == "1") {
+                    if (parseFloat(diffDays) == 1) {
+                        to_dt.SetValue(from_dt.GetDate());
+                        document.getElementById('txtLeaveDays').value = "0.50";
+                    }
+                    else if (parseFloat(diffDays) > 1) {
+                        to_dt.SetValue(from_dt.GetDate());
+                        document.getElementById('txtLeaveDays').value = "0.00";
+                    }
+                }
+                else {
+                    document.getElementById('txtLeaveDays').value = diffDays;
+                }
+            }
+        }
+        else {
+            if (Active_DayPart == "1") {
+                to_dt.SetValue(from_dt.GetDate());
+                document.getElementById('txtLeaveDays').value = "0.50";
+            }
+        }
+    }
+
+    function DateValidateTo() {
+        if (from_dt.GetDate()) {
+            if (to_dt.GetDate() < from_dt.GetDate()) {
+                to_dt.SetValue(null);
+            }
+            else {
+                var FromDate = from_dt.GetValue();
+                var ToDate = to_dt.GetValue();
+
+                var LeaveTypeID = $("#ddlLeaveType").val();
+                var Active_DayPart = $.grep(jsonLeaveBalance, function (e) { return e.LeaveID == LeaveTypeID; })[0].Active_DayPart;
+                var diffDays = parseFloat(date_diff_indays(FromDate, ToDate) + 1).toFixed(2);
+
+                if (Active_DayPart == "1") {
+                    if (parseFloat(diffDays) == 1) {
+                        document.getElementById('txtLeaveDays').value = "0.50";
+                    }
+                    else if (parseFloat(diffDays) > 1) {
+                        to_dt.SetValue(from_dt.GetDate());
+                        document.getElementById('txtLeaveDays').value = "0.00";
+                    }
+                }
+                else {
+                    document.getElementById('txtLeaveDays').value = diffDays;
+                }
+            }
+        }
+    }
+
+    function PopulateLeaveBalance() {
+        debugger;
+        var LeaveTypeID = $("#ddlLeaveType").val();
+
+        if (LeaveTypeID == "0") {
+            document.getElementById('txtLeaveBalance').value = "0.00";
+        }
+        else {
+            var RunningLeaveBalnce = GetRunningLeaveBalnce(LeaveTypeID);
+            var CalculateBalance = $.grep(jsonLeaveBalance, function (e) { return e.LeaveID == LeaveTypeID; })[0].Balance;
+            var Active_DayPart = $.grep(jsonLeaveBalance, function (e) { return e.LeaveID == LeaveTypeID; })[0].Active_DayPart;
+            var Is_AllowLeaveCaseZeroBalance = $.grep(jsonLeaveBalance, function (e) { return e.LeaveID == LeaveTypeID; })[0].Is_AllowLeaveCaseZeroBalance;
+            if (Active_DayPart == "1") document.getElementById("ddlDayPart").disabled = false;
+            else
+            {
+                document.getElementById("ddlDayPart").disabled = true;
+                $("#ddlDayPart").val("0");
+            }
+            document.getElementById('txtLeaveBalance').value = (parseFloat(CalculateBalance) - parseFloat(RunningLeaveBalnce));
+
+            
+        }
+
+        from_dt.SetValue(null);
+        to_dt.SetValue(null);
+        document.getElementById('txtLeaveDays').value = "0.00";
+    }
+
+    function GetRunningLeaveBalnce(LeaveTypeID) {
+        var RunningLeaveBalnce = 0;
+
+        for (x in json_MainLeaveDetails) {
+            if (json_MainLeaveDetails[x]["LeaveID"] == LeaveTypeID) {
+                RunningLeaveBalnce = (parseFloat(RunningLeaveBalnce) + parseFloat(json_MainLeaveDetails[x]["ApplyDays"])).toFixed(2)
+            }
+        }
+
+        return RunningLeaveBalnce;
+    }
+
+    function date_diff_indays(date1, date2) {
+        dt1 = new Date(date1);
+        dt2 = new Date(date2);
+        return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+    }
+</script>
+<script>
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function GetClientDateFormat(today) {
+        if (today) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = dd + '-' + mm + '-' + yyyy;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function GetConvertDateFormat(today) {
+        if (today != "" && today != null) {
+            var DateList = today.split('-');
+
+            var dd = Number(DateList[0].trim());
+            var mm = Number(DateList[1].trim()); //January is 0!
+            var yyyy = Number(DateList[2].trim());
+
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+</script>
+<script>
+    function btnSaveLeave_Click() {
+        debugger;
+        var val = hdAction.value;
+        if (val == "Edit") {
+            $("label[for='lblErrorMsg']").html("");
+            var model = json_MainLeaveDetails;
+
+            $.ajax({
+                type: "POST",
+                url: "/LeaveApplication/LeaveApplicationEdit",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {
+                        $('#LeavePopup').modal('hide');
+                        jAlert("Leave apply successfully.", 'Alert Dialog: [Leave Application]', function (r) {
+                            gvPaging.Refresh();
+                        });
+                    }
+                    else {
+                        $("label[for='lblErrorMsg']").html("Please try again later");
+                    }
+                },
+                error: function (response) {
+                    $("label[for='lblErrorMsg']").html("Please try again later");
+                }
+            });
+        }
+        else {
+            $("label[for='lblErrorMsg']").html("");
+            var model = json_MainLeaveDetails;
+
+            $.ajax({
+                type: "POST",
+                url: "/LeaveApplication/LeaveApplicationSubmit",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {
+                        $('#LeavePopup').modal('hide');
+                        jAlert("Leave apply successfully.", 'Alert Dialog: [Leave Application]', function (r) {
+                            refreshLeaveHistory();
+                        });
+                    }
+                    else {
+                        $("label[for='lblErrorMsg']").html("Please try again later");
+                    }
+                },
+                error: function (response) {
+                    $("label[for='lblErrorMsg']").html("Please try again later");
+                }
+            });
+        }
+    }
+</script>
+
+<div class="panel-body ptop5">
+    <div class="backg">
+        <div class="row">
+            <div class="col-md-3">
+                <label>Application No.</label>
+                <div>
+                    @Html.TextBox("txtApplicationNo")
+                    <span id="MandatoryApplicationNo" style="display: none" class="a_validclass">
+                        <img id="imgMandatoryApplicationNo" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-9 lblmTop8">
+                <label>Application Details</label>
+                <div>
+                    @Html.TextBox("txtLeaveApplicationDetails")
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+            <div class="col-md-3">
+                <label>Leave Type</label>
+                <div>
+                    @Html.DropDownList("ddlLeaveType", Enumerable.Empty<SelectListItem>(), new { style = "width: 100%;", onchange = "PopulateLeaveBalance()" })
+
+                    @*@Html.DropDownListFor(m => m.PLeaveID, Model._PLeaveType, "", new { style = "width: 100%;", Id = "ddlLeaveType", onchange = "PopulateLeaveBalance()" })*@
+                    <span id="MandatoryLeaveType" style="display: none" class="a_validclass">
+                        <img id="imgMandatoryLeaveType" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2 lblmTop8">
+                <label>Part Of Day</label>
+                <div>
+                    @Html.DropDownList("ddlDayPart", new SelectListItem[]{
+                new SelectListItem() {Text = "Select", Value="0"},
+                new SelectListItem() {Text = "First Half", Value="FH"},
+                new SelectListItem() {Text = "Second Half", Value="SH"}},
+                new { style = "width: 100%;" })
+                </div>
+            </div>
+            <div class="col-md-2 lblmTop8">
+                <label>From Date</label>
+                <div>
+                    @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "from_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormat = EditFormat.Custom;
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateFrom";
+                                settings.Properties.ShowOutOfRangeWarning = false;
+                            }
+                ).GetHtml()
+                    <span id="MandatoryFromDate" style="display: none" class="a_validclass">
+                        <img id="imgMandatoryFromDate" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2 lblmTop8">
+                <label>To Date</label>
+                <div>
+                    @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "to_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormat = EditFormat.Custom;
+                                settings.Properties.ValidationSettings.Display = Display.None;
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateTo";
+                                settings.Properties.ShowOutOfRangeWarning = false;
+                            }
+                ).GetHtml()
+                    <span id="MandatoryToDate" style="display: none" class="a_validclass">
+                        <img id="imgMandatoryToDate" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6 lblmTop8">
+                        <label>Days</label>
+                        <div>
+                            @Html.TextBox("txtLeaveDays", null, new { disabled = "true" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 lblmTop8">
+                        <label>Balance</label>
+                        <div>
+                            @Html.TextBox("txtLeaveBalance", null, new { disabled = "true" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+            <div class="col-md-9 lblmTop8">
+                <label>Leave Reason</label>
+                <div>
+                    @Html.TextBox("txtLeaveReason")
+                    <span id="MandatoryLeaveReason" style="display: none" class="a_validclass">
+                        <img id="imgMandatoryLeaveReason" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 lblmTop8" style="padding-top: 6px;">
+                <label></label>
+                <div>
+                    <input id="btnLeaveAddition" type="button" class="btn btn-primary" onclick="LeaveAddition()" value="ADD >>" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="div_leave">
+                <table id="tbl_leave" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th width="15%">Leave</th>
+                            <th width="10%">From</th>
+                            <th width="10%">To</th>
+                            <th width="10%">Days</th>
+                            <th width="15%">Part Of Day</th>
+                            <th width="50%">Reason</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div class="col-md-12">
+            <label for="lblErrorMsg" style="color:red;"></label>
+        </div>
+    </div>
+</div>
+<div class="buttonPosition">
+    <div class="col-md-12">
+        <input id="btnSaveLeav" type="button" class="btn btn-primary" onclick="btnSaveLeave_Click()" value="Save" />
+        <button type="button" class="btn btn-danger">Close</button>
+    </div>
+</div>
+<input type="hidden" value="Add" id="hdAction" />
+

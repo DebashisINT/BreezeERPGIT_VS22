@@ -1,0 +1,987 @@
+﻿@model Payroll.Models.ShiftMasterEngine
+@{
+
+    String IsDeduct = (Model.LateDayCount != "" && Model.LateDayCount != null) ? "checked" : "";
+    String Shift_EndDay = (Model.Shift_EndDay != "" && Model.Shift_EndDay != null) ? "selected" : "";
+    String IsInTimeAfter = (Model.InTimeAfter != "" && Model.InTimeAfter != null) ? "checked" : "";
+    String IsOutTimeAfter = (Model.OutTimeAfter != "" && Model.OutTimeAfter != null) ? "checked" : "";
+    String IsInOutTimeDiff = (Model.InOutTimeDiff != "" && Model.InOutTimeDiff != null) ? "checked" : "";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        setTimeout(function () { $("#txtShiftCode").focus(); }, 500);
+        var shiftId = "@Model.Shift_Id";
+        if (shiftId != "") {
+            $("#txtShiftCode").attr("disabled", "disabled");
+        }
+
+        var d = new Date(),
+        h = d.getHours(),
+        m = d.getMinutes();
+        if (h < 10) h = '0' + h;
+        if (m < 10) m = '0' + m;
+        $('input[type="time"][value="now"]').each(function () {
+            $(this).attr({ 'value': h + ':' + m });
+        });
+
+    });
+
+    //function validateHhMm(inputField) {
+    //    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputField.value);  //Actual regex which will validate
+
+    //    if (!isValid) {
+    //        inputField.style.backgroundColor = '#fba';
+    //    }
+    //    else {
+    //        inputField.style.backgroundColor = '#FFFFFF';
+    //    }
+
+    //    return isValid;
+    //}
+
+    function ShowHideAdvanceRule() {
+        if ($('#AdvanceShiftRule').prop("checked") == true) {
+            $('.divAdvanceShiftRule').show();
+        }
+        else {
+            $('.divAdvanceShiftRule').hide();
+        }
+    }
+
+
+
+    function addLateRule() {
+        var obj = {};
+        var latecount = $('#latecount').val();
+        var txtaftertimelate = $('#txtaftertimelate').val();
+        if (latecount == "") {
+            $('#Mandatorylatecount').show();
+        }
+        else {
+            $('#Mandatorylatecount').hide();
+        }
+
+        if (txtaftertimelate == "") {
+            $('#Mandatoryaftertimelate').show();
+        }
+        else {
+            $('#Mandatoryaftertimelate').hide();
+        }
+
+        if (latecount != "" && txtaftertimelate != "") {
+            obj.LateCount = $('#latecount').val();
+            obj.InTimeAfter = $('#txtaftertimelate').val();
+            var isInsert = 1;
+
+            if (LateRule.length > 0) {
+                for (var i = 0 ; i < LateRule.length ; i++) {
+                    var obj1 = LateRule[i];
+                    if (obj1.LateCount == $('#latecount').val()) {
+                        jAlert("Late rule already defined!");
+                        isInsert = 0;
+                        return false;
+                    }
+                }
+            }
+            if (isInsert == 1) {
+                LateRule.push(obj);
+            }
+            LateRuleTable();
+            $('#latecount').val('');
+            $('#txtaftertimelate').val('');
+        }
+    }
+
+    function LateRuleTable() {
+        var txthtml = "";
+        for (var i = 0; i < LateRule.length; i++) {
+            var obj = {};
+            obj = LateRule[i];
+            txthtml = txthtml + "<tr><td>" + obj.LateCount + "</td><td>" + obj.InTimeAfter + "</td><td class='text-center'><i class='fa fa-trash' style='cursor: pointer;font-size: 15px;' onclick='RemoveLateLeaving(" + i + ");'></i></td></tr>";
+        }
+        $('#tblbodylaterule').html(txthtml);
+    }
+
+    function RemoveLateLeaving(index) {
+        if (LateRule.length > index) {
+            for (var i = 0; i < LateRule.length; i++) {
+                if (i == index) {
+                    LateRule.splice(i, 1);
+                }
+            }
+
+            LateRuleTable();
+        }
+    }
+
+
+    function AddEarlyLeaving() {
+        var obj = {};
+        var earlyruleleavingtime = $('#earlyruleleavingtime').val();
+        var earlyleavingdays = $('#earlyleavingdays').val();
+        var slcondition = $('#slcondition option:selected').val();
+        if (earlyruleleavingtime == "") {
+            $('#Mandatoryearlyruleleavingtime').show();
+        }
+        else {
+            $('#Mandatoryearlyruleleavingtime').hide();
+        }
+
+        if (earlyleavingdays == "") {
+            $('#Mandatoryearlyleavingdays').show();
+        }
+        else {
+            $('#Mandatoryearlyleavingdays').hide();
+        }
+
+        if (earlyruleleavingtime != "" && earlyleavingdays != "") {
+            obj.LeavingHours = $('#earlyruleleavingtime').val();
+            obj.LeavingDays = $('#earlyleavingdays').val();
+            obj.Condition = slcondition;
+            EarlyLeaving.push(obj);
+            EarlyLeavingTable();
+            $('#earlyruleleavingtime').val('');
+            $('#earlyleavingdays').val('');
+            $('#slcondition').val($("#slcondition option:first").val());
+        }
+    }
+
+    function EarlyLeavingTable() {
+        var txthtml = "";
+        for (var i = 0; i < EarlyLeaving.length; i++) {
+            var obj = {};
+            obj = EarlyLeaving[i];
+            txthtml = txthtml + "<tr><td>" + obj.LeavingHours + "</td><td>" + obj.LeavingDays + "</td><td>" + obj.Condition + "</td><td class='text-center'><i class='fa fa-trash' style='cursor: pointer;font-size: 15px;' onclick='RemoveEarlyLeaving(" + i + ");'></i></td></tr>";
+        }
+        $('#tblearlyleavingruleseclist').html(txthtml);
+    }
+
+    function RemoveEarlyLeaving(index) {
+        if (EarlyLeaving.length > index) {
+            for (var i = 0; i < EarlyLeaving.length; i++) {
+                if (i == index) {
+                    EarlyLeaving.splice(i, 1);
+                }
+            }
+
+            EarlyLeavingTable();
+        }
+    }
+
+    function shiftendchange() {
+        var ShiftStart = $('#txtShiftStart').val();
+        var ShiftEnd = $('#txtShiftEnd').val();
+
+        if (ShiftStart != "" && ShiftEnd != "") {
+
+            var hours = parseFloat(parseFloat(ShiftEnd.split(':')[0], 10) - parseFloat(ShiftStart.split(':')[0], 10));
+            var mins = "00";
+            var srtmin = ShiftStart.split(':')[1];
+            var endmin = ShiftEnd.split(':')[1];
+
+
+
+            if (hours < 0) hours = 24 + hours;
+            if (parseInt(srtmin) <= parseInt(endmin)) {
+                mins = parseFloat(parseFloat(ShiftEnd.split(':')[1], 10) - parseFloat(ShiftStart.split(':')[1], 10));
+            }
+            else {
+                mins = parseFloat(parseFloat(ShiftStart.split(':')[1], 10) - parseFloat(ShiftEnd.split(':')[1], 10));
+                hours = hours - 1;
+                mins = (60 - mins);
+            }
+
+            $("#TotalShiftDuration").val(hours + ":" + mins);
+        }
+    }
+
+    function ResetShiftEntry() {
+        $('#txtShiftStart').val('');
+        $('#txtShiftEnd').val('');
+        $("#TotalShiftDuration").val("00:00");
+        $('#txtShiftBreak').val('');
+        $("#AdvanceShiftRule").prop("checked", false);
+        $('.divAdvanceShiftRule').hide();
+        $('#txtConsAttenAfter').val('');
+    }
+
+    function addRotationalshiftRule() {
+        $('#RotationalMandatoryShiftStart').attr('style', 'display:none');
+        $('#RotationalMandatoryShiftEnd').attr('style', 'display:none');
+
+        $('#RotationalMandatorySHiftName').attr('style', 'display:none');
+
+        var txtRotationalShiftStart = $('#txtRotationalShiftStart').val();
+        var txtRotationalShiftEnd = $('#txtRotationalShiftEnd').val();
+        var txtShiftTime = $('#txtShiftTime').val();
+        var txtShiftName = $('#txtRShiftName').val();
+        var obj = {};
+        if (txtRotationalShiftStart != "" && txtRotationalShiftEnd != "" && txtShiftTime != "" && txtShiftName!="") {
+            obj.RotationalShiftStart = txtRotationalShiftStart;
+            obj.RotationalShiftEnd = txtRotationalShiftEnd;
+
+            var hours = parseFloat(parseFloat(obj.RotationalShiftEnd.split(':')[0], 10) - parseFloat(obj.RotationalShiftStart.split(':')[0], 10));
+            var mins = "00";
+            var srtmin = obj.RotationalShiftStart.split(':')[1];
+            var endmin = obj.RotationalShiftEnd.split(':')[1];
+
+            if (hours < 0) hours = 24 + hours;
+            if (parseInt(srtmin) <= parseInt(endmin)) {
+                mins = parseFloat(parseFloat(obj.RotationalShiftEnd.split(':')[1], 10) - parseFloat(obj.RotationalShiftStart.split(':')[1], 10));
+            }
+            else {
+                mins = parseFloat(parseFloat(obj.RotationalShiftStart.split(':')[1], 10) - parseFloat(obj.RotationalShiftEnd.split(':')[1], 10));
+                hours = hours - 1;
+                mins = (60 - mins);
+            }
+
+            obj.TimeDuration = hours + ":" + mins;
+            var isInsert = 1;
+            var totaltimecount = 0;
+
+            obj.ShiftName = txtShiftName;
+
+            if (txtShiftTime == "") {
+                jAlert("Shift total time not define!");
+                isInsert = 0;
+                return false;
+            }
+
+            if (RotationalShift.length > 0) {
+                for (var i = 0 ; i < RotationalShift.length ; i++) {
+
+                    var obj1 = RotationalShift[i];
+                    if (obj1.RotationalShiftStart == $('#txtRotationalShiftStart').val() || ((parseFloat($('#txtRotationalShiftStart').val().replace(":", ".")) >= parseFloat(obj1.RotationalShiftStart.replace(":", "."))) && (parseFloat($('#txtRotationalShiftStart').val().replace(":", ".")) <= parseFloat(obj1.RotationalShiftEnd.replace(":", "."))))) {
+                        jAlert("Shift start time already defined!");
+                        isInsert = 0;
+                        return false;
+                    }
+                    else if (obj1.RotationalShiftEnd == $('#txtRotationalShiftEnd').val() || ((parseFloat($('#txtRotationalShiftEnd').val().replace(":", ".")) >= parseFloat(obj1.RotationalShiftStart.replace(":", "."))) && (parseFloat($('#txtRotationalShiftEnd').val().replace(":", ".")) <= parseFloat(obj1.RotationalShiftEnd.replace(":", "."))))) {
+                        jAlert("Shift end time already defined!");
+                        isInsert = 0;
+                        return false;
+                    }
+                    else if (obj1.ShiftName == $('#txtRShiftName').val()) {
+                        jAlert("Shift name already defined!");
+                        isInsert = 0;
+                        return false;
+                    }
+                    //else {
+                    //    totaltimecount =(totaltimecount +  parseFloat(obj1.TimeDuration.replace(":", "."))).toFixed(2);
+                    //}
+                }
+            }
+
+            if (isInsert == 1) {
+                RotationalShift.push(obj);
+            }
+
+            for (var i = 0 ; i < RotationalShift.length ; i++) {
+                var obj1 = RotationalShift[i];
+                totaltimecount = parseFloat(totaltimecount) + parseFloat(obj1.TimeDuration.replace(":", "."));
+            }
+
+            totaltimecount = parseFloat(totaltimecount).toFixed(2);
+            var totaltime = totaltimecount.split('.')[0];
+            var totaltimeendmin = totaltimecount.split('.')[1];
+
+            if (parseInt(totaltimeendmin) > 60) {
+                totaltime = parseInt(totaltime) + (parseInt(totaltimeendmin) / 60);
+                totaltimecount = totaltime;
+            }
+            else {
+                totaltimecount = parseFloat(totaltimecount).toFixed(2);
+            }
+
+            var txtShiftTime1 = txtShiftTime.split(':')[0];
+            var txtShiftTime2 = txtShiftTime.split(':')[1];
+            var calcTime = parseInt(txtShiftTime1) + (parseInt(txtShiftTime2) / 60);
+            if (parseFloat(totaltimecount).toFixed(2) > calcTime) {
+                jAlert("Shift time exceed!");
+                RotationalShift.splice((RotationalShift.length - 1), 1)
+                isInsert = 0;
+                return false;
+            }
+
+
+            RotationalShiftTable();
+            $('#txtRotationalShiftStart').val('');
+            $('#txtRotationalShiftEnd').val('');
+            $('#txtRShiftName').val('');
+        }
+        else {
+            if (txtShiftTime.trim() == '') {
+                $('#MandatoryTotalShiftTime').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#MandatoryTotalShiftTime').attr('style', 'display:none');
+            }
+
+            if (txtRotationalShiftStart.trim() == '') {
+                $('#RotationalMandatoryShiftStart').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#RotationalMandatoryShiftStart').attr('style', 'display:none');
+            }
+
+            if (txtRotationalShiftEnd.trim() == '') {
+                $('#RotationalMandatoryShiftEnd').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#RotationalMandatoryShiftEnd').attr('style', 'display:none');
+            }
+
+            if (txtShiftName.trim() == '') {
+                $('#RotationalMandatorySHiftName').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#RotationalMandatorySHiftName').attr('style', 'display:none');
+            }
+        }
+    }
+
+
+
+    function RotationalShiftTable() {
+        $('#lblnoofshift').val('');
+        var txthtml = "";
+        for (var i = 0; i < RotationalShift.length; i++) {
+            var obj = {};
+            obj = RotationalShift[i];
+            txthtml = txthtml + "<tr><td>" + obj.RotationalShiftStart + "</td><td>" + obj.RotationalShiftEnd + "</td><td>" + obj.TimeDuration + "</td><td>" + obj.ShiftName + "</td><td class='text-center'><i class='fa fa-trash' style='cursor: pointer;font-size: 15px;' onclick='RemoveShiftTime(" + i + ");'></i></td></tr>";
+        }
+        $('#tblbodyRotationalShiftrule').html(txthtml);
+
+        $('#lblnoofshift').val(RotationalShift.length);
+    }
+
+    function RemoveShiftTime(index) {
+
+        if (RotationalShift.length > index) {
+            for (var i = 0; i < RotationalShift.length; i++) {
+                if (i == index) {
+                    RotationalShift.splice(i, 1);
+                }
+            }
+            RotationalShiftTable();
+        }
+    }
+
+</script>
+<style>
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+
+        .btn-circle.btn-lg {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+        }
+    /* The customcheck */
+    .customcheck {
+        display: block;
+        position: relative;
+        padding-left: 29px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        /* Hide the browser's default checkbox */
+        .customcheck input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 22px;
+        width: 22px;
+        background-color: #d0d0d0;
+        border-radius: 5px;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .customcheck:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .customcheck input:checked ~ .checkmark {
+        background-color: #02c6cf;
+        border-radius: 5px;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .customcheck input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .customcheck .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+    .validclass {
+        position: absolute;
+        right: -20px;
+        top: 4px;
+    }
+    .validclass.typeTable {
+        right: -14px;
+        top: 4px;
+    } 
+    .paddingTbl.backgrounded {
+        width: 100%;
+        border: 1px solid #d0d0d0;
+        margin-top: 8px;
+    }
+    .paddingTbl.backgrounded > thead > tr > th {
+        background: #5b70b2;
+        color: #fff;
+    }
+    .paddingTbl.backgrounded > thead > tr > th, .paddingTbl.backgrounded > tbody > tr > td {
+        padding: 5px 10px;
+    }
+    .paddingTbl.backgrounded > tbody > tr > td {
+        background: #fff;
+        border-bottom: 1px solid #d0d0d0;
+    }
+    .separateDiv{
+        border-top: 1px solid #ccc;
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Shift Add/Edit</h4>
+</div>
+<div class="modal-body clearfix">
+    <div class="row">
+        <div class="col-md-4">
+            <label>Shift Code</label>
+            <div class="relative">
+                <input type="text" id="txtShiftCode" style="width:100%" value="@Model.Shift_Code" />
+                <span id="MandatoryShiftCode" style="display: none" class="validclass">
+                    <img id="imgMandatoryShiftCode" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label>Shift Name</label>
+            <div class="relative">
+                <input type="text" id="txtShiftName" style="width:100%" value="@Model.Shift_Name" />
+                <span id="MandatoryShiftName" style="display: none" class="validclass">
+                    <img id="imgMandatoryShiftName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label>Shift Type</label>
+            <div class="relative">
+                <select id="idShiftType" onchange="ChangeShiftByType()" class="form-control">
+                    <option value="0">Normal</option>
+                    <option value="1">Rotational</option>
+                </select>
+                <span id="MandatoryShiftName" style="display: none" class="validclass">
+                    <img id="imgMandatoryShiftName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="@Model.Shift_Type" id="hdnShift_Type" />
+
+    <div class="clear"><br /></div>
+    <div id="normalShiftSec" style="@(Model.Shift_Type == "0" ? "display:block;" :"display:none;")">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="borderpad clearfix">
+                    <span class="">Shift Details</span>
+                    <div class="col-md-12">
+                        <table class="paddingTbl">
+                            <tr>
+                                <td>
+                                    <label class="mTop5">Shift Start</label>
+                                    <div class="relative">
+                                        <input type="time" onchange="validateHhMm(this); shiftendchange();" placeholder="00:00" id="txtShiftStart" width="100" maxlength="5" value="@Model.Shift_Start" style="width: 100%; height: 22px;" />
+                                        <span id="MandatoryShiftStart" style="display: none" class="validclass typeTable">
+                                            <img id="imgMandatoryShiftStart" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <label class="mTop5">Shift End</label>
+                                    <div class="relative">
+                                        <input type="time" onchange="validateHhMm(this); shiftendchange();" style="width: 100%; height: 22px;" placeholder="00:00" id="txtShiftEnd" width="100" maxlength="5" value="@Model.Shift_End" />
+                                        <span id="MandatoryShiftEnd" style="display: none" class="validclass typeTable">
+                                            <img id="imgMandatoryShiftEnd" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+
+
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <label class="mTop5">Day</label>
+                                    <div>
+                                        <select id="Shift_EndDay" style="margin: 0;width:100%">
+                                            @if (Model.Shift_EndDay == "1")
+                                            {
+                                                <option value="1" @Shift_EndDay>Same Day</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="1">Same Day</option>
+                                            }
+                                            @if (Model.Shift_EndDay == "2")
+                                            {
+                                                <option value="2" @Shift_EndDay>Next Day</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="2">Next Day</option>
+                                            }
+
+
+                                        </select>
+                                    </div>
+
+
+
+                                </td>
+                                <td>
+                                    <label class="mTop5">Duration</label>
+                                    <div>
+                                        <input type="text" id="TotalShiftDuration" value="0.00" disabled style="width: 100%; height: 22px; margin-bottom: 0;" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <label class="mTop5">Break</label>
+                                    <div><input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtShiftBreak" width="100" maxlength="5" value="@Model.Break" /></div>
+                                </td>
+                                <td><div style="padding-top: 26px;">Hours</div></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="display:none;">
+            <div class="col-md-12">
+                <label class="customcheck">
+                    Advance Shift Rules
+                    <input type="checkbox" id="AdvanceShiftRule" onclick="ShowHideAdvanceRule();">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+        <div class="divAdvanceShiftRule" style="display:none;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="borderpad clearfix" style="min-height: 106px;">
+                        <span class="">Full Attendance</span>
+                        <div class="col-md-12">
+                            <table class="paddingTbl">
+                                <tr>
+                                    <td><label class="mTop5">Consider Full Day</label></td>
+                                    <td>
+
+                                        <div>
+                                            <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtConsAttenAfter" width="100" maxlength="5" value="@Model.Consider_AttendanceAfter" />
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>Hours</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="borderpad clearfix">
+                        <span class="">Half Day</span>
+                        <div class="col-md-12">
+                            <table class="paddingTbl">
+                                <tr>
+                                    <td><input type="checkbox" id="intimeafter" @IsInTimeAfter /> In Time After</td>
+                                    <td><input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtintimeafter" width="100" maxlength="5" value="@Model.InTimeAfter" /></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" id="OutTimeBefore" @IsOutTimeAfter /> Out Time Before</td>
+                                    <td><input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtOutTimeBefore" width="100" maxlength="5" value="@Model.OutTimeAfter" /></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" id="InOutTimeDiff" @IsInOutTimeDiff /> In/Out Time Diff</td>
+                                    <td><input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtInOutTimeDiff" width="100" maxlength="5" value="@Model.InOutTimeDiff" /></td>
+                                    <td>Hours</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="borderpad clearfix">
+                        <span class="">Late/Early Leaving Rule</span>
+                        <div class="col-md-12">
+                            <table class="paddingTbl">
+                                <tr>
+                                    <td class="relative">
+                                        <input type="number" id="latecount" />
+                                        <span id="Mandatorylatecount" style="display: none" class="validclass">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td>Late &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; After</td>
+                                    <td class="relative">
+                                        <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtaftertimelate" width="100" maxlength="5" value="" />
+                                        <span id="Mandatoryaftertimelate" style="display: none" class="validclass">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td><button type="button" class="btn btn-success btn-xs btn-radius" onclick="addLateRule();">+</button></td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="tblLateEarlyLeavingRule">
+                                <table class="paddingTbl backgrounded">
+                                    <thead>
+                                        <tr>
+                                            <th>Late</th>
+                                            <th>In Time After</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblbodylaterule">
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <br />
+                        <div class="col-md-12 ">
+                            <table class="paddingTbl">
+                                <tr>
+                                    <td><input type="checkbox" id="deductrule" @IsDeduct /> </td>
+                                    <td>Deduct</td>
+                                    <td><input type="number" id="latedaycount" min="1" value="@Model.LateDayCount" style="width:80px" /></td>
+                                    <td>Day's for every</td>
+                                    <td><input type="number" id="laterulecount" min="1" value="@Model.LateRuleCount" style="width:80px" /></td>
+                                    <td>
+                                        Lates, After first
+                                    </td>
+                                    <td>
+                                        <input type="number" id="lateruleaftercount" min="1" value="@Model.LateRuleAfterCount" style="width:80px" />
+                                    </td>
+                                    <td>Lates</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12 separateDiv">
+                            <table class="paddingTbl">
+                                <tr>
+                                    <td>Early Leaving</td>
+                                    <td class="relative">
+                                        <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="earlyruleleavingtime" width="100" maxlength="5" value="" />
+                                        <span id="Mandatoryearlyruleleavingtime" style="display: none" class="validclass">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td>Hours</td>
+                                    <td class="relative">
+                                        <input type="number" id="earlyleavingdays" min="1" />
+                                        <span id="Mandatoryearlyleavingdays" style="display: none" class="validclass">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td>Day's</td>
+                                    <td>
+                                        <select id="slcondition">
+                                            <option value="And">And</option>
+                                            <option value="Or">Or</option>
+                                        </select>
+                                    </td>
+                                    <td><button type="button" class="btn btn-success btn-xs btn-radius" onclick="AddEarlyLeaving();">+</button></td>
+                                </tr>
+                            </table>
+                            <div>
+                                <div class="earlyleavingrulesec">
+                                    <table class="paddingTbl backgrounded">
+                                        <thead>
+                                            <tr>
+                                                <th>hours</th>
+                                                <th>Days</th>
+                                                <th>Condition</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblearlyleavingruleseclist">
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <font color="red"><label id="lblErrorMessage"></label></font>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+
+
+            <div class=" clearfix">
+
+
+
+
+
+                <div class="divAdvanceShiftRule" style="display:none;">
+                    @*<div class="col-md-6 mbot-5">
+                            <label>Consider Late After</label>
+                            <input type="text" onchange="validateHhMm(this);" placeholder="00:00" id="txtConsLateAfter" width="100" maxlength="5" value="@Model.Consider_LateAfter"/>
+                        </div>*@
+
+
+
+
+
+
+
+
+                    @*<div class="col-md-6 mbot-5">
+                            <label class="mTop5">Consider Attendance After</label>
+                            <div>
+                                <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtConsAttenAfter" width="100" maxlength="5" value="@Model.Consider_AttendanceAfter" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mbot-5">
+                            <label class="mTop5">Consider Half-Day After</label>
+                            <div>
+                                <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtConsHalfDayAfter" width="100" maxlength="5" value="@Model.Consider_HalfDayAfter" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label class="mTop5">Consider Half Day Before</label>
+                            <div>
+                                <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtConsHalfDayBefore" width="100" maxlength="5" value="@Model.Consider_HalfDayBefore" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label class="mTop5">One Late After </label>
+                            <div>
+                                <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtOneLateAfter" width="100" maxlength="5" value="@Model.OneLateAfter" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label class="mTop5">Two Lates After</label>
+                            <div>
+                                <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txttwoLateAfter" width="100" maxlength="5" value="@Model.TwoLateAfter" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label class="mTop5">Three Lates After</label>
+                            <div>
+                                <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtthreeLateAfter" width="100" maxlength="5" value="@Model.ThreeLateAfter" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 mbot-5">
+                            <label class="mTop5">Break</label>
+                            <div>
+                                <input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtBreak" width="100" maxlength="5" value="@Model.Break" />
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="Rotationalshiftsec" style="@(Model.Shift_Type == "1" ? "display:block;" :"display:none;")">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="borderpad clearfix">
+                    <span class="">Shift Details</span>
+                    <div class="col-md-12">
+                        <table class="paddingTbl">
+                            <tr>
+                                <td>
+                                    <label>Time</label> <span style="color:red;">(24 hours format)</span>
+                                    <div class="relative">
+                                        <input type="text" onchange="validateHhMm(this); checkTimeHours(this);" placeholder="00:00" id="txtShiftTime" width="100" maxlength="5" value="@Model.Shift_Time" style="width: 100%; height: 22px;" />
+
+
+                                        <span id="MandatoryTotalShiftTime" style="display: none" class="validclass typeTable">
+                                            <img id="imgMandatoryTotalShiftTime" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </div>
+                                </td>
+                                <td><div style="padding-top: 16px">Hours</div></td>
+                                <td>
+                                    <label>No of Sub Shift</label>
+                                    <div><input type="text" id="lblnoofshift" disabled="disabled" /></div> 
+                                </td>
+                                <td>
+                                    <label>Shift Break Time</label> <span style="color:red;">(24 hours format)</span>
+                                    <div class="relative">
+                                        <input type="text" onchange="validateHhMm(this); checkTimeHours(this);" placeholder="00:00" id="txtShift_Break_Time" width="100" maxlength="5" value="@Model.Shift_Break_Time" style="width: 100%; height: 22px;" />
+
+                                        <span id="MandatoryShiftBreakTime" style="display: none" class="validclass typeTable">
+                                            <img id="imgMandatoryTotalShiftTime" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </div>
+                                </td>
+                                <td><div style="padding-top: 16px">Hours</div></td>
+                            </tr>
+                        </table>
+                    </div>
+                       
+
+
+                        <div class="col-md-12">
+                            <table class="paddingTbl">
+                                <tr>
+                                    <td>
+                                        <label class="mTop5">Shift Start</label>
+                                        <div class="relative">
+                                            <input type="time" onchange="validateHhMm(this); shiftendchange();" placeholder="00:00" id="txtRotationalShiftStart" width="100" maxlength="5" value="" style="width: 100%; height: 22px;" />
+                                            <span id="RotationalMandatoryShiftStart" style="display: none" class="validclass">
+                                                <img id="imgMandatoryShiftStart" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label class="mTop5">Shift End</label>
+                                        <div class="relative">
+                                            <input type="time" onchange="validateHhMm(this); shiftendchange();" style="width: 100%; height: 22px;" placeholder="00:00" id="txtRotationalShiftEnd" width="100" maxlength="5" value="" />
+                                            <span id="RotationalMandatoryShiftEnd" style="display: none" class="validclass">
+                                                <img id="imgMandatoryShiftEnd" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <label class="mTop5">Sub Shift Name</label>
+                                        <div class="relative">
+                                            <input type="text" id="txtRShiftName" style="width: 100%; height: 22px;" maxlength="20" />
+                                            <span id="RotationalMandatorySHiftName" style="display: none" class="validclass">
+                                                <img id="imgMandatorySHiftName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <td><button type="button" class="btn btn-success btn-xs btn-radius" onclick="addRotationalshiftRule();" style="margin-top: 26px !important;">+</button></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="tblShiftTime">
+                                <table class="paddingTbl backgrounded">
+                                    <thead>
+                                        <tr>
+                                            <th>Shift Start</th>
+                                            <th>Shift End</th>
+                                            <th>Time Duration</th>
+                                            <th>Sub Shift Name</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblbodyRotationalShiftrule">
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <input type="hidden" name="hdn_id" id="hdn_id" value="@Model.Shift_Id" />
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" onclick="AddEdit()">Save & Exit</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-bottom:6px">
+        Close
+    </button>
+</div>
+

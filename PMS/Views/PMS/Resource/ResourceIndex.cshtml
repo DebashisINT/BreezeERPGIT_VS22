@@ -1,0 +1,760 @@
+﻿@model PMS.Models.ViewModel.ResourceViewModel
+@{
+    ViewBag.Title = "Resource";
+}
+
+<link href="~/assests/js/PMS/SearchPopup.css" rel="stylesheet" />
+<script src="~/assests/js/PMS/SearchPopupResource.js"></script>
+
+<script>
+    $(document).ready(function () {
+        gridResourceMasterList.Refresh();
+        gridResourceMasterList.Refresh();
+        var BankBranchID = $('#ddlResourceType option:selected').val();
+
+        if (BankBranchID == 1) {
+            document.getElementById("divSecondName").style.display = "none";
+        }
+
+        $('#ddlAppIds').on('change', function () {
+            if ($("#ddlAppIds option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlAppIds').prop("selectedIndex", 0);
+                var url = '@Url.Action("ExportResourcelist", "Resource", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+
+    });
+
+    function OnStartCallback(s, e) {
+
+    }
+
+
+    function SaveData() {
+        var obj = {};
+        var localSkill = [];
+        obj.resource_id = $("#Rescid").val();
+        obj.resourceName = $("#resourceName").val().trim();
+        var e = document.getElementById("ddlResourceType");
+        obj.resourceType = e.options[e.selectedIndex].value;
+        var f = document.getElementById("ddlBranch");
+        obj.Branch = f.options[f.selectedIndex].value;
+        // obj.Contact = $("#ContactName").val().trim();
+        var BankBranchID = obj.resourceType;
+        if (BankBranchID == 2) {
+            obj.Contact = ctxtCustomer.GetText().trim();
+            if (obj.Contact == "") {
+                jAlert($('#ContactID').text() + " is Mandatory.", "Alert");
+                setTimeout(function () {
+                    ctxtCustomer.Focus();
+                }, 200);
+                return;
+            }
+        }
+        else if (BankBranchID == 3) {
+            obj.Contact = ctxtCustomer.GetText().trim();
+            if (obj.Contact == "") {
+                jAlert($('#ContactID').text() + " is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        ctxtCustomer.Focus();
+                    }, 200);
+                });
+                return;
+            }
+        }
+        else if (BankBranchID == 4) {
+            obj.Contact = ctxtProduct.GetText().trim();
+            if (obj.Contact == "") {
+                jAlert($('#ContactID').text() + " is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        ctxtProduct.Focus();
+                    }, 200);
+                });
+                return;
+            }
+
+        }
+        else if (BankBranchID == 5) {
+            obj.Contact = ctxtCustomer.GetText().trim();
+            if (obj.Contact == "") {
+                jAlert($('#ContactID').text() + " is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        ctxtCustomer.Focus();
+                    }, 200);
+                });
+                return;
+            }
+        }
+        else {
+            obj.Contact = ctxtCustomer.GetText().trim();
+        }
+
+        if (obj.resourceType != "0") {
+            if (obj.resourceName != "") {
+                if (obj.Branch != "") {
+                    LoadingPanel.Show();
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("SaveData", "Resource")",
+                        data: { Resc: obj },
+                        success: function (response) {
+                            jAlert(response);
+                            $("#resourcePop").modal('toggle');
+                            LoadingPanel.Hide();
+                            if (response == 'Saved Successfully.') {
+                                $("#Rescid").val('');
+                                $("#resourceName").val('');
+                                $("#ddlResourceType").val('');
+                                $("#ddlBranch").val('');
+                                $("#ContactName").val('');
+                                ctxtCustomer.SetText('');
+                                ctxtProduct.SetText('');
+                                gridResourceMasterList.Refresh();
+                            }
+                        },
+                        error: function (response) {
+                            //alert(response);
+                            jAlert("Please try again later.", "Alert", function () {
+                                setTimeout(function () {
+                                    $('#resourceName').focus();
+                                }, 200);
+                            });
+                            LoadingPanel.Hide();
+                        }
+                    });
+                }
+                else {
+                    jAlert("Organization Unit is Mandatory.", "Alert", function () {
+                        setTimeout(function () {
+                            $('#ddlBranch').focus();
+                        }, 200);
+                    });
+                }
+            }
+            else {
+                jAlert("Name is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        $('#resourceName').focus();
+                    }, 200);
+                });
+            }
+        }
+        else {
+            jAlert("Resource Type is Mandatory.", "Alert", function () {
+                setTimeout(function () {
+                    $('#ddlResourceType').focus();
+                }, 200);
+            });
+        }
+    }
+
+
+    function PopulateWareHouseData() {
+        var BankBranchID = $('#ddlResourceType option:selected').val();
+
+        if (BankBranchID == 2) {
+            document.getElementById("divSecondName").style.display = "block";
+            $('#ContactID').html('Contact');
+            $("#divprdct").addClass('hide');
+            $("#divCustomer").removeClass('hide');
+            ctxtProduct.SetText('');
+            ctxtCustomer.SetText('');
+            document.getElementById("resourceName").disabled = true;
+            $("#resourceName").val('');
+            ctxtCustomer.Focus();
+        }
+        else if (BankBranchID == 3) {
+            document.getElementById("divSecondName").style.display = "block";
+            $('#ContactID').html("User");
+            $("#divprdct").addClass('hide');
+            $("#divCustomer").removeClass('hide');
+            ctxtProduct.SetText('');
+            ctxtCustomer.SetText('');
+            ctxtCustomer.Focus();
+            document.getElementById("resourceName").disabled = true;
+            $("#resourceName").val('');
+        }
+        else if (BankBranchID == 4) {
+            document.getElementById("divSecondName").style.display = "block";
+            $('#ContactID').html('Product');
+            $("#divprdct").removeClass('hide');
+            $("#divCustomer").addClass('hide');
+            ctxtProduct.SetText('');
+            ctxtCustomer.SetText('');
+            ctxtProduct.Focus();
+            document.getElementById("resourceName").disabled = true;
+            $("#resourceName").val('');
+        }
+        else if (BankBranchID == 5) {
+            document.getElementById("divSecondName").style.display = "block";
+            $('#ContactID').html('Customer');
+            $("#divprdct").addClass('hide');
+            $("#divCustomer").removeClass('hide');
+            ctxtProduct.SetText('');
+            ctxtCustomer.SetText('');
+            ctxtCustomer.Focus();
+            document.getElementById("resourceName").disabled = true;
+            $("#resourceName").val('');
+        }
+        else {
+            document.getElementById("divSecondName").style.display = "none";
+            $("#divprdct").addClass('hide');
+            $("#divCustomer").addClass('hide');
+            ctxtProduct.SetText('');
+            ctxtCustomer.SetText('');
+            document.getElementById("resourceName").disabled = false;
+            $("#resourceName").val('');
+        }
+        @*$.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewSkillSet", "Master")",
+            data: { SkillID: BankBranchID },
+        success: function (response) {
+            var html = "";
+            //var hdnProductWarehouseID = $('#hdnProductWarehouseID').val();
+            //for (var i = 0; i < response.length; i++) {
+            //    if (hdnProductWarehouseID > 0) {
+            //        if (hdnProductWarehouseID == response[i].WarehouseID) {
+            //            html = html + "<option value='" + response[i].WarehouseID + "' selected>" + response[i].WarehouseName + "</option>";
+            //        }
+            //        else {
+            //            html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+            //        }
+            //    }
+            //    else {
+            //        html = html + "<option value='" + response[i].WarehouseID + "'>" + response[i].WarehouseName + "</option>";
+            //    }
+
+            //}
+            //$('#ddlWarehouse').html(html);
+
+        }
+    });*@
+    }
+
+
+    function openModal() {
+        $("#Rescid").val('');
+        $("#resourceName").val('');
+        $("#ContactName").val('');
+        $("#ddlResourceType").val(0);
+        $("#ddlBranch").val(0);
+        $("#ddlResourceType").focus();
+        ctxtCustomer.SetText('');
+        ctxtProduct.SetText('');
+        $("#divSaveinf").removeClass('hide');
+        PopulateWareHouseData();
+        $("#exampleModalLabel").html("Add Resource");
+    }
+
+
+
+    function OpenResouirceforEdit(obj) {
+        //alert(obj);
+        $("#Rescid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "Resource")",
+            data: { resourceID: obj },
+            dataType: "json",
+            success: function (response) {
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("Edit Resource");
+                    $("#ddlResourceType").val(status.resourceType);
+                    $("#ddlBranch").val(status.Branch);
+                    PopulateWareHouseData();
+                    var BankBranchID = status.resourceType;
+                    if (BankBranchID == 2) {
+                        ctxtCustomer.SetText(status.Contact);
+                    }
+                    else if (BankBranchID == 3) {
+                        ctxtCustomer.SetText(status.Contact);
+                    }
+                    else if (BankBranchID == 4) {
+                        ctxtProduct.SetText(status.Contact);
+                    }
+                    else if (BankBranchID == 5) {
+                        ctxtCustomer.SetText(status.Contact);
+                    }
+                    //else {
+                    //    obj.Contact = ctxtCustomer.GetText().trim();
+                    //}
+                    $("#resourceName").val(status.resourceName);
+                    $("#divSaveinf").removeClass('hide');
+                    $("#ddlResourceType").focus();
+                    $("#resourcePop").modal('toggle');
+                }
+            },
+            error: function (response) {
+                //   alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function OpenResouirceforDelete(obj) {
+        jConfirm('Confirm Delete?', 'Alert', function (r) {
+            if (r) {
+                $("#Rescid").val(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteData", "Resource")",
+                    data: { resourceID: obj },
+                    dataType: "json",
+                    success: function (response) {
+                        var status = response;
+                        jAlert(status);
+                        gridResourceMasterList.Refresh();
+                        $("#Rescid").val('');
+                    },
+                    error: function (response) {
+                        //  alert(response);
+                        jAlert("Please try again later.");
+                    }
+                });
+            }
+            else {
+                // alert("false");
+            }
+        });
+
+    }
+
+
+
+    function OpenResouirceforView(obj) {
+        //alert(obj);
+        $("#Rescid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "Resource")",
+            data: { resourceID: obj },
+            dataType: "json",
+            success: function (response) {
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("View Resource");
+                    $("#ddlResourceType").val(status.resourceType);
+                    $("#ddlBranch").val(status.Branch);
+                    PopulateWareHouseData();
+                    var BankBranchID = status.resourceType;
+                    if (BankBranchID == 2) {
+                        ctxtCustomer.SetText(status.Contact);
+                    }
+                    else if (BankBranchID == 3) {
+                        ctxtCustomer.SetText(status.Contact);
+                    }
+                    else if (BankBranchID == 4) {
+                        ctxtProduct.SetText(status.Contact);
+                    }
+                    else if (BankBranchID == 5) {
+                        ctxtCustomer.SetText(status.Contact);
+                    }
+                    $("#resourceName").val(status.resourceName);
+                    $("#resourcePop").modal('toggle');
+                    $("#divSaveinf").addClass('hide');
+                }
+            },
+            error: function (response) {
+                //alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function Product_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#ProductModelResource').modal('show');
+        }
+    }
+
+    function ProductButnClick(s, e) {
+        $('#ProductModelResource').modal('show');
+    }
+
+    function Productkeydown(e) {
+        var OtherDetails = {}
+
+        if ($.trim($("#txtProductSearch").val()) == "" || $.trim($("#txtProductSearch").val()) == null) {
+            return false;
+        }
+        OtherDetails.SearchKey = $("#txtProductSearch").val();
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Product Name");
+            HeaderCaption.push("Product Description");
+            HeaderCaption.push("HSN/SAC");
+
+            if ($("#txtProductSearch").val() != "") {
+                callonServer("../Resource/GetcrmProducts", OtherDetails, "ProductTableCRM", HeaderCaption, "ProductIndex", "SetProduct");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[ProductIndex=0]"))
+                $("input[ProductIndex=0]").focus();
+        }
+    }
+
+    function SetProduct(Id, Name) {
+        //  debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#ProductModelResource').modal('hide');
+            ctxtProduct.SetText(Name);
+            $("#resourceName").val(Name);
+            GetObjectID('hdfProductID').value = key;
+            ctxtProduct.Focus();
+        }
+        else {
+            ctxtProduct.SetText('');
+            GetObjectID('hdfProductID').value = '';
+        }
+    }
+
+    function Customer_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            $('#CustModel').modal('show');
+        }
+    }
+
+    function CustomerButnClick(s, e) {
+        $('#CustModel').modal('show');
+    }
+
+    function Customerkeydown(e) {
+
+        var OtherDetails = {}
+        OtherDetails.SearchKey = $("#txtCustSearch").val();
+
+        var type = $('#ContactID').text();
+        //if (type == 'User') {
+        //    OtherDetails.contactType = 'Employee';
+        //}
+        //else
+        if (type == 'Contact') {
+            OtherDetails.contactType = 'Customer';
+        }
+        else {
+            OtherDetails.contactType = $('#ContactID').text();
+        }
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            var HeaderCaption = [];
+            HeaderCaption.push("Customer Name");
+            HeaderCaption.push("Unique Id");
+            HeaderCaption.push("Address");
+            if ($("#txtCustSearch").val() != '') {
+                callonServer("../Resource/GetCustomer", OtherDetails, "CustomerTable", HeaderCaption, "customerIndex", "SetCustomer");
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[customerindex=0]"))
+                $("input[customerindex=0]").focus();
+        }
+    }
+
+    function SetCustomer(Id, Name) {
+        // debugger;
+        var key = Id;
+        if (key != null && key != '') {
+            $('#CustModel').modal('hide');
+            ctxtCustomer.SetText(Name);
+            $("#resourceName").val(Name);
+            GetObjectID('hdfCustomerID').value = key;
+            ctxtCustomer.Focus();
+        }
+        else {
+            ctxtCustomer.SetText('');
+            GetObjectID('hdfCustomerID').value = '';
+        }
+    }
+
+
+    function ValueSelected(e, indexName) {
+
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if (indexName == "customerIndex") {
+
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                if (Id) {
+                    SetCustomer(Id, name);
+
+                }
+            }
+            else if (indexName == "MainAccountIndex") {
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                SetMainAccount(Id, name, e.target.parentElement);
+            }
+
+            else if (indexName == "SubAccountIndex") {
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                GetSubAcountComboBox(Id, name);
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1) {
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            }
+            else {
+
+                if (indexName == "customerIndex")
+                    $('#txtCustSearch').focus();
+                else if (indexName == "MainAccountIndex")
+                    $('#txtMainAccountSearch').focus();
+                else if (indexName == "SubAccountIndex")
+                    $('#txtSubAccountSearch').focus();
+            }
+        }
+    }
+    function gridRowclick(s, e) {
+        $('#gridResourceMasterList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+</script>
+
+<style>
+    #gridResourceMasterList, #gridResourceMasterList > tbody > tr > td .dxgvCSD {
+        width: 100% !important;
+    }
+</style>
+
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Resource</label>
+        </h3>
+    </div>
+
+</div>
+<div class="form_main">
+    <div class="padBot8 padTop8">
+        <div class="clearfix">
+            @if (ViewBag.CanAdd)
+            {
+                <button class="btn btn-success  btn-radius" data-toggle="modal" data-target="#resourcePop" onclick="openModal()" data-backdrop="static" data-keyboard="true">
+                    <span class="btn-icon"><i class="fa fa-plus"></i></span> Resource
+                </button>
+            }
+            @if (ViewBag.CanExport)
+            {
+                <select name="ddlAppIds" class="btn btn-primary btn-radius" id="ddlAppIds">
+                    <option value="0">Export to</option>
+                    <option value="1">PDF</option>
+                    <option value="2">XLSX</option>
+                    <option value="3">XLS</option>
+                    <option value="4">RTF</option>
+                    <option value="5">CSV</option>
+                </select>
+            }
+        </div>
+    </div>
+    <div class="scrooler">
+        <div id="refreshgrid" class="relative">
+            @{
+                Html.RenderAction("GetResourceMasterPartial", "Resource");
+            }
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="Rescid" />
+<!--resource -->
+<div class="modal fade pmsModal w30" id="resourcePop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Resource </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="openModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Resource Type <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                            @Html.DropDownListFor(x => x.resourceTypeList, new SelectList(Model.resourceTypeList, "ID", "RESOURCE_NAME"), new { @id = "ddlResourceType", @class = "form-control", @onchange = "PopulateWareHouseData();" })
+                        </div>
+                    </div>
+                    <div id="divSecondName">
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label" ><span id="ContactID"></span> <span style="color:red">*</span></label>
+                            <div class="col-sm-8">
+                                @*<select class="form-control">
+                                        <option>Select</option>
+                                    </select>*@
+                                <div class="" id="divprdct">
+                                    @Html.DevExpress().ButtonEdit(settings =>
+                                       {
+                                           settings.Name = "btnProducts";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.ClientSideEvents.ButtonClick = "ProductButnClick";
+                                           settings.Properties.ClientSideEvents.KeyDown = "Product_KeyDown";
+                                           settings.Properties.ClientInstanceName = "ctxtProduct";
+                                           settings.Properties.Buttons.Add("...");
+                                       }).GetHtml()
+
+                                    <input type="hidden" id="hdfProductID" />
+                                </div>
+                                <div class="" id="divCustomer">
+                                    @Html.DevExpress().ButtonEdit(settings =>
+                                       {
+                                           settings.Name = "btnCustomer";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.ClientSideEvents.ButtonClick = "CustomerButnClick";
+                                           settings.Properties.ClientSideEvents.KeyDown = "Customer_KeyDown";
+                                           settings.Properties.ClientInstanceName = "ctxtCustomer";
+                                           settings.Properties.Buttons.Add("...");
+                                       }).GetHtml()
+
+                                    <input type="hidden" id="hdfCustomerID" />
+                                </div>
+                                @*@Html.TextBoxFor(m => m.Contact, new { @class = "form-control", @id = "ContactName", @MaxLength = "100" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Name <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<input type="text" class="form-control" id="" value="Susanta Kundu">*@
+                            @Html.TextBoxFor(m => m.resourceName, new { @class = "form-control", @id = "resourceName", @MaxLength = "100" })
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Organization Unit <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                            @Html.DropDownListFor(x => x.BranchList, new SelectList(Model.BranchList, "branch_id", "branch_description"), new { @id = "ddlBranch", @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal" onclick="openModal()">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="divSaveinf" onclick="SaveData()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--product search-->
+<div class="modal fade pmsModal w40" id="ProductModelResource" role="dialog">
+    <div class="modal-dialog">
+        <!-- Contact content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Product Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="Productkeydown(event)" id="txtProductSearch" autofocus width="100%" placeholder="Search By Product" />
+                <div id="ProductTableCRM">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Product Name</th>
+                            <th>Product Description</th>
+                            <th>HSN/SAC</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Customer Modal -->
+<div class="modal fade pmsModal w40" id="CustModel" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Entity Search</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="Customerkeydown(event)" id="txtCustSearch" autofocus width="100%" placeholder="Search By Customer Name" />
+
+                <div id="CustomerTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Customer Name</th>
+                            <th>Unique Id</th>
+                            <th>Address</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()

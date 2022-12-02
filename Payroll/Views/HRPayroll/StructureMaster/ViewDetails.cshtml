@@ -1,0 +1,123 @@
+﻿@model Payroll.Models.payrollStructureEngine
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dynamicPopupTbl {
+        border: 1px solid #ccc;
+    }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            overflow: hidden;
+            border-bottom: 1px solid #d9d9d9;
+            border-right: 1px solid #d9d9d9;
+            /* border-top-width: 0; */
+            border-left-width: 0;
+            padding: 4px 6px 5px;
+            font: 12px Tahoma, Geneva, sans-serif;
+        }
+
+        .dynamicPopupTbl > tbody > tr > th {
+            font: 12px Tahoma, Geneva, sans-serif;
+            padding: 7px 6px 7px 6px;
+            border-right: 1px solid #2a2067;
+            border-top: 1px solid #2a2067;
+            border-bottom: 1px solid #2a2067;
+                color: #fff;
+        }
+
+            .dynamicPopupTbl > tbody > tr > th:first-child {
+                border-left: 1px solid #2a2067;
+            }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            cursor: pointer;
+        }
+
+            .dynamicPopupTbl > tbody > tr > td input {
+                border: none !important;
+                cursor: pointer;
+                background: transparent !important;
+                height: 14px;
+                margin-bottom: 0;
+                font: 12px Tahoma, Geneva, sans-serif;
+            }
+
+    #DetailsTable {
+        padding: 0 15px;
+    }
+
+    .HeaderStyle.newcol {
+        background-color: #45599b;
+    }
+
+    .dynamicPopupTbl > tbody > tr > th {
+        border-right: 1px solid #4f42a0;
+    }
+</style>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">@Model.StructureHeaderName</h3>
+        <div id="divcross" class="crossBtn"><a href="/StructureMaster/Dashboard"><i class="fa fa-times"></i></a></div>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row">
+        <div class="col-md-3">
+            <label>Pay Structure Name</label>
+            <div>
+                @Html.TextBoxFor(model => model.StructureName, new { Id = "txtStructureName", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Short Name</label>
+            <div>
+                @Html.TextBoxFor(model => model.StructureCode, new { Id = "txtStructureCode", @readonly = "readonly" })
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div id="DetailsTable">
+            <table border='1' width="100%" class="dynamicPopupTbl">
+                <tr class="HeaderStyle newcol">
+                    <th>Pay Head</th>
+                    <th>Short Name</th>
+                    <th>Pay Type</th>
+                    <th>Calculation Type</th>
+                    <th>Round Off</th>
+                </tr>
+                @if (Model != null)
+                {
+                    if (Model.AllowanceDetails != null)
+                    {
+                        foreach (var item in Model.AllowanceDetails)
+                        {
+                            <tr>
+                                <td width="30%">
+                                    @item.PayHead
+                                </td>
+                                <td width="30%">
+                                    @item.ShortName
+                                </td>
+                                <td width="10">
+                                    @item.PayType
+                                </td>
+                                <td width="15%">
+                                    @item.CalculationType
+                                </td>
+                                <td width="15%">
+                                    @item.RoundOffType
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

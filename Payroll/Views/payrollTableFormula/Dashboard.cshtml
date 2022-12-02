@@ -1,0 +1,66 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@{
+    ViewBag.Title = "Table";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function AddFormula() {
+        var url = '/payrollTableFormula/Index?ActionType=ADD';
+        window.location.href = url;
+    }
+</script>
+<script>
+    function OnClickEditForm(TableFormulaCode) {
+        var url = '/payrollTableFormula/Index?ActionType=EDIT&_formulacode=' + TableFormulaCode;
+        window.location.href = url;
+    }
+
+    function OnClickDeleteForm(TableFormulaCode) {
+        var url = '/payrollTableFormula/FormulaDelete/';
+
+        jConfirm("Confirm Delete?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'Delete', 'id': TableFormulaCode }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.response_msg == "Success") {
+                            jAlert("Successfully Deleted");
+                            gvPaging.Refresh();
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Table</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="clearfix">
+        <a href="javascript:void(0);" onclick="AddFormula()" class="btn btn-primary"><span>Add</span> </a>
+    </div>
+</div>
+<div class="GridViewArea">
+    @{
+        Html.RenderAction("PartialFormulaGrid", "payrollTableFormula");
+    }
+</div>

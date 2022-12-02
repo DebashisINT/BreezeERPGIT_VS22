@@ -1,0 +1,75 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "SalaryGengridView";
+    settings.CallbackRouteValues = new { Controller = "PayrollGeneration", Action = "PartialEmployeeGenerationGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.SettingsPager.FirstPageButton.Visible = true;
+    //settings.SettingsPager.LastPageButton.Visible = true;
+    //settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.KeyFieldName = "EmployeeCode";
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    //settings.CommandColumn.ShowClearFilterButton = true;
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.Page;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 400;
+    settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+    settings.SettingsPager.PageSize = 10000;
+   
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            ViewContext.Writer.Write(
+                   "<a href=\"javascript:void(0);\" onclick=\"OnClickView('" + DataBinder.Eval(tc.DataItem, "EmployeeCode") + "','" + DataBinder.Eval(tc.DataItem, "ClassCode") + "')\" class=\"pad\" title=\"View\">" + DataBinder.Eval(tc.DataItem, "EmployeeUniqueCode") + "</a>"
+                //"<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "StructureID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/info.png\" /></a>" +
+                // "&nbsp;" +
+                //"<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "StructureID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/Delete.png\" /></a>"
+               );
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.True;
+        c.Settings.FilterMode = ColumnFilterMode.DisplayText;
+        c.Width = 300;
+        c.Caption = "Employee Code";
+        c.ColumnType = MVCxGridViewColumnType.TextBox;
+        c.FieldName = "EmployeeUniqueCode";
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Employee_Name";
+        column.Caption = "Employee Name";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(60);
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+    });
+
+
+    //settings.Columns.Add(c =>
+    //{
+    //    c.SetDataItemTemplateContent(tc =>
+    //    {
+    //        ViewContext.Writer.Write(              
+    //             "<div class=''><a href=\"javascript:void(0);\" onclick=\"OnClickUndoGeneration('" + DataBinder.Eval(tc.DataItem, "EmployeeCode") + "','" + DataBinder.Eval(tc.DataItem, "ClassCode") + "',this)\" class=\"pad\" title=\"Copy\"><span>Undo Generation</span></a></div>" 
+    //        );
+    //    });
+    //    c.Settings.AllowDragDrop = DefaultBoolean.False;
+    //    c.Settings.AllowSort = DefaultBoolean.False;
+    //    c.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+    //    c.Caption = "Action";
+    //    c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //});
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+    
+}).Bind(Model).GetHtml()
+
+

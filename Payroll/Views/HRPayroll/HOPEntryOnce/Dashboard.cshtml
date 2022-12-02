@@ -1,0 +1,769 @@
+﻿@{
+    ViewBag.Title = "HOP-Entered Once";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+<script src="~/Scripts/JS/editableTableWidget.js"></script>
+<link href="~/assests/pluggins/pure-min.css" rel="stylesheet" />
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+<script src="~/assests/pluggins/DataTable/dataTables.fixedColumns.min.js"></script>
+<link href="~/assests/css/payrollCss/HOPEntryOnce.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        document.getElementById("buttonDIV").style.display = "none";
+        $('#editable').editableTableWidget();
+        $('#divImportHOP').hide();
+        $('#editable td.uneditable').on('change', function (evt, newValue) {
+            return false;
+        });
+    });
+</script>
+<script type="text/javascript">
+    function btnPayStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+    function ToJavaScriptDate(value) {
+        var m_names = new Array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
+
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        //return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear
+        return dt.getDate() + "-" + m_names[(dt.getMonth())] + "-" + dt.getFullYear();
+    }
+
+    function btnPayStructure_Click(s, e) {
+        BindPayStructure('');
+        setTimeout(function () { $("#txtPayStructure").focus(); }, 500);
+        $('#PayStructureModel').modal('show');
+    }
+
+    function PayStructurekeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtPayStructure").val() != '') {
+                BindPayStructure($("#txtPayStructure").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[PayStructureIndex=0]"))
+                $("input[PayStructureIndex=0]").focus();
+        }
+    }
+    function BindPayStructure(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Pay Structure Name");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetPayStructureList", OtherDetails, "PayStructureTable", HeaderCaption, "PayStructureIndex", "SetPayStructure");
+    }
+
+    function SetPayStructure(Id, Name) {
+        var PayStructureID = Id;
+        var PayStructureName = Name;
+
+        if (PayStructureID != "") {
+            $('#AttachmentHOP').val('');
+            $('#PayStructureModel').modal('hide');
+            btnPayStructureName.SetText(PayStructureName);
+            document.getElementById('hdnPayStructureID').value = Id;
+            LoadActivatedPeriod(Id)
+            CreateEmployeeDetails(Id);
+        }
+    }
+
+    function LoadActivatedPeriod(PayStructureID) {
+        var url = '/HOPEntryOnce/GetActivePeriodGeneration/';
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: { 'ID': PayStructureID },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+
+                if (response.data2.response_msg == "Success") {
+                    $("#txt_frmDt").val(ToJavaScriptDate(JSON.parse(response.data)[0]["PeriodFrom"]));
+                    $("#txt_toDt").val(ToJavaScriptDate(JSON.parse(response.data)[0]["PeriodTo"]));
+                    $("#txt_actvmnth").val(JSON.parse(response.data)[0]["Period"])
+                    //JSON.parse(response.data)[0].StructureID
+
+                }
+                else {
+                    jAlert(response.data2.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert('Please try again later');
+            }
+        });
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "PayStructureIndex") {
+                    SetPayStructure(Id, name);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "PayStructureIndex")
+                    $('#txtPayStructure').focus();
+            }
+        }
+
+    }
+</script>
+<script>
+    var HOPHeader = [];
+    var HOPDataType = [];
+
+    var HOPColumnHeader = [];
+
+
+    function CreateEmployeeDetails(PayStructureID) {
+        var OtherDetails = {}
+        OtherDetails.PayStructureID = PayStructureID;
+        $('#hdnPayStructureID').val(PayStructureID);
+        $.ajax({
+            type: "POST",
+            url: "/HOPEntryOnce/GetEmployeeHOPList",
+            data: JSON.stringify(OtherDetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var ResponseCode = msg.ResponseCode;
+                var ResponseMessage = msg.ResponseMessage;
+
+                if (ResponseCode == "Success") {
+                    var myObj = msg.EmployeeHOPList;
+                    var myHeaderObj = msg.PayHeadList;
+                    var myDataTypeObj = msg.PayHeadDataTypeList;
+                    var PropertyCount = 0;
+
+                    if (myObj.length > 0) {
+                        document.getElementById("buttonDIV").style.display = "block";
+                        $('#divImportHOP').show();
+
+                        var txt = '';
+                        txt += "<table id='editable' class='pure-table pure-table-bordered scroll display nowrap'width='100%'><thead><tr>";
+
+                        var jsonObject = myObj[0];
+                        PropertyCount = 0;
+                        HOPColumnHeader = [];
+                        for (prop in jsonObject) {
+                            var value = filterValue(myHeaderObj, "PayHeadID", jsonObject[prop].Key);
+                            var DataTypeValue = filterValue(myDataTypeObj, "PayHeadID", jsonObject[prop].Key);
+                            HOPHeader.push(jsonObject[prop].Key);
+
+
+                            if (PropertyCount == 0) {
+                                txt += "<th class='hide'>" + jsonObject[prop].Key + "</th>";
+                                HOPDataType.push("ST");
+                                //HOPColumnHeader.push(jsonObject[prop].Key);
+                            }
+                            else if (PropertyCount == 1) {
+                                txt += "<th style='width:200px'>" + jsonObject[prop].Key + "</th>";
+                                HOPDataType.push("ST");
+                                HOPColumnHeader.push(jsonObject[prop].Key);
+                            }
+                            else if (PropertyCount == 2) {
+                                txt += "<th style='width:200px'>" + jsonObject[prop].Key + "</th>";
+                                HOPDataType.push("ST");
+                                HOPColumnHeader.push(jsonObject[prop].Key);
+                            }
+                            else {
+                                txt += "<th style='width:200px'>" + value.PayHead + "</th>";
+                                HOPDataType.push(DataTypeValue.DataType);
+                                HOPColumnHeader.push(value.PayHead);
+                            }
+
+                            PropertyCount++;
+                        }
+                        txt += "</tr></thead><tbody>"
+
+                        for (x in myObj) {
+                            txt += "<tr>";
+                            PropertyCount = 0;
+
+                            for (key in myObj[0]) {
+                                if (PropertyCount == 0) {
+                                    txt += " <td class='hide'>" + myObj[x][key].Value + "</td>";
+                                }
+                                else if (PropertyCount == 1) {
+                                    txt += " <td class='uneditable' style='width:200px'>" + myObj[x][key].Value + "</td>";
+                                }
+                                else if (PropertyCount == 2) {
+                                    txt += " <td class='uneditable' style='width:200px'>" + myObj[x][key].Value + "</td>";
+                                }
+                                else {
+                                    var _DataType = HOPDataType[PropertyCount];
+
+                                    txt += "<td style='width:200px' class='validate' data-type='" + _DataType + "'>" + myObj[x][key].Value + "</td>";
+                                }
+                                PropertyCount++;
+                            }
+                            txt += "</tr>";
+                        }
+                        txt += "</tbody></table>"
+
+                        document.getElementById("tbl").innerHTML = txt;
+                        $(".scroll").DataTable({
+                            "scrollY": "60vh",
+                            "scrollCollapse": true,
+                            "scrollX": true,
+                            "paging": false,
+                            "searching": false,
+                            "ordering": false,
+                            "fixedColumns": {
+                                leftColumns: 3
+                            }
+                        });
+                        $("#editable").editableTableWidget();
+                        $('#editable td.uneditable').on('change', function (evt, newValue) {
+                            return false;
+                        });
+
+                        $('#editable td.validate').on('click', function (evt, newValue) {
+                            var _DataType = $(this).attr('data-type');
+
+                            if (_DataType == 'ST') {
+                                document.getElementById('hdnInputDataType').value = "String";
+                            }
+                            else {
+                                document.getElementById('hdnInputDataType').value = "Number";
+                            }
+                        });
+
+                        $('#editable td.validate').on('blur', function (evt, newValue) {
+                            var _DataType = $(this).attr('data-type');
+
+                            if (_DataType == 'ST') {
+                                document.getElementById('hdnInputDataType').value = "String";
+                            }
+                            else {
+                                document.getElementById('hdnInputDataType').value = "Number";
+                            }
+                        });
+
+                        $('input.editerclass').on('input', function () {
+                            var _DataType = document.getElementById('hdnInputDataType').value;
+
+                            if (_DataType == "Number") {
+                                match = (/(^-?\d{0,8})[^.]*((?:\.\d{0,2})?)/g).exec(this.value.replace(/[^-\d.]/g, ''));
+                                var _Value = match[1] + match[2];
+
+                                if (_Value == '') {
+                                    this.value = '0';
+                                }
+                                else {
+                                    if (_Value.replace(/^0+/, '') == '-') {
+                                        this.value = _Value.replace(/^0+/, '') + '0';
+                                    }
+                                    else if (_Value.replace(/^0+/, '') == '.') {
+                                        this.value = '0' + _Value.replace(/^0+/, '');
+                                    }
+                                    else if (_Value.replace(/^0+/, '') == '') {
+                                        this.value = '0';
+                                    }
+                                    else if (_Value.replace(/^0+/, '').charAt(0) == '.') {
+                                        this.value = '0' + _Value.replace(/^0+/, '');
+                                    }
+                                    else {
+                                        this.value = _Value.replace(/^0+/, '');
+                                    }
+                                }
+                            }
+                            else {
+                                var str = this.value;
+                                if (str.length > 20) this.value = str.substring(0, 20);
+                            }
+                        });
+                    }
+                    else {
+                        document.getElementById("tbl").innerHTML = "";
+                        document.getElementById("buttonDIV").style.display = "none";
+                        $('#divImportHOP').hide();
+                    }
+                }
+                else {
+                    document.getElementById("tbl").innerHTML = "";
+                    document.getElementById("buttonDIV").style.display = "none";
+                    $('#divImportHOP').hide();
+
+                    jAlert(ResponseMessage);
+                }
+            }
+        });
+    }
+
+    function filterValue(obj, key, value) {
+        return obj.find(function (v) { return v[key] === value });
+    }
+
+</script>
+<script>
+    function SaveNew() {
+        var jsonObj = [];
+
+        $('#editable tbody>tr').each(function () {
+            var obj = [];
+            var i = 0;
+
+            $('td', this).each(function () {
+                var _DataType = HOPDataType[i];
+
+                if (_DataType == 'ST') {
+                    var _Key = HOPHeader[i];
+                    var _Amount = "0";
+                    var _Value = $(this).text();
+                }
+                else {
+                    var _Key = HOPHeader[i];
+                    var _Amount = parseFloat($(this).text());
+                    var _Value = "";
+                }
+
+
+                var _Object = new Object();
+                _Object.Keys = _Key;
+                _Object.Amount = _Amount;
+                _Object.Values = _Value;
+
+                obj.push(_Object);
+                i++;
+            });
+
+            var classPayHead = {};
+            classPayHead.classPayHead = obj;
+
+            jsonObj.push(classPayHead);
+        });
+
+        var _obj = {};
+        var TableDetails = {};
+        TableDetails.MainArray = jsonObj;
+        _obj.TableDetails = TableDetails;
+
+        $.ajax({
+            type: "POST",
+            url: "/HOPEntryOnce/SaveEmployeeHOPData",
+            data: JSON.stringify(_obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    var url = '/HOPEntryOnce/Dashboard';
+
+                    jAlert("Save successfully.", 'Alert Dialog: [Message]', function (r) {
+                        if (r == true) {
+                            window.location.href = url;
+                        }
+                    });
+                }
+                else {
+                    jAlert(response.ResponseMessage);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+
+    //Surojit 16-08-2019
+    var ExcelMapList = [];
+    var maplist = [];
+    function ExcelMappingSave() {
+        var obj = {};
+        maplist = [];
+        var SettingName = $('#txtSettingName').val();
+        $('#tblmapping').find('tr').each(function (colIndex, c) {
+            obj = {};
+            obj.Column = $(c).find('td').eq(0).text();
+            obj.Map = $(c).find('td select option:selected').text();
+            maplist.push(obj);
+        });
+        if (SettingName == "" || SettingName == null) {
+            jAlert("Please enter setting name!");
+            return false;
+        }
+        else {
+            if (maplist.length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "/HOPEntryOnce/GetExcelMapList",
+                    data: JSON.stringify({ 'SettingName': SettingName, 'maplist': maplist }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response) {
+                            $('#ExcelMappingModel').modal('hide');
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    function ImportHOP() {
+        if (HOPColumnHeader.length > 0) {
+            var AttachmentHOP = $('#AttachmentHOP').val();
+            if (AttachmentHOP == "") {
+                jAlert("Please select file for Import.");
+                return false;
+            }
+            else {
+                if (maplist.length > 0) {
+                    if (window.FormData !== undefined) {
+                        var fileUpload = $("#AttachmentHOP").get(0);
+                        var files = fileUpload.files;
+                        var fileData = new FormData();
+
+                        for (var i = 0; i < files.length; i++) {
+                            fileData.append(files[i].name, files[i]);
+                        }
+
+                        fileData.append('AttachmentHOPType', "Insert");
+                        fileData.append('PayStructureID', $('#hdnPayStructureID').val());
+
+                        $.ajax({
+                            type: "POST",
+                            url: $('#hdnAttachmentFileRead').val(),
+                            contentType: false,
+                            processData: false,
+                            data: fileData,
+                            success: function (response) {
+                                if (response) {
+                                    if (response.length == 0) {
+                                        jAlert("Please try again later!");
+                                    }
+                                    else {
+                                        for (var i = 0; i < response.length; i++) {
+                                            if (response[i] == "True") {
+                                                var url = '/HOPEntryOnce/Dashboard';
+
+                                                jAlert("Data Import Successfully.", 'Alert Dialog: [Message]', function (r) {
+                                                    if (r == true) {
+                                                        // window.location.href = url;                                                        
+                                                        CreateEmployeeDetails(document.getElementById('hdnPayStructureID').value);
+                                                    }
+                                                });
+                                            }
+                                        }
+                                        $("#AttachmentHOP").val('');
+                                        ExcelMapList = [];
+                                    }
+                                }
+                                else {
+                                    jAlert("Please try again later!");
+                                }
+                            }
+                        });
+                    }
+                }
+                else {
+                    jAlert("Please provide mapping excel before import.");
+                    return false;
+                }
+            }
+        }
+        else {
+            jAlert("Please select pay structure first.");
+            return false;
+        }
+    }
+
+    function HOPMapExcel() {
+        if (HOPColumnHeader.length > 0) {
+            var AttachmentHOP = $('#AttachmentHOP').val();
+            if (AttachmentHOP == "") {
+                jAlert("Please select file for Import.");
+            }
+            else {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $("#AttachmentHOP").get(0);
+                    var files = fileUpload.files;
+                    var fileData = new FormData();
+
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+
+                    fileData.append('AttachmentHOPType', "Get");
+                    fileData.append('PayStructureID', $('#hdnPayStructureID').val());
+
+                    $.ajax({
+                        type: "POST",
+                        url: $('#hdnAttachmentFileRead').val(),
+                        contentType: false,
+                        processData: false,
+                        data: fileData,
+                        success: function (response) {
+
+                            if (response) {
+                                if (response.length == 0) {
+                                    jAlert("No record found in Excel file!");
+                                }
+                                else {
+
+                                    ExcelMapList = [];
+                                    for (var i = 0; i < response.length; i++) {
+                                        ExcelMapList.push(response[i]);
+                                    }
+
+                                    if (ExcelMapList.length > 0 && HOPColumnHeader.length > 0) {
+                                        if (HOPColumnHeader.length == ExcelMapList.length) {
+                                            GetSavedExcelMapping();
+                                            populateMappingTbl();
+                                            $('#ExcelMappingModel').modal('show');
+                                        }
+                                        else {
+                                            jAlert("Please select proper source excel.");
+                                            return false;
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                jAlert("Please try again later!");
+                            }
+                        }
+                    });
+                }
+            }
+        }
+        else {
+            jAlert("Please select pay structure first.");
+            return false;
+        }
+    }
+
+    function GetSetting(e) {
+        if ($(e).prop("checked") == true) {
+            var settingName = $(e).val();
+            $.ajax({
+                type: "POST",
+                url: "/HOPEntryOnce/GetSettingDetailsByName",
+                data: JSON.stringify({ 'settingName': settingName }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (HOPColumnHeader.length == response.length && response.length == ExcelMapList.length) {
+                        for (var i = 0; i < response.length; i++) {
+                            $('#tblmapping').find('select').eq(i).val(response[i].Map);
+                        }
+
+                        $('#txtSettingName').val(settingName);
+                    }
+                    else {
+                        jAlert("Please select proper setting for import!");
+                        $(e).prop("checked", false);
+                    }
+                    
+                }
+            });
+        }
+        else {
+            $('#txtSettingName').val('');
+        }
+    }
+
+    function GetSavedExcelMapping() {
+        $.ajax({
+            type: "POST",
+            url: "/HOPEntryOnce/GetExcelMappingList",
+            success: function (response) {
+                if (response.length > 0) {
+                    var txt = '';
+                    txt += "<tbody><tr>";
+                    for (var i = 0; i < response.length; i++) {
+                        txt += "<td><input type='checkbox' value='" + response[i] + "' onchange='GetSetting(this)' /></td><td>" + response[i] + "</td>";
+                        txt += "";
+                    }
+                    txt += "</tr></tbody>";
+
+                    $('#tblsettinglist').html(txt);
+                }
+            }
+        });
+    }
+
+    function populateMappingTbl() {
+        $('#tblmapping').html('');
+        //var selectbox = '<select class="form-control">';
+        var selectbox = '<select>';
+        for (var i = 0; i < ExcelMapList.length; i++) {
+            selectbox += '<option value="' + ExcelMapList[i] + '">' + ExcelMapList[i] + "</option>";
+        }
+        selectbox += '</select>';
+
+        var txt = '';
+        txt += "<tbody>";
+        for (var i = 0; i < HOPColumnHeader.length; i++) {
+            //txt += "<tr><td>" + HOPColumnHeader[i] + "</td></tr>";
+            //txt += "<tr><td>" + selectbox + "</td></tr>";
+            //txt += "";
+            txt += "<tr><td>" + HOPColumnHeader[i] + "</td><td>" + selectbox + "</td>";
+            txt += "</tr>";
+        }
+        txt += "</tbody>";
+
+        $('#tblmapping').html(txt);
+    }
+
+
+    //Surojit 16-08-2019
+
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">HOP - Entered Once</h3>
+    </div>
+</div>
+<div class="form_main">
+
+    <input type="hidden" value="@Url.Action("AttachmentFileRead", "HOPEntryOnce")" id="hdnAttachmentFileRead" />
+    <input type="hidden" value="" id="hdnPayStructureID" />
+    <div class="boxedLayoutCard">
+        <div class="row clearfix">
+            <div class="col-md-2">
+                <label>Pay structure</label>
+                @Html.DevExpress().ButtonEdit(
+                    settings =>
+                    {
+                        settings.Name = "btnPayStructureName";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = "";
+                        settings.ReadOnly = true;
+                        settings.Properties.Buttons.Add("..");
+                        settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPayStructure_Click(s,e);}";
+                        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayStructure_KeyDown(s,e);}";
+                    }).GetHtml()
+            </div>
+            <div class="col-md-2">
+                <label style="width: 150px;">From Date</label>
+                <div><input type="text" class="form-control" id="txt_frmDt" disabled  /></div>
+            </div>
+            <div class="col-md-2">
+                <label style="width: 150px;">To Date</label>
+                <div><input type="text" class="form-control" id="txt_toDt" disabled  /></div>
+            </div>
+            <div class="col-md-2">
+                <label style="width: 150px;">Activated Month</label>
+                <div><input type="text" class="form-control" id="txt_actvmnth" disabled /></div>
+            </div>
+            <div class="col-md-2">
+                <div style="height: 20px;">&nbsp;</div>
+                <input type="file" class="fileInput" id="AttachmentHOP" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+            </div>
+            <div class="clear"></div>
+            <div class="col-md-3" id="divImportHOP">
+                <div style="height: 20px;">&nbsp;</div>
+                <button class="btn btn-success mTop22" id="btnMapExcel" onclick="HOPMapExcel();">Import Script</button>
+                <button class="btn btn-warning mTop22" id="btnImport" onclick="ImportHOP();">Import</button>
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div>
+            <div id="tbl">
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div id="buttonDIV">
+            <button type="submit" class="btn btn-primary" onclick="SaveNew()">Save & New</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pmsModal w40" id="ExcelMappingModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">HOP Excel Mapping</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding:0 15px">
+                    <div class="row">
+                        <div class="loadsettinglist ">
+                            <table id="tblsettinglist"></table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" listmapping" style="width: 100%">
+                            <label>Map Setting Name</label>
+                            <div class="">
+                                <input type="text" id="txtSettingName" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="row">
+                        <div class="">
+                            <table id="tblmapping"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="ExcelMappingSave();">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pay structure -->
+<div class="modal fade" id="PayStructureModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay structure</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="PayStructurekeydown(event)" id="txtPayStructure" autofocus width="100%" placeholder="Search By Pay Structure Name or Short Name" />
+                <div id="PayStructureTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Pay Structure Name</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay structure-->
+<div>
+    @Html.Hidden("hdnPayStructureID")
+    @Html.Hidden("hdnInputDataType")
+</div>

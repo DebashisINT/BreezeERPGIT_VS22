@@ -1,0 +1,742 @@
+﻿@model Payroll.Models.PGenerationEngine
+
+@{
+    ViewBag.Title = "Payroll Generation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    var ClassCode;
+    var yymm;
+    $(document).ready(function () {
+        $('#btnMassGenaration').hide();
+    });
+    function OnStartCallback(s, e) {
+        e.customArgs["ClassCode"] = ClassCode;
+        e.customArgs["yymm"] = yymm;
+    }
+    function ProjectStartCallback(s, e) {
+        var BranchId = $("#hdnToUnit").val();
+        //  e.customArgs["Project_ID"] = '@ViewBag.ProjectID';
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Branchs"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Branchs"] = BranchId;
+        }
+    }
+    function ProjectSelectionChanged(s, e) {
+        var projId = ProjectGridLookup.GetValue();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getHierarchyID", "PayrollGeneration")",
+            data: { ProjID: projId },
+            success: function (response) {
+                if (response != null) {
+                    $('#ddlHierarchy').val(response.Message);
+                }
+            }
+        });
+    }
+    function ProjectLookupValChange() {
+        //ProjectGridLookup.SetValue("");
+        //$('#ddlHierarchy').val("");
+        //ProjectGridLookup.GetGridView().Refresh();
+    }
+
+    function fn_ShowEmployee() {
+        ClassCode = $("#ddlProllclass").val();
+        if (ClassCode == "" || ClassCode == null) {
+            jAlert("Please Select Class", "Alert");
+            return;
+        }
+        else {
+            @*$.ajax({
+                type: "POST",
+                url: "@Url.Action("PartialSelectedEmployeeGenerationGrid", "PayrollGeneration")",
+                // data: { ActivityId: s.GetValue() },
+                success: function (response) {
+                    //$("#idshowhistory").html(response);
+                    //$("#cCRMShowHistory").modal('show');
+                    var strHtml = "<div class='col-md-12'>" + response +
+                        "</div><div class='col-md-12 mTop5 text-right'><button class='btn btn-success btn-round' type='button' id='btnselectedempGen' onclick='GenerateSelectedEmployeeSalary();'>Generate and Save</button></div>";
+
+                    cPopup.SetContentHtml(strHtml);
+                    MVCxClientUtils.FinalizeCallback();
+                    cPopup.Show();
+                    SalarySelectedridView.Refresh()
+                    SalarySelectedridView.Refresh()
+
+                }
+            });*@
+
+            GenerateSelectedEmployeeSalary();
+
+        }
+
+    }
+
+
+
+    function GenerateSelectedEmployeeSalary() {
+        var selectted = "";
+        SalaryGengridView.GetSelectedFieldValues("EmployeeCode", function (str) {
+            selectted = str.join(",");
+            ClassCode = $("#ddlProllclass").val();
+            if (ClassCode == "" || ClassCode == null) {
+                jAlert("Please Select Class", "Alert");
+                return;
+            }
+
+            if (selectted == "") {
+                jAlert("Please Select atleast one employee to proceed", "Alert");
+                return;
+            }
+
+            yymm = document.getElementById('hdnYYMM').value;
+
+            var obj = {}
+            obj.ClassCode = ClassCode;
+            obj.emp = selectted;
+
+            var url = '/PayrollGeneration/PGenerationEmployeeWise';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function (response) {
+                    if (response.response_msg == "Success") {
+                        jAlert("Payroll Generate successfully");
+
+                        SalaryGengridView.Refresh();
+                    }
+                    else {
+                        jAlert('Please try again later');
+                    }
+                },
+                error: function (response) {
+                    jAlert('Please try again later');
+                }
+            });
+
+        })
+
+
+
+
+
+    }
+
+
+    var selectedRowKey;
+    function EmpGrid_OnEndCallback(s, e) {
+
+    }
+
+    function EmpGrid_OnEndCallback(s, e) {
+    }
+
+    var ClassCodeallowance;
+    var EmployeeCodeallowance;
+    var yymm1allowance;
+    function OnStartAllowanceCallback(s, e) {
+        e.customArgs["ClassCode"] = ClassCodeallowance;
+        e.customArgs["EmployeeCode"] = EmployeeCodeallowance;
+        e.customArgs["yymm"] = yymm1allowance;
+    }
+
+
+
+    function GridPopulate() {
+        ClassCode = $("#ddlProllclass").val();
+        if (ClassCode == "" || ClassCode == null) {
+            jAlert("Please Select Class", "Alert");
+            return;
+        }
+        yymm = document.getElementById('hdnYYMM').value;
+
+        var obj = {}
+        obj.ClassCode = ClassCode;
+
+        var url = '/PayrollGeneration/PGeneration';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+            success: function (response) {
+                if (response.response_msg == "Success") {
+                    jAlert("Payroll Generate successfully");
+
+                    SalaryGengridView.Refresh();
+                }
+                else {
+                    jAlert('Please try again later');
+                }
+            },
+            error: function (response) {
+                jAlert('Please try again later');
+            }
+        });
+
+    }
+
+    function PopulatePeriod() {
+        var classId = $("#ddlProllclass").val();
+        ClassCode = $("#ddlProllclass").val();
+        var url = '/PayrollGeneration/GetPeriodName/';
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: { 'classId': classId },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(JSON.parse(response.data));
+
+                if (response.data2.response_msg == "Success") {
+                    if (JSON.parse(response.data).length > 0) {
+                        $("#txtPeriodName").val(JSON.parse(response.data)[0]["Period"]);
+
+                        yymm = JSON.parse(response.data)[0]["YYMM"];
+                        document.getElementById('hdnYYMM').value = yymm;
+                        SalaryGengridView.Refresh();
+                        $('#btnMassGenaration').show();
+                    }
+                    else {
+                        $("#txtPeriodName").val('');
+                    }
+                }
+                else {
+                    jAlert(response.data2.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert('Please try again later');
+            }
+        });
+    }
+
+    function OnClickView(EmployeeCode, ClassCode) {
+        EmployeeCodeallowance = EmployeeCode;
+        ClassCodeallowance = ClassCode;
+        yymm1allowance = document.getElementById('hdnYYMM').value;
+        GenerationAllowancegridView.Refresh();
+        $('#DfltSalaryModel').modal('show');
+    }
+    function OnClickUndoGeneration() {
+
+        yymm1allowance = document.getElementById('hdnYYMM').value;
+        var EmployeeCode = SalaryGengridView.GetSelectedKeysOnPage();
+        if (EmployeeCode == "" || EmployeeCode == null) {
+            jAlert("Please Select Employee Code", "Alert");
+            return;
+        }
+        ClassCode = $("#ddlProllclass").val();
+        var obj = {};
+        obj.EmployeeCode = EmployeeCode.toString();
+        obj.ClassCode = ClassCode;
+        obj.yymm = yymm1allowance;
+
+        jConfirm('Are you sure to undo generation?', 'Confirmation Dialog', function (r) {
+            if (r == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "/PayrollGeneration/UndoSalaryGeneration",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+
+                        var message = response.data.response_msg;
+                        jAlert(message, 'Alert', function () {
+
+                            //if (response.data.response_msg == "Undo Generate successfully") {
+                            //    //$(e).hide();
+                            //}
+
+                            SalaryGengridView.UnselectRows();
+                            ClassCode = $("#ddlProllclass").val();
+                            yymm = document.getElementById('hdnYYMM').value;
+                            SalaryGengridView.Refresh();
+                        });
+
+                        //location.reload();
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+        });
+    }
+    //function OnClickUndoGeneration(EmployeeCode, ClassCode,e) {
+    //    yymm1allowance = document.getElementById('hdnYYMM').value;
+
+    //    var obj = {};
+    //    obj.EmployeeCode = EmployeeCode;
+    //    obj.ClassCode = ClassCode;
+    //    obj.yymm = yymm1allowance;
+
+    //    jConfirm('Are you sure to undo generation?', 'Confirmation Dialog', function (r) {
+    //        if (r == true) {
+    //            $.ajax({
+    //                type: "POST",
+    //                url: "/PayrollGeneration/UndoSalaryGeneration",
+    //                data: JSON.stringify(obj),
+    //                contentType: "application/json; charset=utf-8",
+    //                dataType: "json",
+    //                success: function (response) {
+
+    //                    jAlert(response.data.response_msg);
+    //                    if (response.data.response_msg == "Undo Generate successfully") {
+    //                        $(e).hide();
+    //                    }
+    //                },
+    //                error: function (response) {
+    //                    jAlert("Please try again later");
+    //                }
+    //            });
+    //        }
+    //    });
+    //}
+    function gridRowclick(s, e) {
+        $('#SalaryGengridView').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        PopulateUnitList();
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            SalaryGengridView.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 218;
+            SalaryGengridView.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                SalaryGengridView.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 200;
+                SalaryGengridView.SetWidth(cntWidth);
+            }
+
+        });
+        if ('@ViewBag.ProjectShow' == "Yes") {
+            $("#divProj").removeClass("hidden");
+        }
+        else {
+            $("#divProj").addClass("hidden");
+        }
+
+        if ('@ViewBag.Hierarchy' == "1") {
+            $('#divHierarchy').removeClass('hidden');
+        }
+        else {
+            $('#divHierarchy').addClass('hidden');
+        }
+    });
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "PayrollGeneration")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+            }
+        });
+    }
+
+    function fn_PostJournal() {
+        var selectted = "", strEmployee_Name = "";
+        yymm = document.getElementById('hdnYYMM').value;
+        ClassCode = $("#ddlProllclass").val();
+        SalaryGengridView.GetSelectedFieldValues("EmployeeCode", function (str) {
+
+            selectted = str.join(",");
+
+            SalaryGengridView.GetSelectedFieldValues("Employee_Name", function (strName) {
+
+                strEmployee_Name = strName.join(",");
+
+                var obj = {}
+                obj.ClassCode = ClassCode;
+                obj.yymm = yymm;
+                obj.EmployeeCode = selectted;
+
+                var url = '/PayrollGeneration/PostToAccountCheck';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+
+                    success: function (response) {
+                        if (response == "0") {
+                            $("#PostingModel").modal('show');
+                        }
+                        else {
+                            jAlert('Journal was already posting for ' + strEmployee_Name + '.<br/>Please select again');
+                        }
+
+                    },
+                    error: function (response) {
+                        jAlert('Please try again later');
+                    }
+                });
+            })
+
+        })
+    }
+
+    function SavePosting() {
+        var selectted = "";
+        SalaryGengridView.GetSelectedFieldValues("EmployeeCode", function (str) {
+            selectted = str.join(",");
+            ClassCode = $("#ddlProllclass").val();
+            if (ClassCode == "" || ClassCode == null) {
+                jAlert("Please Select Class", "Alert");
+                return;
+            }
+
+            if (selectted == "") {
+                jAlert("Please Select atleast one employee to proceed", "Alert");
+                return;
+            }
+
+            var ProjectMandatoryInEntry = '@ViewBag.ProjectMandatoryInEntry';
+            var ProjectSelectInEntryModule = '@ViewBag.ProjectShow';
+            if (ProjectMandatoryInEntry == "Yes" && ProjectSelectInEntryModule == "Yes" && ProjectGridLookup.GetSelectedKeyFieldValues() == "") {
+                jAlert("Please Select Project.");               
+                return false;
+            }
+            yymm = document.getElementById('hdnYYMM').value;
+            var val = document.getElementById("NumberingSchemsId").value;
+            var BranchId = $("#hdnToUnit").val();
+            var Doc_no = document.getElementById('txtBillNo').value;
+            var dt = tDate.GetDate();
+            var projId = ProjectGridLookup.GetSelectedKeyFieldValues();
+            if (projId == "")
+            {
+                projId = '0';
+            }
+            var obj = {}
+            obj.ClassCode = ClassCode;
+            obj.yymm = yymm;
+            obj.EmployeeCode = selectted;
+            obj.Numbering = val;
+            obj.Doc_no = Doc_no;
+            obj.BranchId = BranchId;
+            obj.Date = dt;
+            obj.projId = projId[0];
+
+
+
+            var url = '/PayrollGeneration/PostToAccount';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function (response) {
+
+                    jAlert("Payroll Generate successfully");
+
+                },
+                error: function (response) {
+                    jAlert('Please try again later');
+                }
+            });
+
+        })
+
+    }
+
+    function CmbScheme_ValueChange() {
+
+        var val = document.getElementById("NumberingSchemsId").value;
+
+
+        if (val != "0") {
+            $.ajax({
+                type: "POST",
+                url: '/PayrollGeneration/getSchemeType',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: "{sel_scheme_id:\"" + val + "\"}",
+                success: function (type) {
+                    console.log(type);
+
+                    var schemetypeValue = type;
+                    var schemetype = schemetypeValue.toString().split('~')[0];
+                    var schemelength = schemetypeValue.toString().split('~')[1];
+                    $('#txtBillNo').attr('maxLength', schemelength);
+                    var branchID = schemetypeValue.toString().split('~')[2];
+                    $("#ddlunitlist").val(branchID);
+                    $("#hdnToUnit").val(branchID);
+
+                    ProjectGridLookup.SetValue("");
+                    $('#ddlHierarchy').val("");
+                    ProjectGridLookup.gridView.UnselectRows(1);
+                    ProjectGridLookup.GetGridView().Refresh();
+
+                    document.getElementById('ddlunitlist').disabled = true;
+                    var branchStateID = schemetypeValue.toString().split('~')[3];
+
+                    var fromdate = schemetypeValue.toString().split('~')[4];
+                    var todate = schemetypeValue.toString().split('~')[5];
+
+                    var dt = new Date();
+
+                    tDate.SetDate(dt);
+
+                    if (dt < new Date(fromdate)) {
+                        tDate.SetDate(new Date(fromdate));
+                    }
+
+                    if (dt > new Date(todate)) {
+                        tDate.SetDate(new Date(todate));
+                    }
+
+
+
+
+                    tDate.SetMinDate(new Date(fromdate));
+                    tDate.SetMaxDate(new Date(todate));
+
+
+                    if (schemetype == '0') {
+                        $('#hdnSchemaType').val('0');
+                        document.getElementById('txtBillNo').disabled = false;
+                        document.getElementById('txtBillNo').value = "";
+                        //document.getElementById("txtBillNo").focus();
+                        setTimeout(function () { $("#txtBillNo").focus(); }, 200);
+
+                    }
+                    else if (schemetype == '1') {
+                        document.getElementById('txtBillNo').disabled = true;
+                        document.getElementById('txtBillNo').value = "Auto";
+                        tDate.Focus();
+                    }
+                    else if (schemetype == '2') {
+                        document.getElementById('txtBillNo').disabled = true;
+                        document.getElementById('txtBillNo').value = "Datewise";
+                    }
+                    var startDate = new Date();
+                    //               startDate = tDate.GetDate().format('yyyy-MM-dd');
+
+                }
+            });
+        }
+        else {
+            document.getElementById('txtBillNo').disabled = true;
+            document.getElementById('txtBillNo').value = "";
+        }
+
+    }
+
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Payroll Generation</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="clearfix" style="background: #f7f7f7; border: 1px solid #ccc; margin: 0 15px; border-radius: 4px;">
+            <div class="col-md-3">
+                <label>Payroll Class</label>
+                <div>
+                    @Html.DropDownListFor(m => m._PClassId, Model._PClassName, "", new { style = "width: 100%;", Id = "ddlProllclass", onchange = "PopulatePeriod()" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Period</label>
+                <div>
+                    @*<input type="text" id="txtPeriodName" disabled style="width:65%" />*@
+                    @Html.TextBoxFor(model => model._PeriodName, new { Id = "txtPeriodName", disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-top: 26px;">
+                <label></label>
+                <button type="submit" class="btn btn-success btn-radius" onclick="GridPopulate()">Generate & View</button>
+                <button type="submit" class="btn btn-warning btn-radius" id="btnMassGenaration" onclick="OnClickUndoGeneration()">Undo Generation</button>
+                <button type="button" class="btn btn-warning btn-radius" id="btnMassSalaryGenaration" onclick="fn_ShowEmployee()">Selected Generation</button>
+                <button type="button" class="btn btn-warning btn-radius" id="btnMassPostGenaration" onclick="fn_PostJournal()">Selected Post to Journal</button>
+
+
+
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-12">
+            <div class="GridViewArea relative">
+                @{
+                Html.RenderAction("PartialEmployeeGenerationGrid", "PayrollGeneration");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.Hidden("hdnYYMM")
+    @Html.Hidden("hdnToUnit")
+</div>
+
+<div class="modal fade" id="DfltSalaryModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="clearfix">
+                    <div id="partial">
+                        @{
+                        Html.RenderAction("PartialAllowanceGenerationGrid", "PayrollGeneration");
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="PostingModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Post to journal</h4>
+            </div>
+            <div class="modal-body">
+                <div class="clearfix">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>Numbering scheme</span>
+                            @Html.DropDownListFor(m => m.NumberingSchemsId, new SelectList(Model.NumberingSchemas, "Text", "Value"), new { @class = "form-control", @onchange = "CmbScheme_ValueChange()" })
+                        </div>
+                        <div class="col-md-3">
+                            <span>Document No</span>
+                            <input type="text" id="txtBillNo" width="100%" meta:resourcekey="txtBillNoResource1" maxlength="30"></input>
+
+                        </div>
+                        <div class="col-md-3">
+                            <span>Posting Date</span>
+                            @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                            settings.Properties.EditFormat = EditFormat.Custom;
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Date = DateTime.Now;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientInstanceName = "tDate";
+                            settings.Name = "tDate";
+
+                            settings.ControlStyle.CssClass = "dateEditInput";
+                            }).GetHtml()
+
+                        </div>
+                        <div class="col-md-3">
+                            <span>Branch</span>
+                            <select id="ddlunitlist" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" id="divProj">
+                            <span>
+                                Project Code
+                            </span>
+                            @Html.Action("GetProjectCode", "PayrollGeneration", new { Project_ID = ViewBag.ProjectID, Branchs = ViewBag.Unit, Hierarchy = @ViewBag.Hierarchy })
+                        </div>
+                        <div class="col-md-4" id="divHierarchy">
+                            <span>
+                                Hierarchy
+                            </span>
+                            @Html.DropDownListFor(x => x.Hierarchy, new SelectList(Model.Hierarchy_List, "Hierarchy_id", "Hierarchy_Name"), new { @id = "ddlHierarchy", @class = "form-control", @disabled = "disabled" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="SavePosting()">Post to Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "cPopup";
+        settings.Width = 700;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.PopupAnimationType = AnimationType.None;
+        settings.HeaderText = "Select Employee";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        // settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()

@@ -1,0 +1,87 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridHierarchyList";
+    settings.CallbackRouteValues = new { Action = "HierarchyGrid", Controller = "CompanyStructure" };
+
+    
+    
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    //  settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Visible;
+
+
+
+    
+    
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Hierarchy_ID";
+        x.Caption = "";
+        x.VisibleIndex = 0;
+        x.Width = 0;      
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Hierarchy_Name";
+        x.Caption = "Name";
+        x.VisibleIndex = 2;
+        //x.Width = 200;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(40);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Hierarchy_Description";
+        x.Caption = "Description";
+        x.VisibleIndex = 3;
+        //x.Width = 100;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(40);
+
+    });
+
+
+   
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "Action";
+        x.VisibleIndex = 8;
+
+
+        x.SetDataItemTemplateContent(c =>
+        {
+            if (ViewBag.CanEdit)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"DefineHierarchy('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Hierarchy_ID")) + "')\"><span class='ico editColor' style='margin-right:5px'><img src='../assests/images/Edit.png' /></span><span class='hidden-xs'></span></a>");
+            }
+        });
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Order_Value"); ;
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Delivered_Value");
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "countactivity").DisplayFormat = "0";
+
+}).Bind(Model).GetHtml()
+

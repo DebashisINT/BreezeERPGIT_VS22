@@ -1,0 +1,385 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+<script src="~/Scripts/JS/editableTableWidget.js"></script>
+
+<link href="~/assests/pluggins/pure-min.css" rel="stylesheet" />
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+
+<link href="~/assests/css/payrollCss/LeaveOpening.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    function btnLeaveStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnLeaveStructure_Click(s, e) {
+        document.getElementById("txtSearchBox").value = "";
+
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Structure Short Code</th><th>Structure Name</th></tr><table>";
+        document.getElementById("TableStructure").innerHTML = txt;
+
+        BindModalGrid('');
+        setTimeout(function () { $("#txtSearchBox").focus(); }, 500);
+        $('#ModelPopup').modal('show');
+    }
+
+    function txtSearchBoxkeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtSearchBox").val() != '') {
+                BindModalGrid($("#txtSearchBox").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[searchIndex=0]"))
+                $("input[searchIndex=0]").focus();
+        }
+    }
+
+    function BindModalGrid(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Structure Short Code");
+        HeaderCaption.push("Structure Name");
+        HeaderCaption.push("Period From");
+        HeaderCaption.push("Period To");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetLeaveStructureDetailsList", OtherDetails, "TableStructure", HeaderCaption, "searchIndex", "SetDropdownValue");
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+
+            if (Id) {
+                if (indexName == "searchIndex") {
+                    SetDropdownValue(Id, name, e.target.parentElement);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            //if (thisindex < 10)
+            $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "searchIndex")
+                    $('#txtSearchBox').focus();
+            }
+        }
+    }
+
+    function SetDropdownValue(Id, name, e) {
+        var StructureID = Id;
+        var StructureCode = name;
+        var StructureName = e.parentElement.children[2].innerHTML;
+
+        if (StructureID != "") {
+            $('#ModelPopup').modal('hide');
+            btnLeaveStructure.SetText(StructureCode);
+            document.getElementById('hdnStructureID').value = StructureID;
+            document.getElementById('txtLeaveStructureName').value = StructureName;
+
+            CreateBalanceDetails(StructureID);
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        document.getElementById("buttonDIV").style.display = "none";
+        $('#editable').editableTableWidget();
+
+        $('#editable td.uneditable').on('change', function (evt, newValue) {
+            return false;
+        });
+    });
+</script>
+
+<script>
+    var LeaveHeader = [];
+    var LeaveDataType = [];
+
+    function CreateBalanceDetails(StructureID) {
+        var OtherDetails = {}
+        OtherDetails.StructureID = StructureID;
+
+        $.ajax({
+            type: "POST",
+            url: "/LeaveOpening/GetOpeningBalanceList",
+            data: JSON.stringify(OtherDetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var ResponseCode = msg.ResponseCode;
+                var ResponseMessage = msg.ResponseMessage;
+
+                if (ResponseCode == "Success") {
+                    var myObj = msg.OpeningBalanceList;
+                    var myHeaderObj = msg.LeaveDetailsList;
+                    var PropertyCount = 0;
+
+                    if (myObj.length > 0) {
+                        document.getElementById("buttonDIV").style.display = "block";
+
+                        var txt = '';
+                        txt += "<table id='editable' class='pure-table pure-table-bordered scroll display nowrap'width='100%'><thead><tr>";
+
+                        var jsonObject = myObj[0];
+                        PropertyCount = 0;
+                        for (prop in jsonObject) {
+                            var value = filterValue(myHeaderObj, "LeaveID", jsonObject[prop].Key);
+                            LeaveHeader.push(jsonObject[prop].Key);
+
+                            if (PropertyCount == 0) {
+                                txt += "<th class='hide'>" + jsonObject[prop].Key + "</th>";
+                                LeaveDataType.push("ST");
+                            }
+                            else if (PropertyCount == 1) {
+                                txt += "<th style='width:200px'>" + jsonObject[prop].Key + "</th>";
+                                LeaveDataType.push("ST");
+                            }
+                            else {
+                                txt += "<th style='width:200px'>" + value.LeaveName + "</th>";
+                                LeaveDataType.push("NM");
+                            }
+
+                            PropertyCount++;
+                        }
+                        txt += "</tr></thead><tbody>"
+
+                        for (x in myObj) {
+                            txt += "<tr>";
+                            PropertyCount = 0;
+
+                            for (key in myObj[0]) {
+                                if (PropertyCount == 0) {
+                                    txt += " <td class='hide'>" + myObj[x][key].Value + "</td>";
+                                }
+                                else if (PropertyCount == 1) {
+                                    txt += " <td class='uneditable' style='width:200px'>" + myObj[x][key].Value + "</td>";
+                                }
+                                else {
+                                    txt += "<td style='width:200px'>" + myObj[x][key].Value + "</td>";
+                                }
+                                PropertyCount++;
+                            }
+                            txt += "</tr>";
+                        }
+                        txt += "</tbody></table>"
+
+                        document.getElementById("tbl").innerHTML = txt;
+                        $(".scroll").DataTable({
+                            "scrollY": "60vh",
+                            "scrollCollapse": true,
+                            "scrollX": true,
+                            "paging": false,
+                            "searching": false,
+                            "ordering": false
+                        });
+                        $("#editable").editableTableWidget();
+                        $('#editable td.uneditable').on('change', function (evt, newValue) {
+                            return false;
+                        });
+
+                        $('input.editerclass').on('input', function () {
+                            match = (/(^-?\d{0,8})[^.]*((?:\.\d{0,2})?)/g).exec(this.value.replace(/[^-\d.]/g, ''));
+                            var _Value = match[1] + match[2];
+
+                            if (_Value == '') {
+                                this.value = '0';
+                            }
+                            else {
+                                if (_Value.replace(/^0+/, '') == '-') {
+                                    this.value = _Value.replace(/^0+/, '') + '0';
+                                }
+                                else if (_Value.replace(/^0+/, '') == '.') {
+                                    this.value = '0' + _Value.replace(/^0+/, '');
+                                }
+                                else if (_Value.replace(/^0+/, '') == '') {
+                                    this.value = '0';
+                                }
+                                else if (_Value.replace(/^0+/, '').charAt(0) == '.') {
+                                    this.value = '0' + _Value.replace(/^0+/, '');
+                                }
+                                else {
+                                    this.value = _Value.replace(/^0+/, '');
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        document.getElementById("tbl").innerHTML = "";
+                        document.getElementById("buttonDIV").style.display = "none";
+                    }
+                }
+                else {
+                    document.getElementById("tbl").innerHTML = "";
+                    document.getElementById("buttonDIV").style.display = "none";
+
+                    jAlert(ResponseMessage);
+                }
+            }
+        });
+    }
+
+    function filterValue(obj, key, value) {
+        return obj.find(function (v) { return v[key] === value });
+    }
+</script>
+<script>
+    function SaveNew() {
+        var jsonObj = [];
+
+        $('#editable tbody>tr').each(function () {
+            var obj = [];
+            var i = 0;
+
+            $('td', this).each(function () {
+                var _DataType = LeaveDataType[i];
+
+                if (_DataType == 'ST') {
+                    var _Key = LeaveHeader[i];
+                    var _Amount = "0";
+                    var _Value = $(this).text();
+                }
+                else {
+                    var _Key = LeaveHeader[i];
+                    var _Amount = parseFloat($(this).text());
+                    var _Value = "";
+                }
+
+                var _Object = new Object();
+                _Object.Keys = _Key;
+                _Object.Amount = _Amount;
+                _Object.Values = _Value;
+
+                obj.push(_Object);
+                i++;
+            });
+
+            var classLeaveHead = {};
+            classLeaveHead.classLeaveHead = obj;
+
+            jsonObj.push(classLeaveHead);
+        });
+
+        var _obj = {};
+        var TableDetails = {};
+        TableDetails.MainArray = jsonObj;
+        _obj.TableDetails = TableDetails;
+
+        $.ajax({
+            type: "POST",
+            url: "/LeaveOpening/SaveEmployeeOpeningBalance",
+            data: JSON.stringify(_obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    var url = '/LeaveOpening/Dashboard';
+
+                    jAlert("Save successfully.", 'Alert Dialog: [Message]', function (r) {
+                        if (r == true) {
+                            window.location.href = url;
+                        }
+                    });
+                }
+                else {
+                    jAlert(response.ResponseMessage);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left"> Leave - Opening</h3>
+    </div>
+</div>
+<div class="panel-body">
+    <div class="row">
+        <div class="col-md-3">
+            <label>Leave Structure Code</label>
+            <div>
+                @Html.DevExpress().ButtonEdit(
+                settings =>
+                {
+                    settings.Name = "btnLeaveStructure";
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Text = "";
+                    settings.ReadOnly = true;
+                    settings.Properties.Buttons.Add("..");
+                    settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnLeaveStructure_Click(s,e);}";
+                    settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnLeaveStructure_KeyDown(s,e);}";
+                }).GetHtml()
+                <span id="MandatoryStructureName" style="display: none" class="d_validclass">
+                    <img id="imgMandatoryStructureName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Leave Structure Name</label>
+            <div>
+                @Html.TextBox("txtLeaveStructureName", null, new { @readonly = "readonly" })
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-12">
+            <div id="tbl">
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-3" id="buttonDIV">
+            <button type="submit" class="btn btn-primary" onclick="SaveNew()">Save & New</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal PopUp -->
+<div class="modal fade" id="ModelPopup" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay structure</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="txtSearchBoxkeydown(event)" id="txtSearchBox" autofocus width="100%" placeholder="Search By Pay Structure Name or Short Name" />
+                <div id="TableStructure">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal PopUp -->
+
+<div>
+    @Html.Hidden("hdnStructureID")
+</div>

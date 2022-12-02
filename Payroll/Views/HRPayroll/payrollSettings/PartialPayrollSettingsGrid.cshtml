@@ -1,0 +1,78 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "grid";
+    settings.CallbackRouteValues = new { Controller = "PayrollSettings", Action = "PartialPayrollSettingsGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    //settings.ClientSideEvents.BeginCallback = "OnStartAllowanceCallback";
+    settings.Settings.ShowFilterRow = true;
+    settings.KeyFieldName = "serial";
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PostingAccount";
+        column.Caption = "Account Head";
+        //column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+        
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SubAccount";
+        column.Caption = "Sub Account";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayHeads";
+        column.Caption = "Pay Heads";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(50);
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DRCR";
+        column.Caption = "DR/CR";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "Action";
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(1);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        // x.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    settings.ClientSideEvents.RowClick = "gridclick";
+
+    settings.HtmlDataCellPrepared += (s, e) =>
+    {
+        if (e.DataColumn.Caption == "Action")
+        {
+            DevExpress.Web.Mvc.MVCxGridView grid = (DevExpress.Web.Mvc.MVCxGridView)s;
+            string ACPayheadMapID = Convert.ToString(grid.GetRowValues(e.VisibleIndex, new string[] { "ACPayheadMapID" }));
+            var buttonHtml = "";
+            buttonHtml += string.Format("<div class='floatedBtnArea'><a onclick=\"EditClick('" + ACPayheadMapID + "');\" title=\"\" class='ed '><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+            buttonHtml += string.Format("<a onclick=\"DeleteClick('" + ACPayheadMapID + "');\" title=\"\" class=''><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+
+            e.Cell.Text = buttonHtml;
+        }
+
+    };
+
+
+
+
+}).Bind(Model).GetHtml()

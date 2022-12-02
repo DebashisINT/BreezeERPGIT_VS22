@@ -1,0 +1,447 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@using DevExpress.Web.Mvc.UI;
+@using DevExpress.Web;
+@using DevExpress.XtraPrinting;
+@using DevExpress.Export;
+@using DevExpress.Web.Mvc;
+
+
+@*@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+@{
+    
+    ViewBag.Title = "Define Hierarchy";
+    //string ConnectionString = "";
+    //HRMS_BusinessLayer.CommonServices.GetEntityConnectionString(out ConnectionString);
+    //var db = new HRMS_DataAccessLayer.CompanyRepository.CompanyEntities(ConnectionString);
+
+    //bool IsAdd = false, IsEdit = false, IsDelete = false;
+    //PMS.Controllers.CompanyStructureController.Models.MenuHelper.GetUserRights("CompanyStructure", "CompanyStructure", out IsAdd, out IsEdit, out IsDelete);
+}
+
+@{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+
+@*@Html.DevExpress().GetStyleSheets(
+                new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, ExtensionType = ExtensionType.TreeList },
+                new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, ExtensionType = ExtensionType.DropDownEdit },
+                new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList, ExtensionType = ExtensionType.Button }
+    )
+
+@Html.DevExpress().GetScripts(
+                new Script { ExtensionSuite = ExtensionSuite.TreeList, ExtensionType = ExtensionType.TreeList },
+                new Script { ExtensionSuite = ExtensionSuite.TreeList, ExtensionType = ExtensionType.DropDownEdit },
+                new Script { ExtensionSuite = ExtensionSuite.TreeList, ExtensionType = ExtensionType.Button }
+    )*@
+<style>
+    .dxtlControl_PlasticBlue {
+        font: 12px "Roboto", Geneva, sans-serif;
+    }
+    #CompStrucTreeList > tbody > tr > td > table > thead > tr > th:last-child,
+    #CompStrucTreeList > tbody > tr > td > table > tbody > tr > td:last-child {
+        display: none !important;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            CompStrucTreeList.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            CompStrucTreeList.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                CompStrucTreeList.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                CompStrucTreeList.SetWidth(cntWidth);
+            }
+
+        });
+    });
+
+
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Define Hierarchy</h3>
+
+        <div class="crossBtn"><a href="/CompanyStructure/Index"><i class="fa fa-times"></i></a></div>
+    </div>
+</div>
+<div class="form_main">
+    
+
+    <script type="text/javascript">
+
+    function OnCustomButtonClick(s, e) {
+        var Id = e.nodeKey;
+
+        var Url = '@Url.Action("CompStrucTreeListPartialDelete", "CompanyStructure", new { comName = Convert.ToString(Session["CompanyId"]), Id = "_id_" })';
+
+        jConfirm('Wish to Delete?', 'Confirmation Dialog', function (r) {
+            if (r == true) {
+                var urluser = Url.replace("_id_", Id);
+                $.ajax({
+                    type: "POST",
+                    url: urluser,
+                    success: function (result) {
+                        jAlert('Deleted Successfully');
+                        window.location.reload(true);
+
+                    }
+                });
+            }
+        });
+
+    }
+
+        function PopupClose() {
+            $(".spnAsterisk").addClass('hide');
+        }
+
+
+      
+
+
+    function CheckUniqueID(s,e) {
+        var txtOID = s.GetText();
+        var obj = {};
+        obj.txtOID = txtOID;
+        obj.mode = $("#hdnmode").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/CompanyStructure/CheckUniqueID",
+            data: JSON.stringify(obj),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response == 0) {
+                    jAlert('This ID already exist. Please try other ID to proceed.', 'Alert', function () {
+                        s.SetFocus();
+                    });
+
+
+
+                }
+            },
+            error: function (response) {
+                jAlert("Something went wrong please try again later.", 'Alert', function () {
+                    s.SetFocus();
+                });
+
+             }
+        });
+    }
+
+
+
+    </script>
+
+    <style>
+        .abpopup {
+            color: #9F9F9F !important;
+        }
+
+        .dx-ar > * {
+            margin-right: 22px;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        checkmoddone();
+    });
+
+    //$(function ()
+    function checkmoddone() {
+
+        $('#spMessage').css('color', '#9F9F9F');
+        $('#btnModify').show();
+        $('#btncancel').hide();
+        $("#spMessage").hide();
+
+        $('.dxtl__Collapse').hide();
+
+
+        $("#chkdivmod").addClass('abpopup');
+        $(".spnAsterisk").addClass('hide');
+        $("#hdnNodeclick").val(0);
+        CompStrucTreeList.SetEnabled(false);
+        PopupMenu.rootItem.items[0].SetVisible(false);
+
+        PopupMenu.rootItem.items[1].SetVisible(false);
+        PopupMenu.rootItem.items[2].SetVisible(false);
+
+        $('#btnModify').click(function () {
+            debugger;
+            $("#hdnNodeclick").val(1);
+            $('#spMessage').css('color', '#4297d8');
+            $('#btncancel').show();
+            $("#spMessage").show();
+            $('#btnModify').hide();
+            PopupMenu.SetEnabled(true);
+
+            PopupMenu.rootItem.items[0].SetVisible(true);
+            PopupMenu.rootItem.items[1].SetVisible(true);
+            PopupMenu.rootItem.items[2].SetVisible(true);
+            $("#CompStrucTreeList").css("color", "#000000");
+            $('.dxtl__Collapse').show();
+        });
+        $('#btncancel').click(function () {
+
+            $("#hdnNodeclick").val(0);
+            $('#btnModify').show();
+            $('#btncancel').hide();
+            $("#spMessage").hide();
+
+            $('#spMessage').css('color', '#9F9F9F');
+
+            PopupMenu.rootItem.items[0].SetVisible(false);
+
+            PopupMenu.rootItem.items[1].SetVisible(false);
+
+            PopupMenu.rootItem.items[2].SetVisible(false);
+
+            $("#CompStrucTreeList").css("color", "#9F9F9F");
+            $('.dxtl__Collapse').hide();
+        });
+    };
+
+    </script>
+
+    <script type="text/javascript">
+    $(function () {
+
+    });
+    var nodeKey;
+    var parentNodeKey;
+    function OpenDetail(s, e) {
+        PopupOpen();
+        PopupClose();
+    }
+
+    function OnContextMenu(s, e) {
+
+        if (e.objectType === "Node") {
+            var x = ASPxClientUtils.GetEventX(e.htmlEvent);
+            var y = ASPxClientUtils.GetEventY(e.htmlEvent);
+            PopupMenu.ShowAtPos(x, y);
+
+            nodeKey = e.objectKey;
+            var node = s.GetNodeHtmlElement(nodeKey);
+            parentNodeKey = node.getAttribute("ParentNodeKey");
+        }
+
+
+
+    }
+
+    function UniqueIDInit(s,e) {
+        if ($("#hdnmode").val() == "add") {
+            s.SetEnabled(true);
+        }
+        else {
+            s.SetEnabled(false);
+
+        }
+    }
+
+    function logReportTextLogUnexpectedError(s, e) {
+        e.handled = true;
+        alert("Used in Oter module:Can not delete");
+    }
+    function OnItemClick(s, e) {
+        debugger;
+        switch (e.item.name) {
+
+            case "NewRoot":
+                $("#hdnmode").val("add");
+                //txtOID.SetEnabled(true);
+                CompStrucTreeList.StartEditNewNode();
+                break;
+            case "NewSibling":
+                $("#hdnmode").val("add");
+               // txtOID.SetEnabled(true);
+                CompStrucTreeList.StartEditNewNode(parentNodeKey);
+                break;
+            case "NewChild":
+                $("#hdnmode").val("add");
+                //txtOID.SetEnabled(true);
+                CompStrucTreeList.StartEditNewNode(nodeKey);
+                break;
+            case "Edit":
+                $("#hdnmode").val("edit");
+                //txtOID.SetEnabled(false);
+                CompStrucTreeList.StartEdit(nodeKey);
+                break;
+            case "Delete":
+                if (nodeKey == 1) {
+                    jAlert("You can not delete the root Node");
+
+                }
+                else {
+
+                    var Id = nodeKey;
+                    var Url = '@Url.Action("CompStrucTreeListPartialDelete", "CompanyStructure", new { comName = Convert.ToString(Session["CompanyId"]), Id = "_id_" })';
+
+                    jConfirm('Wish to Delete?', 'Confirmation Dialog', function (r) {
+                        if (r == true) {
+                            var urluser = Url.replace("_id_", Id);
+                            $.ajax({
+                                type: "POST",
+                                url: urluser,
+                                success: function (result) {
+
+                                    if (result == "foreignkeyexception" || result == "Unique constraint error" || result == "")
+                                    { jAlert('Used in other modules. Cannot delete'); }
+                                    else if (result == "duplicate") {
+
+                                        jAlert('Already child is there, First delete all child nodes.');
+                                    }
+                                    else if (result == "error") {
+
+                                        jAlert('Please try again later.');
+                                    }
+                                    else if (result == "HighParent") {
+
+                                        jAlert('You can not delete the root Node.');
+                                    }
+                                    else {
+                                        jAlert('Deleted Successfully');
+                                        CompStrucTreeList.PerformCallback();
+
+                                    }
+
+                                },
+                                error:function(msg){
+                                    jAlert('Please try again later.');
+                            }
+                            });
+                        }
+                    });
+                }
+                break;
+        }
+    }
+
+    </script>
+    <script type="text/javascript">
+    function funviewdetailscmpstructure(s, e) {
+        $("#hdnNode").val(e.nodeKey);
+        var hdvalpopup = $("#hdnNodeclick").val();
+
+        if (hdvalpopup == 0) {
+        }
+        else {
+            if (e.nodeKey != "") {
+                $.get("@Url.Action("SetConpanyStructureSessionId", "CompanyStructure")?Id=" + e.nodeKey, function (data, status) {
+
+                });
+            }
+            popstructure.Show();
+        }
+    }
+
+    function OnGetSelectedNodeKeyValues() {
+
+    }
+
+    function ShowPopup(s, e) {
+
+    }
+    function StructureGridBing(s, e) {
+
+        grid.PerformCallback();
+    }
+    function OnEndCallback(s, e) {
+
+        if (!s.IsEditing())
+            $(".spnAsterisk").addClass('hide');
+        if (s.cpBatchUpdate != null) {
+            jAlert(s.cpBatchUpdate, 'Alert');
+        }
+
+    }
+    </script>
+
+    <div id="chkdivmod">
+        @Html.Action("CompStrucTreeListPartial")
+    </div>
+
+    @Html.DevExpress().PopupMenu(settings =>
+{
+    settings.Name = "PopupMenu";
+    settings.AllowSelectItem = false;
+
+    settings.Items.Add("Add", "NewChild");
+
+    settings.Items.Add("Modify", "Edit");
+
+    settings.Items.Add("Delete", "Delete");
+
+    settings.ClientSideEvents.ItemClick = "OnItemClick";
+}).GetHtml()
+
+
+
+
+    @Html.DevExpress().PopupControl(settings =>
+       {
+           settings.Name = "popstructure";
+           settings.Width = 950;
+           settings.AllowDragging = true;
+           settings.CloseAction = DevExpress.Web.CloseAction.CloseButton;
+           settings.CallbackRouteValues = new { Controller = "CompanyStructure", Action = "DataViewPertial" };
+           settings.CloseOnEscape = true;
+           settings.PopupAnimationType = AnimationType.Fade;
+           settings.HeaderText = "Details";
+           settings.AllowResize = true;
+           settings.CloseAnimationType = AnimationType.Fade;
+           settings.ClientSideEvents.PopUp = "StructureGridBing";
+           //settings.ClientSideEvents.BeginCallback = "StructureGridBing";
+           //settings.ClientSideEvents.EndCallback = "OnEndCallback";
+           settings.Modal = true;
+           settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+           settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+           settings.SetContent(() =>
+           {
+
+               Html.RenderAction("DataViewPertial");
+
+           });
+       }).GetHtml()
+
+    <br />
+    <span id="spMessage" style="font-size: small;">Right click on a Sub Level to get options.</span>
+    <br />
+    <br />
+
+    <input type="button" value="Modify" id="btnModify" class="btn btn-primary btnwidth" />
+
+
+    <input type="button" value="Done" id="btncancel" class="btn btn-success btnwidth" />
+
+    <input type="hidden" id="hdnNode" />
+    <input type="hidden" id="hdnNodeclick" />
+    <input type="hidden" id="hdnmode" />
+</div>
+

@@ -1,0 +1,121 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvLeaveCalculation";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "LeaveCalculation", Action = "LeaveCalculationListingGrid"};
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+   // settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+
+    settings.KeyFieldName = "Doc_ID";
+    settings.EnableRowsCache = true;
+    // settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    //settings.Settings.ShowGroupPanel = true;
+
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Doc_ID";
+        column.Caption = "Doc ID";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EmployeeName";
+        column.Caption = "Employee Name";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "cnt_UCC";
+        column.Caption = "Employee Code";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayrollClassName";
+        column.Caption = "Pay Class";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Period";
+        column.Caption = "Period";
+    });  
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeaveStructureName";
+        column.Caption = "LeaveStructure Name";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeaveStructureCode";
+        column.Caption = "LeaveStructure Code";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeaveCode";
+        column.Caption = "Leave Code";
+    });
+
+   
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApplicationNo";
+        column.Caption = "ApplicationNo";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApplicationDetails";
+        column.Caption = "Application Details";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Lev_Date_From";
+        column.Caption = "Leave Date From";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Lev_Date_To";
+        column.Caption = "Leave Date To";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Day_Part";
+        column.Caption = "Day Part";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "No_Day";
+        column.Caption = "No. Day";
+    });
+
+   
+
+    //settings.Columns.Add(c =>
+    //{
+    //    c.SetDataItemTemplateContent(tc =>
+    //    {
+    //        ViewContext.Writer.Write(
+    //            "<a href=\"javascript:void(0);\" onclick=\"OnClickEdit('" + DataBinder.Eval(tc.DataItem, "LeaveID") + "','" + DataBinder.Eval(tc.DataItem, "LeaveStructureID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/info.png\" />" + "</a>" +
+    //            "<a href=\"javascript:void(0);\" onclick=\"OnClickDelete('" + DataBinder.Eval(tc.DataItem, "LeaveID") + "','" + DataBinder.Eval(tc.DataItem, "LeaveStructureID") + "')\" class=\"pad\" title=\"Delete\"><img src=\"../../../assests/images/Delete.png\" />" + "</a>"
+
+    //        );
+    //    });
+    //    c.Settings.AllowDragDrop = DefaultBoolean.False;
+    //    c.Settings.AllowSort = DefaultBoolean.False;
+    //    c.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+    //    c.Caption = "Action";
+    //    c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //});
+
+}).Bind(Model).GetHtml()

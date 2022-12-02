@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EVAC02122020" Class="PayRollDataClassDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=EVAC02122020;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="EVAC02122020ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.v_proll_TableFormulaInnerList" Member="v_proll_TableFormulaInnerLists">
+    <Type Name="v_proll_TableFormulaInnerList">
+      <Column Name="TableFormulaCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="TableBreakup_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="LowValue" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="HighValue" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ResultValue" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="CreatedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_TableFormulaList" Member="v_proll_TableFormulaLists">
+    <Type Name="v_proll_TableFormulaList">
+      <Column Name="TableFormulaCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="TableName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="TableCode" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ApplicableDate" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreatedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_TableFormulaOuterList" Member="v_proll_TableFormulaOuterLists">
+    <Type Name="v_proll_TableFormulaOuterList">
+      <Column Name="TableFormulaCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="TableName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="TableBreakup_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ApplicatedFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ApplicatedTo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_ClassGenerationList" Member="v_proll_ClassGenerationLists">
+    <Type Name="v_proll_ClassGenerationList">
+      <Column Name="PayrollClassID" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="PayrollClassName" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="PeriodFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PeriodTo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PayrollUnit" Type="System.String" DbType="NVarChar(2)" CanBeNull="true" />
+      <Column Name="Unit" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PayrollGeneration" Type="System.String" DbType="NVarChar(2)" CanBeNull="true" />
+      <Column Name="Generation" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CreatedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_FoundationMasterOuterList" Member="v_proll_FoundationMasterOuterLists">
+    <Type Name="v_proll_FoundationMasterOuterList">
+      <Column Name="RID" Type="System.String" DbType="NVarChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="CODE" Type="System.String" DbType="NVarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="[DESC]" Member="DESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_FoundationMasterInnerList" Member="v_proll_FoundationMasterInnerLists">
+    <Type Name="v_proll_FoundationMasterInnerList">
+      <Column Name="RID" Type="System.String" DbType="NVarChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="CODE" Type="System.String" DbType="NVarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="[DESC]" Member="DESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_PeriodGenerationList" Member="v_proll_PeriodGenerationLists">
+    <Type Name="v_proll_PeriodGenerationList">
+      <Column Name="PayrollClassID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="YYMM" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
+      <Column Name="FinYear" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="Period" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IsExpire" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_PayStructureMasterList" Member="v_proll_PayStructureMasterLists">
+    <Type Name="v_proll_PayStructureMasterList">
+      <Column Name="StructureID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="StructureName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="StructureCode" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ClassId" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CreatedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="UpdatedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PayrollClassName" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_EmployeeList" Member="v_proll_EmployeeLists">
+    <Type Name="v_proll_EmployeeList">
+      <Column Name="Employee_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Employee_Code" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="EmployeeUniqueCode" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="Employee_Name" Type="System.String" DbType="VarChar(252)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_EmployeeAttachment" Member="v_proll_EmployeeAttachments">
+    <Type Name="v_proll_EmployeeAttachment">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Employee_Code" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="EmployeeUniqueCode" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="Employee_Name" Type="System.String" DbType="VarChar(252)" CanBeNull="true" />
+      <Column Name="PayStructureCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PayStructureName" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Pay_ApplicationFrom" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Pay_ApplicationTo" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="LeaveStructureCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="LeaveStructureName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Leave_ApplicationFrom" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Leave_ApplicationTo" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_Dflt_Salary" Member="v_proll_Dflt_Salaries">
+    <Type Name="v_proll_Dflt_Salary">
+      <Column Name="EmployeeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="EmployeeCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PayStructureCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ClassCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="FrmDt" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
+      <Column Name="ToDt" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
+      <Column Name="Employee_Name" Type="System.String" DbType="VarChar(252)" CanBeNull="true" />
+      <Column Name="EmployeeUniqueCode" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_Salary_AllowanceDeduction" Member="v_proll_Salary_AllowanceDeductions">
+    <Type Name="v_proll_Salary_AllowanceDeduction">
+      <Column Name="serial" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="EmployeeCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="StructureID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="YYMM" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PayHeadName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PayValue" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="ClassId" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_SalaryImage_AllowanceDeduction" Member="v_proll_SalaryImage_AllowanceDeductions">
+    <Type Name="v_proll_SalaryImage_AllowanceDeduction">
+      <Column Name="serial" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="EmployeeCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="StructureID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ClassID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="YYMM" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PayHeadName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PayValue" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_PayHeadList" Member="v_proll_PayHeadLists">
+    <Type Name="v_proll_PayHeadList">
+      <Column Name="PayHeadID" Type="System.String" DbType="NVarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="StructureID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PayHead" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ShortName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PayType" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="DataType" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="CalculationType" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="RoundOffType" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_LeaveStructureList" Member="v_proll_LeaveStructureLists">
+    <Type Name="v_proll_LeaveStructureList">
+      <Column Name="LeaveStructureID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="LeaveStructureName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="LeaveStructureCode" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="LeavePeriodFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LeavePeriodTo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_LeaveDefinationList" Member="v_proll_LeaveDefinationLists">
+    <Type Name="v_proll_LeaveDefinationList">
+      <Column Name="LeaveID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="LeaveStructureID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="LeaveName" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="LeaveCode" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="applicableFor" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="leavetype" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_prollLeaveBalance" Member="v_prollLeaveBalances">
+    <Type Name="v_prollLeaveBalance">
+      <Column Name="EmployeeCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="LeaveStructureCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="LeaveID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="LeaveName" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="Opening" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="Availed" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="Balance" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_RosterMasterList" Member="v_proll_RosterMasterLists">
+    <Type Name="v_proll_RosterMasterList">
+      <Column Name="RosterID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="RosterCode" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="RosterName" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="PayrollClassName" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_ShiftList" Member="v_proll_ShiftLists">
+    <Type Name="v_proll_ShiftList">
+      <Column Name="ShiftID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ShiftName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ShiftStartTime" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="ShiftEndTime" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="ConsiderLateAfter" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="ConsiderAttendanceAfter" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="ConsiderHalfDayAfter" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="ShiftBreak" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CreatedDatetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="UpdatedDatetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Shift_Type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Shift_Time" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_proll_PayHeadImportLogList" Member="v_proll_PayHeadImportLogLists">
+    <Type Name="v_proll_PayHeadImportLogList">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PayHead" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ShortName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="PayHeadType" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="DataType" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="CalculationType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Formula" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RoundingOff" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ProrataCalculation" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Success" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.V_LOANADVANCES" Member="V_LOANADVANCEs">
+    <Type Name="V_LOANADVANCE">
+      <Column Name="LoanID" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="TYPE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CODE" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="NAME" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Employee_Name" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Due_Amount" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.V_PayrollSettings" Member="V_PayrollSettings">
+    <Type Name="V_PayrollSetting">
+      <Column Name="ACPayheadMapID" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="PostingAccount" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="SubAccount" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PayHeads" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DRCR" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="StructureId" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_LeaveRegister" Member="v_LeaveRegisters">
+    <Type Name="v_LeaveRegister">
+      <Column Name="SLNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="EmployeeCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="EmployeeName" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="LeaveName" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="Lev_Date_From" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Lev_Date_To" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LeaveDays" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="LeaveAppliedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VIEWLEAVEREGISTER_REPORT" Member="VIEWLEAVEREGISTER_REPORTs">
+    <Type Name="VIEWLEAVEREGISTER_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="REPORTTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SLNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="EMPLOYEECODE" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="EMPLOYEENAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="LEAVENAME" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="LEV_DATE_FROM" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LEV_DATE_TO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LEAVEDAYS" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="LEAVEAPPLIEDON" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="STATUS" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="ENTEREDBY" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VIEWLEAVEREGISTER_LISTINGREPORT" Member="VIEWLEAVEREGISTER_LISTINGREPORTs">
+    <Type Name="VIEWLEAVEREGISTER_LISTINGREPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="REPORTTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SLNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="EMPLOYEECODE" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="EMPLOYEENAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="LEAVENAME" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="LEV_DATE_FROM" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LEV_DATE_TO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LEAVEDAYS" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="LEAVEAPPLIEDON" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="STATUS" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="EXPSTATUS" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="ENTEREDBY" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="DOCID" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="DOCDATE" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="APPLICATIONNUMBER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="APPLICATIONDETAILS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="REASONSFORLEAVE" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

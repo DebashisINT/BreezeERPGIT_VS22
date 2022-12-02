@@ -1,0 +1,413 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@{
+   // ViewBag.Title = "Price List";
+}
+
+
+
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Price List</label>
+        </h3>
+    </div>
+</div>
+<div class="form_main">
+
+    <div class="tabbable-panel">
+        <div class="tabbable-line">
+            <ul class="nav nav-tabs ">
+                <li class="active">
+                    <a href="#tab_default_1" data-toggle="tab">
+                        General
+                    </a>
+                </li>
+                <li>
+                    <a href="#tab_default_2" data-toggle="tab">
+                        Role Prices
+                    </a>
+                </li>
+                <li>
+                    <a href="#tab_default_3" data-toggle="tab">
+                        Role Prices Markup
+                    </a>
+                </li>
+                <li>
+                    <a href="#tab_default_4" data-toggle="tab">
+                        Category Prices
+                    </a>
+                </li>
+                <li>
+                    <a href="#tab_default_5" data-toggle="tab">
+                        Price List Items
+                    </a>
+                </li>
+               
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1">
+                    <div class="clearfix">
+                        <div class="col-sm-4 col-md-3">
+                            <div class="row pmsForm horizontalLbl bxStyle">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-12 col-form-label">Name </label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-12 col-form-label">Context </label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control">
+                                                <option>Select</option>
+                                                <option>Approve</option>
+                                                <option>Reject</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-12 col-form-label">Start date </label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-12 col-form-label">End Date </label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-12 col-form-label">Currency </label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control">
+                                                <option>Select</option>
+                                                <option>Approve</option>
+                                                <option>Reject</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-12 col-form-label">Time Unit </label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control">
+                                                <option>Select</option>
+                                                <option>Approve</option>
+                                                <option>Reject</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+
+                                        <div class="col-sm-12">
+                                            <button type="button" class="btn btn-success ">Save changes</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_default_2">
+                    <p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#RolePrice" data-backdrop="static" data-keyboard="true">Add Role Price</button> 
+                    </p>
+                    <p>
+                        Devexoress grid here
+                    </p>
+                </div>
+                <div class="tab-pane" id="tab_default_3">
+                    <p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#RolePriceMarkup" data-backdrop="static" data-keyboard="true">Add Role Price Markups</button>
+                    </p>
+                    <p>
+                        Devexoress grid here
+                    </p>
+                </div>
+                <div class="tab-pane" id="tab_default_4">
+                    <p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CategoryPrices" data-backdrop="static" data-keyboard="true">Add Role Price Markups</button>
+                    </p>
+                    <p>
+                        Devexoress grid here
+                    </p>
+                </div>
+                <div class="tab-pane" id="tab_default_5">
+                    <p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PriceListItems" data-backdrop="static" data-keyboard="true">Add Role Price Markups</button>
+                    </p>
+                    <p>
+                        Devexoress grid here
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pmsModal w30" id="RolePrice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Role Price</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Role</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="CharecteristicID">
+                                <option>Select</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label"> Unit</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="CharecteristicID">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Price</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="skillDetails" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Currency</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Unit Schedule</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Measurement Unit</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control " value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade pmsModal w30" id="RolePriceMarkup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Role Price Markups</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Price List Name</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="CharecteristicID">
+                                    <option>Select</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="formLine"></div>
+
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label"> Amount</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="CharecteristicID">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Percentage</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="skillDetails" value="" />
+                            </div>
+                        </div>
+                       
+                        
+                    </div>
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal fade pmsModal w30" id="CategoryPrices" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Category Prices</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Transaction Category</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="CharecteristicID">
+                                <option>Select</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label"> Price Calculation</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Unit Schedule</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="skillDetails" value="" />
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Unit</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="CharecteristicID">
+                                <option>Select</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Percent </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="skillDetails" value="" />
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Price</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="skillDetails" value="" />
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade pmsModal w30" id="PriceListItems" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Price List Items</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Price List Name</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="CharecteristicID">
+                                <option>Select</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label"> Amount</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="CharecteristicID">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Percentage</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="skillDetails" value="" />
+                        </div>
+                    </div>
+
+
+                </div>
+                
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

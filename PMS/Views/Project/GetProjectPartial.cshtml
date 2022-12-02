@@ -1,0 +1,279 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridProjectList";
+    settings.CallbackRouteValues = new { Action = "GetProjectPartial", Controller = "Project" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+    settings.KeyFieldName = "Proj_Id";
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+   
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "7", "14", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = false;
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Visible;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Proj_Code";
+        x.Caption = "Project Code";
+        x.VisibleIndex = 1;
+        x.Width = 180;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        // x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Proj_Name";
+        x.Caption = "Project Name";
+        x.VisibleIndex = 2;
+        x.Width = 180;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Customer";
+        x.Caption = "Customer";
+        x.VisibleIndex = 3;
+        x.Width = 250;
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        // x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProjectStatus";
+        x.Caption = "Status";
+        x.VisibleIndex = 4;
+        x.Width = 150;
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    //if (ViewBag.MultipleBranchProject != "Yes")
+    //{
+   
+    //}
+    if (ViewBag.MultipleBranchProject == "Yes")
+    {
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "MultiBranch";
+            x.Caption = "MultiBranch";
+            x.VisibleIndex = 6;
+            x.Width = 300;
+            //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+        });
+    }
+    else
+    {
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "BranchName";
+            x.Caption = "Branch";
+            x.VisibleIndex = 5;
+            x.Width = 150;
+            //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+            //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+        }); 
+    }
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "projStage_Desc";
+        x.Caption = "Project Stage";
+        x.VisibleIndex = 7;
+        x.Width = 150;
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Hierarchy_Name";
+        x.Caption = "Hierarchy";
+        x.VisibleIndex = 8;
+        x.Width = 150;
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+    
+    
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Proj_EstimateStartdate";
+        x.Caption = "Estimated Start Date";
+        x.VisibleIndex = 9;
+        x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Proj_EstimateEnddate";
+        x.Caption = "Estimated End Date";
+        x.VisibleIndex = 10;
+        x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Proj_ActualStartdate";
+        x.Caption = "Actual Start Date";
+        x.VisibleIndex = 11;
+        x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        // x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Proj_ActualEndDate";
+        x.Caption = "Actual End Date";
+        x.VisibleIndex = 12;
+        //x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CreatedName";
+        x.Caption = "Entered By";
+        x.VisibleIndex = 12;
+        x.Width = 80;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CreatedDate";
+        x.Caption = "Entered On";
+        x.VisibleIndex = 13;
+        x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        // x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ModifiedName";
+        x.Caption = "Modified By";
+        x.VisibleIndex = 14;
+        x.Width = 80;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ModifiedDate";
+        x.Caption = "Modified On";
+        x.VisibleIndex = 15;
+        x.Width = 120;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy hh:mm:ss";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        // x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "";
+        x.VisibleIndex = 16;
+        x.Width = 0;
+
+        x.SetDataItemTemplateContent(c =>
+        {
+            ViewContext.Writer.Write("<div class='floatedBtnArea'>");
+            if (ViewBag.CanEdit)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenProjectforEdit('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Proj_Id")) + "')\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+            }
+            if (ViewBag.CanView)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenProjectforView('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Proj_Id")) + "')\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>");
+            }
+            if (ViewBag.CanDelete)
+            {
+                ViewContext.Writer.Write("<a title='Delete' style='cursor:pointer' class='' onclick=\"OpenProjectforDelete('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Proj_Id")) + "')\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+            }
+            if (ViewBag.CanApproved)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"ProjectApproval('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Proj_Id")) + "')\"><span class='ico editColor'><i class='fa fa-check' aria-hidden='true'></i></span><span class='hidden-xs'>Approval Details</span> </a>");
+            }
+            if (ViewBag.CanCancel)
+            {
+                ViewContext.Writer.Write("<a title='cancel/Close' style='cursor:pointer' class='' onclick=\"ProjectCancel('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Proj_Id")) + "')\"><span class='ico deleteColor'><i class='fa fa-times'></i></span> <span class='hidden-xs'>Cancel</span> </a>");
+            }
+            ViewContext.Writer.Write("</div>");
+            // ViewContext.Writer.Write("<a style='cursor:pointer' onclick=\"OpenProductWindow('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ROLE_ID")) + "')\">" + Convert.ToString(DataBinder.Eval(c.DataItem, "Order_Number")) + "</a>");
+        });
+        //x.Width = 100;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Order_Value"); ;
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Delivered_Value");
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "countactivity").DisplayFormat = "0";
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+
+}).Bind(Model).GetHtml()
+
+

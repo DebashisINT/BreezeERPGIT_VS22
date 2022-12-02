@@ -1,0 +1,54 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "SalarySelectedridView";
+    settings.CallbackRouteValues = new { Controller = "PayrollGeneration", Action = "PartialSelectedEmployeeGenerationGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.KeyFieldName = "EmployeeCode";
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+    settings.CommandColumn.VisibleIndex = 0;
+    settings.CommandColumn.Width = 100;
+    
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 300;
+    
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 20;
+
+    settings.ClientSideEvents.EndCallback = "EmpGrid_OnEndCallback";
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Employee_Name";
+        column.Caption = "Employee Name";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(60);
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+    });
+
+    settings.Columns.Add(c =>
+    {
+        
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.True;
+        c.Settings.FilterMode = ColumnFilterMode.DisplayText;
+        c.Width = 300;
+        c.Caption = "Employee Code";
+        c.ColumnType = MVCxGridViewColumnType.TextBox;
+        c.FieldName = "EmployeeUniqueCode";
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+
+    
+}).Bind(Model).GetHtml()
+
+
+
+

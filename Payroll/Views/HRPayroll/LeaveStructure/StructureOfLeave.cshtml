@@ -1,0 +1,256 @@
+﻿@model Payroll.Models.LeaveStructureEngine
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+<style>
+    .mtop8 {
+            margin-top: 8px
+    }
+    .MandatoryCode {
+        position: absolute;
+        right: -4px;
+        top: 35px;
+    }
+    .MandatoryName {
+        position: absolute;
+        right: -4px;
+        top:35px;
+    }
+    .MandatoryfrmDt
+    {
+        position:absolute;
+        right:-4px;
+        top:9px;
+    }
+    .MandatoryToDt {
+        position: absolute;
+        right: -4px;
+        top: 9px;
+    }
+
+     ._validclass {
+        position: absolute;
+        right: -1px;13
+
+        top: -2px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        if($("#hdnleavestructid").val()!="")
+        {
+            $('#buttonDIVSave').attr('style', 'display:block');
+            $('#buttonDIV').attr('style', 'display:none');
+        
+        }
+    });
+    function SaveLeaveStructure() {
+        var IsValid = true;
+        var StructureName = $("#txtStructureName").val();
+        var StructureCode = $("#txtStructureCode").val();
+        var FromDate = period_frm_dt.GetDate();
+        var ToDate = period_to_dt.GetDate();
+        var obj = {};
+        obj.StructureID = $("#hdnleavestructid").val()
+        obj.StructureName = StructureName;
+        obj.StructureCode = StructureCode;
+        obj.FromDate = FromDate;
+        obj.ToDate = ToDate
+
+        if (StructureName.trim() == '') {
+            $('#MandatoryName').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryName').attr('style', 'display:none');
+        }
+        if (StructureCode.trim() == '') {
+            $('#MandatoryCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryCode').attr('style', 'display:none');
+        }
+        if (FromDate==null) {
+            $('#MandatoryfrmDt').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryfrmDt').attr('style', 'display:none');
+        }
+        if (ToDate == null) {
+            $('#MandatoryToDt').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryToDt').attr('style', 'display:none');
+        }
+
+        if (IsValid == true) {
+            $.ajax({
+                type: "POST",
+                url: "/LeaveStructure/LeaveStructureSubmit",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {
+
+                        //$("#hdnleavestructid").val()
+                        $('a[href="#tab1"]').parent('li').removeClass('active');
+                        $('#tab1').removeClass(' in active');
+
+                        $('a[href="#tab2"]').attr("data-toggle", "tab");
+                        $('a[href="#tab2"]').parent('li').addClass('active');
+                        $('#tab2').addClass(' in active');
+                        $("#txtLeaveName").focus();
+                    }
+                    else {
+                        jAlert(response.ResponseMessage);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    }
+
+    function EditSaveLeaveStructure() {
+        var IsValid = true;
+        var StructureName = $("#txtStructureName").val();
+        var StructureCode = $("#txtStructureCode").val();
+        var FromDate = period_frm_dt.GetDate();
+        var ToDate = period_to_dt.GetDate();
+        var obj = {};
+        obj.StructureID = $("#hdnleavestructid").val()
+        obj.StructureName = StructureName;
+        obj.StructureCode = StructureCode;
+        obj.FromDate = FromDate;
+        obj.ToDate = ToDate
+
+        if (StructureName.trim() == '') {
+            $('#MandatoryName').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryName').attr('style', 'display:none');
+        }
+        if (StructureCode.trim() == '') {
+            $('#MandatoryCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryCode').attr('style', 'display:none');
+        }
+        if (FromDate == null) {
+            $('#MandatoryfrmDt').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryfrmDt').attr('style', 'display:none');
+        }
+        if (ToDate == null) {
+            $('#MandatoryToDt').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryToDt').attr('style', 'display:none');
+        }
+
+        if (IsValid == true) {
+            $.ajax({
+                type: "POST",
+                url: "/LeaveStructure/LeaveStructureSubmit",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {                       
+                        jAlert("Update Sussessfully.", "Alert", function () {
+                            var url = '/LeaveStructure/Dashboard';
+                            window.location.href = url;
+                        });
+                    }
+                    else {
+                        jAlert(response.ResponseMessage);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    }
+</script>
+<div class="row">
+    <div class="col-md-3">
+        <label>Leave Structure Name</label>
+        <div>
+            @Html.TextBoxFor(model => model.StructureName, new { Id = "txtStructureName" })
+            <span id="MandatoryName" style="display: none" class="_validclass">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue MandatoryName " src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label>Short Name</label>
+        <div>
+            @Html.TextBoxFor(model => model.StructureCode, new { Id = "txtStructureCode", style = "text-transform:uppercase", onkeypress = "return blockspclChar(event)" })
+            <span id="MandatoryCode" style="display: none" class="_validclass">
+                <img id="imgMandatoryCode" class="dxEditors_edtError_PlasticBlue MandatoryCode" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <label class="col-md-12 mtop8">Leave Period</label>
+            <div class="col-md-6">
+                @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "period_frm_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormat = EditFormat.Custom;
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Width = Unit.Percentage(100);
+                                settings.Date = Convert.ToDateTime(@Model.FromDate);
+                                //settings.Properties.ClientSideEvents.DateChanged = "datevalidate";
+                                settings.Properties.ShowOutOfRangeWarning = false;
+                            }
+                ).GetHtml()
+                <span id="MandatoryfrmDt" style="display: none" class="_validclass">
+                    <img id="imgMandatoryfrmDt" class="dxEditors_edtError_PlasticBlue MandatoryfrmDt" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+            <div class="col-md-6">
+                @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "period_to_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormat = EditFormat.Custom;
+                                settings.Properties.ValidationSettings.Display = Display.None;
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Date = Convert.ToDateTime(@Model.ToDate);
+                                settings.Width = Unit.Percentage(100);
+                                //settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Properties.ShowOutOfRangeWarning = false;
+
+                            }
+                ).GetHtml()
+                <span id="MandatoryToDt" style="display: none" class="_validclass">
+                    <img id="imgMandatoryToDt" class="dxEditors_edtError_PlasticBlue MandatoryToDt" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2" style="padding-top: 26px;" id="buttonDIV">
+        <label></label>
+        <button  type="submit" class="btn btn-primary" onclick="SaveLeaveStructure()">Leaves ></button>
+    </div>
+    <div class="col-md-2" style="display: none; " id="buttonDIVSave" >       
+        <button type="submit" class="btn btn-primary" onclick="EditSaveLeaveStructure()" style="margin-top: 23px; ">Save</button>
+    </div>
+</div>

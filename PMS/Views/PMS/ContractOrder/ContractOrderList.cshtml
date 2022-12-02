@@ -1,0 +1,323 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model PMS.Models.ViewModel.ContractOrderViewModel
+
+@{
+    ViewBag.Title = "Project Contract (Order)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<style>
+    .padTab > tbody > tr > td:not(:last-child) {
+        padding:0;
+         padding-right:15px;
+        vertical-align: middle;
+    }
+    .w150 {
+        width:150px;
+    }
+    #gridContractList_DXMainTable > tbody > tr > td:last-child, #gridContractList_DXFooterTable > tbody > tr > td:last-child, #gridContractList_DXHeaderTable > tbody > tr > td:last-child {
+        display: none;
+    }
+</style>
+<script>
+    var load = 0;
+    function OpenContractData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetContractDataByID", "ContractOrder")",
+                data: { detailsid: detailsid },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnContractAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    function RemoveContractData(detailsid) {
+
+        jConfirm('Confirm delete?', 'Alert!', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveContractDataByID", "ContractOrder")",
+                    data: { detailsid: detailsid },
+                    success: function (response) {
+                        if (response != null) {
+                            jAlert(response.Message);
+                            if (response.Success) {
+                                gridContractList.Refresh();
+                                gridContractList.Refresh();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function OnContractListEndCallback(s, e) {
+
+    }
+
+    function OnContractListBeginCallback(s, e) {
+
+    }
+
+    $(function () {
+        PopulateUnitList();
+        if (localStorage.getItem('FromDateBOM')) {
+            BomFromDate_dt.SetDate(new Date(localStorage.getItem('FromDateBOM')));
+        }
+        if (localStorage.getItem('ToDateBOM')) {
+            BomToDate_dt.SetDate(new Date(localStorage.getItem('ToDateBOM')));
+        }
+        $('#btnAddNew').focus();
+    });
+
+    function datevalidateTo() {
+
+        if (BomFromDate_dt.GetDate()) {
+            if (BomToDate_dt.GetDate() <= BomFromDate_dt.GetDate()) {
+                BomToDate_dt.SetValue(BomFromDate_dt.GetDate());
+                BomToDate_dt.SetMinDate(BomFromDate_dt.GetDate());
+            }
+        }
+    }
+
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "ContractOrder")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+                if (localStorage.getItem('BOMBranch')) {
+                    if ($("#ddlunitlist option[value=" + localStorage.getItem('BOMBranch') + "]").text() != "" && $("#ddlunitlist option[value=" + localStorage.getItem('BOMBranch') + "]").text() != null) {
+                        $('#ddlunitlist').val(localStorage.getItem('BOMBranch'));
+                    }
+                }
+
+            }
+        });
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function updateGridByDate() {
+        if (BomFromDate_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { BomFromDate_dt.Focus(); });
+        }
+        else if (BomToDate_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { BomToDate_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(BomFromDate_dt.GetValue());
+            var todate = GetServerDateFormat(BomToDate_dt.GetValue());
+            var unitid = $('#ddlunitlist option:selected').val();
+
+            localStorage.setItem("FromDateBOM", BomFromDate_dt.GetDate());
+            localStorage.setItem("ToDateBOM", BomToDate_dt.GetDate());
+            localStorage.setItem("BOMBranch", unitid);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetContractDateFilter", "ContractOrder")",
+                data: { unitid: unitid, FromDate: fromdate, ToDate: todate },
+                success: function (response) {
+                    if (response) {
+                        gridContractList.Refresh();
+                        gridContractList.Refresh();
+                    }
+                }
+            });
+        }
+    }
+
+
+    function onPrintJv(id, RowIndex) {
+        jAlert('No design available!');
+    }
+
+    function OnclickViewAttachment(id) {
+        $('#hdnDocNo').val(id);
+        $('#AttachmentModal').modal('show');
+        setTimeout(function () {  $('#documentType').focus();  }, 1000);
+    }
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+
+        if (exportid > 0) {
+
+            var url = '@Url.Action("ExportBOMGridList", "ContractOrder", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+
+
+        }
+
+    }
+
+   // $(document).ready(function () {
+
+        document.onkeydown = function (e) {
+            if (event.keyCode == 65 && event.altKey == true) {
+                var url = '@Url.Action("Index", "ContractOrder")';
+                window.location.href = url;
+            }
+        }
+    //});
+</script>
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="">
+            <label>Project Contract (Order)</label>
+        </h3>
+        @*<div id="ApprovalCross" class="crossBtn"><a href=""><i class="fa fa-times"></i></a></div>*@
+    </div>
+    
+</div>
+
+<div class="mainarea form_main">
+
+    <input type="hidden" value="@Url.Action("Index", "ContractOrder")" id="hdnContractAddUpdate" />
+    <input type="hidden" value="@Url.Action("AttachmentDocument", "Attachment", new { module = "ContractOrder" })" id="hdnAttachmentDocument" />
+
+    <div>
+        @{
+            Html.RenderAction("AttachmentDocument", "Attachment", new { module = "ContractOrder", DocNo = "" });
+        }
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+            <div class="gridHeadersec">
+
+                
+
+                <div class="clearfix">
+                    <div class="md-pull-left">
+                        @if (ViewBag.CanAdd) 
+                        { 
+                            <button type="button" id="btnAddNew" class="btn btn-success" onclick="location.href='@Url.Action("Index", "ContractOrder")'">
+                                <span class="btn-icon"><i class="fa fa-plus"></i></span> Add New</button>
+                        }
+                        <select id="exportlist" class="btn btn-primary" onchange="cmbExport_SelectedIndexChanged()">
+                            <option value="0">Export to</option>
+                            <option value="1">PDF</option>
+                            <option value="2">XLSX</option>
+                            <option value="3">RTF</option>
+                            <option value="4">CSV</option>
+                        </select>
+                    </div>
+                    <div class="md-pull-right">
+                        <table class="paddingTbl">
+                            <tr>
+                                <td>
+                                    From Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                                        settings =>
+                                        {
+                                            settings.Name = "BomFromDate_dt";
+                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                            settings.Width = Unit.Percentage(100);
+                                            settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                            settings.Date = DateTime.Now;
+
+                                        }).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    To Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                                        settings =>
+                                        {
+                                            settings.Name = "BomToDate_dt";
+                                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                            settings.Width = Unit.Percentage(100);
+                                            settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                            settings.Date = DateTime.Now;
+
+                                        }).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    Unit
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        <select id="ddlunitlist" class="form-control"></select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" id="btnShowData" class="btn btn-primary" onclick="updateGridByDate()">Show</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+
+            <div id="refreshgrid">
+                @{
+                    Html.RenderAction("GetContractEntryList", "ContractOrder");
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
