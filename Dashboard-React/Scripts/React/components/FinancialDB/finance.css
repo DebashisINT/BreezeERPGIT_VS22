@@ -1,0 +1,116 @@
+.swiper-container {
+    width: 100%;
+    height: auto;
+}
+
+.swArea .swiper-button-prev, .swArea .swiper-button-next {
+    width: 22px;
+    height: 37px;
+    font-size: 11px;
+    top: 52%;
+    background: #333;
+    color: #fff;
+}
+.swArea .swiper-button-prev:hover , .swArea .swiper-button-next:hover {
+    background:#1a41c0;
+}
+.swArea .swiper-button-prev::after, .swArea .swiper-button-next::after {
+    font-size:15px;
+}
+.swArea .swiper-button-prev {
+    left: 0;
+}
+.swArea .swiper-button-next {
+    right: 0px;
+}
+.sIcon {
+    font-size: 13px;
+    /* margin-top: 35px; */
+    display: inline-block;
+    transform: translateY(-4px);
+}
+.totalContainer {
+    display: flex;
+    padding: 20px 10px;
+}
+.highlighter {
+    background: rgb(26, 65, 192);
+    color: #fff;
+    max-width: 11%;
+    text-align: center;
+    border-radius: 7px;
+    padding: 15px;
+    margin: -10px 0 -10px 0;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.highlighter .value {
+    font-size: 32px;
+    font-weight: 500;
+}
+.hdTag {
+    font-size: 13px;
+}
+.dataCont {
+    padding: 20px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.22);
+    border-radius: 0 8px 8px 0;
+    BOX-SIZING: border-box;
+    width: 89%;
+    background: #fff;
+    border-radius: 0 10px 10px 0;
+    overflow: hidden;
+    align-items: center;
+    display: flex;
+}
+.tabSlideContainer {
+    OVERFLOW: HIDDEN;
+    max-width: 100%;
+}
+.dataCont .value {
+    font-size: 28px;
+}
+.dataCont .value.dataColor1 {
+    color: #e03434;
+}
+.clPrim {
+    color: #59B6AA;
+}
+.col1Revert {
+    background: #69bdb2;
+    padding: 18px 0;
+    text-align: center;
+    color: #fff;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.col2Revert {
+    background: #e03434;
+    padding: 18px 0;
+    text-align: center;
+    color: #fff;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.smallFont {
+    font-size: 10px;
+}
+.bigValue {
+    font-size: 16px;
+}
+.cll {
+    color: #676565;
+}
+.textS  {
+    font-size: 12px;
+}
+
+.red {
+    color:red;
+}

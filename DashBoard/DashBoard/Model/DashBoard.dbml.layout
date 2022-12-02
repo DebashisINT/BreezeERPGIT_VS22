@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DashBoard">
+  <DataContextMoniker Name="/DashBoardDataContext" />
+  <nestedChildShapes>
+    <classShape Id="aead8f55-50a9-449f-9bc5-a8ae24dbbd38" absoluteBounds="0.5, 0.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/DashBoardDataContext/v_phoneCallDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e482501a-84d7-4ae3-8ce8-0b684bd966e5" absoluteBounds="0.51499999999999968, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

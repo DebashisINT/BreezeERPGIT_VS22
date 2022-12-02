@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EVAC290920" Class="DashBoardDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=EVAC290920;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="EVAC290920ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.v_phoneCallDetails" Member="v_phoneCallDetails">
+    <Type Name="v_phoneCallDetail">
+      <Column Name="calldate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="note" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="smanId" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="phd_callDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="phd_id" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="slv_nextActivityType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_FutureSaleDetails" Member="v_FutureSaleDetails">
+    <Type Name="v_FutureSaleDetail">
+      <Column Name="phd_id" Type="System.Decimal" DbType="Decimal(19,0)" CanBeNull="true" />
+      <Column Name="phd_callDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SalesManName" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="CustomerName" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="sProducts_Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="phd_note" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="call_dispositions" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_TodaysAttendance" Member="v_TodaysAttendances">
+    <Type Name="v_TodaysAttendance">
+      <Column Name="Emp_InternalId" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(251)" CanBeNull="true" />
+      <Column Name="In_Time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_TodaysAttendanceCount" Member="v_TodaysAttendanceCounts">
+    <Type Name="v_TodaysAttendanceCount">
+      <Column Name="Emp_InternalId" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(251)" CanBeNull="true" />
+      <Column Name="count" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_CRMDb_ActHistory" Member="tbl_CRMDb_ActHistories">
+    <Type Name="tbl_CRMDb_ActHistory">
+      <Column Name="SMenId" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="SmenName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CustName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ProdClass" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="sls_id" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="OutCome1" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Remarks1" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FeedBack1" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="OutCome2" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Remarks2" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FeedBack2" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="OutCome3" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Remarks3" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FeedBack3" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="OutCome4" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Remarks4" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FeedBack4" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="OutCome5" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Remarks5" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FeedBack5" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Budget" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OutcomeDate1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OutcomeDate2" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OutcomeDate3" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OutcomeDate4" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OutcomeDate5" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FeedBackDate1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FeedBackDate2" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FeedBackDate3" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FeedBackDate4" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FeedBackDate5" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_followupDbHistory" Member="v_followupDbHistories">
+    <Type Name="v_followupDbHistory">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="user_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FollowDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FollowUsing" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Document" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DocDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="VarChar(251)" CanBeNull="true" />
+      <Column Name="openClsoe" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="NextFollowDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="VarChar(4000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourtesyCall_Report" Member="CourtesyCall_Reports">
+    <Type Name="CourtesyCall_Report">
+      <Column Name="TelleCaller" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[Courtesy CallDate / Time]" Member="Courtesy_CallDate___Time" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Lead ID /Name]" Member="Lead_ID__Name" Type="System.String" DbType="NVarChar(204)" CanBeNull="true" />
+      <Column Name="[Last Visit Date/Time]" Member="Last_Visit_Date_Time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FOS" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[Courtesy Call Feedback]" Member="Courtesy_Call_Feedback" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="[Visit Outcome(Courtesy Call)]" Member="Visit_Outcome_Courtesy_Call_" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="[Visit Outcome(Sales Rep.)]" Member="Visit_Outcome_Sales_Rep__" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="TelleCallerId" Type="System.Decimal" DbType="Decimal(10,0) NOT NULL" CanBeNull="false" />
+      <Column Name="assignedByid" Type="System.Decimal" DbType="Decimal(10,0) NOT NULL" CanBeNull="false" />
+      <Column Name="[Assign By]" Member="Assign_By" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.V_ProjectList" Member="V_ProjectLists">
+    <Type Name="V_ProjectList">
+      <Column Name="Proj_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Proj_Code" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
+      <Column Name="CustId" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IsInUse" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ProjectStatus" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjBracnchid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Hierarchy_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="HIERARCHY_NAME" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.V_ProjectList_DashBoard" Member="V_ProjectList_DashBoards">
+    <Type Name="V_ProjectList_DashBoard">
+      <Column Name="Proj_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Proj_Code" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
+      <Column Name="IsInUse" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ProjectStatus" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjBracnchid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

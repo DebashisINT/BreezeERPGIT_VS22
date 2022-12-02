@@ -1,0 +1,19 @@
+.widgBox {
+    background: #fff;
+    padding: 10px;
+    -webkit-transition: transform 0.3s ease-in-out;
+    -moz-transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.23);
+    cursor: pointer !important;
+    margin-bottom: 15px;
+    padding-bottom: 40px;
+    text-align: center;
+    border-radius: 5px;
+}
+.widgBox .Numb {
+    text-align: center;
+    font-size: 4.9em;
+    font-weight: 200;
+    font-family: 'Roboto', sans-serif;
+}

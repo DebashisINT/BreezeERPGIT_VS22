@@ -1,0 +1,331 @@
+﻿
+@model IEnumerable<EntityLayer.MenuHelperELS.MenuListModel>
+
+@*<script type="text/javascript">
+
+        document.addEventListener("contextmenu", function (e) {
+           // var url = location.href;
+
+            //jAlert('Currently Right click not allowed.');
+           // e.preventDefault();
+
+        }, false);
+
+    </script>*@
+
+@*<ul>
+        <li>
+            <a id="DashboardId" href="/dev/Dashboard/Index"><i class="fa fa-home" data-toggle="tooltip" title="" data-original-title="Dashboard"></i><span class="navfltext">Dashboard</span></a>
+        </li>
+        <li>
+            <a href="#"><i class="fa  fa-cogs" data-toggle="tooltip" title="" data-original-title="Admin"></i><span class="navfltext">Admin</span></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">System User</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="/dev/User/UserGroups">User Group and Rights</a></li>
+                                        <li><a href="/dev/User/UserMaintenance">User Maintenance</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Company Setup</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="/dev/CompanySetup/EditCompany">Company Info</a></li>
+                                        <li><a href="/dev/CompanyStructure/Location">Locations</a></li>
+                                        <li><a href="/dev/CompanyStructure/CompanyStructure">Company Structure</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Job Details Setup</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="/dev/JobDetailsSetup/Designation">Designations</a></li>
+                                        <li><a href="/dev/JobDetailsSetup/JobCategory">Job Categories</a></li>
+                                        <li><a href="/dev/JobDetailsSetup/EmploymentStatus">Employment Status</a></li>
+                                        <li><a href="/dev/JobDetailsSetup/PayGrades">Pay Grades</a></li>
+                                        <li><a href="/dev/JobDetailsSetup/SalaryStucture">CTC Details</a></li>
+                                        <li><a href="/dev/JobDetailsSetup/ShiftDetails">Shift Details</a></li>
+                                        <li><a href="/dev/JobDetailsSetup/Industry">Industry</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">System Settings</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="/dev/SystemSettings/EmailConfiguration">Email Configuration</a></li>
+                                        <li><a href="/dev/SystemSettings/Localization">Localization  </a></li>
+                                        <li><a href="/dev/SystemSettings/State">State</a></li>
+                                        <li><a href="/dev/SystemSettings/Country">Countries</a></li>
+                                        <li><a href="/dev/SystemSettings/Nationality">Nationalities  </a></li>
+                                        <li><a href="/dev/SystemSettings/IdProof">ID Proof  </a></li>
+                                        <li><a href="/dev/SystemSettings/CurrencyTypes">Currencies</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Qualifications Setup</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="/dev/Qualifications/Education">Education</a></li>
+                                        <li><a href="/dev/Qualifications/Skills">Skills</a></li>
+                                        <li><a href="/dev/Qualifications/Language">Languages</a></li>
+                                        <li><a href="/dev/Qualifications/Certification">Certifications</a></li>
+                                        <li><a href="/dev/Qualifications/Membership">Membership</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Dashboard</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="/dev/Dashboard/ViewDashboardSettings">Settings</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#"><i class="fa fa-user-plus" data-toggle="tooltip" title="" data-original-title="eRecruitment"></i><span class="navfltext">eRecruitment</span></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Configuration</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="">Questions</a></li>
+                                        <li><a href="">Question Category</a></li>
+                                        <li><a href="">Application Form</a></li>
+                                        <li><a href="">Email Templates</a></li>
+                                        <li><a href="">JD Templates</a></li>
+                                        <li><a href="">Requisition Workflow</a></li>
+                                        <li><a href="">Candidate Workflow</a></li>
+                                        <li><a href="">Job Source</a></li>
+                                        <li><a href="">Priority</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Requisition</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="">Add/Update Requisition</a></li>
+                                        <li><a href="">All Requisition</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Candidate</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="">Add/Update Candidate</a></li>
+                                        <li><a href="">View All Candidates</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a href="">Candidate Import</a>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a href="">Report</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#"><i class="fa fa-users" data-toggle="tooltip" title="" data-original-title="Employee"></i><span class="navfltext">Employee</span></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <ul class="seclevel">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Configuration</a>
+                            <ul class="dropdown-menu thrdlevel">
+                                <li>
+                                    <ul class="">
+                                        <li><a href="/dev/Employee/EmployeeIDScheme">Employee ID Scheme</a></li>
+                                        <li><a href="/dev/Employee/Termination">Reasons of Termination</a></li>
+                                        <li><a href="/dev/Employee/Documentation">Document Template</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a href="">Add/Update Employees</a>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a href="">My Details</a>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a href="">Employee Mass Update</a>
+                        </li>
+                    </ul>
+                    <ul class="seclevel">
+                        <li>
+                            <a href="">Employee Import</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>*@
+
+
+
+<ul>
+    <li>
+        <a id="DashboardId" href="javascript:void(0)" onclick="openMenuFromNav('/OMS/management/ProjectMainPage.aspx')"><i class=" fa fa-line-chart" data-toggle="tooltip" title="Dashboard"></i><span class="navfltext">Dashboard</span></a>
+
+    </li>
+
+    @if (Model != null && Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            string rootMenuLink = "#";
+            string rootMenuClass = "";
+
+            if (!string.IsNullOrWhiteSpace(item.Link))
+            {
+                rootMenuLink = "/" + item.Menu_Prefix + item.Link;
+            }
+
+            if (!string.IsNullOrWhiteSpace(item.IconClass))
+            {
+                rootMenuClass = "<i class=\"" + item.IconClass + "\" data-toggle=\"tooltip\" title=\"" + item.Name.Trim() + "\"></i>";
+            }
+
+
+            <li>
+                <a href="javascript:void(0)" onclick="openMenuFromNav('@Html.Raw(rootMenuLink)')">    @Html.Raw(rootMenuClass)<span class="navfltext">@(item.Name.Trim())</span>@((item.Lavel1Menu != null && item.Lavel1Menu.Count() > 0) ? Html.Raw("<i class=\"fa fa-angle-right dpvsl\"></i>") : Html.Raw(""))</a>
+
+                @if (item.Lavel1Menu != null && item.Lavel1Menu.Count() > 0)
+                {
+                    <ul class="dropdown-menu">
+                        <li>
+                            @foreach (var lvl1 in item.Lavel1Menu)
+                            {
+                                string lv1MenuLink = "";
+                                string lv1MenuClass = "";
+
+                                if (!string.IsNullOrWhiteSpace(lvl1.Link))
+                                {
+                                    lv1MenuLink = "/" + lvl1.Menu_Prefix + lvl1.Link;
+                                }
+
+                                if (!string.IsNullOrWhiteSpace(lvl1.IconClass))
+                                {
+                                    lv1MenuClass = "<i class=\"" + lvl1.IconClass + "\" data-toggle=\"tooltip\" title=\"" + lvl1.Name.Trim() + "\"></i>";
+                                }
+
+                                @*@Html.Raw(lv1MenuClass);*@
+
+                                <ul class="seclevel">
+                                    <li>
+                                        @if (lvl1.Lavel2Menus != null && lvl1.Lavel2Menus.Count() > 0)
+                                        {
+                                            @*<a  class="dropdown-toggle active" @((!string.IsNullOrWhiteSpace(lv1MenuLink)) ? Html.Raw("href=\"" + lv1MenuLink + "\"") : Html.Raw("")) data-toggle="dropdown">@Html.Raw(lv1MenuClass)@(lvl1.Name)<i class="fa fa-angle-right dpvsl"></i></a>*@
+                                            <a class="dropdown-toggle active" @((!string.IsNullOrWhiteSpace(lv1MenuLink)) ? Html.Raw("href=javascript:void(0) onclick=openMenuFromNav('" + lv1MenuLink + "')") : Html.Raw("")) data-toggle="dropdown">@Html.Raw(lv1MenuClass)@(lvl1.Name)<i class="fa fa-angle-right dpvsl"></i></a>
+                                            <ul class="dropdown-menu thrdlevel">
+                                                <li>
+                                                    <ul class="">
+                                                        @foreach (var lvl2 in lvl1.Lavel2Menus)
+                                                        {
+                                                            string lv2MenuLink = "#";
+                                                            string lv2MenuClass = "";
+
+                                                            if (!string.IsNullOrWhiteSpace(lvl2.Link))
+                                                            {
+                                                                lv2MenuLink = "/" + lvl2.Menu_Prefix + lvl2.Link;
+                                                            }
+
+                                                            if (!string.IsNullOrWhiteSpace(lvl2.IconClass))
+                                                            {
+                                                                lv2MenuClass = "<i class=\"" + lvl2.IconClass + "\" data-toggle=\"tooltip\" title=\"" + lvl2.Name.Trim() + "\"></i>";
+
+                                                            }
+                                                            <li><a href="javascript:void(0)" onclick="openMenuFromNav('@Html.Raw(lv2MenuLink)')">@Html.Raw(lv2MenuClass)@lvl2.Name.Trim()</a></li>
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            @*<a @((!string.IsNullOrWhiteSpace(lv1MenuLink)) ? Html.Raw("href=\"" + lv1MenuLink + "\"") : Html.Raw(""))>@Html.Raw(lv1MenuClass)@lvl1.Name</a>*@
+                                            <a @((!string.IsNullOrWhiteSpace(lv1MenuLink)) ? Html.Raw("href=javascript:void(0) onclick=openMenuFromNav('" + lv1MenuLink + "')") : Html.Raw(""))>@Html.Raw(lv1MenuClass)@lvl1.Name</a>
+                                        }
+                                    </li>
+                                </ul>
+                            }
+                        </li>
+                    </ul>
+                }
+            </li>
+        }
+    }
+    else
+    {
+        <script type="text/javascript"> window.location = '/oms/AlertMessage.aspx';</script>
+    }
+    <li>
+        <a id="schedulerId" href="#" onclick="DashboardClick()"><i class="fa fa-calendar" data-toggle="tooltip" title="Scheduler"></i><span class="navfltext">Scheduler</span></a>
+    </li>
+    @*<li>
+            <a id="Company" href="/OMS/management/frm_selectCompFinYrSett.aspx"><i class="fa fa-tachometer" data-toggle="tooltip" title="Change Company"></i><span class="navfltext">Change Company</span></a>
+        </li>*@
+</ul>
+
+
+

@@ -1,0 +1,725 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+    <link href="assets/css/magicsuggest-min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        #project-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+  #project-icon {
+    float: left;
+    height: 32px;
+    width: 32px;
+  }
+  #project-description {
+    margin: 0;
+    padding: 0;
+  }
+  tr.hasChild>td {
+      background:#d2cfff;
+      background-color:#d2cfff;
+      border-bottom:1px solid #BFBBFE
+  }
+  tr.level1 {
+      padding-left:0px;
+  }
+  tr.level2>td {
+      padding-left:25px;
+  }
+  tr.level3>td {
+    padding-left:50px;
+  }
+  .table .thead-dark th, .headerType th {
+    background-color: #324148;
+    color: #fff;
+    }
+  .ifd {
+      display:none;
+  }
+    </style>
+</head>
+<body id="test" class="with-chart">
+    <nav class="d-flex flex-column">
+        <div class="logo-wrap"><a href="index.html"><img src="assets/images/logo.png" title="logo" /></a></div>
+        <div class="menuArea flex-grow-1">
+            <ul class="main-nav">
+                <li><a href=""><span><i class="fas fa-home"></i></span> Dashboard</a></li>
+                <li><a href=""><span><i class="fas fa-bezier-curve"></i></span> Transaction</a></li>
+                <li><a href=""><span><i class="fab fa-buffer"></i></span> Project Management</a></li>
+                <li><a href=""><span><i class="fas fa-industry"></i></span> Manufacturing</a></li>
+                <li><a href=""><span><i class="fas fa-user-tie"></i></span> Payroll</a></li>
+                <li><a href=""><span><i class="fas fa-briefcase"></i></span> CRM Master</a></li>
+            </ul>
+        </div>
+        <div class="">
+            <div class="d-flex justify-content-center align-item-center calltoAction">
+                <div><a href="" class="actionBtn key" data-toggle="tooltip" data-placement="top" title="Change Password"><i class="fas fa-key"></i></a></div>
+                <div><a href="" class="actionBtn logout" data-toggle="tooltip" data-placement="top" title="Logout"><i class="fas fa-power-off"></i></a></div>
+            </div>
+        </div> 
+    </nav>
+    <div class="body-wraper">
+        <header class="p-3">
+            <div class="d-flex  align-items-center">
+                <div class="pr-3">
+                    <a href="index.html" class="backLink"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+                <div class="title">Top 10 Customer</div>
+                <div class="ml-auto d-flex align-items-center">
+                    <div class="pr-3 showChart"><i class="fas fa-chart-bar"></i></div>
+                    <div class="dropdown user-dropdown hide">
+                        <a class="btn btn-link p-0" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar"></div>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"> <i class="fas fa-info-circle"></i> What's new</a>
+                            <a class="dropdown-item" href="#"><i class="far fa-question-circle"></i> About</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="content-wrap pb-4">
+            <div class="">
+                <div class="topInfo d-flex align-items-center  p-3 pl-2">
+                    <div class="mr-auto col-xs-12  col-sm-3 col-md-3 col-lg-3 d-flex align-items-center nogutter"><span class="">Search record for</span></div>
+                    <div class=""><i class="fas fa-download" onclick="generatePDF()"></i></div>
+                </div>
+            </div>
+            <div class="col-12" id="invoice">
+                
+                <div class="py-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table shotabledata">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="30px">No</th>
+                                        <th>Name</th>
+                                        <th class="text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataHere"></tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table shotabledata">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="30px">No</th>
+                                        <th>Name</th>
+                                        <th class="text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data2"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table shotabledata">
+                                <thead>
+                                    <tr>
+                                        <th width="30px"></th>
+                                        <th>Total</th>
+                                        <th id="amoTotal" class="text-right"></th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table shotabledata">
+                                <thead>
+                                    <tr>
+                                        <th width="30px"></th>
+                                        <th>Total</th>
+                                        <th id="amoTotal2" class="text-right"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="input-group calwrap">
+                                <input type="text" class="form-control datepicker" id="FromDate" readonly>
+                                <div class="input-group-append calToggleicon">
+                                    <span class="input-group-text "><i class="fas fa-calendar-week"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12  mb-3">
+                            <div class="input-group calwrap">
+                                <input type="text" class="form-control  datepicker" id="toDate" readonly>
+                                <div class="input-group-append calToggleicon">
+                                    <span class="input-group-text "><i class="fas fa-calendar-week"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-sm" id="refreshData"><i class="fas fa-search"></i> Show</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.1/html2pdf.bundle.min.js" integrity="sha256-5WLU9Y9T0T1S7swCtH9WNzy3IQ77uNGW3cuTP65JSCo=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var data1 = [
+                {
+                    "no": "1",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "2",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '2'
+                },
+                {
+                    "no": "3",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "4",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "5",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "6",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "7",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "8",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '2'
+                },
+                {
+                    "no": "9",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "1",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "2",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '2'
+                },
+                {
+                    "no": "3",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "4",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "5",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "6",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "7",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "8",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '2'
+                },
+                {
+                    "no": "9",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "1",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "2",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '2'
+                },
+                {
+                    "no": "3",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "4",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "5",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "6",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "7",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "8",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '2'
+                },
+                {
+                    "no": "9",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                }
+            ];
+
+            var data2 = [
+                {
+                    "no": "1",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "2",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '2'
+                },
+                {
+                    "no": "3",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "4",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "5",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '2'
+                },
+                {
+                    "no": "6",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                
+                {
+                    "no": "3",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '2'
+                },
+                {
+                    "no": "1",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "2",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '2'
+                },
+                {
+                    "no": "3",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "4",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "5",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "6",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "7",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "8",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '2'
+                },
+                {
+                    "no": "9",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "1",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "2",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '2'
+                },
+                {
+                    "no": "3",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "4",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "5",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "6",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '3'
+                },
+                {
+                    "no": "7",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                },
+                {
+                    "no": "8",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '0',
+                    "isParent": 'no',
+                    "level": '2'
+                },
+                {
+                    "no": "9",
+                    "name": 'Susanta Kundu',
+                    "amount": 56000,
+                    "hasChild": '1',
+                    "isParent": 'yes',
+                    "level": '1'
+                }
+            ];
+            generateTable(data1);
+            generateTablesecond(data2);
+
+        });
+        function generateTable(data) {
+            var data = data;
+            var countItem = 0;
+            var html = '';
+            for (i = 0; i < data.length; i++) {
+
+                if (data[i].hasChild == '1' || data[i].isParent == 'yes') {
+                    if (data[i].level == '2') {
+                        html += '<tr class="hasChild level2"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                    } else if (data[i].level == '3') {
+                        html += '<tr class="hasChild level3"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                    } else {
+                        html += '<tr class="hasChild level1"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                    }  
+                } else if (data[i].level == '2' && data[i].hasChild == '0') {
+                    html += '<tr class=" level2"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                }
+                else if (data[i].level == '3' && data[i].hasChild == '0') {
+                    html += '<tr class=" level3"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                }else {
+                    html += '<tr><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                }
+                //countItem++;
+                //if (countItem == 21) {
+                //    html += '<div class="html2pdf__page-break"></div><tr class="headerType"><th width="30px">No</th><th>Name</th><th class="text-right">Amount</th></tr>'
+                //}
+            }
+            
+            
+            $('#dataHere').html(html);
+            var total = 0;
+            for (var i = 0; i < data.length; i++) {
+                total = total + data[i].amount;
+            }
+            $('#amoTotal').text(total);
+        }
+        function generateTablesecond(data) {
+            var data = data;
+            var countItem = 0;
+            var html = '';
+            for (i = 0; i < data.length; i++) {
+
+                if (data[i].hasChild == '1' || data[i].isParent == 'yes') {
+                    if (data[i].level == '2') {
+                        html += '<tr class="hasChild level2"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                    } else if (data[i].level == '3') {
+                        html += '<tr class="hasChild level3"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                    } else {
+                        html += '<tr class="hasChild level1"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                    }
+                } else if (data[i].level == '2' && data[i].hasChild == '0') {
+                    html += '<tr class=" level2"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                }
+                else if (data[i].level == '3' && data[i].hasChild == '0') {
+                    html += '<tr class=" level3"><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                } else {
+                    html += '<tr><td>' + data[i].no + '</td><td>' + data[i].name + '</td><td  class="text-right">' + data[i].amount + '</td></tr>'
+                }
+
+                //countItem++;
+                //if (countItem == 21) {
+                //    html += '<div class="html2pdf__page-break"></div><tr class="headerType"><th width="30px">No</th><th>Name</th><th class="text-right">Amount</th></tr>'
+                //}
+                
+            }
+
+
+            $('#data2').html(html);
+            var total = 0;
+            for (var i = 0; i < data.length; i++) {
+                total = total + data[i].amount;
+            }
+            $('#amoTotal2').text(total);
+        }
+        function generatePDF() {
+            // Choose the element that our invoice is rendered in.
+            var element = document.getElementById("invoice");
+            // Choose the element and save the PDF for our user.
+            html2pdf(element, {
+                margin: 0.1,
+                filename: "my.pdf",
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { dpi: 72, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            });
+
+        //function generatePDF() {
+        //    // Choose the element that our invoice is rendered in.
+        //    var element = document.getElementById("invoice");
+        //    // Choose the element and save the PDF for our user.
+        //    html2pdf().set({
+        //        margin: 0.1,
+        //        filename: 'myfile.pdf',
+        //        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+        //        pdfCallback: pdfCallback
+        //    }).from(element).save();
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK07082018" Class="DashBoardDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=10.0.8.251\MSSQLSERVERR2;Initial Catalog=PK07082018;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PK07082018ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.v_phoneCallDetails" Member="v_phoneCallDetails">
+    <Type Name="v_phoneCallDetail">
+      <Column Name="calldate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="note" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="smanId" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="phd_callDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="phd_id" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="slv_nextActivityType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

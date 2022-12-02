@@ -1,0 +1,310 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap');
+.padding {
+    padding: 15px;
+}
+.fontPop {
+    font-family: 'Poppins', sans-serif !important;
+}
+.pageClose {
+    display: block;
+    width: 25px;
+    height: 25px;
+    background: #eb4747;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+    line-height: 25px;
+    margin-top: 2px;
+}
+.pageClose:hover {
+    color:#fff;
+    -o-transform:scale(1.06);
+    -moz-transform:scale(1.06);
+    -webkit-transform:scale(1.06);
+    transform:scale(1.06);
+    opacity:0.8;
+}
+.widget {
+    text-align: center;
+    color: #fff;
+    display:flex;
+    border-radius:3px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom:15px;
+}
+.widget .iconBox {
+    width: 80px;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+}
+.widget .textInbox {
+    text-align: left;
+        flex: 1;
+        padding:15px 20px;
+}
+.widget.c1 {
+    background: #8076e9;
+}
+
+.widget.c2 {
+    background: #d8b861;
+}
+
+.widget.c3 {
+    background: #1a8a9b;
+}
+
+.widget.c4 {
+    background: #f46b4b;
+}
+
+.wdgLabel {
+    font-size: 16px;
+}
+
+.wdgNumber {
+    font-size: 26px;
+    font-weight: 600;
+}
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+/* Track */
+ ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+ ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.3); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(0,0,0,0.3); 
+}
+
+.box {
+    padding: 20px;
+    background: #f3f3f3;
+    border-radius: 15px;
+}
+.box .calltoActionicons a {
+        font-size: 13px;
+        color: #ffffff;
+        background: #42c08b;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 25px;
+}
+.box .calltoActionicons a.ful {
+        color: #ffffff;
+        background: #d89985;
+}
+.box .calltoActionicons a:hover{
+    opacity:0.7;
+}
+.box .calltoActionicons a:not(:last-child){
+    margin-right:10px;
+}
+.boxLabel {
+    font-size: 18px;
+}
+
+.amcharts-chart-div > svg + a {
+    display: none !important;
+}
+
+.flLeftTbl {
+    margin-left: 50px;
+}
+
+    .flLeftTbl > tbody > tr > td {
+        padding-right: 15px;
+    }
+
+.bdBot {
+    border-bottom: 1px solid #ccc;
+}
+
+    .box.fullscreen {
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    margin:0;
+    top: 0;
+    left: 0;
+    background-color: #dfe8f1;
+        -webkit-transition:all 0.3s ease;
+        transition:all 0.3s ease;
+        border-radius:0;
+}
+.colorlightDark {
+    color:#535353;
+}
+
+.chartboxes {
+    background:url(../images/nochart.png) no-repeat center center;
+    background-size: contain;
+}
+.nochart{
+    text-align:center;
+    top:50%;
+    left:50%;
+    -webkit-transform:translate(-50%, -50%);
+    -moz-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);
+    position:absolute;
+}
+.nochart h3 {
+    font-weight:400;
+    margin-bottom:10px !important;
+}
+.nochart p{
+    color:#365ce7;
+}
+.vTabWrap{
+        display: block;
+        width: 100%;
+        min-width: 100%;
+        padding: 0px;
+        border-radius: 25px;
+        background-color: #2d5daf;
+        vertical-align: top;
+        position: relative;
+        z-index: 1;
+        border: 3px solid #616694;
+        background: #628ec4;
+        background: -moz-linear-gradient(top, #628ec4 1%, #2d5daf 100%);
+        background: -webkit-linear-gradient(top, #628ec4 1%,#2d5daf 100%);
+        background: linear-gradient(to bottom, #628ec4 1%,#2d5daf 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#628ec4', endColorstr='#2d5daf',GradientType=0 );
+        box-shadow: 2px 1px 3px rgb(167, 167, 167);
+}
+.vertical-tab .nav-tabs li{
+    float: none;
+    vertical-align: top;
+}
+.vTabWrap div.zoom{
+    color: #999;
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 15px;
+    margin: 0;
+    border-radius: 50px;
+    border: none;
+    position: relative;
+    transition: all 0.20s ease 0s;
+    width: 100%;
+    cursor:pointer;
+    color: #fff;
+}
+.vTabWrap div.zoom:hover{
+    color: #302e2e !important;
+    background: #d6cc50 !important;
+    border: none;
+}
+
+.vTabWrap.horizontal-tab >div {
+    display:inline-block;
+    width:auto;
+    white-space: nowrap;
+}
+.DisableClass {
+    color: #302e2e !important;
+    background: #d6cc50 !important;
+    cursor: default !important;
+    /* -webkit-transform: scale(.9); */
+    /* transform: scale(.9); */
+    /* z-index: 9999; */
+    
+}
+
+
+.d-flex {
+    display:flex;
+}
+.swNav {
+    min-width: 50px;
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+    line-height: 51px;
+    position:absolute;
+    /* justify-content: center; */
+    /* align-items: center; */
+    cursor: pointer;
+}
+.middl {
+        max-width: 94%;
+    margin: 0 auto;
+}
+.swNav{
+    color:#fff;
+}
+.swNav.snavPrev {
+        left: 0;
+    top: 2px;
+}
+.swNav.snavNext {
+    right: 0px;
+    top: 0;
+}
+.swNav:after{
+    content:'';
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    border: 3px solid #a0b3de;
+    background: #4371b7;
+    background:#4371b7;
+    z-index:-1;
+    border-radius:50%;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.swNav:hover:after{
+    
+    opacity:1;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    transform: scale(0.8);
+}
+
+
+
+@media screen and (max-width: 580px) {
+    .resposive_table>tbody>tr>td {
+        display:block;
+        padding-top:5px
+    }
+    .resposive_table, .resposive_table>tbody>tr>td{
+        width:100% !important;
+    }
+    .box {
+        margin-bottom:10px
+    }
+    .glow.salesAmt {
+        float:left !important
+    }
+}

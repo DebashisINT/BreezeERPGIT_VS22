@@ -1,0 +1,173 @@
+﻿
+        .fullScreen {
+            position:fixed;
+            top:0;
+            bottom:0;
+            width:100%;
+            background:#fff;
+            z-index: 999;
+            left: 0;
+        }
+        .clPrim {
+            color:#59B6AA
+        }
+        .clPrimback {
+            background:#59B6AA
+        }
+        .bigValue{
+            font-size: 16px;
+        }
+        .popi {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        .tabSlideContainer {
+            OVERFLOW: HIDDEN;
+        }
+        .swNav {
+            position:absolute;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height: 100%;
+            width: 15px;
+            z-index: 999;
+            background: #fff;
+            cursor:pointer;
+        }
+        .swNav.snavPrev{
+            left:0;
+            top:0;
+        }
+        .swNav.snavNext{
+            right:0;
+            top:0;
+        }
+        .closeBtn a {
+            font-size: 14px;
+            /* padding: 8px; */
+            color: #e55656;
+            background: #e35353;
+            color: #fff !important;
+            width: 23px;
+            height: 23px;
+            display: inline-block;
+            text-align: center;
+            line-height: 25px;
+            border-radius: 50%;
+            margin-top: 0px;
+            margin-right: 14px;
+        }
+        /*new card design*/
+        body, .lightBack {
+            background:#f0f6f9 !important;
+        }
+        .cardContainer {
+            background: #fff;
+            border-radius: 8px;
+            min-height: 200px;
+            width: 100%;
+            box-shadow:0px 3px 5px rgba(0,0,0,0.04)
+        }
+        .cardContainer .cardHeader{
+            padding: 10px 15px 8px 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #586371;
+            border-bottom: 1px solid #e8edf3;
+        }
+        .cardContainer .cardContent {
+            padding: 15px;
+        }
+        .selectBox {
+            width: 100%;
+            border: 1px solid #dcd8d8;
+            border-radius: 4px;
+            font-size: 11px;
+            min-height: 29px;
+        }
+        .space{
+            padding: 15px 0;
+        }
+       
+        .cll {
+            color: #676565;
+        }
+        .relativeLoader {
+            position:relative;
+        }
+        .relativeLoader #loaderP, .loaderPC{
+            background: rgba(255,255,255,0.95);
+            position: absolute;
+            top: 0;
+            height:100vh;
+            width: 100%;
+            z-index: 9999;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        
+        }
+        .hdTag{
+            font-size: 13px;
+        }
+        .smallFont {
+            font-size: 11px;
+        }
+        .sIcon {
+            font-size: 13px;
+            /* margin-top: 35px; */
+            display: inline-block;
+            transform: translateY(-4px);
+        }
+        #chartdiv {
+            height:400px;
+        }
+        #chartdiv2 {
+            height:340px;
+        }
+        #funnelCahrt {
+            height:200px;
+        }
+        .resizeChart {
+            height:85vh !important;
+        }
+            
+        /* DOUBLE BORDER SPINNER */
+        .db-spinner {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 2px solid #222;
+            border-top-color: #009688;
+            border-bottom-color: #009688;
+            -webkit-animation: 1s spin linear infinite;
+            animation: 1s spin linear infinite;
+            margin-right: 10px;
+        }
+        
+
+        @-webkit-keyframes spin {
+          from {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          to {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes spin {
+          from {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          to {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+          }
+        }
+    

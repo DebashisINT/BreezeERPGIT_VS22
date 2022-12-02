@@ -1,0 +1,166 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="PopUp.master.cs" Inherits="ERP.OMS.MasterPage.PopUp"%>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="/assests/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assests/bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="/assests/css/custom/main.css" />
+    <link rel="stylesheet" type="text/css" href="/assests/fonts/font-awesome/css/font-awesome.min.css" />
+    <link href="/assests/pluggins/choosen/chosen.css" rel="stylesheet" />
+     <link href="/assests/css/custom/jquery.alerts.css" rel="stylesheet" />
+
+  
+
+    <%--<link type="text/css" href="../CSS/style.css" rel="Stylesheet" />--%>
+    <%--<script type="text/javascript" src="/assests/js/loaddata1.js"></script>
+
+    <link rel="stylesheet" href="/OMS/windowfiles/dhtmlwindow.css" type="text/css" />
+    <script type="text/javascript" src="/OMS/windowfiles/dhtmlwindow.js"></script>--%>
+    <script type="text/javascript" src="/assests/js/jquery.min.js"></script>
+      <script src="/assests/js/jquery.alerts.js"></script>
+    <%--<link rel="stylesheet" href="/OMS/modalfiles/modal.css" type="text/css" />--%>
+     <style>
+        .drag-handle { /*Overwrite default drag handle bar background color with below*/
+            background-color: #03277C;
+        }
+
+        #interVeil { /*CSS for veil that covers entire page while modal window is visible*/
+            position: absolute;
+            /*background: black url(blackdot.gif);*/
+            width: 10px;
+            left: 0;
+            top: 0;
+            z-index: 22222222;
+            visibility: hidden;
+            filter: progid:DXImageTransform.Microsoft.alpha(opacity=80);
+            opacity: 0.8;
+        }
+    </style>
+    <%--<script type="text/javascript" src="/OMS/modalfiles/modal.js"></script> --%> 
+
+   <%-- <script type="text/javascript" src="/Scripts/jquery.min.js"></script>--%>
+   
+
+   <%-- <script type="text/javascript" src="/assests/js/modernizr-2.8.3-respond-1.4.2.min.js"></script>--%>
+
+
+    <meta name="theme-color" content="#0C78B1" />
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#0C78B1" />
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <script type="text/javascript">
+        function addCookiesKeyOnStorage(val) {
+            var data = '';
+            if (localStorage.getItem("GridCookiesId") != null) {
+                data = localStorage.getItem("GridCookiesId");
+            }
+            var tempCookiesData = data + ',';
+            if (tempCookiesData.indexOf(',' + val + ',') == -1) {
+                data = data + ',' + val;
+                localStorage.setItem("GridCookiesId", data);
+            }
+
+
+        }
+        function DecimalRoundoff(value, decimals) {
+            return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+        }
+        function HideShow(obj, HS) {
+            if (HS == "H")
+                document.getElementById(obj).style.display = "None";
+            else
+                document.getElementById(obj).style.display = "inline";
+        }
+        function GetObjectID(obj) {
+            return document.getElementById(obj);
+        }
+        FieldName = '';
+        window.history.forward();
+        function noBack() { window.history.forward(); }
+
+        function AddFavourite() {
+            document.getElementById('BtnFavourite').click();
+        }       
+
+        function OnMoreInfoClick(url, HeaderText, Width, Height, anyKey) //AnyKey will help to call back event to child page, if u have to fire more that one function 
+        {
+            editwin = dhtmlmodal.open("Editbox", "iframe", url, HeaderText, "width=" + Width + ",height=" + Height + ",center=1,resize=1,scrolling=2,top=500", "recal")
+            editwin.onclose = function () {
+                if (anyKey == 'Y') {
+                    //document.getElementById('IFRAME_ForAllPages').contentWindow.callback();
+                }
+            }
+        }
+
+    </script>
+    <style type="text/css">
+	
+	/* Big box with list of options */
+	#ajax_listOfOptions{
+		position:absolute;	    /* Never change this one */
+		width:50px;	        /* Width of box */
+		height:auto;	        /* Height of box */
+		overflow:auto;	        /* Scrolling features */
+		border:1px solid Blue;	/* Blue border */
+		background-color:#FFF;	/* White background color */
+		text-align:left;
+		font-size:0.9em;
+		z-index:100;
+	}
+	#ajax_listOfOptions div{	/* General rule for both .optionDiv and .optionDivSelected */
+		margin:1px;		
+		padding:1px;
+		cursor:pointer;
+		font-size:0.9em;
+	}
+	#ajax_listOfOptions .optionDiv{	/* Div for each item in list */
+		
+	}
+	#ajax_listOfOptions .optionDivSelected{ /* Selected item in the list */
+		background-color:#DDECFE;
+		color:Blue;
+		z-index:900;
+	}
+	#ajax_listOfOptions_iframe{
+		background-color:#F00;
+		position:absolute;
+		z-index:10;
+	}
+	
+	form{
+		display:inline;
+	}
+	body {
+        background-color: rgb(237,243,244);
+	}
+         
+	</style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        
+        <div class="ContentPlaceHolder1Class" style="background-color: rgb(237,243,244);">
+            
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <script type="text/javascript" src="/assests/bootstrap/js/bootstrap.min.js"></script>
+        <%--<script type="text/javascript" src="/assests/js/main.js"></script>--%>
+    </form>
+      <script type="text/javascript" src="/assests/js/init.js"></script>
+    <script type="text/javascript" src="/assests/js/ajax-dynamic-list.js"></script>
+</body>
+</html>

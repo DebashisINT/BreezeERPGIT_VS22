@@ -1,0 +1,48 @@
+
+.widgBox {
+    background: #fff;
+    border-radius: 19px;
+    padding: 15px;  
+    -webkit-transition: transform 0.3s ease-in-out;
+    -moz-transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.23);
+    cursor:pointer !important;
+    margin-bottom:15px;
+    padding-bottom:40px;
+    }
+    .widgBox .icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 50%;
+    -webkit-box-shadow: 7px 8px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 7px 8px 10px rgba(0, 0, 0, 0.22);
+    font-size: 24px;
+    }
+    .widgBox .txt{
+    font-size: 14px;
+    padding-left: 10px;
+    max-width: 114px;
+    font-weight: 500;
+    color: #8e8787;
+    padding-top: 3px;
+    }
+    .widgBox .Numb {
+    text-align: center;
+    font-size: 4.9em;
+    font-weight: 200;
+    font-family: 'Roboto', sans-serif;
+    }
+    .widgBox .Numb + div{
+    font-size: 15px;
+    }
+    .widgBox .dwn {
+    font-size: 26px;
+    position: absolute;
+    right: 18px;
+    bottom: 40px;
+    }

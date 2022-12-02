@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DashBoard">
+  <DataContextMoniker Name="/DashBoardDataContext" />
+  <nestedChildShapes>
+    <classShape Id="1f5984e3-bc6d-489c-9f0d-c3ab1648c48a" isExpanded="false" absoluteBounds="0.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/DashBoardDataContext/v_phoneCallDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1579e3ef-9b5c-468c-87ac-a07f48a1f71b" absoluteBounds="0.51499999999999968, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="143e6b4a-5c41-4e4b-a235-ad01677cb888" isExpanded="false" absoluteBounds="3, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/DashBoardDataContext/v_FutureSaleDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="39fc4d63-fea3-4138-8315-7873c714f28a" absoluteBounds="3.0149999999999997, 0.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fafbd4f0-a870-4623-9ee9-86b28120a597" isExpanded="false" absoluteBounds="5.375, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/DashBoardDataContext/v_TodaysAttendance" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1bee3f0d-5775-44a2-a16a-8237e7c19354" absoluteBounds="5.39, 0.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8d1f54f6-9fd8-4f74-ae40-0c4d46f48285" isExpanded="false" absoluteBounds="0.5, 1.25, 2, 0.45">
+      <DataClassMoniker Name="/DashBoardDataContext/v_TodaysAttendanceCount" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d3d9b8ea-d806-4d0d-b901-917c32322e48" absoluteBounds="0.51499999999999968, 1.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f4e783cb-22a3-48e6-9220-7a8c13e4ac31" isExpanded="false" absoluteBounds="3, 1.25, 2, 0.45">
+      <DataClassMoniker Name="/DashBoardDataContext/tbl_CRMDb_ActHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8e954451-4a8f-418e-b5a1-bd322feaac5d" absoluteBounds="3.0149999999999997, 1.71, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4beb424e-b403-4916-8f89-3073bc1cd724" isExpanded="false" absoluteBounds="5.5, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/DashBoardDataContext/v_followupDbHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1fbd25ee-8437-472f-a497-d8ab5b011c86" absoluteBounds="5.515, 1.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="adf655fa-23ec-4d40-8d24-79e6ec922d2a" isExpanded="false" absoluteBounds="5.625, 2, 2, 0.45">
+      <DataClassMoniker Name="/DashBoardDataContext/CourtesyCall_Report" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5a386ddc-c27f-4e7b-a7c3-f4f66fe927c9" absoluteBounds="5.64, 2.46, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1347f352-74d0-4c70-8c00-783c4ebcc826" isExpanded="false" absoluteBounds="8.125, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/DashBoardDataContext/V_ProjectList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="78fb13e2-56ac-4e8a-97d1-c034ac8c014f" absoluteBounds="8.14, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
