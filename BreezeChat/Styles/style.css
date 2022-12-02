@@ -1,0 +1,217 @@
+/*!
+ * Start Bootstrap - SB Admin 2 Bootstrap Admin Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+.flRight {
+            display:block;
+            float:right !important;
+        }
+        /*#chat_box {
+            background: #eff5f4;
+            padding: 7px;
+        }*/
+        #chat_box> a {
+            margin-bottom:5px;
+            border-radius:4px;
+            overflow:hidden;
+            background: #fff;
+            box-shadow: 0px 2px 5px rgb(43 42 42 / 8%);
+            -webkit-transition:all 0.3s ease-in;
+            transition:all 0.3s ease-in;
+        }
+        #chat_box> a:hover {
+            -webkit-transform:scale(1.02);
+            transform:scale(1.02);
+        }
+        #chat_box> div {
+            background: #f0f7f5;
+            border-radius: 5px;
+            margin-bottom:5px;
+        }
+        /*#chat_widnow {
+           width: 210px;
+           border-radius: 6px 6px 0 0;
+           overflow: hidden;
+           background: #dfdfdf;
+        }*/
+        #chat_title_bar {
+            height: 28px;
+        }
+        .userImg {
+            max-width: 32px;
+            margin-right: 7px;
+        }
+        .uName {
+            text-transform:capitalize;
+        }
+        .onlineFlag {
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: #4dd24d;
+            border-radius: 50%;
+            position: absolute;
+            right: 12px;
+            top: 22px;
+        }
+        textarea.ui-widget-content:focus {
+            border:1px solid #2890E1
+        }
+         .userEnd> img {
+             float:left
+         }
+        .self .uiCnt, .userEnd .uiCnt {
+            float: left;
+            background: #f1f1f1;
+            font-size: 12px;
+            padding: 2px 15px;
+            border-radius: 5px;
+                max-width: 75%;
+                overflow-wrap: anywhere;
+                display: block;
+    width: 100%;
+        }
+        .self .uiCntHd, .userEnd .uiCntHd {
+            font-weight: 600;
+            text-transform: capitalize;
+            font-size: 10px;
+            color: #66a966;
+            overflow-wrap: anywhere;
+        }
+
+.chat {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .chat li {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dotted #999;
+    }
+
+        .chat li.left .chat-body {
+            margin-left: 60px;
+        }
+
+        .chat li.right .chat-body {
+            margin-right: 60px;
+        }
+
+        .chat li .chat-body p {
+            margin: 0;
+        }
+
+    .panel .slidedown .glyphicon,
+    .chat .glyphicon {
+        margin-right: 5px;
+    }
+
+.chat-panel .panel-body {
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.login-panel {
+    margin-top: 25%;
+}
+
+/*New Css from here*/
+.panel-default {
+    box-shadow: 0 0 11px 3px rgba(0,0,0,.1);
+    background-color: #f9f9f9;
+}
+
+/*Chat CSS*/
+/*#chat_widnow {
+    width: 200px;
+    border: solid 1px #6c0e4a;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    overflow-x: hidden;
+    box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.7) !important;
+}*/
+
+#chat_title_bar {
+    background: #FEFEFE;
+    height: 25px;
+    width: 100%;
+}
+
+#chat_min_button {
+    width: 25px;
+    height: 23px;
+    float: right;
+    cursor: pointer;
+}
+
+/*#chat_box {
+    height: 250px;
+    background: #DFDFDF;
+}*/
+    /*Chat End*/
+
+
+
+
+    #chat_box .bg-success {
+        display: block;
+        padding: 8px 15px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    #chat_box .bg-info {
+        display: block;
+        padding: 8px 15px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+.ui-chatbox .ui-widget-header {
+    color: #222222;
+    font-weight: 400;
+}
+
+.ui-chatbox-input {
+    border: 0 !important;
+}
+
+.ui-chatbox-input-box {
+    width: 189px !important;
+}
+.ui-icon{
+    margin-top: 0 !important; 
+}
+.ui-icon.ui-icon-closethick {
+    text-indent: initial !important;
+    background-image: none !important;
+}
+.ui-icon.ui-icon-minusthick {
+    text-indent: initial !important;
+    background-image: none !important;
+}
+.ui-chatbox-msg {
+    margin:10px !important;
+}
+
+.ui-chatbox-msg.self {
+    text-align: right;
+    width: 95%;
+        display: block;
+}
+.ui-chatbox-msg.userEnd {
+    text-align: left;
+    width: 95%;
+        display: block;
+}
+.ui-chatbox-msg.self .userImg {
+    margin-right: 5px;
+        float: right;
+}
+.ui-chatbox-msg.self .uiCnt{
+    float: right;
+}

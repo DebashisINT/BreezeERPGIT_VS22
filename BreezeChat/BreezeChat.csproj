@@ -1,0 +1,1282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{20F9EC99-3C4A-4AF7-ABC9-DB739E7180A1}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SignalRPrivateChat</RootNamespace>
+    <AssemblyName>SignalRPrivateChat</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\DevExpress.Web.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assests\bootstrap\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="assests\bootstrap\css\bootstrap.css" />
+    <Content Include="assests\bootstrap\css\bootstrap.min.css" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assests\bootstrap\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="assests\bootstrap\js\bootstrap.js" />
+    <Content Include="assests\bootstrap\js\bootstrap.min.js" />
+    <Content Include="assests\css\custom\AjaxStyle.css" />
+    <Content Include="assests\css\custom\demos.css" />
+    <Content Include="assests\css\custom\dhtmlgoodies_calendar.css" />
+    <Content Include="assests\css\custom\GenericCss.css" />
+    <Content Include="assests\css\custom\jquery.alerts.css" />
+    <Content Include="assests\css\custom\jquery.confirm.css" />
+    <Content Include="assests\css\custom\jquery.timeentry.css" />
+    <Content Include="assests\css\custom\main.css" />
+    <Content Include="assests\css\custom\menu-bar.css" />
+    <Content Include="assests\css\custom\menu-item.css" />
+    <Content Include="assests\css\custom\MultipleSelectionDDLCSS.css" />
+    <Content Include="assests\css\custom\newtheme.css" />
+    <Content Include="assests\css\custom\PageStyle.css" />
+    <Content Include="assests\css\custom\PMSStyles.css" />
+    <Content Include="assests\css\custom\SearchPopup.css" />
+    <Content Include="assests\css\custom\style.css" />
+    <Content Include="assests\css\custom\sumoselect.css" />
+    <Content Include="assests\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="assests\css\jquery-ui.css" />
+    <Content Include="assests\css\login.css" />
+    <Content Include="assests\css\RES.css" />
+    <Content Include="assests\css\SearchPopup.css" />
+    <Content Include="assests\fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="assests\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assests\images\activeState.png" />
+    <Content Include="assests\images\activity.png" />
+    <Content Include="assests\images\add-adress.png" />
+    <Content Include="assests\images\Add.png" />
+    <Content Include="assests\images\addmember.png" />
+    <Content Include="assests\images\addnew.gif" />
+    <Content Include="assests\images\ajax-loader.gif" />
+    <Content Include="assests\images\arrowright.jpg" />
+    <Content Include="assests\images\arrow_down.gif" />
+    <Content Include="assests\images\arrow_down.jpg" />
+    <Content Include="assests\images\arrow_up.gif" />
+    <Content Include="assests\images\arrow_up.jpg" />
+    <Content Include="assests\images\AssignTo.png" />
+    <Content Include="assests\images\attach.png" />
+    <Content Include="assests\images\attachment.png" />
+    <Content Include="assests\images\av.jpg" />
+    <Content Include="assests\images\back.jpg" />
+    <Content Include="assests\images\back.png" />
+    <Content Include="assests\images\backhead.png" />
+    <Content Include="assests\images\bcktip.png" />
+    <Content Include="assests\images\bcktool.png" />
+    <Content Include="assests\images\bell.png" />
+    <Content Include="assests\images\bg.jpg" />
+    <Content Include="assests\images\bg1.jpg" />
+    <Content Include="assests\images\bg2.png" />
+    <Content Include="assests\images\bglogin.jpg" />
+    <Content Include="assests\images\bill.png" />
+    <Content Include="assests\images\blue.bmp" />
+    <Content Include="assests\images\border.png" />
+    <Content Include="assests\images\box.png" />
+    <Content Include="assests\images\boxW.png" />
+    <Content Include="assests\images\Box_Black.PNG" />
+    <Content Include="assests\images\Box_Blue.png" />
+    <Content Include="assests\images\Box_Green.png" />
+    <Content Include="assests\images\Box_Red.png" />
+    <Content Include="assests\images\btn-go.gif" />
+    <Content Include="assests\images\btnPinkActive.jpg" />
+    <Content Include="assests\images\calculator.png" />
+    <Content Include="assests\images\calendar.jpg" />
+    <Content Include="assests\images\cash.png" />
+    <Content Include="assests\images\cashbudget.png" />
+    <Content Include="assests\images\change-dark.png" />
+    <Content Include="assests\images\change.png" />
+    <Content Include="assests\images\changeIcon.png" />
+    <Content Include="assests\images\changeP.png" />
+    <Content Include="assests\images\close.gif" />
+    <Content Include="assests\images\Closed.png" />
+    <Content Include="assests\images\closePop.png" />
+    <Content Include="assests\images\close_over.gif" />
+    <Content Include="assests\images\contractimages.gif" />
+    <Content Include="assests\images\controls.png" />
+    <Content Include="assests\images\ConvertTo.png" />
+    <Content Include="assests\images\copy.png" />
+    <Content Include="assests\images\CrIcon.png" />
+    <Content Include="assests\images\crossT.png" />
+    <Content Include="assests\images\crs.png" />
+    <Content Include="assests\images\CurrencyImage1.jpg" />
+    <Content Include="assests\images\DashboardIcons\accounting.png" />
+    <Content Include="assests\images\DashboardIcons\analytics %281%29.png" />
+    <Content Include="assests\images\DashboardIcons\analytics %282%29.png" />
+    <Content Include="assests\images\DashboardIcons\analytics %283%29.png" />
+    <Content Include="assests\images\DashboardIcons\analytics %284%29.png" />
+    <Content Include="assests\images\DashboardIcons\analytics.png" />
+    <Content Include="assests\images\DashboardIcons\approvalWaiting.png" />
+    <Content Include="assests\images\DashboardIcons\attendance.png" />
+    <Content Include="assests\images\DashboardIcons\book.png" />
+    <Content Include="assests\images\DashboardIcons\boxes.png" />
+    <Content Include="assests\images\DashboardIcons\checklist.png" />
+    <Content Include="assests\images\DashboardIcons\crm %281%29.png" />
+    <Content Include="assests\images\DashboardIcons\crm.png" />
+    <Content Include="assests\images\DashboardIcons\customer.png" />
+    <Content Include="assests\images\DashboardIcons\data-analytics.png" />
+    <Content Include="assests\images\DashboardIcons\graph %281%29.png" />
+    <Content Include="assests\images\DashboardIcons\graph.png" />
+    <Content Include="assests\images\DashboardIcons\inventory %281%29.png" />
+    <Content Include="assests\images\DashboardIcons\inventory.png" />
+    <Content Include="assests\images\DashboardIcons\kpi.png" />
+    <Content Include="assests\images\DashboardIcons\mangementNotify.png" />
+    <Content Include="assests\images\DashboardIcons\project.png" />
+    <Content Include="assests\images\DashboardIcons\report %281%29.png" />
+    <Content Include="assests\images\DashboardIcons\report.png" />
+    <Content Include="assests\images\DashboardIcons\reportDash.png" />
+    <Content Include="assests\images\DashboardIcons\sale.png" />
+    <Content Include="assests\images\DashboardIcons\sales-icon-18196 %281%29.jpeg" />
+    <Content Include="assests\images\DashboardIcons\sales-icon-18196-Windows.ico" />
+    <Content Include="assests\images\DashboardIcons\sales-icon-18196.jpeg" />
+    <Content Include="assests\images\DashboardIcons\scheduling.png" />
+    <Content Include="assests\images\DashboardIcons\shopping.png" />
+    <Content Include="assests\images\DashboardIcons\stadistics.png" />
+    <Content Include="assests\images\DashboardIcons\stock.png" />
+    <Content Include="assests\images\DashboardIcons\task %281%29.png" />
+    <Content Include="assests\images\DashboardIcons\task %282%29.png" />
+    <Content Include="assests\images\DashboardIcons\task.png" />
+    <Content Include="assests\images\DashboardIcons\worker.png" />
+    <Content Include="assests\images\Delete.png" />
+    <Content Include="assests\images\disk.gif" />
+    <Content Include="assests\images\doc.png" />
+    <Content Include="assests\images\document.png" />
+    <Content Include="assests\images\down.gif" />
+    <Content Include="assests\images\downarrow.png" />
+    <Content Include="assests\images\download.png" />
+    <Content Include="assests\images\down_over.gif" />
+    <Content Include="assests\images\down_time.gif" />
+    <Content Include="assests\images\down_time_over.gif" />
+    <Content Include="assests\images\DropIcons\abt.png" />
+    <Content Include="assests\images\DropIcons\chngpass.png" />
+    <Content Include="assests\images\DropIcons\logout.png" />
+    <Content Include="assests\images\DropIcons\Whtnew.png" />
+    <Content Include="assests\images\ds1.png" />
+    <Content Include="assests\images\ds2.png" />
+    <Content Include="assests\images\ds3.png" />
+    <Content Include="assests\images\ds4.png" />
+    <Content Include="assests\images\ds5.png" />
+    <Content Include="assests\images\ds6.png" />
+    <Content Include="assests\images\ds7.png" />
+    <Content Include="assests\images\ds8.png" />
+    <Content Include="assests\images\Edit.jpg" />
+    <Content Include="assests\images\Edit.png" />
+    <Content Include="assests\images\EHeaderBack.gif" />
+    <Content Include="assests\images\email.png" />
+    <Content Include="assests\images\endBG.JPG" />
+    <Content Include="assests\images\endlessLoading.gif" />
+    <Content Include="assests\images\endprogressBG.JPG" />
+    <Content Include="assests\images\Entry.png" />
+    <Content Include="assests\images\EntryW.png" />
+    <Content Include="assests\images\error.png" />
+    <Content Include="assests\images\exclamation-mark.png" />
+    <Content Include="assests\images\eye.png" />
+    <Content Include="assests\images\feedback.png" />
+    <Content Include="assests\images\file.gif" />
+    <Content Include="assests\images\filter.png" />
+    <Content Include="assests\images\first.gif" />
+    <Content Include="assests\images\flag.png" />
+    <Content Include="assests\images\folder.gif" />
+    <Content Include="assests\images\footerbg.jpg" />
+    <Content Include="assests\images\Formula_16x16.png" />
+    <Content Include="assests\images\full.jpg" />
+    <Content Include="assests\images\Go.gif" />
+    <Content Include="assests\images\Gradient.jpg" />
+    <Content Include="assests\images\green.bmp" />
+    <Content Include="assests\images\grid.png" />
+    <Content Include="assests\images\gridhead.gif" />
+    <Content Include="assests\images\headbg.jpg" />
+    <Content Include="assests\images\headerpanel.gif" />
+    <Content Include="assests\images\history.png" />
+    <Content Include="assests\images\icoaccts.gif" />
+    <Content Include="assests\images\icoactivity.gif" />
+    <Content Include="assests\images\icohome.gif" />
+    <Content Include="assests\images\icon_sprite.png" />
+    <Content Include="assests\images\icopipe.gif" />
+    <Content Include="assests\images\icoprint.gif" />
+    <Content Include="assests\images\icosearch.gif" />
+    <Content Include="assests\images\icoxls.gif" />
+    <Content Include="assests\images\inactiveState.png" />
+    <Content Include="assests\images\indianrupee.jpg" />
+    <Content Include="assests\images\info-back.png" />
+    <Content Include="assests\images\info.png" />
+    <Content Include="assests\images\invoiceII.png" />
+    <Content Include="assests\images\JournalEntry.jpeg" />
+    <Content Include="assests\images\Ledger_Map.png" />
+    <Content Include="assests\images\left.gif" />
+    <Content Include="assests\images\LeftNav.gif" />
+    <Content Include="assests\images\left_over.gif" />
+    <Content Include="assests\images\lightbox\bg-checker.png" />
+    <Content Include="assests\images\lightbox\box.png" />
+    <Content Include="assests\images\lightbox\bullet.gif" />
+    <Content Include="assests\images\lightbox\close.png" />
+    <Content Include="assests\images\lightbox\donate.png" />
+    <Content Include="assests\images\lightbox\favicon.gif" />
+    <Content Include="assests\images\lightbox\loading.gif" />
+    <Content Include="assests\images\lightbox\next.png" />
+    <Content Include="assests\images\lightbox\prev.png" />
+    <Content Include="assests\images\lightbox\speech-bubbles.png" />
+    <Content Include="assests\images\loader.gif" />
+    <Content Include="assests\images\loading.gif" />
+    <Content Include="assests\images\loading_background.png" />
+    <Content Include="assests\images\login-bg.gif" />
+    <Content Include="assests\images\login-head.gif" />
+    <Content Include="assests\images\login.gif" />
+    <Content Include="assests\images\logo-mini.png" />
+    <Content Include="assests\images\logo.png" />
+    <Content Include="assests\images\logout.png" />
+    <Content Include="assests\images\lprogressBG.JPG" />
+    <Content Include="assests\images\maintenance.jpg" />
+    <Content Include="assests\images\meeting.png" />
+    <Content Include="assests\images\Members.png" />
+    <Content Include="assests\images\menback.png" />
+    <Content Include="assests\images\menu-bar-gradient.jpg" />
+    <Content Include="assests\images\menu-bar-gradient1.JPG" />
+    <Content Include="assests\images\menu-bar-right-arrow.gif" />
+    <Content Include="assests\images\menu-bar-right-arrow.png" />
+    <Content Include="assests\images\menu_strip_bg.jpg" />
+    <Content Include="assests\images\menu_strip_bg1.JPG" />
+    <Content Include="assests\images\menu_strip_down_arrow.gif" />
+    <Content Include="assests\images\menu_strip_down_arrow.png" />
+    <Content Include="assests\images\menu_strip_separator.gif" />
+    <Content Include="assests\images\more.png" />
+    <Content Include="assests\images\MultiUOM.png" />
+    <Content Include="assests\images\MultiUomIcon.png" />
+    <Content Include="assests\images\nCros.png" />
+    <Content Include="assests\images\next.gif" />
+    <Content Include="assests\images\next_fast.gif" />
+    <Content Include="assests\images\not-verified.png" />
+    <Content Include="assests\images\notification.png" />
+    <Content Include="assests\images\Notification1.png" />
+    <Content Include="assests\images\ok.jpg" />
+    <Content Include="assests\images\onmouse_addnew.gif" />
+    <Content Include="assests\images\onmouse_exportcsv.gif" />
+    <Content Include="assests\images\onmouse_exportword.gif" />
+    <Content Include="assests\images\open.gif" />
+    <Content Include="assests\images\PageSize.gif" />
+    <Content Include="assests\images\paper.png" />
+    <Content Include="assests\images\paperW.png" />
+    <Content Include="assests\images\PDFICON.jpg" />
+    <Content Include="assests\images\pFirst.png" />
+    <Content Include="assests\images\phone_number.png" />
+    <Content Include="assests\images\picture.png" />
+    <Content Include="assests\images\pLast.png" />
+    <Content Include="assests\images\plumbing.png" />
+    <Content Include="assests\images\plumbingW.png" />
+    <Content Include="assests\images\pNext.png" />
+    <Content Include="assests\images\popuparrow.jpg" />
+    <Content Include="assests\images\popupBack.png" />
+    <Content Include="assests\images\popup_l.png" />
+    <Content Include="assests\images\pop_notification.png" />
+    <Content Include="assests\images\pPrev.png" />
+    <Content Include="assests\images\prev.gif" />
+    <Content Include="assests\images\previous_disabled.gif" />
+    <Content Include="assests\images\previous_fast_disabled.gif" />
+    <Content Include="assests\images\print.gif" />
+    <Content Include="assests\images\print.png" />
+    <Content Include="assests\images\profile1.png" />
+    <Content Include="assests\images\progress.gif" />
+    <Content Include="assests\images\progressBG.JPG" />
+    <Content Include="assests\images\r.jpg" />
+    <Content Include="assests\images\rating.png" />
+    <Content Include="assests\images\reassign.png" />
+    <Content Include="assests\images\report.png" />
+    <Content Include="assests\images\reportW.png" />
+    <Content Include="assests\images\right.gif" />
+    <Content Include="assests\images\rightArrowHand.jpg" />
+    <Content Include="assests\images\RightNav.gif" />
+    <Content Include="assests\images\right_over.gif" />
+    <Content Include="assests\images\ruler.png" />
+    <Content Include="assests\images\rupee.png" />
+    <Content Include="assests\images\sales.png" />
+    <Content Include="assests\images\salesman.png" />
+    <Content Include="assests\images\salesmanW.png" />
+    <Content Include="assests\images\schedule.png" />
+    <Content Include="assests\images\sdown.JPG" />
+    <Content Include="assests\images\search.gif" />
+    <Content Include="assests\images\search.png" />
+    <Content Include="assests\images\searchW.png" />
+    <Content Include="assests\images\Shedule.png" />
+    <Content Include="assests\images\show.png" />
+    <Content Include="assests\images\sms.png" />
+    <Content Include="assests\images\snext.JPG" />
+    <Content Include="assests\images\snext1.JPG" />
+    <Content Include="assests\images\subnavhov.gif" />
+    <Content Include="assests\images\subnavlink.gif" />
+    <Content Include="assests\images\success.png" />
+    <Content Include="assests\images\sup.JPG" />
+    <Content Include="assests\images\Svg\bars.svg" />
+    <Content Include="assests\images\tow-truck.png" />
+    <Content Include="assests\images\transfer.png" />
+    <Content Include="assests\images\updated.png" />
+    <Content Include="assests\images\upload.png" />
+    <Content Include="assests\images\user1.png" />
+    <Content Include="assests\images\user2.png" />
+    <Content Include="assests\images\userASign.png" />
+    <Content Include="assests\images\verified.png" />
+    <Content Include="assests\images\viewIcon.png" />
+    <Content Include="assests\images\viewt1.png" />
+    <Content Include="assests\images\warehouse.png" />
+    <Content Include="assests\images\Warning.png" />
+    <Content Include="assests\js\ajax-dynamic-list.js" />
+    <Content Include="assests\js\ajax-dynamic-list1.js" />
+    <Content Include="assests\js\ajax-dynamic-list1_rootfile.js" />
+    <Content Include="assests\js\ajax-dynamic-list1_wofolder.js" />
+    <Content Include="assests\js\ajax-dynamic-list_rootfile.js" />
+    <Content Include="assests\js\ajax-dynamic-list_wofolder.js" />
+    <Content Include="assests\js\ajaxList.js" />
+    <Content Include="assests\js\ajaxList_rootfile.js" />
+    <Content Include="assests\js\ajaxList_wofolder.js" />
+    <Content Include="assests\js\angular.min.js" />
+    <Content Include="assests\js\CRM\ActivityProducts.js" />
+    <Content Include="assests\js\CRM\crmMembers.js" />
+    <Content Include="assests\js\CRM\crmProducts.js" />
+    <Content Include="assests\js\CRM\SearchPopup.css" />
+    <Content Include="assests\js\CRM\SearchPopup.js" />
+    <Content Include="assests\js\Date\datevalidate.js" />
+    <Content Include="assests\js\dhtmlgoodies_calendar.js" />
+    <Content Include="assests\js\floating-1.12.js" />
+    <Content Include="assests\js\GenericJScript.js" />
+    <Content Include="assests\js\gen_validatorv31.js" />
+    <Content Include="assests\js\init.js" />
+    <Content Include="assests\js\jquery-1.10.2.js" />
+    <Content Include="assests\js\jquery-1.10.2.min.js" />
+    <Content Include="assests\js\jquery-1.12.4.min.js" />
+    <Content Include="assests\js\jquery-1.3.1.js" />
+    <Content Include="assests\js\jquery-1.3.2.js" />
+    <Content Include="assests\js\jquery-1.3.2.min.js" />
+    <Content Include="assests\js\jquery-ui.min.js" />
+    <Content Include="assests\js\jquery.alerts.js" />
+    <Content Include="assests\js\jquery.colorbox-min.js" />
+    <Content Include="assests\js\jquery.colorbox.js" />
+    <Content Include="assests\js\jquery.confirm.min.js" />
+    <Content Include="assests\js\jquery.mask.min.js" />
+    <Content Include="assests\js\jquery.meio.mask.js" />
+    <Content Include="assests\js\jquery.min.js" />
+    <Content Include="assests\js\jquery.sumoselect.min.js" />
+    <Content Include="assests\js\jquery.timeentry.js" />
+    <Content Include="assests\js\jquery.validate.js" />
+    <Content Include="assests\js\jquery.validate.min.js" />
+    <Content Include="assests\js\jquery.validate.unobtrusive.js" />
+    <Content Include="assests\js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="assests\js\jquery3.3.1.min.js" />
+    <Content Include="assests\js\loaddata.js" />
+    <Content Include="assests\js\loaddata1.js" />
+    <Content Include="assests\js\main.js" />
+    <Content Include="assests\js\mobile-detect.js" />
+    <Content Include="assests\js\modalmsg.js" />
+    <Content Include="assests\js\modernizr-2.6.2.js" />
+    <Content Include="assests\js\MultipleSelectionDDLJS.js" />
+    <Content Include="assests\js\PageMethods.js" />
+    <Content Include="assests\js\PMS\gnatt-custom.js" />
+    <Content Include="assests\js\PMS\gnatt.css" />
+    <Content Include="assests\js\PMS\jquery.fn.gantt.min.js" />
+    <Content Include="assests\js\PMS\moment.min.js" />
+    <Content Include="assests\js\PMS\SearchPopup.css" />
+    <Content Include="assests\js\PMS\SearchPopup.js" />
+    <Content Include="assests\js\PMS\SearchPopupResource.js" />
+    <Content Include="assests\js\PMS\TaxDetailsItemlevel.js" />
+    <Content Include="assests\js\progress.js" />
+    <Content Include="assests\js\respond.js" />
+    <Content Include="assests\js\respond.min.js" />
+    <Content Include="assests\js\slimscroll.js" />
+    <Content Include="assests\js\vendor\jquery-1.11.2.min.js" />
+    <Content Include="assests\js\wz_tooltip.js" />
+    <Content Include="assests\Logo For Label Print\logo2.png" />
+    <Content Include="assests\logoshort.png" />
+    <Content Include="assests\pluggins\bootstrap-multiselect\bootstrap-multiselect.min.js" />
+    <Content Include="assests\pluggins\choosen\choosen.min.css" />
+    <Content Include="assests\pluggins\choosen\choosen.min.js" />
+    <Content Include="assests\pluggins\choosen\chosen-sprite.png" />
+    <Content Include="assests\pluggins\choosen\chosen.css" />
+    <Content Include="assests\pluggins\customScroll\customScroll.js" />
+    <Content Include="assests\pluggins\customScroll\custoScroll.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.bootstrap.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.bootstrap.min.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.bootstrap4.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.bootstrap4.min.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.dataTables.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.dataTables.min.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.foundation.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.foundation.min.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.jqueryui.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.jqueryui.min.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.semanticui.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\buttons.semanticui.min.css" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.bootstrap.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.bootstrap.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.bootstrap4.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.bootstrap4.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.colVis.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.colVis.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.flash.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.flash.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.foundation.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.foundation.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.html5.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.html5.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.jqueryui.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.jqueryui.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.print.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.print.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.semanticui.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\buttons.semanticui.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\dataTables.buttons.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\js\dataTables.buttons.min.js" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\swf\flashExport.swf" />
+    <Content Include="assests\pluggins\DataTable\dataTables.fixedColumns.min.js" />
+    <Content Include="assests\pluggins\DataTable\jquery.dataTables.min.css" />
+    <Content Include="assests\pluggins\DataTable\jquery.dataTables.min.js" />
+    <Content Include="assests\pluggins\DataTable\JSZip-2.5.0\jszip.js" />
+    <Content Include="assests\pluggins\DataTable\JSZip-2.5.0\jszip.min.js" />
+    <Content Include="assests\pluggins\DataTable\pdfmake-0.1.36\pdfmake.js" />
+    <Content Include="assests\pluggins\DataTable\pdfmake-0.1.36\pdfmake.min.js" />
+    <Content Include="assests\pluggins\DataTable\pdfmake-0.1.36\vfs_fonts.js" />
+    <Content Include="assests\pluggins\datePicker\bootstrap-datepicker.js" />
+    <Content Include="assests\pluggins\datePicker\datepicker.css" />
+    <Content Include="assests\pluggins\easyui\easyui.css" />
+    <Content Include="assests\pluggins\easyui\icon.css" />
+    <Content Include="assests\pluggins\easyui\images\tree_icons.png" />
+    <Content Include="assests\pluggins\easyui\jquery.easyui.min.js" />
+    <Content Include="assests\pluggins\fileuploads\css\demo.css" />
+    <Content Include="assests\pluggins\fileuploads\css\dropify.css" />
+    <Content Include="assests\pluggins\fileuploads\css\dropify.min.css" />
+    <Content Include="assests\pluggins\fileuploads\fonts\dropify.svg" />
+    <Content Include="assests\pluggins\fileuploads\js\dropify.js" />
+    <Content Include="assests\pluggins\fileuploads\js\dropify.min.js" />
+    <Content Include="assests\pluggins\images\favicon.ico" />
+    <Content Include="assests\pluggins\images\sort_asc.png" />
+    <Content Include="assests\pluggins\images\sort_asc_disabled.png" />
+    <Content Include="assests\pluggins\images\sort_both.png" />
+    <Content Include="assests\pluggins\images\sort_desc.png" />
+    <Content Include="assests\pluggins\images\sort_desc_disabled.png" />
+    <Content Include="assests\pluggins\jquery.ajax-cross-origin.min.js" />
+    <Content Include="assests\pluggins\jquery.alert\images\help.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\important.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\info.gif" />
+    <Content Include="assests\pluggins\jquery.alert\images\title.gif" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.alerts.css" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.alerts.js" />
+    <Content Include="assests\pluggins\jquery.alert\jquery.ui.draggable.js" />
+    <Content Include="assests\pluggins\JqueryConfirm\jquery-confirm.min.css" />
+    <Content Include="assests\pluggins\JqueryConfirm\jquery-confirm.min.js" />
+    <Content Include="assests\pluggins\jsgnatt\jsgantt.css" />
+    <Content Include="assests\pluggins\jsgnatt\jsgantt.js" />
+    <Content Include="assests\pluggins\jsgnatt\JSgnattNew.css" />
+    <Content Include="assests\pluggins\jsgnatt\JSgnattNew.js" />
+    <Content Include="assests\pluggins\progressbar.js" />
+    <Content Include="assests\pluggins\pure-min.css" />
+    <Content Include="assests\pluggins\Select2\select2.min.css" />
+    <Content Include="assests\pluggins\Select2\select2.min.js" />
+    <Content Include="assests\pluggins\selectize.js" />
+    <Content Include="assests\pluggins\smartWizard\jquery.smartWizard.min.js" />
+    <Content Include="assests\pluggins\smartWizard\smart_wizard.min.css" />
+    <Content Include="assests\pluggins\smartWizard\smart_wizard_theme_arrows.min.css" />
+    <Content Include="assests\pluggins\smartWizard\smart_wizard_theme_circles.css" />
+    <Content Include="assests\pluggins\smartWizard\smart_wizard_theme_dots.css" />
+    <Content Include="assests\pluggins\steps\jquery.steps.js" />
+    <Content Include="assests\pluggins\tagsinput\bootstrap-tagsinput.css" />
+    <Content Include="assests\pluggins\tagsinput\bootstrap-tagsinput.js" />
+    <Content Include="assests\pluggins\tether.min.js" />
+    <Content Include="assests\pluggins\ticker\eocjs-newsticker.css" />
+    <Content Include="assests\pluggins\ticker\eocjs-newsticker.js" />
+    <Content Include="assests\pluggins\ticker\jquery.tickerNews.min.js" />
+    <Content Include="assests\pluggins\TimePicker\bootstrap-timepicker.min.css" />
+    <Content Include="assests\pluggins\TimePicker\bootstrap-timepicker.min.js" />
+    <Content Include="assests\pluggins\TimePicker\timepicker.min.css" />
+    <Content Include="assests\pluggins\TimePicker\timepicker.min.js" />
+    <Content Include="assests\svg\speaker.svg" />
+    <Content Include="assests\UserImages\challan.png" />
+    <Content Include="assests\UserImages\delivery %281%29.png" />
+    <Content Include="assests\UserImages\download.jpg" />
+    <Content Include="assests\UserImages\employeeCTC %281%29.PNG" />
+    <Content Include="assests\UserImages\ERROR.jpg" />
+    <Content Include="assests\UserImages\grn %281%29.png" />
+    <Content Include="assests\UserImages\grn.png" />
+    <Content Include="assests\UserImages\nate_munger.png" />
+    <Content Include="assests\UserImages\Small.png" />
+    <Content Include="assests\UserImages\warehouse %281%29.png" />
+    <Content Include="assests\UserImages\warehouse.png" />
+    <Content Include="controls\ctlChatBox.ascx" />
+    <Content Include="fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="images\notify.mp3" />
+    <Content Include="images\notify.wav" />
+    <Content Include="Login.aspx" />
+    <Content Include="MasterPage\css\MasterPage.css" />
+    <Content Include="MasterPage\ERP.Master" />
+    <Content Include="MasterPage\Js\MasterPage.js" />
+    <Content Include="MasterPage\Services\Master.asmx" />
+    <Content Include="MasterPage\UserControls\ucPartialMenu.ascx" />
+    <Content Include="oms\MasterPage\css\MasterPage.css" />
+    <Content Include="oms\MasterPage\Js\MasterPage.js" />
+    <Content Include="packages.config" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="fonts\font-awesome\less\core.less" />
+    <Content Include="fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="fonts\font-awesome\less\icons.less" />
+    <Content Include="fonts\font-awesome\less\larger.less" />
+    <Content Include="fonts\font-awesome\less\list.less" />
+    <Content Include="fonts\font-awesome\less\mixins.less" />
+    <Content Include="fonts\font-awesome\less\path.less" />
+    <Content Include="fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="fonts\font-awesome\less\spinning.less" />
+    <Content Include="fonts\font-awesome\less\stacked.less" />
+    <Content Include="fonts\font-awesome\less\variables.less" />
+    <Content Include="fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="fonts\font-awesome\scss\_core.scss" />
+    <Content Include="fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="fonts\font-awesome\scss\_list.scss" />
+    <Content Include="fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="fonts\font-awesome\scss\_path.scss" />
+    <Content Include="fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="fonts\font-awesome\scss\_spinning.scss" />
+    <Content Include="fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="fonts\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="images\notify.ogg" />
+    <Content Include="Scripts\jquery\Web.config" />
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="assests\bootstrap\css\bootstrap.css.map" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assests\css\custom\style.css.bak" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assests\fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="assests\fonts\font-awesome\less\animated.less" />
+    <Content Include="assests\fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="assests\fonts\font-awesome\less\core.less" />
+    <Content Include="assests\fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="assests\fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="assests\fonts\font-awesome\less\icons.less" />
+    <Content Include="assests\fonts\font-awesome\less\larger.less" />
+    <Content Include="assests\fonts\font-awesome\less\list.less" />
+    <Content Include="assests\fonts\font-awesome\less\mixins.less" />
+    <Content Include="assests\fonts\font-awesome\less\path.less" />
+    <Content Include="assests\fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="assests\fonts\font-awesome\less\screen-reader.less" />
+    <Content Include="assests\fonts\font-awesome\less\stacked.less" />
+    <Content Include="assests\fonts\font-awesome\less\variables.less" />
+    <Content Include="assests\fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_core.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_list.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_path.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="assests\images\webP\activeState.webp" />
+    <Content Include="assests\images\webP\activity.webp" />
+    <Content Include="assests\images\webP\add-adress.webp" />
+    <Content Include="assests\images\webP\Add.webp" />
+    <Content Include="assests\images\webP\arrow_up.webp" />
+    <Content Include="assests\images\webP\attachment.webp" />
+    <Content Include="assests\images\webP\bell.webp" />
+    <Content Include="assests\images\webP\bg2.webp" />
+    <Content Include="assests\images\webP\bgLogin-min.webp" />
+    <Content Include="assests\images\webP\bglogin.webp" />
+    <Content Include="assests\images\webP\bill.webp" />
+    <Content Include="assests\images\webP\cash.webp" />
+    <Content Include="assests\images\webP\cashbudget.webp" />
+    <Content Include="assests\images\webP\change-dark.webp" />
+    <Content Include="assests\images\webP\change.webp" />
+    <Content Include="assests\images\webP\changeIcon.webp" />
+    <Content Include="assests\images\webP\changeP.webp" />
+    <Content Include="assests\images\webP\Closed.webp" />
+    <Content Include="assests\images\webP\closePop.webp" />
+    <Content Include="assests\images\webP\ConvertTo.webp" />
+    <Content Include="assests\images\webP\copy.webp" />
+    <Content Include="assests\images\webP\crossT.webp" />
+    <Content Include="assests\images\webP\crs.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\accounting.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\analytics %281%29.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\analytics %282%29.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\analytics.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\attendance.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\attendanceP.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\book.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\boxes.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\checklist.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\crm.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\customer.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\data-analytics.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\graph.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\inventory.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\kpi.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\mangementNotify.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\project.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\report.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\sale.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\scheduling.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\shopping.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\stadistics.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\stock.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\task.webp" />
+    <Content Include="assests\images\webP\DashboardIcons\worker.webp" />
+    <Content Include="assests\images\webP\Delete.webp" />
+    <Content Include="assests\images\webP\disk.webp" />
+    <Content Include="assests\images\webP\doc.webp" />
+    <Content Include="assests\images\webP\document.webp" />
+    <Content Include="assests\images\webP\download.webp" />
+    <Content Include="assests\images\webP\dropIcons\abt.webp" />
+    <Content Include="assests\images\webP\dropIcons\chngpass.webp" />
+    <Content Include="assests\images\webP\dropIcons\logout.webp" />
+    <Content Include="assests\images\webP\dropIcons\Whtnew.webp" />
+    <Content Include="assests\images\webP\ds1.webp" />
+    <Content Include="assests\images\webP\ds2.webp" />
+    <Content Include="assests\images\webP\ds3.webp" />
+    <Content Include="assests\images\webP\ds4.webp" />
+    <Content Include="assests\images\webP\ds5.webp" />
+    <Content Include="assests\images\webP\ds7.webp" />
+    <Content Include="assests\images\webP\ds8.webp" />
+    <Content Include="assests\images\webP\Edit.webp" />
+    <Content Include="assests\images\webP\email.webp" />
+    <Content Include="assests\images\webP\Entry.webp" />
+    <Content Include="assests\images\webP\EntryW.webp" />
+    <Content Include="assests\images\webP\exclamation-mark.webp" />
+    <Content Include="assests\images\webP\eye.webp" />
+    <Content Include="assests\images\webP\filter.webp" />
+    <Content Include="assests\images\webP\headbg.webp" />
+    <Content Include="assests\images\webP\history.webp" />
+    <Content Include="assests\images\webP\icoaccts.webp" />
+    <Content Include="assests\images\webP\inactiveState.webp" />
+    <Content Include="assests\images\webP\indianrupee.webp" />
+    <Content Include="assests\images\webP\info-back.webp" />
+    <Content Include="assests\images\webP\info.webp" />
+    <Content Include="assests\images\webP\invoiceII.webp" />
+    <Content Include="assests\images\webP\Ledger_Map.webp" />
+    <Content Include="assests\images\webP\logo-mini.webp" />
+    <Content Include="assests\images\webP\logo.webp" />
+    <Content Include="assests\images\webP\logout.webp" />
+    <Content Include="assests\images\webP\maintenance.webp" />
+    <Content Include="assests\images\webP\meeting.webp" />
+    <Content Include="assests\images\webP\Members.webp" />
+    <Content Include="assests\images\webP\nCros.webp" />
+    <Content Include="assests\images\webP\not-verified.webp" />
+    <Content Include="assests\images\webP\notification.webp" />
+    <Content Include="assests\images\webP\Notification1.webp" />
+    <Content Include="assests\images\webP\paper.webp" />
+    <Content Include="assests\images\webP\paperW.webp" />
+    <Content Include="assests\images\webP\picture.webp" />
+    <Content Include="assests\images\webP\plumbing.webp" />
+    <Content Include="assests\images\webP\plumbingW.webp" />
+    <Content Include="assests\images\webP\popupBack.webp" />
+    <Content Include="assests\images\webP\popup_l.webp" />
+    <Content Include="assests\images\webP\pop_notification.webp" />
+    <Content Include="assests\images\webP\profile1.webp" />
+    <Content Include="assests\images\webP\rating.webp" />
+    <Content Include="assests\images\webP\reassign.webp" />
+    <Content Include="assests\images\webP\report.webp" />
+    <Content Include="assests\images\webP\reportW.webp" />
+    <Content Include="assests\images\webP\ruler.webp" />
+    <Content Include="assests\images\webP\rupee.webp" />
+    <Content Include="assests\images\webP\sales.webp" />
+    <Content Include="assests\images\webP\salesman.webp" />
+    <Content Include="assests\images\webP\salesmanW.webp" />
+    <Content Include="assests\images\webP\schedule.webp" />
+    <Content Include="assests\images\webP\search.webp" />
+    <Content Include="assests\images\webP\searchW.webp" />
+    <Content Include="assests\images\webP\Shedule.webp" />
+    <Content Include="assests\images\webP\show.webp" />
+    <Content Include="assests\images\webP\success.webp" />
+    <Content Include="assests\images\webP\tow-truck.webp" />
+    <Content Include="assests\images\webP\transfer.webp" />
+    <Content Include="assests\images\webP\upload.webp" />
+    <Content Include="assests\images\webP\userASign.webp" />
+    <Content Include="assests\images\webP\verified.webp" />
+    <Content Include="assests\images\webP\viewIcon.webp" />
+    <Content Include="assests\images\webP\viewt1.webp" />
+    <Content Include="assests\images\webP\warehouse.webp" />
+    <Content Include="assests\images\webP\Warning.webp" />
+    <Content Include="assests\js\jquery-1.10.2.min.map" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\common.scss" />
+    <Content Include="assests\pluggins\DataTable\Buttons-1.6.2\css\mixins.scss" />
+    <Content Include="assests\pluggins\fileuploads\fonts\dropify.eot" />
+    <Content Include="assests\pluggins\fileuploads\fonts\dropify.ttf" />
+    <Content Include="assests\pluggins\fileuploads\fonts\dropify.woff" />
+    <Content Include="assests\pluggins\proxy.php" />
+    <Content Include="Views\Common\_PartialMenu.cshtml" />
+    <Content Include="Views\Dummy\PartialRender.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\chatboxManager.js" />
+    <Content Include="Scripts\chatboxManager.min.js" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Scripts\jquery.ui.chatbox.js" />
+    <Content Include="Scripts\jquery\colorbox\ColorBox\colorbox.css" />
+    <Content Include="Scripts\jquery\colorbox\ColorBox\images\border.png" />
+    <Content Include="Scripts\jquery\colorbox\ColorBox\images\controls.png" />
+    <Content Include="Scripts\jquery\colorbox\ColorBox\images\loading.gif" />
+    <Content Include="Scripts\jquery\colorbox\ColorBox\images\loading_background.png" />
+    <Content Include="Scripts\jquery\colorbox\ColorBox\images\overlay.png" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-ar.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-bg.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-cs.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-da.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-de.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-es.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-et.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-fa.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-fi.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-fr.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-he.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-hr.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-hu.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-id.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-it.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-ja.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-kr.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-lv.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-nl.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-no.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-pl.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-pt-br.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-ro.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-ru.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-si.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-sk.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-sv.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-tr.js" />
+    <Content Include="Scripts\jquery\colorbox\i18n\jquery.colorbox-zh-CN.js" />
+    <Content Include="Scripts\jquery\colorbox\jquery.colorbox-min.js" />
+    <Content Include="Scripts\jquery\colorbox\jquery.colorbox.js" />
+    <Content Include="Scripts\jquery\fileuploader.css" />
+    <Content Include="Scripts\jquery\fileuploader.js" />
+    <Content Include="Scripts\jquery\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\jquery\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\jquery\jquery-ui\external\jquery\jquery.js" />
+    <Content Include="Scripts\jquery\jquery-ui\images\animated-overlay.gif" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_454545_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_888888_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\jquery\jquery-ui\index.html" />
+    <Content Include="Scripts\jquery\jquery-ui\jquery-ui.css" />
+    <Content Include="Scripts\jquery\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery\jquery-ui\jquery-ui.structure.css" />
+    <Content Include="Scripts\jquery\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="Scripts\jquery\jquery-ui\jquery-ui.theme.css" />
+    <Content Include="Scripts\jquery\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery\jquery.bxslider.min.js" />
+    <Content Include="Scripts\jquery\jquery.dataTables.css" />
+    <Content Include="Scripts\jquery\jquery.dataTables.editable.js" />
+    <Content Include="Scripts\jquery\jquery.dataTables.grouping.js" />
+    <Content Include="Scripts\jquery\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery\jquery.dataTables.rowReordering.js" />
+    <Content Include="Scripts\jquery\jquery.dataTables_themeroller.css" />
+    <Content Include="Scripts\jquery\jquery.DateTimepick.css" />
+    <Content Include="Scripts\jquery\jquery.jeditable.js" />
+    <Content Include="Scripts\jquery\jquery.linq.js" />
+    <Content Include="Scripts\jquery\jquery.tablednd_0_5.js" />
+    <Content Include="Scripts\jquery\jquery.timepicker.css" />
+    <Content Include="Scripts\jquery\jquery.timepicker.js" />
+    <Content Include="Scripts\jquery\jquery.timepicker.min.css" />
+    <Content Include="Scripts\jquery\jquery.timepicker.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\additional-methods.js" />
+    <Content Include="Scripts\jquery\jquery.validation\additional-methods.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\jquery.validate.js" />
+    <Content Include="Scripts\jquery\jquery.validation\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ar.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ar.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_bg.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_bg.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ca.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ca.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_cs.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_cs.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_da.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_da.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_de.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_de.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_el.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_el.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_es.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_es.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_es_AR.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_es_AR.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_et.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_et.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_eu.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_eu.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_fa.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_fa.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_fi.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_fi.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_fr.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_fr.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_gl.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_gl.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_he.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_he.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_hr.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_hr.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_hu.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_hu.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_id.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_id.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_is.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_is.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_it.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_it.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ja.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ja.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ka.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ka.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_kk.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_kk.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ko.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ko.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_lt.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_lt.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_lv.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_lv.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_my.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_my.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_nl.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_nl.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_no.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_no.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_pl.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_pl.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_pt_BR.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_pt_BR.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_pt_PT.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_pt_PT.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ro.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ro.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ru.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_ru.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_si.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_si.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sk.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sk.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sl.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sl.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sr.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sr.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sr_lat.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sr_lat.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sv.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_sv.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_th.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_th.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_tj.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_tj.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_tr.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_tr.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_uk.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_uk.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_vi.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_vi.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_zh.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_zh.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_zh_TW.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\messages_zh_TW.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_de.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_de.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_es_CL.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_es_CL.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_fi.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_fi.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_nl.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_nl.min.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_pt.js" />
+    <Content Include="Scripts\jquery\jquery.validation\localization\methods_pt.min.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\ColorBox\colorbox.css" />
+    <Content Include="Scripts\jquery\jquery\colorbox\ColorBox\images\border.png" />
+    <Content Include="Scripts\jquery\jquery\colorbox\ColorBox\images\controls.png" />
+    <Content Include="Scripts\jquery\jquery\colorbox\ColorBox\images\loading.gif" />
+    <Content Include="Scripts\jquery\jquery\colorbox\ColorBox\images\loading_background.png" />
+    <Content Include="Scripts\jquery\jquery\colorbox\ColorBox\images\overlay.png" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-ar.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-bg.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-cs.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-da.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-de.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-es.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-et.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-fa.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-fi.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-fr.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-he.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-hr.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-hu.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-id.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-it.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-ja.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-kr.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-lv.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-nl.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-no.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-pl.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-pt-br.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-ro.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-ru.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-si.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-sk.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-sv.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-tr.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\i18n\jquery.colorbox-zh-CN.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\jquery.colorbox-min.js" />
+    <Content Include="Scripts\jquery\jquery\colorbox\jquery.colorbox.js" />
+    <Content Include="Scripts\jquery\jquery\fileuploader.css" />
+    <Content Include="Scripts\jquery\jquery\fileuploader.js" />
+    <Content Include="Scripts\jquery\jquery\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery\jquery\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\external\jquery\jquery.js" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\animated-overlay.gif" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_454545_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_888888_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\index.html" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\jquery-ui.css" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\jquery-ui.structure.css" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\jquery-ui.theme.css" />
+    <Content Include="Scripts\jquery\jquery\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery\jquery\jquery.bxslider.min.js" />
+    <Content Include="Scripts\jquery\jquery\jquery.dataTables.css" />
+    <Content Include="Scripts\jquery\jquery\jquery.dataTables.editable.js" />
+    <Content Include="Scripts\jquery\jquery\jquery.dataTables.grouping.js" />
+    <Content Include="Scripts\jquery\jquery\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery\jquery\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery\jquery\jquery.dataTables.rowReordering.js" />
+    <Content Include="Scripts\jquery\jquery\jquery.dataTables_themeroller.css" />
+    <Content Include="Scripts\jquery\jquery\jquery.DateTimepick.css" />
+    <Content Include="Scripts\jquery\jquery\jquery.highlightFade.js" />
+    <Content Include="Scripts\jquery\jquery\jquery.jeditable.js" />
+    <Content Include="Scripts\jquery\jquery\jquery.linq.js" />
+    <Content Include="Scripts\jquery\jquery\lightbox.css" />
+    <Content Include="Scripts\jquery\jquery\lightbox.js" />
+    <Content Include="Scripts\jquery\jquery\lightbox.min.js" />
+    <Content Include="Scripts\jquery\jquery\loading.gif" />
+    <Content Include="Scripts\jquery\jquery\screen.css" />
+    <Content Include="Scripts\jquery\jquery\ZeroClipboard.js" />
+    <Content Include="Scripts\jquery\jquery\ZeroClipboard.min.js" />
+    <Content Include="Scripts\jquery\jquery\ZeroClipboard.swf" />
+    <Content Include="Scripts\jquery\lightbox.css" />
+    <Content Include="Scripts\jquery\lightbox.js" />
+    <Content Include="Scripts\jquery\lightbox.min.js" />
+    <Content Include="Scripts\jquery\linq.js" />
+    <Content Include="Scripts\jquery\loading.gif" />
+    <Content Include="Scripts\jquery\screen.css" />
+    <Content Include="Scripts\jquery\Validation.js" />
+    <Content Include="Scripts\jquery\ZeroClipboard.js" />
+    <Content Include="Scripts\jquery\ZeroClipboard.min.js" />
+    <Content Include="Scripts\jquery\ZeroClipboard.swf" />
+    <Content Include="StartChat.aspx" />
+    <Content Include="Styles\bootstrap.css" />
+    <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\jquery.ui.chatbox.css" />
+    <Content Include="Styles\style.css" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChatHelper\ChatHub.cs" />
+    <Compile Include="ChatHelper\MessageDetail.cs" />
+    <Compile Include="ChatHelper\Startup.cs" />
+    <Compile Include="ChatHelper\UserDetail.cs" />
+    <Compile Include="controls\CommonBL.cs" />
+    <Compile Include="controls\CommonController.cs" />
+    <Compile Include="controls\CommonEL.cs" />
+    <Compile Include="controls\ctlChatBox.ascx.cs">
+      <DependentUpon>ctlChatBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\ctlChatBox.ascx.designer.cs">
+      <DependentUpon>ctlChatBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\DBEngine.cs" />
+    <Compile Include="controls\DummyController.cs" />
+    <Compile Include="controls\Encryption.cs" />
+    <Compile Include="controls\GenericMethod.cs" />
+    <Compile Include="controls\GenericStoreProcedure.cs" />
+    <Compile Include="controls\GenericXML.cs" />
+    <Compile Include="controls\ProcedureExecute.cs" />
+    <Compile Include="controls\ReadWriteMasterDatabaseBL.cs" />
+    <Compile Include="controls\SQLProcedures.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPage\ERP.Master.cs">
+      <DependentUpon>ERP.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPage\ERP.Master.designer.cs">
+      <DependentUpon>ERP.Master</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPage\Services\Master.asmx.cs">
+      <DependentUpon>Master.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MasterPage\UserControls\ucPartialMenu.ascx.cs">
+      <DependentUpon>ucPartialMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPage\UserControls\ucPartialMenu.ascx.designer.cs">
+      <DependentUpon>ucPartialMenu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MVCUtility.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartChat.aspx.cs">
+      <DependentUpon>StartChat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StartChat.aspx.designer.cs">
+      <DependentUpon>StartChat.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
+      <Project>{ea505340-6c3f-4a45-8876-61c0c8a17a5f}</Project>
+      <Name>BusinessLogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{e0403ce7-71f7-4d02-85d1-1ee7125c1e75}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityLayer\EntityLayer.csproj">
+      <Project>{d31c544e-8eb6-4a69-b0f2-9c46ff7fc533}</Project>
+      <Name>EntityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UtilityLayer\UtilityLayer.csproj">
+      <Project>{9f45f4c2-a1b9-4aea-9f77-72b9f864b593}</Project>
+      <Name>UtilityLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49703</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49703/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
