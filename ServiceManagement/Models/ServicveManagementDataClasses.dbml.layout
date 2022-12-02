@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 13.75, 8.5" name="ServicveManagementDataClasses">
+  <DataContextMoniker Name="/ServicveManagementDataClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="6debe4a6-8f89-4d12-85f1-d50ba746a1fd" isExpanded="false" absoluteBounds="0.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_ReceiptChallanList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a61ab7c4-a395-4f94-8972-503c2ea3410d" absoluteBounds="0.51499999999999968, 0.96, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c81c855f-b54b-4ac2-ab53-bdb395848d9a" isExpanded="false" absoluteBounds="2.75, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_ReceiptChallanReportList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="04b5858d-ef3a-4f4c-9b15-37b1fc8967df" absoluteBounds="2.7649999999999997, 0.96, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0445b479-3217-4425-9b07-3b20b9db8d41" isExpanded="false" absoluteBounds="5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STBReceivingReportList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cb334af1-e55d-470e-be24-54459e989c03" absoluteBounds="5.015, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="12ac1214-bd95-4f60-9b31-3532faed4991" isExpanded="false" absoluteBounds="7.125, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STB_SetTopBoxList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d06ba4da-25ce-476e-b28e-4d15d80e1703" absoluteBounds="7.14, 0.96, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="69dd3cec-26ff-42e7-ac31-b8bd3ee4cf52" isExpanded="false" absoluteBounds="11.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STB_STBUpgradeSchemeList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7c3b971c-b9eb-4b71-8b7e-b8c8dd2b5383" absoluteBounds="11.515, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ee8879ac-0e8b-4058-b224-8f36151759ae" isExpanded="false" absoluteBounds="11.5, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STBReturnReqDispatchList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="59e6aaee-45a4-4f04-b823-469322fd4de4" absoluteBounds="11.515, 1.585, 1.9700000000000002, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dac95338-65f1-43ad-8695-bb36600b2ad9" isExpanded="false" absoluteBounds="0.5, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STBSchemeReceivedReportList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8a646ecc-bb45-4f76-b130-af0c41b6d669" absoluteBounds="0.51499999999999968, 2.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="433bcce6-ea19-4d37-ad58-3413740c6c17" isExpanded="false" absoluteBounds="2.75, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STBSchemeReceivedApprovalList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aa2f3e75-168d-472a-a9fc-8e4d93000d4e" absoluteBounds="2.7649999999999997, 2.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f4476139-5df9-4ac1-90b9-451b9a14f85c" isExpanded="false" absoluteBounds="5, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STBSchemePendingRequisitionList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ab09e62f-14df-4454-b010-c8e358c32308" absoluteBounds="5.015, 2.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="03a0059f-ae88-4f08-b8e9-785d249d9275" isExpanded="false" absoluteBounds="0.5, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STB_MoneyReceiptList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="becf8fb3-09cf-4cee-af4d-26a88e0e1757" absoluteBounds="0.51499999999999968, 1.585, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="61af25b6-6e8b-479f-82c1-76206529c17f" isExpanded="false" absoluteBounds="2.75, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STB_WalletRechargeList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="59c37e61-c466-4fdc-ba4a-427b8c6ca741" absoluteBounds="2.7649999999999997, 1.585, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d7c4fe5b-1249-4b37-bc82-4d198ed5ef44" isExpanded="false" absoluteBounds="5, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STB_ApprovalList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="10368491-69a4-4d8c-8836-33ababfcad54" absoluteBounds="5.015, 1.585, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1ce7a689-fbfc-4074-b41b-e3cafb7c0e2b" isExpanded="false" absoluteBounds="7.125, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STB_STBRequisitionList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="89a2036f-fad6-43c7-abaf-59ff9d187553" absoluteBounds="7.14, 1.585, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e2d366e0-5514-4a36-8855-8d6eaf8fd901" isExpanded="false" absoluteBounds="9.375, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STB_ReturnRequisitionList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aff56bcd-7127-478a-86fe-3ea13c7ded8d" absoluteBounds="9.39, 1.585, 1.9700000000000002, 5.6338297526041661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="303265a3-71ed-4224-98c4-6a932e36dc31" isExpanded="false" absoluteBounds="9.375, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/ServicveManagementDataClassesDataContext/V_STBReqInventoryList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d3d5c11f-362e-4da8-ac03-482aa81c5f31" absoluteBounds="9.39, 0.96, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

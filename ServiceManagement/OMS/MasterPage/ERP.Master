@@ -1,0 +1,863 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ERP.master.cs" Inherits="ServiceManagement.OMS.MasterPage.ERP" %>
+
+<%@ Register Src="~/OMS/MasterPage/UserControls/ucPartialMenu.ascx" TagPrefix="ucMenu" TagName="ucpartialMenu" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Welcome to BreezeERP</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <%--JAlert Start--%>
+
+
+
+    <script type="text/javascript" src="/assests/js/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        window.jQuery || document.write("<script src='/assests/js/jquery.min.js'><\/script>")
+    </script>
+
+    <link href="/assests/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+
+    <%--JAlert End--%>
+
+    <%--<link href="/assests/css/custom/jquery.alerts.css" rel="stylesheet" />--%>
+    <%--<link href="../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />--%>
+
+    <%--<link rel="stylesheet" href="/assests/bootstrap/css/bootstrap.min.css" />--%>
+    <link rel="stylesheet" href="~/assests/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assests/bootstrap/css/bootstrap-theme.min.css" />
+    <link href="/assests/pluggins/choosen/chosen.css" rel="stylesheet" />
+    <%--<link rel="stylesheet" href="/assests/css/custom/main.css?v=0.1" />--%>
+
+    <link rel="stylesheet" href="/assests/css/custom/newtheme.css?v=0.1" />
+    <link rel="stylesheet" href="/assests/css/custom/PMSStyles.css?v=0.1" />
+    <link rel="stylesheet" type="text/css" href="/assests/fonts/font-awesome/css/font-awesome.min.css" />
+    <link href="/assests/pluggins/customScroll/custoScroll.css" rel="stylesheet" />
+    <link href="/OMS/MasterPage/css/MasterPage.css?v=0.1" rel="stylesheet" />
+
+  <%--  <script src="//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script>--%>
+    <%--<script src="../../assests/js/jquery-ui.min.js"></script>--%>
+    <%--<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"></script>--%>
+    <%--<script type="text/javascript">
+
+        window.jQuery || document.write("<script src='/assests/js/jquery-ui.min.js'><\/script>")
+    </script>--%>
+    <script type="text/javascript" src="/assests/js/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //About section
+            $('#showAbout').click(function () {
+                $(".AboutPop").show();
+            });
+            $('.CrossIconAbout, #CRSAbtButton').click(function () {
+                $(".AboutPop").hide();
+            });
+
+
+            $(".bubble").draggable();
+
+            var isMoving = false;
+            var isdragging = false;
+            var chatMode = false;
+
+            function closeChat() {
+                $(".bubble").css("top", "50%").css("right", "-15px").css("transition", "all 0.5s");
+                $(".chat").addClass("bounceout").removeClass("bouncein");
+                $(".chat").replaceWith($(".chat").clone(true));
+            }
+            function closeChatonSht() {
+                $(".bubble").css("top", "50%").css("right", "-15px").css("transition", "all 0.5s");
+                $(".chat").removeClass("bouncein bounceout");
+
+            }
+
+            $(".bubble").on("click", function () {
+
+                var pos = $(".chat_container").offset();
+
+                if (chatMode) {
+                    closeChat();
+                    chatMode = false;
+                } else {
+                    $(".chat").addClass("bouncein").removeClass("bounceout");
+                    $(".bubble").css("top", (pos.top + 30) + "px").css("left", (pos.left - 70) + "px").css("transition", "all 0.3s");
+                    $(".chat").replaceWith($(".chat").clone(true));
+                    chatMode = true;
+                }
+            });
+
+            $(".bubble").mousedown(function () {
+                isdragging = false;
+            });
+
+            $(".bubble").mousemove(function () {
+                isdragging = true;
+                $(this).css("transition", "all 0s");
+            });
+
+            $(".bubble").mouseup(function (e) {
+                e.preventDefault();
+                var lastY = window.event.clientY;
+                var lastX = window.event.clientX;
+                var swidth = $(window).width();
+
+                if (isdragging) {
+
+                    if (chatMode) {
+                        closeChat();
+                        chatMode = false;
+                    }
+
+                    if (lastX > (swidth / 2)) {
+                        $(this).css("top", lastY).css("left", (swidth - 55) + "px").css("transition", "all 0.4s");
+                    } else {
+                        $(this).css("top", lastY).css("left", "-15px").css("transition", "all 0.4s");
+                    }
+                }
+
+
+            });
+            function menuScrollerInit() {
+                var SideNavHeight = $('.sidenav').height();
+                var LogoutBtnHeight = $('.pwred').outerHeight();
+                var maxMenuH = SideNavHeight - LogoutBtnHeight;
+                //alert(maxMenuH);
+                $('.sidenav > ul').css({ 'max-height': maxMenuH + 'px' });
+            }
+            menuScrollerInit();
+            $(window).resize(function () {
+                menuScrollerInit();
+            });
+
+            $(window).load(function () {
+                if (localStorage.getItem('LCmini-navbarcss')) {
+                    if (localStorage.getItem('LCmini-navbarcss') == "Yes")
+                        $("body").addClass("mini-navbar");
+                    else
+                        $("body").removeClass("mini-navbar");
+                }
+            });
+
+            //$(".sidenav > ul").mCustomScrollbar({
+            //    theme:"minimal-dark"
+            //});
+            // shortcut key show 
+            document.addEventListener("keydown", function (event) {
+
+                //console.log(event);
+                if (event.keyCode == 81 && event.ctrlKey == true) {
+                    document.getElementById("bubblePin").classList.toggle("hide");
+                    if (chatMode) {
+                        chatMode = false;
+                        closeChatonSht();
+                    }
+                }
+
+                var baseurl = window.location.origin;
+
+                if (event.keyCode == 49 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/Customer_Ledger.aspx?&From=Hotkey";
+                    window.open(url);
+
+                }
+                else if (event.keyCode == 50 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/Vendor_Ledger.aspx?&From=Hotkey";
+                    window.open(url);
+
+                }
+                else if (event.keyCode == 51 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/GeneralLedgerRegister.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+                else if (event.keyCode == 52 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/CashBankReport.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+                else if (event.keyCode == 53 && event.altKey == true) {
+                    var url = baseurl + "/Reports/GridReports/StockLedger.aspx?&From=Hotkey";
+                    window.open(url);
+                }
+
+            });
+            function quickToggleTilesCalculator() {
+                document.getElementById("bubblePin").classList.toggle("hide");
+                if (chatMode) {
+                    chatMode = false;
+                    closeChatonSht();
+                }
+            }
+        });
+
+        //document.onkeydown = function (e) {
+        //    if (event.altKey == true && event.keyCode ==83) { //run code for Alt + n -- ie, Save & New  
+        //        alert("alt+" + event.key);
+        //        //  Save_ButtonClick();
+        //    }
+        //    //else {
+        //    //    alert("else+" + event.key);
+        //    //}
+        //    //alert(event.altKey);
+        //    //alert(event.key + "---" + event.keyCode + "  " + event.code);
+        //}
+
+        //document.onkeypress = function (e) {
+        //    alert("alt+" + event.key);
+        //}
+
+
+        //Mousetrap.bind('Alt+s', function (e) {
+        //    debugger;
+        //    alert("alt+s");
+        //});
+    </script>
+
+    <script type="text/javascript" src="/assests/js/modalmsg.js"></script>
+    <script src="/OMS/MasterPage/Js/MasterPage.js?v=0.1" type="text/javascript"></script>
+
+    <%--confierm plugin--%>
+    <script src="/assests/js/jquery.confirm.min.js"></script>
+    <meta name="theme-color" content="#0C78B1" />
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#0C78B1" />
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+    <style>
+        .HelpMasterClass {
+            font-size: 24px;
+            display: inline-block;
+            margin: 16px;
+            color: white;
+            cursor: pointer;
+        }
+        /* Calculator part */
+        .chat_container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            right: 0;
+            left: 0;
+            width: 60%;
+            height: 70%;
+            z-index: 9999;
+        }
+
+            .chat_container .chat {
+                position: absolute;
+                width: 93%;
+                height: 98%;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                left: 0;
+                right: 0;
+                background: white;
+                border-radius: 10px;
+                transform: scale(0);
+                box-shadow: 0 5px 60px 10px rgba(0, 0, 0, 0.12);
+            }
+
+                .chat_container .chat::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-left: 15px solid rgba(0, 0, 0, 0);
+                    border-bottom: 15px solid rgba(0, 0, 0, 0);
+                    border-top: 15px solid rgba(0, 0, 0, 0);
+                    border-right: 15px solid white;
+                    left: -25px;
+                    top: 7px;
+                }
+
+                .chat_container .chat .textbox {
+                    position: absolute;
+                    width: 100%;
+                    height: 50px;
+                    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.07);
+                    bottom: 0;
+                }
+
+                    .chat_container .chat .textbox .input {
+                        width: 82%;
+                        height: 35px;
+                        display: block;
+                        position: relative;
+                        float: left;
+                        margin-left: 10px;
+                        border: none;
+                        padding: 3px;
+                        border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+                    }
+
+                    .chat_container .chat .textbox .send {
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        width: 50px;
+                        height: 50px;
+                        text-align: center;
+                        line-height: 50px;
+                        font-size: 40px;
+                        color: #1E88E5;
+                    }
+
+        .bubble {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            position: fixed;
+            top: 50%;
+            right: -15px;
+            text-align: center;
+            box-shadow: 0 0px 20px rgba(0, 0, 0, 0.19), 0 0px 6px rgba(0, 0, 0, 0.23);
+            
+            cursor: pointer;
+        }
+
+            .bubble > img {
+                max-width: 38px;
+                margin: 15px 0 7px 1px;
+            }
+
+            .bubble:hover {
+                transition: all 0.3s;
+                transform: scale(1.1);
+            }
+
+        .bubble__span {
+            position: absolute;
+            left: 70px;
+            background: #333;
+            border-radius: 10px;
+            padding: 5px;
+            color: white;
+            font-family: "Roboto";
+            opacity: 0;
+        }
+
+        .bubble:active {
+            transform: scale(1.2);
+            transition: all 0.3s;
+        }
+
+        .chat-thread {
+            padding: 20px;
+            margin: 10px;
+            list-style: none;
+            overflow-x: hidden;
+        }
+
+            .chat-thread li {
+                position: relative;
+                clear: both;
+                display: inline-block;
+                padding: 10px 20px 10px 15px;
+                margin-bottom: 10px;
+                font-family: "Roboto";
+                font: 14px;
+                border-radius: 25px;
+            }
+
+            .chat-thread .message-mit {
+                background: #1E88E5;
+                float: right;
+                color: white;
+            }
+
+            .chat-thread .message-dest {
+                background: #CFD8DC;
+                float: left;
+            }
+
+            .chat-thread .loading .material-icons {
+                color: rgba(200, 200, 200, 0.8);
+                font-size: 8px;
+                padding: 1px;
+                margin-bottom: 5px;
+            }
+
+                .chat-thread .loading .material-icons:nth-child(1) {
+                    animation: writing 1.2s infinite alternate;
+                }
+
+                .chat-thread .loading .material-icons:nth-child(2) {
+                    animation: writing 1.2s infinite 0.2s alternate;
+                }
+
+                .chat-thread .loading .material-icons:nth-child(3) {
+                    animation: writing 1.2s infinite 0.3s alternate;
+                }
+
+        .bouncein {
+            animation: bounce 0.4s ease-out forwards 0.2s;
+        }
+
+        .bounceout {
+            animation: bounce 0.25s ease-out forwards reverse;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: scale(0);
+            }
+
+            60% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes writing {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(5px);
+            }
+
+            100% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .Calcheader {
+            font-size: 18px;
+            padding: 15px 25px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+            .Calcheader > span {
+                font-weight: 300;
+                color: #0083c9;
+            }
+
+        .tilesContent {
+            padding: 15px 25px;
+        }
+
+        .textbox {
+            padding: 10px 15px;
+        }
+
+        .AboutPop {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.62);
+            display: none;
+            z-index: 9999;
+        }
+
+        .AboutBox {
+            width: 400px;
+            margin: auto;
+            background: #fff;
+            margin-top: 152px;
+            padding: 6px 15px 15px 15px;
+            border-radius: 4px;
+            border: 3px solid #309dff;
+            box-shadow: 0px 0px 0px 1px #094780;
+        }
+
+        .AbtImage {
+            -webkit-transform: translateX(-17px);
+            -moz-transform: translateX(-17px);
+            -o-transform: translateX(-17px);
+            transform: translateX(-17px);
+            margin-bottom: 14px;
+        }
+
+        .abtContent {
+            padding: 20px 0 0 0;
+        }
+
+        .AboutPop .CrossIconAbout {
+            position: absolute;
+            right: 7px;
+            top: 4px;
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+            .AboutPop .CrossIconAbout:hover {
+                color: #094e8c;
+            }
+
+        #CRSAbtButton {
+            border: 1px solid #ccc;
+            background: #e6e6e6;
+            padding: 4px 14px;
+            float: right;
+        }
+
+            #CRSAbtButton:hover {
+                border: 1px solid #adabab;
+                background: #d2d2d2;
+            }
+
+        .AboutBoxHeader {
+            font-size: 16px;
+            border-bottom: 1px solid #f1eded;
+            padding-bottom: 5px;
+        }
+        /*End of Calculator*/
+        /*Menu design changes*/
+        .fixedMenuNew {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 10;
+            background: #272b3c;
+            width: 167px;
+            -webkit-transition: all 0.03s ease-in;
+            -moz-transition: all 0.03s ease-in;
+            transition: all 0.03s ease-in;
+        }
+
+        .mini-navbar .fixedMenuNew {
+            width: 51px;
+        }
+
+        #header {
+            margin-left: 167px;
+        }
+
+        .mini-navbar #header {
+            margin-left: 50px;
+        }
+
+        .fixedMenuNew .leftLogowrap {
+            height: 60px;
+            float: none !important;
+        }
+        /*.fixedMenuNew .sidebar {
+            position:static;
+        }*/
+
+        /*hover on mini*/
+        .mini-navbar .fixedMenuNew:hover .sidebar {
+            width: 167px !important;
+        }
+
+            .mini-navbar .fixedMenuNew:hover .sidebar .navfltext {
+                width: auto;
+                opacity: 1;
+                display: inline-block;
+            }
+
+        .mini-navbar .fixedMenuNew:hover .bigLogo {
+            display: block;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .miniLogo {
+            display: none;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav li > a {
+            font-size: inherit;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .leftLogowrap {
+            width: 100%;
+        }
+
+        .mini-navbar .fixedMenuNew:hover {
+            width: 167px;
+        }
+
+        .mini-navbar .sidebar .navfltext {
+            display: none;
+            width: 0px;
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-in;
+            -moz-transition: all 0.3s ease-in;
+            transition: all 0.3s ease-in;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav > ul > li > a .dpvsl {
+            display: block;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .pwred {
+            display: block;
+        }
+
+        .fixedMenuNew .sidenav > ul > li:last-child {
+            margin-bottom: 20px;
+        }
+
+        .mini-navbar .fixedMenuNew:hover .sidenav ul li {
+            font-size: 12px;
+        }
+
+        .mini-navbar #header {
+            width: calc(100% - 50px);
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            var WindowHeight = $(window).height();
+            var SetmenuHeight = WindowHeight - 120;
+
+            $('.fixedMenuNew .sidenav > ul').css({ 'max-height': SetmenuHeight });
+            //$('.mini-navbar .fixedMenuNew').mouseover(function () {
+            //    setTimeout(function () {
+            //        $('.fixedMenuNew .sidebar .navfltext').css({ 'width': 'auto', 'opacity': '1', 'display': 'inline-block' })
+            //    }, 1000);
+
+            //});
+        });
+        $(window).resize(function () {
+            var WindowHeight = $(window).height();
+            var SetmenuHeight = WindowHeight - 120;
+            $('.fixedMenuNew .sidenav > ul').css({ 'max-height': SetmenuHeight });
+        })
+    </script>
+    <link href="/assests/css/RES.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body class="<%=styleMenuCloseOpen%>" onload="noBack();" onpageshow="if (event.persisted) noBack();">
+    
+
+    <!-- Tiles Calculator Part-->
+    <div class="chat_container hide" id="bubblePin">
+        <div class="bubble " title="Tiles Calculator">
+            <%--<img src="../../../assests/images/calculator.png" />--%>
+        </div>
+        <div class="chat">
+            <div class="Calcheader">Tiles <span>Calculator</span></div>
+            <div class="tilesContent">
+                <p>Hi, Your TIles Calculator goes here</p>
+            </div>
+            <div class="textbox clearfix">
+                <button class="btn btn-primary pull-right ">Calculate</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Tiles calculator End -->
+
+    <div class="overlayEf hide"></div>
+    <section id="sftVer" class="hide">
+
+        <div class="insd">
+            <%--<img class="" src="/assests/images/l.jpg" alt="" >--%>
+            <div style="font-size: 20px; font-weight: 500; padding: 9px;">Breeze ERP <span style="color: #ccc; display: block; font-size: 10px;">Version - 1.0</span></div>
+            <div>Software version Area</div>
+            <button class="hide">Upgrade </button>
+        </div>
+        <div style="padding-top: 5px">
+            <a href="" id="cross"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+        </div>
+    </section>
+
+    <form id="form1" class="jpopup" runat="server">
+
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+        </asp:ScriptManager>
+
+        <%--About section--%>
+        <div class="AboutPop">
+            <div class="AboutBox relative">
+                <div class="AboutBoxHeader">About BreezeERP</div>
+
+                <span class="CrossIconAbout"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                <div class="abtContent clearfix">
+                    <div>
+                        <img src="../../../assests/images/logo.png" style="width: 170px;" class="AbtImage" />
+                    </div>
+                    <div class="aboutText">
+                        <p>Version : <b id="lblVersion" runat="server"></b></p>
+                        <p><i class="fa fa-copyright" aria-hidden="true"></i>Copyright 2019 Indus Net Technologies </p>
+                        <p>Application best viewed at 1280 x 720 resolution in Google Chrome <b>59 or above</b> </p>
+                        <button type="button" id="CRSAbtButton">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--About section--%>
+        <div class="fixedMenuNew">
+            <div class="leftLogowrap transit">
+                <dxe:ASPxImage runat="server" ShowLoadingImage="true" ID="bigLogo" CssClass="img-responsive bigLogo"></dxe:ASPxImage>
+                <dxe:ASPxImage runat="server" ShowLoadingImage="true" ID="miniLogo" CssClass="img-responsive miniLogo"></dxe:ASPxImage>
+            </div>
+            <div class="sidebar transit">
+                <%--   <nav class="sidenav">
+                    <% ERP.OMS.MVCUtility.RenderAction("Common", "_PartialMenu", new { }); %>
+                    <div class="text-center pwred"> <%=PageFooterTag3 %>  </div>
+                </nav>--%>
+                <ucMenu:ucpartialMenu runat="server" ID="_PartialMenu" />
+
+            </div>
+            <div class="text-center pwred">
+                <div class="divNav">
+                    <a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx" class="pas" data-toggle="tooltip" title="" data-original-title="change password"><i class="fa fa-key"></i></a>
+                    <a href="/serviceManagement/SignOff.aspx" class="logout" data-toggle="tooltip" title="" data-original-title="logout"><i class="fa fa-power-off"></i></a>
+                </div>
+                <div>Powered by BreezeERP </div>
+            </div>
+        </div>
+
+
+
+        <div class="mainWraper">
+            <header id="header" class="clearfix transit">
+
+                <div class="rightNav">
+                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a href="#" class="btn navbar-minimalize"><i class="fa fa-bars"></i></a>
+                            <span class="text"></span>
+
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right user-dropdown-custom">
+
+                            <li>
+                                <span id="btnHelpPopup" style="display: none" onclick="ShowHelpPopup()" class="HelpMasterClass" data-toggle="tooltip" data-placement="bottom" title="Help">
+                                    <i class="fa fa-question-circle"></i>
+
+                                </span>
+                            </li>
+
+
+                            <li>
+
+
+
+
+                                <div class="aaadv" style="margin-right: 10px; max-width: 700px; height: 50px; display: block;">
+                                    <table>
+                                        <tr>
+
+                                            <td>
+                                                <div class="cmpName">
+                                                    <asp:Label ID="lblSCompName" runat="server"></asp:Label>
+                                                </div>
+                                                <div class="cmpYear">
+                                                    FY :
+                                                <asp:Label ID="lblFinYear" runat="server"></asp:Label>
+                                                    <span style="margin-left: 7px; margin-right: 7px;">|</span>
+                                                    <asp:Label ID="lblCurrency" runat="server"></asp:Label>
+                                                </div>
+
+
+                                            </td>
+
+
+
+                                        </tr>
+                                    </table>
+                                </div>
+                                <%--</a>--%>
+
+                           
+
+
+
+                            </li>
+                            <li class="dropdown usr">
+                                <a class="dropdown-toggle user" data-toggle="dropdown" href="#" aria-expanded="true" style="padding: 9px 15px 6px 0px;">
+                                    <div class="avtarHolder" style="margin-right: 24px; margin-top: 3px; border-radius: 0 !important;">
+                                        <img src="/assests/images/profile1.png" />
+                                    </div>
+                                    <span class="label hidden-xs">Welcome,
+                                    <asp:Label runat="server" ID="LogedUser"></asp:Label>
+                                        <i class="fa fa-caret-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu userAccsess">
+                                    <li>
+                                        <ul class="submenu">
+                                            <li><a href="/OMS/Management/WhatsNewAddEdit.aspx" target="_blank">
+                                                <i class="fa fa-lightbulb-o" style="font-size: 16px; margin-right: 5px;"></i>
+                                                <span>What's New</span></a></li>
+                                            <li class=""><a href="#" id="showAbout">
+                                                <i class="fa fa-info-circle" style="font-size: 16px; margin-right: 5px;"></i>
+                                                <span>About </span></a></li>
+                                            <li><a href="/OMS/Management/ToolsUtilities/frmchangepassword.aspx">
+                                                <img src="/assests/images/change.png" class="iconSubMenu">
+                                                <span>Change Password</span></a></li>
+                                            <li class="noBod"><a href="/serviceManagement/SignOff.aspx">
+                                                <img src="/assests/images/logout.png" class="iconSubMenu">
+                                                <span>Logout</span></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+                <!-- <div class="rightNav">
+            
+                
+
+          <div class="searhHead">
+            <a href="" class="btn navbarMinialize"><i class="icon-bars"></i></a>
+            <form class="srcfield"><span class="text">Global Search</span></form>
+          </div>
+        </div> -->
+
+            </header>
+            <section class="rightSide transit clearfix" style="min-height: 415px;">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </section>
+        </div>
+        <asp:HiddenField ID="hiddnversion" runat="server" ClientIDMode="Static" />
+
+        <%--<asp:Label ID="lbltext" runat="server"></asp:Label>--%>
+        <dxe:ASPxPopupControl ID="ASPXPopupControl11" runat="server" ContentUrl="../management/frm_selectCompFinYrSett.aspx?id=1"
+            CloseAction="CloseButton" Top="120" Left="500" ClientInstanceName="popup11"
+            Width="450px" HeaderText="Financial Year" AllowResize="false" ContentStyle-Wrap="True" ResizingMode="Live" Modal="true">
+            <ContentCollection>
+                <dxe:PopupControlContentControl runat="server">
+                </dxe:PopupControlContentControl>
+            </ContentCollection>
+            <HeaderStyle BackColor="Blue" Font-Bold="True" ForeColor="White" />
+        </dxe:ASPxPopupControl>
+
+
+        <script type="text/javascript" src="/assests/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assests/js/main.js"></script>
+    </form>
+    <script type="text/javascript" src="/assests/js/init.js"></script>
+    <script type="text/javascript" src="/assests/js/ajax-dynamic-list.js"></script>
+    <script src="/assests/pluggins/customScroll/customScroll.js"></script>
+
+    <script type="text/javascript">
+
+        //if (typeof (grid) !== 'undefined') grid.PerformCallback();
+
+    </script>
+
+    <%--Help Popup Div Started Here--%>
+
+    <div id="HelpDivid" class="helpDivClass" style="display: none">
+        <span class="close-it pull-right" onclick="CloseHelpPopup()"><i class="fa fa-close"></i></span>
+        <div id="helptextpart"></div>
+    </div>
+
+    <%--Help Popup Div End Here--%>
+</body>
+
+</html>
