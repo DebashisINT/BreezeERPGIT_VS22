@@ -1,0 +1,65 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "PeriodgridView";
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.ClientSideEvents.EndCallback = "OnEndCallback";
+    settings.CallbackRouteValues = new { Controller = "PeriodGeneration", Action = "PartialPeriodGeneration" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsPager.PageSize = 20;
+    settings.SettingsBehavior.AllowSort = false;
+
+    settings.KeyFieldName = "YYMM";
+    settings.Columns.Add("IsExpire", " ", MVCxGridViewColumnType.CheckBox).Width = System.Web.UI.WebControls.Unit.Pixel(100);
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "YYMM";
+        column.Caption = "YYMM";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "IsActive";
+        column.Caption = "IsActive";
+        column.CellStyle.CssClass = "abc";
+        column.HeaderStyle.CssClass = "abc";
+    });
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "IsActive";
+    //    column.Caption = "IsActive";
+        
+    //});
+  
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Period";
+        column.Caption = "Period";
+        column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+    });
+
+    settings.HtmlRowPrepared = (s, e) =>
+    {
+        if (Convert.ToBoolean(e.GetValue("IsExpire")) == true)
+        {
+            e.Row.ForeColor = System.Drawing.Color.Gray;
+        }
+
+        else if (Convert.ToBoolean(e.GetValue("IsActive")) == true)
+        {
+            e.Row.ForeColor = System.Drawing.Color.Green;
+            e.Row.Font.Bold = true;
+        }
+        else
+        {
+            
+        }
+    };
+    
+}).Bind(Model).GetHtml()

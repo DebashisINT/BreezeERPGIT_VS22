@@ -1,0 +1,216 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridBOMList";
+
+    settings.CallbackRouteValues = new { Action = "GetBOMEntryList", Controller = "PMSInvoice" };
+
+    settings.KeyFieldName = "DetailsID";
+    settings.ClientSideEvents.EndCallback = "OnBOMListEndCallback";
+    settings.ClientSideEvents.BeginCallback = "OnBOMListBeginCallback";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Quotation", Action = "GetBOMEntryList" };
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+    settings.Settings.VerticalScrollableHeight = 230;
+
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.SettingsBehavior.ColumnResizeMode = DevExpress.Web.ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = true;
+
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BOMNo";
+        x.Caption = "Document No";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BOMType";
+        x.Caption = "Document Type";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "dtBOMDate";
+        x.Caption = "Document Date";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "RevisionNo";
+        x.Caption = "Revision No";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "RevisionDate";
+        x.Caption = "Revision Date";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "FinishedItem";
+        x.Caption = "Finished Item";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Unit";
+        x.Caption = "Unit";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(160);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Warehouse";
+        x.Caption = "Warehouse";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(220);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CreatedBy";
+        x.Caption = "Entered By";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CreateDate";
+        x.Caption = "Entered On";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ModifyBy";
+        x.Caption = "Modified By";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ModifyDate";
+        x.Caption = "Modified On";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "Actions";
+        //x.VisibleIndex = 16;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        x.SetDataItemTemplateContent(c =>
+        {
+            string EnqRights = "";
+            if (ViewBag.CanEdit)
+            {
+                EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"OpenBOMData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "')\"><img src='/assests/images/edit.png' title='Edit' class='mright8' /> </a>" ;
+            }
+            if(ViewBag.CanDelete)
+            {
+                EnqRights = EnqRights + "&nbsp;" +
+                    "<a style='cursor:pointer; ' onclick=\"RemoveBOMData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "')\"> <img src='/assests/images/delete.png' title='Delete' class='mright8' /> </a>" ;
+            }
+            EnqRights = EnqRights + "&nbsp;" + "<a style='cursor:pointer' title='print' onclick=\"onPrintJv('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "','" + c.VisibleIndex.ToString() + "')\"><img src='/assests/images/Print.png' title='print' class='mright8' /> </a>" ;
+            if (ViewBag.CanAddUpdateDocuments)
+            {
+                EnqRights = EnqRights + "&nbsp;" + "<a style='cursor:pointer' onclick=\"OnclickViewAttachment('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "')\"><img src='/assests/images/attachment.png' title='View Attachment' class='mright8' /> </a>";
+            }
+
+            ViewContext.Writer.Write(EnqRights);
+        });
+
+
+    });
+
+
+
+}).Bind(Model).GetHtml()
+
+
+

@@ -1,0 +1,197 @@
+﻿
+    .panel-body {
+        border: 1px solid #ccc;
+        border-top: 3px solid #3D5294;
+    }
+    .round {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        /* border-radius: 15px; */
+        line-height: 33px;
+        text-align: center;
+    }
+
+
+    .lightorangemark {
+        background: #ecd2a2;
+    }
+
+    .table-fixed thead {
+        width: 99%;
+    }
+
+    .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+
+        .table-fixed tbody td, .table-fixed thead > tr > th {
+            float: left;
+        }
+
+    .pure-table > thead > tr > th {
+        background: #425799;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#596fb1+0,415698+100 */
+        background: #596fb1; /* Old browsers */
+        background: -moz-linear-gradient(top, #596fb1 0%, #415698 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #596fb1 0%,#415698 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #596fb1 0%,#415698 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#596fb1', endColorstr='#415698',GradientType=0 ); /* IE6-9 */
+        color: #fff;
+        border-right: 1px solid #394d8c;
+        padding: 9px 10px;
+        
+        box-shadow: inset 0px 1px 2px rgba(255,255,255,0.35);
+    }
+
+    /*.mtbl {
+        width: 100%;
+    }*/
+
+    .mtbl > tbody > tr > td {
+        padding-right: 25px;
+        position: relative;
+        padding-bottom: 5px;
+    }
+
+    .fileInput {
+        padding: 1px;
+        width: 100%;
+        margin-top: 6px;
+    }
+
+    .mTop22 {
+        margin-top: 22px;
+    }
+
+    .Mbxgroup {
+        background: #f1f1f1;
+        border: 1px solid #cecece;
+        padding: 8px 0 11px 0;
+        border-radius: 6px;
+    }
+    #tbl #editable_filter input[type="search"] {
+        padding:0 10px !important;
+    }
+    table.dataTable.scroll thead .sorting {
+        background-image: none;
+        background: #485d9f;
+    }
+    table.dataTable.no-footer {
+        border:none;
+    }
+
+    .secListing {
+        padding: 0;
+        list-style-type: circle !important;
+        column-count: 4;
+    }
+    .secListing > li {
+        display: block;
+        padding-right: 35px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+        #adtDataTbl_wrapper {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    #adtDataTbl_filter input[type="search"], .dataTables_filter input[type="search"] {
+        padding: 0 !important;
+        height: 20px;
+        margin-right: 5px;
+    } 
+    .table-curved th {
+        color: #fff;
+        background: #31383e;
+        padding: 15px;
+        white-space: nowrap !important;
+    }
+    .table-curved {
+        border: 1px solid #eaeaec;
+        border-radius: 10px;
+        width: 100%;
+    }
+    .left-table-curved, .table-curved, .table-view {
+        border-collapse: separate;
+    }
+        .table-curved.cal12report th {
+            padding: 8px;
+            font-size: 88%;
+            color: #e2e2e2;
+        }
+    .table-curved th:first-child {
+        border-top-left-radius: 10px;
+    }
+    .table-curved th:last-child {
+        border-top-right-radius: 10px;
+    }
+    .table-curved.cal12report td {
+        padding: 10px 5px;
+        font-size: 88%;
+        color: #2b2b2b;
+    }
+        .table-curved.cal12report >tbody>tr{
+            border-bottom:1px solid #ccc;
+        }
+        
+         .attandanceBg {
+            background: #25dea2;
+            font-weight: 800;
+        }
+    .timesheetBg {
+        background: #7b91ff;
+        font-weight: 800;
+    }
+    .wkOff {
+        background: #c7c6c3;
+    }
+    .orangemark {
+        background: #ea9a06;
+    }
+
+    .lightredmark {
+        background: #c8756c;
+    }
+    .yewellomark {
+        background: #d5ed3b;
+    }
+     .redmark {
+        background: red;
+    }
+    .greenmark {
+        background: #16e255;
+    }
+    .borderR{
+        border-right:3px solid #ccc
+    }
+    #loadeddiv {
+        border-radius: 5px;
+    }
+
+    #loaderP {
+        background: rgba(255,255,255,0.95);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 9999;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #exampleModal .modal-body {
+        overflow-x: hidden;
+    }
+
+    #exampleModal .modal-dialog {
+        margin-top: 0 !important;
+    }

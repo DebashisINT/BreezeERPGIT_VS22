@@ -1,0 +1,214 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@model Payroll.Models.PGenerationEngine
+@{
+    ViewBag.Title = "Leave Calculation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(function () {
+        PopulateEmployee();
+    });
+
+    function PopulateEmployee() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateEmployee", "LeaveCalculation")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlEmployee').html(html);
+            }
+        });
+    }
+    function updateGridByEMP() {
+        var EmployeeCode = $('#ddlEmployee option:selected').val();
+        if (EmployeeCode != "") {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetEmployeeCodeDateFilter", "LeaveCalculation")",
+                data: { EmployeeCode: EmployeeCode},
+                success: function (response) {
+                    if (response) {
+                        gvLeaveCalculation.Refresh();
+                        gvLeaveCalculation.Refresh();
+                    }
+                }
+            });
+        }
+
+    }
+    function LeaveCalculation() {
+        //ClassCode = $("#ddlProllclass").val();
+        //if (ClassCode == "" || ClassCode == null) {
+        //    jAlert("Please Select Class", "Alert");
+        //    return;
+        //}
+        //yymm = document.getElementById('hdnYYMM').value;
+
+        var classId = $("#ddlProllclass").val();
+       // ClassCode = $("#ddlProllclass").val();
+        var yymm = document.getElementById('hdnYYMM').value;
+
+
+        if (classId == "") {
+            jAlert("Please Select Class", "Alert");
+            return;
+        }
+
+        if (yymm == "" ) {
+            jAlert("Please Select Period", "Alert");
+            return;
+        }
+
+
+        var obj = {}
+        obj.ClassCode = ClassCode;
+        obj.yymm = yymm;
+
+        var url = '/LeaveCalculation/MANUALLeaveCalculation';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+            success: function (response) {
+                if (response.response_msg == "Success") {
+                    jAlert("Successfully Leave Calculation ");
+
+                    gvLeaveCalculation.Refresh();
+                }
+                else {
+                    jAlert('Please try again later');
+                }
+            },
+            error: function (response) {
+                jAlert('Please try again later');
+            }
+        });
+
+    }
+    function PopulatePeriod() {
+        var classId = $("#ddlProllclass").val();
+        ClassCode = $("#ddlProllclass").val();
+        var url = '/LeaveCalculation/GetPeriodName/';
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: { 'classId': classId },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                //console.log(JSON.parse(response.data));
+
+                if (response.data2.response_msg == "Success") {
+                    if (JSON.parse(response.data).length > 0) {
+                        $("#txtPeriodName").val(JSON.parse(response.data)[0]["Period"]);
+
+                        yymm = JSON.parse(response.data)[0]["YYMM"];
+                        document.getElementById('hdnYYMM').value = yymm;
+                       // SalaryGengridView.Refresh();
+                       // $('#btnMassGenaration').show();
+                    }
+                    else {
+                        $("#txtPeriodName").val('');
+                    }
+                }
+                else {
+                    jAlert(response.data2.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert('Please try again later');
+            }
+        });
+    }
+    function GetLeaveList() {
+        var classId = $("#ddlProllclass").val();
+        ClassCode = $("#ddlProllclass").val();
+        var yymm = document.getElementById('hdnYYMM').value;
+        var url = '/LeaveCalculation/GetPeriodName/';
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: { 'classId': classId },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {              
+
+                if (response.data2.response_msg == "Success") {
+                    if (JSON.parse(response.data).length > 0) {
+                        $("#txtPeriodName").val(JSON.parse(response.data)[0]["Period"]);
+                        yymm = JSON.parse(response.data)[0]["YYMM"];
+                        document.getElementById('hdnYYMM').value = yymm;
+                        gvLeaveCalculation.Refresh();
+                        // $('#btnMassGenaration').show();
+                    }
+                    else {
+                        $("#txtPeriodName").val('');
+                    }
+                }
+                else {
+                    jAlert(response.data2.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert('Please try again later');
+            }
+        });
+    }
+</script>
+<div>
+    @Html.Hidden("hdnYYMM")
+</div>
+<h2>EmpLeaveListing</h2>
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Leave Calculation Listing</h3>
+    </div>
+</div>
+<div class="md-pull-right hide">
+    <table class="paddingTbl">
+        <tr>
+            <td>
+                Employee
+            </td>
+            <td class="w150">
+                <div class="">
+                    <select id="ddlEmployee" class="form-control"></select>
+                </div>
+            </td>
+            <td>
+                <button type="button" id="btnShowData" class="btn btn-primary" onclick="updateGridByEMP()">Show</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="col-md-3">
+    <label>Payroll Class</label>
+    <div>
+        @Html.DropDownListFor(m => m._PClassId, Model._PClassName, "", new { style = "width: 100%;", Id = "ddlProllclass", onchange = "PopulatePeriod()" })
+    </div>
+</div>
+<div class="col-md-3">
+    <label>Period</label>
+    <div>
+        @*<input type="text" id="txtPeriodName" disabled style="width:65%" />*@
+        @Html.TextBoxFor(model => model._PeriodName, new { Id = "txtPeriodName", disabled = "disabled" })
+    </div>
+</div>
+<div class="col-md-6">  
+    <button type="submit" class="btn btn-success btn-radius" onclick="LeaveCalculation()">Leave Calculation</button>
+</div>
+<div class="GridViewArea ">
+    @{
+        Html.RenderAction("LeaveCalculationListingGrid", "LeaveCalculation");
+    }
+</div>
+

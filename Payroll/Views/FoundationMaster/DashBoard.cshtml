@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Foundation Master</h3>
+    </div>
+</div>
+@*<div class="form_main">
+    <div class="clearfix">
+        <a href="javascript:void(0);" onclick="AddClass()" class="btn btn-primary"><span>Add Class</span> </a>
+    </div>
+</div>*@
+<div class="GridViewArea">
+    @{
+        Html.RenderAction("partialFoundationMasterOuterGrid", "FoundationMaster");
+    }
+</div>
+

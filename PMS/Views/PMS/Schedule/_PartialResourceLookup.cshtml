@@ -1,0 +1,79 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridResourceEntryList";
+    settings.CallbackRouteValues = new { Action = "ResourceEntryView", Controller = "Schedule" };
+    settings.KeyFieldName = "cnt_internalId";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 200;
+    settings.Height = System.Web.UI.WebControls.Unit.Pixel(500);
+    settings.SettingsPager.PageSizeItemSettings.Visible = false;
+    settings.SettingsPager.PageSize = 100000;
+    settings.ClientSideEvents.RowClick = "gridclick";
+    settings.ClientSideEvents.BatchEditStartEditing = "gridclick";
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.ShowClearFilterButton = true;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "cnt_internalId";
+        x.Caption = "cnt_internalId";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.ReadOnly = true;
+    });
+
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "cnt_UCC";
+        x.Caption = "Short Name";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.ReadOnly = true;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Name";
+        x.Caption = "Name";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(70);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.ReadOnly = true;
+    });
+
+
+    settings.DataBinding = (s, e) =>
+    {
+        if (ViewBag.Keys != null && ViewBag.Keys!="")
+        {
+            string[] strarr = Convert.ToString(ViewBag.Keys).Split(',');
+
+            MVCxGridView l = s as MVCxGridView;
+            foreach (var str in strarr)
+            {
+                l.Selection.SelectRowByKey(str);
+            }
+            
+        }
+    };
+
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    
+}).Bind(Model).GetHtml()
+
+
+
+<div style="margin-top:10px">
+    <button class="btn btn-primary" onclick="onSaveResourceClick()">OK</button>
+    <button class="btn btn-danger" onclick="onSaveResourceClick()">Cancel</button>
+</div>

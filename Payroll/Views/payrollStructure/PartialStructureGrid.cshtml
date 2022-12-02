@@ -1,0 +1,67 @@
+﻿@model IOrderedQueryable
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaging";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "payrollStructure", Action = "PartialStructureGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+    settings.KeyFieldName = "StructureID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.VisibleIndex = 3;
+    settings.CommandColumn.Width = 100;
+    settings.ClientSideEvents.CustomButtonClick = "OnCustomButtonClick";
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "StructureID";
+        column.Caption = "Structure ID";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "StructureName";
+        column.Caption = "Structure Name";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "StructureCode";
+        column.Caption = "Structure Code";
+    });
+
+    GridViewCommandColumnCustomButton viewBtn = new GridViewCommandColumnCustomButton();
+    viewBtn.ID = "btnView";
+    viewBtn.Text = " ";
+    viewBtn.Image.Url = "../../../assests/images/doc.png";
+    settings.CommandColumn.CustomButtons.Add(viewBtn);
+
+    GridViewCommandColumnCustomButton editBtn = new GridViewCommandColumnCustomButton();
+    editBtn.ID = "btnEdit";
+    editBtn.Text = " ";
+    editBtn.Image.Url = "../../../assests/images/info.png";
+    settings.CommandColumn.CustomButtons.Add(editBtn);
+
+    GridViewCommandColumnCustomButton deleteBtn = new GridViewCommandColumnCustomButton();
+    deleteBtn.ID = "btnDelete";
+    deleteBtn.Text = " ";
+    deleteBtn.Image.Url = "../../../assests/images/Delete.png";
+    settings.CommandColumn.CustomButtons.Add(deleteBtn);
+}).BindToEF(string.Empty, string.Empty, (s, e) =>
+    {
+
+        e.KeyExpression = "StructureID";
+        e.QueryableSource = (IOrderedQueryable)@Model;
+    }).GetHtml()

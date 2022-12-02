@@ -1,0 +1,105 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPayHeadLog";
+    settings.KeyFieldName = "ID";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "StructureMaster", Action = "PayHeadImportLogGrid" };
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.Settings.ShowFilterRow = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ID";
+        column.Caption = "PayHead Log ID";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayHead";
+        column.Caption = "Pay Head";
+       // column.Width = System.Web.UI.WebControls.Unit.Percentage(11);
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ShortName";
+        column.Caption = "Short Name";
+       // column.Width = System.Web.UI.WebControls.Unit.Percentage(11);
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayHeadType";
+        column.Caption = "Pay Type";
+       // column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DataType";
+        column.Caption = "Data Type";
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CalculationType";
+        column.Caption = "Calculation Type";
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Formula";
+        column.Caption = "Formula";
+        column.Width = 300;
+    });
+
+   
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "RoundingOff";
+        column.Caption = "RoundOff Type";
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Comments";
+        column.Caption = "Comments";
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ProrataCalculation";
+        column.Caption = "ProrataCalculation";
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Success";
+        column.Caption = "Success";
+        column.Width = 200;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Message";
+        column.Caption = "Message";
+        column.Width = 200;
+    });
+
+}).Bind(Model).GetHtml()

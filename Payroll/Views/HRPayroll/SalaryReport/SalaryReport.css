@@ -1,0 +1,51 @@
+﻿
+    .table-fixed thead {
+        width: 99%;
+    }
+
+    .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+
+        .table-fixed tbody td, .table-fixed thead > tr > th {
+            float: left;
+        }
+
+    .dynamicPopupTbl input[type=text]:focus {
+        color: #333 !important;
+    }
+
+    /*Mantis Issue 24246*/
+    #tblshoplist > thead > tr > th {
+        background: #26669e;
+        border-top: 1px solid #18476f;
+        color: #fff;
+        border-color: #18476f !important;
+    }
+
+    #tblshoplist thead > tr > th, #tblshoplist tbody > tr > th, #tblshoplist tfoot > tr > th, #tblshoplist thead > tr > td, #tblshoplist tbody > tr > td, #tblshoplist tfoot > tr > td {
+        padding: 1px 5px !important;
+    }
+
+    .tblspace > tbody > tr > td {
+        padding-right: 15px;
+    }
+
+    .acheckbox {
+    }
+    #SalaryReportgridView .dxpcLite_PlasticBlue.dxpclW:before {
+        display: none !important;
+    }
+    /*#StateGridLookup_ET > tbody > tr > td:first-child, #DesigGridLookup_ET > tbody > tr > td:first-child, #EmpGridLookup_ET > tbody > tr > td:first-child {
+        display: none;
+    }*/
+    label {
+        font-weight: 500 !important;
+    }
+    /*End of Mantis Issue 24246*/

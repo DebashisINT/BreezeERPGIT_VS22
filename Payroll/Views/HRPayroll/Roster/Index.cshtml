@@ -1,0 +1,1904 @@
+﻿@model Payroll.Models.Roster
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    String ShiftRule = (Model.ShiftRule == true) ? "checked" : "";
+    String ShiftRuleShow = (Model.ShiftRule == true) ? "style='display:block;'" : "style=display:none;";
+    String IsDeduct = (Model.LateDayCount != "" && Model.LateDayCount != null) ? "checked" : "";
+    String IsInTimeAfter = (Model.InTimeAfter != "" && Model.InTimeAfter != null) ? "checked" : "";
+    String IsOutTimeAfter = (Model.OutTimeAfter != "" && Model.OutTimeAfter != null) ? "checked" : "";
+    String IsInOutTimeDiff = (Model.InOutTimeDiff != "" && Model.InOutTimeDiff != null) ? "checked" : "";
+}
+<script src="~/assests/js/payrollJs/roaster.js"></script>
+<script id="HalfDay">
+    var HalfDayINOUT = [];
+    function AddHalfDay() {
+        var obj = {};
+
+        var _Intimehh = $('#Intimehh').val();
+        var _Intimemm = $('#Intimemm').val();
+        var HalfDayRuleIntime="";
+        var HalfDayRuleOuttime="";
+        var valid=false;
+        if(_Intimehh=="" && _Intimemm==""){
+            $('#MandatoryINTime').show();
+            valid=false;
+        }
+        else {
+            $('#MandatoryINTime').hide();
+            valid=true;
+        }
+
+        if(_Intimemm==""){
+            _Intimemm="00";
+        }
+
+        if(_Intimehh==""){
+            _Intimehh="00";
+        }
+
+        if(_Intimehh!="" )
+        {
+            HalfDayRuleIntime = (_Intimehh+":"+_Intimemm);//$('#txtConsAttenAfter').val();
+        }
+
+
+        var slAfterBefor1 = $('#slAfterBefor1 option:selected').val();
+        var _outtimehh = $('#outtimehh').val();
+        var _outtimemm = $('#outtimemm').val();
+        if(_outtimehh=="" && _outtimemm==""){
+            $('#MandatoryOUTTime').show();
+            valid=false;
+        }
+        else {
+            $('#MandatoryOUTTime').hide();
+            valid=true;
+        }
+        var slAfterBefor2 = $('#slAfterBefor2 option:selected').val();
+        var slcondition2 = $('#slcondition2 option:selected').val();
+
+        if(_outtimemm==""){
+            _outtimemm="00";
+        }
+
+        if(_outtimehh==""){
+            _outtimehh="00";
+        }
+
+        if(_outtimehh!="" )
+        {
+            HalfDayRuleOuttime = (_outtimehh+":"+_outtimemm);//$('#txtConsAttenAfter').val();
+        }
+
+
+        if (HalfDayRuleIntime != "" && HalfDayRuleOuttime != ""  && valid) {
+            obj.HalfDayInHours = HalfDayRuleIntime;
+            obj.HalfDayOutHours = HalfDayRuleOuttime;
+            obj.AfterBefor1=slAfterBefor1;
+            obj.AfterBefor2=slAfterBefor2;
+            obj.slcondition1='AND';
+            obj.slcondition2=slcondition2;
+
+            HalfDayINOUT.push(obj);
+            HalfDayINOUTTable();
+
+            $('#Intimehh').val('');
+            $('#Intimemm').val('');
+            $('#outtimehh').val('');
+            $('#outtimemm').val('');
+
+            $('#slAfterBefor1').val($("#slAfterBefor1 option:first").val());
+            $('#slAfterBefor2').val($("#slAfterBefor2 option:first").val());
+            $('#slcondition2').val($("#slcondition2 option:first").val());
+        }
+    }
+
+    function HalfDayINOUTTable() {
+        var txthtml = "";
+        for (var i = 0; i < HalfDayINOUT.length; i++) {
+            var obj = {};
+            obj = HalfDayINOUT[i];
+            txthtml = txthtml + "<tr><td>" + obj.HalfDayInHours + "</td><td>" + obj.AfterBefor1 + "</td><td>" + obj.slcondition1 + "</td><td>" + obj.HalfDayOutHours+ "</td><td>" + obj.AfterBefor2 + "</td><td>" + obj.slcondition2 + "</td><td class='text-center'><i class='fa fa-trash' style='cursor: pointer;font-size: 15px;' onclick='RemoveHalfDayINOUT(" + i + ");'></i></td></tr>";
+        }
+        $('#tblHalfDayRuleSecList').html(txthtml);
+    }
+
+    function RemoveHalfDayINOUT(index) {
+        if (HalfDayINOUT.length > index) {
+            for (var i = 0; i < HalfDayINOUT.length; i++) {
+                if (i == index) {
+                    HalfDayINOUT.splice(i, 1);
+                }
+            }
+
+            HalfDayINOUTTable();
+        }
+    }
+</script>
+<style>
+    .navbar {
+        z-index: 99 !important;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -1px;
+        top: 27px;
+    }
+    .vAlignb>tbody>tr>td {
+        vertical-align:bottom;
+    }
+</style>
+<style>
+    .panel.with-nav-tabs .panel-heading {
+        padding: 5px 5px 0 5px;
+    }
+
+    .panel.with-nav-tabs .nav-tabs {
+        border-bottom: none;
+    }
+
+    .panel.with-nav-tabs .nav-justified {
+        margin-bottom: -1px;
+    }
+    /********************************************************************/
+
+    /*** PANEL PRIMARY ***/
+    .with-nav-tabs.panel-primary .nav-tabs > li > a,
+    .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+    .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+        color: #fff;
+    }
+
+        .with-nav-tabs.panel-primary .nav-tabs > .open > a,
+        .with-nav-tabs.panel-primary .nav-tabs > .open > a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs > .open > a:focus,
+        .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+            color: #fff;
+            background-color: #3071a9;
+            border-color: transparent;
+        }
+
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a,
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
+        color: #428bca;
+        background-color: #fff;
+        border-color: #428bca;
+        border-bottom-color: transparent;
+    }
+
+    .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu {
+        background-color: #428bca;
+        border-color: #3071a9;
+    }
+
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a {
+            color: #fff;
+        }
+
+            .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
+            .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
+                background-color: #3071a9;
+            }
+
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a,
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
+            background-color: #4a9fe9;
+        }
+    /********************************************************************/
+    .tabTotal {
+        border: none;
+    }
+
+        .tabTotal .tabHead {
+            background: transparent !important;
+        }
+
+        .tabTotal .panel-body {
+            border: 1px solid #ccc;
+            border-top: 3px solid #3D5294;
+        }
+
+        .tabTotal .tabHead > ul > li > a {
+            height: 27px;
+            padding: 5px 10px 4px 10px;
+            border-radius: 0;
+            color: #333 !important;
+        }
+
+        .tabTotal .tabHead > ul > li > a {
+            border: 1px solid #d8d8d8;
+            border-bottom: 1px solid #002D96 !important;
+            background-color: #f9f9f9 !important;
+        }
+
+            .tabTotal .tabHead > ul > li > a:hover {
+                border: 1px solid #d8d8d8 !important;
+                border-bottom: 1px solid #002D96 !important;
+                background-color: #f1efef !important;
+            }
+
+        .tabTotal .tabHead > ul > li.active > a,
+        .tabTotal .tabHead > ul > li.active > a:hover {
+            border-top: 1px solid #002D96 !important;
+            border-right: 1px solid #002D96 !important;
+            border-bottom: 1px none #002D96 !important;
+            border-left: 1px solid #002D96 !important;
+            color: #fff !important;
+            background-color: #45599B !important;
+            -moz-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            -webkit-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+        }
+
+    .horizontallblHolder {
+        height: auto;
+        border: 1px solid #12a79b;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+        .horizontallblHolder > table > tbody > tr > td {
+            padding: 8px 10px;
+            background: #ffffff;
+            background: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+            background: -webkit-linear-gradient(top, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+            background: linear-gradient(to bottom, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+        }
+
+            .horizontallblHolder > table > tbody > tr > td:first-child {
+                background: #12a79b;
+                color: #fff;
+            }
+
+            .horizontallblHolder > table > tbody > tr > td:last-child {
+                font-weight: 500;
+                text-transform: uppercase;
+                color: #121212;
+            }
+</style>
+<style>
+    .dvxtbl {
+        border: 1px solid #ccc;
+    }
+
+        .dvxtbl > thead > tr > th {
+            cursor: pointer;
+            white-space: nowrap;
+            padding: 7px 6px;
+            border-top: 1px none #3e597b;
+            border: 1px solid #3e597b;
+            background: #54749D !important;
+            overflow: hidden;
+            font-weight: normal;
+            text-align: left;
+            color: #fff;
+        }
+
+        .dvxtbl > tbody > tr > td {
+            padding: 5px 5px;
+            background: #fff;
+        }
+
+            .dvxtbl > tbody > tr > td:not(:last-child) {
+                border-right: 1px solid #ccc;
+            }
+
+        .dvxtbl > tbody > tr > td {
+            border-bottom: 1px solid #ccc;
+        }
+</style>
+<style>
+    .headText {
+        margin: 0;
+        padding: 5px 15px 5px;
+        background: #0177c1;
+        margin-bottom: 5px;
+        color: #fff;
+        font-size: 12px !important;
+        border-radius: 12px;
+    }
+
+    #DivBilling [class^="col-md"], #DivShipping [class^="col-md"] {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .lowSize {
+        font-size: 12px !important;
+    }
+
+    .mandt {
+        position: absolute;
+        right: -18px;
+        top: 4px;
+    }
+
+    .mLeft5 {
+        margin-left: 5px;
+    }
+
+    #calendar-body > tr > td:last-child {
+        border-right: 1px solid #ccc;
+    }
+</style>
+<style>
+    .borderpad {
+        border: 1px solid #ccc;
+        padding: 21px 0 11px 0;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+        .borderpad > span {
+            display: inline-block;
+            background: #edf3f4;
+            position: absolute;
+            top: -11px;
+            left: 12px;
+            padding: 6px 15px 6px 4px;
+            font-weight: 600;
+        }
+
+    .validclass {
+        position: absolute;
+        right: 0px;
+        top: 26px;
+    }
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+
+        .btn-circle.btn-lg {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+        }
+    /* The customcheck */
+    .customcheck {
+        display: block;
+        position: relative;
+        padding-left: 29px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        /* Hide the browser's default checkbox */
+        .customcheck input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 22px;
+        width: 22px;
+        background-color: #d0d0d0;
+        border-radius: 5px;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .customcheck:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .customcheck input:checked ~ .checkmark {
+        background-color: #02c6cf;
+        border-radius: 5px;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .customcheck input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .customcheck .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .requiredtype {
+        position: absolute;
+        right: 0;
+        top: 6px;
+    }
+    .requiredtype2 {
+        position: absolute;
+        right: -15px;
+        top: 6px;
+    }
+        .validclass.typeTable {
+            right: -14px;
+            top: 4px;
+        }
+
+    .paddingTbl.backgrounded {
+        width: 100%;
+        border: 1px solid #d0d0d0;
+        margin-top: 8px;
+    }
+
+        .paddingTbl.backgrounded > thead > tr > th {
+            background: #5b70b2;
+            color: #fff;
+        }
+
+        .paddingTbl.backgrounded > thead > tr > th, .paddingTbl.backgrounded > tbody > tr > td {
+            padding: 5px 10px;
+        }
+
+        .paddingTbl.backgrounded > tbody > tr > td {
+            background: #fff;
+            border-bottom: 1px solid #d0d0d0;
+        }
+
+    .separateDiv {
+        border-top: 1px solid #ccc;
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+    .mTop20 {
+        margin-top:20px;
+    }
+</style>
+
+
+<script>
+
+    var LateRule = [];
+    var EarlyLeaving = [];
+
+    $(function () {
+        LateRule = [];
+        EarlyLeaving = [];
+
+        $(".decimalCheck").on("keypress keyup blur", function (event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        var RosterId="@Model.RosterID"
+        var RosterType="@Model._WeekDay"
+        if(RosterId!="")
+        {
+            var hdnConsider_AttendanceAfter = $('#hdnConsider_AttendanceAfter').val();
+            var hdnInTimeAfter = $('#hdnInTimeAfter').val();
+            var hdnOutTimeAfter = $('#hdnOutTimeAfter').val();
+            var hdnInOutTimeDiff = $('#hdnInOutTimeDiff').val();
+
+            if(hdnConsider_AttendanceAfter!="")
+            {
+                var hh= hdnConsider_AttendanceAfter.split(':')[0];
+                var mm= hdnConsider_AttendanceAfter.split(':')[1];
+                $('#txtConsAttenAfterhh').val(hh);
+                $('#txtConsAttenAftermm').val(mm);
+            }
+            if(hdnInTimeAfter!="")
+            {
+                var hh= hdnInTimeAfter.split(':')[0];
+                var mm= hdnInTimeAfter.split(':')[1];
+                $('#txtintimeafterhh').val(hh);
+                $('#txtintimeaftermm').val(mm);
+            }
+            if(hdnOutTimeAfter!="")
+            {
+                var hh= hdnOutTimeAfter.split(':')[0];
+                var mm= hdnOutTimeAfter.split(':')[1];
+                $('#txtOutTimeBeforehh').val(hh);
+                $('#txtOutTimeBeforemm').val(mm);
+            }
+            if(hdnInOutTimeDiff!="")
+            {
+                var hh= hdnInOutTimeDiff.split(':')[0];
+                var mm= hdnInOutTimeDiff.split(':')[1];
+                $('#txtInOutTimeDiffhh').val(hh);
+                $('#txtInOutTimeDiffmm').val(mm);
+            }
+            var mode=$("#hdnMode").val();
+            if(mode=="RosterCopy")
+            {
+                
+            }
+            else{
+                $("#txt_roster_code").attr("disabled", "disabled");
+            }
+            
+
+            if(RosterType=="P")
+            {
+                $("#ddlPeriodName").removeAttr("disabled");
+                var k=1;
+                var yymm="@Model._PeriodID"
+                showCalendarEidtMode(yymm);
+                var JavaScriptArray = @Html.Raw(Json.Encode(Model.dtls));
+                for (var jj = 0; jj <JavaScriptArray.length; jj++) {
+                    $("#ddlPeriodShift"+k).val(JavaScriptArray[jj].ShiftId);
+                    k++;
+                }
+            }
+
+            else
+            {
+                $("#ddlPeriodName").empty();
+                var optionhtml1 = '<option value="' + 0 + '">' + "--Select--" + '</option>';
+                $("#ddlPeriodName").append(optionhtml1);
+                $("#editable").show();
+                $("#ddlPeriodName").attr("disabled", "disabled");
+            }
+
+
+
+        }
+        else
+        {
+            $("#editable").show();
+            $("#ddlPeriodName").empty();
+            var optionhtml1 = '<option value="' + 0 + '">' + "--Select--" + '</option>';
+            $("#ddlPeriodName").append(optionhtml1);
+        }
+
+
+
+        $(':radio[name=_WeekDay]').change(function () {
+            // read the value of the selected radio
+            var value = $(this).val();
+
+            if (value == 'P') {
+                // DrpClassChange($("#ddlPayClassName").val())
+                $("#ddlPeriodName").removeAttr("disabled");
+                $("#editable").hide();
+                $("#editable1").show();
+            }
+            else {
+                $("#editable").show();
+                $("#editable1").hide();
+                $("#ddlPeriodName").attr("disabled", "disabled");
+            }
+
+
+        });
+
+        var hdnRosterID  = $('#hdnRosterID').val();
+        if(hdnRosterID!=undefined && hdnRosterID!=""){
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LeavingLateShiftByID", "Roster")',
+                data: JSON.stringify({ 'id': hdnRosterID }),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.ResponseMessage == "Success") {
+                        LateRule = response.LateRules;
+                        EarlyLeaving = response.EarlyLeavingRules;
+                        HalfDayINOUT=response.HalfDayINOUTRules;
+                        setTimeout(function () {
+                            LateRuleTable(); EarlyLeavingTable();HalfDayINOUTTable();
+                        }, 1200);
+                    }
+
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
+    });
+
+    function DrpClassChange(e) {
+        var classId;
+
+        //if(e!="[object HTMLSelectElement]")
+        //    classId = e
+        //else
+
+        classId = e.value;
+
+
+        var url = '/Roster/GetPeriod';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: "{'classId':'" + classId + "'}",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $("#ddlPeriodName").empty();
+                var optionhtml1 = '<option value="' + 0 + '">' + "--Select--" + '</option>';
+                $("#ddlPeriodName").append(optionhtml1);
+
+                $.each(response._PeriodName, function (i) {
+
+                    var optionhtml = '<option value="' +
+                response._PeriodName[i].Value + '">' + response._PeriodName[i].Text + '</option>';
+                    $("#ddlPeriodName").append(optionhtml);
+
+                });
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+
+        });
+    }
+
+
+    function ChkPad2DigitCount(e) {
+        var data = parseInt($(e).val());
+        $(e).val((data < 10 ? '0' : '') + data);
+   
+    }
+
+    var inputQuantity = [];
+    $(function() {
+        $(".quantity").each(function(i) {
+            inputQuantity[i]=this.defaultValue;
+            $(this).data("idx",i); // save this field's index to access later
+        });
+        $(".quantity").on("keyup", function (e) {
+
+            var $field = $(this),
+                val=this.value,
+                $thisIndex=parseInt($field.data("idx"),10); // retrieve the index
+            //        window.console && console.log($field.is(":invalid"));
+            //  $field.is(":invalid") is for Safari, it must be the last to not error in IE8
+            if (this.validity && this.validity.badInput || isNaN(val) || $field.is(":invalid") ) {
+                this.value = inputQuantity[$thisIndex];
+                return;
+            } 
+            if (val.length > Number($field.attr("maxlength"))) {
+                val=val.slice(0, 5);
+                $field.val(val);
+            }
+            inputQuantity[$thisIndex]=val;
+        });      
+    });
+
+    //function ChkMoneyDigitCount(e) {
+    //    var data = $(e).val();
+    //    $(e).val(parseInt(data)< 10 ? '0' : '');
+    //}
+
+    function SaveRoster() {
+        
+        var mode=$("#hdnMode").val();
+        if(mode=="RosterCopy")
+        {
+            $("#hdn_id").val('');
+        }
+        var IsValid = true;
+        var Roster_Code = $("#txt_roster_code").val();
+        var Roster_Name = $("#txt_roster_nm").val();
+        var Roster_Cass = $("#ddlPayClassName").val();
+        var Roster_Period =$("#ddlPeriodName").val();
+
+
+        var AdvanceShiftRules = $('#AdvanceShiftRule').prop('checked');
+        var txtConsAttenAfterhh = $('#txtConsAttenAfterhh').val();
+        var txtConsAttenAftermm = $('#txtConsAttenAftermm').val();
+
+       
+
+
+
+        var txtaftertimelate = "";
+        var valid=false;
+        if(txtConsAttenAfterhh=="" && txtConsAttenAftermm==""){
+            valid=false;
+        }
+        else {
+
+            valid=true;
+        }
+
+        if(txtConsAttenAftermm==""){
+            txtConsAttenAftermm="00";
+        }
+
+        if(txtConsAttenAfterhh==""){
+            txtConsAttenAfterhh="00";
+        }
+
+        var txtConsAttenAfter = "";
+        if(txtConsAttenAfterhh!="" && txtConsAttenAftermm!="")
+        {
+            txtConsAttenAfter = (txtConsAttenAfterhh+":"+txtConsAttenAftermm);//$('#txtConsAttenAfter').val();
+        }
+
+
+
+
+        var intimeafter = $('#intimeafter').prop('checked');
+
+        var txtintimeafterhh = $('#txtintimeafterhh').val();
+        var txtintimeaftermm = $('#txtintimeaftermm').val();
+
+        var txtintimeafter = "";
+        if(txtintimeafterhh!="" && txtintimeaftermm!="")
+        {
+            txtintimeafter = (txtintimeafterhh+":"+txtintimeaftermm);//$('#txtConsAttenAfter').val();
+        }
+
+        var OutTimeBefore = $('#OutTimeBefore').prop('checked');
+
+        var txtOutTimeBeforehh = $('#txtOutTimeBeforehh').val();
+        var txtOutTimeBeforemm = $('#txtOutTimeBeforemm').val();
+
+        var txtOutTimeBefore = "";
+        if(txtOutTimeBeforehh!="" && txtOutTimeBeforemm!="")
+        {
+            txtOutTimeBefore = (txtOutTimeBeforehh+":"+txtOutTimeBeforemm);//$('#txtConsAttenAfter').val();
+        }
+
+       // var txtOutTimeBefore = $('#txtOutTimeBefore').val();
+
+        var InOutTimeDiff = $('#InOutTimeDiff').prop('checked');
+
+        var txtInOutTimeDiffhh = $('#txtInOutTimeDiffhh').val();
+        var txtInOutTimeDiffmm = $('#txtInOutTimeDiffmm').val();
+
+        var txtInOutTimeDiff = "";
+        if(txtInOutTimeDiffhh!="" && txtInOutTimeDiffmm!="")
+        {
+            txtInOutTimeDiff = (txtInOutTimeDiffhh+":"+txtInOutTimeDiffmm);//$('#txtConsAttenAfter').val();
+        }
+
+        //var txtInOutTimeDiff = $('#txtInOutTimeDiff').val();
+
+        var DeductLeave = $('#deductrule').prop('checked');
+        var latedaycount = $('#latedaycount').val();
+        var laterulecount = $('#laterulecount').val();
+        var lateruleaftercount = $('#lateruleaftercount').val();
+
+
+        if (Roster_Code.trim() == '') {
+            $('#Mandatoryrostercode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#Mandatoryrostercode').attr('style', 'display:none');
+        }
+
+        if (Roster_Name.trim() == '') {
+            $('#Mandatoryroster_nm').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#Mandatoryroster_nm').attr('style', 'display:none');
+        }
+
+        if (Roster_Cass.trim() == '' || Roster_Cass.trim() ==null) {
+            $('#Mandatoryclass_drp').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#Mandatoryclass_drp').attr('style', 'display:none');
+        }
+
+        if (AdvanceShiftRules && !valid) {
+            IsValid = false;
+            jAlert("Please fill shift rules section.");
+        }
+
+        if($("input:radio[name='_WeekDay']:checked").val()=="P")
+        {
+            if (Roster_Period.trim() == '0' || Roster_Period.trim() ==null) {
+                $('#Mandatoryperiod_drp').attr('style', 'display:block');
+                IsValid = false;
+            }
+            else {
+                $('#Mandatoryperiod_drp').attr('style', 'display:none');
+            }
+        }
+
+        else
+        {
+            $('#Mandatoryperiod_drp').attr('style', 'display:none');
+        }
+
+        if (IsValid == true)
+        {
+            var day = ["","Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
+            var jsonObj = [];
+            var tableName="";
+
+            if ($("input:radio[name='_WeekDay']:checked").val() == 'W') tableName="#editable tbody>tr";
+            else tableName="#editable1 tbody>tr";
+
+            var i = 1;
+            var isInsert="N";
+
+            $(tableName).each(function () {
+
+
+                $('td', this).each(function () {
+                    var rosterDetails = {};
+
+                    if ($("input:radio[name='_WeekDay']:checked").val() == 'W')
+                    {
+                        rosterDetails["Day"] = day[i];
+                        rosterDetails["ShiftId"] = $("#ddlWeekShift" + i).val()
+                        jsonObj.push(rosterDetails);
+
+
+                    }
+                    else
+                    {
+                        if(i>EmpltyValue && isInsert!="Y")
+                        {
+                            i=1;
+                            isInsert="Y";
+                        }
+
+                        if(isInsert=="Y"){
+                            var yymm = document.getElementById("ddlPeriodName").value;
+                            var Day=pad(i, 2);
+                            var Month=yymm.slice(2, 4);
+                            var Year='20'+yymm.slice(0, 2);
+
+                            rosterDetails["Day"] = Year+"-"+Month+"-"+Day;
+                            rosterDetails["ShiftId"] = $("#ddlPeriodShift" + i).val()
+                            jsonObj.push(rosterDetails);
+                        }
+                    }
+
+                    i++;
+                });
+
+            });
+            var RosterHeaderDetails= {
+                RosterID:   $("#hdn_id").val(),
+                RosterCode: $("#txt_roster_code").val(),
+                RosterName: $('#txt_roster_nm').val(),
+                _PClassId: $("#ddlPayClassName").val(),
+                _WeekDay: $("input:radio[name='_WeekDay']:checked").val(),
+                _PeriodID: $("#ddlPeriodName").val(),
+                dtls: jsonObj,
+
+                AdvanceShiftRules : AdvanceShiftRules,
+                IsInTimeAfter: intimeafter,
+                InTimeAfter: txtintimeafter,
+
+                IsOutTimeAfter: OutTimeBefore,
+                OutTimeAfter: txtOutTimeBefore,
+
+                IsInOutTimeDiff: InOutTimeDiff,
+                InOutTimeDiff: txtInOutTimeDiff,
+
+                IsDeductLeave: DeductLeave,
+                LateDayCount: latedaycount,
+                LateRuleCount: laterulecount,
+                LateRuleAfterCount: lateruleaftercount,
+                ShiftRule: AdvanceShiftRules,
+                Consider_AttendanceAfter : txtConsAttenAfter,
+
+                EarlyLeavingRules: EarlyLeaving,
+                LateRules: LateRule,
+                HalfDayINOUTRules:HalfDayINOUT,
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Roster/Apply",
+                data: "{RosterHeaderDetails:" + JSON.stringify(RosterHeaderDetails) + "}",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.ResponseMessage == "Success") {
+
+                        jAlert("Saved Successfully", "Alert", function () {
+                            var url = '/Roster/Dashboard';
+                            window.location.href = url;
+
+                        });
+                    }
+                    else {
+                        jAlert(response.ResponseMessage);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    }
+
+    function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+</script>
+<script>
+    var EmpltyValue=0;
+
+    function showCalendar(e) {
+        var yourJavaScriptArray = @Html.Raw(Json.Encode(Model._ShiftName));
+
+        $("#editable").hide();
+        $("#editable1").show();
+        var yymm = e.value;
+        var yy = '20'+yymm.slice(0, 2);
+        var month = yymm.slice(2, 4);
+        var mm = parseInt(month) - 1;
+
+        let firstDay = (new Date(yy, mm)).getDay();
+
+        tbl = document.getElementById("calendar-body"); // body of the calendar
+
+        // clearing all previous cells
+        tbl.innerHTML = "";
+
+
+        // creating all cells
+        let date = 1;
+        for (let i = 1; i <=7; i++) {
+            // creates a table row
+            let row = document.createElement("tr");
+
+            //creating individual cells, filing them up with data.
+            for (let j = 1; j <= 7; j++) {
+
+                if (i === 1 && j < 7 && firstDay == 0)
+                {
+                    cell = document.createElement("td");
+                    cellText = document.createTextNode("");
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    EmpltyValue++;
+                }
+
+                else if (i === 1 && j < firstDay) {
+                    cell = document.createElement("td");
+                    cellText = document.createTextNode("");
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    EmpltyValue++;
+                }
+                else if (date > daysInMonth(mm, yy)) {
+                    break;
+                }
+
+                else {
+                    var selectlist=document.createElement("Select");
+                    selectlist.id="ddlPeriodShift"+date;
+                    selectlist.style.width="100%";
+
+                    cell = document.createElement("td");
+                    cell.appendChild(selectlist);
+                    row.appendChild(cell);
+
+                    for (var ii = 0; ii <yourJavaScriptArray.length; ii++) {
+                        var option = document.createElement("option");
+                        option.value = yourJavaScriptArray[ii].Value;
+                        option.text = yourJavaScriptArray[ii].Text;
+                        selectlist.appendChild(option);
+                    }
+
+                    date++;
+                }
+
+
+            }
+
+            tbl.appendChild(row); // appending each row into calendar body.
+        }
+
+    }
+
+    function showCalendarEidtMode(yearMonth)
+    {
+
+        var yourJavaScriptArray = @Html.Raw(Json.Encode(Model._ShiftName));
+
+        $("#editable").hide();
+        $("#editable1").show();
+        var yymm = yearMonth;
+        var yy = '20'+yymm.slice(0, 2);
+        var month = yymm.slice(2, 4);
+        var mm = parseInt(month) - 1;
+
+        let firstDay = (new Date(yy, mm)).getDay();
+
+        tbl = document.getElementById("calendar-body"); // body of the calendar
+
+        // clearing all previous cells
+        tbl.innerHTML = "";
+
+
+        // creating all cells
+        let date = 1;
+        for (let i = 1; i <=7; i++) {
+            // creates a table row
+            let row = document.createElement("tr");
+
+            //creating individual cells, filing them up with data.
+            for (let j = 1; j <= 7; j++) {
+
+                if (i === 1 && j < 7 && firstDay == 0)
+                {
+                    cell = document.createElement("td");
+                    cellText = document.createTextNode("");
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    EmpltyValue++;
+                }
+
+                else if (i === 1 && j < firstDay) {
+                    cell = document.createElement("td");
+                    cellText = document.createTextNode("");
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    EmpltyValue++;
+                }
+                else if (date > daysInMonth(mm, yy)) {
+                    break;
+                }
+
+                else {
+                    var selectlist=document.createElement("Select");
+                    selectlist.id="ddlPeriodShift"+date;
+                    selectlist.style.width="100%";
+
+                    cell = document.createElement("td");
+                    cell.appendChild(selectlist);
+                    row.appendChild(cell);
+
+                    for (var ii = 0; ii <yourJavaScriptArray.length; ii++) {
+                        var option = document.createElement("option");
+                        option.value = yourJavaScriptArray[ii].Value;
+                        option.text = yourJavaScriptArray[ii].Text;
+                        selectlist.appendChild(option);
+                    }
+
+                    date++;
+                }
+
+
+            }
+
+            tbl.appendChild(row); // appending each row into calendar body.
+        }
+
+
+    }
+
+
+
+    // check how many days in a month code from
+    function daysInMonth(iMonth, iYear) {
+
+        return 32 - new Date(iYear, iMonth, 32).getDate();
+    }
+
+    function validateHhMm(inputField) {
+        var InputValue = inputField.value;
+        var Time = "";
+
+        if (InputValue.includes(":")) {
+            var BeforeColon = InputValue.split(":")[0].trim();
+            var AfterColon = InputValue.split(":")[1].trim();
+
+            if (BeforeColon == "" || BeforeColon == "00") {
+                if (AfterColon.length == 0) {
+                    Time = "00:00";
+                }
+                else if (AfterColon.length == 1) {
+                    Time = "00:" + AfterColon + "0";
+                }
+                else {
+                    Time = InputValue;
+                }
+            }
+            else {
+                if (AfterColon.length == 0) {
+                    Time = BeforeColon + ":00";
+                }
+                else if (AfterColon.length == 1) {
+                    Time = BeforeColon + ":" + AfterColon + "0";
+                }
+                else {
+                    Time = InputValue;
+                }
+            }
+        }
+        else {
+            var BeforeColon = InputValue.split(":")[0].trim();
+            if (BeforeColon.length == 2) {
+                Time = InputValue + ":00"
+            }
+            else if (BeforeColon.length == 1) {
+                Time = "0"+InputValue + ":00"
+            }
+            else {
+                Time = InputValue + ":00"
+            }
+        }
+
+        var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(Time);  //Actual regex which will validate
+        if (!isValid) {
+            inputField.value = "";
+        }
+        else {
+            inputField.value = Time;
+        }
+
+        return isValid;
+    }
+
+    function ShowHideAdvanceRule() {
+        if ($('#AdvanceShiftRule').prop("checked") == true) {
+            $('.divAdvanceShiftRule').show();
+        }
+        else {
+            $('.divAdvanceShiftRule').hide();
+        }
+    }
+
+    function addLateRule() {
+        var obj = {};
+        var latecount = $('#latecount').val();
+
+        var txtaftertimelatehh = $('#txtaftertimelatehh').val();
+        var txtaftertimelatemm = $('#txtaftertimelatemm').val();
+
+       
+
+        var txtaftertimelate = "";
+        var valid=false;
+        if(txtaftertimelatehh=="" && txtaftertimelatemm==""){
+            $('#Mandatoryaftertimelate').show();
+            valid=false;
+        }
+        else {
+            $('#Mandatoryaftertimelate').hide();
+            valid=true;
+        }
+
+        if(txtaftertimelatemm==""){
+            txtaftertimelatemm="00";
+        }
+
+        if(txtaftertimelatehh==""){
+            txtaftertimelatehh="00";
+        }
+
+        if(txtaftertimelatehh!="" )
+        {
+            txtaftertimelate = (txtaftertimelatehh+":"+txtaftertimelatemm);//$('#txtConsAttenAfter').val();
+        }
+
+        //var  = $('#txtaftertimelate').val();
+        if (latecount == "") {
+            $('#Mandatorylatecount').show();
+        }
+        else {
+            $('#Mandatorylatecount').hide();
+        }
+
+        if (txtaftertimelate == "") {
+            $('#Mandatoryaftertimelate').show();
+        }
+        else {
+            $('#Mandatoryaftertimelate').hide();
+        }
+
+        if (latecount != "" && txtaftertimelate != "" && valid) {
+            obj.LateCount = $('#latecount').val();
+            obj.InTimeAfter = txtaftertimelate//$('#txtaftertimelate').val();
+            var isInsert = 1;
+
+            if (LateRule.length > 0) {
+                for (var i = 0 ; i < LateRule.length ; i++) {
+                    var obj1 = LateRule[i];
+                    if (obj1.LateCount == $('#latecount').val()) {
+                        jAlert("Late rule already defined!");
+                        isInsert = 0;
+                        return false;
+                    }
+                }
+            }
+            if (isInsert == 1) {
+                LateRule.push(obj);
+            }
+            LateRuleTable();
+            $('#latecount').val('');
+            //$('#txtaftertimelate').val('');
+            $('#txtaftertimelatehh').val('');
+            $('#txtaftertimelatemm').val('');
+        }
+    }
+
+    function LateRuleTable() {
+        var txthtml = "";
+        for (var i = 0; i < LateRule.length; i++) {
+            var obj = {};
+            obj = LateRule[i];
+            txthtml = txthtml + "<tr><td>" + obj.LateCount + "</td><td>" + obj.InTimeAfter + "</td><td class='text-center'><i class='fa fa-trash' style='cursor: pointer;font-size: 15px;' onclick='RemoveLateLeaving(" + i + ");'></i></td></tr>";
+        }
+        $('#tblbodylaterule').html(txthtml);
+    }
+
+    function RemoveLateLeaving(index) {
+        if (LateRule.length > index) {
+            for (var i = 0; i < LateRule.length; i++) {
+                if (i == index) {
+                    LateRule.splice(i, 1);
+                }
+            }
+
+            LateRuleTable();
+        }
+    }
+
+
+    function AddEarlyLeaving() {
+        var obj = {};
+
+        var earlyruleleavingtimehh = $('#earlyruleleavingtimehh').val();
+        var earlyruleleavingtimemm = $('#earlyruleleavingtimemm').val();
+
+
+
+        var earlyruleleavingtimelate = "";
+        var valid=false;
+        if(earlyruleleavingtimehh=="" && earlyruleleavingtimemm==""){
+            $('#Mandatoryearlyruleleavingtime').show();
+            valid=false;
+        }
+        else {
+            $('#Mandatoryearlyruleleavingtime').hide();
+            valid=true;
+        }
+
+        if(earlyruleleavingtimemm==""){
+            earlyruleleavingtimemm="00";
+        }
+
+        if(earlyruleleavingtimehh==""){
+            earlyruleleavingtimehh="00";
+        }
+
+        if(earlyruleleavingtimehh!="" )
+        {
+            earlyruleleavingtime = (earlyruleleavingtimehh+":"+earlyruleleavingtimemm);//$('#txtConsAttenAfter').val();
+        }
+
+
+
+
+
+
+
+
+        //var earlyruleleavingtime = "";
+        //if(earlyruleleavingtimehh!="" && earlyruleleavingtimemm!="")
+        //{
+        //    earlyruleleavingtime = (earlyruleleavingtimehh+":"+earlyruleleavingtimemm);//$('#txtConsAttenAfter').val();
+        //}
+
+        //var earlyruleleavingtime = $('#earlyruleleavingtime').val();
+
+        var earlyleavingdays = $('#earlyleavingdays').val();
+        var slcondition = $('#slcondition option:selected').val();
+        if (earlyruleleavingtime == "") {
+            $('#Mandatoryearlyruleleavingtime').show();
+        }
+        else {
+            $('#Mandatoryearlyruleleavingtime').hide();
+        }
+
+        if (earlyleavingdays == "") {
+            $('#Mandatoryearlyleavingdays').show();
+        }
+        else {
+            $('#Mandatoryearlyleavingdays').hide();
+        }
+
+        if (earlyruleleavingtime != "" && earlyleavingdays != ""  && valid) {
+            obj.LeavingHours = earlyruleleavingtime;//$('#earlyruleleavingtime').val();
+            obj.LeavingDays = $('#earlyleavingdays').val();
+            obj.Condition = slcondition;
+            EarlyLeaving.push(obj);
+            EarlyLeavingTable();
+
+            $('#earlyruleleavingtimehh').val('');
+            $('#earlyruleleavingtimemm').val('');
+
+            //$('#earlyruleleavingtime').val('');
+            $('#earlyleavingdays').val('');
+            $('#slcondition').val($("#slcondition option:first").val());
+        }
+    }
+
+    function EarlyLeavingTable() {
+        var txthtml = "";
+        for (var i = 0; i < EarlyLeaving.length; i++) {
+            var obj = {};
+            obj = EarlyLeaving[i];
+            txthtml = txthtml + "<tr><td>" + obj.LeavingHours + "</td><td>" + obj.LeavingDays + "</td><td>" + obj.Condition + "</td><td class='text-center'><i class='fa fa-trash' style='cursor: pointer;font-size: 15px;' onclick='RemoveEarlyLeaving(" + i + ");'></i></td></tr>";
+        }
+        $('#tblearlyleavingruleseclist').html(txthtml);
+    }
+
+    function RemoveEarlyLeaving(index) {
+        if (EarlyLeaving.length > index) {
+            for (var i = 0; i < EarlyLeaving.length; i++) {
+                if (i == index) {
+                    EarlyLeaving.splice(i, 1);
+                }
+            }
+
+            EarlyLeavingTable();
+        }
+    }
+
+    function shiftendchange() {
+        var ShiftStart = $('#txtShiftStart').val();
+        var ShiftEnd = $('#txtShiftEnd').val();
+
+        if (ShiftStart != "" && ShiftEnd != "") {
+
+            var hours = parseFloat(parseFloat(ShiftEnd.split(':')[0], 10) - parseFloat(ShiftStart.split(':')[0], 10));
+            var mins = "00";
+            var srtmin = ShiftStart.split(':')[1];
+            var endmin = ShiftEnd.split(':')[1];
+
+
+
+            if (hours < 0) hours = 24 + hours;
+            if (parseInt(srtmin) <= parseInt(endmin)) {
+                mins = parseFloat(parseFloat(ShiftEnd.split(':')[1], 10) - parseFloat(ShiftStart.split(':')[1], 10));
+            }
+            else {
+                mins = parseFloat(parseFloat(ShiftStart.split(':')[1], 10) - parseFloat(ShiftEnd.split(':')[1], 10));
+                hours = hours - 1;
+                mins = (60 - mins);
+            }
+
+            $("#TotalShiftDuration").val(hours + ":" + mins);
+        }
+    }
+
+    function ResetShiftEntry() {
+        $('#txtShiftStart').val('');
+        $('#txtShiftEnd').val('');
+        $("#TotalShiftDuration").val("00:00");
+        $('#txtShiftBreak').val('');
+        $("#AdvanceShiftRule").prop("checked", false);
+        $('.divAdvanceShiftRule').hide();
+        $('#txtConsAttenAfterhh').val('');
+
+        $('#txtConsAttenAftermm').val('');
+    }
+
+</script>
+
+
+
+<div class="panel-title clearfix" id="myDiv">
+    <h3 class="pull-left">
+        <label>Add/Edit Roster</label>
+    </h3>
+    <div id="ApprovalCross" class="crossBtn"><a href="/Roster/Dashboard"><i class="fa fa-times"></i></a></div>
+</div>
+<div class="form_main">
+    <div class="row clearfix">
+        <input type="hidden" value="@Model.RosterID" id="hdnRosterID" />
+        <input type="hidden" value="@ViewBag.mode" id="hdnMode" />
+        <div class="col-md-3">
+
+
+            <label>Roster Code</label>
+            <div class="relative">
+                <input type="text" id="txt_roster_code" value="@Model.RosterCode" />
+                <span id="Mandatoryrostercode" style="display: none" class="requiredtype2">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Roster Name</label>
+            <div class="relative">
+                <input type="text" id="txt_roster_nm" value="@Model.RosterName" />
+                <span id="Mandatoryroster_nm" style="display: none" class="requiredtype2">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+            <input type="hidden" name="hdn_id" id="hdn_id" value="@Model.RosterID" />
+
+        </div>
+        <div class="col-md-3">
+            <label>Payroll Class</label>
+            <div class="relative">
+                @Html.DropDownListFor(m => m._PClassId, Model._PClassName, new { style = "width: 100%;", Id = "ddlPayClassName", @onchange = "DrpClassChange(this)" })
+                <span id="Mandatoryclass_drp" style="display: none" class="requiredtype2">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Roster Type</label>
+            <div style="padding-top: 5px;" class="relative">
+                @Html.RadioButtonFor(m => m._WeekDay, "W", new { id = "week", @checked = "true" }) <label for="always">WeekDay</label>  @Html.RadioButtonFor(m => m._WeekDay, "P", new { id = "period" })<label for="always">Period</label>
+                <span id="Mandatoryto_dt" style="display: none" class="requiredtype2">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="col-md-3">
+
+            <label>Period</label>
+            <div class="relative">
+                @Html.DropDownListFor(m => m._PeriodID, Model._PeriodName, new { style = "width: 100%;", Id = "ddlPeriodName", @disabled = "disabled", @onchange = "showCalendar(this)" })
+                <span id="Mandatoryperiod_drp" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <label class="customcheck" style="margin-top:25px">
+                Shift Rules
+                <input type="checkbox" id="AdvanceShiftRule" onclick="ShowHideAdvanceRule();" @ShiftRule>
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="clear"></div>
+
+        <input type="hidden" value="@Model.Consider_AttendanceAfter" id="hdnConsider_AttendanceAfter">
+        <input type="hidden" value="@Model.InTimeAfter" id="hdnInTimeAfter">
+        <input type="hidden" value="@Model.OutTimeAfter" id="hdnOutTimeAfter">
+        <input type="hidden" value="@Model.InOutTimeDiff" id="hdnInOutTimeDiff">
+        
+        
+        <div class="divAdvanceShiftRule mTop20" @ShiftRuleShow>
+            <div class="clearfix">
+                <div class="col-md-6">
+                    <div class="borderpad clearfix" style="min-height: 106px;">
+                        <span class="">Full Attendance</span>
+                        <div class="col-md-12">
+                            <table class="paddingTbl">
+                                <tr>
+                                    <td><label style=" margin-top: 26px;">Consider Full Day (24 Hours format)</label></td>
+                                    <td>
+
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    <td colspan="2"><b>Hours</b></td>
+                                                    <td><b>Min</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtConsAttenAfterhh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                    <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                                    <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtConsAttenAftermm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                </tr>
+                                            </table>
+                                             
+                                            
+                                            @*<input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtConsAttenAfter" width="100" maxlength="5" value="@Model.Consider_AttendanceAfter" />*@
+                                        </div>
+
+                                    </td>
+                                    
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="borderpad clearfix">
+                        <span class="">Half Day</span>
+                        <div class="col-md-12">
+                            <table class="paddingTbl vAlignb">
+                                <tr>
+                                    <td style=" padding-top: 26px;"><input type="checkbox" id="intimeafter" @IsInTimeAfter /> In Time After (24 Hours format)</td>
+
+                                    <td>
+                                        <table class="vAlignb">
+                                            <tr>
+                                                <td colspan="2"><b>Hours</b></td>
+                                                <td><b>Min</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtintimeafterhh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtintimeaftermm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                            </tr>
+                                        </table>
+
+
+                                        @*<input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtintimeafter" width="100" maxlength="5" value="@Model.InTimeAfter" />*@
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" id="OutTimeBefore" @IsOutTimeAfter /> Out Time Before (24 Hours format)</td>
+                                    <td>
+                                        <table class="vAlignb">
+                                            <tr>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtOutTimeBeforehh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtOutTimeBeforemm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                            </tr>
+                                        </table>
+
+                                        @*<input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtOutTimeBefore" width="100" maxlength="5" value="@Model.OutTimeAfter" />*@
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" id="InOutTimeDiff" @IsInOutTimeDiff /> In/Out Time Diff (24 Hours format)</td>
+                                    <td>
+                                        <table class="vAlignb">
+                                            <tr>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtInOutTimeDiffhh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtInOutTimeDiffmm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                            </tr>
+                                        </table>
+
+                                        @*<input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtInOutTimeDiff" width="100" maxlength="5" value="@Model.InOutTimeDiff" />*@
+                                    </td>
+                                    
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12 separateDiv">
+                            <table class="paddingTbl vAlignb">
+                                <tr>
+                                    <td>IN Time</td>
+                                    <td class="relative">
+                                        <table>
+                                            <tr>
+                                                <td colspan="2"><b>Hours</b></td>
+                                                <td><b>Min</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="Intimehh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="Intimemm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                            </tr>
+                                        </table>                                       
+                                        <span id="MandatoryINTime" style="display: none" class="requiredtype">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <select id="slAfterBefor1" style="margin:0">
+                                            <option value="After">After</option>
+                                            <option value="Before">Before</option>
+                                        </select>
+                                    </td>
+                                   
+                                    
+                                </tr>
+                                <tr>
+                                    <td>Out Time</td>
+                                    <td class="relative">
+                                        <table>
+                                            <tr>
+                                                <td colspan="2"><b>Hours</b></td>
+                                                <td><b>Min</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="outtimehh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="outtimemm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                            </tr>
+                                        </table>
+                                        <span id="MandatoryOUTTime" style="display: none" class="requiredtype">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <select id="slAfterBefor2" style="margin:0">
+                                            <option value="After">After</option>
+                                            <option value="Before">Before</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="slcondition2" style="margin:0">
+                                            <option value="And">And</option>
+                                            <option value="Or">Or</option>
+                                        </select>
+                                    </td>
+                                    <td><button type="button" class="btn btn-success btn-xs btn-radius" onclick="AddHalfDay();">+</button></td>
+                                </tr>
+                            </table>
+                            <div>
+                                <div class="earlyleavingrulesec">
+                                    <table class="dvxtbl mTop5" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>In Time</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Out Time</th>
+                                                <th></th>
+                                                <th>Condition</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblHalfDayRuleSecList">
+                                            <tr>
+                                                <td colspan="7" class="text-center">Please add data</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix mTop5">
+                <div class="col-md-12">
+                    <div class="borderpad clearfix">
+                        <span class="">Late/Early Leaving Rule</span>
+                        <div class="col-md-12">
+                            <table class="paddingTbl vAlignb">
+                                <tr>
+                                    <td class="relative">
+                                        <input type="number" id="latecount" />
+                                        <span id="Mandatorylatecount" style="display: none" class="requiredtype">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td>Late &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; After</td>
+                                    <td class="relative">
+                                        <table class="vAlignb">
+                                            <tr>
+                                                <td colspan="2"><b>Hours</b></td>
+                                                <td><b>Min</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtaftertimelatehh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="txtaftertimelatemm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                            </tr>
+                                        </table>
+
+
+                                        @*<input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="txtaftertimelate" width="100" maxlength="5" value="" />*@
+                                        <span id="Mandatoryaftertimelate" style="display: none" class="requiredtype">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td><button type="button" class="btn btn-success btn-xs btn-radius" onclick="addLateRule();">+</button></td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="tblLateEarlyLeavingRule">
+                                <table class="dvxtbl mTop5" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Late</th>
+                                            <th>In Time After</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblbodylaterule">
+                                        <tr>
+                                            <td colspan="3" class="text-center">Please add data </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        
+                        <div class="col-md-12 separateDiv">
+                            <table class="paddingTbl">
+                                <tr>
+                                    <td><input type="checkbox" id="deductrule" @IsDeduct /> </td>
+                                    <td>Deduct</td>
+                                    <td><input type="number" id="latedaycount" min="1" value="@Model.LateDayCount" style="width:80px" /></td>
+                                    <td>Day's for every</td>
+                                    <td><input type="number" id="laterulecount" min="1" value="@Model.LateRuleCount" style="width:80px" /></td>
+                                    <td>
+                                        Lates, After first
+                                    </td>
+                                    <td>
+                                        <input type="number" id="lateruleaftercount" min="1" value="@Model.LateRuleAfterCount" style="width:80px" />
+                                    </td>
+                                    <td>Lates</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12 separateDiv">
+                            <table class="paddingTbl vAlignb">
+                                <tr>
+                                    <td>Early Leaving (24 Hours format)</td>
+                                    <td class="relative">
+                                        <table>
+                                            <tr>
+                                                <td colspan="2"><b>Hours</b></td>
+                                                <td><b>Min</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="earlyruleleavingtimehh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                                <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                                <td><input type="number" style="width: 100%; height: 22px;" class="decimalCheck quantity" placeholder="00" id="earlyruleleavingtimemm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                            </tr>
+                                        </table>
+                                         
+                                        
+
+                                        @*<input type="time" onchange="validateHhMm(this);" style="width: 100%; height: 22px;" placeholder="00:00" id="earlyruleleavingtime" width="100" maxlength="5" value="" />*@
+                                        <span id="Mandatoryearlyruleleavingtime" style="display: none" class="requiredtype">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td>Hours</td>
+                                    <td class="relative">
+                                        <input type="number" id="earlyleavingdays" min="1" />
+                                        <span id="Mandatoryearlyleavingdays" style="display: none" class="requiredtype">
+                                            <img id="" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                        </span>
+                                    </td>
+                                    <td>Day's</td>
+                                    <td>
+                                        <select id="slcondition" style="margin:0">
+                                            <option value="And">And</option>
+                                            <option value="Or">Or</option>
+                                        </select>
+                                    </td>
+                                    <td><button type="button" class="btn btn-success btn-xs btn-radius" onclick="AddEarlyLeaving();">+</button></td>
+                                </tr>
+                            </table>
+                            <div>
+                                <div class="earlyleavingrulesec">
+                                    <table class="dvxtbl mTop5" width="60%">
+                                        <thead>
+                                            <tr>
+                                                <th>hours</th>
+                                                <th>Days</th>
+                                                <th>Condition</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblearlyleavingruleseclist">
+                                            <tr>
+                                                <td colspan="4" class="text-center">Please add data</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <font color="red"><label id="lblErrorMessage"></label></font>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-12">
+            <div id="tblDetails">
+                <table width='100%' class='dvxtbl' id="editable" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Html.DropDownListFor(m => m._Shift_Mon_ID, Model._ShiftName, new { style = "width: 100%;", Id = "ddlWeekShift1" })</td>
+                            <td>@Html.DropDownListFor(m => m._Shift_Tue_ID, Model._ShiftName, new { style = "width: 100%;", Id = "ddlWeekShift2" })</td>
+                            <td>@Html.DropDownListFor(m => m._Shift_Wed_ID, Model._ShiftName, new { style = "width: 100%;", Id = "ddlWeekShift3" })</td>
+                            <td>@Html.DropDownListFor(m => m._Shift_Thur_ID, Model._ShiftName, new { style = "width: 100%;", Id = "ddlWeekShift4" })</td>
+                            <td>@Html.DropDownListFor(m => m._Shift_Fri_ID, Model._ShiftName, new { style = "width: 100%;", Id = "ddlWeekShift5" })</td>
+                            <td>@Html.DropDownListFor(m => m._Shift_Sat_ID, Model._ShiftName, new { style = "width: 100%;", Id = "ddlWeekShift6" })</td>
+                            <td>@Html.DropDownListFor(m => m._Shift_Sun_ID, Model._ShiftName, new { style = "width: 100%;", Id = "ddlWeekShift7" })</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <table width='100%' class='dvxtbl' id="editable1" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                        </tr>
+                        <tr>
+                            <td class="text-center" colspan="7">No data available</td>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-12" style="padding-top: 10px;">
+            <input id="btnSaveHeads" type="button" class="btn btn-primary" onclick="SaveRoster()" value="Save & New" />
+        </div>
+    </div>
+</div>
+
+

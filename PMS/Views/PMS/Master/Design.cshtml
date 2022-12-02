@@ -1,0 +1,1073 @@
+﻿
+@{
+    ViewBag.Title = "Design";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    
+    
+
+    $('input.tagsInput').tagsinput({
+        //typeaheadjs: {
+        //    name: 'citynames',
+        //    displayKey: 'name',
+        //    valueKey: 'name',
+        //    source: citynames.ttAdapter()
+        //}
+    });
+
+    //$(function () {
+       
+    //    $("#form-total").steps({
+    //        headerTag: "h2",
+    //        bodyTag: "section",
+    //        transitionEffect: "slide",
+    //        // enableAllSteps: true,
+    //        autoFocus: true,
+    //        transitionEffectSpeed: 500,
+    //        titleTemplate: '<div class="title">#title#</div>',
+    //        labels: {
+    //            previous: 'Back',
+    //            next: '<i class="fa fa-arrow-right"></i>',
+    //            finish: '<i class="fa fa-arrow-right"></i>',
+    //            current: ''
+    //        }
+    //    });
+    //});
+
+</script>
+
+<link href="~/assests/pluggins/smartWizard/smart_wizard.min.css" rel="stylesheet" />
+<link href="~/assests/pluggins/smartWizard/smart_wizard_theme_arrows.min.css" rel="stylesheet" />
+<link href="~/assests/pluggins/smartWizard/smart_wizard_theme_dots.css" rel="stylesheet" />
+<script src="~/assests/pluggins/smartWizard/jquery.smartWizard.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.widgetizeForm li .parentLabel').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).parent('li').hasClass('ready')) {
+                //$('.widgetDrop').hide();
+                $(this).parent('li').addClass('on');
+                $(this).parent('li').find('.widgetDrop').toggle();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+        $('.widgetDrop .nextStage').click(function () {
+            //alert($(this).attr('class'));
+            if ($(this).hasClass('act')) {
+                $(this).closest('li.parentLi').next('.parentLi').addClass('ready');
+                $(this).closest('li.parentLi').next('.parentLi').find('.widgetDrop').show();
+                $(this).closest('li.parentLi').next('.parentLi').addClass('on');
+                $(this).closest('li.parentLi').find('.widgetDrop').hide();
+            } else {
+                $(this).parent('li').find('.widgetDrop').hide();
+            }
+        });
+    });
+</script>
+
+
+
+<section class="rightSide transit clearfix pmsRight" style="min-height: 415px;">
+    <div class="panel-heading clearfix pmsHeader">
+        <div class="panel-title clearfix pull-left" id="myDiv">
+            <h3 class="pull-left">
+                <label>Designs</label>
+            </h3>
+        </div>
+
+        @*<div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOMEntryList", "BOMEntry")"><i class="fa fa-times"></i></a></div>*@
+    </div>
+    <div class="pmsContent">
+        <div class="clearfix">
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false">Roles Popup</button>
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#bookingSatus" data-backdrop="static" data-keyboard="false">Booking Status</button>
+            <button class="btn btn-warning btn-radius" data-toggle="modal" data-target="#skillPopup" data-backdrop="static" data-keyboard="false">Skill</button>
+
+            <button class="btn btn-warning btn-radius" data-toggle="modal" data-target="#expCate" data-backdrop="static" data-keyboard="false">Expense Category</button>
+            <button class="btn btn-primary btn-radius" data-toggle="modal" data-target="#reqStatus" data-backdrop="static" data-keyboard="false">Requirement Status</button>
+            <button class="btn btn-primary btn-radius" data-toggle="modal" data-target="#resourcePop" data-backdrop="static" data-keyboard="false">Resource</button>
+            <button class="btn btn-primary btn-radius" data-toggle="modal" data-target="#transCat" data-backdrop="static" data-keyboard="false">Transaction Category</button>
+            <button class="btn btn-primary btn-radius" data-toggle="modal" data-target="#projectMod" data-backdrop="static" data-keyboard="false">Project Module</button>
+
+
+            <button class="btn btn-primary btn-radius" data-toggle="modal" data-target="#timeSheet" data-backdrop="static" data-keyboard="false">Timesheet Entry Module</button>
+
+
+            <button class="btn btn-primary btn-radius" data-toggle="modal" data-target="#profModal" data-backdrop="static" data-keyboard="false">Proficiency Model</button>
+        </div>
+    </div>
+
+
+
+
+
+    <!--Timesheet Entry -->
+    <div class="modal fade pmsModal w50" id="profModal" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Proficiency Model </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="pmsForm horizontalLbl boxModel">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Name <span class="asterix">*</span></label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Min Rating Value <span class="asterix">*</span></label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>
+                                </div>
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Max Rating Value <span class="asterix">*</span></label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Ratable Entity <span class="asterix">*</span></label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="pmsForm horizontalLbl boxModel">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Name <span class="asterix">*</span></label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>
+                                </div>
+
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Rating Model</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Value</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>
+                                </div>
+
+
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Is Default</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Timesheet Entry -->
+    <div class="modal fade pmsModal w50" id="timeSheet" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Timesheet Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="pmsForm horizontalLbl">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Date <span class="asterix">*</span></label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>
+                                </div>
+
+                                <div class="formLine"></div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-12 col-form-label">Type</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control">
+                                                <option>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Project Task</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Description</label>
+                                    <div class="col-sm-12">
+                                        <textarea rows="5" class="form-control" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="pmsForm horizontalLbl">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Duration</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Project</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">Role</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="formLine"></div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-12 col-form-label">External Comments</label>
+                                    <div class="col-sm-12">
+                                        <textarea rows="5" class="form-control" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--Project Module -->
+    <div class="modal fade pmsModal w90" id="projectMod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Project Module </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="clearfix">
+                        <ul class="widgetizeForm">
+                            <li class="parentLi ready">
+                                <span class="parentLabel "></span>
+                                <div>Quote</div>
+                                <ul class="widgetDrop ">
+                                    <li>
+                                        <div class="dropContent">
+                                            <div class="pmsForm">
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Name</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="" value="email@example.com">
+                                                    </div>
+                                                </div>
+                                                <div class="formLine"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Description</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="formLine"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Customer</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control">
+                                                            <option>Select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full  nextStage act">Go to Next</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="parentLi">
+                                <span class="parentLabel"></span>
+                                <div>Plan </div>
+                                <ul class="widgetDrop ">
+                                    <li>
+                                        <div class="dropContent">
+                                            <div class="pmsForm">
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Name</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="" value="email@example.com">
+                                                    </div>
+                                                </div>
+                                                <div class="formLine"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Description</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="formLine"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Customer</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control">
+                                                            <option>Select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Go to Next</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="parentLi">
+                                <span class="parentLabel"></span>
+                                <div>Deliver</div>
+                                <ul class="widgetDrop ">
+                                    <li>
+                                        <div class="dropContent">
+                                            <div class="pmsForm">
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Name</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="" value="email@example.com">
+                                                    </div>
+                                                </div>
+                                                <div class="formLine"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Description</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="formLine"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Customer</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control">
+                                                            <option>Select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Go to Next</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="parentLi">
+                                <span class="parentLabel"></span>
+                                <div>Complete</div>
+                                <ul class="widgetDrop ">
+                                    <li>
+                                        <div class="dropContent">
+                                            <div class="pmsForm">
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Name</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="" value="email@example.com">
+                                                    </div>
+                                                </div>
+                                                <div class="formLine"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Description</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="formLine"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-4 col-form-label">Customer</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control">
+                                                            <option>Select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-success btn-full act nextStage">Finish</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <h5 class="mTop0 clearfix">
+                        <div class="col-sm-2">
+                            <span class="tabLikeLink">Summary</span>
+                        </div> 
+                        
+                    
+                    </h5>
+                    
+
+                    <div class="clearfix">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mutiFMbox">
+                                    <div class="pmsForm">
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="" value="email@example.com">
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">Description</label>
+                                            <div class="col-sm-10">
+                                                <textarea rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">Customer</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control">
+                                                    <option>Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">Currency</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control">
+                                                    <option>Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">Calender Template</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control">
+                                                    <option>Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">Contracting Unit</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control">
+                                                    <option>Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">Project Manager</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control">
+                                                    <option>Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mutiFMbox">
+                                    <div class="pmsForm">
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Estimated Start Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="" value="">
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Estimated End Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="" value="">
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Estimated Hours</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="" value="">
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Estimated Labour Cost</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="" value="">
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Estimated Expense Cost</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="" value="">
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Estimated Total Cost</label>
+                                            <div class="col-sm-8">
+                                                <div class="lebeldText c5">&#8377; 30000.00</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mutiFMbox">
+                                    <div class="pmsForm">
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Actual Start Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="" value="">
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Actual End Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="" value="">
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Actual Hours</label>
+                                            <div class="col-sm-8">
+                                                <div class="lebeldText c1">&#8377; 30000.00</div>
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Actual Labour Cost</label>
+                                            <div class="col-sm-8">
+                                                <div class="lebeldText c2">&#8377; 30000.00</div>
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Actual Expense Cost</label>
+                                            <div class="col-sm-8">
+                                                <div class="lebeldText c3">&#8377; 30000.00</div>
+                                            </div>
+                                        </div>
+                                        <div class="formLine"></div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-4 col-form-label">Actual Total Cost</label>
+                                            <div class="col-sm-8">
+                                                <div class="lebeldText c4">&#8377; 30000.00</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 text-right pTop20 ">
+                                <button class="btn btn-success btn-radius">Save</button>
+                                <button class="btn btn-danger btn-radius" data-dismiss="modal" aria-label="Close">Cancel</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade pmsModal w40" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Roles</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="" value="email@example.com">
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Billing Type</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Unit</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Skillset</label>
+                            <div class="col-sm-10">
+                                <div class="checkWraper">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox1" value="option1"> something skill 1
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox2" value="option2">something skill 1
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox3" value="option3"> something skill 1
+                                    </label>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade pmsModal w40" id="bookingSatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Roles</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="" value="Susanta Kundu">
+                            </div>
+                        </div>
+
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Status</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea rows="5" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Unit</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade pmsModal w40" id="skillPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Skill</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="" value="Susanta Kundu">
+                            </div>
+                        </div>
+
+                        <div class="formLine"></div>
+                        
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea rows="5" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Charecteristic Type</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Unit</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Skill</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control tagsInput" value="Quality Analyst,Service Manager" data-role="tagsinput">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Expense Category-->
+    <div class="modal fade pmsModal w30" id="expCate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Expense Category </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="" value="Susanta Kundu">
+                            </div>
+                        </div>
+
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Expense Type</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Transaction Category</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Receipt Required</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Requirement Status-->
+    <div class="modal fade pmsModal w30" id="reqStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Expense Category </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="" value="Susanta Kundu">
+                            </div>
+                        </div>
+
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Status</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Unit</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--resource -->
+    <div class="modal fade pmsModal w30" id="resourcePop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Resource </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Resource Type</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="" value="Susanta Kundu">
+                            </div>
+                        </div>
+
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Contact</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Organization Unit</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--transaction Category -->
+    <div class="modal fade pmsModal w30" id="transCat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Transaction Category </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pmsForm">
+                        
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="" value="Susanta Kundu">
+                            </div>
+                        </div>
+
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Unit Group</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Default Unit</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Billing Type</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-radius">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</section>

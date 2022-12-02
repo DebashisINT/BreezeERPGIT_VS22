@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    body {
+        padding: 1% 3%;
+        color: rgb(119, 119, 119);
+    }
+
+    h1 {
+        color: #333;
+    }
+</style>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+<script src="../Scripts/JS/editableTableWidget.js"></script>
+@*<script src="../Views/payrollHOPEntryOnce/editableTableWidget.js"></script>*@
+@*<script src="mindmup-editabletable.js"></script>*@
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#editable').editableTableWidget();
+        $('#editable td.uneditable').on('change', function (evt, newValue) {
+            return false;
+        });
+
+        //$('#editable td').on('change', function (evt, newValue) {
+        //    $.post("script.php", { value: newValue })
+        //        .done(function (data) {
+        //            alert("Data Loaded: " + data);
+        //        });
+        //    ;
+        //});
+    });
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">HOP - Entered Once</h3>
+    </div>
+</div>
+<div class="form_main">
+    <table id="editable" class="pure-table pure-table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td class="uneditable">1</td>
+                <td>Honda</td>
+                <td>Accord</td>
+                <td>2009</td>
+            </tr>
+
+            <tr>
+                <td class="uneditable">2</td>
+                <td>Toyota</td>
+                <td>Camry</td>
+                <td>2012</td>
+            </tr>
+
+            <tr>
+                <td class="uneditable">3</td>
+                <td>Hyundai</td>
+                <td>Elantra</td>
+                <td>2010</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

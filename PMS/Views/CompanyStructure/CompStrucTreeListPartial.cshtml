@@ -1,0 +1,289 @@
+﻿@model PMS.Controllers.Heirarchy_details
+
+@using DevExpress.Web.Mvc.UI;
+@using DevExpress.Web;
+@using DevExpress.XtraPrinting;
+@using DevExpress.Export;
+@using DevExpress.Web.Mvc;
+@using System.Web.UI.WebControls;
+@using DevExpress.Web.ASPxTreeList;
+@using DevExpress.Utils;
+@using System.Linq;
+
+
+
+@Html.DevExpress().TreeList(settings =>
+    {
+        settings.Name = "CompStrucTreeList";
+        settings.CallbackRouteValues = new { Controller = "CompanyStructure", Action = "CompStrucTreeListPartial" };
+
+        settings.SettingsEditing.AddNewNodeRouteValues = new { Controller = "CompanyStructure", Action = "CompStrucTreeListPartialAddNew" };
+        settings.SettingsEditing.UpdateNodeRouteValues = new { Controller = "CompanyStructure", Action = "CompStrucTreeListPartialUpdate" };
+        settings.SettingsEditing.DeleteNodeRouteValues = new { Controller = "CompanyStructure", Action = "CompStrucTreeListPartialDelete" };
+        //settings.SettingsEditing.NodeDragDropRouteValues = new { Controller = "CompanyStructure", Action = "CompStrucTreeListPartialMove" };
+
+        settings.Style.Add("color", "#9F9F9F");
+        settings.CommandColumn.ButtonType = ButtonType.Button;
+        settings.SettingsEditing.Mode = TreeListEditMode.PopupEditForm;
+
+        //settings.SettingsPopupEditForm.AllowResize = true;
+        //settings.SettingsPopup.EditForm.ResizingMode = ResizingMode.Live;
+        settings.SettingsPopupEditForm.Modal = true;
+        settings.SettingsPopupEditForm.Width = 500; //Unit.Percentage(100);
+        settings.SettingsPopupEditForm.VerticalAlign = PopupVerticalAlign.WindowCenter;
+        settings.SettingsPopupEditForm.HorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.CommandColumn.UpdateButton.Visible = true;//.UpdateButton.ButtonType = GridCommandButtonRenderMode.Button;
+        //settings.Se.UpdateButton.ButtonType = GridCommandButtonRenderMode.Button;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.VisibleIndex = 4;
+        settings.CommandColumn.NewButton.Visible = false;
+        settings.CommandColumn.EditButton.Visible = true;
+        settings.CommandColumn.DeleteButton.Visible = false;
+        settings.CommandColumn.Caption = "Actions";
+        settings.CommandColumn.Width = 0;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+            
+        settings.ClientSideEvents.EndCallback = "OnEndCallback";
+
+        //settings.ClientSideEvents.NodeClick = "funviewdetailscmpstructure";
+        
+        //settings.Styles.EditFormColumnCaption.CssClass = "customCaption";
+
+        //settings.ClientSideEvents.EndCallback = "treeList_OnEndCallback";
+
+
+        /*settings.CommandColumn.ButtonType = ButtonType.Image;
+        settings.CommandColumn.EditButton.Image.Url = "~/Areas/Admin/Content/Images/Edit.png";*/
+        //settings.CommandColumn.EditButton.Image.Height = 20;
+        //settings.CommandColumn.EditButton.Image.Width = 20;
+
+        ////custom button
+        TreeListCommandColumnCustomButton objdelete = new TreeListCommandColumnCustomButton();
+        objdelete.Styles.Style.Border.BorderStyle = BorderStyle.None;
+        objdelete.Image.Url = "~/Areas/Admin/Content/Images/Delete.png";
+        //objdelete.Image.Width = 20;
+        //objdelete.Image.Height = 20;
+        settings.CommandColumn.CustomButtons.Add(objdelete);
+
+
+
+        ////custom button
+        settings.ClientSideEvents.CustomButtonClick = "OnCustomButtonClick";
+        ////settings.CommandColumn.DeleteButton.Image.Url = "~/Areas/Admin/Content/Images/Delete.png";
+        ////settings.CommandColumn.DeleteButton.Image.Height = 20;
+        ////settings.CommandColumn.DeleteButton.Image.Width = 20;
+        /*settings.CommandColumn.NewButton.Image.Url = "~/Areas/Admin/Content/Images/AddNew.png";
+        settings.CommandColumn.NewButton.Image.Height = 16;
+        settings.CommandColumn.NewButton.Image.Width = 16;
+        settings.CommandColumn.UpdateButton.Image.Url = "~/Areas/Admin/Content/Images/Update.png";
+        settings.CommandColumn.UpdateButton.Image.Height = 16;
+        settings.CommandColumn.UpdateButton.Image.Width = 16;
+        settings.CommandColumn.CancelButton.Image.Url = "~/Areas/Admin/Content/Images/Cancel.png";
+        settings.CommandColumn.CancelButton.Image.Height = 16;
+        settings.CommandColumn.CancelButton.Image.Width = 16;*/
+
+
+
+
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+
+            ASPxTreeList gridView = sender as ASPxTreeList;
+            if (gridView.IsNewNodeEditing)
+            {
+                gridView.SettingsPopupEditForm.Caption = "Add Sub Level";
+                gridView.SettingsText.CommandUpdate = "Save";
+            }
+            else
+            {
+                gridView.SettingsPopupEditForm.Caption = "Edit Sub Level";
+                gridView.SettingsText.CommandNew = "Modify";
+            }
+
+        };
+
+
+
+
+        settings.CommandColumnButtonInitialize = (s, e) =>
+        {
+            ASPxTreeList grid = s as ASPxTreeList;
+            if (grid.IsNewNodeEditing)
+            {
+                e.CommandColumn.CancelButton.Visible = true;
+            }
+            else
+            {
+                e.CommandColumn.CancelButton.Visible = true;
+            }
+
+            e.CommandColumn.Width = 0;
+        };
+
+        settings.PreRender = (s, e) =>
+        {
+            ASPxTreeList tree = s as ASPxTreeList;
+            tree.ClientSideEvents.ContextMenu = "OnContextMenu";
+            
+            //tree.ClientSideEvents.NodeClick = "function(s,e){alert('clicked');}";
+            //tree.ClientSideEvents.NodeClick = "OpenDetail";
+            //tree.Columns[5].Visible = false;
+            tree.ExpandAll();
+
+            //  tree.Enabled = false;
+
+            //   tree.SettingsSelection.Enabled = false;
+        };
+        //settings.ClientSideEvents.NodeClick = "function(s,e){e.cancel;}";
+
+        settings.Init = (s, e) =>
+        {
+            ASPxTreeList tree = s as ASPxTreeList;
+
+            tree.ExpandAll();
+
+            // tree.Enabled = false;
+            //     tree.ClientSideEvents.ContextMenu = "OnContextMenuc";
+            tree.SettingsSelection.Enabled = false;
+        };
+        //settings.BeforeGetCallbackResult = (s, e) =>
+        //{
+        //    MVCxTreeList tl = s as MVCxTreeList;
+        //    tl.ExpandAll();
+        //};
+
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            ASPxTreeList tree = s as ASPxTreeList;
+            tree.ClientSideEvents.ContextMenu = "OnContextMenu";
+            //  tree.SettingsSelection.Enabled = false;
+        };
+
+
+        settings.CustomJSProperties = (s, e) => {
+            if (ViewBag.msg != null && ViewBag.msg != "")
+            {
+                e.Properties["cpBatchUpdate"] = ViewBag.msg;
+            }
+        
+        };
+
+
+        settings.KeyFieldName = "ID";
+        settings.ParentFieldName = "PARENT_ID";
+
+        settings.Columns.Add(
+            column =>
+            {
+                column.FieldName = "ID";
+                column.Caption = "Unit ID";
+                column.Visible = false;
+                column.Width = 0;
+                column.Visible = false;
+                var NameProperties = column.PropertiesEdit as TextBoxProperties;
+                NameProperties.Width = 400;
+                NameProperties.MaxLength = 50;
+
+            });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "OID";
+            column.Caption = "ID" + "<label  style='color:red' >*</label>";
+            column.Width = 0;
+            column.Visible = false;
+            column.ColumnType = MVCxTreeListColumnType.TextBox;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditFormSettings.VisibleIndex = 1;
+            column.EditFormSettings.ColumnSpan = 2;            
+            var txtOidProp = column.PropertiesEdit as TextBoxProperties;
+            txtOidProp.ClientSideEvents.LostFocus = "CheckUniqueID";
+            txtOidProp.ClientSideEvents.Init = "UniqueIDInit";
+            txtOidProp.ClientInstanceName = "txtOID";
+            txtOidProp.ValidationSettings.RequiredField.IsRequired = true;
+            txtOidProp.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            txtOidProp.ValidationSettings.RequiredField.ErrorText = "Mandatory";
+            txtOidProp.MaxLength = 200;
+
+
+        });
+
+      
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Name" + "<span class='spnAsterisk' style='color:red' >*</span>";
+            column.FieldName = "Name";
+            //column.VisibleIndex = 3;
+            column.ColumnType = MVCxTreeListColumnType.TextBox;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditFormSettings.ColumnSpan = 2;
+            column.EditFormSettings.VisibleIndex =2;
+            //  column.EditFormSettings.Visible = "Associated Employee";
+            //column.Width = Unit.Percentage(20);          
+            var txtOidProp = column.PropertiesEdit as TextBoxProperties;
+            txtOidProp.ValidationSettings.RequiredField.IsRequired = true;
+            txtOidProp.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            txtOidProp.ValidationSettings.RequiredField.ErrorText = "Mandatory";
+
+
+        });
+
+
+
+        settings.Columns.Add( column =>
+            {
+                column.FieldName = "OPERHEAD";
+                column.Caption = "Head";
+                column.Visible = false;
+                column.EditFormSettings.Visible = DefaultBoolean.True;
+                column.ColumnType = MVCxTreeListColumnType.TextBox;
+                column.EditFormSettings.VisibleIndex = 4;
+                column.EditFormSettings.ColumnSpan = 4;             
+                column.ColumnType = MVCxTreeListColumnType.ComboBox;
+                var cbxAsEmployee = column.PropertiesEdit as ComboBoxProperties;
+                cbxAsEmployee.Width = 400;
+                cbxAsEmployee.DataSource = Model.employee_List;
+
+                cbxAsEmployee.ValueField = "cnt_internalId";
+                cbxAsEmployee.TextField = "Name";
+            });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Description";
+            column.Caption = "Description ";
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.ColumnType = MVCxTreeListColumnType.TextBox;
+            column.EditFormSettings.VisibleIndex = 3;
+            column.EditFormSettings.ColumnSpan = 3;
+            //column.Width = 100;
+            //var NameProperties = column.PropertiesEdit as TextBoxProperties;
+            //NameProperties.Width = 400;
+            //NameProperties.ValidationSettings.RequiredField.IsRequired = true;
+            //NameProperties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            //NameProperties.ValidationSettings.RequiredField.ErrorText = "Mandatory";
+            //NameProperties.MaxLength = 200;
+            //NameProperties.ValidationSettings.RegularExpression.ErrorText = "Invalid Input";
+        });
+
+
+
+
+
+
+        //settings.Columns["strccount"].VisibleIndex = settings.Columns.Count - 2;
+        //settings.Columns["Name"].VisibleIndex = settings.Columns.Count - 2;
+       // settings.RootValue = 4;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsSelection.Enabled = true;
+
+
+
+
+    }).Bind(Model.listHierarchy).GetHtml()
+
+
+
+

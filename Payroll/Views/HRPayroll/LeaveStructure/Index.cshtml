@@ -1,0 +1,76 @@
+﻿@model Payroll.Models.LeaveStructureEngine
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+
+@{
+    ViewBag.Title = "Leave Structure-Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/payrollCss/LeaveStructure.css" rel="stylesheet" />
+<script>
+    function blockspclChar(event) {
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+        return true;
+    }
+
+    $(document).ready(function () {
+        $('a[href="#tab1"]').parent('li').addClass('active');
+        $('#tab1').addClass(' in active');
+
+        var StructureID = "@Model.StructureID";
+        if (StructureID == "") {
+            $('a[href="#tab2"]').removeAttr("data-toggle");
+        }
+        else {
+            $('a[href="#tab2"]').attr("data-toggle", "tab");
+
+            document.getElementById("txtStructureCode").readOnly = true;
+            document.getElementById("txtStructureName").readOnly = true;
+        }
+
+        $("#txtStructureName").focus();
+    });
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">@Model.StructureHeaderName</h3>
+        <div id="divcross" class="crossBtn"><a href="/LeaveStructure/Dashboard"><i class="fa fa-times"></i></a></div>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-primary tabTotal">
+                <div class="panel-heading tabHead">
+                    <ul class="nav nav-tabs">
+                        <li><a href="#tab1" data-toggle="tab">Leave Structure</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Leave Definition</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                         <div class="tab-pane fade" id="tab1">
+                            @{
+                                Html.RenderAction("StructureOfLeave", "LeaveStructure", new { objModel = Model });
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="tab2">
+                            @{
+                                Html.RenderAction("LeaveDefinition", "LeaveStructure", new { LeaveStructureId = Model.StructureID });
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.StructureID, new { Id = "hdnleavestructid" })
+</div>
+

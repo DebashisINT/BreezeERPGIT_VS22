@@ -1,0 +1,165 @@
+﻿<script src="~/assests/js/jquery.emojiRatings.js"></script>
+<style>
+    .qWrap {
+        border: 1px solid #cecaca;
+        border-radius: 19px;
+        margin-bottom:15px;
+    }
+    .qHead {
+        margin: 6px 30px;
+        padding: 11px 0;
+        font-size: 16px;
+        border-bottom: 1px solid #e8e8e8;
+    }
+    .qBody {
+        padding: 20px 30px;
+    }
+    .qHead .icon {
+        width: 30px;
+        display: inline-block;
+        height: 30px;
+        background: #ffba52;
+        text-align: center;
+        line-height: 31px;
+        color: #fff;
+        margin-right: 10px;
+        border-radius: 4px;
+    }
+    .ptop0 {
+        padding-top:0;
+    }
+    .pbot0 {
+        padding-bottom: 0;
+    }
+     .jqEmoji {
+        color: #29af52;
+    }
+    .boxlayout {
+        background: #f7f7f7;
+        margin-bottom: 10px;
+        padding: 15px;
+        border: 1px solid #e8e8e8;
+        border-radius: 7px;
+    }
+</style>
+<script>
+    $(function () {
+        // Defaults
+        options = {
+            emoji: 'U+2B50',
+            count: 5,
+            fontSize: 56,
+            inputName: 'rating',
+            onUpdate: function () { }
+        }
+        $('#StarRate').emojiRating(options);
+    });
+</script>
+<div class="panel-heading">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Rating </label>
+        </h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="boxlayout">
+                <div class="row">
+                    <div class="col-md-3 pmsForm">
+                        <label for="" class="col-form-label "><b>Select Employee</b></label>
+                        <div class="relative">
+                            <select class="form-control">
+                                <option>Subhra Mukherjee</option>
+                                <option>Indranil Dey</option>
+                                <option>Goutam Das</option>
+                                <option>Susanta Kundu</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+           <div class="qWrap">
+               <div class="qHead"><span class="icon"><i class="fa fa-question" ></i></span>Question number one</div>
+               <div class="qBody pmsForm">
+                   <ul class="list-inline">
+                       <li>
+                           <div class="form-check">
+                               <input type="checkbox" class="form-check-input customCheck" id="exampleCheck1">
+                               <label class="form-check-label" for="exampleCheck1"> Option 1 </label>
+                           </div>
+                       </li>
+                       <li>
+                           <div class="form-check">
+                               <input type="checkbox" class="form-check-input customCheck" id="exampleCheck2">
+                               <label class="form-check-label" for="exampleCheck2"> Option 2 </label>
+                           </div>
+                       </li>
+                       <li>
+                           <div class="form-check">
+                               <input type="checkbox" class="form-check-input customCheck" id="exampleCheck3">
+                               <label class="form-check-label" for="exampleCheck3"> Option 3</label>
+                           </div>
+                       </li>
+                       <li>
+                           <div class="form-check">
+                               <input type="checkbox" class="form-check-input customCheck" id="exampleCheck4">
+                               <label class="form-check-label" for="exampleCheck4"> Option 4 </label>
+                           </div>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+        </div>
+        <div class="col-md-12">
+            <div class="qWrap">
+                <div class="qHead"><span class="icon"><i class="fa fa-question"></i></span>Question number one</div>
+                <div class="qBody pmsForm">
+                    <ul class="list-inline">
+                        <li>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input customCheck" name="s1" id="radio1">
+                                <label class="form-check-label" for="radio1"> Option 1 </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input customCheck" name="s1" id="radio2">
+                                <label class="form-check-label" for="radio2"> Option 2 </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input customCheck" name="s1" id="radio3">
+                                <label class="form-check-label" for="radio3"> Option 3</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check"> 
+                                <input type="radio" class="form-check-input customCheck" name="s1" id="radio4">
+                                <label class="form-check-label" for="radio4"> Option 4 </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="qWrap">
+                <div class="qHead"><span class="icon"><i class="fa fa-question"></i></span>Question number one</div>
+                <div class="qBody pmsForm ptop0 pbot0">
+                    <div id="StarRate"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button class="btn btn-primary" >Submit</button>
+            <button class="btn btn-danger">Clear all Response</button>
+            <button class="btn btn-warning">Save as Draft</button>
+        </div>
+    </div>
+</div>
+

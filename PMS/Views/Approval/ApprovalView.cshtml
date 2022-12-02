@@ -1,0 +1,106 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@{
+    ViewBag.Title = "Approval";
+}
+
+<link href="~/Views/Approval/approval.css" rel="stylesheet" />
+
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Approval</label>
+        </h3>
+    </div>
+</div>
+<div class="form_main">
+    
+    <div class="relative gridWraper">
+        <table class="tableGrid">
+            <thead>
+                <tr>
+                    <th>Transaction Date</th>
+                    <th>Expense Purpose</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Sales Tax...</th>
+                    <th>Currency</th>
+                    <th>Project</th>
+                    <th>Expense Category</th>
+                    <th>Comments</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="#" data-toggle="modal" data-target="#ExpBooking" data-backdrop="static" data-keyboard="true"><img src="~/assests/images/Edit.png" title="Review" /></a>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+<!--Timesheet Entry -->
+<div class="modal fade pmsModal w30" id="ExpBooking" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row pmsForm horizontalLbl">
+                    
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Approve/Reject </label>
+                            <div class="col-sm-12">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                    <option>Approve</option>
+                                    <option>Reject</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label"> Remarks</label>
+                            <div class="col-sm-12">
+                                <textarea class="form_control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,334 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model PMS.Models.ViewModel.ExpenseBookingViewModel
+@{
+    ViewBag.Title = "Project Expense Booking";
+}
+<link href="~/Views/PMS/ExpenseBooking/ExpenseView.css" rel="stylesheet" />
+
+
+<script src="~/Views/PMS/ExpenseBooking/expenseView.js"></script>
+
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Project Expense Booking </label>
+        </h3>
+    </div>
+    <div class="pull-right">
+        <table class="paddingTbl">
+            <tr>
+                <td><label>From Date</label></td>
+                <td class="w150">
+                    <div>
+                        @Html.DevExpress().DateEdit(
+                        settings =>
+                        {
+                            settings.Name = "FromDate";
+                            settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                            settings.Properties.EditFormatString = "dd-MM-yyyy";
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            settings.Properties.ClientSideEvents.DateChanged = "DateValidateFrom";
+                            settings.Date = DateTime.Now;
+                        }
+                        ).GetHtml()
+                    </div>
+                </td>
+                <td><label>To Date</label></td>
+                <td class="w150">
+                    <div>
+                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "ToDate";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateTo";
+                                settings.Date = DateTime.Now;
+                            }
+                        ).GetHtml()
+                    </div>
+                </td>
+                <td>
+                    Unit
+                </td>
+                <td class="w150">
+                    <div class="relative">
+                        <select id="ddlunitlist" class="form-control"></select>
+                    </div>
+                </td>
+                <td>
+                    <a href="javascript:void(0);" onclick="Show();" class="btn btn-primary"><span>Show</span> </a>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="form_main">
+    <div class="">
+        <div class="clearfix">
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#ExpBooking" data-backdrop="static" data-keyboard="true" onclick="Clear();">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span> Expense
+            </button>
+
+            <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="4">RTF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="5">CSV</option>
+            </select>
+        </div>
+    </div>
+    <div class="relative gridWraper">
+        @{
+            Html.RenderAction("GetExpenseBookingPartial", "ExpenseBooking");
+        }
+
+        @*<table class="tableGrid">
+                <thead>
+                    <tr>
+                        <th>Transaction Date</th>
+                        <th>Expense Purpose</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th>Sales Tax...</th>
+                        <th>Currency</th>
+                        <th>Project</th>
+                        <th>Expense Category</th>
+                        <th>Comments</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+
+            </table>*@
+    </div>
+</div>
+
+
+<!--Timesheet Entry -->
+<div class="modal fade pmsModal w70" id="ExpBooking" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Expense </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row pmsForm horizontalLbl">
+                    <div class="col-md-2">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Transaction Date <span class="asterix">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.DevExpress().DateEdit(
+                                settings =>
+                                {
+                                    settings.Name = "StartDate_dt";
+                                    settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                    settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                    settings.Width = Unit.Percentage(100);
+                                    settings.Date = DateTime.Now;
+                                }
+                                ).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Unit<span class="asterix">*</span></label>
+                            <div class="col-sm-12">
+                                @*<select class="form-control">
+                                        <option>Select</option>
+                                    </select>*@
+                                @Html.DropDownListFor(x => x.Branch, new SelectList(Model.UnitsList, "branch_id", "branch_description"), new { @id = "ddlBranch", @class = "form-control", @onchange = "PopulateProjectData();" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Project<span class="asterix">*</span></label>
+                            <div class="col-sm-12" id="Projectdiv">
+                                @Html.DropDownListFor(x => x.Projects, new SelectList(Model.ProjectsList, "Proj_Id", "Proj_Name"), new { @id = "ddlProjects", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Expense Purpose</label>
+                            <div class="col-sm-12">
+                                @*<textarea class="form_control" rows="2"></textarea>*@
+                                @Html.TextAreaFor(m => m.ExpensePurpose, new { @class = "form-control", @id = "txtExpensePurpose", @MaxLength = "500" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Expense Category<span class="asterix">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.DropDownListFor(x => x.ExpenseCategory, new SelectList(Model.ExpenseCategoryList, "ExpenseCategory_id", "ExpenseCategory_Name"), new { @id = "ddlExpenseCategory", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Basis<span class="asterix">*</span></label>
+                            <div class="col-sm-12">
+                                <select class="form-control" id="ddlBasis">
+                                    <option value="">Select</option>
+                                    <option value="Hourly">Hourly</option>
+                                    <option value="Daily">Daily</option>
+                                    <option value="Weekly">Weekly</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Yearly">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Quantity<span class="asterix">*</span></label>
+                            <div class="col-sm-12">
+                                @*<input type="text" class="form_control" value="0.00" />*@
+                                @*@Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @id = "txtQuantity", @MaxLength = "100" })*@
+                                @Html.DevExpress().TextBoxFor(m => m.Quantity,
+                                settings =>
+                                {
+                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.ClientInstanceName = "cQuantity";
+                                    settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                                    ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                    ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                    settings.Properties.ClientSideEvents.LostFocus = "function(s,e){ExpenseSetTotalAmount(s,e);}";
+                                    settings.ControlStyle.CssClass = "DEvInput";
+                                    settings.ClientEnabled = true;
+                                }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Price<span class="asterix">*</span></label>
+                            <div class="col-sm-12">
+                                @*<input type="text" class="form_control" value="0.00" />*@
+                                @*@Html.TextBoxFor(m => m.Price, new { @class = "form-control", @id = "txtPrice", @MaxLength = "100" })*@
+                                @Html.DevExpress().TextBoxFor(m => m.Price,
+                                settings =>
+                                {
+                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.ClientInstanceName = "cPrice";
+                                    settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                                    ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                    ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                    settings.Properties.ClientSideEvents.LostFocus = "function(s,e){ExpenseSetTotalAmount(s,e);}";
+                                    settings.ControlStyle.CssClass = "DEvInput";
+                                    settings.ClientEnabled = true;
+                                }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Currency<span class="asterix">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.DropDownListFor(x => x.Currency, new SelectList(Model.CurrencyList, "Currency_id", "Currency_Name"), new { @id = "ddlCurrency", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Amount</label>
+                            <div class="col-sm-12">
+                                @*<input type="text" class="form_control" value="0.00" />*@
+                                @*@Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @id = "txtAmount", @MaxLength = "100" })*@
+                                @Html.DevExpress().TextBoxFor(m => m.Amount,
+                                settings =>
+                                {
+                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.ClientInstanceName = "cAmount";
+                                    settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                                    ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                    ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                    //settings.Properties.ClientSideEvents.LostFocus = "function(s,e){EstimateGridSetTotalAmount(s,e);}";
+                                    settings.ControlStyle.CssClass = "DEvInput";
+                                    settings.ClientEnabled = false;
+                                }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Sales Tax Amount</label>
+                            <div class="col-sm-12">
+                                @*<input type="text" class="form_control" value="0.00" />*@
+                                @*@Html.TextBoxFor(m => m.SalesTaxAmount, new { @class = "form-control", @id = "txtSalesTaxAmount", @MaxLength = "100" })*@
+                                @Html.DevExpress().TextBoxFor(m => m.SalesTaxAmount,
+                                settings =>
+                                {
+                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.ClientInstanceName = "cSalesTaxAmount";
+                                    settings.Properties.MaskSettings.Mask = "<0..999999999>.<00..99>";
+                                    ////settings.Properties.MaskSettings.IncludeLiterals = false;
+                                    ////settings.Properties.MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.DecimalSymbol;
+                                    //settings.Properties.ClientSideEvents.LostFocus = "function(s,e){EstimateGridSetTotalAmount(s,e);}";
+                                    settings.ControlStyle.CssClass = "DEvInput";
+                                    settings.ClientEnabled = true;
+                                }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">External Comments</label>
+                            <div class="col-sm-12">
+                                @*<textarea class="form_control" rows="3"></textarea>*@
+                                @Html.TextAreaFor(m => m.ExternalComments, new { @class = "form-control", @id = "txtExternalComments", @MaxLength = "500" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSave" class="btn btn-success btn-radius" onclick="SaveExit();">Save & Exit</button>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hdnuniqueid" />
+    <input type="hidden" id="hdnExpenseBookingid" />
+    <input type="hidden" id="hdnAction" />
+</div>
+

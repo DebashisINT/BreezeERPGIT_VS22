@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h1>Welcome To Payroll.</h1>
+
+    <ul type="square">
+        <li><a style="font-size: small;">@Html.ActionLink("Foundation Master", "Dashboard", "FoundationMaster")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Payroll Class", "Dashboard", "PayrollClass")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Period Generation", "Dashboard", "PeriodGeneration")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Pay Structure List", "Dashboard", "StructureMaster")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Table Formula List", "Dashboard", "payrollTableFormula")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Employee Attachment", "Dashboard", "EmployeeAttachment")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("HOP - Entered Once", "Dashboard", "HOPEntryOnce")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("HOP - Entered Always", "Dashboard", "HOPEntryAlways")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Payroll Generation ", "Dashboard", "PayrollGeneration")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Salary Report ", "Dashboard", "SalaryReport")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Leave Structure ", "Dashboard", "LeaveStructure")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Leave - Opening ", "Dashboard", "LeaveOpening")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Leave Application ", "Dashboard", "LeaveApplication")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Attendance Entry ", "Dashboard", "AttendanceEntry")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Shift Master ", "Dashboard", "ShiftMaster")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Leave Calculation ", "EmpLeaveListing", "LeaveCalculation")</a></li>
+        @*<li><a style="font-size: small;">@Html.ActionLink("Default Salary ", "Dashboard", "DefaultSalary")</a></li>
+        <li><a style="font-size: small;">@Html.ActionLink("Generation Salary ", "Dashboard", "ImageSalary")</a></li>*@
+    </ul>
+</div>
+
+
+
+

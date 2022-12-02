@@ -1,0 +1,86 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+
+@{
+    ViewBag.Title = "Pay Structure List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function OnStructureClick() {
+        var url = '/Structure/Index?ActionType';
+        window.location.href = url;
+    }
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Pay Structure</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="clearfix">
+        <a href="javascript:void(0);" onclick="OnStructureClick()" class="btn btn-primary"><span>Add Structure</span> </a>
+    </div>
+</div>
+<div class="GridViewArea">
+    @*@Html.DevExpress().GridView(settings =>
+        {
+            settings.Name = "gvDataBindingToLinq";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            settings.CallbackRouteValues = new { Controller = "", Action = "" };
+
+            settings.KeyFieldName = "cnt_id";
+            settings.EnableRowsCache = true;
+            settings.SettingsSearchPanel.Visible = true;
+            settings.Settings.ShowFilterRow = true;
+            settings.Settings.ShowGroupPanel = true;
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Name";
+                column.Caption = "Name";
+            });
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "shortname";k
+                column.Caption = "Branch Name";
+                column.Settings.AllowAutoFilterTextInputTimer = DefaultBoolean.False;
+            });
+
+            //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+        }).BindToEF(string.Empty, string.Empty, (s, e) =>
+        {
+
+            e.KeyExpression = "cnt_Id";
+            e.QueryableSource = (IOrderedQueryable)@Model;
+        }).GetHtml()*@
+
+    @*@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaging";
+    settings.CallbackRouteValues = new { Controller = "PagingAndScrolling", Action = "PagingPartial" };
+    settings.Width = Unit.Percentage(100);
+
+    settings.SettingsPager.Position = PagerPosition.Bottom;
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+    settings.KeyFieldName = "StructureID";
+    settings.Columns.Add("Structure Name");
+    settings.Columns.Add("Structure Short Name");
+}).Bind(Model).GetHtml()*@
+
+    @{
+        Html.RenderAction("GridViewPart", "p_StructureList");
+    }
+
+</div>
+
+
+
+
+
+
+

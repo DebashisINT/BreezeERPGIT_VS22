@@ -1,0 +1,370 @@
+﻿@model Payroll.Models.SalaryReportEngine
+
+@{
+    ViewBag.Title = "Salary Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+<script type="text/javascript">
+    
+    var StructureCode;
+    var yymm;
+
+    function OnStartCallback(s, e) {
+        e.customArgs["StructureCode"] = StructureCode;
+        e.customArgs["yymm"] = yymm;
+    }
+
+    function btnPayStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+    function btnPerionGeneration_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnPayStructure_Click(s, e) {
+        document.getElementById('hdnInputType').value = "PayStructure";
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th class=\"hide\">id</th><th>>Pay Structure Name</th></tr><table>";
+        document.getElementById("PayStructureTable").innerHTML = txt;
+        BindPayStructure('');
+        setTimeout(function () { $("#txtPayStructure").focus(); }, 500);
+        $('#PayStructureModel').find('.modal-title').text('Pay Structure');
+        $('#PayStructureModel').modal('show');
+    }
+
+    function btnPerionGeneration_Click(s, e) {
+        document.getElementById('hdnInputType').value = "Period";
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Period</th><th>Period From</th><th>Period To</th></tr><table>";
+        document.getElementById("PayStructureTable").innerHTML = txt;
+        BindPayStructure('');
+        setTimeout(function () { $("#txtPayStructure").focus(); }, 500);
+        $('#PayStructureModel').find('.modal-title').text('Period Generation');
+        $('#PayStructureModel').modal('show');
+    }
+
+
+
+    function PayStructurekeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtPayStructure").val() != '') {
+                BindPayStructure($("#txtPayStructure").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[PayStructureIndex=0]"))
+                $("input[PayStructureIndex=0]").focus();
+        }
+    }
+    function BindPayStructure(SearchKey) {
+        var SearchType = document.getElementById('hdnInputType').value;
+        if (SearchType == "PayStructure")
+        {
+            var OtherDetails = {}
+            OtherDetails.SearchKey = SearchKey;
+
+            var HeaderCaption = [];
+            HeaderCaption.push("Pay Structure Name");
+
+            callonServerScroll("../Models/p_WebServiceList.asmx/GetPayStructureList", OtherDetails, "PayStructureTable", HeaderCaption, "PayStructureIndex", "SetDropdownValue");
+        }
+        else if (SearchType == "Period") {
+            var OtherDetails = {};
+            OtherDetails.SearchKey = SearchKey;
+            OtherDetails.PayStructureID = document.getElementById('hdnPayStructureID').value;
+
+            var HeaderCaption = [];
+            HeaderCaption.push("Period");
+            HeaderCaption.push("Period From");
+            HeaderCaption.push("Period To");
+
+            callonServerScroll("../Models/p_WebServiceList.asmx/GetPayrollSalaryPeriodList", OtherDetails, "PayStructureTable", HeaderCaption, "PayStructureIndex", "SetDropdownValue");
+        }
+
+    }
+
+    function SetDropdownValue(Id, Name) {
+        var SearchType = document.getElementById('hdnInputType').value;
+        if (SearchType == "PayStructure")
+        {
+            var PayStructureID = Id;
+            var PayStructureName = Name;
+
+            if (PayStructureID != "") {
+                $('#PayStructureModel').modal('hide');
+                btnPayStructureName.SetText(PayStructureName);
+                document.getElementById('hdnPayStructureID').value = Id;
+                btnPerionGeneration.SetFocus(true);
+                //LoadActivatedPeriod(Id);
+            }
+        }
+        else if (SearchType == "Period") {
+            if (Id != "")
+            {
+                $('#PayStructureModel').modal('hide');
+                document.getElementById('hdnYYMM').value = Id;
+                btnPerionGeneration.SetText(Name);
+               
+                LoadActivatedPeriod();
+            }
+            
+        }
+    }
+    
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "PayStructureIndex") {
+                    SetDropdownValue(Id, name);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            //if (thisindex < 10)
+            $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "PayStructureIndex")
+                    $('#txtPayStructure').focus();
+            }
+        }
+    }
+
+    function LoadActivatedPeriod() {
+        StructureCode = document.getElementById('hdnPayStructureID').value;
+        yymm = document.getElementById('hdnYYMM').value;
+
+        SalaryReportgridView.Refresh();
+        SalaryReportgridView.Refresh();
+    }
+
+    // Mantis Issue 24246
+    function onShowChooserClick(s, e) {
+        UpdateCustomizationWindowVisibility();
+    }
+    var visibleColumn = [];
+    function grid_CustomizationWindowCloseUp(s, e) {
+        UpdateButtonText();
+        visibleColumn = [];
+
+        for (var i = 0; i <= SalaryReportgridView.GetColumnsCount() ; i++) {
+            if (SalaryReportgridView.GetColumn(i) != null) {
+                if (SalaryReportgridView.GetColumn(i).visible == false) {
+                    console.log(SalaryReportgridView.GetColumn(i).fieldName);
+                    visibleColumn.push(SalaryReportgridView.GetColumn(i).fieldName);
+                }
+            }
+        }
+
+        addPageRetention(visibleColumn);
+    }
+
+    function UpdateCustomizationWindowVisibility() {
+        if (SalaryReportgridView.columns.length > 1) {
+            if (SalaryReportgridView.IsCustomizationWindowVisible())
+                SalaryReportgridView.HideCustomizationWindow();
+            else
+                SalaryReportgridView.ShowCustomizationWindow();
+            UpdateButtonText();
+        }
+        
+    }
+    
+    function UpdateButtonText() {
+        var text = SalaryReportgridView.IsCustomizationWindowVisible() ? "Hide" : "Show";
+        text += " Column Chooser";
+        btShowColumnChooser.SetText(text);
+    }
+
+    function addPageRetention(visibleColumn) {
+        $.ajax({
+            url: "@Url.Action("PageRetention", "SalaryReport")",
+            async: false,
+        data: { Columns: visibleColumn },
+        type: 'POST',
+        success: function (data) {
+            SalaryReportgridView.Refresh();
+        },
+        error: function () {
+        },
+        });
+
+    }
+
+    // End of Mantis Issue 24246
+
+    $(function () {
+        $('#ddlExport').on('change', function () {
+            if ($("#ddlExport option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlExport').prop("selectedIndex", 0);
+                $('#reportLink').prop('href', '/SalaryReport/ExportAllCandidateList?type=' + selectedValue);
+                var url = '@Url.Action("ExportAllCandidateList", "SalaryReport", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            SalaryReportgridView.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            SalaryReportgridView.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                SalaryReportgridView.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                SalaryReportgridView.SetWidth(cntWidth);
+            }
+
+        });
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Salary Register</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="col-md-3">
+            <label>Pay Structure</label>
+            <div>
+                @Html.DevExpress().ButtonEdit(
+                    settings =>
+                    {
+                        settings.Name = "btnPayStructureName";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = "";
+                        settings.ReadOnly = true;
+                        settings.Properties.Buttons.Add("..");
+                        settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPayStructure_Click(s,e);}";
+                        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayStructure_KeyDown(s,e);}";
+                    }).GetHtml()
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Period</label>
+            <div>
+                @Html.DevExpress().ButtonEdit(
+                settings =>
+                {
+                    settings.Name = "btnPerionGeneration";
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Text = "";
+                    settings.ReadOnly = true;
+                    settings.Properties.Buttons.Add("..");
+                    settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPerionGeneration_Click(s,e);}";
+                    settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPerionGeneration_KeyDown(s,e);}";
+                }).GetHtml()
+            </div>
+        </div>
+        <div class="col-md-3" style="padding-top:7px;">
+            <label></label>
+            <div>
+                <select name="ddlExport" class="btn btn-sm btn-primary"  id="ddlExport">
+                    <option value="0">Export to</option>
+                    @*<option value="1">PDF</option>
+                        <option value="4">RTF</option>*@
+                    <option value="2">XLSX</option>
+                    <option value="3">XLS</option>
+                    <option value="5">CSV</option>
+                </select>
+            </div>
+        </div>
+        @*Mantis Issue 24246*@
+        <div class="clear"><br /></div>
+        <div class="col-md-3">
+            <div >
+                @Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btShowColumnChooser";
+                    settings.Text = "Show Column Chooser";
+                    settings.ClientSideEvents.Click = "function (s, e) { onShowChooserClick(s,e); }";
+                    // settings.Theme = "MaterialCompactOrange";
+                }).GetHtml()
+            </div>
+        </div>
+
+        @*End of Mantis Issue 24246*@
+        <div class="clear"><br /></div>
+        <div class="col-md-12">
+            <div class="GridViewArea">
+                @{
+                    Html.RenderAction("PartialGrid", "SalaryReport");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pay structure -->
+<div class="modal fade" id="PayStructureModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay structure</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="PayStructurekeydown(event)" id="txtPayStructure" autofocus width="100%" placeholder="Search By Pay Structure Name or Short Name" />
+                <div id="PayStructureTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Pay Structure Name</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay structure-->
+
+
+<div>
+    @Html.Hidden("hdnInputType")
+    @Html.Hidden("hdnYYMM")
+    @Html.Hidden("hdnPayStructureID")
+</div>

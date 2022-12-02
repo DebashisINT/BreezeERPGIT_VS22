@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "Hierarchy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Hierarchy</h2>
+
+
+<script>
+
+
+    function SaveData() {
+
+        var obj = {};
+        obj.Name = ctxtname.GetText();
+        obj.Desc = ctxtdescription.GetText();
+        LoadingPanel.Show();
+
+        $.ajax({
+            type: "POST",
+            url: "/CompanyStructure/SaveRecord",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                jAlert(response);
+                gridHierarchyList.Refresh();
+                gridHierarchyList.Refresh();
+                $("#HierarchyPop").modal('hide');
+                LoadingPanel.Hide();
+
+            },
+            error: function (response) {
+                jAlert("Try again.");
+                gridHierarchyList.Refresh();
+                gridHierarchyList.Refresh();
+                LoadingPanel.Hide();
+            }
+        });
+    }
+    function DefineHierarchy(id) {
+        var url = '@Url.Action("CompanyStructure", "CompanyStructure")?' + 'h_id=' + id;
+        window.location.href = url;
+
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="form_main">
+    <div class="padBot8 padTop8">
+        <div class="clearfix">
+            @if (ViewBag.CanAdd)
+            {
+            <button class="btn btn-success  btn-radius" data-toggle="modal" data-target="#HierarchyPop" onclick="openModal()" data-backdrop="static" data-keyboard="true">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span> Hierarchy
+            </button>
+            }
+            @if (ViewBag.CanExport)
+            {
+            <select name="ddlAppIds" class="btn btn-primary btn-radius" id="ddlAppIds">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="4">RTF</option>
+                <option value="5">CSV</option>
+
+            </select>
+            }
+        </div>
+    </div>
+    <div class="scrooler">
+        <div id="refreshgrid" class="relative">
+            @{
+                Html.RenderAction("HierarchyGrid", "CompanyStructure");
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pmsModal w30" id="HierarchyPop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Hierarchy </h5>
+                <button type="button" class="close" data-dismiss="modal" >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div id="divSecondName">
+                        <div class="formLine"></div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label" id="ContactID">Name</label>
+                            <div class="col-sm-8">
+                                @*<select class="form-control">
+                                <option>Select</option>
+                            </select>*@
+                                <div class="" id="divprdct">
+                                    @Html.DevExpress().TextBox(settings =>
+                                       {
+                                           settings.Name = "txtname";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.ClientInstanceName = "ctxtname";
+
+                                       }).GetHtml()
+
+                                    <input type="hidden" id="hdfProductID" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label" id="ContactID">Description</label>
+                            <div class="col-sm-8">
+                                <div class="" id="divCustomer">
+                                    @Html.DevExpress().TextBox(settings =>
+                                       {
+                                           settings.Name = "txtdescription";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.ClientInstanceName = "ctxtdescription";
+                                       }).GetHtml()
+
+                                    <input type="hidden" id="hdfCustomerID" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="divSaveinf" onclick="SaveData()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStepOne";
+    }
+).GetHtml()
+
+
+
+
+<script>
+    $(document).ready(function(){
+        gridHierarchyList.Refresh();
+        gridHierarchyList.Refresh();
+
+    });
+
+</script>

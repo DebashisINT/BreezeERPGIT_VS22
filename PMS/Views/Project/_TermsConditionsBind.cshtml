@@ -1,0 +1,141 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "TermsConitionsPartial";
+    settings.CallbackRouteValues = new { Action = "GetTermsConitionsPartial", Controller = "Project" };
+    settings.ClientSideEvents.BeginCallback = "OnStartTermsConitionsCallback";
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+    settings.KeyFieldName = "Terms_BankGuaranteeSL";
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "7", "14", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = false;
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Visible;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BG_BGGroup";
+        x.Caption = "BG Group";
+        x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(14);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        // x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BG_BGType";
+        x.Caption = "BG Type";
+        x.VisibleIndex = 2;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(14);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BG_Percentage";
+        x.Caption = "Percentage";
+        x.VisibleIndex = 3;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(16);
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        // x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BG_BGValue";
+        x.Caption = "Value";
+        x.VisibleIndex = 4;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(14);
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BG_BGStatus";
+        x.Caption = "Status";
+        x.VisibleIndex = 5;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(14);
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BG_BGValidfrom";
+        x.Caption = "BG Validity From Date";
+        x.VisibleIndex = 6;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(14);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BG_BGValidUpTo";
+        x.Caption = "BG Validity TO Date";
+        x.VisibleIndex = 7;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(14);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "";
+        x.VisibleIndex = 8;
+        x.Width = 0;
+
+        x.SetDataItemTemplateContent(c =>
+        {
+            ViewContext.Writer.Write("<div class='floatedBtnArea'>");
+
+            ViewContext.Writer.Write("<a title='Delete' style='cursor:pointer' class='' onclick=\"OpenTermsConitionsforDelete('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Terms_BankGuaranteeSL")) + "')\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+           
+            ViewContext.Writer.Write("</div>");
+            // ViewContext.Writer.Write("<a style='cursor:pointer' onclick=\"OpenProductWindow('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ROLE_ID")) + "')\">" + Convert.ToString(DataBinder.Eval(c.DataItem, "Order_Number")) + "</a>");
+        });
+        //x.Width = 100;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Order_Value"); ;
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Delivered_Value");
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "countactivity").DisplayFormat = "0";
+    settings.ClientSideEvents.RowClick = "gridRowclickforterms";
+
+}).Bind(Model).GetHtml()
+
+

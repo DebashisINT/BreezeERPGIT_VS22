@@ -1,0 +1,211 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridExpenseBookingList";
+    settings.CallbackRouteValues = new { Action = "GetExpenseBookingPartial", Controller = "ExpenseBooking" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    //  settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+   
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.TopAndBottom;
+    settings.Settings.ShowFilterRowMenu = true;
+    
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.SettingsBehavior.ColumnResizeMode = DevExpress.Web.ColumnResizeMode.Control;
+    
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "TransactionDate";
+        x.Caption = "Transaction Date";
+        x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "branch_description";
+        x.Caption = "Unit";
+        x.VisibleIndex = 2;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ExpensePurpose";
+        x.Caption = "Expense Purpose";
+        x.VisibleIndex = 3;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Basis";
+        x.Caption = "Basis";
+        x.VisibleIndex = 4;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Quantity";
+        x.Caption = "Quantity";
+        x.VisibleIndex = 5;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Price";
+        x.Caption = "Price";
+        x.VisibleIndex = 6;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Amount";
+        x.Caption = "Amount";
+        x.VisibleIndex = 7;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+    });
+    
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "SalesTaxAmount";
+        x.Caption = "Sales Tax...";
+        x.VisibleIndex = 8;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Currency_Name";
+        x.Caption = "Currency";
+        x.VisibleIndex = 9;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Proj_Name";
+        x.Caption = "Project";
+        x.VisibleIndex = 10;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+    });
+    
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Expense_Name";
+        x.Caption = "Expense Category";
+        x.VisibleIndex = 11;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ExternalComments";
+        x.Caption = "Comments";
+        x.VisibleIndex = 12;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CREATE_USER";
+        x.Caption = "Entered By";
+        x.VisibleIndex = 13;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "CREATED_ON";
+        x.Caption = "Entered On";
+        x.VisibleIndex = 14;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+
+    settings.Columns.Add(x =>
+       {
+           x.FieldName = "UPDATE_USER";
+           x.Caption = "Modified By";
+           x.VisibleIndex = 15;
+           x.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+           //  x.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+       });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "UPDATED_ON";
+        x.Caption = "Modified On";
+        x.VisibleIndex = 16;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy hh:mm:ss";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    });
+
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "";
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(1);
+        x.VisibleIndex = 18;
+
+        x.SetDataItemTemplateContent(c =>
+        {
+            ViewContext.Writer.Write("<div class='floatedBtnArea'>");
+            if (ViewBag.CanEdit)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenExpenseBookingforEdit('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ExpenseBooking_Id")) + "')\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>");
+            }
+            if (ViewBag.CanView)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenExpenseBookingforView('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ExpenseBooking_Id")) + "')\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View Details</span></a>");
+            }
+            if (ViewBag.CanDelete)
+            {
+                ViewContext.Writer.Write("<a title='' style='cursor:pointer' class='' onclick=\"OpenExpenseBookingDelete('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ExpenseBooking_Id")) + "')\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>");
+            }
+            ViewContext.Writer.Write("</div>");
+            // ViewContext.Writer.Write("<a style='cursor:pointer' onclick=\"OpenProductWindow('" + Convert.ToString(DataBinder.Eval(c.DataItem, "ROLE_ID")) + "')\">" + Convert.ToString(DataBinder.Eval(c.DataItem, "Order_Number")) + "</a>");
+        });
+
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+    settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Amount");
+  
+}).Bind(Model).GetHtml()
+
+

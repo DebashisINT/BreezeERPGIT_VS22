@@ -1,0 +1,77 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvTimeSheetSummaryList";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "TimeSheet", Action = "PartialTimeSheetGridSummary" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+   // settings.KeyFieldName = "TimeSheet_ID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.DataBound = (sender, e) =>
+    {
+        MVCxGridView gv = sender as MVCxGridView;
+        var TotalColumns = gv.Columns.Count;
+
+        foreach (GridViewColumn column in gv.Columns)
+        {
+            var dataColumn = column as GridViewDataColumn;
+
+            if (TotalColumns == 1)
+            {
+                dataColumn.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            }
+            else
+            {
+                var FieldName = dataColumn.FieldName;                
+                var DataType = FieldName.Substring(FieldName.Length - 2);
+                var Caption = FieldName;
+
+
+                if (Caption == "Proj_Code")
+                {
+                    Caption = "Project Code";
+                }
+                else if (Caption == "Proj_Name")
+                {
+                    Caption = "Project Name";
+                }               
+                else if (Caption == "CONVERTHRMM")
+                {
+                    Caption = "Total Hours";
+                }
+                //else if (Caption == "EnteredBy")
+                //{
+                //    Caption = "Entered By";
+                //}
+                //else if (Caption == "EnteredOn")
+                //{
+                //    Caption = "Entered On";
+                   
+                //}
+                //else if (Caption == "UpdatedBy")
+                //{
+                //    Caption = "Updated By";
+                //}
+                //else if (Caption == "UpdatedOn")
+                //{
+                //    Caption = "Updated On";
+                //}
+                
+                    dataColumn.Caption = Caption;
+                    dataColumn.Width = 300;
+                    dataColumn.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+                    dataColumn.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+                    
+            }
+        }
+    };
+}).Bind(Model).GetHtml()

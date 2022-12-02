@@ -1,0 +1,366 @@
+﻿@{
+    ViewBag.Title = "Employee Attachment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+
+<style>
+    .bacB {
+        padding: 15px 15px;
+        background: #f5f5f5;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    .mbot-5 {
+        margin-bottom: 8px;
+    }
+
+    .mtop-8 {
+        margin-top: 8px;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -4px;
+        top: 27px;
+    }
+</style>
+<style>
+    .table-fixed thead {
+        width: 99%;
+    }
+
+    .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+
+        .table-fixed tbody td, .table-fixed thead > tr > th {
+            float: left;
+        }
+</style>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () { gridView.PerformCallback(); }, 500);
+    });
+</script>
+<script type="text/javascript">
+    function btnPayStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnPayStructure_Click(s, e) {
+        BindPayStructure('');
+        setTimeout(function () { $("#txtPayStructure").focus(); }, 500);
+        $('#PayStructureModel').modal('show');
+    }
+
+    function PayStructurekeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtPayStructure").val() != '') {
+                BindPayStructure($("#txtPayStructure").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[PayStructureIndex=0]"))
+                $("input[PayStructureIndex=0]").focus();
+        }
+    }
+    function BindPayStructure(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Pay Structure Name");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetPayStructureList", OtherDetails, "PayStructureTable", HeaderCaption, "PayStructureIndex", "SetPayStructure");
+    }
+
+    function SetPayStructure(Id, Name) {
+        var PayStructureID = Id;
+        var PayStructureName = Name;
+
+        if (PayStructureID != "") {
+            $('#PayStructureModel').modal('hide');
+            btnPayStructure.SetText(PayStructureName);
+            document.getElementById('hdnPayStructureID').value = Id;
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "PayStructureIndex") {
+                    SetPayStructure(Id, name);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "PayStructureIndex")
+                    $('#txtPayStructure').focus();
+            }
+        }
+
+    }
+</script>
+<script type="text/javascript">
+    function btnLeaveStructure_Click(s, e) {
+    }
+</script>
+<script type="text/javascript">
+    function Cancel() {
+        var url = '/payrollEmpAttactchment/Dashboard';
+        window.location.href = url;
+    }
+
+    function Save() {
+        var IsValid = true;
+        var PayStructure = btnPayStructure.GetValue();
+        var LeaveStructure = btnLeaveStructure.GetValue();
+        var EmployeeList = gridView.GetSelectedKeysOnPage();
+
+        if (btnPayStructure.GetValue() == '' || btnPayStructure.GetValue() == null) {
+            $('#MandatoryPayStructure').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryPayStructure').attr('style', 'display:none');
+        }
+
+        //if (btnLeaveStructure.GetValue() == '' || btnLeaveStructure.GetValue() == null) {
+        //    $('#MandatoryLeaveStructure').attr('style', 'display:block');
+        //    IsValid = false;
+        //}
+        //else {
+        //    $('#MandatoryLeaveStructure').attr('style', 'display:none');
+        //}
+
+        if (EmployeeList.length == 0) {
+            jAlert("Please select an Employee");
+        }
+
+        if (IsValid == true) {
+            var obj = {};
+            obj.PayStructureCode = $("#hdnPayStructureID").val();
+            obj.Pay_ApplicationFrom = GetServerDateFormat(dtPayFrom.GetValue());
+            obj.Pay_ApplicationTo = GetServerDateFormat(dtPayTo.GetValue());
+            obj.LeaveStructureCode = $("#hdnLeaveStructureID").val();
+            obj.Leave_ApplicationFrom = GetServerDateFormat(dtLeaveFrom.GetValue());
+            obj.Leave_ApplicationTo = GetServerDateFormat(dtLeaveTo.GetValue());
+            obj.EmployeeList = EmployeeList.toString();
+
+            $.ajax({
+                type: "POST",
+                url: "/payrollEmpAttactchment/AttactchmentSubmit",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {
+                        var url = '/payrollEmpAttactchment/Dashboard';
+
+                        jAlert("Employee successfully assigned", 'Alert Dialog: [Message]', function (r) {
+                            if (r == true) {
+                                window.location.href = url;
+                            }
+                        });
+                    }
+                    else {
+                        jAlert(response.ResponseMessage);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Employee Attachment</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row clearfix mtop-8">
+        <div class="col-md-5">
+            @{
+                Html.RenderAction("PartialEmployeeGrid", "payrollEmpAttactchment");
+            }
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-6 bacB">
+                <div class="col-md-12 mbot-5">
+                    <label>Pay structure</label>
+                    @Html.DevExpress().ButtonEdit(
+                    settings =>
+                    {
+                        settings.Name = "btnPayStructure";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = "";
+                        settings.ReadOnly = true;
+                        settings.Properties.Buttons.Add("..");
+                        settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPayStructure_Click(s,e);}";
+                        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayStructure_KeyDown(s,e);}";
+                    }).GetHtml()
+                    <span id="MandatoryPayStructure" style="display: none" class="validclass">
+                        <img id="imgPayStructure" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </div>
+                <div class="col-md-12 mbot-5">
+                    <label>Application from</label>
+                    @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "dtPayFrom";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormat = EditFormat.Custom;
+                        settings.Properties.UseMaskBehavior = true;
+                    }).GetHtml()
+                </div>
+                <div class="col-md-12 mbot-5">
+                    <label>Application to</label>
+                    @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "dtPayTo";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormat = EditFormat.Custom;
+                        settings.Properties.UseMaskBehavior = true;
+                    }).GetHtml()
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="col-md-6 bacB">
+                <div class="col-md-12 mbot-5">
+                    <label>Leave structure</label>
+                    @Html.DevExpress().ButtonEdit(
+                    settings =>
+                    {
+                        settings.Name = "btnLeaveStructure";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = "";
+                        settings.ReadOnly = true;
+                        settings.Properties.Buttons.Add("..");
+                        settings.Properties.ClientSideEvents.ButtonClick = "btnLeaveStructure_Click";
+                    }).GetHtml()
+                    <span id="MandatoryLeaveStructure" style="display: none" class="validclass">
+                        <img id="imgMandatoryLeaveStructure" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                    </span>
+                </div>
+                <div class="col-md-12 mbot-5">
+                    <label>Application from</label>
+                    @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "dtLeaveFrom";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormat = EditFormat.Custom;
+                        settings.Properties.UseMaskBehavior = true;
+                    }).GetHtml()
+                </div>
+                <div class="col-md-12 mbot-5">
+                    <label>Application to</label>
+                    @Html.DevExpress().DateEdit(
+                    settings =>
+                    {
+                        settings.Name = "dtLeaveTo";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                        settings.Properties.EditFormat = EditFormat.Custom;
+                        settings.Properties.UseMaskBehavior = true;
+                    }).GetHtml()
+                </div>
+
+            </div>
+            <div class="clear"></div>
+            <div class="">
+                <button class="btn btn-primary" onclick="Save()">Save </button>
+                <button class="btn btn-danger" onclick="Cancel()">Cancel </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay structure -->
+<div class="modal fade" id="PayStructureModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay structure</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="PayStructurekeydown(event)" id="txtPayStructure" autofocus width="100%" placeholder="Search By Pay Structure Name or Short Name" />
+                <div id="PayStructureTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Pay Structure Name</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay structure-->
+<div>
+    @Html.Hidden("hdnPayStructureID")
+    @Html.Hidden("hdnLeaveStructureID")
+</div>

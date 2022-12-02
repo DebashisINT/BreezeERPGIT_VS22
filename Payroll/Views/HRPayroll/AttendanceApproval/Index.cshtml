@@ -1,0 +1,329 @@
+﻿@model Payroll.Models.PGenerationEngine
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">*@
+<link href="~/assests/pluggins/pure-min.css" rel="stylesheet" />
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+@*<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+<script src="~/Scripts/JS/editableTableWidget.js"></script>
+@*<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>*@
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+<script src="~/assests/pluggins/DataTable/dataTables.fixedColumns.min.js"></script>
+
+<script>
+    var ClassCode = "";
+    function PopulatePeriod() {
+        var classId = $("#ddlProllclass").val();
+        ClassCode = $("#ddlProllclass").val();
+        var url = '/PayrollGeneration/GetPeriodName/';
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: { 'classId': classId },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(JSON.parse(response.data));
+
+                if (response.data2.response_msg == "Success") {
+                    if (JSON.parse(response.data).length > 0) {
+                        $("#txtPeriodName").val(JSON.parse(response.data)[0]["Period"]);
+                        var myDropDownList = $("#ddlEmployee");
+                        yymm = JSON.parse(response.data)[0]["YYMM"];
+                        document.getElementById('hdnYYMM').value = yymm;
+                        url = '/AttendanceApproval/GetEmployeeList'
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: JSON.stringify({ 'ClassCode': classId, 'yymm': yymm }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (response) {
+                                console.log(response);
+                                myDropDownList.empty();
+                                for (i = 0; i < response.length; i++) {
+
+                                    myDropDownList.append($("<option></option>").val(response[i].EmployeeCode).html(response[i].Employee_Name));
+                                }
+                            }
+                        });
+
+
+
+
+
+                    }
+                    else {
+                        $("#txtPeriodName").val('');
+                    }
+                }
+                else {
+                    jAlert(response.data2.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert('Please try again later');
+            }
+        });
+    }
+
+    function GridPopulate() {
+        var timesFO = [
+            "Select",
+	        "Full Day",
+	        "Half Day",
+	        "Out Duty",
+	        "Leave",
+	        "Disapprove Leave"
+        ];
+        var timesH = [
+            "Select",
+	        "Full Day",
+	        "Half Day",
+	        "Out Duty",
+	        "Leave",
+	        "Disapprove Half Day"
+        ];
+
+        var timesEL = [
+            "Select",
+            "Full Day",
+            "Half Day",
+            "Out Duty",
+            "Leave",
+            "Disapprove Early Leave"
+        ];
+
+        var timesLate = [
+            "Select",
+            "Late Waived off"
+        ];
+
+        var timesHL = [
+            "Select",
+	        "Full Day",
+	        "Half Day",
+	        "Out Duty",
+	        "Leave",
+	        "Disapprove Half Day",
+            "Late Waived off"
+        ];
+
+        var timesAll = [
+            "Select",
+	        "Full Day",
+	        "Out Duty",
+        ];
+
+        var obj = [];
+        var OtherDetails = {}
+        OtherDetails.PayClassID = ClassCode;
+        OtherDetails.YYMM = $("#hdnYYMM").val();
+        OtherDetails.EmployeeId = $("#ddlEmployee").val()
+        //LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/AttendanceApproval/GetEmployeeAttendance",
+            data: JSON.stringify(OtherDetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+                obj = msg;
+            }
+        });
+
+        $('#example').dataTable().fnDestroy();
+
+        $("#example").DataTable({
+            data: obj,
+            "paging": false,
+            "scrollY": "200px",
+            "scrollCollapse": true,
+            columnDefs: [
+             { className: "my_class", targets: "_all" },
+             { className: "my_second_class", targets: 1 }
+            ],
+            "columns": [
+                 { data: 'Date' },
+                { data: 'Status' },
+                {
+                    "render": function (d, t, r) {
+                        var $select = $("<select class='sWidth'></select>", {
+                            "id": r[0] + "start",
+                            "value": d
+                        });
+                        var genArr = [];
+                        var stat = "";
+                        var temp_text = r.Status;
+                        if (temp_text.includes('ABSENT')) {
+                            stat = "AB";
+                            genArr = timesFO;
+                        }
+                        else if (temp_text.startsWith('1ST HALF OFF') || temp_text.startsWith('2ND HALF OFF')) {
+                            stat = "H";
+                            genArr = timesH;
+
+                        }
+                        else if (temp_text.startsWith('LATE')) {
+                            stat = "LATE";
+                            genArr = timesLate;
+
+                        }
+                        
+                        else if (temp_text.startsWith('EARLY LEAVE')) {
+                            stat = "EL";
+                            genArr = timesEL;
+
+                        }
+                        else if (temp_text.startsWith('EARLY LEAVE')) {
+                            stat = "AB";
+                            genArr = timesFO;
+
+                        }
+                        else
+                        {
+                            genArr = timesAll;
+                        }
+
+
+                        $.each(genArr, function (k, v) {
+                            var $option = $("<option></option>", {
+                                "text": v,
+                                "value": v
+                            });
+                            if (v == r.curStatus) {
+                                $option.attr("selected", "selected")
+                            }
+                            $select.append($option);
+                        });
+
+
+
+
+                        return $select.prop("outerHTML");
+                    }
+                }
+            ]
+        });
+
+
+
+    }
+    
+    
+    function SaveApproval() {
+
+        var myTableArray = [];
+
+        $("table#example tr").each(function () {
+            var arrayOfThisRow = [];
+            var tableData = $(this).find('td');
+            if (tableData.length > 0) {
+                
+                var obj = {};
+
+                obj.Date = tableData[0].innerHTML;
+                obj.NewStatus = $(tableData[2].children).val();
+
+
+                myTableArray.push(obj);
+            }
+        });
+
+
+        var _obj = {};
+        _obj.data = myTableArray;
+        _obj.yymm = $("#hdnYYMM").val();
+        _obj.EmployeeId = $("#ddlEmployee").val()
+        $.ajax({
+            type: "POST",
+            url: "/AttendanceApproval/SaveApprovalData",
+            data: JSON.stringify(_obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+                obj = msg;
+            }
+        });
+    }
+
+
+
+
+</script>
+<link href="~/assests/css/payrollCss/AttendanceApproval.css" rel="stylesheet" />
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Attendance Approval</h3>
+    </div>
+</div>
+
+<input type="hidden" id="hdnYYMM" />
+
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="clearfix" style="background: #f7f7f7; border: 1px solid #ccc; margin: 0 15px; border-radius: 4px;">
+            <div class="col-md-3">
+                <label>Payroll Class</label>
+                <div>
+                    @Html.DropDownListFor(m => m._PClassId, Model._PClassName, "", new { style = "width: 100%;", Id = "ddlProllclass", onchange = "PopulatePeriod()" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Period</label>
+                <div>
+                    @*<input type="text" id="txtPeriodName" disabled style="width:65%" />*@
+                    @Html.TextBoxFor(model => model._PeriodName, new { Id = "txtPeriodName", disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Employee</label>
+                <div>
+                    @*<input type="text" id="txtPeriodName" disabled style="width:65%" />*@
+                    <select id="ddlEmployee" class="form-control"></select>
+                </div>
+            </div>
+
+            <div class="col-md-3" style="padding-top: 24px;">
+                <label></label>
+                <button type="submit" class="btn btn-primary" onclick="GridPopulate()">View</button>
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-12">
+            <div class="GridViewArea relative">
+                <table id="example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>New Status</th>
+                        </tr>
+                    </thead>
+                   
+                </table>
+
+
+
+            </div>
+        </div>
+
+        <div class="col-md-12 mTop5" >
+            <button type="button" id="btnSave" onclick="SaveApproval();" class="btn btn-success">Save</button> 
+        </div>
+
+    </div>
+</div>
+
+

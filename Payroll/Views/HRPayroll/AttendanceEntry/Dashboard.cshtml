@@ -1,0 +1,983 @@
+﻿@{
+    ViewBag.Title = "Attendence Entry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+<script src="~/Scripts/JS/editableTableWidget.js"></script>
+@*<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>*@
+<link href="~/assests/pluggins/pure-min.css" rel="stylesheet" />
+<link href="~/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+<script src="~/assests/pluggins/DataTable/dataTables.fixedColumns.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+    function btnPayClasss_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnPayClasss_Click(s, e) {
+        document.getElementById('hdnInputType').value = "PayClass";
+        document.getElementById("txtSearchBox").value = "";
+
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Payroll Class Name</th><th>Period From</th><th>Period To</th></tr><table>";
+        document.getElementById("TableStructure").innerHTML = txt;
+
+        BindModalGrid('');
+        setTimeout(function () { $("#txtSearchBox").focus(); }, 500);
+        $('#ModelPopup').modal('show');
+    }
+
+    function btnPerionGeneration_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnPerionGeneration_Click(s, e) {
+        document.getElementById('hdnInputType').value = "Period";
+        document.getElementById("txtSearchBox").value = "";
+
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Period</th><th>Period From</th><th>Period To</th></tr><table>";
+        document.getElementById("TableStructure").innerHTML = txt;
+
+        BindModalGrid('');
+        setTimeout(function () { $("#txtSearchBox").focus(); }, 500);
+        $('#ModelPopup').modal('show');
+    }
+
+    function txtSearchBoxkeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtSearchBox").val() != '') {
+                BindModalGrid($("#txtSearchBox").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[searchIndex=0]"))
+                $("input[searchIndex=0]").focus();
+        }
+    }
+
+    function BindModalGrid(SearchKey) {
+        var SearchType = document.getElementById('hdnInputType').value;
+
+        if (SearchType == "PayClass") {
+            var OtherDetails = {};
+            OtherDetails.SearchKey = SearchKey;
+
+            var HeaderCaption = [];
+            HeaderCaption.push("Payroll Class Name");
+            HeaderCaption.push("Period From");
+            HeaderCaption.push("Period To");
+
+            callonServerScroll("../Models/p_WebServiceList.asmx/GetPayClassList", OtherDetails, "TableStructure", HeaderCaption, "searchIndex", "SetDropdownValue");
+        }
+        else if (SearchType == "Period") {
+            var OtherDetails = {};
+            OtherDetails.SearchKey = SearchKey;
+            OtherDetails.PayClassID = document.getElementById('hdnPayClassID').value;
+
+            var HeaderCaption = [];
+            HeaderCaption.push("Period");
+            HeaderCaption.push("Period From");
+            HeaderCaption.push("Period To");
+
+            callonServerScroll("../Models/p_WebServiceList.asmx/GetPayrollPeriodList", OtherDetails, "TableStructure", HeaderCaption, "searchIndex", "SetDropdownValue");
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+
+            if (Id) {
+                if (indexName == "searchIndex") {
+                    SetDropdownValue(Id, name, e.target.parentElement);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            //if (thisindex < 10)
+            $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "searchIndex")
+                    $('#txtSearchBox').focus();
+            }
+        }
+    }
+
+    function SetDropdownValue(Id, name, e) {
+        var SearchType = document.getElementById('hdnInputType').value;
+
+        if (SearchType == "PayClass") {
+            if (Id != "") {
+                document.getElementById('hdnPayClassID').value = Id;
+                btnPayClasss.SetText(name);
+                $('#ModelPopup').modal('hide');
+                btnPerionGeneration.SetFocus(true);
+
+                document.getElementById('hdnPeriodID').value = "";
+                btnPerionGeneration.SetText("");
+            }
+        }
+        else if (SearchType == "Period") {
+            if (Id != "") {
+                document.getElementById('hdnPeriodID').value = Id;
+                btnPerionGeneration.SetText(name);
+                $('#ModelPopup').modal('hide');
+                LoadingPanel.Show();
+                CreateBalanceDetails();
+                //LoadingPanel.Hide();
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        document.getElementById("buttonDIV").style.display = "none";
+        $('#editable').editableTableWidget();
+
+        $('#editable td.uneditable').on('change', function (evt, newValue) {
+            return false;
+        });
+    });
+
+    var getDaysInMonth = function (month, year) {
+        return new Date(year, month, 0).getDate();
+    };
+
+    var AttendanceHeader = [];
+    var AttendanceDataType = [];
+
+    function CreateBalanceDetails() {
+        var OtherDetails = {}
+        OtherDetails.PayClassID = document.getElementById('hdnPayClassID').value;
+        OtherDetails.YYMM = document.getElementById('hdnPeriodID').value;
+        //LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/AttendanceEntry/GetEmployeeAttendance",
+            data: JSON.stringify(OtherDetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var ResponseCode = msg.ResponseCode;
+                var ResponseMessage = msg.ResponseMessage;
+
+                if (ResponseCode == "Success") {
+                    var myObj = msg.EmployeeAttendanceList;
+                    var PropertyCount = 0;
+
+                    if (myObj.length > 0) {
+                        document.getElementById("buttonDIV").style.display = "block";
+
+                        var YYMM = document.getElementById('hdnPeriodID').value;
+                        var YYYY = "20" + YYMM.slice(0, 2);
+                        var MM = parseInt(YYMM.slice(2, 4));
+                        var DaysInMonth = getDaysInMonth(MM, YYYY);
+
+                        var txt = '';
+                        txt += "<table id='editable' class='pure-table pure-table-bordered scroll display nowrap'width='100%'><thead><tr>";
+
+                        txt += "<th class='hide' rowspan='2'></th><th rowspan='2'>Emp ID</th><th rowspan='2'>Name</th>";
+                        var monthMM = (MM < 10 ? "0" + MM : MM);
+                        for (i = 1; i <= DaysInMonth; i++) {
+                            if (i < 10) {
+                                txt += "<th colspan='3' class='text-center'>0" + i + "/" + monthMM + "</th>";
+                            }
+                            else {
+                                txt += "<th colspan='3' class='text-center'>" + i + "/" + monthMM + "</th>";
+                            }
+                        }
+                        txt += "</tr><tr>";
+
+                        AttendanceHeader.push("EmployeeID");
+                        AttendanceHeader.push("EmployeeCode");
+                        AttendanceHeader.push("EmployeeName");
+
+                        AttendanceDataType.push("ST");
+                        AttendanceDataType.push("ST");
+                        AttendanceDataType.push("ST");
+
+                        var jsonObject = myObj[0];
+                        PropertyCount = 0;
+                        for (prop in jsonObject) {
+                            if (PropertyCount >= 3) {
+                                var HeaderText = jsonObject[prop].Key;
+                                AttendanceHeader.push(HeaderText);
+
+                                if (HeaderText.includes("InTime") == true) {
+                                    txt += "<th style='width:200px'>IN</th>";
+                                    AttendanceDataType.push("HR");
+                                }
+                                else if (HeaderText.includes("OutTime") == true) {
+                                    txt += "<th style='width:200px'>Out</th>";
+                                    AttendanceDataType.push("HR");
+                                }
+                                else if (HeaderText.includes("Status") == true) {
+                                    txt += "<th style='width:200px'>Status</th>";
+                                    AttendanceDataType.push("ST");
+                                }
+                            }
+
+                            PropertyCount++;
+                        }
+                        txt += "</tr></thead><tbody>"
+
+                        for (x in myObj) {
+                            txt += "<tr>";
+                            PropertyCount = 0;
+
+                            for (key in myObj[0]) {
+                                if (PropertyCount == 0) {
+                                    txt += " <td class='hide'>" + myObj[x][key].Value + "</td>";
+                                }
+                                else if (PropertyCount == 1 || PropertyCount == 2) {
+                                    txt += " <td class='uneditable validate' style='width:200px'>" + myObj[x][key].Value + "</td>";
+                                }
+                                else {
+                                    var _DataType = AttendanceDataType[PropertyCount];
+
+                                    if (_DataType == "ST") txt += "<td class='uneditable validate' style='width:200px'>" + myObj[x][key].Value + "</td>";
+                                    else txt += "<td class='validate' data-type='HR' style='width:200px'>" + myObj[x][key].Value + "</td>";
+                                }
+                                PropertyCount++;
+                            }
+                            txt += "</tr>";
+                        }
+                        txt += "</tbody></table>"
+
+                        document.getElementById("tbl").innerHTML = txt;
+                        //$(".scroll").DataTable({
+                        //    "scrollY": "60vh",
+                        //    "scrollCollapse": true,
+                        //    "scrollX": true,
+                        //    "paging": false,
+                        //    "searching": true,
+                        //    "ordering": false
+                        //});
+
+                        var table = $('.scroll').DataTable({
+                            scrollY: "300px",
+                            scrollX: true,
+                            scrollCollapse: true,
+                            paging: false,
+                            fixedColumns: {
+                                leftColumns: 3
+                            }
+                        })
+
+                        $("#editable").editableTableWidget();
+                        $('#editable td.uneditable').on('change', function (evt, newValue) {
+                            return false;
+                        });
+
+                        $('#editable td.validate').on('click', function (evt, newValue) {
+                            var _DataType = $(this).attr('data-type');
+
+                            if (_DataType == 'ST') {
+                                document.getElementById('hdnInputDataType').value = "String";
+                            }
+                            else if (_DataType == 'HR') {
+                                document.getElementById('hdnInputDataType').value = "Hour";
+                            }
+                            else {
+                                document.getElementById('hdnInputDataType').value = "";
+                            }
+                        });
+
+                        $('#editable td.validate').on('blur', function (evt, newValue) {
+                            var _DataType = $(this).attr('data-type');
+
+                            if (_DataType == 'ST') {
+                                document.getElementById('hdnInputDataType').value = "String";
+                            }
+                            else if (_DataType == 'HR') {
+                                document.getElementById('hdnInputDataType').value = "Hour";
+                            }
+                            else {
+                                document.getElementById('hdnInputDataType').value = "";
+                            }
+                        });
+
+                        $('input.editerclass').on('input', function () {
+                            var _DataType = document.getElementById('hdnInputDataType').value;
+
+                            if (_DataType == "Hour") {
+                                regex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+
+                                var InputValue = this.value;
+                                var Time = InputValue;
+                                var NumberOfColon = InputValue.split(":").length - 1;
+
+                                if (NumberOfColon > 1) {
+                                    this.value = "00:00";
+                                }
+                                else {
+                                    if (InputValue.includes(":")) {
+                                        var BeforeColon = InputValue.split(":")[0].trim();
+                                        var AfterColon = InputValue.split(":")[1].trim();
+
+                                        if (BeforeColon == "" || BeforeColon == "00") {
+                                            if (AfterColon.length == 0) {
+                                                Time = "00:00";
+                                                this.value = "00:";
+                                            }
+                                            else if (AfterColon.length == 1) {
+                                                Time = "00:" + AfterColon + "0";
+                                            }
+                                        }
+                                        else {
+                                            if (AfterColon.length == 0) {
+                                                Time = BeforeColon + ":00";
+                                            }
+                                            else if (AfterColon.length == 1) {
+                                                Time = BeforeColon + ":" + AfterColon + "0";
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        var BeforeColon = InputValue.split(":")[0].trim();
+                                        if (BeforeColon.length == 2) {
+                                            Time = InputValue + ":00"
+                                            this.value = BeforeColon + ":";
+                                        }
+                                        else {
+                                            Time = InputValue + ":00"
+                                        }
+                                    }
+
+                                    if (regex.test(Time) == false) {
+                                        this.value = "00:00";
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        document.getElementById("tbl").innerHTML = "";
+                        document.getElementById("buttonDIV").style.display = "none";
+                    }
+                }
+                else {
+                    document.getElementById("tbl").innerHTML = "";
+                    document.getElementById("buttonDIV").style.display = "none";
+                    LoadingPanel.Hide();
+                    jAlert(ResponseMessage);
+                }
+                LoadingPanel.Hide();
+            }
+        });
+        //LoadingPanel.Hide();
+    }
+    function SaveLeave() {
+        var OtherDetails = {}
+        OtherDetails.PayClassID = document.getElementById('hdnPayClassID').value;
+        OtherDetails.YYMM = document.getElementById('hdnPeriodID').value;
+        //LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/AttendanceEntry/SaveLeave",
+            data: JSON.stringify(OtherDetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                jAlert(msg, 'Alert');
+            }
+
+        });
+        //LoadingPanel.Hide();<td><div class=redmark">2</div></td>
+    }
+
+
+    function RecalculateLeave() {
+        var classId = document.getElementById('hdnPayClassID').value;
+        var yymm = document.getElementById('hdnPeriodID').value;
+
+        if (classId == "") {
+            jAlert("Please Select Class", "Alert");
+            return;
+        }
+
+        if (yymm == "") {
+            jAlert("Please Select Period", "Alert");
+            return;
+        }
+
+        $('#loaderP').show();
+        var OtherDetails = {}
+        OtherDetails.PayClassID = document.getElementById('hdnPayClassID').value;
+        OtherDetails.YYMM = document.getElementById('hdnPeriodID').value;
+        //LoadingPanel.Show();
+        $.ajax({
+            type: "POST",
+            url: "/AttendanceEntry/RecalculateAndShowLeave",
+            data: JSON.stringify(OtherDetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                console.log(msg);
+                $("#exampleModal").modal('show')
+                createTable(msg);
+                }
+               
+        });
+        //LoadingPanel.Hide();<td><div class=redmark">2</div></td>
+    }
+
+
+    function createTable(tableData) {
+
+
+        $("#adtDataTbl").html("");
+
+        var table = document.getElementById("adtDataTbl");
+
+
+        var tableBody = document.createElement('tbody');
+        var tablehead = document.createElement('thead');
+
+
+
+        if (tableData.length > 0) {
+            
+            var row = document.createElement('tr');
+
+            for (var i=0;i<tableData[0].length;i++)
+            {
+                var rowth = document.createElement('th');
+                rowth.appendChild(document.createTextNode(tableData[0][i].Key));
+                row.appendChild(rowth)
+            }
+            
+        }
+
+        tablehead.appendChild(row);
+
+
+        tableData.forEach(function (rowData) {
+            var row = document.createElement('tr');
+            
+            rowData.forEach(function (cellData) {
+                var celltd = document.createElement('td');
+                var cell = document.createElement('div');
+
+                var text = "";
+                if (cellData.Value != null) {
+
+                    var temp_text = cellData.Value.toString()
+                    if (temp_text.startsWith(':')) {
+                        cell.setAttribute('class', 'greenmark round');
+                        text = temp_text.replace(':', '');
+                    }
+                    else if (temp_text.startsWith('%')) {
+                        cell.setAttribute('class', 'redmark round');
+                        text = temp_text.replace('%', '');
+                    }
+                    else if (temp_text.startsWith('{')) {
+                        cell.setAttribute('class', 'orangemark round');
+                        text = temp_text.replace('{', '');
+                    }
+                    else if (temp_text.startsWith('=')) {
+                        cell.setAttribute('class', 'timesheetBg round');
+                        text = temp_text.replace('=', '');
+                    }
+                    else if (temp_text.startsWith('#')) {
+                        cell.setAttribute('class', 'lightorangemark round');
+                        text = temp_text.replace('#', '');
+                    }
+                    else if (temp_text.startsWith('&')) {
+                        cell.setAttribute('class', 'lightorangemark round');
+                        text = temp_text.replace('&', '');
+                    }
+                    else if (temp_text.startsWith("}")) {
+                        cell.setAttribute('class', 'lightredmark round');
+                        text = temp_text.replace('}', '');
+                    }
+                    else if (temp_text.startsWith("-")) {
+                        cell.setAttribute('class', 'yewellomark round');
+                        text = temp_text.replace('-', '');
+                    }
+                    else if (temp_text.startsWith("^")) {
+                        cell.setAttribute('class', 'wkOff round');
+                        text = temp_text.replace('^', '');
+                    }
+                    else if (temp_text.startsWith("*")) {
+                        cell.setAttribute('class', 'wkOff round');
+                        text = temp_text.replace('*', '');
+                    }
+                    
+                    else
+                    {
+                        cell.setAttribute('class', 'blankmark');
+
+                        text = temp_text;
+                    }
+
+                }
+
+                cell.appendChild(document.createTextNode(text));
+                celltd.appendChild(cell);
+
+                row.appendChild(celltd);
+            });
+
+            tableBody.appendChild(row);
+
+            
+        });
+        table.appendChild(tablehead);
+
+        table.appendChild(tableBody);
+        $('#adtDataTbl').dataTable().fnDestroy();
+        $("#exampleModal").on('shown.bs.modal', function (e) {
+            // do something...
+            var table = $('#adtDataTbl').DataTable({
+                scrollY: "400px",
+                scrollX: true,
+                searching: true,
+                ordering: false,
+                bRetrieve: true,
+                scrollCollapse: true,
+                paging: false,
+                fixedColumns: {
+                    leftColumns: 2
+                }
+            })
+            $('#adtDataTbl').DataTable().draw();
+            $('#loaderP').hide();
+        });
+        
+    }
+
+
+    function SaveNew() {
+        jsonObj = [];
+
+        $('#editable tbody>tr').each(function () {
+            var obj = [];
+            var count = 0;
+
+            var EmployeeID = "";
+            $('td', this).each(function () {
+                var HeaderText = AttendanceHeader[count];
+
+                if (HeaderText == "EmployeeID") {
+                    EmployeeID = $(this).text();
+                }
+
+                if (HeaderText.includes("InTime") == true) {
+                    var YYMM = document.getElementById('hdnPeriodID').value;
+                    var YYYY = "20" + YYMM.slice(0, 2);
+                    var MM = YYMM.slice(2, 4);
+                    var DD = HeaderText.split('Day')[1].split('_InTime')[0];
+                    if (parseInt(DD) <= 9) DD = "0" + DD;
+                    var AttendanceDate = YYYY + "-" + MM + "-" + DD;
+
+                    Type = "InTime";
+                }
+                else if (HeaderText.includes("OutTime") == true) {
+                    var YYMM = document.getElementById('hdnPeriodID').value;
+                    var YYYY = "20" + YYMM.slice(0, 2);
+                    var MM = YYMM.slice(2, 4);
+                    var DD = HeaderText.split('Day')[1].split('_OutTime')[0];
+                    if (parseInt(DD) <= 9) DD = "0" + DD;
+                    var AttendanceDate = YYYY + "-" + MM + "-" + DD;
+
+                    Type = "OutTime";
+                }
+                else if (HeaderText.includes("Status") == true) {
+                    var YYMM = document.getElementById('hdnPeriodID').value;
+                    var YYYY = "20" + YYMM.slice(0, 2);
+                    var MM = YYMM.slice(2, 4);
+                    var DD = HeaderText.split('Day')[1].split('_Status')[0];
+                    if (parseInt(DD) <= 9) DD = "0" + DD;
+                    var AttendanceDate = YYYY + "-" + MM + "-" + DD;
+
+                    Type = "Status";
+                }
+                else {
+                    Type = "";
+                }
+
+                if (Type != "") {
+                    var InputValue = $(this).text();
+
+                    if (Type == "InTime" || Type == "OutTime") {
+                        if (InputValue != "") {
+                            if (InputValue.includes(":")) {
+                                var BeforeColon = InputValue.split(":")[0].trim();
+                                var AfterColon = InputValue.split(":")[1].trim();
+
+                                if (AfterColon.length == 0) InputValue = InputValue + "00";
+                                if (AfterColon.length == 1) InputValue = InputValue + "0";
+                                if (BeforeColon.length == 0) InputValue = "00" + InputValue;
+                            }
+                            else {
+                                InputValue = InputValue + ":00";
+                            }
+                        }
+                        else {
+                            InputValue = "00:00";
+                        }
+                    }
+
+                    if (_isContains(jsonObj, EmployeeID, AttendanceDate) == true) {
+                        for (var i = 0; i < jsonObj.length; ++i) {
+                            if (jsonObj[i]['EmployeeID'] === EmployeeID && jsonObj[i]['AttendanceDate'] === AttendanceDate) {
+                                if (Type == "InTime") {
+                                    jsonObj[i]['InTime'] = InputValue;
+                                    break;
+                                }
+                                else if (Type == "OutTime") {
+                                    jsonObj[i]['OutTime'] = InputValue;
+                                    break;
+                                }
+                                else if (Type == "Status") {
+                                    jsonObj[i]['Status'] = InputValue;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        var _Object = new Object();
+                        _Object.EmployeeID = EmployeeID;
+                        _Object.AttendanceDate = AttendanceDate;
+                        if (Type == "InTime") _Object.InTime = InputValue; else _Object.InTime = "00:00";
+                        if (Type == "OutTime") _Object.OutTime = InputValue; else _Object.OutTime = "00:00";
+                        if (Type == "Status") _Object.Status = InputValue; else _Object.Status = "";
+
+                        jsonObj.push(_Object);
+                    }
+                }
+
+                count++;
+            });
+        });
+
+        var _obj = {};
+        _obj.AttendanceDetails = jsonObj;
+        _obj.PayClassID = document.getElementById('hdnPayClassID').value;
+        _obj.Period = document.getElementById('hdnPeriodID').value;
+
+        $.ajax({
+            type: "POST",
+            url: "/AttendanceEntry/SaveEmployeeAttendance",
+            data: JSON.stringify(_obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    var url = '/AttendanceEntry/Dashboard';
+
+                    jAlert("Save successfully.", 'Alert Dialog: [Message]', function (r) {
+                        if (r == true) {
+                            //window.location.href = url;
+                        }
+                    });
+                }
+                else {
+                    jAlert(response.ResponseMessage);
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+
+    function _isContains(JSON, EmployeeID, AttendanceDate) {
+        var hasMatch = false;
+
+        for (var index = 0; index < JSON.length; ++index) {
+            if (JSON[index].EmployeeID == EmployeeID && JSON[index].AttendanceDate == AttendanceDate) {
+                hasMatch = true;
+                break;
+            }
+        }
+
+        return hasMatch;
+    }
+
+    function ImportAttendance() {
+        var hdnPayClassID = document.getElementById('hdnPayClassID').value;
+        var hdnPeriodID = document.getElementById('hdnPeriodID').value;
+
+        var AttachmentAttendance = $('#AttachmentAttendance').val();
+
+        //if (hdnPayClassID == "") {
+        //    jAlert("Please select Payroll Class.");
+        //}
+        //else if (hdnPeriodID == "") {
+        //    jAlert("Please select Period.");
+        //}
+        //else if (AttachmentAttendance == "") {
+        if (AttachmentAttendance == "") {
+            jAlert("Please select file for Import.");
+        }
+        else {
+
+            var EmpMap = $('#idEmpMap').val();
+            if (window.FormData !== undefined) {
+                var fileUpload = $("#AttachmentAttendance").get(0);
+                var files = fileUpload.files;
+                var fileData = new FormData();
+
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                fileData.append('payclassid', hdnPayClassID);
+                fileData.append('periodid', hdnPeriodID);
+                fileData.append('map', EmpMap);
+
+
+                $.ajax({
+                    type: "POST",
+                    url: $('#hdnAttachmentAddUpdate').val(),
+                    contentType: false,
+                    processData: false,
+                    data: fileData,
+                    success: function (response) {
+                        //debugger;
+                        if (response) {
+                            var url = $('#hdnAttachmentDashboard').val();
+                            $('#AttachmentAttendance').val('');
+                            $('#idEmpMap').val($("#idEmpMap option:first").val());
+
+                            jAlert("Attendance Import Successfully.", 'Alert Dialog: [Message]', function (r) {
+                                if (r == true) {
+                                    window.location.href = url;
+                                }
+                            });
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    function DownloadFormatAttendance() {
+        window.location.href = "@Url.RouteUrl(new { Controller = "AttendanceEntry", Action = "DownloadFormatAttendance" })";
+    }
+
+    $(document).ready(function () {
+        $('#loaderP').hide();
+        $('#exampleModal').on('shown.bs.modal', function (e) {
+            // do something...
+           
+        })
+        
+    })
+</script>
+<link href="~/assests/css/payrollCss/AttendanceEntry.css" rel="stylesheet" />
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Attendance Entry</h3>
+    </div>
+</div>
+<div id="loaderP">
+    <img src="/assests/images/Svg/bars.svg" style="max-width: 45px;" />
+</div>
+<div class="panel-body">
+
+    <input type="hidden" value="@Url.Action("AttachmentAttendanceAddUpdate", "AttendanceEntry")" id="hdnAttachmentAddUpdate" />
+    <input type="hidden" value="@Url.Action("Dashboard", "AttendanceEntry")" id="hdnAttachmentDashboard" />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="Mbxgroup clearfix">
+                <div class="col-md-3">
+                    <label>Payroll Class</label>
+                    <div>
+                        @Html.DevExpress().ButtonEdit(
+                settings =>
+                {
+                    settings.Name = "btnPayClasss";
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Text = "";
+                    settings.ReadOnly = true;
+                    settings.Properties.Buttons.Add("..");
+                    settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPayClasss_Click(s,e);}";
+                    settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayClasss_KeyDown(s,e);}";
+                }).GetHtml()
+                        <span id="MandatoryStructureName" style="display: none" class="d_validclass">
+                            <img id="imgMandatoryStructureName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3 lblmTop8">
+                    <label>Period</label>
+                    <div>
+                        @Html.DevExpress().ButtonEdit(
+                settings =>
+                {
+                    settings.Name = "btnPerionGeneration";
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Text = "";
+                    settings.ReadOnly = true;
+                    settings.Properties.Buttons.Add("..");
+                    settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPerionGeneration_Click(s,e);}";
+                    settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPerionGeneration_KeyDown(s,e);}";
+                }).GetHtml()
+                        <span id="MandatoryEmployeeCode" style="display: none" class="d_validclass">
+                            <img id="imgMandatoryEmployeeCode" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <div style="padding-top: 23px;">
+                        <input type="file" class="fileInput" id="AttachmentAttendance" />
+                    </div>
+                </div>
+                
+
+                <div class="col-md-3">
+                    <label style="margin-top: 6px;">Employee map with</label>
+                    <div>
+                        <select class="form-control" id="idEmpMap">
+                            <option value="EmployeeID">Employee ID</option>
+                            <option value="EmployeeCode">Biometric Code</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="col-md-12 mTop5">
+                    <button type="button" class="btn btn-warning mTop5" data-toggle="modal" onclick="RecalculateLeave();">
+                        Calculate & Commit
+                    </button>
+                    <button class="btn btn-info mTop5" id="btnDownloadFormat" onclick="DownloadFormatAttendance();">Download Format</button>
+                    <button class="btn btn-success mTop5" id="btnImport" onclick="ImportAttendance();">Import</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-12">
+            <div id="tbl">
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-3" id="buttonDIV">
+            <button type="submit" class="btn btn-primary" onclick="SaveNew()">Save & New</button>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade pmsModal w90" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Attendance Summary</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="clearfix">
+                    <table width="100%" cellspacing="0" cellpadding="0" class="table-curved cal12report" id="adtDataTbl">
+                        
+                        
+                    </table>
+                </div>
+                <div style="padding:5px 15px">
+                    <ul class="secListing">
+                        <li>TD - TOTAL DAYS</li>
+                        <li>TL - TOTAL LEAVE</li>
+                        <li>FW - TOTAL FULL DAY WORK</li>
+                        <li>AD - ATTENDANCE DAYS </li>
+                        <li>H1 - TOTAL HALF DAYS FIRST HALF</li>
+                        <li>H2 - TOTAL HALF DAYS SECOND HALF</li>
+                        <li>H -  TOTAL HALFDAYS</li>
+                        <li>L -  TOTAL LATE</li>
+                        <li>EL - EARLY LEAVE</li>
+                        <li>DE-L-TOTAL LATE DEDUCTION</li>
+                        <li>DE-EL-EARLY LEAVE DEDUCTION</li>
+                        <li>DE-H-TOTAL HALF DAY DEDUCTION</li>
+                        <li>FO - TOTAL FULL DAY OFF</li>
+                        <li>HD - TOTAL HOLI DAY</li>
+                        <li>WO - TOTAL_WEEK OFF</li>
+                        <li>LA - LEAVE ADD PERIOD</li>
+                        <li> LF - LEAVE ADD FORWARDED</li>
+                        <li>LT - LEAVE TAKEN</li>
+                        <li>TP - TOTAL PAYABLE DAY</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="SaveLeave();">Save changes</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Modal PopUp -->
+<div class="modal fade" id="ModelPopup" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay structure</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="txtSearchBoxkeydown(event)" id="txtSearchBox" autofocus width="100%" placeholder="Search By Pay Structure Name or Short Name" />
+                <div id="TableStructure">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal PopUp -->
+
+<div>
+    @Html.Hidden("hdnInputDataType")
+    @Html.Hidden("hdnInputType")
+    @Html.Hidden("hdnPayClassID")
+    @Html.Hidden("hdnPeriodID")
+</div>
+
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "LoadingDashBoard";
+    }
+).GetHtml()

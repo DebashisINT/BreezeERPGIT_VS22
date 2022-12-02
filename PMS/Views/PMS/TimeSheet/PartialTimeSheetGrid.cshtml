@@ -1,0 +1,148 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvTimeSheetList";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "TimeSheet", Action = "PartialTimeSheetGrid" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.KeyFieldName = "TimeSheet_ID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TimeSheet_ID";
+        column.Caption = "TimeSheet ID";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });  
+    settings.Columns.Add(column =>
+     {
+         column.FieldName = "TimeSheet_Date";
+         column.Caption = "Date";
+        // column.ColumnType = MVCxGridViewColumnType.DateEdit;
+         column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+
+     });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "branch_description";
+        column.Caption = "Branch";
+        //column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Time_Duration";
+        column.Caption = "Duration";
+        //column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Type_Name";
+        column.Caption = "Type";
+        //column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Proj_Name";
+        column.Caption = "Project";
+        //column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ProjectTask_Name";
+        column.Caption = "Project Task";
+        //column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ROLE_NAME";
+        column.Caption = "Roll";
+        //column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TimeSheet_Description";
+        column.Caption = "Description";
+        //column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TimeSheet_ExternalComments";
+        column.Caption = "External Comments";
+        //column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CreatedBy";
+        column.Caption = "Entered By";
+       // column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Create_Date";
+        column.Caption = "Entered On";
+       // column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "UpdatedBy";
+        column.Caption = "Updated By";
+       // column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Update_Date";
+        column.Caption = "Updated On";
+        // column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy hh:mm:ss";
+    });
+
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            //ViewContext.Writer.Write(
+            //     "<div class='floatedBtnArea'><a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "TimeSheet_ID") + "')\" class=\"\" title=\"Edit\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>" +
+            //     "&nbsp;" +
+            //      "<a href=\"javascript:void(0);\" onclick=\"OnClickViewForm('" + DataBinder.Eval(tc.DataItem, "TimeSheet_ID") + "')\" class=\"\" title=\"Delete\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>" +
+            //    "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "TimeSheet_ID") + "')\" class=\"\" title=\"Delete\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a></div>"
+            //);
+            string EnqRights = "<div class='floatedBtnArea'>";
+
+            if (ViewBag.CanAdd)
+            {
+                EnqRights = EnqRights +"<a style='cursor:pointer' class='pad' onclick=\"OnClickEditForm('" + Convert.ToString(DataBinder.Eval(tc.DataItem, "TimeSheet_ID")) + "')\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>";
+            }
+            if (ViewBag.CanView)
+            {
+                EnqRights = EnqRights +"<a style='cursor:pointer' class='pad' onclick=\"OnClickViewForm('" + Convert.ToString(DataBinder.Eval(tc.DataItem, "TimeSheet_ID")) + "')\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>";
+            }
+            if (ViewBag.CanDelete)
+            {
+               EnqRights = EnqRights +"<a style='cursor:pointer' class='pad' onclick=\"OnClickDeleteForm('" + Convert.ToString(DataBinder.Eval(tc.DataItem, "TimeSheet_ID")) + "')\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>";
+            }
+            EnqRights = EnqRights + "</div>";
+            ViewContext.Writer.Write(EnqRights);
+            
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.False;
+        c.Width = 0;
+        c.Caption = "";
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        settings.ClientSideEvents.RowClick = "gridRowclick";
+    });
+}).Bind(Model).GetHtml()

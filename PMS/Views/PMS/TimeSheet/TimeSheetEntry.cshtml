@@ -1,0 +1,866 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model PMS.Models.ViewModel.TimeSheetViewModel
+@{
+    ViewBag.Title = "Timesheet";
+}
+<style>
+    .gridWraper {
+        border: 1px solid #ccc;
+        min-height: 300px;
+    }
+
+    .tableGrid {
+        width: 100%;
+    }
+
+        .tableGrid > thead > tr > th {
+            background: #1e90ce;
+            color: #fff;
+        }
+
+        .tableGrid > thead > tr > th, .tableGrid > tbody > tr > td, .tableGrid > tfoot > tr > td {
+            padding: 8px 10px;
+        }
+
+        .tableGrid > tbody > tr > td, .tableGrid > tfoot > tr > td {
+            border-bottom: 1px solid #ccc;
+        }
+
+            .tableGrid > tbody > tr > td:not(:last-child), .tableGrid > tfoot > tr > td:not(:last-child) {
+                border-right: 1px solid #e4e4e4;
+            }
+
+        .tableGrid > thead > tr > th:not(:last-child) {
+            border-right: 1px solid #1678ad;
+        }
+
+    .mutiFMbox {
+        border: 1px solid #e2e2e2;
+    }
+
+    .tableGrid > thead > tr > th:nth-child(5) {
+        border-right: 3px solid #1678ad;
+    }
+
+    .tableGrid > tbody > tr > td:nth-child(5), .tableGrid > tfoot > tr > td:nth-child(1) {
+        border-right: 3px solid #ccc;
+    }
+    .mandatory {
+        position: absolute;
+        right: -4px;
+        top: 9px;
+    }
+    #MandatorystartDuration {
+        right: 64px;
+        top: 29px;
+    }
+</style>
+<script>
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+       // $('#exportlist').val(0);
+        if (exportid > 0) {
+            var url = '@Url.Action("ExportTimesheetGridList", "TimeSheet", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+        }
+    }
+
+    $(function () {
+        BindProject();
+        PopulateUnitList();
+        if (localStorage.getItem('FromDateTimesheetEntry')) {
+            frm_dt.SetDate(new Date(localStorage.getItem('FromDateTimesheetEntry')));
+        }
+        if (localStorage.getItem('ToDateTimesheetEntry')) {
+            to_dt.SetDate(new Date(localStorage.getItem('ToDateTimesheetEntry')));
+        }
+        $('#btnAddNew').focus();
+    });
+    function BindProject() {
+        var BranchID = $('#ddlBranch').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("BindProject", "TimeSheet")",
+            data: { BranchID: BranchID },
+            //Async:false,
+            success: function (response) {
+            var html = "";
+            var hdnProjectID = $('#hdnProjectID').val();
+            for (var i = 0; i < response.length; i++) {
+                if (hdnProjectID != '') {
+                    if (hdnProjectID == response[i].Proj_Id)
+                    {
+                        html = html + "<option value='" + response[i].Proj_Id + "' selected>" + response[i].Proj_Name + "</option>";
+                    }
+                    else
+                    {
+                        html = html + "<option value='" + response[i].Proj_Id + "' >" + response[i].Proj_Name + "</option>";
+                    }
+                }
+                else {
+                    html = html + "<option value='" + response[i].Proj_Id + "'>" + response[i].Proj_Name + "</option>";
+                }
+              
+            }
+            $('#ddlProjectsList').html(html);
+        }
+    });
+    }
+
+    function BindSchedule() {
+        var ProjectID = $('#ddlProjectsList').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("BindProjectTask", "TimeSheet")",
+            data: { ProjectID: ProjectID },
+            success: function (response) {
+            var html = "";
+            var hdnProjectTaskID = $('#hdnProjectTaskID').val();
+            for (var i = 0; i < response.length; i++) {
+                if (hdnProjectTaskID != '') {
+                    if (hdnProjectTaskID == response[i].ProjectTask_ID) {
+                        html = html + "<option value='" + response[i].ProjectTask_ID + "' selected>" + response[i].ProjectTask_Name + "</option>";
+                    }
+                    else
+                    {
+                        html = html + "<option value='" + response[i].ProjectTask_ID + "'>" + response[i].ProjectTask_Name + "</option>";
+                    }
+
+                }
+                else {
+                    html = html + "<option value='" + response[i].ProjectTask_ID + "'>" + response[i].ProjectTask_Name + "</option>";
+                }
+            }
+            $('#ddlProjectsTaskList').html(html);
+        }
+    });
+    }
+
+
+
+
+
+
+
+
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "TimeSheet")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+                if (localStorage.getItem('TimeSheetBranch')) {
+                    if ($("#ddlunitlist option[value=" + localStorage.getItem('TimeSheetBranch') + "]").text() != "" && $("#ddlunitlist option[value=" + localStorage.getItem('TimeSheetBranch') + "]").text() != null) {
+                        $('#ddlunitlist').val(localStorage.getItem('TimeSheetBranch'));
+                    }
+                }
+
+            }
+    });
+    }
+    function updateGridByDate() {
+        if (frm_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { frm_dt.Focus(); });
+        }
+        else if (to_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { to_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(frm_dt.GetValue());
+            var todate = GetServerDateFormat(to_dt.GetValue());
+            var unitid = $('#ddlunitlist option:selected').val();
+
+            //localStorage.setItem("FromDateTimesheetEntry", frm_dt.GetDate());
+            //localStorage.setItem("ToDateTimesheetEntry", to_dt.GetDate());
+            localStorage.setItem("FromDateTimesheetEntry", fromdate);
+            localStorage.setItem("ToDateTimesheetEntry", todate);
+            localStorage.setItem("TimeSheetBranch", unitid);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetTimesheetDateFilter", "TimeSheet")",
+                data: { unitid: unitid, FromDate: fromdate, ToDate: todate },
+                success: function (response) {
+                if (response) {
+                    is_pageload = "1";
+                    isshowclicked = "1";
+                    gvTimeSheetList.Refresh();
+                    gvTimeSheetSummaryList.Refresh();
+                }
+            }
+        });
+    }
+    }
+
+    function gridRowclick(s, e) {
+        $('#gvTimeSheetList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+    var is_pageload = "0";
+    function Show() {
+        updateGridByDate();
+        //is_pageload = "1";
+        //isshowclicked = "1";
+        //gvTimeSheetList.Refresh();
+        //gvTimeSheetSummaryList.Refresh();
+    }
+    function DateValidateTo() {
+        if (frm_dt.GetDate()) {
+
+            var StrDate = to_dt.GetDate();
+            var varformat_startdt = (StrDate.getDate() - 6) + "-" + ((StrDate.getMonth() + 1) < 10 ? '0' + (StrDate.getMonth() + 1) : (StrDate.getMonth() + 1)) + "-" + StrDate.getFullYear();
+
+            frm_dt.SetText(varformat_startdt);
+
+            if (to_dt.GetDate() < frm_dt.GetDate()) {
+                to_dt.SetValue(frm_dt.GetDate());
+            }
+        }
+    }
+    function DateValidateFrom() {
+        if (to_dt.GetDate()) {
+            var StrDate = frm_dt.GetDate();
+            var varformat_startdt = (StrDate.getDate() + 6) + "-" + ((StrDate.getMonth() + 1) < 10 ? '0' + (StrDate.getMonth() + 1) : (StrDate.getMonth() + 1)) + "-" + StrDate.getFullYear();
+
+            to_dt.SetText(varformat_startdt);
+            if (to_dt.GetDate() < frm_dt.GetDate()) {
+                to_dt.SetValue(frm_dt.GetDate());
+            }
+        }
+    }
+    function OnStartCallback(s, e) {
+        var unitid = $('#ddlunitlist option:selected').val();
+        var StrDate = frm_dt.GetDate();
+        var varformat_startdt = StrDate.getFullYear() + "-" + ((StrDate.getMonth() + 1) < 10 ? '0' + (StrDate.getMonth() + 1) : (StrDate.getMonth() + 1)) + "-" + (StrDate.getDate() < 10 ? '0' + StrDate.getDate() : StrDate.getDate());
+
+        // var varformat_startdt = StrDate.getDate() + "-" + (StrDate.getMonth() + 1) + "-" + StrDate.getFullYear();
+
+        var StrToDate = to_dt.GetDate();
+        var varformat_todt = StrToDate.getFullYear() + "-" + ((StrToDate.getMonth() + 1) < 10 ? '0' + (StrToDate.getMonth() + 1) : (StrToDate.getMonth() + 1)) + "-" + (StrToDate.getDate() < 10 ? '0' + StrToDate.getDate() : StrToDate.getDate());
+
+    
+
+        e.customArgs["FromDate"] = varformat_startdt;
+        e.customArgs["ToDate"] = varformat_todt;
+        e.customArgs["is_pageload"] = is_pageload;
+        e.customArgs["ListBranch"] = unitid;
+
+    }
+    function OnClickDeleteForm(obj) {
+        jConfirm('Are you sure want to Delete ?', 'Alert', function (r) {
+            if (r) {
+                $("#hdnuniqueid").val(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteData", "TimeSheet")",
+                    data: { TimeSheetID: obj },
+                    dataType: "json",
+                    success: function (response) {
+                        var status = response;
+                        jAlert(status);
+                        $("#hdnuniqueid").val('');
+                        gvTimeSheetList.Refresh();
+                        gvTimeSheetSummaryList.Refresh();
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+            else {
+
+            }
+        });
+
+    }
+
+    function openPop() {
+        var today = new Date();
+
+        StartDate_dt.SetDate(today);
+        $("#hdnuniqueid").val('');
+        $("#hdnAction").val("ADD");
+        $("#ddlProjectsList").val(0);
+        $("#Time_Type").val(0);
+        $("#txtDescription").val('');
+        $("#txtExternalComments").val('');
+        $("#ddlProjectsList").val(0);
+        $("#Duration").val(0);
+        $("#ddlRollsList").val(0);
+        $("#exampleModalLabel").text("Add Timesheet");
+        //$('#ProficiencyNAME').focus();
+    }
+
+    function OnClickViewForm(obj) {
+
+        $("#hdnuniqueid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "TimeSheet")",
+            data: { TimeSheetID: obj },
+            dataType: "json",
+            success: function (response) {
+
+                var status = response;
+                var str = "";
+                if (status != null) {
+                    //var strDate=new Date(status.StartDate);
+                    StartDate_dt.SetDate(new Date(parseInt(status.StartDate.substr(6))));
+                   
+                    $("#Time_Type").val(status.Time_Type);
+                    $("#txtDescription").val(status.txtDescription);
+                    $("#txtExternalComments").val(status.txtExternalComments);
+                    $("#Duration").val(status.Duration);
+                    $("#ddlRollsList").val(status.Time_Roll);
+                    $("#exampleModalLabel").text("");
+                    $("#exampleModalLabel").text("View Timesheet");                   
+                    $("#btnSave").addClass('hide');
+                    $("#ddlBranch").val(status.BranchID);
+                    $('#hdnProjectID').val(status.Time_Project);
+                    BindProject();
+                    $("#ddlProjectsList").val(status.Time_Project);
+                    $('#hdnProjectTaskID').val(status.Time_ProjectTask);
+                    BindSchedule();
+                    $('#timeSheet').modal('toggle');
+
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+    function OnClickEditForm(obj) {
+
+        $("#hdnuniqueid").val(obj);
+        $("#hdnAction").val("EDIT");
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataShow", "TimeSheet")",
+            data: { TimeSheetID: obj },
+            dataType: "json",
+            success: function (response) {
+
+                var status = response;
+                var str = "";
+                if (status != null) {
+                    StartDate_dt.SetDate(new Date(parseInt(status.StartDate.substr(6))));
+                  
+                    $("#Time_Type").val(status.Time_Type);
+                    $("#txtDescription").val(status.txtDescription);
+                    $("#txtExternalComments").val(status.txtExternalComments);
+                    $("#ddlProjectsTaskList").val(status.Time_ProjectTask);
+                    //$("#Duration").val(status.Duration);
+                    if (status.Duration != null)
+                    {
+                        var hh = status.Duration.split(':')[0];
+                        var mm = status.Duration.split(':')[1];
+
+                        $('#txtaftertimelatehh').val(hh);
+                        $('#txtaftertimelatemm').val(mm);
+                    }
+
+                    $("#ddlRollsList").val(status.Time_Roll);
+                    $("#exampleModalLabel").text("");
+                    $("#exampleModalLabel").text("Modify Timesheet");
+                  
+                    $("#ddlBranch").val(status.BranchID);
+                    $('#hdnProjectID').val(status.Time_Project);
+                    BindProject();
+                    $("#ddlProjectsList").val(status.Time_Project);
+                    $('#hdnProjectTaskID').val(status.Time_ProjectTask);                    
+                    BindSchedule();
+                    $('#timeSheet').modal('toggle');
+                }
+            },
+            error: function (response) {
+                jAlert("Please try again later");
+            }
+        });
+    }
+    function AddFormula() {
+        var url = '/TimeSheet/TimeSheetEntry?ActionType=ADD';
+        window.location.href = url;
+        $('#timeSheet').modal('show');
+        // $("#timeSheet").show();
+    }
+    function validateclass() {
+        var x = true;
+        var StartDate = StartDate_dt.GetDate();
+        var txtaftertimelate = "";
+        var txtaftertimelatehh = $('#txtaftertimelatehh').val();
+        var txtaftertimelatemm = $('#txtaftertimelatemm').val();
+        if (txtaftertimelatemm == "") {
+            txtaftertimelatemm = "00";
+        }
+        if (txtaftertimelatehh == "") {
+            txtaftertimelatehh = "00";
+        }
+        if (txtaftertimelatehh != "") {
+            txtaftertimelate = (txtaftertimelatehh + ":" + txtaftertimelatemm);//$('#txtConsAttenAfter').val();
+        }
+        var BranchID = $("#ddlBranch").val();
+        var Time_Type = $("#Time_Type").val();
+        var Projects = $("#ddlProjectsList").val();
+        var Time_ProjectTask = $("#ddlProjectsTaskList").val();
+
+        if (StartDate == "" || StartDate == null) {
+            $("#MandatorystartDate").show();
+            x = false;
+        }
+        else {
+            $("#MandatorystartDate").hide();
+        }
+
+        if (txtaftertimelate == "00:00" || txtaftertimelate == "") {
+            $("#MandatorystartDuration").show();
+            x = false;
+        }
+        else {
+            $("#MandatorystartDuration").hide();
+        }
+
+        if (Time_Type == "0" || Time_Type == null) {
+            $("#MandatorystartType").show();
+            x = false;
+        }
+        else {
+            $("#MandatorystartType").hide();
+        }
+        if (BranchID == "0" || BranchID == null) {
+            $("#MandatorystartUnit").show();
+            x = false;
+        }
+        else {
+            $("#MandatorystartUnit").hide();
+        }
+
+
+        if (Projects == "0" || Projects == null) {
+            $("#MandatorystartProject").show();
+            x = false;
+        }
+        else {
+            $("#MandatorystartProject").hide();
+        }
+
+        if (Time_ProjectTask == "0" || Time_ProjectTask == null) {
+            $("#MandatorystartTask").show();
+            x = false;
+        }
+        else {
+            $("#MandatorystartTask").hide();
+        }
+
+        if (x == false) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function SaveExit() {
+        if (validateclass()) {
+
+            //if ($('#hdnAction').val() == "ADD") {
+            //    action = "ADD";
+            //    $('#hdnuniqueid').val("");
+            //}
+            if ($('#hdnAction').val() == "EDIT") {
+                action = "EDIT";
+            }
+            else {
+                action = "ADD";
+                $('#hdnuniqueid').val("");
+
+            }
+            //action = "ADD";
+            var txtaftertimelate = "";
+            var txtaftertimelatehh = $('#txtaftertimelatehh').val();
+            var txtaftertimelatemm = $('#txtaftertimelatemm').val();
+            if (txtaftertimelatemm == "") {
+                txtaftertimelatemm = "00";
+            }
+            if (txtaftertimelatehh == "") {
+                txtaftertimelatehh = "00";
+            }
+            if (txtaftertimelatehh != "") {
+                txtaftertimelate = (txtaftertimelatehh + ":" + txtaftertimelatemm);//$('#txtConsAttenAfter').val();
+            }
+
+            var obj = {};
+            obj.txtExternalComments = $("#txtExternalComments").val();
+            obj.txtDescription = $("#txtDescription").val();
+            obj.Time_Type = $("#Time_Type").val();
+            obj.Time_ProjectTask = $("#ddlProjectsTaskList").val();
+
+            //var e = document.getElementById("Duration");
+            //var strDuration = e.options[e.selectedIndex].value;
+            //obj.Duration = strDuration;
+            obj.Duration = txtaftertimelate;
+            var StrDate = StartDate_dt.GetDate();
+            // var varformat_startdt = StrDate.getDate() + "-" + (StrDate.getMonth() + 1) + "-" + StrDate.getFullYear();
+            obj.StartDate = StrDate;
+
+            var e = document.getElementById("ddlProjectsList");
+            var strProjects = e.options[e.selectedIndex].value;
+            obj.Time_Project = strProjects;
+
+            var Roll = document.getElementById("ddlRollsList");
+            var strRoll = Roll.options[Roll.selectedIndex].value;
+
+            obj.Time_Roll = strRoll;
+            obj.Action_type = action
+            obj.TimeSheetID = $('#hdnuniqueid').val();
+
+            var BranchID = document.getElementById("ddlBranch");
+            var strBranchID = BranchID.options[BranchID.selectedIndex].value;
+            obj.BranchID = strBranchID;
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SaveData", "TimeSheet")",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                //data: { timeSt: obj, uniqueid: $('#hdnuniqueid').val(), Date: varformat_startdt },
+                data: JSON.stringify(obj),
+                success: function (response) {
+                    if (response.response_msg == "Success") {
+                        jAlert("Saved Successfully", "Alert", function () {
+                            var url = '/TimeSheet/TimeSheetEntry';
+                            window.location.href = url;
+                        });
+                    }
+                    else if (response.response_msg == "Update") {
+                        jAlert("Update Successfully", "Alert", function () {
+                            //var url = '/TimeSheet/TimeSheetEntry';
+                            //window.location.href = url;
+                            $('#timeSheet').modal('toggle');
+                            is_pageload = "1";
+                            isshowclicked = "1";
+                            gvTimeSheetList.Refresh();
+                            gvTimeSheetSummaryList.Refresh();
+                        });
+                    }
+                    else {
+                        jAlert(response.response_msg);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later", "Alert", function () {
+                        //setTimeout(function () {
+                        //    $('#ProficiencyNAME').focus();
+                        //}, 200);
+                    });
+                    //LoadingPanel.Hide();
+                }
+            });
+
+        }
+    }
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Timesheet </label>
+        </h3>
+    </div>
+    <div class="md-pull-right">
+        <table class="paddingTbl">
+            <tr>
+                <td><label>From Date</label></td>
+                <td class="w150">
+                    <div>
+                        @Html.DevExpress().DateEdit(
+                                            settings =>
+                                            {
+
+                                                settings.Name = "frm_dt";
+                                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateFrom";
+                                                settings.Date = DateTime.Now;
+                                            }
+                                ).GetHtml()
+                    </div>
+                </td>
+                <td><label>To Date</label></td>
+                <td class="w150">
+                    <div>
+                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "to_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "DateValidateTo";
+                                settings.Date = DateTime.Now;
+
+
+                            }
+                ).GetHtml()
+                    </div>
+                </td>
+                <td>
+                    Unit
+                </td>
+                <td class="w150">
+                    <div class="relative">
+                        <select id="ddlunitlist" class="form-control"></select>
+                    </div>
+                </td>
+
+                <td>
+                    <a href="javascript:void(0);" onclick="Show()" class="btn btn-primary"><span>Show</span> </a>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="form_main">
+    <div class="">
+        <div class="clearfix">
+            @*<a href="javascript:void(0);" onclick="AddFormula()" class="btn btn-primary" data-toggle="modal" data-target="#timeSheet" data-backdrop="static" data-keyboard="true"><span>Add Timesheet</span> </a>*@
+            <button id="btnAddNew" class="btn btn-success btn-radius" data-toggle="modal" data-target="#timeSheet" data-backdrop="static" data-keyboard="true" onclick="openPop()">Add Timesheet  </button>
+            @*@if (ViewBag.CanExport)
+                {*@
+            <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="4">RTF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="5">CSV</option>
+            </select>
+            @*}*@
+
+        </div>
+    </div>
+    <div class="relative gridWraper">
+        <div class="GridViewArea relative">
+            @{
+                Html.RenderAction("PartialTimeSheetGrid", "TimeSheet");
+            }
+        </div>
+        <br /><br />
+        <div class="col-md-12 relative">
+            <h4>
+             Total Hours
+            </h4>
+
+        </div>
+        <div class="GridViewArea2">
+            @{
+                Html.RenderAction("PartialTimeSheetGridSummary", "TimeSheet");
+            }
+        </div>
+    </div>
+</div>
+
+
+<!--Timesheet Entry -->
+<div class="modal fade pmsModal w50" id="timeSheet" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Timesheet </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="pmsForm horizontalLbl">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Date <span class="asterix">*</span></label>
+                                <div class="col-sm-12 relative">
+                                    @Html.DevExpress().DateEdit(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "StartDate_dt";
+                                                      settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                      settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                      settings.Width = Unit.Percentage(100);
+                                                      settings.Date = Convert.ToDateTime(@Model.StartDate);
+                                                      //settings.Date = Convert.ToDateTime(DateTime.Now);
+                                                  }
+                                         ).GetHtml()
+                                    <span id="MandatorystartDate" style="display: none" class="validclass mandatory">
+                                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formLine"></div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Type<span class="asterix">*</span></label>
+                                <div class="col-sm-12 relative">
+                                    @Html.DropDownListFor(x => x.TypesList, new SelectList(Model.TypesList, "Type_ID", "Type_Name"), new { @id = "Time_Type", @class = "form-control" })
+                                    <span id="MandatorystartType" style="display: none" class="validclass mandatory">
+                                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="formLine"></div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Project<span class="asterix">*</span></label>
+                                <div class="col-sm-12 relative">
+                                    @*@Html.DropDownListFor(x => x.ProjectsList, new SelectList(Model.ProjectsList, "Proj_Id", "Proj_Name"), new { @id = "ddlProjectsList", @class = "form-control" })*@
+
+                                    <select id="ddlProjectsList" class="form-control" onchange="BindSchedule()"></select>
+
+                                    <span id="MandatorystartProject" style="display: none" class="validclass mandatory">
+                                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formLine"></div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Description</label>
+                                <div class="col-sm-12">
+                                    @Html.TextAreaFor(m => m.txtDescription, new { @class = "form-control", @id = "txtDescription", @maxlength = "500" })
+                                </div>
+                            </div>
+                            <div class="formLine"></div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">External Comments</label>
+                                <div class="col-sm-12">
+                                    @*<textarea rows="5" class="form-control" ></textarea>*@
+                                    @Html.TextAreaFor(m => m.txtExternalComments, new { @class = "form-control", @id = "txtExternalComments", @maxlength = "500" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pmsForm horizontalLbl">
+                            <div class="form-group row">
+                                <div class="col-sm-12 relative">
+                                    @*<select class="form-control" id="Duration">
+                                            <option value="0">Select</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>*@
+
+                                    @*@Html.DropDownListFor(x => x.DurationsList, new SelectList(Model.DurationsList, "Duration_ID", "Time_Duration"), new { @id = "Duration", @class = "form-control" })*@
+                                    <table class="vAlignb">
+                                        <tr>
+                                            <td></td>
+                                            <td colspan="2"><b>Hours</b></td>
+                                            <td><b>Min</b></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-right: 13px; font-weight: 600;">Duration Hours<span class="asterix">*</span></td>
+                                            <td><input type="number" style="width: 100%; height: 36px;" class="form-control  quantity" placeholder="00" id="txtaftertimelatehh" min="00" max="23" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                            <td style="width:8px;text-align:center;font-weight:700">:</td>
+                                            <td><input type="number" style="width: 100%; height: 36px;" class="form-control decimalCheck quantity" placeholder="00" id="txtaftertimelatemm" min="00" max="59" maxlength="2" onchange="ChkPad2DigitCount(this);"></td>
+                                        </tr>
+                                    </table>
+                                    <span id="MandatorystartDuration" style="display: none" class="validclass mandatory">
+                                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="formLine"></div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Unit<span style="color: red"> *</span></label>
+                                <div class="col-sm-12 relative">
+                                    @Html.DropDownListFor(x => x.BranchList, new SelectList(Model.BranchList, "branch_id", "branch_description"), new { @id = "ddlBranch", @class = "form-control", @onchange = "BindProject(this)" })
+                                    <span id="MandatorystartUnit" style="display: none" class="validclass mandatory">
+                                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="formLine"></div>
+
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Project Task<span class="asterix">*</span></label>
+                                <div class="col-sm-12 relative">
+                                    <select id="ddlProjectsTaskList" class="form-control"></select>
+                                    
+                                    @*@Html.DropDownListFor(x => x.ProjectTasksList, new SelectList(Model.ProjectTasksList, "ProjectTask_ID", "ProjectTask_Name"), new { @id = "Time_ProjectTask", @class = "form-control" })*@
+                                    
+                                    <span id="MandatorystartTask" style="display: none" class="validclass mandatory">
+                                        <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formLine"></div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Role</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(x => x.RollsList, new SelectList(Model.RollsList, "ROLE_ID", "ROLE_NAME"), new { @id = "ddlRollsList", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" onclick="SaveExit()" id="btnSave">Save & Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<input type="hidden" id="hdnuniqueid" />
+<input type="hidden" id="hdnAction" />
+<input type="hidden" value="@Model.Time_Project" id="hdnProjectID" />
+<input type="hidden" value="@Model.Time_ProjectTask" id="hdnProjectTaskID" />
+

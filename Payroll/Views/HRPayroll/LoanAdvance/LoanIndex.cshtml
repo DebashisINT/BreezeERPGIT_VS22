@@ -1,0 +1,793 @@
+﻿@model Payroll.Models.LoanAndAdvances
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+
+@{
+    ViewBag.Title = "Loan or Advance";
+}
+<style>
+    .backBox {
+        padding: 0 15px 15px;
+        background: #f9f9f9;
+        border: 1px solid #ccc;
+    }
+
+    .padRig > tbody > tr > td:not(:last-child) {
+        padding-right: 20px;
+    }
+
+    .form-check-inline > label {
+        display: inline-block !important;
+        margin-top: 0 !important;
+    }
+
+    .form-check-inline > input {
+        -webkit-transform: translateY(2px);
+        transform: translateY(2px);
+    }
+
+    .ln {
+        border: 1px solid #ccc;
+        padding: 5px 5px 0 10px;
+        border-radius: 3px;
+    }
+    
+</style>
+<style>
+    .noBorderTbl {
+        margin: 1px 0;
+        width: 450px;
+    }
+
+        .noBorderTbl > tbody > tr > td {
+            padding: 8px 0;
+        }
+
+    .modal-dialog.modal-sm {
+        width: 650px;
+    }
+
+    .darkLabel {
+        color: #191717;
+    }
+
+    .iconRed {
+        position: absolute;
+        right: -19px;
+        top: 3px;
+    }
+
+    .dxeErrorFrameSys.dxeErrorCellSys {
+        display: none;
+    }
+
+    .boxed {
+        background: #f9f9f9;
+        border: 1px solid #a3a4a5;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+
+    .rowBox {
+        background: #f0f0e0;
+        border: 1px solid #c3c3bd;
+        padding: 6px 0;
+        margin: 5px 0px;
+    }
+
+    .mBot11 {
+        margin-bottom: 11px;
+    }
+
+    .formBox {
+        max-width: 750px;
+        background: #eaeffb;
+        padding: 22px;
+        border-radius: 12px;
+        box-shadow: 0px -4px 0px rgb(251, 151, 49), 0px 4px 0px #FF5722, 0px 4px 5px rgba(60, 62, 62, 0.22);
+        position: relative;
+        margin: 0 auto;
+        z-index: 55;
+    }
+
+    .frmBox-Header {
+        font-size: 17px;
+        background: #1788bb;
+        position: absolute;
+        top: -37px;
+        padding: 5px 18px;
+        border-radius: 8px 18px 0 0;
+        color: #fff;
+    }
+
+    .pdLeft5 {
+        padding-left: 5px;
+    }
+
+    .uLabel {
+        background: #ff8100;
+        padding: 2px 3px;
+        border-radius: 4px;
+        color: #fff;
+    }
+
+    .crossBtn.stkCross {
+        top: -40px;
+        width: 30px;
+        height: 30px;
+        line-height: 28px !important;
+    }
+
+    .btn-radius {
+        border-radius: 15px;
+        padding: 5px 15px !important;
+    }
+
+    .mtop80 {
+        margin-top: 13px;
+    }
+
+    .padTbl {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+        .padTbl > tbody > tr > td {
+            padding-bottom: 15px;
+        }
+
+    .pageOverlay {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.74);
+        z-index: 44;
+    }
+
+    .pagePopLabl {
+        font-size: 18px;
+        -webkit-transform: translateY(-12px);
+        -moz-transform: translateY(-12px);
+        transform: translateY(-12px);
+    }
+
+    .transMinus {
+        -webkit-transform: translateY(-17px);
+        -moz-transform: translateY(-17px);
+        transform: translateY(-17px);
+    }
+
+    .crossBtn.pageTypepop {
+        font-size: 14px !important;
+        height: 25px;
+        line-height: 25px !important;
+        top: 14px;
+        width: 25px;
+    }
+
+    .stLbl + div {
+        text-align: center;
+        padding: 0 10px;
+    }
+</style>
+
+
+
+
+
+<script>
+
+    function typechange() {
+        var type = $("#ddlType").val();
+        if (type == "Loan") {
+            $("#lblCode").text('Loan Code');
+            $("#lblName").text('Loan Name');
+            $('.advanceDiv').hide();
+            $('.loanDiv').show();
+        }
+        else
+        {
+            $("#lblCode").text('Advance Code');
+            $("#lblName").text('Advance Name');
+            $('.advanceDiv').show();
+            $('.loanDiv').hide();
+        }
+    }
+
+    function backToList() {
+        window.location.href = "/LoanAdvance/LoanList"
+    }
+    function FreezeChange() {
+        if (document.getElementById("inlineCheckbox3").checked) {
+            dtFreeze.SetEnabled(true);
+        }
+        else {
+            dtFreeze.SetEnabled(false);
+            dtFreeze.SetDate(null);
+
+
+        }
+    }
+
+    $(document).ready(function () {
+        if ('@Model.TYPE' != '') {
+            $("#ddlType").val('@Model.TYPE')
+            $("#ddlType").attr("disabled", "disabled");
+        }
+        if ('@Model.Code' != '') {
+            $("#txtCode").val('@Model.Code')
+            $("#txtCode").attr("disabled", "disabled");
+
+
+        }
+        if ('@ViewBag.Key' != '') {
+            $("#hdnLoanId").val('@ViewBag.Key')
+        }
+        if ('@Model.Name' != '') {
+            $("#txtName").val('@Model.Name')
+            $("#txtName").attr("disabled", "disabled");
+        }
+        if ('@Model.Amount' != '') {
+            txtAmount.SetText('@Model.Amount')
+        }
+        if ('@Model.Installment' != '') {
+            $("#ddlInstallment").val('@Model.Installment')
+        }
+        if ('@Model.ins_Amount' != '') {
+            txtInsAmount.SetText('@Model.ins_Amount')
+        }
+        if ('@Model.Max_Amount' != '') {
+            txtMaxAmount.SetText('@Model.Max_Amount')
+        }
+        if ('@Model.Max_Check' != '') {
+            MaxCheck.SetText('@Model.Max_Check')
+        }
+        if ('@Model.Min_Amount' != '') {
+            txtMinAmount.SetText('@Model.Min_Amount')
+        }
+
+        if ('@Model.Min_Check' != '') {
+            MinCheck.SetText('@Model.Min_Check')
+        }
+
+
+        if ('@Model.Deduction_Start' != '') {
+
+        }
+
+        if ('@Model.IsFreeze' != '') {
+
+        }
+
+
+
+        MinSelectedIndexChange(null, null);
+        MaxSelectedIndexChange(null, null);
+
+
+
+
+    })
+
+    function Save() {
+        var obj = {};
+        obj.Code = $("#txtCode").val();
+        obj.Name = $("#txtName").val();
+        obj.Emp_Code = $("#ddlEmployee").val();
+
+        obj.Period = $("#ddlPeriod").val();
+
+        obj.TYPE = $("#ddlType").val();
+        obj.Amount = txtAmount.GetText();
+        obj.Installment = $("#ddlInstallment").val();
+        obj.ins_Amount = txtInsAmount.GetText();
+        obj.Max_Amount = txtMaxAmount.GetText();
+        obj.Max_Check = MaxCheck.GetValue();
+        obj.Min_Amount = txtMinAmount.GetText();
+        obj.Min_Check = MinCheck.GetValue();
+        obj.Disb_Date = dtDisb.GetText();
+        obj.Deduction_Start = $("#inlineCheckbox1").is(":checked");
+
+        obj.IsFreeze = $("#inlineCheckbox3").is(":checked");
+        obj.Freeze_Upto = dtFreeze.GetText();
+
+        if ($("#hdnLoanId").val() != "") {
+            obj.LoanId = $("#hdnLoanId").val();
+            obj.Action = "update";
+        }
+        else {
+            obj.Action = "Add";
+        }
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "/LoanAdvance/SaveLoan",
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+
+                if (msg == "1") {
+                    jAlert('Saved Successfully', 'Alert', function () {
+                        window.location.href = "/LoanAdvance/LoanList";
+                    });
+                }
+                else if (msg == "99") {
+                    jAlert('Code already exists', 'Alert');
+                }
+                else if (msg == "98") {
+                    jAlert('Loan/Advance Freezed for this Employee. Can not proceed.', 'Alert');
+                }
+                else if (msg == "97") {
+                    jAlert('Salary already generated for this Loan/Advance. Can not update.', 'Alert');
+                }
+                else if (msg == "96") {
+                    jAlert('Start date can not be less than current active period.', 'Alert');
+                }
+                else {
+                    jAlert('Please try again later.', 'Alert');
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    function RecalculateInsAmountFromAmount(s, e) {
+        var valid = true;
+        var amount = parseFloat(s.GetValue());
+        var minbal = parseFloat(txtMinAmount.GetValue());
+        var maxbal = parseFloat(txtMaxAmount.GetValue());
+
+        if (minbal > amount && minbal != 0) {
+            valid = false;
+            jAlert('Amount must be greater than minimum amount.', 'Alert', function () {
+
+                s.SetValue(minbal);
+                s.SetFocus();
+
+
+            });
+        }
+
+        if (maxbal < amount && maxbal != 0) {
+            valid = false;
+
+            jAlert('Amount must be less than maximum amount.', 'Alert', function () {
+
+                s.SetValue(maxbal);
+                s.SetFocus();
+
+            });
+
+        }
+
+        if (valid)
+            RecalculateInsAmount(null, null);
+    }
+
+
+
+    function RecalculateInsAmount(s, e) {
+        var amount = parseFloat(txtAmount.GetText());
+        var ins_no = parseFloat($("#ddlInstallment").val());
+
+        var ins_amount = parseFloat(amount / ins_no);
+        txtInsAmount.SetText(ins_amount);
+    }
+
+    function MinSelectedIndexChange(s, e) {
+        if (MinCheck.GetValue() == "No Check") {
+
+            txtMinAmount.SetEnabled(false);
+            txtMinAmount.SetValue(0);
+
+        }
+        else {
+            txtMinAmount.SetEnabled(true);
+        }
+    }
+
+    function MaxSelectedIndexChange(s, e) {
+        if (MaxCheck.GetValue() == "No Check") {
+
+            txtMaxAmount.SetEnabled(false);
+            txtMaxAmount.SetValue(0);
+
+        }
+        else {
+            txtMaxAmount.SetEnabled(true);
+        }
+    }
+
+
+    $(function () {
+        $('.advanceDiv').hide();
+        $('.loanDiv').show();
+
+
+    })
+</script>
+
+
+<div class="pageOverlay"></div>
+
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left"></h3>
+    </div>
+</div>
+<div class="">
+    <div class="clearfix formBox mtop80">
+        <div id="ApprovalCross"  class="crossBtn pageTypepop" ><a href="javascript:void(null)" onclick="backToList()"><i class="fa fa-times"></i></a></div>
+        <label class="pagePopLabl">Loans and Advances</label>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Type</label>
+                <div>
+                    <select id="ddlType" class="form-control" onchange="typechange();">
+                        <option selected id="Loan">Loan</option>
+                        <option id="Advance">Advance</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label id="lblCode">Loan Code</label>
+                <div>
+                    <input type="text" class="form-control" value="" id="txtCode" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label id="lblName">Loan Name</label>
+                <div>
+                    <input type="text" class="form-control" value="" id="txtName" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Employee</label>
+                <div>
+                    @Html.DropDownListFor(m => m.Emp_Code, new SelectList(Model.Emp_List, "EmployeeCode", "Employee_Name"), new { style = "width: 100%;", Id = "ddlEmployee" })
+                </div>
+            </div>
+        </div>
+       
+        <div class="row">
+            
+            <div class="col-md-12 advanceDiv">
+                <label style="margin-top: 5px">Advance Amount</label>
+                <div>
+                    <table style="width:100%" class="padRig">
+                        <tr>
+                            <td>
+
+                                @Html.DevExpress().ComboBox(settings =>
+                               {
+                                   settings.Name = "MinCheck";
+                                   //settings.Width = 180;
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.CallbackPageSize = 15;
+                                   //settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                                   settings.Properties.Items.Add("No Check", "No Check");
+                                   settings.Properties.Items.Add("Minimum", "Minimum");
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "MinSelectedIndexChange";
+                                   settings.Width = Unit.Percentage(100);
+
+                               }).GetHtml()
+
+
+
+                            </td>
+                            <td>
+
+
+                                @Html.DevExpress().TextBox(settings =>
+                                      {
+                                          settings.Name = "txtMinAmount";
+                                          settings.Width = Unit.Percentage(100);
+                                          settings.Properties.DisplayFormatString = "0.00";
+                                          settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                      }).GetHtml()
+
+
+                            </td>
+                            <td>
+
+                                @Html.DevExpress().ComboBox(settings =>
+                               {
+                                   settings.Name = "MaxCheck";
+                                   //settings.Width = 180;
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.CallbackPageSize = 15;
+                                   //settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+                                   settings.Properties.Items.Add("No Check", "No Check");
+                                   settings.Properties.Items.Add("Maximum", "Maximum");
+                                   settings.Width = Unit.Percentage(100);
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "MaxSelectedIndexChange";
+
+                               }).GetHtml()
+
+
+
+
+
+
+                            </td>
+                            <td>
+                                @Html.DevExpress().TextBox(settings =>
+                                      {
+                                          settings.Name = "txtMaxAmount";
+                                          settings.Width = Unit.Percentage(100);
+                                          settings.Properties.DisplayFormatString = "0.00";
+                                          settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                          settings.Width = Unit.Percentage(100);
+
+                                      }).GetHtml()
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 loanDiv">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label style="margin-top: 5px">Loan Amount</label>
+                                <div>
+                                    <input type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label style="margin-top: 5px">Tenure</label>
+                                <table>
+                                    <tr>
+                                        <td><input type="text" style="margin-right:10px" /></td>
+                                        <td style="padding-left: 5px">Years</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-4">
+                                <label style="margin-top: 5px">&nbsp;</label>
+                                <table>
+                                    <tr>
+                                        <td><input type="text" style="margin-right:10px" /></td>
+                                        <td style="padding-left: 5px">Months</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="margin-top: 5px">Interest Rate</label>
+                        <table>
+                            <tr>
+                                <td><input type="text" style="margin-right: 10px" /></td>
+                                <td>%</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-9 advanceDiv">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Advance Amount</label>
+                        <div>
+                            @Html.DevExpress().TextBox(settings =>
+                                      {
+                                          settings.Name = "txtAmount";
+                                          settings.Width = Unit.Percentage(100);
+                                          settings.Properties.DisplayFormatString = "0.00";
+                                          settings.Properties.MaskSettings.Mask = "<0..99999999>.<00..99>";
+                                          settings.Width = Unit.Percentage(100);
+                                          settings.Properties.ClientSideEvents.LostFocus = "RecalculateInsAmountFromAmount";
+                                      }).GetHtml()
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Installments</label>
+                        <div>
+                            <select id="ddlInstallment" onchange="RecalculateInsAmount();" class="form-control">
+                                <option id="1">1</option>
+                                <option id="2">2</option>
+                                <option id="3">3</option>
+                                <option id="4">4</option>
+                                <option id="5">5</option>
+                                <option id="6">6</option>
+                                <option id="7">7</option>
+                                <option id="8">8</option>
+                                <option id="9">9</option>
+                                <option id="10">10</option>
+                                <option id="11">11</option>
+                                <option id="12">12</option>
+                                <option id="13">13</option>
+                                <option id="14">14</option>
+                                <option id="15">15</option>
+                                <option id="16">16</option>
+                                <option id="17">17</option>
+                                <option id="18">18</option>
+                                <option id="19">19</option>
+                                <option id="20">20</option>
+                                <option id="21">21</option>
+                                <option id="22">22</option>
+                                <option id="23">23</option>
+                                <option id="24">24</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Installment Amount</label>
+                        <div>
+                            @Html.DevExpress().TextBox(settings =>
+                                      {
+                                          settings.Name = "txtInsAmount";
+                                          settings.Width = Unit.Percentage(100);
+                                          settings.Properties.DisplayFormatString = "0.00";
+                                          settings.ClientEnabled = false;
+                                          settings.Width = Unit.Percentage(100);
+
+                                      }).GetHtml()
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 loanDiv">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label style="margin-top: 0;">Payback</label>
+                        <div>
+                            <select class="form-control">
+                                <option>Lumsum</option>
+                                <option>EMI</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="margin-top: 0;">Amount Payable</label>
+                        <div>
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="margin-top: 0;">Total Interest</label>
+                        <div>
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="margin-top: 0;">EMI Amount</label>
+                        <div>
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label style="margin-top: 0;">Date of Disbursal</label>
+                <div>
+                    @Html.DevExpress().DateEdit(settings =>
+                           {
+                               settings.Name = "dtDisb";
+                               settings.Properties.NullText = "";
+                               settings.Properties.EditFormatString = "dd-MM-yyyy";
+                               settings.Properties.EditFormatString = "dd-MM-yyyy";
+                               settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+                               if (ViewBag.Disb_Date != null)
+                               {
+                                   settings.Date = ViewBag.Disb_Date;
+                               }
+                               else
+                               {
+                                   settings.Date = DateTime.Now;
+                               }
+
+
+
+                           }).GetHtml()
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-md-8">
+                <label style="margin-top: 0px">Deduction </label>
+                <div class="clear"></div>
+                <div class="ln">
+                    <table style="width:100%;" class="padRig">
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-check form-check-inline">
+                                    <input name="chkStartImmediately" class="form-check-input" type="radio" id="inlineCheckbox1" value="option1">
+                                    <label class="form-check-label" for="inlineCheckbox1 ">Start Immediately</label>
+                                </div>
+                            </td>
+                        
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input name="chkStartImmediately" class="form-check-input" type="radio" id="inlineCheckbox2" value="option2">
+                                    <label class="form-check-label" for="inlineCheckbox2">Start from</label>
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(m => m.Period, new SelectList(Model.Period_List, "YYMM", "Period"), new { style = "width: 100%;", Id = "ddlPeriod" })
+
+
+                            </td>
+
+                        </tr>
+                    </table>
+
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check form-check-inline" style="margin-top:1px">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2" onchange="FreezeChange();">
+                    <label class="form-check-label" for="inlineCheckbox2">Freeze Upto</label>
+                </div>
+                <div>
+                    @Html.DevExpress().DateEdit(settings =>
+                           {
+                               settings.Name = "dtFreeze";
+                               settings.Properties.NullText = "";
+                               settings.Properties.EditFormatString = "dd-MM-yyyy";
+                               settings.Properties.EditFormatString = "dd-MM-yyyy";
+                               settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+                               if (ViewBag.Freeze_Upto != null)
+                               {
+                                   settings.Date = ViewBag.Freeze_Upto;
+                               }
+
+                           }).GetHtml()
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-12">
+                <button class="btn btn-success hide" onclick="SaveNew();">Save & New</button>
+                <button class="btn btn-success" onclick="Save();">Save & Exit</button>
+            </div>
+        </div>
+    </div>
+    
+    <input type="hidden" id="hdnLoanId" />
+</div>
+

@@ -1,0 +1,73 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvleavestructure";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "LeaveStructure", Action = "PartialLeaveStructureListGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+    settings.KeyFieldName = "LeaveStructureID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeaveStructureID";
+        column.Caption = "Leave Structure ID";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeaveStructureName";
+        column.Caption = "Leave Structure Name";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeaveStructureCode";
+        column.Caption = "Leave Structure Code";
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeavePeriodFrom";
+        column.Caption = "Period From";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LeavePeriodTo";
+        column.Caption = "Period To";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+
+    });
+
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            ViewContext.Writer.Write(
+                "<div class='floatedBtnArea'><a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "LeaveStructureID") + "')\" class=\"\" title=\"Edit\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>" +
+                 "&nbsp;" +
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "LeaveStructureID") + "')\" class=\"\" title=\"Delete\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a></div>"
+            );
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.False;
+        c.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+        c.Caption = "";
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+    settings.ClientSideEvents.RowClick = "gridRowclick";
+}).Bind(Model).GetHtml()

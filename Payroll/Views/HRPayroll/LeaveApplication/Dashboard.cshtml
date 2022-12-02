@@ -1,0 +1,971 @@
+﻿@model Payroll.Models.LeaveApplicationEngine
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+
+@{
+    ViewBag.Title = "Leave Entry";
+    Layout = "";
+}
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchMultiPopup.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<link href="~/assests/css/payrollCss/LeaveApplication.css" rel="stylesheet" />
+<script type="text/javascript">
+    function btnLeaveStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnLeaveStructure_Click(s, e) {
+        document.getElementById('hdnInputType').value = "LeaveStructure";
+        document.getElementById("txtSearchBox").value = "";
+
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Structure Short Code</th><th>Structure Name</th></tr><table>";
+        document.getElementById("TableStructure").innerHTML = txt;
+
+        BindModalGrid('');
+        setTimeout(function () { $("#txtSearchBox").focus(); }, 500);
+        $('#ModelPopup').modal('show');
+    }
+
+    function btnEmployeeCode_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function btnEmployeeCode_Click(s, e) {
+        document.getElementById('hdnInputType').value = "EmployeeCode";
+        document.getElementById("txtSearchBox").value = "";
+
+        var txt = "<table border='1' width=\"100%\" class=\"dynamicPopupTbl\"><tr class=\"HeaderStyle\"><th>Employee ID</th><th>Employee Name</th></tr><table>";
+        document.getElementById("TableStructure").innerHTML = txt;
+
+        BindModalGrid('');
+        setTimeout(function () { $("#txtSearchBox").focus(); }, 500);
+        $('#ModelPopup').modal('show');
+    }
+
+    function txtSearchBoxkeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtSearchBox").val() != '') {
+                BindModalGrid($("#txtSearchBox").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[searchIndex=0]"))
+                $("input[searchIndex=0]").focus();
+        }
+    }
+
+    function BindModalGrid(SearchKey) {
+        debugger;
+        var SearchType = document.getElementById('hdnInputType').value;
+
+        if (SearchType == "LeaveStructure") {
+            var OtherDetails = {}
+            OtherDetails.SearchKey = SearchKey;
+
+            var HeaderCaption = [];
+            HeaderCaption.push("Structure Short Code");
+            HeaderCaption.push("Structure Name");
+            HeaderCaption.push("Period From");
+            HeaderCaption.push("Period To");
+
+            callonServerScroll("../Models/p_WebServiceList.asmx/GetLeaveStructureDetailsList", OtherDetails, "TableStructure", HeaderCaption, "searchIndex", "SetDropdownValue");
+        }
+        else if (SearchType == "EmployeeCode") {
+            var OtherDetails = {}
+            OtherDetails.SearchKey = SearchKey;
+            OtherDetails.LeaveStructureID = document.getElementById('hdnStructureID').value;
+
+            var HeaderCaption = [];
+            HeaderCaption.push("Employee ID");
+            HeaderCaption.push("Employee Name");
+
+            callonServerScroll("../Models/p_WebServiceList.asmx/GetEmployeeList", OtherDetails, "TableStructure", HeaderCaption, "searchIndex", "SetDropdownValue");
+        }
+    }
+
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+
+            if (Id) {
+                if (indexName == "searchIndex") {
+                    SetDropdownValue(Id, name, e.target.parentElement);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            //if (thisindex < 10)
+            $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "searchIndex")
+                    $('#txtSearchBox').focus();
+            }
+        }
+    }
+
+    function SetDropdownValue(Id, name, e) {
+        var SearchType = document.getElementById('hdnInputType').value;
+
+        if (SearchType == "LeaveStructure") {
+            document.getElementById('hdnStructureID').value = Id;
+            btnLeaveStructure.SetText(name);
+            $('#ModelPopup').modal('hide');
+
+            var _PeriodFrom = e.parentElement.cells[3].innerText;
+            var _PeriodTo = e.parentElement.cells[4].innerText
+
+            var PeriodFrom = new Date(GetConvertDateFormat(_PeriodFrom));
+            var PeriodTo = new Date(GetConvertDateFormat(_PeriodTo));
+
+            from_dt.SetValue(null);
+            from_dt.SetMinDate(PeriodFrom);
+            from_dt.SetMaxDate(PeriodTo);
+
+            to_dt.SetValue(null);
+            to_dt.SetMinDate(PeriodFrom);
+            to_dt.SetMaxDate(PeriodTo);
+
+            document.getElementById('hdnEmployeeID').value = "";
+            document.getElementById('txtEmployeeName').value = "";
+            btnEmployeeCode.SetText("");
+
+            refreshLeaveHistory();
+            $('#MandatoryStructureName').attr('style', 'display:none');
+        }
+        else if (SearchType == "EmployeeCode") {
+            document.getElementById('hdnEmployeeID').value = Id;
+            document.getElementById('txtEmployeeName').value = e.parentElement.children[2].innerHTML;
+            btnEmployeeCode.SetText(name);
+            $('#ModelPopup').modal('hide');
+
+            refreshLeaveHistory();
+            $('#MandatoryEmployeeCode').attr('style', 'display:none');
+        }
+    }
+
+    function refreshLeaveHistory() {
+        if (document.getElementById('hdnEmployeeID').value != "" && document.getElementById('hdnStructureID').value != "") {
+            gvLeaveHistory.Refresh();
+            gvLeaveHistory.Refresh();
+        }
+    }
+</script>
+<script>
+    function btnApprovalAdd_Click()
+    {
+        var IsValid = true;
+        StructureID = document.getElementById('hdnStructureID').value;
+        EmployeeID = document.getElementById('hdnEmployeeID').value;
+        if (StructureID == '') {
+            $('#MandatoryStructureName').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryStructureName').attr('style', 'display:none');
+        }
+
+        if (EmployeeID == '') {
+            $('#MandatoryEmployeeCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryEmployeeCode').attr('style', 'display:none');
+        }
+        if (IsValid == true) {
+            $('#AprovalWait').modal('show');
+            getList();
+        }
+    }
+    
+    function btnLeaveHistory_Click() {
+        var IsValid = true;
+        StructureID = document.getElementById('hdnStructureID').value;
+        EmployeeID = document.getElementById('hdnEmployeeID').value;
+        if (StructureID == '') {
+            $('#MandatoryStructureName').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryStructureName').attr('style', 'display:none');
+        }
+
+        if (EmployeeID == '') {
+            $('#MandatoryEmployeeCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryEmployeeCode').attr('style', 'display:none');
+        }
+        if (IsValid == true) {
+            $('#leaveHis').modal('show');
+           
+        }
+    }
+    function LeaveHistorySearch() {
+
+        var Year = $("#DtYear").val();
+        var Month = $("#DtMonth").val();
+
+        var OtherDetails = {}
+        OtherDetails.EmployeeID = document.getElementById('hdnEmployeeID').value;
+        OtherDetails.StructureID = document.getElementById('hdnStructureID').value;
+        OtherDetails.Year = Year;
+        OtherDetails.Month = Month;
+
+        $.ajax({
+            type: "POST",
+            url: "/LeaveApplication/GETApplyLeaveDetailsByYear",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(OtherDetails),
+            dataType: "json",
+            success: function (data) {
+                console.log("getleaveAppList", data);
+                //return;
+                var info = data.leaveListforApp;
+                if (info == null) {
+                    $("#bioGenHistory").html("<tr><td colspan='6'>NO DATA TO DISPLAY</td></tr>");
+
+                } else {
+
+                    var html = "";
+
+                    for (i = 0; i < info.length; i++) {
+
+                        //var LEAVE_START_DATE = info[i].LEAVE_START_DATE.split(" ")[0],
+                        //    LEAVE_END_DATE = info[i].LEAVE_END_DATE.split(" ")[0],
+                        //    CREATED_DATE = info[i].CREATED_DATE.split(" ")[0];
+                        html += "<tr>"                       
+                        html += "<td class='text-center'>" + info[i].LeaveName + "</td>"
+                        html += "<td class='text-center'>" + info[i].Lev_Date_From + "</td>"
+                        html += "<td class='text-center'>" + info[i].Lev_Date_To + "</td>"
+                        html += "<td class='text-center'>" + info[i].CreatedDateTime + "</td>"
+                        html += "<td class='text-center'>" + info[i].Leave_Status + "</td>"
+                        //html += "<td class='text-center'><span class='badge badge-warning'>PENDING</span></td>"
+                        //html += "<td class='text-center '><i id='infoBioMetric' class='lni lni-eye' style='font-size:18px;color:blue;cursor:pointer' data-i='" + info[i].Doc_ID + "'></i></td>"
+                        html += "</tr>"
+                        //var tObj = { "appUser": info[i].LeaveName, "LEAVE_START_DATE": info[i].Lev_Date_From, "LEAVE_END_DATE": info[i].Lev_Date_To }
+                        //appliedUser.push(tObj)
+                    }
+                    $("#bioGenHistory").html(html);
+
+                }
+            }
+        });
+
+    }
+    function btnLeaveAdd_Click() {
+        var IsValid = true;
+        StructureID = document.getElementById('hdnStructureID').value;
+        EmployeeID = document.getElementById('hdnEmployeeID').value;
+
+        if (StructureID == '') {
+            $('#MandatoryStructureName').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryStructureName').attr('style', 'display:none');
+        }
+
+        if (EmployeeID == '') {
+            $('#MandatoryEmployeeCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryEmployeeCode').attr('style', 'display:none');
+        }
+
+        if (IsValid == true) {
+            $('#LeavePopup').modal('show');
+            BindLeaveDropdown();
+
+            clearAllDetails();
+            setTimeout(function () { $("#txtApplicationNo").focus(); }, 500);
+        }
+    }
+
+    function BindLeaveDropdown() {
+        var OtherDetails = {}
+        OtherDetails.EmployeeID = document.getElementById('hdnEmployeeID').value;
+        OtherDetails.StructureID = document.getElementById('hdnStructureID').value;
+
+        $('#ddlLeaveType').empty();
+        $("#ddlLeaveType").append($("<option></option>").val("0").html("Select"));
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(OtherDetails),
+            url: "../Models/p_WebServiceList.asmx/PopulateLeaveTypeWithBalance",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (res) {
+                var jsonLeaveObject = res.d;
+
+                for (x in jsonLeaveObject) {
+                    var _LeaveID = jsonLeaveObject[x]["LeaveID"];
+                    var _LeaveName = jsonLeaveObject[x]["LeaveName"];
+                    var _Balance = jsonLeaveObject[x]["Balance"];
+                    var _Active_DayPart = jsonLeaveObject[x]["Active_DayPart"];
+                    var _Is_AllowLeaveCaseZeroBalance = jsonLeaveObject[x]["Is_AllowLeaveCaseZeroBalance"];
+
+                    $("#ddlLeaveType").append($("<option></option>").val(_LeaveID).html(_LeaveName));
+
+                    var _LeaveBalance = { LeaveID: _LeaveID, Balance: _Balance, Active_DayPart: _Active_DayPart, Is_AllowLeaveCaseZeroBalance: _Is_AllowLeaveCaseZeroBalance }
+                    jsonLeaveBalance.push(_LeaveBalance);
+                }
+            }
+        });
+    }
+</script>
+<script>
+    function OnStartCallback(s, e) {
+        e.customArgs["EmployeeCode"] = document.getElementById('hdnEmployeeID').value;;
+        e.customArgs["LeaveStructureCode"] = document.getElementById('hdnStructureID').value;;
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("body").on("click", "#select-all", function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $('#bioGen :checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $('#bioGen :checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+
+        });
+    });
+    function getList() {
+        var OtherDetails = {}
+        OtherDetails.EmployeeID = document.getElementById('hdnEmployeeID').value;
+        OtherDetails.StructureID = document.getElementById('hdnStructureID').value;
+        $.ajax({
+            type: "POST",
+            url: "/LeaveApplication/GETApplyLeaveDetails",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(OtherDetails),
+            dataType: "json",
+            success: function (data) {
+                console.log("getleaveAppList", data);
+                //return;
+                var info = data.leaveListforApp;
+                if (info == null) {
+                    $("#bioGen").html("<tr><td colspan='6'>NO DATA TO DISPLAY</td></tr>");
+
+                } else {
+
+                    var html = "";
+
+                    for (i = 0; i < info.length; i++) {
+
+                        //var LEAVE_START_DATE = info[i].LEAVE_START_DATE.split(" ")[0],
+                        //    LEAVE_END_DATE = info[i].LEAVE_END_DATE.split(" ")[0],
+                        //    CREATED_DATE = info[i].CREATED_DATE.split(" ")[0];
+                        html += "<tr>"
+                        html += "<td><input type='checkbox' name='type' id='c" + info[i].Doc_ID + "' value='" + info[i].Doc_ID + "'/></td>"
+                        html += "<td class='text-center'>" + info[i].LeaveName + "</td>"
+                        html += "<td class='text-center'>" + info[i].Lev_Date_From + "</td>"
+                        html += "<td class='text-center'>" + info[i].Lev_Date_To + "</td>"
+                        html += "<td class='text-center'>" + info[i].CreatedDateTime + "</td>"
+                        //html += "<td class='text-center'>" + info[i].ReasonForLeave + "</td>"
+                        html += "<td class='text-center'><span class='badge badge-warning'>PENDING</span></td>"
+                        //html += "<td class='text-center '><i id='infoBioMetric' class='lni lni-eye' style='font-size:18px;color:blue;cursor:pointer' data-i='" + info[i].Doc_ID + "'></i></td>"
+                        html += "</tr>"
+                        //var tObj = { "appUser": info[i].LeaveName, "LEAVE_START_DATE": info[i].Lev_Date_From, "LEAVE_END_DATE": info[i].Lev_Date_To }
+                        //appliedUser.push(tObj)
+                    }
+                    $("#bioGen").html(html);
+
+                }
+            }
+        });
+
+    }
+   // getList();
+    function submitApprovalReq() {
+        var ar = [];
+        $("input:checkbox[name=type]:checked").each(function () {
+            ar.push($(this).val());
+        });
+        var strng = ar.toString();
+        console.log("LEAVE_IDS", strng);
+        if (strng == "") {
+            alert("You must select First");
+        } else {
+            console.log("you selected ", strng);
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure you want to Approve',
+                buttons: {
+                    confirm: {
+                        text: 'Approve',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "/LeaveApplication/ApproveLeaveReq",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    "LEAVE_IDS": strng
+                                }),
+                                dataType: "json",
+                                success: function (data) {
+
+                                    console.log("ApproveBiometricReq", data);
+                                    if (data.ResponseCode == "Success") {
+                                        $.confirm({
+                                            title: 'Success',
+                                            content: 'Approved Successfull',
+                                            icon: 'fa fa-tick',
+                                            theme: 'modern',
+                                            closeIcon: true,
+                                            animation: 'scale',
+                                            type: 'blue',
+                                        });
+                                        getList();
+
+                                        //console.log("appliedUser", appliedUser);
+                                        for (i = 0; i <= appliedUser.length; i++) {
+                                            var emAilHtml = '<!DOCTYPE html><html><head><style>table{font-family:arial,sans-serif;border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;text-align:left;padding:8px}tr:nth-child(even){background-color:#ddd}</style></head><body><table style="border:1px solid #ccc"><tr style="background:blue;color:#fff"><th colspan="2">Biometric Time Approved</tr><tr><td>Name :</td><td>' + appliedUser[i].appUser + '</td></tr><tr><td>Requested Outtime :</td><td>' + appliedUser[i].REQ_INTIME + '</td></tr><tr><td>Requested Intime :</td><td>' + appliedUser[i].REQ_OUTTIME + '</td></tr><tr><td>Date Applied for :</td><td>' + appliedUser[i].APPLIED_FOR_DATE + '</td></tr></table></body></html>'
+                                            //SendEmail()
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {
+                        // cancel code
+                    }
+                }
+            });
+        }
+    }
+
+    // Reject Leave Applications
+
+    function submitRejectReq() {
+        var ar = [];
+        $("input:checkbox[name=type]:checked").each(function () {
+            ar.push($(this).val());
+        });
+        var strng = ar.toString();
+        console.log("LEAVE_IDS", strng);
+        if (strng == "") {
+            alert("You must select First");
+        } else {
+            console.log("you selected ", strng);
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Are you sure you want to Reject',
+                buttons: {
+                    confirm: {
+                        text: 'Reject',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "/LeaveApplication/RejectLeaveReq",                               
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    "LEAVE_IDS": strng
+                                }),
+                                dataType: "json",
+                                success: function (data) {
+                                    console.log("RejectLeaveReq", data);
+                                    if (data.ResponseCode == "Success") {
+                                        $.confirm({
+                                            title: 'Success',
+                                            content: 'Successfull',
+                                            icon: 'fa fa-tick',
+                                            theme: 'modern',
+                                            closeIcon: true,
+                                            animation: 'scale',
+                                            type: 'blue',
+                                        });
+                                        getList();
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {
+                        // cancel code
+                    }
+                }
+            });
+        }
+    }
+
+</script>
+
+<script src="~/assests/pluggins/progressbar.js"></script>
+<link href="~/assests/pluggins/chartjs/chart.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/chartjs/Chart.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+
+        
+    });
+
+    function btnSaveApprovalLeave_Click() {
+        $("label[for='lblErrorMsg']").html("");
+        var model = json_MainLeaveDetails;
+
+        $.ajax({
+            type: "POST",
+            url: "/LeaveApplication/LeaveApprovalSubmit",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    $('#LeavePopup').modal('hide');
+                    jAlert("Leave apply successfully.", 'Alert Dialog: [Leave Application]', function (r) {
+                        refreshLeaveHistory();
+                    });
+                }
+                else {
+                    $("label[for='lblErrorMsg']").html("Please try again later");
+                }
+            },
+            error: function (response) {
+                $("label[for='lblErrorMsg']").html("Please try again later");
+            }
+        });
+    }
+    //$(document).on('show.bs.modal', '#AprovalWait', function () {
+
+        
+
+
+    //    $('#chartCircle, #chartCircle2, #chartCircle3').html('');
+    //    var circle = new ProgressBar.Circle('#chartCircle', {
+    //        color: '#FCB03C',
+    //        strokeWidth: 3.5,
+    //        trailColor: '#eee',
+    //        trailWidth: 1,
+    //        text: {
+    //            // Initial value for text.
+    //            // Default: null
+    //            value: '10',
+
+    //            // Class name for text element.
+    //            // Default: 'progressbar-text'
+    //            className: 'progressbar__label',
+
+    //            // Inline CSS styles for the text element.
+    //            // If you want to modify all CSS your self, set null to disable
+    //            // all default styles.
+    //            // If the style option contains values, container is automatically
+    //            // set to position: relative. You can disable behavior this with
+    //            // autoStyleContainer: false
+    //            // If you specify anything in this object, none of the default styles
+    //            // apply
+    //            // Default: object speficied below
+               
+    //       }
+    //    });
+
+    //    circle.animate(1);  // Number from 0.0 to 1.0
+
+    //    var circle = new ProgressBar.Circle('#chartCircle2', {
+    //        color: '#e05e5a',
+    //        strokeWidth: 3.5,
+    //        trailColor: '#eee',
+    //        trailWidth: 1,
+    //        text: {
+    //            // Initial value for text.
+    //            // Default: null
+    //            value: '6',
+
+    //            // Class name for text element.
+    //            // Default: 'progressbar-text'
+    //            className: 'progressbar__label',
+
+    //            // Inline CSS styles for the text element.
+    //            // If you want to modify all CSS your self, set null to disable
+    //            // all default styles.
+    //            // If the style option contains values, container is automatically
+    //            // set to position: relative. You can disable behavior this with
+    //            // autoStyleContainer: false
+    //            // If you specify anything in this object, none of the default styles
+    //            // apply
+    //            // Default: object speficied below
+
+    //        }
+    //    });
+
+    //    circle.animate(0.6);  // Number from 0.0 to 1.0
+
+    //    var circle = new ProgressBar.Circle('#chartCircle3', {
+    //        color: '#6ac172',
+    //        strokeWidth: 3.5,
+    //        trailColor: '#eee',
+    //        trailWidth: 1,
+    //        text: {
+    //            // Initial value for text.
+    //            // Default: null
+    //            value: '4',
+
+    //            // Class name for text element.
+    //            // Default: 'progressbar-text'
+    //            className: 'progressbar__label',
+
+    //            // Inline CSS styles for the text element.
+    //            // If you want to modify all CSS your self, set null to disable
+    //            // all default styles.
+    //            // If the style option contains values, container is automatically
+    //            // set to position: relative. You can disable behavior this with
+    //            // autoStyleContainer: false
+    //            // If you specify anything in this object, none of the default styles
+    //            // apply
+    //            // Default: object speficied below
+
+    //        }
+    //    });
+
+    //    circle.animate(0.4);  // Number from 0.0 to 1.0
+    //})
+</script>
+
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Leave Entry</h3>
+    </div>
+</div>
+<div class="panel-body">
+    <div class="row">
+        <div class="col-md-2">
+            <label>Leave Structure</label>
+            <div>
+                @Html.DevExpress().ButtonEdit(
+                settings =>
+                {
+                    settings.Name = "btnLeaveStructure";
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Text = "";
+                    settings.ReadOnly = true;
+                    settings.Properties.Buttons.Add("..");
+                    settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnLeaveStructure_Click(s,e);}";
+                    settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnLeaveStructure_KeyDown(s,e);}";
+                }).GetHtml()
+                <span id="MandatoryStructureName" style="display: none" class="d_validclass">
+                    <img id="imgMandatoryStructureName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Employee ID</label>
+            <div>
+                @Html.DevExpress().ButtonEdit(
+                settings =>
+                {
+                    settings.Name = "btnEmployeeCode";
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Text = "";
+                    settings.ReadOnly = true;
+                    settings.Properties.Buttons.Add("..");
+                    settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnEmployeeCode_Click(s,e);}";
+                    settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnEmployeeCode_KeyDown(s,e);}";
+                }).GetHtml()
+                <span id="MandatoryEmployeeCode" style="display: none" class="d_validclass">
+                    <img id="imgMandatoryEmployeeCode" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Employee Name</label>
+            <div>
+                @Html.TextBoxFor(model => model.EmployeeName, new { Id = "txtEmployeeName", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label> </label>
+            <div>
+                <input id="btnLeaveAdd" type="button" class="btn btn-success" onclick="btnLeaveAdd_Click()" value="Leave Addition" />
+                <button class="btn btn-warning relative" type="button" data-toggle="modal" onclick="btnApprovalAdd_Click()" data-backdrop="static" data-keyboard="false">Approval Waiting </button>
+                <button class="btn btn-primary" type="button" data-toggle="modal" onclick="btnLeaveHistory_Click()" data-backdrop="static" data-keyboard="false">Manage Leave</button>
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-12">
+            @{
+                Html.RenderAction("PartialLeaveHistroyGrid", "LeaveApplication");
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal PopUp -->
+<div class="modal fade" id="ModelPopup" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay structure</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="txtSearchBoxkeydown(event)" id="txtSearchBox" autofocus width="100%" placeholder="Search By Pay Structure Name or Short Name" />
+                <div id="TableStructure">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="LeavePopup" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Leave Application Details</h4>
+            </div>
+            <div id="divLeaveApplication">
+                @{
+                    Html.RenderAction("PartialLeaveApplication", "LeaveApplication");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal PopUp -->
+
+<div class="modal fade pmsModal w60" id="AprovalWait" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Approval Waiting</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                @*<div class="clearfix">
+                    <ul class="progressList">
+                        <li>
+                            <div id="chartCircle"></div>
+                            <div class="prgHeader">Leave Available</div>
+                        </li>
+                        <li>
+                            <div id="chartCircle2"></div>
+                            <div class="prgHeader">Leave Consumed</div>
+                        </li>
+                        <li>
+                            <div id="chartCircle3"></div>
+                            <div class="prgHeader">Leave Balance</div>
+                        </li>
+                    </ul>
+                </div>*@
+                @*<div class="pmsForm clearfix row">
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="" class="col-form-label mBot10"><strong>Month</strong></label>
+                            <div class="">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="" class=" col-form-label mBot10"><strong>Year</strong></label>
+                            <div class="">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="" class=" col-form-label mBot10"></label>
+                            <div class="">
+                                <button class="btn btn-info" >Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+                @*<div class="clearfix">
+                    <table class="table leaveHIstoryTBl" >
+                        <thead>
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Leave Reason</th>
+                                <th>Application Date</th>
+                                <th>From</th>
+                                <th>To</th>
+                                
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Planned Leave</td>
+                                <td>Family issue </td>
+                                <td>05-05-2019</td>
+                                <td>06-05-2019</td>
+                                <td>06-05-2019</td>
+                               
+                                <td><select class="form_control"><option>Select</option><option>Approve</option><option>Reject</option></select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>*@
+
+                <nav class="nav az-nav-line">
+                    @*<a href="" class="nav-link active" data-toggle="tab">Pending Leave Approval </a>*@
+                    <div class="ml-auto"><button type="button" class="btn btn-success btn-rounded mr-2" onclick="submitApprovalReq()">Approve</button><button class="btn btn-outline-danger btn-rounded " onclick="submitRejectReq()">Reject</button></div>
+                </nav>
+                <div class="az-profile-body pt-0">
+                    <div class="row mg-b-20">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered mg-b-0 table-padded">
+                                <thead>
+                                    <tr>
+                                        <td><input type="checkbox" id="select-all" /></td>
+                                        <th>Leave Type</th>
+                                        <th class="text-center">Leave Start Date</th>
+                                        <th class="text-center">Leave End Date</th>
+                                        <th class="text-center">Leave Applied on</th>
+                                        <th class="text-center">Status</th>
+                                        @*<th class="text-center">Action</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody id="bioGen"></tbody>
+                            </table>
+                        </div>
+                    </div><!-- row -->
+
+                    <div class="mg-b-20"></div>
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <input id="btnSaveLeav" type="button" class="btn btn-primary" onclick="btnSaveApprovalLeave_Click()" value="Save" />
+            </div>*@
+        </div>
+    </div>
+</div> 
+
+
+<div class="modal fade pmsModal w60" id="leaveHis" tabindex="-1" role="dialog" aria-labelledby="historyLeave" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Leave History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm clearfix row backFrm">
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="" class="col-form-label mBot10"><strong>Month</strong></label>
+                            <div class="">
+                                <select class="form-control" id="DtMonth">
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="" class=" col-form-label mBot10"><strong>Year</strong></label>
+                            <div class="">
+                                <select class="form-control" id="DtYear">
+                                    <option>2019</option>
+                                    <option>2020</option>
+                                    <option>2021</option>
+                                    <option>2022</option>
+                                    <option>2023</option>
+                                    <option>2024</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="" class=" col-form-label mBot10"></label>
+                            <div class="">
+                                <button class="btn btn-info" onclick="LeaveHistorySearch()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="az-profile-body pt-0">
+                    <div class="row mg-b-20">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered mg-b-0 table-padded">
+                                <thead>
+                                    <tr>                                        
+                                        <th>Leave Type</th>
+                                        <th class="text-center">Leave Start Date</th>
+                                        <th class="text-center">Leave End Date</th>
+                                        <th class="text-center">Leave Applied on</th>
+                                        <th class="text-center">Status</th>
+                                        @*<th class="text-center">Action</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody id="bioGenHistory"></tbody>
+                            </table>
+                        </div>
+                    </div><!-- row -->
+
+                    <div class="mg-b-20"></div>
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius">Save</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.Hidden("hdnInputType")
+    @Html.Hidden("hdnStructureID")
+    @Html.Hidden("hdnEmployeeID")
+</div>

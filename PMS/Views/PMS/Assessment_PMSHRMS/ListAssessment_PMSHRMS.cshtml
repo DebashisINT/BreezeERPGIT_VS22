@@ -1,0 +1,329 @@
+﻿<script src="~/assests/js/Date/datepicker.js"></script>
+<link href="~/Views/PMS/Assessment_PMSHRMS/ass_pmshrms.css" rel="stylesheet" />
+<script src="~/Views/PMS/Assessment_PMSHRMS/assessment_pmshrms.js"></script>
+<div class="panel-heading">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Assesment List </label>
+        </h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#AssesmentModal" data-backdrop="static" data-keyboard="true">
+                <span class=" btn-icon" ><i class="fa fa-plus"></i></span> Add Question
+            </button>
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                Html.RenderAction("assesmentGrid", "Assessment_PMSHRMS");
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pmsModal w40" id="AssesmentModal" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Assesment  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm horizontalLbl clearfix">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Assessment Name <span class="asterix">*</span></label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Assessment  Type <span class="asterix">*</span></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="">
+                                        <option value="">Select</option>
+                                        <option value="1">360</option>
+                                        <option value="2">180</option>
+                                        <option value="3">Self</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Assessment  Period <span class="asterix">*</span></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="">
+                                        <option value="">Select</option>
+                                        <option value="1">Quarter 1</option>
+                                        <option value="2">Behavior Monitor</option>
+                                        <option value="3">Monthly Sales Person</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Question <span class="asterix">*</span>
+                                   
+                                    <span class="btn btn-success btn-radius btn-icon" style="border-radius: 50%;padding: 0 !important;" data-toggle="modal" data-target="#AssesmentModalin1" data-backdrop="static" data-keyboard="true"><i class="fa fa-plus"></i></span>
+                                    
+                                </label>
+                                <div class="col-sm-12">
+                                    <table class="assessmentTbl">
+                                        <thead>
+                                            <tr>
+                                                <th>Question</th>
+                                                <th>Type</th>
+                                                <th>Total Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Question 1</td>
+                                                <td>Single select</td>
+                                                <td>15</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Question 2</td>
+                                                <td>Multi select</td>
+                                                <td>15</td>
+                                            </tr>
+                                           
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label" style="padding-top:10px">Total Question</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" value="30">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">Employee <span class="asterix">*</span>
+                                    <span class="btn btn-success btn-radius btn-icon" style="border-radius: 50%;padding: 0 !important;" data-toggle="modal" data-target="#AssesmentModalin2" data-backdrop="static" data-keyboard="true"><i class="fa fa-plus"></i></span>
+
+                                </label>
+                                <div class="col-sm-12">
+                                    <table class="assessmentTbl">
+                                        <thead>
+                                            <tr>
+                                                <th>Emploee</th>
+                                                <th>Designation</th>
+                                                <th>Team</th>
+                                                <th>Department</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Indranil</td>
+                                                <td>Manager</td>
+                                                <td>IT</td>
+                                                <td>Sales</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Subhra</td>
+                                                <td>Manager</td>
+                                                <td>IT</td>
+                                                <td>Sales</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label" style="padding-top:10px">Total Employees</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" value="2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="btnSave">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade pmsModal w50" id="AssesmentModalin1" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">List of Questions  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm horizontalLbl clearfix">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="" class="col-form-label " style="padding-top:10px"><b>Search Questions</b></label>
+                            <div class="relative">
+                                <input type="text" class="form-control" placeholder="search question">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="col-form-label btn-block" style="padding-top:10px">&nbsp;</label>
+                            <button class="btn btn-success" ><i class="fa fa-search" ></i></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">
+                                    Questions 
+                                
+                                </label>
+                                <div class="col-sm-12">
+                                    <table class="assessmentTbl">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Question</th>
+                                                <th>Type</th>
+                                                <th>Total Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="checkbox" checked /></td>
+                                                <td>Question 1</td>
+                                                <td>Single select</td>
+                                                <td>15</td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="checkbox" checked /></td>
+                                                <td>Question 2</td>
+                                                <td>Multi select</td>
+                                                <td>15</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="btnSave">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pmsModal w50" id="AssesmentModalin2" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">List of Employees  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm horizontalLbl clearfix">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="" class="col-form-label " style="padding-top:10px"><b>Search Employees</b></label>
+                            <div class="relative">
+                                <input type="text" class="form-control" placeholder="search question">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="col-form-label btn-block" style="padding-top:10px">&nbsp;</label>
+                            <button class="btn btn-success"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-12 col-form-label">
+                                    Questions
+
+                                </label>
+                                <div class="col-sm-12">
+                                    <table class="assessmentTbl">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Emploee</th>
+                                                <th>Designation</th>
+                                                <th>Team</th>
+                                                <th>Department</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="checkbox" checked /></td>
+                                                <td>Indranil</td>
+                                                <td>Manager</td>
+                                                <td>IT</td>
+                                                <td>Sales</td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="checkbox" checked /></td>
+                                                <td>Subhra</td>
+                                                <td>Manager</td>
+                                                <td>IT</td>
+                                                <td>Sales</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="btnSave">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+
+    });
+</script>
+
+
+

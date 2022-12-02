@@ -1,0 +1,297 @@
+﻿@{
+    ViewBag.Title = "Default Salary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/CSS/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/JS/SearchPopup.js"></script>
+
+<script>
+    var StructureCode;
+    var yymm;
+
+    function OnStartCallback(s, e) {
+        // alert(1)
+        e.customArgs["StructureCode"] = StructureCode;
+        e.customArgs["yymm"] = yymm;
+
+    }
+    var PayStructureCodeallowance;
+    var EmployeeCodeallowance;
+    var yymm1allowance;
+    function  OnStartAllowanceCallback(s,e)
+    {
+        e.customArgs["PayStructureCode"] = PayStructureCodeallowance;
+        e.customArgs["EmployeeCode"] = EmployeeCodeallowance;
+        e.customArgs["yymm"] = yymm1allowance;
+    }
+    function ToJavaScriptDate(value) {
+        var m_names = new Array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
+
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        //return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear
+        return dt.getDate() + "-" + m_names[(dt.getMonth())] + "-" + dt.getFullYear();
+    }
+    function btnPayStructure_KeyDown(s, e) {
+        if (e.htmlEvent.key == "Enter") {
+            s.OnButtonClick(0);
+        }
+    }
+    function btnPayStructure_Click(s, e) {
+        BindPayStructure('');
+        setTimeout(function () { $("#txtPayStructure").focus(); }, 500);
+        $('#PayStructureModel').modal('show');
+    }
+    function PayStructurekeydown(e) {
+        if (e.code == "Enter" || e.code == "NumpadEnter") {
+            if ($("#txtPayStructure").val() != '') {
+                BindPayStructure($("#txtPayStructure").val());
+            }
+        }
+        else if (e.code == "ArrowDown") {
+            if ($("input[PayStructureIndex=0]"))
+                $("input[PayStructureIndex=0]").focus();
+        }
+    }
+    function BindPayStructure(SearchKey) {
+        var OtherDetails = {}
+        OtherDetails.SearchKey = SearchKey;
+
+        var HeaderCaption = [];
+        HeaderCaption.push("Pay Structure Name");
+
+        callonServerScroll("../Models/p_WebServiceList.asmx/GetPayStructureList", OtherDetails, "PayStructureTable", HeaderCaption, "PayStructureIndex", "SetPayStructure");
+    }
+
+    function SetPayStructure(Id, Name) {
+        var PayStructureID = Id;
+        var PayStructureName = Name;
+
+        if (PayStructureID != "") {
+            $('#PayStructureModel').modal('hide');
+            btnPayStructureName.SetText(PayStructureName);
+            // document.getElementById('hdnPayStructureID').value = Id;
+            @*var route = '@Url.Action("PartialEmployeeSalaryGrid", "DefaultSalary")';
+            $('#partial').load(route);*@
+            LoadActivatedPeriod(Id)
+
+        }
+    }
+    function ValueSelected(e, indexName) {
+        if (e.code == "Enter") {
+            var Id = e.target.parentElement.parentElement.cells[0].innerText;
+            var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+            if (Id) {
+                if (indexName == "PayStructureIndex") {
+                    SetPayStructure(Id, name);
+                }
+            }
+        }
+
+        else if (e.code == "ArrowDown") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex++;
+            if (thisindex < 10)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+        }
+        else if (e.code == "ArrowUp") {
+            thisindex = parseFloat(e.target.getAttribute(indexName));
+            thisindex--;
+            if (thisindex > -1)
+                $("input[" + indexName + "=" + thisindex + "]").focus();
+            else {
+                if (indexName == "PayStructureIndex")
+                    $('#txtPayStructure').focus();
+            }
+        }
+
+    }
+
+    function LoadActivatedPeriod(PayStructureID) {
+        var url = '/DefaultSalary/GetActivePeriodGeneration/';
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: { 'ID': PayStructureID },
+            // async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+
+                if (response.data2.response_msg == "Success") {
+                    $("#txt_frmDt").val(ToJavaScriptDate(JSON.parse(response.data)[0]["PeriodFrom"]));
+                    $("#txt_toDt").val(ToJavaScriptDate(JSON.parse(response.data)[0]["PeriodTo"]));
+                    $("#txt_actvmnth").val(JSON.parse(response.data)[0]["Period"])
+                    StructureCode = PayStructureID;
+                    yymm = JSON.parse(response.data)[0]["YYMM"];
+                    document.getElementById('hdnYYMM').value = yymm;
+                    //JSON.parse(response.data)[0].StructureID
+                    SalarygridView.Refresh();
+                    SalarygridView.Refresh();
+                }
+                else {
+                    jAlert(response.data2.response_msg);
+                }
+            },
+            error: function (response) {
+                jAlert('Please try again later');
+            }
+        });
+    }
+    function OnClickView(EmployeeCode, PayStructureCode) {
+        @*var yymm = document.getElementById('hdnYYMM').value;
+        var route = '@Url.Action("PartialAllowanceGrid", "DefaultSalary")?PayStructureCode=' + PayStructureCode + "&EmployeeCode=" + EmployeeCode + "&yymm=" + yymm;
+        $('#DfltSalaryModel').modal('show');
+        $('#partial').load(route);*@
+        EmployeeCodeallowance = EmployeeCode;
+        PayStructureCodeallowance = PayStructureCode;
+        yymm1allowance = document.getElementById('hdnYYMM').value;
+        AllowancegridView.Refresh();
+       // AllowancegridView.Refresh();
+        $('#DfltSalaryModel').modal('show');
+        
+    }
+
+</script>
+<link href="~/assests/css/payrollCss/defaultSalary.css" rel="stylesheet" />
+
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="col-md-3">
+            <label>Pay Structure</label>
+            <div>
+                @Html.DevExpress().ButtonEdit(
+                    settings =>
+                    {
+                        settings.Name = "btnPayStructureName";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Text = "";
+                        settings.ReadOnly = true;
+                        settings.Properties.Buttons.Add("..");
+                        settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){btnPayStructure_Click(s,e);}";
+                        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){btnPayStructure_KeyDown(s,e);}";
+                    }).GetHtml()
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>From Date</label>
+            <div>
+                <input type="text" id="txt_frmDt" disabled />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>To Date</label>
+            <div>
+                <input type="text" id="txt_toDt" disabled />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Activated Month</label>
+            <div>
+                <input type="text" id="txt_actvmnth" disabled />
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="GridViewArea">
+    @{
+        Html.RenderAction("PartialEmployeeSalaryGrid", "DefaultSalary");
+    }
+    @*<div id="partial"></div>*@
+</div>
+
+<!-- Pay structure -->
+<div class="modal fade" id="PayStructureModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pay structure</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" onkeydown="PayStructurekeydown(event)" id="txtPayStructure" autofocus width="100%" placeholder="Search By Pay Structure Name or Short Name" />
+                <div id="PayStructureTable">
+                    <table border='1' width="100%" class="dynamicPopupTbl">
+                        <tr class="HeaderStyle">
+                            <th class="hide">id</th>
+                            <th>Pay Structure Name</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay structure-->
+
+<div>
+    @Html.Hidden("hdnYYMM")
+
+</div>
+
+<div class="modal fade" id="DfltSalaryModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="clearfix">
+                    <div class="col-md-12">
+                        <div class="panel-heading">
+                            <div class="panel-title clearfix">
+                                <h3 class="pull-left">Salary - Employee</h3>
+                            </div>
+
+                            <div class="form_main">
+                                <div class="row clearfix">
+                                    <div class="col-md-12">
+                                        <div class="panel with-nav-tabs panel-primary tabTotal">
+                                            <div class="panel-heading tabHead">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active"><a href="#tab1" data-toggle="tab">Allowance/Deduction</a></li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade in active" id="tab1">
+                                                        <div id="partial">
+                                                            @{
+                                                                Html.RenderAction("PartialAllowanceGrid", "DefaultSalary");
+                                                            }
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

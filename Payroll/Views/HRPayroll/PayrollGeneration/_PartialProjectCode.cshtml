@@ -1,0 +1,96 @@
+﻿@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "ProjectGridLookup";
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "PayrollGeneration", Action = "GetProjectCode" };
+        settings.KeyFieldName = "Proj_Id";
+        settings.Properties.EnableClientSideAPI = true;
+        settings.GridViewClientSideEvents.BeginCallback = "ProjectStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "ProjectSelectionChanged";
+        settings.Properties.ClientSideEvents.DropDown = "ProjectLookupValChange";
+        settings.Properties.TextFormatString = "{1}";
+
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        settings.GridViewProperties.SettingsPager.PageSize = 7;
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Proj_Id";
+            column.Caption = "Proj_Id";
+            column.Width = 0;
+            column.Visible = false;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProjectCode";
+            column.Caption = "Project Code";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ProjectName";
+            column.Caption = "Project Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostomerName";
+            column.Caption = "Customer Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Hierarchy_Name";
+            column.Caption = "Hierarchy Name";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Hierarchy_ID";
+            column.Caption = "Hierarchy_ID";
+            column.Width = 0;
+            column.Visible = false;
+        });
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "PayrollGeneration", Action = "GetProjectCode" };
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+        settings.GridViewClientSideEvents.SelectionChanged = "ProjectSelectionChanged";
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 600;
+        };
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.ProjectID != null)
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.GridView.Selection.SelectRowByKey(ViewBag.ProjectID);
+            }
+            if (ViewBag.Hierarchy == "0")
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.Columns["Hierarchy_Name"].Visible = false;
+            }
+            else
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.Columns["Hierarchy_Name"].Visible = true;
+            }
+        };
+
+    }).BindList(Model).GetHtml()
+
+
+
+
+
+
+
+

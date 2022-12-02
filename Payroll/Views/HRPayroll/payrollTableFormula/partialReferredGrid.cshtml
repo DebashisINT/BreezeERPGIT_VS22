@@ -1,0 +1,83 @@
+﻿@*@model List<Payroll.Models.TableFormulaHeadBreakup>*@
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvreferpaging";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "payrollTableFormula", Action = "partialReferredGrid", TblFormulaCode = ViewData["TblFormulaCode"] };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.KeyFieldName = "TableBreakup_ID";
+    settings.EnableRowsCache = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+    settings.SettingsDetail.ShowDetailRow = true;
+
+    
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TableName";
+        column.Caption = "Table Name";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApplicatedFrom";
+        column.Caption = "Applicable From";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApplicatedTo";
+        column.Caption = "Applicable To";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TableFormulaCode";
+        column.Caption = "TableFormulaCode To";
+        column.Visible = false;
+    });
+
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded =false;
+    settings.SettingsDetail.ShowDetailRow = true;
+
+    settings.SetDetailRowTemplateContent(c =>
+    {
+
+        Html.RenderAction("partialReferredInnerGrid", new { TableBreakup_ID = DataBinder.Eval(c.DataItem, "TableBreakup_ID") });
+    });
+    settings.PreRender = (sender, e) =>
+    {
+        //((MVCxGridView)sender).DetailRows.ExpandRow(0);
+    };
+
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            ViewContext.Writer.Write(
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickEdit('" + DataBinder.Eval(tc.DataItem, "TableFormulaCode") + "','" + DataBinder.Eval(tc.DataItem, "TableBreakup_ID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/info.png\" /></a>" +
+                "&nbsp;"
+                //"<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "StructureID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/info.png\" /></a>" +
+                // "&nbsp;" +
+                //"<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "StructureID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/Delete.png\" /></a>"
+            );
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.False;
+        c.Width = 100;
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+   
+}).Bind(Model).GetHtml()

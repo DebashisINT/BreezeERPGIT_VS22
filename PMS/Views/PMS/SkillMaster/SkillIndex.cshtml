@@ -1,0 +1,480 @@
+﻿@model PMS.Models.ViewModel.SkillMasterViewModel
+@{
+    ViewBag.Title = "Skill";
+}
+<script>
+    $(function () {
+        gridSkillMasterList.Refresh();
+
+        $('#ddlAppIds').on('change', function () {
+            if ($("#ddlAppIds option:selected").index() > 0) {
+                var selectedValue = $(this).val();
+                $('#ddlAppIds').prop("selectedIndex", 0);
+                var url = '@Url.Action("ExportLocationlist", "SkillMaster", new { type = "_type_" })'
+                window.location.href = url.replace("_type_", selectedValue);
+            }
+        });
+    });
+
+    function openModal() {
+        $("#Skillid").val('');
+        $("#SkillName").val('');
+        $("#Description").val('');
+        $("#CharecteristicID").val('select');
+        $("#ddlBranch").val(1);
+        $("#skillDetails").tagsinput('removeAll');
+        $("#SkillName").focus();
+        $("#divSaveinf").removeClass('hide');
+        $("#exampleModalLabel").html("Add Skill");
+        $("#SkillName").prop('disabled', false);
+    }
+
+    function SaveSkill() {
+        var obj = {};
+        var localSkill = [];
+        obj.skill_id = $("#Skillid").val();
+        obj.SkillName = $("#SkillName").val().trim();
+        obj.Description = $("#Description").val().trim();
+        //var e = document.getElementById("CharecteristicID");
+        //obj.Charecteristic_Type = e.options[e.selectedIndex].value;
+        obj.Charecteristic_Type = $("#CharecteristicID").val();
+        var f = document.getElementById("ddlBranch");
+        obj.Branch = f.options[f.selectedIndex].value;
+        var skillDetails = $("#skillDetails").val();
+        if (skillDetails != "") {
+            var str_array = skillDetails.split(',');
+
+            for (var i = 0; i < str_array.length; i++) {
+                str_array[i] = str_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
+                var Gridr = {};
+                Gridr.SkillsName = str_array[i];
+                localSkill.push(Gridr);
+            }
+            obj.SkillList = localSkill;
+            // obj.SkillList = $("#skillDetails").tagsinput('items');
+
+        }
+        if (obj.SkillName != "") {
+            if (obj.Description != "") {
+                if (obj.Charecteristic_Type != "select") {
+                    if (obj.Branch != "") {
+                        if (skillDetails != "") {
+                            LoadingPanel.Show();
+                            $.ajax({
+                                type: "POST",
+                                url: "@Url.Action("SaveData", "SkillMaster")",
+                                // contentType: "application/json; charset=utf-8",
+                                data: { skills: obj }, //, VehicleNo: Gridr
+                                //dataType: "json",
+                                success: function (response) {
+                                    jAlert(response, "Alert", function () {
+                                        setTimeout(function () {
+                                            $('#ddlMax_RateList').focus();
+                                        }, 200);
+                                    });
+                                    //   jAlert(response);
+
+                                    LoadingPanel.Hide();
+                                    if (response == 'Saved Successfully.' || response == 'Updated Successfully.') {
+                                        $("#Skillid").val('');
+                                        $("#SkillName").val('');
+                                        $("#Description").val('');
+                                        $("#CharecteristicID").val('select');
+                                        $("#ddlBranch").val(0);
+                                        $("#skillDetails").tagsinput('removeAll');
+                                        gridSkillMasterList.Refresh();
+                                        //  chkArr = "";
+                                        // unCheckClick();
+                                        $("#skillPopup").modal('toggle');
+                                    }
+                                },
+                                error: function (response) {
+                                    //alert(response);
+                                    jAlert("Please try again later.", "Alert", function () {
+                                        setTimeout(function () {
+                                            $('#SkillName').focus();
+                                        }, 200);
+                                    });
+                                    LoadingPanel.Hide();
+                                }
+                            });
+                        }
+                        else {
+                            jAlert("Skill is Mandatory.", "Alert", function () {
+                                setTimeout(function () {
+                                    $('#skillDetails').tagsinput('focus');
+                                }, 200);
+                            });
+                        }
+                    }
+                    else {
+                        jAlert("Unit is Mandatory.", "Alert", function () {
+                            setTimeout(function () {
+                                $('#ddlBranch').focus();
+                            }, 200);
+                        });
+                    }
+                }
+                else {
+                    jAlert("Characteristic Type is Mandatory.", "Alert", function () {
+                        setTimeout(function () {
+                            $('#CharecteristicID').focus();
+                        }, 200);
+                    });
+                }
+            }
+            else {
+                jAlert("Description is Mandatory.", "Alert", function () {
+                    setTimeout(function () {
+                        $('#Description').focus();
+                    }, 200);
+                });
+            }
+        }
+        else {
+            jAlert("Name is Mandatory.", "Alert", function () {
+                setTimeout(function () {
+                    $('#SkillName').focus();
+                }, 200);
+            });
+        }
+    }
+
+    function OnStartCallback(s, e) {
+
+    }
+
+
+
+    function OpenSkillMasterforEdit(obj) {
+        //alert(obj);
+        $("#Skillid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataset", "SkillMaster")",
+            data: { Skill_id: obj },
+            dataType: "json",
+            success: function (response) {
+                // jAlert(response.ROLE_NAME);
+                // $("#exampleModal").modal('toggle');
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#SkillName").prop('disabled', true);
+                    $("#exampleModalLabel").html("Edit Skill");
+                    $("#SkillName").val(status.SkillName);
+                    $("#Description").val(status.Description);
+                    $("#CharecteristicID").val(status.Charecteristic_Type);
+                    $("#ddlBranch").val(status.Branch);
+                    // $("#skillDetails").val(status.skillDetails);
+                    $("#skillDetails").tagsinput('add', status.skillDetails, { preventPost: true });
+                    // alert(status.skillDetails);
+                    $("#skillPopup").modal('toggle');
+                    $("#divSaveinf").removeClass('hide');
+                    $("#SkillName").focus();
+                }
+
+            },
+            error: function (response) {
+                //   alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+
+    function OpenSkillMasterforDelete(obj) {
+        jConfirm('Confirm Delete?', 'Alert', function (r) {
+            if (r) {
+                $("#Skillid").val(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteData", "SkillMaster")",
+                    data: { skillID: obj },
+                    dataType: "json",
+                    success: function (response) {
+                        var status = response;
+                        jAlert(status);
+                        gridSkillMasterList.Refresh();
+                    },
+                    error: function (response) {
+                        //  alert(response);
+                        jAlert("Please try again later.");
+                    }
+                });
+            }
+            else {
+                // alert("false");
+            }
+        });
+
+    }
+
+
+
+    function OpenSkillMasterforView(obj) {
+        //alert(obj);
+        $("#Skillid").val(obj);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ViewDataset", "SkillMaster")",
+            data: { Skill_id: obj },
+            dataType: "json",
+            success: function (response) {
+                // jAlert(response.ROLE_NAME);
+                // $("#exampleModal").modal('toggle');
+                // LoadingPanel.Hide();
+                var status = response;
+                var str = "";
+
+                if (status != null) {
+                    $("#exampleModalLabel").html("View Skill");
+                    $("#SkillName").prop('disabled', true);
+                    $("#SkillName").val(status.SkillName);
+                    $("#Description").val(status.Description);
+                    $("#CharecteristicID").val(status.Charecteristic_Type);
+                    $("#ddlBranch").val(status.Branch);
+                    $("#skillDetails").tagsinput('add', status.skillDetails, { preventPost: true });
+                    $("#skillPopup").modal('toggle');
+                    $("#divSaveinf").addClass('hide');
+
+                }
+
+            },
+            error: function (response) {
+                //alert(response);
+                jAlert("Please try again later.");
+                //LoadingPanel.Hide();
+            }
+        });
+    }
+    function gridRowclick(s, e) {
+        $('#gridSkillMasterList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});    
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+</script>
+<style>
+    #gridSkillMasterList, #gridSkillMasterList > tbody > tr > td .dxgvCSD {
+        width: 100% !important;
+    }
+    /* .makeFullscreen{
+        position:relative;
+    }
+    .makeFullscreen .makeFullscreen-icon {
+        position: absolute;
+        left: -25px;
+        display: inline-block;
+        width: 26px;
+        height: 30px;
+        background: #808080;
+        text-align: center;
+        line-height: 29px;
+        color: #fff;
+        border-radius: 14px 0 0 14px;
+        cursor: pointer;
+        -webkit-transition: all 0.3s ease-in;
+        -ms-transition: all 0.3s ease-in;
+        -o-transition: all 0.3s ease-in;
+        transition: all 0.3s ease-in;
+    }
+    .makeFullscreen-icon.hovered {
+        left: 0px;
+    }
+    .makeFullscreen:hover .makeFullscreen-icon.hovered {
+        left:-25px;
+    } 
+    .panel-fullscreen {
+        position: fixed;
+        padding: 30px 20px 10px 20px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 99;
+        background: #fff;
+    }
+    .panel-fullscreen .makeFullscreen-icon {
+        right:20px;
+        top:0px;
+        left:auto;
+        background:transparent;
+        color:#333;
+    }
+    .panel-fullscreen .makeFullscreen-icon:hover {
+        -webkit-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+        -o-transform: scale(1.5);
+            transform:scale(1.5);
+    }*/
+</style>
+<script>
+    $(document).ready(function () {
+        //Toggle fullscreen
+        $(".makeFullscreen-icon").click(function (e) {
+            e.preventDefault();
+
+            var $this = $(this);
+
+            if ($this.children('i').hasClass('fa-expand')) {
+                $this.removeClass('hovered');
+                $this.children('i').removeClass('fa-expand');
+                $this.children('i').addClass('fa-arrows-alt');
+            }
+            else if ($this.children('i').hasClass('fa-arrows-alt')) {
+                $this.children('i').removeClass('fa-arrows-alt');
+                $this.addClass('hovered');
+                $this.children('i').addClass('fa-expand');
+            }
+            $(this).closest('.makeFullscreen').toggleClass('panel-fullscreen');
+        });
+    });
+
+</script>
+
+
+
+
+
+
+
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix" id="myDiv">
+        <h3 class="pull-left">
+            <label>Skill</label>
+        </h3>
+    </div>
+
+    @*<div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOMEntryList", "BOMEntry")"><i class="fa fa-times"></i></a></div>*@
+</div>
+<div class="form_main">
+    <div class="padBot8 padTop8">
+        <div class="clearfix">
+            @if (ViewBag.CanAdd)
+            {
+                <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#skillPopup" onclick="openModal()" data-backdrop="static" data-keyboard="true">
+                    <span class="btn-icon"><i class="fa fa-plus"></i></span> Skill</button>
+            }
+            @if (ViewBag.CanExport)
+            {
+            <select name="ddlAppIds" class="btn btn-primary btn-radius" id="ddlAppIds">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="4">RTF</option>
+                <option value="5">CSV</option>
+            </select>
+            }
+        </div>
+
+    </div>
+    <!--CONTENT GHOES HERE-->
+    <div class="makeFullscreen ">
+        <span class="makeFullscreen-icon hovered"><i class="fa fa-expand"></i></span>
+        <div id="refreshgrid" class="relative">
+            @{
+                Html.RenderAction("GetSkillMasterPartial", "SkillMaster");
+            }
+        </div>
+    </div>
+</div>
+<input type="hidden" id="Skillid" />
+
+<div class="modal fade pmsModal w40" id="skillPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Skill</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="openModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pmsForm">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Name <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<input type="text" class="form-control" id="" value="Susanta Kundu">*@
+                            @Html.TextBoxFor(m => m.SkillName, new { @class = "form-control", @id = "SkillName",@Maxlength="100" })
+                        </div>
+                    </div>
+
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Description <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<textarea rows="5" disabled></textarea>*@
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "Description",@Maxlength="500" })
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Characteristic Type <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="CharecteristicID">
+                                <option value="select">Select</option>
+                                <option value="Skill">Skill</option>
+                                <option value="Certification">Certification</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Unit <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                            @Html.DropDownListFor(x => x.BranchList, new SelectList(Model.BranchList, "branch_id", "branch_description"), new { @id = "ddlBranch", @class = "form-control" })  @*, @onchange = "PopulateWareHouseData();"*@
+
+                        </div>
+                    </div>
+                    <div class="formLine"></div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label">Skill <span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control tagsInput" id="skillDetails" value="" data-role="tagsinput">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal" onclick="openModal()">Close</button>
+                <button type="button" class="btn btn-success btn-radius" id="divSaveinf" onclick="SaveSkill()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "dvStep3";
+    }
+).GetHtml()
+

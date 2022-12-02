@@ -1,0 +1,575 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model PMS.Models.ViewModel.BillofQuantitiesVM
+
+@{
+    ViewBag.Title = "Bill of Quantities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<style>
+    .padTab > tbody > tr > td:not(:last-child) {
+        padding: 0;
+        padding-right: 15px;
+        vertical-align: middle;
+    }
+
+    .w150 {
+        width: 150px;
+    }
+
+    #gridBOMList_DXMainTable > tbody > tr > td:last-child, #gridBOMList_DXFooterTable > tbody > tr > td:last-child, #gridBOMList_DXHeaderTable > tbody > tr > td:last-child {
+        display: none;
+    }
+</style>
+<script>
+    var load = 0;
+    function OpenBOQData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetBOQDataByID", "BillofQuantities")",
+                data: { detailsid: detailsid, Approve: "", View: "" },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnBOQAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    function ViewBOQData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetBOQDataByID", "BillofQuantities")",
+                data: { detailsid: detailsid, Approve: "", View: "View" },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnBOQAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    function RemoveBOQData(detailsid) {
+
+        jConfirm('Confirm delete?', 'Alert!', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveBOQDataByID", "BillofQuantities")",
+                    data: { detailsid: detailsid },
+                    success: function (response) {
+                        if (response != null) {
+                            jAlert(response.Message);
+                            if (response.Success) {
+                                gridBOQList.Refresh();
+                                gridBOQList.Refresh();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function OnBOQListEndCallback(s, e) {
+
+    }
+
+    function OnBOQListBeginCallback(s, e) {
+
+    }
+
+    $(function () {
+        PopulateUnitList();
+        if (localStorage.getItem('FromDateBOQ')) {
+            BOQFromDate_dt.SetDate(new Date(localStorage.getItem('FromDateBOQ')));
+        }
+        if (localStorage.getItem('ToDateBOQ')) {
+            BOQToDate_dt.SetDate(new Date(localStorage.getItem('ToDateBOQ')));
+        }
+        $('#btnAddNew').focus();
+    });
+
+    function datevalidateTo() {
+
+        if (BOQFromDate_dt.GetDate()) {
+            if (BOQToDate_dt.GetDate() <= BOQFromDate_dt.GetDate()) {
+                BOQToDate_dt.SetValue(BOQFromDate_dt.GetDate());
+                BOQToDate_dt.SetMinDate(BOQFromDate_dt.GetDate());
+            }
+        }
+    }
+
+    function PopulateUnitList() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PopulateBranchByHierchy", "BillofQuantities")",
+            success: function (response) {
+                var html = "";
+                for (var i = 0; i < response.length; i++) {
+                    html = html + "<option value='" + response[i].ID + "'>" + response[i].Name + "</option>";
+                }
+                $('#ddlunitlist').html(html);
+
+                if (localStorage.getItem('BOQBranch')) {
+                    if ($("#ddlunitlist option[value=" + localStorage.getItem('BOQBranch') + "]").text() != "" && $("#ddlunitlist option[value=" + localStorage.getItem('BOQBranch') + "]").text() != null) {
+                        $('#ddlunitlist').val(localStorage.getItem('BOQBranch'));
+                    }
+                }
+
+            }
+        });
+    }
+
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function updateGridByDate() {
+        if (BOQFromDate_dt.GetDate() == null) {
+            jAlert('Please select from date.', 'Alert', function () { BOQFromDate_dt.Focus(); });
+        }
+        else if (BOQToDate_dt.GetDate() == null) {
+            jAlert('Please select to date.', 'Alert', function () { BOQToDate_dt.Focus(); });
+        }
+        else {
+            var fromdate = GetServerDateFormat(BOQFromDate_dt.GetValue());
+            var todate = GetServerDateFormat(BOQToDate_dt.GetValue());
+            var unitid = $('#ddlunitlist option:selected').val();
+
+            localStorage.setItem("FromDateBOQ", BOQFromDate_dt.GetDate());
+            localStorage.setItem("ToDateBOQ", BOQToDate_dt.GetDate());
+            localStorage.setItem("BOQBranch", unitid);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetBOQDateFilter", "BillofQuantities")",
+                data: { unitid: unitid, FromDate: fromdate, ToDate: todate },
+                success: function (response) {
+                    if (response) {
+                        gridBOQList.Refresh();
+                        gridBOQList.Refresh();
+                    }
+                }
+            });
+        }
+    }
+
+
+    function onPrintJv(id, RowIndex) {
+        jAlert('No design available!');
+    }
+
+    function OnclickViewAttachment(id) {
+        // alert(id)
+        $('#hdnDocNo').val(id);
+        $('#AttachmentModal').modal('show');
+        $('#hdndoc_id').val(id);
+
+        setTimeout(function () { $('#documentType').focus(); }, 1000);
+    }
+
+    function cmbExport_SelectedIndexChanged() {
+        var exportid = $('#exportlist option:selected').val();
+        $('#exportlist').val(0);
+
+        if (exportid > 0) {
+
+            var url = '@Url.Action("ExportBOQGridList", "BillofQuantities", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+
+
+        }
+
+    }
+
+    $(document).ready(function () {
+
+        @*document.onkeydown = function (e) {
+            if (event.keyCode == 83 && event.altKey == true) {
+                var url = '@Url.Action("Index", "Estimate")';
+                window.location.href = url;
+            }
+        }*@
+
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 66 && event.altKey == true) {
+                var url = '@Url.Action("Index", "BillofQuantities")';
+                window.location.href = url;
+            }
+        });
+    });
+    function gridRowclick(s, e) {
+        $('#gridBOQList').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+    //});
+</script>
+
+<script>
+    function BOQCancel(obj) {
+        jConfirm('Do you want to cancel the BOQ?', 'Confirm Dialog', function (r) {
+            if (r == true) {
+                $("#EstIdCancel").val(obj);
+                $("#CloseModal").modal('toggle');
+                setTimeout(function () {
+                    $("#txtCanCelRemarks").focus();
+                },600);
+            }
+            else {
+                return false;
+            }
+        });
+    }
+
+
+    function CancelRemarks_save() {
+        var flag = true;
+        if ($("#txtCanCelRemarks").val() == "") {
+            flag = false;
+            $("#txtCanCelRemarks").focus();
+        }
+        else {
+            var detailsid = $("#EstIdCancel").val();
+            var CancelRemarks = $("#txtCanCelRemarks").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("CalcelBOQDataByID", "BillofQuantities")",
+                data: { detailsid: detailsid, Cancel_Remarks: CancelRemarks },
+                success: function (response) {
+                    if (response != null) {
+                        jAlert(response.Message);
+                        if (response.Success) {
+                            $("#EstIdCancel").val('');
+                            gridBOQList.Refresh();
+                            gridBOQList.Refresh();
+                            $("#CloseModal").modal('toggle');
+                            $("#txtCanCelRemarks").val('');
+
+                        }
+                    }
+                }
+            });
+        }
+
+        return flag;
+    }
+
+
+    function BOQReOpen(obj) {
+        jConfirm('Do you want to re-open BOQ?', 'Confirm Dialog', function (r) {
+            if (r == true) {
+                $("#EstIdCancel").val(obj);
+                $("#ReOpenModal").modal('toggle');
+                setTimeout(function () {
+                    $("#txtReOpenRemarks").focus();
+                },600);
+            }
+            else {
+                return false;
+            }
+        });
+    }
+
+
+    function ReOpenRemarks_save() {
+        var flag = true;
+        if ($("#txtReOpenRemarks").val() == "") {
+            flag = false;
+            $("#txtReOpenRemarks").focus();
+        }
+        else {
+            var detailsid = $("#EstIdCancel").val();
+            var ReOpenRemarks = $("#txtReOpenRemarks").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ReOpenBOQDataByID", "BillofQuantities")",
+                data: { detailsid: detailsid, Cancel_Remarks: ReOpenRemarks },
+                success: function (response) {
+                    if (response != null) {
+                        jAlert(response.Message);
+                        if (response.Success) {
+                            $("#EstIdCancel").val('');
+                            gridBOQList.Refresh();
+                            gridBOQList.Refresh();
+                            $("#ReOpenModal").modal('toggle');
+                            $("#txtReOpenRemarks").val('');
+                        }
+                    }
+                }
+            });
+        }
+
+        return flag;
+    }
+
+    function BOQApprove(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetBOQDataByID", "BillofQuantities")",
+                data: { detailsid: detailsid, Approve: "Approve", View: "" },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        var url = $('#hdnBOQAddUpdate').val();
+                        window.location.href = url;
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridBOQList.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridBOQList.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridBOQList.SetWidth(cntWidth);
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridBOQList.SetWidth(cntWidth);
+            }
+
+        });
+    });
+
+</script>
+
+<div class="panel-heading clearfix">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="">
+            <label>Bill of Quantities</label>
+        </h3>
+        @*<div id="ApprovalCross" class="crossBtn"><a href=""><i class="fa fa-times"></i></a></div>*@
+    </div>
+
+</div>
+
+<div class="mainarea form_main">
+
+    <input type="hidden" value="@Url.Action("Index", "BillofQuantities")" id="hdnBOQAddUpdate" />
+    <input type="hidden" value="@Url.Action("AttachmentDocument", "CRMAttachment", new { module = "BillofQuantities" })" id="hdnAttachmentDocument" />
+
+    <div class="relative">
+        @{
+            Html.RenderAction("AttachmentDocument", "CRMAttachment", new { module = "BOQ", DocNo = "" });
+        }
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12 mTop5">
+            <div class="gridHeadersec">
+
+
+
+                <div class="clearfix">
+                    <div class="md-pull-left">
+                        @if (ViewBag.CanAdd)
+                        {
+                            <button type="button" id="btnAddNew" class="btn btn-success btn-radius" onclick="location.href='@Url.Action("Index", "BillofQuantities")'">
+                                <span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>B</u>ill of Quantities</span>
+                            </button>
+                        }
+                        <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
+                            <option value="0">Export to</option>
+                            <option value="1">PDF</option>
+                            <option value="2">XLSX</option>
+                            <option value="3">RTF</option>
+                            <option value="4">CSV</option>
+                        </select>
+                    </div>
+                    <div class="md-pull-right">
+                        <table class="paddingTbl">
+                            <tr>
+                                <td>
+                                    From Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "BOQFromDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+
+                            }
+                        ).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    To Date
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        @Html.DevExpress().DateEdit(
+                            settings =>
+                            {
+                                settings.Name = "BOQToDate_dt";
+                                settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
+                                settings.Date = DateTime.Now;
+
+                            }
+                        ).GetHtml()
+                                    </div>
+                                </td>
+                                <td>
+                                    Unit
+
+                                </td>
+                                <td class="w150">
+                                    <div class="relative">
+                                        <select id="ddlunitlist" class="form-control"></select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" id="btnShowData" class="btn btn-primary btn-radius" onclick="updateGridByDate()">Show</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+
+            <div id="refreshgrid" class="relative">
+                @{
+                    Html.RenderAction("GetBOQEntryList", "BillofQuantities");
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<input type="hidden" id="EstIdCancel" />
+<div id="CloseModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Reason For Cancel</h4>
+            </div>
+            <div class="modal-body">
+                <label>Reason<span style="color:red">*</span></label>
+                <div><textarea id="txtCanCelRemarks" class="form-control" maxlength="500" style="margin: 0px -2px 5px 0px; width: 479px; height: 88px;"></textarea></div>
+            </div>
+            <div class="modal-footer" style="padding-bottom: 8px; padding-top:11px;">
+
+                <button class="btn btn-success btn-radius" id="btnCancelRemarks" onclick="CancelRemarks_save()">Save</button>
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="ReOpenModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Reason For Re-Open</h4>
+            </div>
+            <div class="modal-body">
+                <label>Reason<span style="color:red">*</span></label>
+                <div><textarea id="txtReOpenRemarks" class="form-control" maxlength="500" style="margin: 0px -2px 5px 0px; width: 479px; height: 88px;"></textarea></div>
+            </div>
+            <div class="modal-footer" style="padding-bottom: 8px; padding-top:11px;">
+
+                <button class="btn btn-success btn-radius" id="btnReopenRemarks" onclick="ReOpenRemarks_save()">Save</button>
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

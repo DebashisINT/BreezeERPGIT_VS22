@@ -1,0 +1,83 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPayHead";
+    settings.KeyFieldName = "PayHeadID";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "StructureMaster", Action = "PartialPayHeadGrid" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.Settings.ShowFilterRow = true;
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayHeadID";
+        column.Caption = "PayHead ID";
+        column.Visible = false;
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayHead";
+        column.Caption = "Pay Head";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(22);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ShortName";
+        column.Caption = "Short Name";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(22);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PayType";
+        column.Caption = "Pay Type";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(11);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DataType";
+        column.Caption = "Data Type";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(11);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CalculationType";
+        column.Caption = "Calculation Type";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(11);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "RoundOffType";
+        column.Caption = "RoundOff Type";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
+    });
+
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            ViewContext.Writer.Write(
+                 "<a href=\"javascript:void(0);\" onclick=\"OnClickCopyForm('" + DataBinder.Eval(tc.DataItem, "PayHeadID") + "')\" class=\"pad\" title=\"Copy\"><i class='fa fa-copy' style='font-size: 14px;color: #428abf;'></i></a>" +
+                 "&nbsp;" +
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "PayHeadID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/info.png\" /></a>" +
+                 "&nbsp;" +
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "PayHeadID") + "')\" class=\"pad\" title=\"Delete\"><img src=\"../../../assests/images/Delete.png\" /></a>"
+            );
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.False;
+        
+        c.Caption = "Action";
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        c.Width = 150;
+    });
+}).Bind(Model).GetHtml()

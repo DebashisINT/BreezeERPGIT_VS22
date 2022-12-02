@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Leave Structure List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function OnStructureClick() {
+        var url = '/LeaveStructure/Index?ActionType=ADD';
+        window.location.href = url;
+    }
+</script>
+
+<script>
+    function OnClickViewForm(StructureID) {
+        
+    }
+
+    function OnClickEditForm(StructureID) {
+        var url = '/LeaveStructure/Index?ActionType=EDIT&LeaveStructureID=' + StructureID;
+        window.location.href = url;
+    }
+
+    function OnClickDeleteForm(StructureID) {
+        var url = '/LeaveStructure/StructureDelete/';
+
+        jConfirm("Confirm Delete?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'DeleteStructure', 'StructureID': StructureID }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.response_msg == "Success") {
+                            jAlert("Successfully Deleted");
+                            gvleavestructure.Refresh();
+                        }
+                        else {
+                            jAlert(response.response_msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    }
+    function gridRowclick(s, e) {
+        $('#gvleavestructure').find('tr').removeClass('rowActive');
+        $('.floatedBtnArea').removeClass('insideGrid');
+        //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+        $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
+        $(s.GetRow(e.visibleIndex)).addClass('rowActive');
+        setTimeout(function () {
+            //alert('delay');
+            var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
+            //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
+            //    setTimeout(function () {
+            //        $(this).fadeIn();
+            //    }, 100);
+            //});    
+            $.each(lists, function (index, value) {
+                //console.log(index);
+                //console.log(value);
+                setTimeout(function () {
+                    $(value).css({ 'opacity': '1' });
+                }, 100);
+            });
+        }, 200);
+    }
+</script>
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Leave Structure</h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="clearfix">
+        <a href="javascript:void(0);" onclick="OnStructureClick()" class="btn btn-success btn-radius" ><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add New</span> </a>
+    </div>
+</div>
+<div class="GridViewArea relative">
+    @{
+        Html.RenderAction("PartialLeaveStructureListGrid", "LeaveStructure");
+    }
+</div>

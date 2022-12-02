@@ -1,0 +1,95 @@
+﻿@model Payroll.Models.PayrollSettings
+@{
+    ViewBag.Title = "Account Map";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assests/pluggins/JSMultiselect/jquery.multiselect.css" rel="stylesheet" />
+<script src="~/assests/pluggins/JSMultiselect/jquery.multiselect.js"></script>
+<link href="~/assests/pluggins/Select2/select2.min.css" rel="stylesheet" />
+<script src="~/assests/pluggins/Select2/select2.min.js"></script>
+<script src="~/assests/js/payrollJs/payrollSetting.js"></script>
+<link href="~/assests/css/payrollCss/payrollSettings.css" rel="stylesheet" />
+<style>
+    .dxgvLoadingPanel_PlasticBlue {
+        display: none !important;
+    }
+
+    .ms-options-wrap > button {
+        border-radius: 4px;
+        min-height: 28px;
+        margin-top: 0;
+    }
+</style>
+<div class="panel-heading">
+    <div class="panel-title clearfix">
+        <h3 class="pull-left">Accounts Posting</h3>
+        <div id="divcross" class="crossBtn"><a href="/StructureMaster/Dashboard"><i class="fa fa-times"></i></a></div>
+    </div>
+
+</div>
+<input type="hidden" id="hdnID" />
+<div class="form_main clearfix">
+    <div class="boxedLayoutCard">
+        <div class="row clearfix">
+            <div class="col-md-2">
+                <label>Account Head</label>
+                <div>@Html.DropDownListFor(m => m.MainAccountCode, new SelectList(Model.MainAccounts, "Code", "Name"), new { @class = "form-control" })</div>
+            </div>
+            <div class="col-md-2 ">
+                <label>Sub Account</label>
+                <div>
+                    <select id="ddlSubaccdount" class='form-control'>
+                        <option value="None">None</option>
+                        <option value="Employees">Employees</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2 ">
+                <label>Pay Heads</label>
+                <div>
+                    <select name="basic[]" multiple="multiple" class="3col active form-control" id="ddlPayhead">
+                        @{
+                            foreach (Payroll.Models.Payheads item in Model.Payheads)
+                            {
+                                <option value="@item.PayHeadID">@item.PayHeadName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2 ">
+                <label>DR/CR</label>
+                <div>
+                    <select id="ddlPostingType" class='form-control'>
+                        <option value="Debit">Dr.</option>
+                        <option value="Credit">Cr.</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-top: 16px;">
+                <button type="button" class="btn btn-success btn-radius" onclick="SaveSetting()">Add to Row</button>
+                <button type="button" class="btn btn-danger btn-radius" onclick="ClearData()">Clear</button>
+                <select name="ctl00$ContentPlaceHolder1$drdExport" id="ddlExport" class="btn btn-primary btn-radius">
+                    <option selected="selected" value="0">Export to</option>
+                    <option value="1">PDF</option>
+                    <option value="2">XLS</option>
+                    <option value="3">RTF</option>
+                    <option value="4">CSV</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div style="clear: both;"><br /></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="GridViewArea relative">
+                @{
+                    Html.RenderAction("PartialPayrollSettingsGrid", "PayrollSettings");
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<input type="hidden" value="@Url.Action("Export", "PayrollSettings", new { type = "_type_" })" id="hdnExportLink" />

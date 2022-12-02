@@ -1,0 +1,67 @@
+﻿
+    .ui-datepicker-title {
+        color: #fff;
+    }
+
+    .spacer5 {
+        padding: 5px;
+    }
+
+    .optionTable {
+        width: 100%;
+        background: #fff;
+    }
+
+        .optionTable > tbody > tr > td {
+            padding: 8px 10px;
+        }
+
+    .optionAdd {
+        font-size: 20px;
+        color: #3fb148;
+        cursor: pointer;
+    }
+
+    .optionMinus {
+        font-size: 20px;
+        color: #F14C30;
+        cursor: pointer;
+    }
+
+    .optionTable > tbody > tr:last-child .optionAdd {
+        display: none;
+    }
+
+    .optionTable > tbody > tr:not(:last-child) .optionAdd {
+        display: block;
+    }
+
+    .optionTable > tbody > tr:not(:last-child) .optionMinus {
+        display: none;
+    }
+
+    .optionTable > tbody > tr:last-child .optionMinus {
+        display: block;
+    }
+
+    .optionTable > tbody > tr:first-child .optionAdd {
+        display: block;
+    }
+    .assessmentTbl {
+        width: 100%;
+        border: 1px solid #d2d2d2;
+    }
+    .assessmentTbl > tbody > tr > td, .assessmentTbl > thead > tr > th{
+        padding:8px 10px;
+    } 
+    .assessmentTbl > thead > tr > th {
+        background: #333;
+        color: #fff;
+    }
+    .assessmentTbl > tbody > tr > td {
+        border-bottom:1px solid #ccc;
+    }
+    .assessmentTbl > tbody > tr:nth-child(even) > td {
+        background: #f9f9f9;
+    }
+

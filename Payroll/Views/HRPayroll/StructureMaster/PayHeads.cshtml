@@ -1,0 +1,464 @@
+﻿@model Payroll.Models.payrollStructureEngine
+
+<style>
+    .focusrow {
+        background-color: #3CA5DF;
+        color: #ffffff;
+    }
+
+        .focusrow > td input {
+            color: white;
+        }
+
+    .HeaderStyle {
+        background-color: #180771d9;
+        color: #f5f5f5;
+        height: 23px;
+        font-size: 15px;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -4px;
+        top: 35px;
+    }
+
+    .pdtop35 {
+        padding-top: 35px;
+        123;
+    }
+    .validclass.b {
+        position: absolute;
+        right: -4px;
+        top: 26px;
+    }
+</style>
+<script>
+    function CallFormulaPopup() {
+        var strType = document.getElementById("ddlCalculationType").value;
+
+        if (strType == "CL") {
+            var route = '@Url.Action("FormulaBuilder", "StructureMaster")';
+            $('#FormulaModel').modal('show');
+            $('#partial').load(route);
+
+            if (document.getElementById('txtFormula') != null) {
+                var Formula = $("#txtFormula").val();
+                document.getElementById('hdnFormulaField').value = Formula;
+            }
+            else {
+                document.getElementById('hdnFormulaField').value = "";
+            }
+        }
+    }
+    
+    //function blockChar(e) {
+    //    var k;
+    //    document.all ? k = e.keyCode : k = e.which;
+    //    if ((k >= 48 && k <= 57) || k == 46 || k == 40 || k == 41 || k == 42 || k == 43 || k == 45 || k == 47) {
+    //        // Calculate Formula
+    //        var _Formula = $("#hdnFormulaField").val();
+    //        _Formula = _Formula + e.key;
+    //        document.getElementById('hdnFormulaField').value = _Formula;
+    //    }
+    //    return ((k >= 48 && k <= 57) || k == 46 || k == 40 || k == 41 || k == 42 || k == 43 || k == 45 || k == 47);
+    //}
+
+    function isValidKey(e) {
+        var charCode = e.keyCode || e.which;
+        if (charCode == 8 || charCode == 46)
+            return false;
+
+        return true;
+    }
+
+    function SaveHeads() {
+        var IsValid = true;
+        var PayHeadID = document.getElementById('hdnPayHeadID').value;
+        var PayHeadName = $("#txtPayHeadName").val();
+        var PayHeadShortName = $("#txtPayHeadCode").val();
+        var PayType = $("#ddlPayHeadType").val();
+        var DataType = $("#ddlDataType").val();
+        var CalculationType = $("#ddlCalculationType").val();
+        var RoundOffType = $("#ddlRoundOffType").val();
+        var IsProrataCalculated = $("#chk_pro_rata_calc").is(':checked')
+
+        var Comments = $('#txtComments').val();
+
+        var CalculateFormula = "";
+        if (document.getElementById('txtFormula') != null) CalculateFormula = $("#txtFormula").val();
+
+        var obj = {};
+        obj.PayHeadID = PayHeadID;
+        obj.PayHeadName = PayHeadName;
+        obj.PayHeadShortName = PayHeadShortName;
+        obj.PayType = PayType;
+        obj.DataType = DataType;
+        obj.CalculationType = CalculationType;
+        obj.RoundOffType = RoundOffType;
+        obj.IsProrataCalculated = IsProrataCalculated;
+        obj.Cal_CalculateFormula = CalculateFormula;
+        obj.StructureID = "@ViewData["StructureID"]";
+        obj.Comments = Comments;
+
+        if (PayHeadName.trim() == '') {
+            $('#MandatoryPayHeadName').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryPayHeadName').attr('style', 'display:none');
+        }
+
+        if (PayHeadShortName.trim() == '') {
+            $('#MandatoryPayHeadCode').attr('style', 'display:block');
+            IsValid = false;
+        }
+        else {
+            $('#MandatoryPayHeadCode').attr('style', 'display:none');
+        }
+
+        if (IsValid == true) {
+            $.ajax({
+                type: "POST",
+                url: "/StructureMaster/PayHeadsSubmit",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.ResponseCode == "Success") {
+                        Clear();
+                        $("#txtPayHeadName").focus();
+                        document.getElementById('hdnPayHeadID').value = "";
+                        gvPayHead.Refresh();
+                        gvPayHead.Refresh();
+                    }
+                    else {
+                        jAlert(response.ResponseMessage);
+                    }
+                },
+                error: function (response) {
+                    jAlert("Please try again later");
+                }
+            });
+        }
+    }
+
+    function CancelHeads() {
+        Clear();
+
+        $('#MandatoryPayHeadName').attr('style', 'display:none');
+        $('#MandatoryPayHeadCode').attr('style', 'display:none');
+        $("#txtPayHeadName").focus();
+    }
+
+    function Clear() {
+        document.getElementById('txtPayHeadName').value = "";
+        document.getElementById('txtPayHeadCode').value = "";
+        document.getElementById('ddlPayHeadType').value = "AL";
+        document.getElementById('ddlDataType').value = "NM";
+        document.getElementById('ddlCalculationType').value = "EO";
+        document.getElementById('ddlRoundOffType').value = "NR";
+        document.getElementById('hdnFormulaField').value = "";
+        $('#AttachmentPayHead').val('');
+       // $('#hdnEditid').val("");
+        document.getElementById('hdnPayHeadID').value = "";
+        document.getElementById('txtComments').value = "";
+        $("#chk_pro_rata_calc").prop('checked', false);
+        if (document.getElementById('txtFormula') != null) document.getElementById('txtFormula').value = "";
+        document.getElementById("btnSaveHeads").value = "Save & New";
+    }
+
+    function OnClickDeleteForm(id) {
+        var url = '/StructureMaster/DeletePayHead/';
+
+        jConfirm("Confirm Delete?", "Confirmation Dialog", function (ret) {
+            if (ret == true) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify({ 'ActionType': 'DeletePayHead', 'id': id }),
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.ResponseCode == "Success") {
+                            gvPayHead.Refresh();
+                            jAlert("Successfully Deleted");
+                        }
+                        else {
+                            jAlert(response.ResponseMessage);
+                        }
+                    },
+                    error: function (response) {
+                        jAlert("Please try again later");
+                    }
+                });
+            }
+        });
+    }
+
+    function OnClickCopyForm(id) {
+        var url = '/StructureMaster/EditPayHead/';
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify({ 'ActionType': 'EditPayHead', 'id': id }),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+
+                    document.getElementById('ddlPayHeadType').value = response.PayType;
+                    document.getElementById('ddlDataType').value = response.DataType;
+                    $("#chk_pro_rata_calc").prop('checked', response.IsProrataCalculated);
+                    document.getElementById('ddlCalculationType').value = response.CalculationType;
+                    document.getElementById('ddlRoundOffType').value = response.RoundOffType;
+                    document.getElementById('hdnFormulaField').value = response.Cal_DisplayFormula;
+
+                    document.getElementById('txtComments').value = response.Comments;
+
+                    var route = '@Url.Action("FormulaBuilder", "StructureMaster")';
+                    $('#partial').load(route);
+                }
+                else {
+                    jAlert("Please try again later");
+                    Clear();
+                }
+            }
+        });
+    }
+
+
+    function OnClickEditForm(id) {
+        var url = '/StructureMaster/EditPayHead/';
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify({ 'ActionType': 'EditPayHead', 'id': id }),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.ResponseCode == "Success") {
+                    document.getElementById('txtPayHeadName').value = response.PayHeadName;
+                    document.getElementById('txtPayHeadCode').value = response.PayHeadShortName;
+                    document.getElementById('ddlPayHeadType').value = response.PayType;
+                    document.getElementById('ddlDataType').value = response.DataType;
+                    $("#chk_pro_rata_calc").prop('checked', response.IsProrataCalculated);
+                    document.getElementById('ddlCalculationType').value = response.CalculationType;
+                    document.getElementById('ddlRoundOffType').value = response.RoundOffType;
+                    document.getElementById('hdnFormulaField').value = response.Cal_DisplayFormula;
+                    document.getElementById('hdnPayHeadID').value = id;
+                    $('#hdnEditid').val(id);
+                    document.getElementById('txtComments').value = response.Comments;
+                    document.getElementById("btnSaveHeads").value = "Update";
+
+                    var route = '@Url.Action("FormulaBuilder", "StructureMaster")';
+                    $('#partial').load(route);
+                }
+                else {
+                    Clear();
+                }
+            }
+        });
+    }
+
+    function DownloadFormatPayHead() {
+        window.location.href = "@Url.RouteUrl(new { Controller = "StructureMaster", Action = "DownloadFormatPayHead" })";
+    }
+
+    function ImportPayHead() {
+        var PayHeadID = $('#hdnEditid').val();//document.getElementById('hdnPayHeadID').value;
+        var AttachmentPayHead = $('#AttachmentPayHead').val();
+        if (AttachmentPayHead == "") {
+            jAlert("Please select file for Import.");
+        }
+        else {
+
+            var EmpMap = $('#idEmpMap').val();
+            if (window.FormData !== undefined) {
+                var fileUpload = $("#AttachmentPayHead").get(0);
+                var files = fileUpload.files;
+                var fileData = new FormData();
+
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                fileData.append('StructureID', "@ViewData["StructureID"]");
+                fileData.append('PayHeadID', PayHeadID);
+
+                $.ajax({
+                    type: "POST",
+                    url: $('#hdnAttachmentAddUpdate').val(),
+                    contentType: false,
+                    processData: false,
+                    data: fileData,
+                    success: function (response) {
+                        //debugger;
+                        if (response) {
+                            Clear();
+                            $("#txtPayHeadName").focus();
+                            gvPayHead.Refresh();
+                            gvPayHead.Refresh();
+
+                            jConfirm('Pay Head Import Successfully. Want to view log?', 'Confirmation Dialog', function (r) {
+                                if (r == true) {
+                                    ImportLogView();
+                                }
+                            });
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+
+    function ImportLogView() {
+        $('#ImportLogDetails').modal('show');
+        gvPayHeadLog.Refresh();
+        gvPayHeadLog.Refresh();
+    }
+    $(document).ready(function () {
+        gvPayHead.Refresh();
+        gvPayHead.Refresh();
+
+    });
+
+</script>
+
+<div class="row">
+    <input type="hidden" value="@Url.Action("AttachmentPayHeadAddUpdate", "StructureMaster")" id="hdnAttachmentAddUpdate" />
+    <input type="hidden" id="hdnEditid" value="" />
+
+    <div class="col-md-2">
+        <label>Pay Head</label>
+        <div>
+            @Html.TextBoxFor(model => model.PayHeadName, new { Id = "txtPayHeadName" })
+            <span id="MandatoryPayHeadName" style="display: none" class="validclass b">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <label>Short Name</label>
+        <div>
+
+            @Html.TextBoxFor(model => model.PayHeadShortName, new { Id = "txtPayHeadCode", style = "text-transform:uppercase", onkeypress = "return blockspclChar(event)" })
+            <span id="MandatoryPayHeadCode" style="display: none" class="validclass b">
+                <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <label>Pay Head Type</label>
+        <div>
+            @Html.DropDownListFor(m => m.PayType, Model.PayHeadTypeList, new { style = "width: 100%;", Id = "ddlPayHeadType" })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <label>Data Type</label>
+        <div>
+            @Html.DropDownListFor(m => m.DataType, Model.DataTypeList, new { style = "width: 100%;", Id = "ddlDataType" })
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <label>Calculation Type</label>
+        <div>
+            @Html.DropDownListFor(m => m.CalculationType, Model.CalculationTypeList, new { style = "width: 90%;", Id = "ddlCalculationType", onchange = "CallFormulaPopup()" })
+            <span id="spnCalculationType" onclick="CallFormulaPopup()" style="position:absolute">
+                <img src="~/assests/images/activity.png" />
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <label>Rounding Off</label>
+        <div>
+            @Html.DropDownListFor(m => m.RoundOffType, Model.RoundOffTypeList, new { style = "width: 100%;", Id = "ddlRoundOffType" })
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+
+    <div class="col-md-4">
+        <label>Comments</label>
+        <div>
+            @Html.TextAreaFor(model => model.Comments, new { Id = "txtComments", @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-md-2">
+
+        <div class="pdtop35">
+            @Html.CheckBoxFor(m => m.IsProrataCalculated, new { id = "chk_pro_rata_calc" })
+            <label>Pro-rata Calculation</label>
+        </div>
+    </div>
+    <div class="col-md-6" style="padding-top: 26px;">
+        <label></label>
+        <input id="btnSaveHeads" type="button" class="btn btn-primary" onclick="SaveHeads()" value="Save & New" />
+        <input id="btnCancel" type="button" class="btn btn-danger" onclick="CancelHeads()" value="Cancel" />
+        <button class="btn btn-info mTop22" type="button" id="btnDownloadFormat" onclick="DownloadFormatPayHead();">Download Format</button>
+    </div>
+    <div class="clear"></div>
+    <hr style="margin: 11px 0px 13px 0 !important;" />
+    <div class="clear"></div>
+    <div class="col-md-3">
+        
+        <input type="file" class="fileInput" id="AttachmentPayHead" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="width:100%" />
+    </div>
+    <div class="col-md-3">
+       
+        <button class="btn btn-success mTop22" id="btnImport" onclick="ImportPayHead();">Import</button>
+        <button class="btn btn-warning mTop22" id="btnLogView" onclick="ImportLogView();">View Log</button>
+    </div>
+    <div id="DetailsTable">
+        @{
+            Html.RenderAction("PartialPayHeadGrid", "StructureMaster");
+        }
+    </div>
+</div>
+<div class="modal fade" id="FormulaModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*@{
+                    Html.RenderAction("FormulaBuilder", "StructureMaster");
+                }*@
+            <div id="partial"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ImportLogDetails" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span id="lblModelHeader">Log Details</span></h4>
+            </div>
+            <div class="modal-body">
+                <div id="">
+                    @{
+                        Html.RenderAction("PayHeadImportLogGrid", "StructureMaster");
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    @Html.HiddenFor(model => model.Cal_CalculateFormula, new { Id = "hdnFormulaField" })
+    @Html.Hidden("hdnPayHeadID")
+</div>
+

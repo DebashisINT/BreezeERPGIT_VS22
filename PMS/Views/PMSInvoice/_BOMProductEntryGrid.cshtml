@@ -1,0 +1,613 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridBOMProductEntryList";
+
+    settings.CallbackRouteValues = new { Action = "GetBOMProductEntryList", Controller = "PMSInvoice" };
+
+    settings.KeyFieldName = "SlNO";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "PMSInvoice", Action = "BatchEditingUpdateBOMProductEntry" };
+    //settings.ClientSideEvents.Init = "OnInit";
+    //settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    
+    settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 200;
+    settings.Height = System.Web.UI.WebControls.Unit.Pixel(500);
+    settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
+    //settings.SettingsEditing.BatchEditSettings.AllowEndEditOnValidationError = true;
+    ///settings.SettingsBehavior.ColumnResizeMode = DevExpress.Web.ColumnResizeMode.Control;
+    //settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    //settings.SettingsSearchPanel.Visible = true;
+   // settings.Settings.ShowFilterRow = false;
+    //settings.Settings.ShowGroupPanel = false;
+   // settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+   // settings.ClientSideEvents.BatchEditStartEditing = "BatchStartEditing";
+    //settings.ClientSideEvents.CustomButtonClick = "grid_CustomButtonClick";
+
+    settings.SettingsBehavior.AllowSort = false;
+    //settings.Settings.SortOrder = DevExpress.Data.ColumnSortOrder.None;
+    
+    settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
+    settings.CommandColumn.Visible = false;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Cell;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+
+    //settings.Settings.ShowFooter = true;
+    //settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
+
+
+    //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    //settings.SettingsPager.PageSizeItemSettings.Visible = false;
+    //settings.SettingsPager.PageSize = 10;
+    //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    //settings.Settings.ShowFilterRowMenu = false;
+
+    settings.SettingsEditing.NewItemRowPosition = DevExpress.Web.GridViewNewItemRowPosition.Bottom;
+    settings.ClientSideEvents.RowClick = "gridclick";
+    settings.ClientSideEvents.BatchEditStartEditing = "gridclick";
+    //settings.ClientSideEvents.BatchEditTemplateCellFocused = "FocusGrid";
+    //settings.ClientSideEvents.FocusedRowChanged = "FocusGrid";
+
+    //var del1 = new GridViewCommandColumnCustomButton();
+    //del1.Text = " ";
+    //del1.Image.Url = "/assests/images/crs.png";
+    //del1.ID = "DeleteProduct";
+
+    //settings.CommandColumn.CustomButtons.Add(del1);
+    //settings.CommandColumn.Caption = "DeleteProduct";
+    //settings.CommandColumn.Visible = true;
+    ////settings.CommandColumn.VisibleIndex = 0;
+    //settings.CommandColumn.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+    //settings.CommandColumn.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //settings.CommandColumn.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "";
+        x.Caption = " ";
+        //x.VisibleIndex = 2;
+        // x.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+        x.ReadOnly = true;
+    });
+    
+
+    //var del = new GridViewCommandColumnCustomButton();
+    //del.Text = " ";
+    //del.Image.Url = "/assests/images/crs.png";
+
+    //del.ID = "Delete";
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.Caption = "#";
+    //    //x.VisibleIndex = 1;
+    //    // x.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(7);
+    //    x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+    //    x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+
+    //    //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.ButtonEdit;
+    //    //DevExpress.Web.ButtonEditProperties ButtonEditProperties = x.PropertiesEdit as DevExpress.Web.ButtonEditProperties;
+
+    //    x.CommandColumn.CustomButtons.Add(del);
+    //    //ButtonEditProperties.Buttons.Add("...");
+    //    //ButtonEditProperties.ClientSideEvents.ButtonClick = "OpenProductList";
+
+    //    //ButtonEditProperties.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    //});
+
+    settings.HtmlDataCellPrepared += (s, e) =>
+    {
+
+        if (e.DataColumn.Caption == " ")
+        {
+            var buttonHtml = "";
+            buttonHtml = string.Format(" <a class='example-image-link' style='cursor: pointer;' onclick='grid_CustomButtonClick()' data-lightbox='example-1'><img src='/assests/images/crs.png'></a>");
+            e.Cell.ID = "DeleteProduct";
+            
+            e.Cell.Text = buttonHtml;
+        }
+    };
+    
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "SlNO";
+        x.Caption = "Sl#";
+        //x.VisibleIndex = 2;
+       // x.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(7);
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        //x.FixedStyle = DevExpress.Web.GridViewColumnFixedStyle.Left;
+
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.ReadOnly = true;
+    });
+
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductName";
+        //x.Caption = "Product Name";
+        ////x.VisibleIndex = 2;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.ButtonEdit;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+
+        //x.Caption = "Product Name";
+        ////x.VisibleIndex = 2;
+        ////x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //x.SetDataItemTemplateContent(c =>
+        //{
+        //    ViewContext.Writer.Write(
+        //        "<input type='text' value='" + Convert.ToString(DataBinder.Eval(c.DataItem, "ProductName")) + "' id='" + Convert.ToString(DataBinder.Eval(c.DataItem, "SlNO")) + "_txtbox'>" +
+        //        "<a style='cursor:pointer' onclick=\"OpenProductList('" + Convert.ToString(DataBinder.Eval(c.DataItem, "SlNO")) + "')\"><img src='/assests/images/edit.png' title='Edit' class='mright8' /> </a>"
+
+        //        );
+        //});
+
+        x.Caption = "Product";
+        //x.VisibleIndex = 3;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.ButtonEdit;
+        DevExpress.Web.ButtonEditProperties ButtonEditProperties = x.PropertiesEdit as DevExpress.Web.ButtonEditProperties;
+
+        ButtonEditProperties.Buttons.Add("...");
+        ButtonEditProperties.ClientSideEvents.ButtonClick = "OpenProductList";
+        ButtonEditProperties.ClientSideEvents.KeyDown = "ProductKeyDown";
+       x.ReadOnly = true;
+        //ButtonEditProperties.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    });
+
+
+
+    settings.Columns.Add(x =>
+    {
+        //x.FieldName = "ProductDescription";
+        ////x.Caption = "Description";
+        //////x.VisibleIndex = 3;
+        ////x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+        ////x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        ////x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+
+        //x.Caption = "Description";
+        //x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        //x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        ////x.VisibleIndex = 4;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(7);
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+
+
+        x.FieldName = "ProductDescription";
+        x.Caption = "Description";
+        x.ReadOnly = true;
+        //x.VisibleIndex = 7;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(31);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+    });
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.FieldName = "StockQty";
+    //    x.Caption = "Stock in Hand";
+    //    //x.VisibleIndex = 5;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+    //    x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+    //    x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+
+    //});
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.FieldName = "StockUOM";
+    //    //x.Caption = "UOM(Stk)";
+    //    ////x.VisibleIndex = 5;
+    //    //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    //    //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+    //    //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+
+    //    x.Caption = "UOM(Stk)";
+    //    //x.VisibleIndex = 6;
+    //    //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+    //    x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //    x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    //    x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+    //    x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+    //    //x.SetDataItemTemplateContent(c =>
+    //    //{
+    //    //    ViewContext.Writer.Write(
+    //    //        "<input type='text' disabled value='" + Convert.ToString(DataBinder.Eval(c.DataItem, "StockUOM")) + "' id='" + Convert.ToString(DataBinder.Eval(c.DataItem, "SlNO")) + "_txtStockUOM'>"
+
+
+    //    //        );
+    //    //});
+
+    //});
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductQty";
+        x.Caption = "Qty";
+        //x.VisibleIndex = 7;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
+        //DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.EditCellStyle.HorizontalAlign =System.Web.UI.WebControls.HorizontalAlign.Right;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        txtEditProperties.ClientSideEvents.LostFocus = "function(s, e) { BOMGridSetAmountQty(s,e); }";
+        //x.Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        //x.CellStyle.CssClass = "Right";
+        //x.EditCellStyle.CssClass = "Right";
+        //x.EditCellStyle.
+        //var txtProperties = settings.Properties as DevExpress.Web.TextBoxProperties;
+        //txtProperties.Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductUOM";
+        x.Caption = "UOM";
+        //x.VisibleIndex = 8;
+        x.ReadOnly = true;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Warehouse";
+        x.Caption = "Warehouse";
+        x.ReadOnly = true;
+        //x.VisibleIndex = 9;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+       // x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.ButtonEdit;
+        DevExpress.Web.ButtonEditProperties ButtonEditProperties = x.PropertiesEdit as DevExpress.Web.ButtonEditProperties;
+        ButtonEditProperties.Buttons.Add("...");
+        ButtonEditProperties.ClientSideEvents.ButtonClick = "OpenWarehouseList";
+        ButtonEditProperties.ClientSideEvents.KeyDown = "WarehouseKeyDown";
+        
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Price";
+        //x.Caption = "Price";
+        ////x.VisibleIndex = 9;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+
+        x.Caption = "Price";
+        //x.VisibleIndex = 10;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(17);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        txtEditProperties.ClientSideEvents.LostFocus = "function(s, e) { BOMGridSetAmount(s,e); }";
+        txtEditProperties.ClientSideEvents.KeyDown = "function(s, e) { PriceKeyDown(s,e); }";
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<00..99>";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.EditCellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        //x.SetDataItemTemplateContent(c =>
+        //{
+        //    ViewContext.Writer.Write(
+        //        "<input type='text' value='" + Convert.ToString(DataBinder.Eval(c.DataItem, "StockUOM")) + "' id='" + Convert.ToString(DataBinder.Eval(c.DataItem, "SlNO")) + "_txtPrice'>"
+
+
+         //       );
+       // });
+
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Amount";
+        x.Caption = "Amount";
+        //x.VisibleIndex = 11;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(17);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<00..99>";
+
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetTotalAmount";
+        txtEditProperties.ClientSideEvents.GotFocus = "BOMGridSetAmount";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.EditCellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        //txtEditProperties.ClientSideEvents.GotFocus = "BOMGridSetTotalAmount";
+        x.ReadOnly = true;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BOMNo";
+        //x.Caption = "BOM No.";
+        ////x.VisibleIndex = 11;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+
+
+        x.Caption = "Charges";
+        //x.VisibleIndex = 12;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.ButtonEdit;
+        //x.Properties.Buttons.Add();
+        //var a = x.Properties as DevExpress.Web.ButtonEditProperties;
+        //a.Properties.Buttons.Add();
+
+        DevExpress.Web.ButtonEditProperties ButtonEditProperties = x.PropertiesEdit as DevExpress.Web.ButtonEditProperties;
+
+        ButtonEditProperties.Buttons.Add("...");
+        ButtonEditProperties.ClientSideEvents.ButtonClick = "OpenBOMList";
+        ButtonEditProperties.ClientSideEvents.KeyDown = "BOMKeyDown";
+        x.ReadOnly = true;
+
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "RevNo";
+        x.Caption = "Net Amount";
+        //x.VisibleIndex = 13;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.ReadOnly = true;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "RevDate";
+        x.Caption = "Rev Date";
+        //x.CellStyle.CssClass = "hide";
+        //x.HeaderStyle.CssClass = "hide";
+        //x.VisibleIndex = 14;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.DateEdit;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.PropertiesEdit.DisplayFormatString = "dd-MM-yyyy";
+        (x.PropertiesEdit as DevExpress.Web.DateEditProperties).EditFormatString = "dd-MM-yyyy";
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.ReadOnly = true;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Remarks";
+        x.Caption = "Remarks";
+        //x.VisibleIndex = 15;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        //(x.PropertiesEdit as DevExpress.Web.TextBoxProperties).ClientSideEvents.LostFocus = "RemarksLostFocus";
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).ClientSideEvents.KeyDown = "AddRowKeyDown";
+
+    });
+
+    settings.SettingsEditing.ShowModelErrorsForEditors = true;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    //settings.Columns.Add(x =>
+    //{
+    //    x.Caption = "Actions";
+    //    //x.VisibleIndex = 4;
+    //    //x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    //    x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //    x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //    x.SetDataItemTemplateContent(c =>
+    //    {
+    //        ViewContext.Writer.Write(
+    //            "<a></a>"
+    //            ////"<a href='javascript:void(0);' onclick=\"OpenDashboardSetting('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DashboardSettingID")) + "')\" class='pad' title='Edit'><img src='/assests/images/info.png' /></i></a>" +
+    //            ////"<a style='cursor:pointer' onclick=\"OpenDashboardSetting('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DashboardSettingID")) + "')\"><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a>"+
+    //            ////"<a style='cursor:pointer; margin-left: 12px;' onclick=\"RemoveDashboardSetting('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DashboardSettingID")) + "')\"><i class='fa fa-trash' aria-hidden='true'></i> </a>"
+
+    //            //"<a style='cursor:pointer' onclick=\"OpenDashboardSetting('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DashboardSettingID")) + "')\"><img src='/assests/images/edit.png' title='Edit' class='mright8' /> </a>" +
+    //            //"<a style='cursor:pointer; margin-left: 12px;' onclick=\"RemoveDashboardSetting('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DashboardSettingID")) + "')\"> <img src='/assests/images/delete.png' title='Delete' class='mright8' /> </a>"
+    //            );
+    //    });
+
+
+    //});
+
+    //settings.Columns.Add(x =>
+    //{
+    //    x.FieldName = "OLDAmount";
+    //    x.Caption = "Add New";
+    //    //x.VisibleIndex = 16;
+    //    x.Width = System.Web.UI.WebControls.Unit.Percentage(13);
+    //    x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //    x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    //    x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+    //    x.SetDataItemTemplateContent(c =>
+    //    {
+    //        ViewContext.Writer.Write(
+    //            "<a style='cursor:pointer; margin-left: 12px;' onclick=\"addNewRowTogrid()\"><img src='/assests/images/Add.png' /></a>"
+
+    //            );
+    //    });
+
+
+    //});
+
+    //settings.InitNewRow = (s, e) =>
+    //{
+    //    var grid = (s as MVCxGridView);
+    //    for (int i = 0; i < grid.Columns.Count; i++)
+    //    {
+    //        var column = grid.Columns[i] as GridViewDataColumn;
+    //        if (column.FieldName == "SlNO")
+    //        {
+    //            column.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+    //            column.SortIndex = i;
+    //        }
+    //    }
+    //};
+
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductId";
+        x.Caption = "";
+        //x.VisibleIndex = 0;
+        //x.ClientVisiable = false;
+
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductsWarehouseID";
+        x.Caption = "";
+        //x.VisibleIndex = -1;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
+        //x.ClientVisiable = false;
+
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "UpdateEdit";
+        x.Caption = "";
+        //x.VisibleIndex = -1;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
+        //x.ClientVisiable = false;
+
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+    });
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Tag_Details_ID";
+        x.Caption = "";
+        //x.VisibleIndex = -1;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
+        //x.ClientVisiable = false;
+
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Tag_Production_ID";
+        x.Caption = "";
+        //x.VisibleIndex = -1;
+        //x.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
+        //x.ClientVisiable = false;
+
+        //x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+    });
+
+    settings.CustomJSProperties = (s, e) =>
+    {
+        if (ViewData["Success"] != null)
+        {
+            if (Convert.ToBoolean(ViewData["Success"]))
+            {
+                e.Properties["cpBatchUpdate"] = "1";
+
+            }
+
+        }
+        else
+        {
+            e.Properties["cpBatchUpdate"] = "0";
+        }
+        e.Properties["cpProductionID"] = Convert.ToInt32(ViewData["ProductionID"]);
+        e.Properties["cpDetailsID"] = Convert.ToInt32(ViewData["DetailsID"]);
+        e.Properties["cpBOMNo"] = Convert.ToString(ViewData["BOMNo"]);
+        e.Properties["cpMessage"] = Convert.ToString(ViewData["Message"]);
+    };
+
+
+
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+
+
+    settings.ClientSideEvents.EndCallback = "OnEndCallback";
+    //settings.ClientSideEvents.EndCallback = "OnEndCallback";
+
+    //settings.ClientSideEvents.BatchEditConfirmShowing = "function(s, e) { if(firsttime>0){ e.cancel = false;} else{ e.cancel = false; firsttime++;}}";
+
+}).Bind(Model).GetHtml()
+
+
+
+<input type="hidden" value="@ViewData["BOMEntryProductsTotalAm"]" id="hdnBOMEntryProductsTotalAm" />

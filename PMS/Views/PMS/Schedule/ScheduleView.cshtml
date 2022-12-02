@@ -1,0 +1,2204 @@
+﻿@model PMS.Models.WBSInput
+@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@{
+    ViewBag.Title = "Schedule (WBS)";
+}
+
+@{
+    List<PMS.Models.Shedules> sc = new List<PMS.Models.Shedules>();
+    var grid = new WebGrid(sc);
+}
+
+<script type="text/javascript">
+    var i = 0;
+    var Slno = 1;
+    function ProjectStartCallback(s, e) {
+        //debugger;
+        e.customArgs["Customer_ID"] = $("#CustomerId").val();
+        e.customArgs["Project_ID"] = '@ViewBag.ProjectID';
+        // e.customArgs["Proj_Code"] = ProjectGridLookup.GetSelectedKeyFieldValues();
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Branchs"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Branchs"] = $("#ddlBankBranch").val();
+        }
+    }
+    function ProjectLookupValChange() {
+        ProjectGridLookup.GetGridView().Refresh();
+        //  ProjectGridLookup.GetGridView().Refresh();
+    }
+
+    function OnStartCallback(s, e) {
+
+    }
+
+    function OnStartCallback(s, e) {
+    }
+
+
+    function EffortLostFocus(s, e) {
+
+
+        var StartDate = dtStartDate.GetDate();
+        var EndDate = dtEndDate.GetDate();
+
+
+        var effort = s.GetValue();
+        var end;
+        var adddays = 0;
+        if (StartDate != null) {
+            if ($("#dllWorkUnit").val() == "H") {
+
+                adddays = parseInt(effort / 24);
+                end = StartDate.addDays(adddays);
+
+            }
+            else if ($("#dllWorkUnit").val() == "D") {
+
+                adddays = parseInt(effort) ;
+                if (effort > 0) {
+                    adddays = parseFloat(effort) - 1;
+                }
+                end = StartDate.addDays(adddays);
+
+            }
+
+            else if ($("#dllWorkUnit").val() == "W") {
+
+                adddays = parseInt(effort * 7);
+
+                end = StartDate.addDays(adddays);
+            }
+            else if ($("#dllWorkUnit").val() == "M") {
+                var CurrentDate = StartDate;
+                CurrentDate.setMonth(parseInt(CurrentDate.getMonth()) + parseInt(effort));
+                end = CurrentDate;
+            }
+            else if ($("#dllWorkUnit").val() == "Y") {
+                var CurrentDate = StartDate;
+                CurrentDate.setYear(parseInt(CurrentDate.getFullYear()) + parseInt(effort));
+                end = CurrentDate;
+            }
+
+            dtEndDate.SetDate(end);
+
+        }
+
+    }
+
+
+    var addnew = "1";
+    var DeleteFlag = "0";
+    function onAddtoGridClick() {
+
+        var obj = {};
+        obj.Delete = "";
+        if (Isdelete == 1) {
+            obj.Slno = EditId;
+        }
+        else {
+            obj.Slno = Slno;
+        }
+        obj.ActivityName = txtActivityNameHeader.GetText();
+        obj.Effort = txtEffortheader.GetText();
+        obj.StartDate = dtStartDate.GetDate();
+        obj.EndDate = dtEndDate.GetDate();
+        obj.Predecessor = txtPredecessor.GetText();
+        obj.Duration = txtDurationHeader.GetText();
+        obj.Resources = btnResources.GetText();
+        obj.Description = txtRemarksReader.GetText();
+        obj.AddNew = "1";
+        obj.UpdateEdit = "";
+        obj.ParentId = txtPredecessor.GetText();
+        if (EditId == "0") {
+            Slno = parseInt(Slno) + 1;
+        }
+        addnew = "1";
+
+
+
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("RenderTreeGrid", "Schedule")",
+            data: JSON.stringify(obj),
+            async: true,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                EditId = "0";
+                DeleteFlag = "0";
+                gridScheduleEntryList.PerformCallback();
+
+                txtActivityNameHeader.SetText("");
+                txtEffortheader.SetValue("0");
+                dtStartDate.SetDate(StartDate_dts.GetDate());
+                dtEndDate.SetDate(EndDate_dts.GetDate());
+                txtPredecessor.SetText("0");
+                txtDurationHeader.SetValue(0);
+                btnResources.SetText("");
+                txtRemarksReader.SetText("");
+
+                // gridScheduleEntryList.ExpandNode(0)
+            },
+            error: function (response) {
+                EditId = "0";
+                gridScheduleEntryList.PerformCallback();
+
+
+                txtActivityNameHeader.SetText("");
+                txtEffortheader.SetValue("0");
+                dtStartDate.SetDate(StartDate_dts.GetDate());
+                dtEndDate.SetDate(EndDate_dts.GetDate());
+                txtPredecessor.SetText("0");
+                txtDurationHeader.SetValue(0);
+                btnResources.SetText("");
+                txtRemarksReader.SetText("");
+
+                // gridScheduleEntryList.ExpandNode(0)
+            }
+        });
+    }
+
+
+    var Isdelete = "0";
+    function grid_CustomButtonClick(id) {
+        var noofvisiblerows = gridScheduleEntryList.rowCount;
+        var obj = {};
+        obj.Slno = id;
+        if (noofvisiblerows != 1) {
+
+
+            $.ajax({
+                type: "POST",
+                //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+                url: "@Url.Action("DeletetreeGrid", "Schedule")",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    jAlert(response, 'Alert', function () {
+
+                        gridScheduleEntryList.PerformCallback();
+                    })
+                    // gridScheduleEntryList.ExpandNode(0)
+                },
+                error: function (response) {
+                    jAlert(response, 'Alert', function () {
+                        gridScheduleEntryList.PerformCallback();
+                    })
+                }
+            });
+
+            Isdelete = 1;
+
+        }
+    }
+
+    var EditId = 0;
+    function grid_EditButtonClick(id) {
+        var noofvisiblerows = gridScheduleEntryList.rowCount;
+        var obj = {};
+        EditId = id;
+        obj.Slno = id;
+        if (noofvisiblerows != 1) {
+
+
+            $.ajax({
+                type: "POST",
+                //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+                url: "@Url.Action("EdittreeGrid", "Schedule")",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+
+
+                    if (response) {
+
+                        if (response != "Parent node can not be edited.") {
+                            Isdelete = 1;
+                            var obj = response[0];
+                            txtActivityNameHeader.SetText(obj.ActivityName);
+                            txtEffortheader.SetText(obj.Effort);
+                            dtStartDate.SetDate(new Date(obj.StartDate.match(/\d+/)[0] * 1));
+                            dtEndDate.SetDate(new Date(obj.EndDate.match(/\d+/)[0] * 1));
+                            txtPredecessor.SetText(obj.Predecessor);
+                            txtDurationHeader.SetText(obj.Duration);
+                            txtRemarksReader.SetText(obj.Description);
+                            btnResources.SetText(obj.Resources);
+                        }
+                        else
+                        {
+                            jAlert(response, 'Alert');
+                        }
+                    }
+
+                    // gridScheduleEntryList.ExpandNode(0)
+                },
+                error: function (response) {
+                    jAlert(response, 'Alert', function () {
+                        gridScheduleEntryList.PerformCallback();
+                    })
+                }
+            });
+
+        }
+    }
+
+
+    var globalrowindex = 0;
+    function gridclick(s, e) {
+        globalrowindex = e.visibleIndex;
+
+
+
+    }
+
+    function SaveWBS() {
+        var valid = true;
+        if (txtName.GetText() == "" || txtName.GetText() == null) {
+            valid = false;
+            jAlert('Please enter a name to proceed.', 'Alert', function () {
+
+                txtName.SetFocus();
+                return;
+            })
+
+        }
+
+        if (valid) {
+
+
+            var obj = {};
+
+            if ($("#EditWBS_ID").val() != null && $("#EditWBS_ID").val() != "" && $("#EditWBS_ID").val() != "0") {
+                obj.Action = "Edit";
+            }
+            else {
+                obj.Action = "Add";
+            }
+
+            obj.WBS_ID = $("#EditWBS_ID").val();
+            obj.WBS_Code = txtCode.GetText();
+            obj.WBS_Name = txtName.GetText();
+            obj.WBS_HierarchyId = $("#ddlHierarchy").val();
+            obj.WBS_Branch = $("#ddlBankBranch").val();
+            obj.WBS_StartDate = StartDate_dts.GetDate().toISOString();
+            obj.WBS_EndTime = EndDate_dts.GetDate().toISOString();
+            obj.WBS_Duration = txtDuration.GetText();
+            obj.WBS_Description = txtDescription.GetText();
+            obj.WBS_Workunit = $("#dllWorkUnit").val();
+            obj.WBS_Effort = txtEffort.GetText();
+            obj.WBS_ProjectCode = ProjectGridLookup.GetSelectedKeyFieldValues()[0];
+            obj.Delete = Isdelete;
+            Isdelete = 0;
+
+
+
+            $.ajax({
+                type: "POST",
+                //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+                url: "@Url.Action("grid_Batchupdate", "Schedule")",
+                data: JSON.stringify(obj),
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response == 'Saved Successfully.') {
+                        jAlert('Saved Successfully', 'Alert', function () {
+                            window.location.href = "/Schedule/ScheduleList";
+                        });
+                    }
+                    else {
+                        jAlert(response, 'Alert');
+                    }
+                },
+                error: function (response) {
+                    jAlert('Try again later.', 'Alert');
+                }
+            });
+
+
+
+
+        }
+    }
+
+
+
+
+
+    $(document).ready(function () {
+
+        @*AddNewRowWithSl();
+
+        if ('@ViewBag.Hierarchy' == "1") {
+            $('#divHierarchy').removeClass('hidden');
+        }
+        else {
+            $('#divHierarchy').addClass('hidden');
+        }
+    });
+    var PrdSrlIndex = 1;
+    function AddNewRowWithSl() {
+
+        gridScheduleEntryList.batchEditApi.EndEdit();
+        gridScheduleEntryList.AddNewRow();
+        index = globalrowindex;
+
+        if (StartDate_dts.GetDate() != null) {
+            gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 4);
+            gridScheduleEntryList.GetEditor("StartDate").SetText(formatDate(StartDate_dts.GetDate()));
+            gridScheduleEntryList.GetEditor("EndDate").SetText(formatDate(StartDate_dts.GetDate()));
+        }
+
+
+        SuffleRows();
+        resuffleSerial();
+
+
+        setTimeout(function () {
+            gridScheduleEntryList.batchEditApi.EndEdit();
+            gridScheduleEntryList.batchEditApi.StartEdit(index, PrdSrlIndex);
+        }, 200);*@
+
+        WUChange();
+
+        if ('@ViewBag.Count' != '') {
+            Slno = parseFloat('@ViewBag.Count') +1
+        }
+    });
+
+    var rowtime = 0;
+    function resuffleSerial() {
+
+        var sl = 1;
+        //var visiablerow = gridScheduleEntryList.GetVisibleRowsOnPage();
+        //if (visiablerow > 0 && rowtime == 0) {
+        //    sl = visiablerow;
+        //    rowtime++;
+        //}
+
+        for (var i = 0; i < 500; i++) {
+            if (gridScheduleEntryList.GetRow(i)) {
+                gridScheduleEntryList.batchEditApi.StartEdit(i, PrdSrlIndex);
+                gridScheduleEntryList.GetEditor('Slno').SetText(sl);
+                gridScheduleEntryList.batchEditApi.StartEdit(i, PrdSrlIndex);
+                sl = sl + 1;
+            }
+        }
+
+
+        for (var i = -1; i > -500; i--) {
+            if (gridScheduleEntryList.GetRow(i)) {
+                gridScheduleEntryList.batchEditApi.StartEdit(i, PrdSrlIndex);
+                gridScheduleEntryList.GetEditor('Slno').SetText(sl);
+                gridScheduleEntryList.batchEditApi.StartEdit(i, PrdSrlIndex);
+                sl = sl + 1;
+            }
+        }
+    }
+
+
+    function DescriptionKeyDown(s, e) {
+        if (e.htmlEvent.keyCode == "13") {
+            AddNewRowWithSl();
+        }
+    }
+
+
+    function StringToDateObject(str) {
+        if (str != "__-__-____" && str != null && str != typeof (undefined)) {
+            var arrED = str.split('-');
+            return new Date(arrED[2], parseFloat(arrED[1]) - 1, arrED[0]);
+        }
+        else {
+            return null;
+        }
+    }
+
+
+    //function EffortLostFocus(s, e) {
+    //    gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+
+    //    var StartDates = gridScheduleEntryList.GetEditor("StartDate").GetValue();
+    //    var EndDates = gridScheduleEntryList.GetEditor("EndDate").GetValue();
+
+    //    var StartDates = gridScheduleEntryList.GetEditor("StartDate").GetText();
+    //    var EndDates = gridScheduleEntryList.GetEditor("EndDate").GetText();
+
+    //    var arrSD = StartDates.split('-');
+    //    var arrED = EndDates.split('-');
+
+    //    var StartDate = new Date(arrSD[2], parseFloat(arrSD[1]) - 1, arrSD[0]);
+
+    //    var EndDate = new Date(arrED[2], parseFloat(arrED[1]) - 1, arrED[0]);
+
+    //    var effort = s.GetValue();
+    //    var end;
+    //    var adddays = 0;
+    //    if (StartDate != null) {
+    //        if ($("#dllWorkUnit").val() == "H") {
+
+    //            adddays = parseInt(effort / 24);
+    //            end = StartDate.addDays(adddays);
+
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "D") {
+
+    //            adddays = parseInt(effort);
+    //            end = StartDate.addDays(adddays);
+
+    //        }
+
+    //        else if ($("#dllWorkUnit").val() == "W") {
+
+    //            adddays = parseInt(effort * 7);
+
+    //            end = StartDate.addDays(adddays);
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "M") {
+    //            var CurrentDate = StartDate;
+    //            CurrentDate.setMonth(parseInt(CurrentDate.getMonth()) + parseInt(effort));
+    //            end = CurrentDate;
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "Y") {
+    //            var CurrentDate = StartDate;
+    //            CurrentDate.setYear(parseInt(CurrentDate.getFullYear()) + parseInt(effort));
+    //            end = CurrentDate;
+    //        }
+    //        gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 5);
+    //        gridScheduleEntryList.GetEditor("EndDate").SetText(formatDate(end));
+
+    //    }
+    //    gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 4);
+
+
+    //    var StartDate = gridScheduleEntryList.GetEditor("StartDate").GetText();
+    //    var EndDate = gridScheduleEntryList.GetEditor("EndDate").GetText();
+
+
+    //    var diff = date_diff_indays(StringToDateObject(StartDate), StringToDateObject(EndDate));
+
+    //    if (StartDate != null && EndDate != null) {
+    //        var Actualdiff = gridScheduleEntryList.GetEditor("Effort").GetValue();
+    //        Diff = CalculateEffort(StringToDateObject(StartDate), StringToDateObject(EndDate));
+    //        DayDiff = date_diff_indays(StringToDateObject(StartDate), StringToDateObject(EndDate));
+    //        DayDiff = parseInt(DayDiff) + 1;
+    //        Diff = Diff + 1;
+
+    //        if ($("#dllWorkUnit").val() == "H") {
+
+    //            if (Actualdiff >= (parseFloat(Diff) - 1) * 24 && Actualdiff <= (parseFloat(Diff)) * 24) {
+    //                Diff = parseFloat(Actualdiff);
+    //            }
+    //            else {
+    //                Diff = parseFloat(Diff) * 24;
+    //            }
+
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "D") {
+
+    //            Diff = parseFloat(Diff);
+
+
+    //        }
+
+    //        else if ($("#dllWorkUnit").val() == "W") {
+
+    //            Diff = parseInt(parseFloat(Diff) / 7);
+
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "M") {
+    //            Diff = parseInt(parseFloat(Diff) / 30);
+
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "Y") {
+    //            Diff = parseInt(parseFloat(Diff) / 365);
+
+    //        }
+    //        gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 3);
+    //        gridScheduleEntryList.GetEditor("Effort").SetValue(Diff);
+    //        gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 7);
+    //        gridScheduleEntryList.GetEditor("Duration").SetValue(DayDiff);
+
+    //    }
+
+
+
+    //}
+
+    Date.prototype.addDays = function (days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+
+    function DateGotFocus(s, e) {
+
+
+        var Predecessor = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "Predecessor");
+        //var Slno = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "Slno");
+        if (Predecessor != null && Predecessor != "" && Predecessor != Slno && s.uniqueID == "gridScheduleEntryList$DXEditor4") {
+            var LastDate = GetLastDateOfPredecessor(Predecessor);
+            if (LastDate != null && LastDate != typeof (undefined) && LastDate != "") {
+                LastDate = LastDate.addDays(1);
+
+                gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 4);
+                gridScheduleEntryList.GetEditor("StartDate").SetMinDate(LastDate)
+
+                if (gridScheduleEntryList.GetEditor("StartDate").GetDate() < LastDate) {
+                    gridScheduleEntryList.GetEditor("StartDate").SetDate(LastDate);
+                }
+
+
+
+
+
+
+                gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+                var StartDate = gridScheduleEntryList.GetEditor("StartDate").GetValue();
+                var EndDate = gridScheduleEntryList.GetEditor("EndDate").GetValue();
+                var effort = gridScheduleEntryList.GetEditor("Effort").GetValue();
+                var end;
+                var adddays = 0;
+                if (StartDate != null) {
+                    if ($("#dllWorkUnit").val() == "H") {
+
+                        adddays = parseInt(effort / 24);
+                        end = StartDate.addDays(adddays);
+
+                    }
+                    else if ($("#dllWorkUnit").val() == "D") {
+
+                        adddays = parseInt(effort);
+                        end = StartDate.addDays(adddays);
+
+                    }
+
+                    else if ($("#dllWorkUnit").val() == "W") {
+
+                        adddays = parseInt(effort * 7);
+
+                        end = StartDate.addDays(adddays);
+                    }
+                    else if ($("#dllWorkUnit").val() == "M") {
+                        var CurrentDate = StartDate;
+                        CurrentDate.setMonth(parseInt(CurrentDate.getMonth()) + parseInt(effort));
+                        end = CurrentDate;
+                    }
+                    else if ($("#dllWorkUnit").val() == "Y") {
+                        var CurrentDate = StartDate;
+                        CurrentDate.setYear(parseInt(CurrentDate.getFullYear()) + parseInt(effort));
+                        end = CurrentDate;
+                    }
+                    gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 5);
+                    gridScheduleEntryList.GetEditor("EndDate").SetDate(end);
+
+                }
+                gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 4);
+
+
+
+                var StartDate = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "StartDate");
+                var EndDate = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "EndDate");
+                if (StartDate != null) {
+                    gridScheduleEntryList.GetEditor("EndDate").SetMinDate(StartDate);
+                }
+
+
+
+
+
+
+                return;
+            }
+        }
+
+
+        gridScheduleEntryList.GetEditor("EndDate").SetMinDate(new Date(1980, 1, 1, 1, 1, 1, 1))
+        gridScheduleEntryList.GetEditor("StartDate").SetMinDate(new Date(1980, 1, 1, 1, 1, 1, 1))
+        gridScheduleEntryList.GetEditor("EndDate").SetMaxDate(new Date(9999, 1, 1, 1, 1, 1, 1))
+        gridScheduleEntryList.GetEditor("StartDate").SetMaxDate(new Date(9999, 1, 1, 1, 1, 1, 1))
+
+        if (s.uniqueID == "gridScheduleEntryList$DXEditor4") {
+            //gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 4);
+            var StartDate = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "StartDate");
+            var EndDate = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "EndDate");
+
+            if (EndDate != null) {
+                gridScheduleEntryList.GetEditor("StartDate").SetMaxDate(EndDate);
+            }
+        }
+        else {
+            //gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 5);
+            var StartDate = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "StartDate");
+            var EndDate = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "EndDate");
+            if (StartDate != null) {
+                gridScheduleEntryList.GetEditor("EndDate").SetMinDate(StartDate);
+            }
+        }
+    }
+
+    function EnddateGotFocus(s, e) {
+
+
+        var Predecessor = txtPredecessor.GetValue();
+        //var Slno = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "Slno");
+        if (Predecessor != null && Predecessor != "" && Predecessor != Slno) {
+            var LastDate = GetLastDateOfPredecessor(Predecessor);
+            if (LastDate != null && LastDate != typeof (undefined) && LastDate != "") {
+                LastDate = LastDate.addDays(1);
+
+                dtStartDate.SetMinDate(LastDate);
+
+                if (dtStartDate.GetDate() < LastDate) {
+                    dtStartDate.SetDate(LastDate);
+                }
+
+                var StartDate = dtStartDate.GetDate();
+                var EndDate = dtEndDate.GetDate();
+                var effort = txtEffortheader.GetValue();
+                var end;
+                var adddays = 0;
+                if (StartDate != null) {
+                    if ($("#dllWorkUnit").val() == "H") {
+
+                        adddays = parseInt(effort / 24);
+                        end = StartDate.addDays(adddays);
+
+                    }
+                    else if ($("#dllWorkUnit").val() == "D") {
+
+                        adddays = parseInt(effort);
+                        end = StartDate.addDays(adddays);
+
+                    }
+
+                    else if ($("#dllWorkUnit").val() == "W") {
+
+                        adddays = parseInt(effort * 7);
+
+                        end = StartDate.addDays(adddays);
+                    }
+                    else if ($("#dllWorkUnit").val() == "M") {
+                        var CurrentDate = StartDate;
+                        CurrentDate.setMonth(parseInt(CurrentDate.getMonth()) + parseInt(effort));
+                        end = CurrentDate;
+                    }
+                    else if ($("#dllWorkUnit").val() == "Y") {
+                        var CurrentDate = StartDate;
+                        CurrentDate.setYear(parseInt(CurrentDate.getFullYear()) + parseInt(effort));
+                        end = CurrentDate;
+                    }
+
+                   // dtStartDate.SetDate(end);
+
+                }
+
+
+
+
+                var StartDate = dtStartDate.GetDate();
+                var EndDate = dtEndDate.GetDate();
+                if (StartDate != null) {
+                    dtEndDate.SetMinDate(StartDate);
+                }
+
+
+
+
+
+
+                return;
+            }
+        }
+
+
+        dtEndDate.SetMinDate(StartDate_dts.GetDate());
+        dtStartDate.SetMinDate(StartDate_dts.GetDate());
+        dtEndDate.SetMaxDate(EndDate_dts.GetDate());
+        dtStartDate.SetMaxDate(EndDate_dts.GetDate());
+
+        var StartDate = dtStartDate.GetDate();
+        if (StartDate != null) {
+            dtEndDate.SetMinDate(StartDate);
+        }
+
+    }
+
+    function StartdateGotFocus(s, e) {
+
+
+        var Predecessor = txtPredecessor.GetValue();
+        //var Slno = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "Slno");
+        if (Predecessor != null && Predecessor != "" && Predecessor != Slno) {
+            var LastDate = GetLastDateOfPredecessor(Predecessor);
+            if (LastDate != null && LastDate != typeof (undefined) && LastDate != "") {
+                LastDate = LastDate.addDays(1);
+
+                dtStartDate.SetMinDate(LastDate);
+
+                if (dtStartDate.GetDate() < LastDate) {
+                    dtStartDate.SetDate(LastDate);
+                }
+
+                var StartDate = dtStartDate.GetDate();
+                var EndDate = dtEndDate.GetDate();
+                var effort = txtEffortheader.GetValue();
+                var end;
+                var adddays = 0;
+                if (StartDate != null) {
+                    if ($("#dllWorkUnit").val() == "H") {
+
+                        adddays = parseInt(effort / 24);
+                        end = StartDate.addDays(adddays);
+
+                    }
+                    else if ($("#dllWorkUnit").val() == "D") {
+
+                        adddays = parseInt(effort);
+                        end = StartDate.addDays(adddays);
+
+                    }
+
+                    else if ($("#dllWorkUnit").val() == "W") {
+
+                        adddays = parseInt(effort * 7);
+
+                        end = StartDate.addDays(adddays);
+                    }
+                    else if ($("#dllWorkUnit").val() == "M") {
+                        var CurrentDate = StartDate;
+                        CurrentDate.setMonth(parseInt(CurrentDate.getMonth()) + parseInt(effort));
+                        end = CurrentDate;
+                    }
+                    else if ($("#dllWorkUnit").val() == "Y") {
+                        var CurrentDate = StartDate;
+                        CurrentDate.setYear(parseInt(CurrentDate.getFullYear()) + parseInt(effort));
+                        end = CurrentDate;
+                    }
+
+                   // dtStartDate.SetDate(end);
+
+                }
+
+
+
+
+                var StartDate = dtStartDate.GetDate();
+                var EndDate = dtEndDate.GetDate();
+                if (StartDate != null) {
+                    dtEndDate.SetMinDate(StartDate);
+                }
+
+
+
+
+
+
+                return;
+            }
+        }
+
+
+        dtEndDate.SetMinDate(StartDate_dts.GetDate());
+        dtStartDate.SetMinDate(StartDate_dts.GetDate());
+        dtEndDate.SetMaxDate(EndDate_dts.GetDate());
+        dtStartDate.SetMaxDate(EndDate_dts.GetDate());
+
+        var EndDate = dtEndDate.GetDate();
+        if (EndDate != null) {
+            dtStartDate.SetMaxDate(EndDate);
+        }
+
+    }
+
+    function EndLostFocus() {
+        var StartDate = dtStartDate.GetDate();
+        var EndDate = dtEndDate.GetDate();
+
+        if (EndDate != null) {
+            dtStartDate.SetMaxDate(StartDate);
+        }
+
+
+
+
+        var Diff = 0;
+        var DayDiff = 0;
+
+        if (StartDate != null && EndDate != null) {
+            Diff = CalculateEffort(StartDate, EndDate);
+            DayDiff = date_diff_indays(StartDate, EndDate);
+            DayDiff = parseInt(DayDiff) + 1;
+            Diff = Diff + 1;
+            var Actualdiff = txtEffortheader.GetValue();
+            if ($("#dllWorkUnit").val() == "H") {
+
+                if (Actualdiff >= (parseFloat(Diff) - 1) * 24 && Actualdiff <= (parseFloat(Diff)) * 24 && Actualdiff != 0) {
+                    Diff = parseFloat(Actualdiff);
+                }
+                else {
+                    Diff = parseFloat(Diff) * 24;
+                }
+
+            }
+            else if ($("#dllWorkUnit").val() == "D") {
+
+                Diff = parseFloat(Diff);
+
+
+            }
+
+            else if ($("#dllWorkUnit").val() == "W") {
+
+                Diff = parseInt(parseFloat(Diff) / 7);
+
+            }
+            else if ($("#dllWorkUnit").val() == "M") {
+                Diff = parseInt(parseFloat(Diff) / 30);
+
+            }
+            else if ($("#dllWorkUnit").val() == "Y") {
+                Diff = parseInt(parseFloat(Diff) / 365);
+
+            }
+            txtEffortheader.SetValue(Diff);
+            txtDurationHeader.SetValue(DayDiff);
+
+        }
+    }
+
+    function StartLostFocus(s,e) {
+
+        var StartDate = s.GetDate();
+        var EndDate = dtEndDate.GetDate();
+
+        if (StartDate != null) {
+            dtEndDate.SetMinDate(StartDate);
+        }
+
+
+
+
+        
+        var StartDate = s.GetDate();
+        var EndDate = dtEndDate.GetDate();
+
+
+        var effort = txtEffortheader.GetValue();
+        var end;
+        var adddays = 0;
+        if (StartDate != null) {
+            if ($("#dllWorkUnit").val() == "H") {
+
+                adddays = parseInt(effort / 24);
+                end = StartDate.addDays(adddays);
+
+            }
+            else if ($("#dllWorkUnit").val() == "D") {
+
+                adddays = parseInt(effort);
+                if (effort > 0) {
+                    adddays = parseFloat(effort) - 1;
+                }
+                end = StartDate.addDays(adddays);
+
+            }
+
+            else if ($("#dllWorkUnit").val() == "W") {
+
+                adddays = parseInt(effort * 7);
+
+                end = StartDate.addDays(adddays);
+            }
+            else if ($("#dllWorkUnit").val() == "M") {
+                var CurrentDate = StartDate;
+                CurrentDate.setMonth(parseInt(CurrentDate.getMonth()) + parseInt(effort));
+                end = CurrentDate;
+            }
+            else if ($("#dllWorkUnit").val() == "Y") {
+                var CurrentDate = StartDate;
+                CurrentDate.setYear(parseInt(CurrentDate.getFullYear()) + parseInt(effort));
+                end = CurrentDate;
+            }
+
+            dtEndDate.SetDate(end);
+
+        }
+
+
+        var Diff = 0;
+        var DayDiff = 0;
+
+        if (StartDate != null && EndDate != null) {
+            Diff = CalculateEffort(StartDate, EndDate);
+            DayDiff = date_diff_indays(StartDate, EndDate);
+            DayDiff = parseInt(DayDiff) + 1;
+            Diff = Diff + 1;
+            var Actualdiff = txtEffortheader.GetValue();
+            if ($("#dllWorkUnit").val() == "H") {
+
+                if (Actualdiff >= (parseFloat(Diff) - 1) * 24 && Actualdiff <= (parseFloat(Diff)) * 24 && Actualdiff != 0) {
+                    Diff = parseFloat(Actualdiff);
+                }
+                else {
+                    Diff = parseFloat(Diff) * 24;
+                }
+
+            }
+            else if ($("#dllWorkUnit").val() == "D") {
+
+                Diff = parseFloat(Diff);
+
+
+            }
+
+            else if ($("#dllWorkUnit").val() == "W") {
+
+                Diff = parseInt(parseFloat(Diff) / 7);
+
+            }
+            else if ($("#dllWorkUnit").val() == "M") {
+                Diff = parseInt(parseFloat(Diff) / 30);
+
+            }
+            else if ($("#dllWorkUnit").val() == "Y") {
+                Diff = parseInt(parseFloat(Diff) / 365);
+
+            }
+            //txtEffortheader.SetValue(Diff);
+            txtDurationHeader.SetValue(DayDiff);
+
+        }
+        
+
+    }
+
+
+
+    //function DateLostFocus(s, e) {
+    //    gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+
+    //    var StartDate = gridScheduleEntryList.GetEditor("StartDate").GetText();
+    //    var EndDate = gridScheduleEntryList.GetEditor("EndDate").GetText();
+
+    //    if (s.uniqueID == "gridScheduleEntryList$DXEditor5") {
+    //        if (EndDate != " - - ") {
+    //            if (StringToDateObject(EndDate) > StringToDateObject(StartDate)) {
+    //                gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+
+    //                var StartDates = gridScheduleEntryList.GetEditor("StartDate").GetValue();
+    //                var EndDates = gridScheduleEntryList.GetEditor("EndDate").GetValue();
+
+    //                var StartDates = gridScheduleEntryList.GetEditor("StartDate").GetText();
+    //                var EndDates = gridScheduleEntryList.GetEditor("EndDate").GetText();
+
+    //                var arrSD = StartDates.split('-');
+    //                var arrED = EndDates.split('-');
+
+    //                var StartDate = new Date(arrSD[2], parseFloat(arrSD[1]) - 1, arrSD[0]);
+
+    //                var EndDate = new Date(arrED[2], parseFloat(arrED[1]) - 1, arrED[0]);
+
+
+
+
+    //                if (EndDate == 'Invalid Date') {
+    //                    jAlert('Invalid date.', 'Alert', function () {
+    //                        gridScheduleEntryList.GetEditor("EndDate").SetText('01-01-2000');
+    //                    })
+    //                }
+
+
+
+
+
+
+    //            }
+    //        }
+    //    }
+    //    else {
+    //        if (StartDate != " - - ") {
+    //            if (StringToDateObject(EndDate) > StringToDateObject(StartDate)) {
+    //                gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 2);
+
+    //                var StartDates = gridScheduleEntryList.GetEditor("StartDate").GetValue();
+    //                var EndDates = gridScheduleEntryList.GetEditor("EndDate").GetValue();
+
+    //                var StartDates = gridScheduleEntryList.GetEditor("StartDate").GetText();
+    //                var EndDates = gridScheduleEntryList.GetEditor("EndDate").GetText();
+
+    //                var arrSD = StartDates.split('-');
+    //                var arrED = EndDates.split('-');
+
+    //                var StartDate = new Date(arrSD[2], parseFloat(arrSD[1]) - 1, arrSD[0]);
+
+    //                var EndDate = new Date(arrED[2], parseFloat(arrED[1]) - 1, arrED[0]);
+
+
+    //            }
+    //        }
+    //    }
+
+    //    var StartDate = gridScheduleEntryList.GetEditor("StartDate").GetText();
+    //    var EndDate = gridScheduleEntryList.GetEditor("EndDate").GetText();
+
+
+    //    var diff = date_diff_indays(StringToDateObject(StartDate), StringToDateObject(EndDate));
+
+    //    if (StartDate != null && EndDate != null) {
+
+    //        var Actualdiff = gridScheduleEntryList.GetEditor("Effort").GetValue();
+
+
+
+    //        Diff = CalculateEffort(StringToDateObject(StartDate), StringToDateObject(EndDate));
+
+
+
+    //        DayDiff = date_diff_indays(StringToDateObject(StartDate), StringToDateObject(EndDate));
+    //        DayDiff = parseInt(DayDiff) + 1;
+    //        Diff = Diff + 1;
+
+    //        if ($("#dllWorkUnit").val() == "H") {
+
+    //            if (Actualdiff >= (parseFloat(Diff) - 1) * 24 && Actualdiff <= (parseFloat(Diff)) * 24) {
+    //                Diff = parseFloat(Actualdiff);
+    //            }
+    //            else {
+    //                Diff = parseFloat(Diff) * 24;
+    //            }
+
+
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "D") {
+
+    //            Diff = parseFloat(Diff);
+
+
+    //        }
+
+    //        else if ($("#dllWorkUnit").val() == "W") {
+
+    //            Diff = parseInt(parseFloat(Diff) / 7);
+
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "M") {
+    //            Diff = parseInt(parseFloat(Diff) / 30);
+
+    //        }
+    //        else if ($("#dllWorkUnit").val() == "Y") {
+    //            Diff = parseInt(parseFloat(Diff) / 365);
+
+    //        }
+    //        gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 3);
+    //        gridScheduleEntryList.GetEditor("Effort").SetValue(Diff);
+    //        gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 7);
+    //        gridScheduleEntryList.GetEditor("Duration").SetValue(DayDiff);
+
+    //    }
+
+
+    //}
+
+    var date_diff_indays = function (date1, date2) {
+        dt1 = new Date(date1);
+        dt2 = new Date(date2);
+        return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+    }
+
+
+
+    function CalculateEffort(date1, date2) {
+
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays;
+
+    }
+
+    function formatDate(timestamp) {
+        var x = new Date(timestamp);
+        var dd = x.getDate();
+        var mm = x.getMonth() + 1;
+        var yy = x.getFullYear();
+
+        if (dd.toString().length == 1) {
+            dd = "0" + dd;
+        }
+        if (mm.toString().length == 1) {
+            mm = "0" + mm;
+        }
+
+        return dd + "-" + mm + "-" + yy;
+    }
+
+
+    Date.isLeapYear = function (year) {
+        return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
+    };
+
+    Date.getDaysInMonth = function (year, month) {
+        return [31, (Date.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
+    };
+
+    Date.prototype.isLeapYear = function () {
+        return Date.isLeapYear(this.getFullYear());
+    };
+
+    Date.prototype.getDaysInMonth = function () {
+        return Date.getDaysInMonth(this.getFullYear(), this.getMonth());
+    };
+
+    Date.prototype.addMonths = function (value) {
+        var n = this.getDate();
+        this.setDate(1);
+        this.setMonth(this.getMonth() + value);
+        this.setDate(Math.min(n, this.getDaysInMonth()));
+        return this;
+    };
+
+
+    function ResourcseBtnClick(s, e) {
+
+        //gridScheduleEntryList.batchEditApi.StartEdit(globalrowindex, 8);
+        //var Slno = gridScheduleEntryList.batchEditApi.GetCellValue(globalrowindex, "Slno");
+        if (EditId != "0" && EditId != "") {
+            $("#Row_Id").val(EditId);
+        }
+        else {
+            $("#Row_Id").val(Slno);
+        }
+
+        $.ajax({
+            type: "POST",
+            //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+            url: "@Url.Action("ResourceEntryView", "Schedule")",
+            data: { Slno: $("#Row_Id").val() },
+            success: function (response) {
+                PMSpcControl.SetContentHtml(response);
+                MVCxClientUtils.FinalizeCallback();
+                PMSpcControl.SetHeaderText('Resources');
+                PMSpcControl.Show();
+
+
+            }
+        });
+    }
+
+    function ResourcseKeyDown(s, e) {
+        if (e.htmlEvent.keyCode == "13") {
+            s.OnButtonClick(0);
+        }
+    }
+
+    function onSaveResourceClick() {
+        var SelectedKeys = gridResourceEntryList.GetSelectedKeysOnPage();
+        //var slno = $("#Row_Id").val();
+
+        if (SelectedKeys.length > 0) {
+
+
+
+
+            $.ajax({
+                type: "POST",
+                //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+                url: "@Url.Action("ResourceEntryOkClick", "Schedule")",
+                data: { SelectedKeys: SelectedKeys, slno: $("#Row_Id").val() },
+                success: function (response) {
+                    PMSpcControl.Hide();
+                    btnResources.SetText(SelectedKeys.length + ' Item(s) Selected.');
+                }
+
+            });
+        }
+        else {
+            PMSpcControl.Hide();
+        }
+    }
+
+
+    function PredecessorLostFocus() {
+        var Predecessor = txtPredecessor.GetValue();
+        if (parseFloat(Predecessor) > parseFloat(Slno)) {
+            jAlert("Predecessor must be equal or less than current serial number.", 'Alert', function () {
+                return;
+            })
+            return;
+        }
+
+
+        if (Predecessor != null && Predecessor != "" && Predecessor != Slno) {
+            var LastDate = GetLastDateOfPredecessor(Predecessor);
+            if (LastDate != null && LastDate != typeof (undefined) && LastDate != "") {
+                LastDate = LastDate.addDays(1);
+
+                dtStartDate.SetMinDate(LastDate)
+
+                if (dtStartDate.GetDate() < LastDate) {
+                    dtStartDate.SetDate(LastDate);
+                }
+
+
+
+                var StartDate = dtStartDate.GetDate();
+                var EndDate = dtEndDate.GetDate();
+                var effort = txtEffortheader.GetValue();
+                var end;
+                var adddays = 0;
+                if (StartDate != null) {
+                    if ($("#dllWorkUnit").val() == "H") {
+
+                        adddays = parseInt(effort / 24);
+                        end = StartDate.addDays(adddays);
+
+                    }
+                    else if ($("#dllWorkUnit").val() == "D") {
+
+                        adddays = parseInt(effort);
+                        if (effort > 0) {
+                            adddays = parseFloat(effort) - 1;
+                        }
+                        end = StartDate.addDays(adddays);
+
+                    }
+
+                    else if ($("#dllWorkUnit").val() == "W") {
+
+                        adddays = parseInt(effort * 7);
+
+                        end = StartDate.addDays(adddays);
+                    }
+                    else if ($("#dllWorkUnit").val() == "M") {
+                        var CurrentDate = StartDate;
+                        CurrentDate.setMonth(parseInt(CurrentDate.getMonth()) + parseInt(effort));
+                        end = CurrentDate;
+                    }
+                    else if ($("#dllWorkUnit").val() == "Y") {
+                        var CurrentDate = StartDate;
+                        CurrentDate.setYear(parseInt(CurrentDate.getFullYear()) + parseInt(effort));
+                        end = CurrentDate;
+                    }
+
+                    dtEndDate.SetDate(end);
+
+                }
+
+
+                var StartDate = dtStartDate.GetDate();
+                var EndDate = dtEndDate.GetDate();
+                if (StartDate != null) {
+                    dtEndDate.SetMinDate(StartDate);
+                }
+
+
+                return;
+            }
+        }
+    }
+    var LastDateOfPredecessor = null;
+    function GetLastDateOfPredecessor(Predecessor) {
+        //for (var i = -1; i > -500; i--) {
+        //    if (gridScheduleEntryList.GetNodeHtmlElement(i)) {
+        //        var chkPredecessor = gridScheduleEntryList.batchEditApi.GetCellValue(i, "Slno");
+        //        if (chkPredecessor == Predecessor) {
+        //            return StringToDateObject(gridScheduleEntryList.batchEditApi.GetCellValue(i, "EndDate"));
+
+        //        }
+
+        //    }
+        //}
+        //for (var j = 0; j <= 500; j++) {
+        //    if (gridScheduleEntryList.GetRow(j)) {
+        //        var chkPredecessor = gridScheduleEntryList.batchEditApi.GetCellValue(j, "Slno");
+        //        if (chkPredecessor == Predecessor) {
+        //            return StringToDateObject(gridScheduleEntryList.batchEditApi.GetCellValue(j, "EndDate"));
+
+        //        }
+
+        //    }
+        //}
+
+        if (gridScheduleEntryList.GetNodeHtmlElement(Predecessor)) {
+            //var val = gridScheduleEntryList.GetNodeHtmlElement(Predecessor).children[5];
+            //return StringToDateObject(val.innerText);
+            var obj = {};
+            obj.Predecessor = Predecessor;
+
+            $.ajax({
+                type: "POST",
+                //url: "Url.Action("GetEmployeesTargetByCode", "EmployeesTarget")",
+                url: "@Url.Action("GetEndDateofpredessesor", "Schedule")",
+                data: JSON.stringify(obj),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response) {
+                        var dt = new Date(response.match(/\d+/)[0] * 1);
+                        LastDateOfPredecessor = dt;
+                        return dt;
+                    }
+                    else {
+                        LastDateOfPredecessor = null;
+                        return null;
+                    }
+                },
+                error: function (response) {
+                    LastDateOfPredecessor = null;
+                    return null;
+                }
+            });
+
+
+            //return gridScheduleEntryList.GetNodeValues(Predecessor, "EndDate", GetEndDateValue)
+
+        }
+        else {
+            LastDateOfPredecessor = null;
+            return null;
+        }
+
+        return LastDateOfPredecessor;
+    }
+
+
+    function GetEndDateValue(value) {
+        alert(value);
+        return value;
+    }
+
+
+
+
+
+    function SuffleRows() {
+        for (var i = 0; i < 1000; i++) {
+            if (gridScheduleEntryList.GetRow(i)) {
+                if (gridScheduleEntryList.GetRow(i).style.display != "none") {
+                    gridScheduleEntryList.batchEditApi.StartEdit(i, 9);
+                    gridScheduleEntryList.GetEditor("UpdateEdit").SetText(i);
+                }
+            }
+        }
+
+        for (i = -1; i > -1000; i--) {
+            if (gridScheduleEntryList.GetRow(i)) {
+                if (gridScheduleEntryList.GetRow(i).style.display != "none") {
+                    gridScheduleEntryList.batchEditApi.StartEdit(i, 9);
+                    gridScheduleEntryList.GetEditor("UpdateEdit").SetText(i);
+                }
+            }
+        }
+    }
+
+
+
+
+    var WBS_ID = 0;
+
+
+
+
+    function OnStartCallback(s, e) {
+        if (e != undefined) {
+
+            if ($("#EditWBS_ID").val() != null && $("#EditWBS_ID").val() != "" && $("#EditWBS_ID").val() != "0") {
+                e.customArgs["Action"] = "Edit";
+            }
+            else {
+                e.customArgs["Action"] = "Add";
+            }
+
+            e.customArgs["WBS_ID"] = $("#EditWBS_ID").val();
+            e.customArgs["WBS_Code"] = txtCode.GetText();
+            e.customArgs["WBS_Name"] = txtName.GetText();
+            e.customArgs["WBS_HierarchyId"] = 0;
+            e.customArgs["WBS_Branch"] = $("#ddlBankBranch").val();
+            e.customArgs["WBS_StartDate"] = StartDate_dts.GetDate().toISOString();
+            e.customArgs["WBS_EndTime"] = EndDate_dts.GetDate().toISOString();
+            e.customArgs["WBS_Duration"] = txtDuration.GetText();
+            e.customArgs["WBS_Description"] = txtDescription.GetText();
+            e.customArgs["WBS_Workunit"] = $("#dllWorkUnit").val();
+            e.customArgs["WBS_ProjectCode"] = ProjectGridLookup.GetSelectedKeyFieldValues();
+            e.customArgs["Isdelete"] = Isdelete;
+            Isdelete = 0;
+        }
+
+
+    }
+
+    function OnEndCallback(s, e) {
+        if (s.cpBatchUpdate != null && s.cpBatchUpdate != "") {
+            jAlert(s.cpBatchUpdate, 'Alert', function () {
+                if (s.cpID == "1") {
+                    window.location.href = "/Schedule/ScheduleList";
+                }
+            });
+
+        }
+    }
+
+
+</script>
+
+
+<script>
+    function ProjectSelectionChanged(s, e) {
+        var projId = ProjectGridLookup.GetValue();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getHierarchyID", "Schedule")",
+            data: { ProjID: projId },
+            success: function (response) {
+                if (response != null) {
+                    //jAlert(response.Message);
+                    $('#ddlHierarchy').val(response.Message);
+                }
+            }
+        });
+    }
+
+
+    function StDateGotFocus(s, e) {
+        if (EndDate_dts.GetText() != "") {
+            s.SetMaxDate(EndDate_dts.GetDate())
+        }
+
+        $("#dllWorkUnit").attr('disabled', 'disabled')
+    }
+
+    function EnDateGotFocus(s, e) {
+        if (StartDate_dts.GetText() != "") {
+            s.SetMinDate(StartDate_dts.GetDate())
+        }
+        $("#dllWorkUnit").attr('disabled', 'disabled')
+
+    }
+
+    function StDateLostFocus(s, e) {
+
+        var StartDate = StartDate_dts.GetDate();
+        var EndDate = EndDate_dts.GetDate();
+        var Diff = 0;
+        var DayDiff = 0;
+
+        if (StartDate != null && EndDate != null) {
+            Diff = CalculateEffort(StartDate, EndDate);
+            DayDiff = date_diff_indays(StartDate, EndDate);
+            DayDiff = parseInt(DayDiff) + 1;
+            Diff = Diff + 1;
+            var Actualdiff = txtEffortheader.GetValue();
+            if ($("#dllWorkUnit").val() == "H") {
+
+                if (Actualdiff >= (parseFloat(Diff) - 1) * 24 && Actualdiff <= (parseFloat(Diff)) * 24 && Actualdiff != 0) {
+                    Diff = parseFloat(Actualdiff);
+                }
+                else {
+                    Diff = parseFloat(Diff) * 24;
+                }
+
+            }
+            else if ($("#dllWorkUnit").val() == "D") {
+
+                Diff = parseFloat(Diff);
+
+
+            }
+
+            else if ($("#dllWorkUnit").val() == "W") {
+
+                Diff = parseInt(parseFloat(Diff) / 7);
+
+            }
+            else if ($("#dllWorkUnit").val() == "M") {
+                Diff = parseInt(parseFloat(Diff) / 30);
+
+            }
+            else if ($("#dllWorkUnit").val() == "Y") {
+                Diff = parseInt(parseFloat(Diff) / 365);
+
+            }
+            txtEffort.SetValue(Diff);
+            txtDuration.SetValue(DayDiff);
+
+        }
+
+    }
+
+    function EnDateLostFocus(s, e) {
+        var StartDate = StartDate_dts.GetDate();
+        var EndDate = EndDate_dts.GetDate();
+        var Diff = 0;
+        var DayDiff = 0;
+
+        if (StartDate != null && EndDate != null) {
+            Diff = CalculateEffort(StartDate, EndDate);
+            DayDiff = date_diff_indays(StartDate, EndDate);
+            DayDiff = parseInt(DayDiff) + 1;
+            Diff = Diff + 1;
+            var Actualdiff = txtEffortheader.GetValue();
+            if ($("#dllWorkUnit").val() == "H") {
+
+                if (Actualdiff >= (parseFloat(Diff) - 1) * 24 && Actualdiff <= (parseFloat(Diff)) * 24 && Actualdiff != 0) {
+                    Diff = parseFloat(Actualdiff);
+                }
+                else {
+                    Diff = parseFloat(Diff) * 24;
+                }
+
+            }
+            else if ($("#dllWorkUnit").val() == "D") {
+
+                Diff = parseFloat(Diff);
+
+
+            }
+
+            else if ($("#dllWorkUnit").val() == "W") {
+
+                Diff = parseInt(parseFloat(Diff) / 7);
+
+            }
+            else if ($("#dllWorkUnit").val() == "M") {
+                Diff = parseInt(parseFloat(Diff) / 30);
+
+            }
+            else if ($("#dllWorkUnit").val() == "Y") {
+                Diff = parseInt(parseFloat(Diff) / 365);
+
+            }
+            txtEffort.SetValue(Diff);
+            txtDuration.SetValue(DayDiff);
+
+        }
+    }
+
+
+
+</script>
+
+
+
+
+
+
+<style>
+    .gridWraper {
+        border: 1px solid #ccc;
+        min-height: 300px;
+    }
+
+    .tableGrid {
+        width: 100%;
+    }
+
+        .tableGrid > thead > tr > th {
+            background: #1e90ce;
+            color: #fff;
+        }
+
+        .tableGrid > thead > tr > th, .tableGrid > tbody > tr > td {
+            padding: 5px 10px;
+        }
+
+        .tableGrid > tbody > tr > td {
+            border-bottom: 1px solid #ccc;
+        }
+
+            .tableGrid > tbody > tr > td:not(:last-child) {
+                border-right: 1px solid #e4e4e4;
+            }
+
+        .tableGrid > thead > tr > th:not(:last-child) {
+            border-right: 1px solid #1678ad;
+        }
+
+    .mutiFMbox {
+        border: 1px solid #e2e2e2;
+        padding: 5px 15px;
+    }
+
+    .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+        background: #fff !important;
+    }
+
+    #gridScheduleEntryList_DXStatus {
+        display: none;
+    }
+    .tablepd{
+        width:100%;
+    } 
+    .tablepd > tbody > tr > td:not(:last-child) {
+        padding-right: 10px;
+    }
+    .btn-rounded {
+        border-radius:50%;
+        display:inline-block;
+        padding:0;
+    }
+    .example-image-link{
+        margin-right:5px;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('body').hasClass('mini-navbar')) {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 90;
+            gridScheduleEntryList.SetWidth(cntWidth);
+        } else {
+            var windowWidth = $(window).width();
+            var cntWidth = windowWidth - 220;
+            gridScheduleEntryList.SetWidth(cntWidth);
+        }
+
+        $('.navbar-minimalize').click(function () {
+            if ($('body').hasClass('mini-navbar')) {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 90;
+                gridScheduleEntryList.SetWidth(cntWidth);
+                console.log(cntWidth)
+            } else {
+                var windowWidth = $(window).width();
+                var cntWidth = windowWidth - 220;
+                gridScheduleEntryList.SetWidth(cntWidth);
+                console.log(cntWidth)
+            }
+
+        });
+    });
+
+    function CancelWBS() {
+        window.location.href = "/Schedule/ScheduleList";
+    }
+
+    function WUChange() {
+
+        if ($("#dllWorkUnit").val() == "H") {            
+            $("#bName,#bName1").text(" (In Hour(s) )");
+
+        }
+        else if ($("#dllWorkUnit").val() == "D") {
+            $("#bName,#bName1").text(" (In Day(s) )");
+        }
+        else if ($("#dllWorkUnit").val() == "W") {
+            $("#bName,#bName1").text(" (In Week(s) )");
+        }
+        else if ($("#dllWorkUnit").val() == "M") {
+            $("#bName,#bName1").text(" (In Month(s) )");
+        }
+        else if ($("#dllWorkUnit").val() == "Y") {
+            $("#bName,#bName1").text(" (In Year(s) )");
+        }
+
+        
+    }
+
+
+</script>
+
+
+
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Schedule (WBS)</label>
+        </h3>
+        <div class="crossBtn"><a href="ScheduleList"><i class="fa fa-times"></i></a></div>
+    </div>
+
+    @*<div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("BOMEntryList", "BOMEntry")"><i class="fa fa-times"></i></a></div>*@
+</div>
+<div class=" form_main">
+    <div class="clearfix">
+        <input type="hidden" id="Row_Id" />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mutiFMbox clearfix">
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="" class=" col-form-label">Code <span class="asterix">*</span></label>
+                            <div class="">
+                                @Html.DevExpress().TextBox(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "txtCode";
+                                                      settings.Width = Unit.Percentage(100);
+
+                                                      if (Session["WBS_Id"] != null && Session["WBS_Id"] != "")
+                                                      {
+                                                          settings.ClientEnabled = false;
+                                                          settings.Text = Model.WBS_Code;
+                                                      }
+                                                      settings.Properties.MaxLength = 50;
+
+                                                  }
+                                         ).GetHtml()
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-2">
+                            <label for="" class="col-form-label">Name</label>
+                            <div class="">
+                                @Html.DevExpress().TextBox(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "txtName";
+                                                      settings.Width = Unit.Percentage(100);
+                                                      settings.Text = Model.WBS_Name;
+
+                                                  }
+                                         ).GetHtml()
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="" class="col-form-label">Work Unit</label>
+                            <div class="">
+
+                                <select class="form-control" id="dllWorkUnit" onchange="WUChange()">
+                                    @{
+                                        if (Model.WBS_Workunit == "H")
+                                        {
+                                            <option value="H" selected>Hour(s)</option>
+                                            <option value="D">Day(s)</option>
+                                            <option value="W">Week(s)</option>
+                                            <option value="M">Month(s)</option>
+                                            <option value="Y">Year(s)</option>
+                                        }
+                                        else if (Model.WBS_Workunit == "D")
+                                        {
+                                            <option value="H">Hour(s)</option>
+                                            <option value="D" selected>Day(s)</option>
+                                            <option value="W">Week(s)</option>
+                                            <option value="M">Month(s)</option>
+                                            <option value="Y">Year(s)</option>
+                                        }
+                                        else if (Model.WBS_Workunit == "W")
+                                        {
+                                            <option value="H">Hour(s)</option>
+                                            <option value="D">Day(s)</option>
+                                            <option value="W" selected>Week(s)</option>
+                                            <option value="M">Month(s)</option>
+                                            <option value="Y">Year(s)</option>
+                                        }
+                                        else if (Model.WBS_Workunit == "M")
+                                        {
+                                            <option value="H">Hour(s)</option>
+                                            <option value="D">Day(s)</option>
+                                            <option value="W">Week(s)</option>
+                                            <option value="M" selected>Month(s)</option>
+                                            <option value="Y">Year(s)</option>
+                                        }
+                                        else if (Model.WBS_Workunit == "Y")
+                                        {
+                                            <option value="H">Hour(s)</option>
+                                            <option value="D">Day(s)</option>
+                                            <option value="W">Week(s)</option>
+                                            <option value="M">Month(s)</option>
+                                            <option value="Y" selected>Year(s)</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="H" selected>Hour(s)</option>
+                                            <option value="D">Day(s)</option>
+                                            <option value="W">Week(s)</option>
+                                            <option value="M">Month(s)</option>
+                                            <option value="Y">Year(s)</option>
+                                        }
+
+
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-2">
+                            <label for="" class="col-form-label">	Branch</label>
+                            <div class="">
+                                @Html.DropDownListFor(x => x.WBS_Branch, new SelectList(Model.UnitList, "BranchID", "BankBranchName"), new { @id = "ddlBankBranch", @class = "form-control" })
+                            </div>
+                        </div>
+                        
+                        <div class="form-group  col-md-2">
+                            <label for="" class=" col-form-label">	Start Date</label>
+                            <div class="">
+                                @Html.DevExpress().DateEdit(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "StartDate_dts";
+                                                      settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                      settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                      settings.Width = Unit.Percentage(100);
+                                                      settings.Date = DateTime.Now;
+                                                      settings.Properties.DisplayFormatInEditMode = true;
+                                                      settings.Properties.EditFormat = DevExpress.Web.EditFormat.Custom;
+                                                      settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                      settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                      settings.Properties.UseMaskBehavior = true;
+                                                      settings.Properties.AllowNull = false;
+                                                      settings.Properties.ClientSideEvents.GotFocus = "StDateGotFocus";
+                                                      settings.Properties.ClientSideEvents.LostFocus = "StDateLostFocus";
+                                                      settings.Properties.ClientSideEvents.DateChanged = "StDateLostFocus";
+                                                      settings.Properties.ClientSideEvents.ValueChanged = "StDateLostFocus";
+                                                      if (Model.WBS_StartDate != null && Model.WBS_StartDate.Year != 0001)
+                                                      {
+                                                          settings.Date = Model.WBS_StartDate;
+                                                      }
+
+                                                  }
+                                         ).GetHtml()
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-2">
+                            <label for="" class="col-form-label">End Date</label>
+                            <div class="">
+                                @Html.DevExpress().DateEdit(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "EndDate_dts";
+                                                      settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                      settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                      settings.Width = Unit.Percentage(100);
+                                                      settings.Date = DateTime.Now;
+                                                      settings.Properties.DisplayFormatInEditMode = true;
+                                                      settings.Properties.EditFormat = DevExpress.Web.EditFormat.Custom;
+                                                      settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                                      settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                                      settings.Properties.UseMaskBehavior = true;
+                                                      settings.Properties.AllowNull = false;
+                                                      settings.Properties.ClientSideEvents.GotFocus = "EnDateGotFocus";
+                                                      settings.Properties.ClientSideEvents.LostFocus = "EnDateLostFocus";
+                                                      settings.Properties.ClientSideEvents.DateChanged = "EnDateLostFocus";
+                                                      settings.Properties.ClientSideEvents.ValueChanged = "EnDateLostFocus";
+                                                      if (Model.WBS_EndTime != null && Model.WBS_EndTime.Year != 0001)
+                                                      {
+                                                          settings.Date = Model.WBS_EndTime;
+                                                      }
+                                                  }
+                                         ).GetHtml()
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        
+
+                        <div class="form-group  col-md-2">
+                            <label for="" class="col-form-label">Duration(Days)</label>
+                            <div class="">
+                                @Html.DevExpress().TextBox(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "txtDuration";
+                                                      settings.Width = Unit.Percentage(100);
+                                                      settings.Properties.MaskSettings.Mask = "<0..9999>.<0..99>";
+                                                      settings.ClientEnabled = false;
+                                                      if (Model.WBS_Duration != null)
+                                                      {
+                                                          settings.Text = Model.WBS_Duration;
+                                                      }
+
+                                                  }
+                                         ).GetHtml()
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-2">
+                            <label for="" class="col-form-label">Effort<b id="bName"></b></label>
+                            <div class="">
+                                @Html.DevExpress().TextBox(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "txtEffort";
+                                                      settings.Width = Unit.Percentage(100);
+                                                      settings.ClientEnabled = false;
+                                                      settings.Properties.MaskSettings.Mask = "<0..9999>.<0..99>";
+                                                      if (Model.WBS_Effort != null && Model.WBS_Effort!="")
+                                                      {
+                                                          settings.Text = Model.WBS_Effort;
+                                                      }
+                                                  }
+                                         ).GetHtml()
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-md-2">
+                            <label for="" class="col-form-label">Project Code </label>
+                            <div class="">
+                                @Html.Action("GetProjectCode", "Schedule", new { Project_ID = Model.WBS_ProjectCode, Branchs = Model.WBS_Branch, Hierarchy = @ViewBag.Hierarchy })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2" id="divHierarchy">
+                            <label for="" class="col-form-label">Hierarchy</label>
+                            <div class="">
+                                @*<select class="form-control"></select>*@
+                                @Html.DropDownListFor(x => x.WBS_HierarchyId, new SelectList(Model.Hierarchy_List, "Hierarchy_id", "Hierarchy_Name"), new { @id = "ddlHierarchy", @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="" class="col-form-label">Description</label>
+                            <div class="">
+                                @Html.DevExpress().Memo(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "txtDescription";
+                                                      settings.Width = Unit.Percentage(100);
+                                                      if (Model.WBS_Description != null)
+                                                      {
+                                                          settings.Text = Model.WBS_Description;
+                                                      }
+                                                  }
+                                         ).GetHtml()
+                            </div>
+                        </div>
+                        <div class="form-group row hide">
+                            <label for="" class=" col-form-label">Resources</label>
+                            <div class="">
+                                @Html.DevExpress().Memo(
+                                                  settings =>
+                                                  {
+                                                      settings.Name = "txtEffortS";
+                                                      settings.Width = Unit.Percentage(100);
+
+
+                                                  }
+                                         ).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear mBot10"></div>
+
+        <div class="mutiFMbox mBot10">
+
+
+            <table class="tablepd">
+                <tr>
+                    <td>
+                        <label for="" class="col-form-label">Activity Name</label>
+                        <div class="">
+                            @Html.DevExpress().TextBox(
+                                        settings =>
+                                        {
+                                            settings.Name = "txtActivityNameHeader";
+                                            settings.Width = Unit.Percentage(100);
+                                            settings.Properties.MaxLength = 500;
+
+                                        }
+                                         ).GetHtml()
+                        </div>
+                    </td>
+                    <td>
+                        <label for="" class="col-form-label">Effort<b id="bName1"></b></label>
+                        <div class="">
+                            @Html.DevExpress().TextBox(
+                                settings =>
+                                {
+                                    settings.Name = "txtEffortheader";
+                                    settings.Width = Unit.Percentage(100);
+                                    settings.Properties.MaxLength = 500;
+
+                                    settings.Properties.MaskSettings.Mask = "<0..9999>.<0..99>";
+                                    settings.Properties.ClientSideEvents.LostFocus = "EffortLostFocus";
+
+                                }
+                                    ).GetHtml()
+                        </div>
+                    </td>
+                    <td>
+                        <label for="" class="col-form-label">Start Date</label>
+                        <div class="">
+                            @Html.DevExpress().DateEdit(
+                                    settings =>
+                                    {
+                                        settings.Name = "dtStartDate";
+                                        settings.Width = Unit.Percentage(100);
+                                        settings.Properties.UseMaskBehavior = true;
+                                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                        settings.Width = Unit.Percentage(100);
+                                        settings.Date = DateTime.Now;
+                                        settings.Properties.DisplayFormatInEditMode = true;
+                                        settings.Properties.EditFormat = DevExpress.Web.EditFormat.Custom;
+                                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                        settings.Properties.UseMaskBehavior = true;
+                                        settings.Properties.AllowNull = false;
+                                        settings.Properties.ClientSideEvents.LostFocus = "StartLostFocus";
+                                        settings.Properties.ClientSideEvents.GotFocus = "StartdateGotFocus";
+                                        settings.Properties.ClientSideEvents.DateChanged = "StartLostFocus";
+                                        settings.Properties.ClientSideEvents.ValueChanged = "StartLostFocus";
+                                        
+
+                                    }
+                            ).GetHtml()
+                        </div>
+                    </td>
+                    <td>
+                        <label for="" class="col-form-label">End Date</label>
+                        <div class="">
+                            @Html.DevExpress().DateEdit(
+                                    settings =>
+                                    {
+                                        settings.Name = "dtEndDate";
+                                        settings.Width = Unit.Percentage(100);
+                                        settings.Properties.UseMaskBehavior = true;
+                                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                        settings.Width = Unit.Percentage(100);
+                                        settings.Date = DateTime.Now;
+                                        settings.Properties.DisplayFormatInEditMode = true;
+                                        settings.Properties.EditFormat = DevExpress.Web.EditFormat.Custom;
+                                        settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                        settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                        settings.Properties.UseMaskBehavior = true;
+                                        settings.Properties.AllowNull = false;
+                                        settings.Properties.ClientSideEvents.LostFocus = "EndLostFocus";
+                                        settings.Properties.ClientSideEvents.GotFocus = "EnddateGotFocus";
+                                        settings.Properties.ClientSideEvents.DateChanged= "EndLostFocus";
+                                        settings.Properties.ClientSideEvents.ValueChanged = "EndLostFocus";
+                                    }
+                            ).GetHtml()
+                        </div>
+                    </td>
+                    <td>
+                        <label for="" class="col-form-label">Predessesor</label>
+                        <div class="">
+                            @Html.DevExpress().TextBox(
+                                    settings =>
+                                    {
+                                        settings.Name = "txtPredecessor";
+                                        settings.Width = Unit.Percentage(100);
+                                        settings.Properties.MaskSettings.Mask = "<0..999999999>";
+                                        settings.Properties.ClientSideEvents.LostFocus = "PredecessorLostFocus";
+                                    }
+                            ).GetHtml()
+                        </div>
+                    </td>
+                    <td>
+                        <label for="" class="col-form-label">Duration(Days)</label>
+                        <div class="">
+                            @Html.DevExpress().TextBox(
+                                    settings =>
+                                    {
+                                        settings.Name = "txtDurationHeader";
+                                        settings.Width = Unit.Percentage(100);
+                                        settings.Properties.MaskSettings.Mask = "<0..9999>.<0..99>";
+                                        settings.ClientEnabled = false;
+
+                                    }
+                            ).GetHtml()
+                        </div>
+                    </td>
+                    <td>
+                        <label for="" class="col-form-label">Resources</label>
+                        <div class="">
+                            @Html.DevExpress().ButtonEdit(
+                                    settings =>
+                                    {
+                                        settings.Name = "btnResources";
+                                        settings.Width = Unit.Percentage(100);
+                                        settings.ReadOnly = true;
+                                        settings.Properties.Buttons.Add("...");
+                                        settings.Properties.ClientSideEvents.ButtonClick = "ResourcseBtnClick";
+                                        settings.Properties.ClientSideEvents.KeyDown = "ResourcseKeyDown";
+                                    }
+                            ).GetHtml()
+                        </div>
+                    </td>
+                    <td>
+                        <label for="" class="col-form-label">Remarks</label>
+                        <div class="">
+                            @Html.DevExpress().TextBox(
+                                settings =>
+                                {
+                                    settings.Name = "txtRemarksReader";
+                                    settings.Width = Unit.Percentage(100);
+
+
+                                }
+                            ).GetHtml()
+                        </div>
+                    </td>
+                    <td class="">
+                        <button class="btn btn-success btn-rounded " id="btnSave" onclick="onAddtoGridClick()" style="margin-top: 22px;"><i class="fa fa-plus"></i></button>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                
+            </div>
+        </div>
+        
+
+
+        <div class="relative " style="border-left: 1px solid #c1bebe; border-right: 1px solid #c1bebe; border-bottom: 1px solid #c1bebe; ">
+
+            @{
+                Html.RenderAction("ScheduleEntryView", "Schedule", new { Doc_Id = ViewBag.WBS_ID });
+            }
+
+        </div>
+        <div class="clearfix mTop5">
+            <button class="btn btn-success" onclick="SaveWBS()">Save </button>
+            <button class="btn btn-danger" onclick="CancelWBS()" >Cancel </button>
+        </div>
+    </div>
+    <input type="hidden" id="EditWBS_ID" value="@Model.WBS_ID">
+</div>
+
+<div class="modal fade pmsModal w50" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Task </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@Html.DevExpress().PopupControl(
+    settings =>
+    {
+        settings.Name = "PMSpcControl";
+        settings.Width = 600;
+        settings.Height = 350;
+        //settings.ScrollBars.v
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.HeaderText = "Employees Target Setting";
+        settings.Modal = true;
+        settings.AutoUpdatePosition = true;
+        settings.Top = 50;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.Above;
+        settings.SetContent(() =>
+        { });
+
+        //settings.ClientSideEvents.CloseUp = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(null, '', true); }";
+    }).GetHtml()
+
+

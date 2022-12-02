@@ -1,0 +1,59 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaging";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "p_StructureList", Action = "GridViewPart" };
+
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+    settings.KeyFieldName = "StructureID";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "StructureName";
+        column.Caption = "Structure Name";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "StructureCode";
+        column.Caption = "Structure Code";
+    });
+
+    settings.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            ViewContext.Writer.Write(
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickViewForm('" + DataBinder.Eval(tc.DataItem, "StructureID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/doc.png\" /></a>" +
+                "&nbsp;" +
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickEditForm('" + DataBinder.Eval(tc.DataItem, "StructureID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/info.png\" /></a>" +
+                 "&nbsp;" +
+                "<a href=\"javascript:void(0);\" onclick=\"OnClickDeleteForm('" + DataBinder.Eval(tc.DataItem, "StructureID") + "')\" class=\"pad\" title=\"Edit\"><img src=\"../../../assests/images/Delete.png\" /></a>"
+            );
+        });
+        c.Settings.AllowDragDrop = DefaultBoolean.False;
+        c.Settings.AllowSort = DefaultBoolean.False;
+        c.Width = 100;
+        c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+    });
+}).Bind(Model).GetHtml()
+
+<script>
+    function OnClickViewForm(StructureID) {
+        alert(StructureID);
+    }
+    function OnClickEditForm(StructureID) {
+        alert(StructureID);
+    }
+    function OnClickDeleteForm(StructureID) {
+        alert(StructureID);
+    }
+</script>

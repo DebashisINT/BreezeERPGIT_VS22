@@ -1,0 +1,261 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@using DevExpress.Web
+@model PMS.Models.ViewModel.ExpenseBookingViewModel
+@{
+    ViewBag.Title = "Project Expense Booking";
+}
+
+<style>
+    .gridWraper {
+        border: 1px solid #ccc;
+        min-height: 300px;
+    }
+
+    .tableGrid {
+        width: 100%;
+    }
+
+        .tableGrid > thead > tr > th {
+            background: #1e90ce;
+            color: #fff;
+        }
+
+        .tableGrid > thead > tr > th, .tableGrid > tbody > tr > td, .tableGrid > tfoot > tr > td {
+            padding: 8px 10px;
+        }
+
+        .tableGrid > tbody > tr > td, .tableGrid > tfoot > tr > td {
+            border-bottom: 1px solid #ccc;
+        }
+
+            .tableGrid > tbody > tr > td:not(:last-child), .tableGrid > tfoot > tr > td:not(:last-child) {
+                border-right: 1px solid #e4e4e4;
+            }
+
+        .tableGrid > thead > tr > th:not(:last-child) {
+            border-right: 1px solid #1678ad;
+        }
+
+    .mutiFMbox {
+        border: 1px solid #e2e2e2;
+    }
+</style>
+
+<div class="panel-heading clearfix ">
+    <div class="panel-title clearfix pull-left" id="myDiv">
+        <h3 class="pull-left">
+            <label>Project Expense Booking </label>
+        </h3>
+    </div>
+</div>
+<div class="form_main">
+    <div class="">
+        <div class="clearfix">
+            <button class="btn btn-success btn-radius" data-toggle="modal" data-target="#ExpBooking" data-backdrop="static" data-keyboard="true">
+                <span class="btn-icon"><i class="fa fa-plus"></i></span> Expense
+            </button>
+
+            <select name="ddlAppIds" class="btn btn-primary btn-radius" id="ddlAppIds">
+                <option value="0">Export to</option>
+                <option value="1">PDF</option>
+                <option value="2">XLSX</option>
+                <option value="3">XLS</option>
+                <option value="4">RTF</option>
+                <option value="5">CSV</option>
+            </select>
+        </div>
+    </div>
+    <div class="relative gridWraper">
+        <table class="tableGrid">
+            <thead>
+                <tr>
+                    <th>Transaction Date</th>
+                    <th>Expense Purpose</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Sales Tax...</th>
+                    <th>Currency</th>
+                    <th>Project</th>
+                    <th>Expense Category</th>
+                    <th>Comments</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+<!--Timesheet Entry -->
+<div class="modal fade pmsModal w70" id="ExpBooking" tabindex="-1" role="dialog" aria-labelledby="timeSheet" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Expense </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row pmsForm horizontalLbl">
+                    <div class="col-md-2">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Transaction Date <span class="asterix">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.DevExpress().DateEdit(
+                                settings =>
+                                {
+                                    settings.Name = "StartDate_dt";
+                                    settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                                    settings.Properties.EditFormatString = "dd-MM-yyyy";
+                                    settings.Width = Unit.Percentage(100);
+                                    settings.Date = DateTime.Now;
+                                }
+                                ).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Unit</label>
+                            <div class="col-sm-12">
+                                @*<select class="form-control">
+                                    <option>Select</option>
+                                </select>*@
+                                @Html.DropDownListFor(x => x.BranchList, new SelectList(Model.BranchList, "branch_id", "branch_description"), new { @id = "ddlBranch", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Project</label>
+                            <div class="col-sm-12">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Expense Purpose</label>
+                            <div class="col-sm-12">
+                                <textarea class="form_control" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Expense Category</label>
+                            <div class="col-sm-12">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Basis</label>
+                            <div class="col-sm-12">
+                                <select class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="Hourly">Hourly</option>
+                                    <option value="Daily">Daily</option>
+                                    <option value="Weekly">Weekly</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Yearly">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Quantity</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form_control" value="0.00" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Price</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form_control" value="0.00" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Currency</label>
+                            <div class="col-sm-12">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Amount</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form_control" value="0.00" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">Sales Tax Amount</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form_control" value="0.00" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-12 col-form-label">External Comments</label>
+                            <div class="col-sm-12">
+                                <textarea class="form_control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success btn-radius">Save & Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,30 @@
+﻿
+    .mutiFMbox {
+        padding: 3px 15px 15px 15px;
+    }
+
+    .widgetizeForm > li .parentLabel:after {
+        border-radius: 50% !important;
+    }
+
+    .widgetizeForm > li.on .parentLabel:after {
+        background: #3bbf39;
+        display: block;
+        box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ff9f3b;
+    }
+
+    .widgetizeForm > li:not(:first-child).on .parentLabel:before {
+        background: #4dc1a1;
+    }
+
+    .Projectmodaltype .modal-dialog {
+        margin-top: 5px !important;
+    }
+
+    .fixedMenuNew {
+        z-index: 5 !important;
+    }
+
+    .dxeButtonEditButton_PlasticBlue.dxeButtonDisabled_PlasticBlue {
+        opacity: 0.4;
+    }

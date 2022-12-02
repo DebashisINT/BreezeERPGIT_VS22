@@ -1,0 +1,44 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridView";
+    settings.CallbackRouteValues = new { Controller = "EmployeeAttachment", Action = "PartialEmployeeGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    //settings.ClientSideEvents.EndCallback = "OnEndCallback";
+ 
+   // settings.Settings.ShowGroupPanel = true;
+    settings.KeyFieldName = "Employee_Code";
+   
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowSelectCheckbox = true;
+    settings.CommandColumn.Width = 100;
+    settings.CommandColumn.Caption = " ";
+
+    //settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.Page;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 400;
+    settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+    settings.SettingsPager.PageSize = 10000;
+    
+  
+    
+   settings.Columns.Add(column =>
+    {
+        column.FieldName = "EmployeeUniqueCode";
+        column.Caption = "Employee Code";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+    });
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Employee_Name";
+        column.Caption = "Employee Name";
+        column.Width = System.Web.UI.WebControls.Unit.Percentage(70);
+        column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+    });
+
+    //DevExpress.Web..GridViewFeaturesHelper.SetupGlobalGridViewBehavior(settings);
+}).Bind(Model).GetHtml()

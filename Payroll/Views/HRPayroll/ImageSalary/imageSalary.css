@@ -1,0 +1,89 @@
+﻿
+    .tabTotal {
+        border: none;
+    }
+
+        .tabTotal .tabHead {
+            background: transparent !important;
+        }
+
+        .tabTotal .panel-body {
+            border: 1px solid #ccc;
+            border-top: 3px solid #3D5294;
+        }
+
+        .tabTotal .tabHead > ul > li > a {
+            height: 27px;
+            padding: 5px 10px 4px 10px;
+            border-radius: 0;
+            color: #333 !important;
+        }
+
+        .tabTotal .tabHead > ul > li > a {
+            border: 1px solid #d8d8d8;
+            border-bottom: 1px solid #002D96 !important;
+            background-color: #f9f9f9 !important;
+        }
+
+            .tabTotal .tabHead > ul > li > a:hover {
+                border: 1px solid #d8d8d8 !important;
+                border-bottom: 1px solid #002D96 !important;
+                background-color: #f1efef !important;
+            }
+
+        .tabTotal .tabHead > ul > li.active > a,
+        .tabTotal .tabHead > ul > li.active > a:hover {
+            border-top: 1px solid #002D96 !important;
+            border-right: 1px solid #002D96 !important;
+            border-bottom: 1px none #002D96 !important;
+            border-left: 1px solid #002D96 !important;
+            color: #fff !important;
+            background-color: #45599B !important;
+            -moz-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            -webkit-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+        }
+
+    .bacB {
+        padding: 15px 15px;
+        background: #f5f5f5;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    .mbot-5 {
+        margin-bottom: 8px;
+    }
+
+    .mtop-8 {
+        margin-top: 8px;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -4px;
+        top: 27px;
+    }
+
+    .dynamicPopupTbl input[type=text]:focus {
+        color: #333;
+    }
+
+    .table-fixed thead {
+        width: 99%;
+    }
+
+    .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+
+        .table-fixed tbody td, .table-fixed thead > tr > th {
+            float: left;
+        }
+

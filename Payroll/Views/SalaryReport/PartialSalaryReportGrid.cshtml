@@ -1,0 +1,23 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "SalaryReportgridView";
+    settings.CallbackRouteValues = new { Controller = "DefaultSalary", Action = "PartialEmployeeSalaryGrid" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.EnableRowsCache = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+
+    settings.KeyFieldName = "EmployeeCode";
+}).Bind(Model).GetHtml()
+   
+
+
+
+
+

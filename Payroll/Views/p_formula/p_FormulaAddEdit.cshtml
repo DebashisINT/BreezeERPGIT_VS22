@@ -1,0 +1,449 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc
+@{
+    ViewBag.Title = "p_FormulaAddEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    var globalRowIndex;
+
+    function save_new() {
+
+        var _formulaheader = {
+            table: $("#txt_tbl").val(),
+            short_nm: $('#txt_shrt_nm').val(),
+            applicbl_frm: appcbl_frm_dt.GetText(),
+            applicbl_to: appcbl_to_dt.GetText()
+
+        }
+           
+            var formulaItems = [];
+            for (var i = 0; i < 1000; i++) {
+                var formula_dtls = {};
+                if (grid.GetRow(i)) {
+                    if (grid.GetRow(i).style.display != "none") {
+                        grid.batchEditApi.StartEdit(i, 2);
+                        formula_dtls["low"] = grid.GetEditor("low").GetValue();
+                        formula_dtls["high"] = grid.GetEditor("high").GetValue();
+                        formula_dtls["value"] = grid.GetEditor("value").GetValue();
+                        formulaItems.push(formula_dtls);
+                    }
+                }
+            }
+
+            for (i = -1; i > -1000; i--) {
+                if (grid.GetRow(i)) {
+                    if (grid.GetRow(i).style.display != "none") {
+                        grid.batchEditApi.StartEdit(i, 2);
+                        var formula_dtls = {};
+                        formula_dtls["low"] = grid.GetEditor("low").GetValue();
+                        formula_dtls["high"] = grid.GetEditor("high").GetValue();
+                        formula_dtls["value"] = grid.GetEditor("value").GetValue();
+                        formulaItems.push(formula_dtls);
+                    }
+                }
+            }
+
+            console.log(formulaItems);
+            var apply = {
+                header: _formulaheader,
+                dtls: formulaItems
+               
+            }
+            $.ajax({
+                type: "POST",
+                url: "/p_formula/Apply",
+                data: "{apply:" + JSON.stringify(apply) + "}",//JSON.stringify(apply),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.d) {
+                        if (response.d == "true") {
+                            jAlert("Saved Successfully", "Alert", function () {
+                                window.location.href = 'DashBoardSettingList.aspx';
+                            });
+                        }
+                        else {
+                            jAlert(response.d);
+
+                        }
+
+                    }
+
+                },
+                error: function (response) {
+
+                    console.log(response);
+                }
+
+            });
+
+        
+    }
+
+    function save_exit() {
+
+    }
+
+    $(document).ready(function () {
+        grid.AddNewRow();
+        setTimeout(function () { AddNewRowWithSl(); }, 200);
+    });
+    function AddNewRowWithSl() {
+        grid.AddNewRow();
+        resuffleSerial();
+    }
+    function resuffleSerial() {
+        var sl = 1;
+        for (var i = -1; i > -500; i--) {
+            if (grid.GetRow(i)) {
+                grid.batchEditApi.StartEdit(i, 1);
+                grid.GetEditor('Sl').SetText(sl);
+                if (grid.GetEditor('low').GetText() == "") {
+
+                    //grid.batchEditApi.StartEdit(i, 4);
+
+                    grid.GetEditor('low').SetText(0);
+                    grid.GetEditor('high').SetText(0);
+                    grid.GetEditor('value').SetText(0);
+
+                    // grid.batchEditApi.StartEdit(i, 6);
+                }
+                grid.batchEditApi.StartEdit(i, 1);
+                sl = sl + 1;
+            }
+        }
+    }
+    function key_value(s, e) {
+        if (e.htmlEvent.key == "Enter" || e.code == "NumpadEnter") {
+            AddNewRowWithSl();
+        }
+    }
+
+    function BatchStartEditing(s, e) {
+        globalRowIndex = e.visibleIndex;
+    }
+
+    function grid_CustomButtonClick(s, e) {
+        if (e.buttonID == "Delete") {
+            grid.DeleteRow(e.visibleIndex);
+            resuffleSerial();
+        }
+        e.processOnServer = false;
+    }
+
+</script>
+
+
+
+<style>
+      .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+        background: #fff !important;
+    }
+
+    #grid_DXStatus  a.dxbButton_PlasticBlue.dxbButtonSys {
+        display: none;
+    }
+    .tabTotal {
+        border: none;
+    }
+
+        .tabTotal .tabHead {
+            background: transparent !important;
+        }
+
+        .tabTotal .panel-body {
+            border: 1px solid #ccc;
+            border-top: 3px solid #3D5294;
+        }
+
+        .tabTotal .tabHead > ul > li > a {
+            height: 27px;
+            padding: 5px 10px 4px 10px;
+            border-radius: 0;
+            color: #333 !important;
+        }
+
+        .tabTotal .tabHead > ul > li > a {
+            border: 1px solid #d8d8d8;
+            border-bottom: 1px solid #002D96 !important;
+            background-color: #f9f9f9 !important;
+        }
+
+            .tabTotal .tabHead > ul > li > a:hover {
+                border: 1px solid #d8d8d8 !important;
+                border-bottom: 1px solid #002D96 !important;
+                background-color: #f1efef !important;
+            }
+
+        .tabTotal .tabHead > ul > li.active > a,
+        .tabTotal .tabHead > ul > li.active > a:hover {
+            border-top: 1px solid #002D96 !important;
+            border-right: 1px solid #002D96 !important;
+            border-bottom: 1px none #002D96 !important;
+            border-left: 1px solid #002D96 !important;
+            color: #fff !important;
+            background-color: #45599B !important;
+            -moz-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            -webkit-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+        }
+
+    .dynamicPopupTbl {
+        border: 1px solid #ccc;
+    }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            overflow: hidden;
+            border-bottom: 1px solid #d9d9d9;
+            border-right: 1px solid #d9d9d9;
+            /* border-top-width: 0; */
+            border-left-width: 0;
+            padding: 4px 6px 5px;
+            font: 12px Tahoma, Geneva, sans-serif;
+        }
+
+        .dynamicPopupTbl > tbody > tr > th {
+            font: 12px Tahoma, Geneva, sans-serif;
+            padding: 7px 6px 7px 6px;
+            border-right: 1px solid #2a2067;
+            border-top: 1px solid #2a2067;
+            border-bottom: 1px solid #2a2067;
+        }
+
+            .dynamicPopupTbl > tbody > tr > th:first-child {
+                border-left: 1px solid #2a2067;
+            }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            cursor: pointer;
+        }
+
+            .dynamicPopupTbl > tbody > tr > td input {
+                border: none !important;
+                cursor: pointer;
+                background: transparent !important;
+                height: 14px;
+                margin-bottom: 0;
+                font: 12px Tahoma, Geneva, sans-serif;
+            }
+
+    #DetailsTable {
+        padding: 0 15px;
+    }
+
+    .HeaderStyle.newcol {
+        background-color: #45599b;
+    }
+
+    .dynamicPopupTbl > tbody > tr > th {
+        border-right: 1px solid #4f42a0;
+    }
+
+    .focusrow {
+        background-color: #3CA5DF;
+        color: #ffffff;
+    }
+
+        .focusrow > td input {
+            color: white;
+        }
+
+    .HeaderStyle {
+        background-color: #180771d9;
+        color: #f5f5f5;
+        height: 23px;
+        font-size: 15px;
+    }
+
+    .validclass {
+        position: absolute;
+        right: -4px;
+        top: 35px;
+    }
+
+  
+   
+</style>
+
+<div class="panel-title clearfix" id="myDiv">
+    <h3 class="pull-left">
+        <label>Formula Add/Edit</label>
+    </h3>
+    <div id="ApprovalCross" class="crossBtn"><a href=""><i class="fa fa-times"></i></a></div>
+</div>
+<div class="form_main">
+    <div class="row clearfix">
+        <div class="col-md-4">
+            <label>Table</label>
+            <div>
+                <input type="text" id="txt_tbl" />
+                <span id="Mandatorytable" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label>Short Name</label>
+            <div>
+                <input type="text" id="txt_shrt_nm" />
+                <span id="Mandatoryshrt_nm" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Applicable From</label>
+            <div>
+                @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "appcbl_frm_dt";
+                                         settings.Properties.DisplayFormatString = "dd/MM/yyyy";
+                                         settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                     }
+                            ).GetHtml()
+                <span id="Mandatoryfrm_dt" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Applicable To</label>
+            <div>
+                @Html.DevExpress().DateEdit(
+                                     settings =>
+                                     {
+                                         settings.Name = "appcbl_to_dt";
+                                         settings.Properties.DisplayFormatString = "dd/MM/yyyy";
+                                         settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                         settings.Width = Unit.Percentage(100);
+                                     }
+                            ).GetHtml()
+                <span id="Mandatoryto_dt" style="display: none" class="validclass">
+                    <img id="imgMandatoryName" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
+                </span>
+            </div>
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div id="DetailsTable">
+            @Html.DevExpress().GridView(
+                settings =>
+                {
+                    settings.Name = "grid";
+                    settings.Width = Unit.Percentage(100);
+                    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+                    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+                    settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
+                    settings.ClientSideEvents.BatchEditStartEditing = "BatchStartEditing";
+                    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+                    settings.ClientSideEvents.CustomButtonClick = "grid_CustomButtonClick";
+
+                    var del = new GridViewCommandColumnCustomButton();
+                    del.Text = "";
+                    del.Image.Url = "/assests/images/crs.png";
+                    del.ID = "Delete";
+                   
+                    
+
+
+
+                    settings.CommandColumn.CustomButtons.Add(del);
+                    settings.CommandColumn.Caption = "Action";
+                    settings.CommandColumn.Visible = true;
+                    settings.CommandColumn.Width = Unit.Percentage(5);
+
+                    var Slno = settings.Columns.Add("Slno", MVCxGridViewColumnType.TextBox);
+                    Slno.Caption = "Sl";
+                    Slno.FieldName = "Sl";
+                    Slno.Width = Unit.Percentage(5);
+
+
+                    var low = settings.Columns.Add("txt_low", MVCxGridViewColumnType.ButtonEdit);
+                    low.Caption = "Low";
+                    low.FieldName = "low";
+
+                    var l_low = (ButtonEditProperties)low.PropertiesEdit;
+                    l_low.MaskSettings.Mask = "<0..999999999>.<00..9999>";
+                    l_low.MaskSettings.AllowMouseWheel = false;
+                    l_low.DisplayFormatString = "0.0000";
+
+                    var high = settings.Columns.Add("txt_high", MVCxGridViewColumnType.ButtonEdit);
+                    high.Caption = "High";
+                    high.FieldName = "high";
+                    var h_high = (ButtonEditProperties)high.PropertiesEdit;
+                    h_high.MaskSettings.Mask = "<0..999999999>.<00..9999>";
+                    h_high.MaskSettings.AllowMouseWheel = false;
+                    h_high.DisplayFormatString = "0.0000";
+
+                    var Vvalue = settings.Columns.Add("txt_val", MVCxGridViewColumnType.ButtonEdit);
+                    Vvalue.Caption = "Value";
+                    Vvalue.FieldName = "value";
+                    var v_value = (ButtonEditProperties)Vvalue.PropertiesEdit;
+                    v_value.MaskSettings.Mask = "<0..999999999>.<00..9999>";
+                    v_value.MaskSettings.AllowMouseWheel = false;
+                    v_value.DisplayFormatString = "0.0000";
+
+
+
+
+
+
+                    settings.CellEditorInitialize = (s, e) =>
+                    {
+                        if (e.Column.Caption == "Value")
+                        {
+                            e.Editor.SetClientSideEventHandler("KeyDown", "key_value");
+                        }
+                        if (e.Column.FieldName != "Sl")
+                        {
+                            e.Editor.Enabled = true;
+                            e.Editor.ReadOnly = false;
+                        }
+
+
+                    };
+
+                }
+
+
+            ).GetHtml()
+        </div>
+        <div style="clear: both;"><br /></div>
+        <div class="col-md-12" style="padding-top: 10px;">
+            @Html.DevExpress().Button(
+                        settings =>
+                        {
+                            settings.Name = "btn_save_new";
+                            settings.Text = "Save & New";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-primary";
+                            settings.UseSubmitBehavior = false;
+                            settings.ClientSideEvents.Click = "save_new";
+
+
+                        }
+
+
+                        ).GetHtml()
+
+            @Html.DevExpress().Button(
+                        settings =>
+                        {
+                            settings.Name = "btn_save_exit";
+                            settings.Text = "Save & Exit";
+                            settings.RenderMode = ButtonRenderMode.Button;
+                            settings.ControlStyle.CssClass = "btn btn-primary";
+                            settings.UseSubmitBehavior = false;
+                            settings.ClientSideEvents.Click = "save_exit";
+
+
+                        }
+
+
+                        ).GetHtml()
+        </div>
+</div>
