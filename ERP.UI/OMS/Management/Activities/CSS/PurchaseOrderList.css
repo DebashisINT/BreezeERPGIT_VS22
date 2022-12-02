@@ -1,0 +1,115 @@
+﻿
+        strong label {
+            font-weight: bold !important;
+        }
+
+        input[type="radio"] {
+            webkit-transform: translateY(3px);
+            -moz-transform: translateY(3px);
+            transform: translateY(3px);
+        }
+
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+            -webkit-animation: blink-animation 1s steps(5, start) infinite;
+            cursor: pointer;
+            color: #128AC9;
+        }
+
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        @-webkit-keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        .padTab > tbody > tr > td {
+            padding-right: 15px;
+        }
+   
+        .dynamicPopupTbl > thead > tr > th, .dynamicPopupTbl > tbody > tr > td {
+            padding: 5px 8px !important;
+        }
+
+        .dynamicPopupTbl > tbody > tr > td {
+            cursor: pointer;
+        }
+
+        .dynamicPopupTbl.back > thead > tr > th {
+            background: #4e64a6;
+            color: #fff;
+        }
+
+        .dynamicPopupTbl.back > tbody > tr > td {
+            background: #fff;
+        }
+
+        .dynamicPopupTbl > tbody > tr > td input {
+            border: none !important;
+            cursor: pointer;
+            background: transparent !important;
+        }
+
+        .focusrow {
+            background-color: #0000ff3d;
+        }
+
+        .HeaderStyle {
+            background-color: #180771d9;
+            color: #f5f5f5;
+        }
+
+        .gridStatic {
+            margin-top: 25px;
+        }
+
+            .gridStatic .dynamicPopupTbl {
+                width: 100%;
+            }
+
+        .bodBot {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        table.scroll {
+            /* width: 100%; */ /* Optional */
+            /* border-collapse: collapse; */
+            border-spacing: 0;
+            width: 100%;
+        }
+
+            table.scroll tbody,
+            table.scroll thead {
+                display: block;
+            }
+
+        thead tr th {
+            height: 30px;
+            line-height: 30px;
+            /* text-align: left; */
+        }
+
+        table.scroll tbody {
+            height: 250px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .tblPad > tbody > tr > td {
+            padding-bottom: 8px;
+        }
+
+        .pdTop {
+            padding-top: 10px;
+        }
+
+        .pdLeft {
+            padding-left: 15px;
+        }
+    

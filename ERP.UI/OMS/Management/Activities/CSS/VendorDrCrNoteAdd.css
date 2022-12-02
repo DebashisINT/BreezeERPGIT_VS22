@@ -1,0 +1,34 @@
+﻿#grid_DXStatus, #aspxGridTax_DXStatus {
+            display: none;
+        }
+
+        .dxgv.dx-al, .dxgv.dx-ar, .dx-nowrap.dxgv, .gridcellleft.dxgv, .dxgv.dx-ac, .dxgvCommandColumn_PlasticBlue.dxgv.dx-ac {
+            display: table-cell !important;
+        }
+
+
+
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        .pullleftClass {
+            position: absolute;
+            right: 8px;
+            top: 35px;
+        }
+
+        .crossBtn.CloseBtn {
+            border: none;
+            margin-right: 10px;
+        }
+
+            .crossBtn.CloseBtn input {
+                padding: 0;
+                border: none;
+            }
+
+        .dxtcSys.dxtc-init > .dxtc-content {
+            border-color: #cccccc !important;
+        }

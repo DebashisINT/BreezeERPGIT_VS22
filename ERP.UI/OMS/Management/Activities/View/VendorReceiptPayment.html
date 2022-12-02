@@ -1,0 +1,824 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Vendor Receipt Payment</title>
+
+    <link href="/assests/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assests/css/jquery-ui.css" rel="stylesheet" />
+    <link href="/assests/pluggins/customScroll/custoScroll.css" rel="stylesheet" />
+    <link href="/assests/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="/assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assests/css/custom/main.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/assests/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assests/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        .navbar {
+            z-index: 99 !important;
+        }
+    </style>
+    <style>
+        .panel.with-nav-tabs .panel-heading {
+            padding: 5px 5px 0 5px;
+        }
+
+        .panel.with-nav-tabs .nav-tabs {
+            border-bottom: none;
+        }
+
+        .panel.with-nav-tabs .nav-justified {
+            margin-bottom: -1px;
+        }
+        /********************************************************************/
+
+        /*** PANEL PRIMARY ***/
+        .with-nav-tabs.panel-primary .nav-tabs > li > a,
+        .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+            color: #fff;
+        }
+
+            .with-nav-tabs.panel-primary .nav-tabs > .open > a,
+            .with-nav-tabs.panel-primary .nav-tabs > .open > a:hover,
+            .with-nav-tabs.panel-primary .nav-tabs > .open > a:focus,
+            .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+            .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+                color: #fff;
+                background-color: #3071a9;
+                border-color: transparent;
+            }
+
+        .with-nav-tabs.panel-primary .nav-tabs > li.active > a,
+        .with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
+            color: #428bca;
+            background-color: #fff;
+            border-color: #428bca;
+            border-bottom-color: transparent;
+        }
+
+        .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu {
+            background-color: #428bca;
+            border-color: #3071a9;
+        }
+
+            .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a {
+                color: #fff;
+            }
+
+                .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
+                .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
+                    background-color: #3071a9;
+                }
+
+            .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a,
+            .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
+            .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
+                background-color: #4a9fe9;
+            }
+        /********************************************************************/
+        .tabTotal {
+            border: none;
+        }
+
+            .tabTotal .tabHead {
+                background: transparent !important;
+            }
+
+            .tabTotal .panel-body {
+                border: 1px solid #ccc;
+                border-top: 3px solid #3D5294;
+            }
+
+            .tabTotal .tabHead > ul > li > a {
+                height: 27px;
+                padding: 5px 10px 4px 10px;
+                border-radius: 0;
+                color: #333 !important;
+            }
+
+            .tabTotal .tabHead > ul > li > a {
+                border: 1px solid #d8d8d8;
+                border-bottom: 1px solid #002D96 !important;
+                background-color: #f9f9f9 !important;
+            }
+
+                .tabTotal .tabHead > ul > li > a:hover {
+                    border: 1px solid #d8d8d8 !important;
+                    border-bottom: 1px solid #002D96 !important;
+                    background-color: #f1efef !important;
+                }
+
+            .tabTotal .tabHead > ul > li.active > a,
+            .tabTotal .tabHead > ul > li.active > a:hover {
+                border-top: 1px solid #002D96 !important;
+                border-right: 1px solid #002D96 !important;
+                border-bottom: 1px none #002D96 !important;
+                border-left: 1px solid #002D96 !important;
+                color: #fff !important;
+                background-color: #45599B !important;
+                -moz-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+                -webkit-box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+                box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+            }
+
+        .horizontallblHolder {
+            height: auto;
+            border: 1px solid #12a79b;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+            .horizontallblHolder > table > tbody > tr > td {
+                padding: 8px 10px;
+                background: #ffffff;
+                background: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+                background: -webkit-linear-gradient(top, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                background: linear-gradient(to bottom, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+            }
+
+                .horizontallblHolder > table > tbody > tr > td:first-child {
+                    background: #12a79b;
+                    color: #fff;
+                }
+
+                .horizontallblHolder > table > tbody > tr > td:last-child {
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    color: #121212;
+                }
+    </style>
+    <style>
+        .dvxtbl {
+            border: 1px solid #ccc;
+        }
+
+            .dvxtbl > thead > tr > th {
+                cursor: pointer;
+                white-space: nowrap;
+                padding: 7px 6px;
+                border-top: 1px none #3e597b;
+                border: 1px solid #3e597b;
+                background: #54749D !important;
+                overflow: hidden;
+                font-weight: normal;
+                text-align: left;
+                color: #fff;
+            }
+
+            .dvxtbl > tbody > tr > td {
+                padding: 5px 5px;
+                background: #fff;
+            }
+
+                .dvxtbl > tbody > tr > td:not(:last-child) {
+                    border-right: 1px solid #ccc;
+                }
+
+            .dvxtbl > tbody > tr > td {
+                border-bottom: 1px solid #ccc;
+            }
+    </style>
+    <style>
+        .headText {
+            margin: 0;
+            padding: 5px 15px 5px;
+            background: #0177c1;
+            margin-bottom: 5px;
+            color: #fff;
+            font-size: 12px !important;
+            border-radius: 12px;
+        }
+
+        #DivBilling [class^="col-md"], #DivShipping [class^="col-md"] {
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
+        .lowSize {
+            font-size: 12px !important;
+        }
+
+        .mandt {
+            position: absolute;
+            right: -18px;
+            top: 4px;
+        }
+
+        .mLeft5 {
+            margin-left: 5px;
+        }
+    </style>
+
+
+    <script>
+        var jsonProductTax;
+        var jsonTotalTax;
+        document.onkeydown = function (e) {
+            if (event.keyCode == 27) {
+                StopDefaultAction(e);
+                $('#ProductTaxModel').modal('hide');
+            }
+        }
+
+        function StopDefaultAction(e) {
+            if (e.preventDefault) { e.preventDefault() }
+            else { e.stop() };
+
+            e.returnValue = false;
+            e.stopPropagation();
+        }
+        $(document).ready(function () {
+            var full_url = document.URL;
+            var url_array = full_url.split('?id=');
+            var id = url_array[1];
+
+            if ((id != null) && (id != "")) {
+                GetVendorPaymentReceiptHeaderDetails(id);
+            }
+
+
+        });
+
+        //function viewProductTax(ProductDetailsID, NetAmount, GrossAmount) {
+        //    document.getElementById('lblPopupTitle').innerHTML = "Tax Details";
+        //    var TaxDetails = $.grep(jsonProductTax, function (element, index) { return element.InvoiceDetails_Id == ProductDetailsID });
+
+        //    var txt = '';
+        //    txt += "<table width='100%' class='dvxtbl'><thead><tr>";
+        //    txt += "<th style='width:30%'>Tax Component ID</th>";
+        //    txt += "<th style='width:30%'>Tax Component Name</th>";
+        //    txt += "<th style='width:13%;text-align:right'>Calculated On</th>";
+        //    txt += "<th style='width:13%;text-align:right'>Percentage</th>";
+        //    txt += "<th style='width:13%;text-align:right'>Amount</th>";
+        //    txt += "</tr></thead><tbody>";
+
+        //    if (TaxDetails.length > 0) {
+        //        for (x in TaxDetails) {
+        //            txt += " <tr>";
+        //            txt += " <td style='width:30%'>" + TaxDetails[x]["Taxes_Code"] + "</td>";
+        //            txt += " <td style='width:30%'>" + TaxDetails[x]["Taxes_Name"] + "</td>";
+
+        //            if (TaxDetails[x]["Percentage"] == "G") txt += " <td style='width:13%' align='right'>" + parseFloat(GrossAmount).toFixed(2) + "</td>";
+        //            else txt += " <td style='width:13%' align='right'>" + parseFloat(NetAmount).toFixed(2) + "</td>";
+
+        //            txt += " <td style='width:13%' align='right'>" + parseFloat(TaxDetails[x]["Percentage"]).toFixed(2) + "</td>";
+        //            txt += " <td style='width:13%' align='right'>" + parseFloat(TaxDetails[x]["Amount"]).toFixed(2) + "</td>";
+        //            txt += " </tr>";
+        //        }
+        //        txt += "</tbody></table>"
+        //    }
+        //    else {
+        //        txt += " <tr><td colspan='5'>No data to display</td></tr></tbody></table>"
+        //    }
+        //    document.getElementById("TaxTable").innerHTML = txt;
+        //    $('#ProductTaxModel').modal('show');
+        //}
+
+        function viewInvoiceTax() {
+            document.getElementById('lblPopupTitle').innerHTML = "Tax Details";
+            var TaxDetails = jsonTotalTax;
+
+            var txt = '';
+            txt += "<table width='100%' class='dvxtbl'><thead><tr>";
+            txt += "<th style='width:30%'>Tax Component ID</th>";
+            txt += "<th style='width:30%'>Tax Component Name</th>";
+            txt += "<th style='width:13%;text-align:right'>Percentage</th>";
+            txt += "<th style='width:13%;text-align:right'>Amount</th>";
+            txt += "</tr></thead><tbody>";
+
+            if (TaxDetails.length > 0) {
+                for (x in TaxDetails) {
+                    txt += " <tr>";
+                    txt += " <td style='width:30%'>" + TaxDetails[x]["Taxes_Code"] + "</td>";
+                    txt += " <td style='width:30%'>" + TaxDetails[x]["Taxes_Name"] + "</td>";
+
+                    txt += " <td style='width:20%' align='right'>" + parseFloat(TaxDetails[x]["Percentage"]).toFixed(2) + "</td>";
+                    txt += " <td style='width:20%' align='right'>" + parseFloat(TaxDetails[x]["Amount"]).toFixed(2) + "</td>";
+                    txt += " </tr>";
+                }
+                txt += "</tbody></table>"
+            }
+            else {
+                txt += " <tr><td colspan='4'>No data to display</td></tr></tbody></table>"
+            }
+            document.getElementById("TaxTable").innerHTML = txt;
+            $('#ProductTaxModel').modal('show');
+        }
+
+        function GetVendorPaymentReceiptHeaderDetails(id)  // Get Cash Bank header details
+        {
+            $.ajax({
+                type: "POST",
+                url: "services/VendorReceiptPaymentService.asmx/GetVendorPaymentReceiptHeaderDetails",
+                data: JSON.stringify({ 'ReceiptPayment_ID': id }),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.d) {
+                        if (response.d.msg == "ok") {
+
+
+
+                            var header_details = response.d.HeaderDetails;
+                            var paymentdetails = response.d.PaymentDetails;
+                            var address_details = response.d.AddressDetails;
+                            var paymentReceiptdetails = response.d.PaymentReceiptDetails;
+                            var productdetails = response.d.ProductDetails;
+                            //jsonProductTax = response.d.InvoiceProductTaxDetails;
+                            jsonTotalTax = response.d.TotalTaxDetails;
+                            var AddressType = 0;
+
+                            document.getElementById('txtType').value = header_details.VoucherType;
+                            document.getElementById('txtunit').value = header_details.Unit;
+                            document.getElementById('txtDocumentNo').value = header_details.DocumentNo;
+                            document.getElementById('txtPostingDate').value = header_details.PostingDate;
+                            document.getElementById('txtforunit').value = header_details.forUnit;
+                            if (header_details.contacttype == "CL") {
+
+                                document.getElementById("Customer").checked = true;
+                            }
+
+                            else if (header_details.contacttype == "DV") {
+
+                                document.getElementById("vendor").checked = true;
+
+                            }
+
+                            document.getElementById('txtcustomer').value = header_details.Customer;
+                            document.getElementById('txt_contact_person').value = header_details.Contact_Person;
+                            document.getElementById('txtCashBank').value = header_details.CashBank;
+                            document.getElementById('txtCurrency').value = header_details.Currency;
+                            document.getElementById('txtRate').value = header_details.Rate;
+                            document.getElementById('txtinstrmnt_type').value = header_details.InstrumentType;
+                            document.getElementById('txtinstrmnt_No').value = header_details.InstrumentNo;
+
+                            document.getElementById('txtinstrmnt_Dt').value = header_details.InstrumentDate;
+                            document.getElementById('txtVoucherAmnt').value = header_details.VoucherAmount;
+                            document.getElementById('txtgstadv').value = productdetails.productsname;
+                            document.getElementById('txtnarration').value = header_details.Narration;
+                            if (header_details.GSTApplicable ==true) document.getElementById("chkgstapplcbl").checked = true;
+                            else document.getElementById("chkgstapplcbl").checked = false;
+                            document.getElementById('lblNetAmount').innerHTML = header_details.TotalPaymentAmount;
+                            var txt = '';
+                            txt += "<table width='100%' class='dvxtbl'><thead><tr>";
+                            txt += "<th style='width:5%'>Sl</th>";
+                            txt += "<th style='width:17%'>Type</th>";
+                            txt += "<th style='width:19%'>Document No.</th>";
+                            txt += "<th style='width:17%;text-align:right'>Receipt</th>";
+                            txt += "<th style='width:17%;text-align:right'>Payment</th>";
+                            txt += "<th style='width:25%'>Remarks</th>";
+                            txt += "</tr></thead><tbody>";
+
+                            if (paymentReceiptdetails.length > 0) {
+                                for (x in paymentReceiptdetails) {
+                                    txt += " <tr>";
+                                    txt += " <td style='width:5%'>" + paymentReceiptdetails[x]["SrlNo"] + "</td>";
+                                    txt += " <td style='width:17%'>" + paymentReceiptdetails[x]["Type"] + "</td>";
+                                    txt += " <td style='width:19%'>" + paymentReceiptdetails[x]["DocumentNo"] + "</td>";
+                                    txt += " <td style='width:17%' align='right'>" + paymentReceiptdetails[x]["Receipt"] + "</td>";
+                                    txt += " <td style='width:17%' align='right'>" + paymentReceiptdetails[x]["Payment"] + "</td>";
+                                    txt += " <td style='width:25%'>" + paymentReceiptdetails[x]["Remarks"] + "</td>";
+                                    txt += " </tr>";
+                                }
+                                txt += "</tbody></table>"
+                            }
+                            else {
+                                txt += " <tr><td colspan='6'>No data to display</td></tr></tbody></table>"
+                            }
+
+                            document.getElementById("tblDetails").innerHTML = txt;
+
+
+                            if (address_details.length > 0) {
+
+                                for (x in address_details) {
+                                    AddressType = address_details[x]["AddressType"];
+
+                                    if (AddressType == "Billing") {
+                                        document.getElementById('txtBillingAddress1').value = address_details[x]["Address1"];
+                                        document.getElementById('txtBillingAddress2').value = address_details[x]["Address2"];
+                                        document.getElementById('txtBillingAddress3').value = address_details[x]["Address3"];
+                                        document.getElementById('txtBillinglandmark').value = address_details[x]["LandMark"];
+                                        document.getElementById('txtBillingCountry').value = address_details[x]["CountryName"];
+                                        document.getElementById('txtBillingState').value = address_details[x]["StateName"];
+                                        document.getElementById('txtBillingCity').value = address_details[x]["CityName"];
+                                        document.getElementById('txtBillingArea').value = address_details[x]["AreaName"];
+                                        document.getElementById('txtBillingPin').value = address_details[x]["Pincode"];
+                                        document.getElementById('txtBillingGSTIN').value = address_details[x]["GSTIN"];
+                                    }
+                                    else if (AddressType == "Shipping") {
+                                        document.getElementById('txtShippingAddress1').value = address_details[x]["Address1"];
+                                        document.getElementById('txtShippingAddress2').value = address_details[x]["Address2"];
+                                        document.getElementById('txtShippingAddress3').value = address_details[x]["Address3"];
+                                        document.getElementById('txtShippinglandmark').value = address_details[x]["LandMark"];
+                                        document.getElementById('txtShippingCountry').value = address_details[x]["CountryName"];
+                                        document.getElementById('txtShippingState').value = address_details[x]["StateName"];
+                                        document.getElementById('txtShippingCity').value = address_details[x]["CityName"];
+                                        document.getElementById('txtShippingArea').value = address_details[x]["AreaName"];
+                                        document.getElementById('txtShippingPin').value = address_details[x]["Pincode"];
+                                        document.getElementById('txtShippingGSTIN').value = address_details[x]["GSTIN"];
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        alert(response.d.msg);
+                    }
+                },
+                error: function (response) {
+                    alert(response.d.msg);
+                }
+            });
+        }
+    </script>
+
+</head>
+<body>
+    <div class="panel-heading">
+        <div class="panel-title clearfix">
+            <h3 class="pull-left">View Vendor Payment Receipt</h3>
+        </div>
+    </div>
+    <div class="form_main">
+        <div class="row clearfix">
+            <div class="col-md-12">
+                <div class="panel with-nav-tabs panel-primary tabTotal">
+                    <div class="panel-heading tabHead">
+                        <ul class="nav nav-tabs">
+                            <li class="in active"><a href="#tab1" data-toggle="tab" role="tab">General</a></li>
+                            <li><a href="#tab2" data-toggle="tab" role="tab">Our Billing/Shipping</a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Voucher Type</label>
+                                        <span style="color: red;"></span>
+                                        <div>
+                                            <input type="text" id="txtType" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Unit</label>
+                                        <span style="color: red;"></span>
+                                        <div>
+                                            <input type="text" id="txtunit" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>Document No.</label>
+                                        <span style="color: red;"></span>
+                                        <div>
+                                            <input type="text" id="txtDocumentNo" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Posting Date</label>
+                                        <span style="color: red;"></span>
+                                        <div>
+                                            <input type="text" id="txtPostingDate" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>For Unit</label>
+                                        <span style="color: red;"></span>
+                                        <div>
+                                            <input type="text" id="txtforunit" readonly>
+                                        </div>
+                                    </div>
+                                    <div style="clear: both"></div>
+                                    <div class="col-md-2" relative>
+                                        <input type="radio" name="editList" id="vendor" disabled />
+                                        <label for="always">Vendor</label>
+                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        <input type="radio" name="editList" id="Customer" disabled />
+                                        <label for="never">Customer</label>
+                                        <div>
+                                            <input type="text" id="txtcustomer" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Contact Person</label>
+                                        <div>
+                                            <input type="text" id="txt_contact_person" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Cash/Bank</label>
+                                        <div>
+                                            <input type="text" id="txtCashBank" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label>Currency</label>
+                                        <div>
+                                            <input type="text" id="txtCurrency" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label>Rate</label>
+                                        <div>
+                                            <input type="text" id="txtRate" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label id="lbl_name">Instrument Type</label>
+                                        <div>
+                                            <input type="text" id="txtinstrmnt_type" readonly>
+                                        </div>
+                                    </div>
+                                    <div style="clear: both"></div>
+                                    <div class="col-md-2">
+                                        <label>Instrument No</label>
+                                        <div>
+                                            <input type="text" id="txtinstrmnt_No" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 relative ">
+                                        <label>Instrument Date</label>
+                                        <div>
+                                            <input type="text" id="txtinstrmnt_Dt" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Narration</label>
+                                        <div>
+                                            <input type="text" id="txtnarration" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Voucher Amount</label>
+                                        <div>
+                                            <input type="text" id="txtVoucherAmnt" readonly>
+                                        </div>
+                                    </div>
+                                    <div style="clear: both"><br /></div>
+                                    <div class="col-md-4">
+                                        <label>Select product to calculate GST for Advance</label>
+                                        <div>
+                                            <input type="text" id="txtgstadv" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding-top: 21px;">
+                                        <div>
+                                            <input type="checkbox" id="chkgstapplcbl" disabled>Gst Applicable
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div style="clear: both"><br /></div>
+                                    <div class="col-md-12">
+                                        <div id="tblDetails">
+                                        </div>
+                                    </div>
+                                    <div style="clear: both"><br /></div>
+                                    <div class="content reverse horizontal-images clearfix" style="width: 100%; margin-right: 0; padding: 8px; height: auto; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; border-radius: 0;">
+                                        <ul>
+
+                                            <li class="clsbnrLblInvVal">
+                                                <div class="horizontallblHolder">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <label>Total Amount</label>
+                                                                </td>
+                                                                <td>
+                                                                    <label id="lblNetAmount"></label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="clear: both"><br /></div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary" onclick="viewInvoiceTax()">Taxes</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab2">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mbot5" id="DivBilling">
+                                            <h5 class="headText">Our Billing Address</h5>
+                                            <div class="clearfix" style="background: #fff; border: 1px solid #ccc; padding: 0px 0 10px 0;">
+                                                <div style="padding-right: 8px">
+                                                    <div class="clear"><br /></div>
+                                                    <div class="col-md-4" style="height: auto; margin-bottom: 5px;">
+                                                        Address1: <span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtBillingAddress1" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto; margin-bottom: 5px;">
+                                                        Address2:
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtBillingAddress2" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto; margin-bottom: 5px;">
+                                                        Address3:
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtBillingAddress3" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto; margin-bottom: 5px;">
+                                                        Landmark:
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtBillinglandmark" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        Pin/Zip (6 Characters):<span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtBillingPin" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        Country:<span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtBillingCountry" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        State:<span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtBillingState" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        City/District:<span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtBillingCity" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        Area:
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="txtBillingArea" readonly>
+                                                    </div>
+
+                                                    <div class="clear"></div>
+                                                    <div id="BillingGstDiv">
+                                                        <div class="col-md-4" style="height: auto;">
+                                                            GSTIN:
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="text" id="txtBillingGSTIN" readonly>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mbot5" id="DivShipping">
+                                            <h5 class="headText">Our Shipping Address</h5>
+                                            <div class="clearfix" style="background: #fff; border: 1px solid #ccc; padding: 0px 0 10px 0;">
+                                                <div style="padding-right: 8px">
+                                                    <div class="clear"><br /></div>
+                                                    <div class="col-md-4" style="height: auto; margin-bottom: 5px;">
+                                                        Address1: <span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtShippingAddress1" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto; margin-bottom: 5px;">
+                                                        Address2:
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtShippingAddress2" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto; margin-bottom: 5px;">
+                                                        Address3:
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtShippingAddress3" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto; margin-bottom: 5px;">
+                                                        Landmark:
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtShippinglandmark" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        Pin/Zip (6 Characters):<span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtShippingPin" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        Country:<span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtShippingCountry" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        State:<span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtShippingState" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        City/District:<span style="color: red;">*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="Left_Content relative">
+                                                            <input type="text" id="txtShippingCity" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="height: auto;">
+                                                        Area:
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="txtShippingArea" readonly>
+                                                    </div>
+
+                                                    <div class="clear"></div>
+                                                    <div id="BillingGstDiv">
+                                                        <div class="col-md-4" style="height: auto;">
+                                                            GSTIN:
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="text" id="txtShippingGSTIN" readonly>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<!-- Modal Popup -->
+<div class="modal fade" id="ProductTaxModel" role="dialog">
+    <div class="modal-dialog">
+         Modal content
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><label id="lblPopupTitle">Product Tax Details</label></h4>
+            </div>
+            <div class="modal-body">
+                <div id="TaxTable">
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Popup -->

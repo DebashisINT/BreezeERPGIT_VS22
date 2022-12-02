@@ -1,0 +1,111 @@
+﻿body {
+    font-family: Arial;
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    height: 27px;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0px 20px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 14px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.horizontallblHolder {
+    height: auto;
+    border: 1px solid #12a79b;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+    .horizontallblHolder > table > tbody > tr > td {
+        padding: 8px 10px;
+        background: #ffffff;
+        background: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+        background: -webkit-linear-gradient(top, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+        background: linear-gradient(to bottom, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+    }
+
+        .horizontallblHolder > table > tbody > tr > td:first-child {
+            background: #12a79b;
+            color: #fff;
+        }
+
+        .horizontallblHolder > table > tbody > tr > td:last-child {
+            font-weight: 500;
+            text-transform: uppercase;
+            color: #121212;
+        }
+
+.statusBar a:first-child {
+    display: none;
+}
+
+.dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+    background: #FFFFFF !important;
+}
+
+table#floatedTbl {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    table#floatedTbl > thead {
+        display: block;
+        overflow: auto;
+        color: #fff;
+        background: #094766;
+    }
+
+    table#floatedTbl > tbody {
+        display: block;
+   
+        overflow: auto;
+    }
+
+        table#floatedTbl > thead > tr > th, table#floatedTbl > tbody > tr > td {
+            padding: .3em 1em;
+            text-align: left;
+            vertical-align: top;
+            border-left: 1px solid #fff;
+        }
+
+#MandatorysCustomer {
+    position: absolute;
+    right: -5px;
+    top: 25px;
+}
+
+.ml5 {
+    margin-left: 5px;
+}

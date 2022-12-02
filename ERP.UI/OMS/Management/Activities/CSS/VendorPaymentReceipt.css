@@ -1,0 +1,106 @@
+﻿ #aspxGridTax_DXStatus, #grid_DXStatus, #gridBatch_DXEmptyRow {
+            display: none;
+        }
+
+        #aspxGridTax_DXStatus, #grid_DXStatus {
+            display: none;
+        }
+
+        #txtRate_EC.dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }
+
+        table#gridBatch, table#gridBatch > tbody > tr > td > .dxgvHSDC > div, table#gridBatch > tbody > tr > td > .dxgvCSD {
+            width: 100% !important;
+        }
+
+        #DivBilling [class^="col-md"], #DivShipping [class^="col-md"] {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    
+        .voucherno {
+            position: absolute;
+            right: -2px;
+            top: 36px;
+        }
+
+        .iconTransDate {
+            position: absolute;
+            right: -1px;
+            top: 36px;
+        }
+
+        .iconBranch {
+            position: absolute;
+            right: -1px;
+            top: 36px;
+        }
+
+        .iconCustomer {
+            position: absolute;
+            right: -1px;
+            top: 29px;
+        }
+
+        .iconCashBank {
+            position: absolute;
+            right: -1px;
+            top: 29px;
+        }
+
+        .inline {
+            display: inline !important;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content {
+            overflow: visible !important;
+        }
+
+
+
+        .abs {
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+
+        .fa.fa-exclamation-circle:before {
+            font-family: FontAwesome;
+        }
+
+        .tp2 {
+            right: -18px;
+            top: 7px;
+            position: absolute;
+        }
+
+        #txtCreditLimit_EC {
+            position: absolute;
+        }
+        /*.dxgv {
+            display: none;
+        }*/
+        #gridBatch_DXStatus {
+            display: none;
+        }
+
+        .dxgv.dx-al, .dxgv.dx-ar, .dx-nowrap.dxgv, .gridcellleft.dxgv, .dxgv.dx-ac, .dxgvCommandColumn_PlasticBlue.dxgv.dx-ac {
+            display: table-cell !important;
+        }
+
+        #gridBatch_DXMainTable tr td:first-child {
+            display: table-cell !important;
+        }
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        #gridBatch_DXStatus span > a {
+            display: none;
+        }
+
+        #rdl_Contact > tbody > tr > td:not(:last-child) {
+            padding-right: 10px;
+        }

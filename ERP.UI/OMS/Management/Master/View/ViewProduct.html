@@ -1,0 +1,897 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="../../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../../../assests/js/jquery.min.js"></script>
+    <script src="../../../../assests/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../../../../assests/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="../../../../assests/js/angular.min.js"></script>
+    <script src="JS/ViewProduct.js?v=0.04"></script>
+
+    <style>
+        .btn {
+            cursor: auto !important;
+        }
+
+        .clsCreditHold {
+            cursor: auto !important;
+        }
+
+        input[type="checkbox"] + .btn-group > label span {
+            width: 20px;
+        }
+
+            input[type="checkbox"] + .btn-group > label span:first-child {
+                /*display: none;*/
+            }
+
+            input[type="checkbox"] + .btn-group > label span:last-child {
+                display: inline-block;
+            }
+
+        input[type="checkbox"]:checked + .btn-group > label span:first-child {
+            display: inline-block;
+        }
+
+        input[type="checkbox"]:checked + .btn-group > label span:last-child {
+            /*display: none;*/
+        }
+
+        .clear {
+            clear: both;
+        }
+
+
+
+
+        .modal-backdrop {
+            z-index: auto !important;
+        }
+
+        body {
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .table-bordered {
+            border: 1px solid #ddd;
+        }
+
+            .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+                border: 1px solid #ddd;
+            }
+
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            padding: 4px 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+
+        .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border: 1px solid #ddd;
+        }
+
+        .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
+            border-top: 0;
+        }
+
+        .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border-bottom-width: 2px;
+        }
+
+        .stTble td > label {
+            font-weight: bold;
+        }
+
+        div.input {
+            width: 100%;
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-top: -1px;
+            height: 31px;
+            background: #fdfbfb;
+            margin-bottom: 3px;
+            overflow: hidden;
+        }
+
+            div.input > input {
+                border: none;
+            }
+
+        .paddingTop {
+            padding-top: 15px;
+        }
+
+        .sttble > thead > tr > th, .sttble tr th {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#258dc8+0,258dc8+100;Blue+Flat+%231 */
+            background: #258dc8; /* Old browsers */
+            background: -moz-linear-gradient(top, #258dc8 0%, #258dc8 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #258dc8 0%,#258dc8 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #258dc8 0%,#258dc8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#258dc8', endColorstr='#258dc8',GradientType=0 ); /* IE6-9 */
+            color: #fff;
+            font-weight: normal;
+            border: 1px solid #1a79af;
+            border-top: 1px solid #1a79af !important;
+        }
+
+        .paddingBottom {
+            margin-bottom: 10px;
+        }
+
+        .hdr {
+            border-bottom: 1px solid #ccc;
+            margin: 0 15px;
+        }
+
+        .form_main {
+            margin: 0 5px !important;
+            /*background-color: #fbfbfb;
+        border: 1px solid #ccc;
+        overflow: hidden;
+        padding: 20px;*/
+            border-top: 1px solid #ccc;
+            padding: 5px 0 0 0;
+        }
+
+
+        .page_title {
+            float: left;
+            width: 100%;
+            font-size: 18px;
+            color: #104e8b;
+            border-bottom: 1px solid #dadada;
+            margin-bottom: 0px;
+            padding: 5px 0;
+            line-height: 32px;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        .tblScroller {
+            overflow-x: auto;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .newLbl {
+            margin: 5px 0 !important;
+            display: block;
+        }
+
+        .cityDiv {
+            height: 25px;
+        }
+        .largeWidth
+        {
+            color:red;
+        }
+        /*.btndisableparent .btn:disabled,
+        .btndisableparent .btn[disabled] {
+            cursor:pointer;
+        }
+        .btndisableparent .btn[disabled]:hover {
+            display:none;
+        }*/
+    </style>
+
+    <title></title>
+</head>
+<body>
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <div class="clearfix" style="padding-top:15px" id="header_main">
+            <div class="">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                Short Name
+                            </label>
+
+                            <div id="lbl_ng_short_name" class="input">
+                                {{ng_short_name}}
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                Name
+                            </label>
+                            <div id="lbl_ng_name" class="input">
+                                {{ng_name}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                Inventory Item
+                            </label>
+                            <div id="ng_inventory" class="input">
+                                {{ng_inventory}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                Service Item
+                            </label>
+                            <div id="ng_service_item" class="input">
+                                {{ng_service_item}}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        Description
+                    </label>
+                    <div id="ng_desc" class="input" style="height:88px">
+                        {{ng_desc}}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="Row">
+
+                <!--<div class="col-md-4">
+                    <label>
+                        Image
+                    </label>
+                    <div id="lbldtbrth" class="input">
+
+                    </div>
+                </div>-->
+            </div>
+            <div class="clear"></div>
+            <div class="clearfix">
+
+                <div class="col-md-3">
+                    <label>
+                        Type
+                    </label>
+                    <div id="ng_type" class="input">
+                        {{ng_type}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Stock Valuation Tech
+                    </label>
+                    <div id="ng_stck_value" class="input">
+                        {{ng_stck_value}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Capital Goods
+                    </label>
+                    <div id="ng_to_buisness" class="input">
+                        {{ng_to_buisness}}
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="col-md-3">
+                    <label>
+                        Class Name
+                    </label>
+                    <div id="ng_class_nm" class="input">
+                        {{ng_class_nm}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Status
+                    </label>
+                    <div id="ng_status" class="input">
+                        {{ng_status}}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label>
+                        HSN Code
+                    </label>
+                    <div id="ng_hsn_code" class="input">
+                        {{ng_hsn_code}}
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-top: -4px;">
+                    <div style="padding-top:28px">
+                        <input type="checkbox" name="fancy-checkbox-success" id="fancy-checkbox-success" autocomplete="off" ng-checked="check_disabl" ng-model="disable" />
+                        <div class="[ btn-group ]">
+                            <label class="[ clsCreditHold btn btn-success ]" style="background-color:#5c7db8">
+                                <span class="[ glyphicon glyphicon-ok ]" id="spanCrdtHold" ng-class="class2"></span>
+                                <span> </span>
+                            </label>
+                            <label class="[ btn btn-default active ]">
+                                Furtherance to Business
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="display:none">
+                    <label>
+                        Quote Currency
+                    </label>
+                    <div id="ng_quote_currency" class="input">
+                        {{ng_quote_currency}}
+                    </div>
+                </div>
+                <div class="col-md-3" style="display:none">
+                    <label>
+                        UOM Factor
+                    </label>
+                    <div id="ng_uom_factor" class="input">
+                        {{ng_uom_factor}}
+                    </div>
+                </div>
+                <div class="col-md-3" style="display:none">
+                    <label>
+                        Quote UOM
+                    </label>
+                    <div id="ng_quote_uom" class="input">
+                        {{ng_quote_uom}}
+                    </div>
+                </div>
+
+                <div class="col-md-3" style="display:none">
+                    <label>
+                        Sale UOM Factor
+                    </label>
+                    <div id="ng_sale_uom_factor" class="input">
+                        {{ng_sale_uom_factor}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Sale UOM
+                    </label>
+                    <div id="ng_sale_uom" class="input">
+                        {{ng_sale_uom}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Sale Price
+                    </label>
+                    <div id="ng_sale_price" class="input">
+                        {{ng_sale_price}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Min Sale Price
+                    </label>
+                    <div id="ng_min_sale_price" class="input">
+                        {{ng_min_sale_price}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        MRP
+                    </label>
+                    <div id="ng_mrp" class="input">
+                        {{ng_mrp}}
+                    </div>
+                </div>
+                <div class="col-md-3" style="display:none">
+                    <label>
+                        Purchase UOM Factor
+                    </label>
+                    <div id="ng_purchase_uom_factor" class="input">
+                        {{ng_purchase_uom_factor}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Purchase UOM
+                    </label>
+                    <div id="ng_purchase_uom" class="input">
+                        {{ng_purchase_uom}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Purchase Price
+                    </label>
+                    <div id="ng_purchase_price" class="input">
+                        {{ng_purchase_price}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Stock UOM
+                    </label>
+                    <div id="ng_stock_uom" class="input">
+                        {{ng_stock_uom}}
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="col-md-3">
+                    <label>
+                        Min Level
+                    </label>
+                    <div id="ng_min_levl" class="input">
+                        {{ng_min_levl}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Reorder Level
+                    </label>
+                    <div id="ng_reordr_lvl" class="input">
+                        {{ng_reordr_lvl}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Reorder Quantity
+                    </label>
+                    <div id="ng_reordr_lvl" class="input">
+                        {{ng_reordr_quantity}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Negative Stock
+                    </label>
+                    <div id="ng_negative_stock" class="input">
+                        {{ng_negative_stock}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Sales Invoice
+                    </label>
+                    <div id="ng_sale_invoice" class="input">
+                        {{ng_sale_invoice}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Sales Return
+                    </label>
+                    <div id="ng_sale_return" class="input">
+                        {{ng_sale_return}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Purchase Invoice
+                    </label>
+                    <div id="ng_purchase_invoice" class="input">
+                        {{ng_purchase_invoice}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Purchase Return
+
+                    </label>
+                    <div id="ng_negative_stock" class="input">
+                        {{ng_purchase_return}}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="clear"></div>
+            <div class="Row">
+                <div class="col-md-12 " style="padding-top:15px">
+                    <div class="Left_Content btndisableparent">
+                        <button type="button" class="btn btn-info btn-small" ng-disabled="ng_inventory=='No'" ng-click="ShowProductAttribute()" id="btnProdConfig">Configure Product Attribute</button>
+                        <button type="button" class="btn btn-info btn-small" style="display:none" ng-click="ShowBarCode()" id="btnBarCodeConfig">Configure Barcode</button>
+                        <button type="button" class="btn btn-info btn-small" style="display:none" ng-click="ShowTaxCode()">Configure Tax</button>
+                        <button type="button" class="btn btn-info btn-small" ng-disabled="ng_inventory=='Yes'" ng-click="ShowServiceTax()" id="btnServiceTaxConfig">Configure Service Category</button>
+                        <button type="button" class="btn btn-info btn-small" ng-disabled="ng_inventory!='Yes'" ng-click="ShowPackingDetails()" id="btnPackingConfig">Configure Packing Details</button>
+                        <button type="button" class="btn btn-info btn-small" ng-disabled="ng_inventory=='Yes'" ng-click="ShowTdsSection()" id="btnTDS">Configure TDS Section</button>
+                        <button type="button" class="btn btn-info btn-small" ng-click="ShowDocuments()" id="btndoc">Documents</button>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="c_prod_attr" style="display:none" class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <label>
+                        Product Color
+                    </label>
+
+
+                    <div id="ng_product_color" class="input">
+                        {{ng_product_color}}
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin-top: -4px;">
+                    <div style="padding-top:28px">
+                        <input type="checkbox" name="fancy-checkbox-success" id="fancy-checkbox-success" autocomplete="off" ng-checked="check_applicable" ng-model="applicable" />
+                        <div class="[ btn-group ]">
+                            <label class="[ clsCreditHold btn btn-success ]" style="background-color:#5c7db8">
+                                <span class="[ glyphicon glyphicon-ok ]" id="spanCrdtHold" ng-class="class1"></span>
+                                <span> </span>
+                            </label>
+                            <label class="[ btn btn-default active ]">
+                                Applicable
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <label>
+                        Product size
+                    </label>
+
+
+                    <div id="ng_product_color" class="input">
+                        {{ng_product_size}}
+                    </div>
+                </div>
+
+                <div class="col-md-6" style="margin-top: -4px;">
+                    <div style="padding-top:28px">
+                        <input type="checkbox" name="fancy-checkbox-success" id="fancy-checkbox-success" autocomplete="off" ng-checked="check_applicable1" ng-model="applicable1" />
+                        <div class="[ btn-group ]">
+                            <label class="[ clsCreditHold btn btn-success ]" style="background-color:#5c7db8">
+                                <span class="[ glyphicon glyphicon-ok ]" id="spanCrdtHold" ng-class="class3"></span>
+                                <span> </span>
+                            </label>
+                            <label class="[ btn btn-default active ]">
+                                Applicable
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>
+                        Brand
+                    </label>
+                    <div id="ng_brand" class="input">
+                        {{ng_brand}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        Old Unit
+                    </label>
+                    <div id="ng_old_unit" class="input">
+                        {{ng_old_unit}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <label>
+                        Components
+                    </label>
+
+
+                    <table class="table table-bordered sttble">
+                        <thead>
+                            <tr>
+
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in Product_dtls">
+
+                            <td>{{item.product_code}}</td>
+                            <td>{{item.product_name}}</td>
+
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <label>
+                        Installation Required
+                    </label>
+                    <div id="ng_install_req" class="input">
+                        {{ng_install_req}}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger" ng-click="close_prod_attr()" id="btnclose">Close</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="clear"></div>
+        <div id="c_bar_code" style="display:none" class="col-md-12">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <label>
+                        Barcode Type
+                    </label>
+                    <div id="ng_bar_code" class="input">
+                        {{ng_bar_type}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <label class="newLbl">
+                        Barcode No
+                    </label>
+
+
+                    <div id="ng_bar_no" class="input">
+                        {{ng_bar_no}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <label class="newLbl">
+                        Global Code(UPC)
+                    </label>
+
+
+                    <div id="ng_global_code" class="input">
+                        {{ng_global_code}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger" ng-click="close_barcode()" id="btnclose1">Close</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="c_tax" style="display:none" class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <label>
+                        Tax Code Scheme -Sales
+                    </label>
+
+
+                    <div id="ng_tax_code_scheme_sales" class="input">
+                        {{ng_tax_code_scheme_sales}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <label class="newLbl">
+                        Tax Code Scheme -Purchase
+                    </label>
+
+
+                    <div id="ng_tax_code_scheme_purchase" class="input">
+                        {{ng_tax_code_scheme_purchase}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger" ng-click="close_tax()" id="btnclose2">Close</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="c_service_catgory" style="display:none" class="col-md-12">
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <label>
+                        Service Category
+                    </label>
+
+
+                    <div class="input">
+                        {{ng_service_category}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger" ng-click="close_service_category()" id="btnclose3">Close</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="c_packing_details" style="display:none" class="col-md-12">
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label>
+                        Quantity
+                    </label>
+                    <div id="ng_quantity" class="input">
+                        {{ng_quantity}}
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                    <label>
+                        Sale Uom
+                    </label>
+
+
+                    <div id="ng_sale_uom" class="input">
+                        {{ng_sale_uom}}
+                    </div>
+                </div>
+                <div class="col-md-1 text-center">
+
+                    <label>
+
+                    </label>
+
+
+                    <div>
+                        =
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                    <label>
+                        Packing
+                    </label>
+
+
+                    <div id="ng_packing" class="input">
+                        {{ng_packing}}
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                    <label>
+                        Select Uom
+                    </label>
+
+
+                    <div id="ng_sel_uom" class="input">
+                        {{ng_sel_uom}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger" ng-click="close_packing_dtls()" id="btnclose4">Close</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="c_tds_section" style="display:none" class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <label>
+                        TDS Section
+                    </label>
+
+
+                    <div id="ng_tds_sec" class="input">
+                        {{ng_tds_sec}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger" ng-click="close_tds()" id="btnclos5">Close</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="c_documents" class="col-md-12" style="display:none">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <label>
+                        Document Section
+                    </label>
+
+                    <table class="table table-bordered sttble">
+                        <thead>
+                            <tr>
+                                <th>Doc Type</th>
+                                <th>Doc Name</th>
+                                <th>Note 1</th>
+                                <th>Note 2</th>
+                                <th>File No</th>
+                                <th>Building</th>
+                                <th>Document Physical Location</th>
+                                <th>Upload By</th>
+                                <th>Verified By</th>
+                                <th>Received Date</th>
+                                <th>Renew Date</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in document_dtls">
+                            <td>{{item.doc_type}}</td>
+                            <td>{{item.doc_name}}</td>
+                            <td>{{item.note1}}</td>
+                            <td>{{item.note2}}</td>
+                            <td>{{item.fileno}}</td>
+                            <td>{{item.building}}</td>
+                            <td>{{item.doc_loc}}</td>
+                            <td>{{item.upload_by}}</td>
+                            <td ng-style="{ color: item.verified_by == 'Not Verified' ? 'red' : '' }">{{item.verified_by}}</td>
+                            <td>{{item.receive_date}}</td>
+                            <td>{{item.renew_date}}</td>
+
+
+                            <td>
+                                <a style="text-decoration: none; cursor: pointer;" ng-hide="item.doc_source==null || item.doc_source==''" title="Download" class="pad" ng-href="{{'../../Documents/' + item.doc_source}}" target="_blank">
+                                    <i class="fa fa-cloud-download"></i>
+                                </a>
+                                <label ng-show="item.doc_source==null || item.doc_source==''" style="color:red">File Not Found</label>
+                            </td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger" ng-click="close_documents()" id="btnclos6">Close</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

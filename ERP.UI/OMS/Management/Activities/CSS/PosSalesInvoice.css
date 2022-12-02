@@ -1,0 +1,317 @@
+﻿   .form-group input[type="checkbox"] {
+            display: none;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                    display: none;
+                }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                    display: inline-block;
+                }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;
+            }
+
+        .clear {
+            clear: both;
+        }
+
+
+
+        
+
+        .inline {
+            display: inline !important;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content {
+            overflow: visible !important;
+        }
+        .labelClass {
+        color: #ffffff; 
+           background-color: rgb(12, 135, 202);  
+             font-size: 15px;
+        }
+
+        strong .dxeBase_PlasticBlue {
+            font-weight: 700 !important;
+        }
+         
+        .abs {
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+
+        .fa.fa-exclamation-circle:before {
+            font-family: FontAwesome;
+        }
+
+        .tp2 {
+            right: -18px;
+            top: 7px;
+            position: absolute;
+        }
+
+        #txtCreditLimit_EC {
+            position: absolute;
+        }
+
+        #grid_DXStatus span > a {
+            display: none;
+        }
+
+        #aspxGridTax_DXEditingErrorRow0 {
+            display: none;
+        }
+
+        .horizontal-images.content li {
+            float: left;
+        }
+
+        #rdl_SaleInvoice {
+            margin-top: 3px;
+        }
+
+        #rdl_SaleInvoice > tbody > tr > td {
+            padding-right: 5px;
+        }
+
+        
+          
+      
+
+        .bod-table {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+            .bod-table > tbody > tr > td {
+                padding: 5px;
+                background: #c2d8e6;
+                font-weight: 500;
+            }
+
+            .bod-table.none > tbody > tr > td {
+                background: none;
+            }
+
+        .bac {
+            background: #c2d8e6;
+            margin: 10px 0;
+            padding: 2px 15px;
+            border-radius: 5px;
+        }
+
+        .greyd {
+            background: #ececec;
+            margin: 10px 0;
+            padding: 0px 15px;
+            border-radius: 5px;
+        }
+
+        .newLbl .lblHolder table tr:first-child td {
+            background: #2bb1bf;
+        }
+
+        table.pad > tbody > tr > td {
+            padding: 0px 10px;
+        }
+
+        section.rds {
+            margin-top: 25px;
+            border: 1px solid #ccc;
+            padding: 3px 15px;
+        }
+
+        span.fieldsettype {
+            background: #1671b7;
+            padding: 8px 10px;
+            color: #fff;
+            position: relative;
+            top: -10px;
+            z-index: 5;
+        }
+
+            span.fieldsettype::before {
+                content: "";
+                border-left: 9px solid transparent;
+                border-right: 9px solid transparent;
+                border-bottom: 13px solid #184d75;
+                position: absolute;
+                right: -9px;
+                z-index: -1;
+            }
+
+        .horizontallblHolder {
+            height: auto;
+            border: 1px solid #12a79b;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+            .horizontallblHolder > table > tbody > tr > td {
+                padding: 8px 10px;
+                background: #ffffff;
+                background: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+                background: -webkit-linear-gradient(top, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                background: linear-gradient(to bottom, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+            }
+
+                .horizontallblHolder > table > tbody > tr > td:first-child {
+                    background: #12a79b;
+                    color: #fff;
+                }
+
+                .horizontallblHolder > table > tbody > tr > td:last-child {
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    color: #121212;
+                }
+
+
+                 .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        .popover {
+            z-index: 999999;
+            max-width: 350px;
+        }
+
+            .popover .popover-title {
+                margin-top: 0 !important;
+                background: #465b9d;
+                color: #fff;
+            }
+
+        .pdLeft15 {
+            padding-left: 15px;
+        }
+
+        .mTop {
+            margin-top: 10px;
+        }
+
+        .mLeft {
+            margin-left: 15px;
+        }
+
+        .popover .popover-content {
+            min-height: 60px;
+        }
+      
+
+        #grid_DXStatus {
+            display: none;
+        }
+
+        #aspxGridTax_DXStatus {
+            display: none;
+        }
+
+        #gridTax_DXStatus {
+            display: none;
+        }
+
+        .hideCell {
+            display: none;
+        }
+
+        .pullleftClass {
+            position: absolute;
+            right: -3px;
+            top: 24px;
+        }
+
+        #myCheck {
+            transform: translateY(2px);
+            -webkit-transform: translateY(2px);
+            -moz-transform: translateY(2px);
+            margin-right: 5px;
+        }
+
+          .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }
+
+        .dxeButtonEditClearButton_PlasticBlue {
+            display: none;
+        }
+
+        .mbot5 .col-md-8 {
+            margin-bottom: 5px;
+        }
+
+        .validclass {
+            position: absolute;
+            right: -4px;
+            top: 20px;
+        }
+
+        .mandt {
+            position: absolute;
+            right: -18px;
+            top: 4px;
+        }
+
+        #txtProductAmount, #txtProductTaxAmount, #txtProductDiscount {
+            font-weight: bold;
+        }
+
+        /*#grid, #grid div {
+            width: 100% !important;
+        }*/
+        .crossBtn {
+            cursor: pointer;
+        }
+
+        #txtTaxTotAmt input, #txtprodBasicAmt input, #txtGstCstVat input {
+            text-align: right;
+        }
+
+        #grid .dxgvHSDC > div, #grid .dxgvCSD {
+            /*width: 100% !important;*/
+        }
+
+
+         #grid_DXMainTable > tbody > tr > td:last-child {
+            display: none !important;
+        }
+
+        #taxroundedOf, #chargesRoundOf {
+            font-weight: 600;
+            font-size: 15px;
+            color: #7f0826;
+        }
+
+        #openlink {
+            font-size: 18px;
+        }
+
+         .errorField {
+            position: absolute;
+            right: 0;
+            top: 20px;
+        }
+
+        .mTop10 {
+            margin-top: 10px;
+        }
+
+        .backBranch {
+            font-weight: 600;
+            background: #75c1f5;
+            padding: 5px;
+        }

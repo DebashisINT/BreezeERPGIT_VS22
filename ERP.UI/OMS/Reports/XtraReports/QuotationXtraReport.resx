@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="sqlDataSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="customSqlQuery1.Sql" xml:space="preserve">
+    <value>select q.Quote_Id,(select ISNULL(cnt_firstName,'')+' '+ISNULL(cnt_middleName,'')+'  '+ISNULL(cnt_lastName,'')
+ from tbl_master_contact where cnt_internalId=q.Customer_Id) as 'Customer',q.Quote_FinYear,q.Quote_Number,q.Quote_Date,q.Quote_Expiry,(select branch_description from tbl_master_branch where branch_id=q.Quote_BranchId) as 'Branch'
+,ISNULL(q.Quote_TotalAmount,0) as 'Total Net Amount' ,c.CNT_GSTIN,pan_no=(select crg_Number from tbl_master_contactRegistration where crg_cntId=c.cnt_internalId and crg_type ='Pan Card'),Cast(ISNULL(q.Quote_TotalAmount,0) as decimal(18,2)) as 'Format Total Net Amount' 
+,(select user_name from tbl_master_user where user_id=q.CreatedBy) as 'user_name'
+from tbl_trans_Quotation q
+inner join tbl_master_contact c on q.Customer_Id=c.cnt_internalId
+where Quote_Id=@Quote_id
+
+
+</value>
+  </data>
+  <data name="customSqlQuery2.Sql" xml:space="preserve">
+    <value>select QuoteDetails_Id,QuoteDetails_QuoteId,Product_Name,Product_Id,Product_Description,barcode_itemslno,Quantity,Unit,Rate,Amount,Total_Amount,Isnull(ProdWise_TaxAmt,0) as ProdWise_TaxAmt,(Total_Amount+Isnull(ProdWise_TaxAmt,0)) as prodTaxTotAmt
+,Is_Taxpresent=ISNULL(( select top 1 ProductTax_TaxTypeId from tbl_trans_QuotationProductTax where ProductTax_QuoteId=@Quote_id and ProductTax_ProductId=QuoteDetails_Id),0)
+ from 
+
+(
+select QuoteDetails_Id,QuoteDetails_QuoteId,(select sProducts_Name from Master_sProducts where sProducts_ID=QuoteDetails_ProductId) as 'Product_Name',QuoteDetails_ProductId as 'Product_Id',
+QuoteDetails_ProductDescription as 'Product_Description',
+(select sProducts_barCode from Master_sProducts where sProducts_ID=tbl_trans_QuotationProducts.QuoteDetails_ProductId) as 'barcode_itemslno',
+QuoteDetails_Quantity as 'Quantity',(select UOM_ShortName from Master_UOM where UOM_ID=tbl_trans_QuotationProducts.QuoteDetails_UOMId) as 'Unit',QuoteDetails_SalePrice as 'Rate',QuoteDetails_GrossAmount as 'Amount',QuoteDetails_TotalAmountInBaseCurrency as 'Total_Amount',
+
+ProdWise_TaxAmt=(select sum(ProductTax_Amount) from tbl_trans_QuotationProductTax where ProductTax_QuoteId=@Quote_id and ProductTax_ProductId=tbl_trans_QuotationProducts.QuoteDetails_Id and (ProductTax_Percentage!=0 or  ProductTax_Amount!=0))
+
+ from tbl_trans_QuotationProducts where QuoteDetails_QuoteId=@Quote_id
+ )  details
+</value>
+  </data>
+  <data name="customSqlQuery3.Sql" xml:space="preserve">
+    <value>select QuoteAdd_QuoteId,
+
+(select QuoteAdd_address1+case when QuoteAdd_address2='' then '' else +','+QuoteAdd_address2 end  
++case when QuoteAdd_address3='' then '' else +','+QuoteAdd_address3 end 
++case when QuoteAdd_landMark='' then '' else +','+QuoteAdd_landMark end  
+) as 'Address',
+
+QuoteAdd_address1,QuoteAdd_address2,QuoteAdd_address3,QuoteAdd_landMark,(select cou_country from tbl_master_country where cou_id=tbl_trans_QuotationAddress.QuoteAdd_countryId) as 'Country',
+(select state from tbl_master_state where id=tbl_trans_QuotationAddress.QuoteAdd_stateId) as 'State',(select RTrim(LTrim(city_name))+'  :' from tbl_master_city where city_id=tbl_trans_QuotationAddress.QuoteAdd_cityId) as 'City',(select area_name from tbl_master_area where area_id=tbl_trans_QuotationAddress.QuoteAdd_areaId) as 'Area',QuoteAdd_pin as 'Pin' from tbl_trans_QuotationAddress where QuoteAdd_QuoteId=@Quote_id and QuoteAdd_addressType='Billing'</value>
+  </data>
+  <data name="customSqlQuery4.Sql" xml:space="preserve">
+    <value>select
+ProductTax_Id,ProductTax_QuoteId,cast(ProductTax_ProductId as bigint) as 'ProductId',ProductTax_TaxTypeId,(select TaxRatesSchemeName from Config_TaxRates where TaxRates_ID=tbl_trans_QuotationProductTax.ProductTax_TaxTypeId) as 'ProductTax_TaxTypeName',ProductTax_Percentage,ProductTax_Amount,
+(select TaxRatesSchemeName from Config_TaxRates where TaxRates_ID=tbl_trans_QuotationProductTax.ProductTax_TaxTypeId)+'      '+cast((CONVERT(DECIMAL(10,0),ProductTax_Percentage)) as varchar(20))+'%' +'        '+cast(ProductTax_Amount as varchar(50)) as 'Tax',(cast((CONVERT(DECIMAL(10,0),ProductTax_Percentage)) as varchar(20))+'%') as tax_percnt
+from  tbl_trans_QuotationProductTax where ProductTax_QuoteId=@Quote_id and (ProductTax_Percentage!=0 or  ProductTax_Amount!=0)</value>
+  </data>
+  <data name="customSqlQuery5.Sql" xml:space="preserve">
+    <value>select QuoteTax_Id,QuoteTax_QuoteId,QuoteTax_Percentage,QuoteTax_Amount,QuoteTax_TaxTypeId,Tax_Name=(select Taxes_Name from Master_Taxes where taxes_Id=(select TaxRates_TaxCode from Config_TaxRates where TaxRates_ID=QuoteTax_TaxTypeId)) from 
+(
+select QuoteTax_Id,QuoteTax_QuoteId,QuoteTax_Percentage,QuoteTax_Amount,QuoteTax_TaxTypeId from tbl_trans_QuotationTax where  (QuoteTax_TaxTypeId&lt;&gt;0 or ProductTax_VatGstCstId&lt;&gt;0)) aa
+where 
+ QuoteTax_QuoteId=@Quote_id
+and QuoteTax_Amount&lt;&gt;0
+</value>
+  </data>
+  <data name="customSqlQuery6.Sql" xml:space="preserve">
+    <value>select c.*,phone=(select top 1 phf_phoneNumber from tbl_master_phonefax where phf_cntId=c.cmp_internalid),email=(select top 1 eml_email from tbl_master_email where eml_cntId=c.cmp_internalid)  ,
+
+ISNULL(a.add_address1,'')+', '+ISNULL(a.add_address2,'')+', '+ISNULL(a.add_address3,'')+', '+case when (select ISNULL(city_name,'') from tbl_master_city where city_id=a.add_city)&lt;&gt;'' then (select ISNULL(city_name,'') from tbl_master_city where city_id=a.add_city)+'-'+(select pin_code from tbl_master_pinzip where pin_id=a.add_pin)+'.' else '' end as 'Address',
+
+(select city_name from tbl_master_city where city_id=a.add_city)as add_city,(select pin_code from tbl_master_pinzip where pin_id=a.add_pin) as add_pin  from tbl_master_company c  inner join tbl_master_address a on c.cmp_internalid=a.add_cntId  where c.cmp_internalid=@Company_Id
+
+
+
+</value>
+  </data>
+  <data name="customSqlQuery7.Sql" xml:space="preserve">
+    <value>select ProductTax_QuoteId,sum(ProductTax_Amount) as ProductTax_Amount,
+mode=(select TaxCalculateMethods from Master_Taxes where Taxes_ID=(select  TaxRates_TaxCode from Config_TaxRates where TaxRates_ID=tbl_trans_QuotationProductTax.ProductTax_TaxTypeId)) ,
+TaxRatesSchemeName=(select  TaxRatesSchemeName from Config_TaxRates where TaxRates_ID=tbl_trans_QuotationProductTax.ProductTax_TaxTypeId)
+from tbl_trans_QuotationProductTax where ProductTax_QuoteId=@Quote_id  and (ProductTax_Percentage!=0 or  ProductTax_Amount!=0) group by ProductTax_TaxTypeId,ProductTax_QuoteId</value>
+  </data>
+  <data name="sqlDataSource1.ResultSchemaSerializable" xml:space="preserve">
+    <value>PERhdGFTZXQgTmFtZT0ic3FsRGF0YVNvdXJjZTEiPjxWaWV3IE5hbWU9IkFkZHJlc3MiPjxGaWVsZCBOYW1lPSJRdW90ZUFkZF9RdW90ZUlkIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iQWRkcmVzcyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJRdW90ZUFkZF9hZGRyZXNzMSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJRdW90ZUFkZF9hZGRyZXNzMiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJRdW90ZUFkZF9hZGRyZXNzMyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJRdW90ZUFkZF9sYW5kTWFyayIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJDb3VudHJ5IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlN0YXRlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkNpdHkiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQXJlYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJQaW4iIFR5cGU9IlN0cmluZyIgLz48L1ZpZXc+PFZpZXcgTmFtZT0iQ29tcGFueU1hc3RlciI+PEZpZWxkIE5hbWU9ImNtcF9pZCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iY21wX2ludGVybmFsaWQiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX05hbWUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX3BhcmVudGlkIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9uYXR1cmVPZkJ1c2luZXNzIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9kaXJlY3RvcnMiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX2F1dGhvcml6ZWRTaWduYXRvcmllcyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfZXhjaGFuZ2UiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX3JlZ2lzdHJhdGlvbk5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9zZWJpUmVnbk5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9wYW5ObyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfc2VydmljZVRheE5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9zYWxlc1RheE5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkNyZWF0ZURhdGUiIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJDcmVhdGVVc2VyIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJMYXN0TW9kaWZ5RGF0ZSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9Ikxhc3RNb2RpZnlVc2VyIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJjbXBfRGF0ZUluY29ycG9yYXRpb24iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJjbXBfQ0lOIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9DSU5kdCIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9ImNtcF9WcmVnaXNObyIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9ImNtcF9WUGFuTm8iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJjbXBfT2ZmUm9sZVNob3J0TmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfT25Sb2xlU2hvcnROYW1lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNvbV9BZGQiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY29tX2xvZ29wYXRoIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9jdXJyZW5jeWlkIiBUeXBlPSJCeXRlIiAvPjxGaWVsZCBOYW1lPSJjbXBfS1lDUHJlZml4IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9LUkFJbnRlcm1lZGlhcnlJRCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfTGVkZ2VyVmlldyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfQ29tYmluZWRDbnRyRGF0ZSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9ImNtcF9Db21iQ250ck51bWJlciIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9ImNtcF9Db21iQ250clJlc2V0IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9Db21iQ250ck9yZGVyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF92YXRfbm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX0VQRlJlZ2lzdHJhdGlvbk5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9FUEZSZWdpc3RyYXRpb25Ob1ZhbGlkZnJvbSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9ImNtcF9FUEZSZWdpc3RyYXRpb25Ob1ZhbGlkdXB0byIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9ImNtcF9FU0lDUmVnaXN0cmF0aW9uTm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX0VTSUNSZWdpc3RyYXRpb25Ob1ZhbGlkZnJvbSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9ImNtcF9FU0lDUmVnaXN0cmF0aW9uTm9WYWxpZHVwdG8iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJvbnJvbGVfc2NoZW1hX2lkIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0ib2Zmcm9sZV9zY2hlbWFfaWQiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJjbXBfYmlnTG9nbyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfc21hbGxMb2dvIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9nc3RpbiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJwaG9uZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJlbWFpbCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJBZGRyZXNzIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImFkZF9jaXR5IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImFkZF9waW4iIFR5cGU9IlN0cmluZyIgLz48L1ZpZXc+PFZpZXcgTmFtZT0iRGV0YWlscyI+PEZpZWxkIE5hbWU9IlF1b3RlRGV0YWlsc19JZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlF1b3RlRGV0YWlsc19RdW90ZUlkIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iUHJvZHVjdF9OYW1lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlByb2R1Y3RfSWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0X0Rlc2NyaXB0aW9uIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImJhcmNvZGVfaXRlbXNsbm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iUXVhbnRpdHkiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlVuaXQiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iUmF0ZSIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iQW1vdW50IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJUb3RhbF9BbW91bnQiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlByb2RXaXNlX1RheEFtdCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0icHJvZFRheFRvdEFtdCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iSXNfVGF4cHJlc2VudCIgVHlwZT0iSW50MzIiIC8+PC9WaWV3PjxWaWV3IE5hbWU9IkhlYWRlciI+PEZpZWxkIE5hbWU9IlF1b3RlX0lkIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iQ3VzdG9tZXIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iUXVvdGVfRmluWWVhciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJRdW90ZV9OdW1iZXIiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iUXVvdGVfRGF0ZSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IlF1b3RlX0V4cGlyeSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IkJyYW5jaCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJUb3RhbCBOZXQgQW1vdW50IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJDTlRfR1NUSU4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0icGFuX25vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkZvcm1hdCBUb3RhbCBOZXQgQW1vdW50IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJ1c2VyX25hbWUiIFR5cGU9IlN0cmluZyIgLz48L1ZpZXc+PFZpZXcgTmFtZT0iSGVhZGVyTWFpblRheCI+PEZpZWxkIE5hbWU9IlF1b3RlVGF4X0lkIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iUXVvdGVUYXhfUXVvdGVJZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlF1b3RlVGF4X1BlcmNlbnRhZ2UiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlF1b3RlVGF4X0Ftb3VudCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iUXVvdGVUYXhfVGF4VHlwZUlkIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iVGF4X05hbWUiIFR5cGU9IlN0cmluZyIgLz48L1ZpZXc+PFZpZXcgTmFtZT0icHJvZHVjdHdpc2ViYXJjb2RlIj48RmllbGQgTmFtZT0iUXVvdGVfSWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0SWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJTZXJpYWxObyIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48VmlldyBOYW1lPSJQcm9kdWN0V2lzZVRheCI+PEZpZWxkIE5hbWU9IlByb2R1Y3RUYXhfSWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0VGF4X1F1b3RlSWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0SWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0VGF4X1RheFR5cGVJZCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IlByb2R1Y3RUYXhfVGF4VHlwZU5hbWUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iUHJvZHVjdFRheF9QZXJjZW50YWdlIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJQcm9kdWN0VGF4X0Ftb3VudCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iVGF4IiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9InRheF9wZXJjbnQiIFR5cGU9IlN0cmluZyIgLz48L1ZpZXc+PFZpZXcgTmFtZT0iUHJvZFdpc2VUYXhXaXNlQW1udCI+PEZpZWxkIE5hbWU9IlByb2R1Y3RUYXhfUXVvdGVJZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IlByb2R1Y3RUYXhfQW1vdW50IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJtb2RlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlRheFJhdGVzU2NoZW1lTmFtZSIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48UmVsYXRpb24gTWFzdGVyPSJEZXRhaWxzIiBEZXRhaWw9IlByb2R1Y3RXaXNlVGF4Ij48S2V5Q29sdW1uIE1hc3Rlcj0iUXVvdGVEZXRhaWxzX0lkIiBEZXRhaWw9IlByb2R1Y3RJZCIgLz48L1JlbGF0aW9uPjxSZWxhdGlvbiBNYXN0ZXI9IkRldGFpbHMiIERldGFpbD0icHJvZHVjdHdpc2ViYXJjb2RlIj48S2V5Q29sdW1uIE1hc3Rlcj0iUHJvZHVjdF9JZCIgRGV0YWlsPSJQcm9kdWN0SWQiIC8+PC9SZWxhdGlvbj48UmVsYXRpb24gTWFzdGVyPSJIZWFkZXIiIERldGFpbD0iRGV0YWlscyI+PEtleUNvbHVtbiBNYXN0ZXI9IlF1b3RlX0lkIiBEZXRhaWw9IlF1b3RlRGV0YWlsc19RdW90ZUlkIiAvPjwvUmVsYXRpb24+PFJlbGF0aW9uIE1hc3Rlcj0iSGVhZGVyIiBEZXRhaWw9IkFkZHJlc3MiPjxLZXlDb2x1bW4gTWFzdGVyPSJRdW90ZV9JZCIgRGV0YWlsPSJRdW90ZUFkZF9RdW90ZUlkIiAvPjwvUmVsYXRpb24+PFJlbGF0aW9uIE1hc3Rlcj0iSGVhZGVyIiBEZXRhaWw9IkhlYWRlck1haW5UYXgiPjxLZXlDb2x1bW4gTWFzdGVyPSJRdW90ZV9JZCIgRGV0YWlsPSJRdW90ZVRheF9RdW90ZUlkIiAvPjwvUmVsYXRpb24+PFJlbGF0aW9uIE1hc3Rlcj0iSGVhZGVyIiBEZXRhaWw9IlByb2RXaXNlVGF4V2lzZUFtbnQiPjxLZXlDb2x1bW4gTWFzdGVyPSJRdW90ZV9JZCIgRGV0YWlsPSJQcm9kdWN0VGF4X1F1b3RlSWQiIC8+PC9SZWxhdGlvbj48L0RhdGFTZXQ+</value>
+  </data>
+  <data name="$this.ScriptsSource" xml:space="preserve">
+    <value>
+private void SubBand1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+//GetCurrentColumnValue("RailName").ToString();
+//xrLabel16.Text=((DataRowView)DetailsProductWiseTax.GetCurrentRow()).Row["Tax"].ToString();
+
+}
+
+double pagewiseTotalAmnt;
+int serial_no=0;
+int sn=0;
+ public string CompanyName { get; set; }
+
+private void xrTableCell26_AfterPrint(object sender, System.EventArgs e) {
+}
+
+private void xrTableCell19_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+serial_no++;
+ XRLabel slno = sender as XRLabel;
+ slno.Text = Convert.ToString(serial_no);
+
+}
+
+private void xrCompanyName_AfterPrint(object sender, System.EventArgs e) {
+         }
+</value>
+  </data>
+</root>

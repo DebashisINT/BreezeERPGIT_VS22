@@ -1,0 +1,12 @@
+﻿.pdbot30 {
+    padding-bottom: 30px;
+}
+
+.dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+    background: #fff !important;
+}
+
+.lblmBot4 > span, .lblmBot4 > label {
+    margin-bottom: 5px !important;
+    display: inline-block;
+}

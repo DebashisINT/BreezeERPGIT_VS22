@@ -1,0 +1,20 @@
+﻿.inBox {
+            background: #f1f1f1;
+            padding: 20px 0;
+            margin: 0 15px;
+            border: 1px solid #dedede;
+        }
+        .panel-title h3  .dxeBase_PlasticBlue{
+            font-size: 20px !important;
+        }
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue{
+            background:#fff;
+        }
+        .validclass {
+            position: absolute;
+            right: -20px;
+            top: 4px;
+        }
+           #lookup_Project .dxeButtonEditClearButton_PlasticBlue {
+          display: table-cell;
+      }

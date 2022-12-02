@@ -1,0 +1,152 @@
+﻿
+        #lookup_Project .dxeButtonEditClearButton_PlasticBlue {
+            display: table-cell;
+        }
+  
+
+
+        #openlink {
+            font-size: 18px;
+        }
+        /*BillingGstDiv*/
+        .inline {
+            display: inline !important;
+        }
+
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content {
+            overflow: visible !important;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled {
+            opacity: 1.5;
+        }
+
+        .abs {
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+
+        .fa.fa-exclamation-circle:before {
+            font-family: FontAwesome;
+        }
+
+        .tp2 {
+            right: -18px;
+            top: 7px;
+            position: absolute;
+        }
+
+        #txtCreditLimit_EC {
+            position: absolute;
+        }
+
+        #grid_DXStatus span > a {
+            display: none;
+        }
+
+        #DivBilling [class^="col-md"], #DivShipping [class^="col-md"] {
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
+        #aspxGridTax_DXEditingErrorRow0 {
+            display: none;
+        }
+
+        .validclass {
+            position: absolute;
+            right: -4px;
+            top: 23px;
+        }
+
+        .valid2 {
+            position: absolute;
+            right: -4px;
+            top: 25px;
+        }
+
+        .mandt {
+            position: absolute;
+            right: -18px;
+            top: 4px;
+        }
+
+        #grid_DXMainTable > tbody > tr > td:last-child {
+            display: none !important;
+        }
+
+        .dynamicPopupTbl > thead > tr > th {
+            font-size: 12px;
+            padding: 5px 6px;
+        }
+
+        .eqTble > tbody > tr > td {
+            padding: 0 7px;
+            vertical-align: top;
+        }
+   
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        /*#grid_DXEditingErrorRow-1 {
+            display: none;
+        }*/
+
+        /*#grid_DXStatus span > a {
+            display: none;
+        }
+
+        #gridTax_DXStatus span > a {
+            display: none;
+        }*/
+
+        #grid_DXStatus {
+            display: none;
+        }
+
+        #aspxGridTax_DXStatus {
+            display: none;
+        }
+
+        #gridTax_DXStatus {
+            display: none;
+        }
+
+        .hideCell {
+            display: none;
+        }
+    
+        .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }
+
+        .dxeButtonEditClearButton_PlasticBlue {
+            display: none;
+        }
+
+        #txt_Rate {
+            min-height: 24px;
+        }
+
+        .col-md-3 > label {
+            margin-bottom: 3px;
+            margin-top: 0;
+            display: block;
+        }
+
+        .mTop {
+            margin-top: 10px;
+            padding: 5px 20px;
+        }
+
+        .mlableWh{
+            padding-top: 22px;
+            display:inline-block
+        }
+        .mlableWh>input +span {
+            white-space: nowrap;
+        }
+   

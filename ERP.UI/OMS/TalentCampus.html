@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Talent Campus</title>
+    <!--<script src="jquery-1.7.1.js" type="text/javascript"></script>--> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        //function TalentSave() {
+        //    alert("Show");
+        //}
+        $(document).ready(function () {
+            //your code here
+        });
+
+
+        function TalentSave() {
+            var model = {};
+
+            model.EmployeeCode = "PEGC/00077";
+            model.Salutation = "MR";
+            model.FirstName = "Tanmoy";
+            model.MiddileName = "";
+            model.LastName = "Roy";
+            model.Dob = "12-07-1994";
+            model.Gender = "Male";
+            model.doj = "20-03-2019";
+            model.Grade = "A";
+            model.BloodGroup = "AB+";
+            model.MaritalStatus = "Single";
+            model.Organization = "Demo Group of Co. ";
+            model.JobResposibility = "Back Office";
+            model.Branch = "Default";
+            model.Designation = "Accountant";
+            model.EmployeeType = "Regular[Onroll]";
+            model.ReportTo = "EMS0000483";
+            model.AddressTypeResidence = "Residense";
+            model.Address1_Res = "";
+            model.Address2_Res = "";
+            model.Address3_Res = "";
+            model.Country_Res = "India";
+            model.State_res = "WEST BENGAL";
+            model.City_District_Res = "Kolkata";
+            model.Pin_Zip_Res = "700091";
+            model.Phone_type_res = "Residence";
+            model.Number_Res = "0342266123";
+            model.AddressType_off = "Office";
+            model.Address1_off = "Saltlake";
+            model.Address2_off = "";
+            model.Address3_off = "";
+            model.Country_off = "India";
+            model.State_off = "WEST BENGAL";
+            model.City_District_Off = "Kolkata";
+            model.Pin_Zip_Off = "504201";
+            model.Phone_type_off = "Office";
+            model.Number_Off = "980456778";
+            model.Email_Type = "Personal";
+            model.Email_Id = "abc@gmail1.com";
+            model.Relationship_1 = "";
+            model.Name_1 = "";
+            model.RelationShip_2 = "";
+            model.Name_2 = "";
+            model.Current_Ctc = "";
+            model.Pan = "";
+            model.Aadhar = "";
+            model.Passport = "";
+            model.ValidUpTo = "";
+            model.Epic = "";
+            model.BankName = "HDFC BANK";
+            model.Account_No = "123456";
+            model.AccountType = "Saving";
+            model.Pf_Applicable = "Yes";
+            model.Pf_No = "45322255";
+            model.Uan = "7896455";
+            model.Esi_Applicable = "Yes";
+            model.Esi_No = "4589526";
+            model.Token = "1234567";
+          
+            //data.EmployeeCode = $("#txtEmployeeCode").val();
+            //data.Salutation = $("#txtSalutation").val();
+            //data.FirstName = $("#txtFirstName").val();
+            //data.MiddileName = $("#txtMiddileName").val();
+            //data.LastName = $("#txtLastName").val();
+            //data.Dob = $("#txtDob").val();
+            //data.Gender = $("#txtGender").val();
+            //data.doj = $("#txtdoj").val();
+
+            //data.Grade = $("#txtGrade").val();
+            //data.BloodGroup = $("#txtBloodGroup").val();
+            //data.MaritalStatus = $("#txtMaritalStatus").val();
+            //data.Organization = $("#txtOrganization").val();
+            //data.JobResposibility = $("#txtJobResposibility").val();
+            //data.Branch = $("#txtBranch").val();
+            //data.Designation = $("#txtDesignation").val();
+            //data.EmployeeType = $("#txtEmployeeType").val();
+
+            //data.ReportTo = $("#txtReportTo").val();
+            //data.AddressTypeResidence = $("#txtAddressTypeResidence").val();
+            //data.Country_Res = $("#txtCountry_Res").val();
+            //data.State_res = $("#txtState_res").val();
+            //data.City_District_Res = $("#txtCity_District_Res").val();
+            //data.Pin_Zip_Res = $("#txtPin_Zip_Res").val();
+            //data.Phone_type_res = $("#txtPhone_type_res").val();
+            //data.Number_Res = $("#txtNumber_Res").val();
+
+            //data.AddressType_off = $("#txtAddressType_off").val();
+            //data.Address1_off = $("#txtAddress1_off").val();
+            //data.Country_off = $("#txtCountry_off").val();
+            //data.State_off = $("#txtState_off").val();
+            //data.City_District_Off = $("#txtCity_District_Off").val();
+            //data.Pin_Zip_Off = $("#txtPin_Zip_Off").val();
+            //data.Phone_type_off = $("#txtPhone_type_off").val();
+            //data.Number_Off = $("#txtNumber_Off").val();
+
+            //data.Email_Type = $("#txtEmail_Type").val();
+            //data.Email_Id = $("#txtEmail_Id").val();
+            //data.BankName = $("#txtBankName").val();
+            //data.Account_No = $("#txtAccount_No").val();
+            //data.AccountType = $("#txtAccountType").val();
+            //data.Pf_Applicable = $("#txtPf_Applicable").val();
+            //data.Pf_No = $("#txtPf_No").val();
+            //data.Uan = $("#txtUan").val();
+
+            //data.Esi_Applicable = $("#txtEsi_Applicable").val();
+            //data.Esi_No = $("#txtEsi_No").val();
+            //data.Token = $("#txtToken").val();
+            $.ajax({
+                //url: "http://localhost:1748/API/AddEmployee",
+                //url: "http://10.0.8.251:9000/API/AddEmployee",
+                url: "http://fts.indusnettechnologies.com:8084/API/AddEmployee",
+                type: "POST",
+                data: model,
+                success: function (response) {
+                    //document.getElementById("total_items").value=response;
+                    //document.getElementById("disp").innerHTML = response;
+                    alert(response.Responsedetails);
+                },
+                error: function (reosponse) {
+                    alert("error");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <input type="text" class="form-control" id="txtEmployeeCode" placeholder="Employee Code" />
+    <input type="text" class="form-control" id="txtSalutation" placeholder="Employee Code" />
+    <input type="text" class="form-control" id="txtFirstName" placeholder="First Name" />
+    <input type="text" class="form-control" id="txtMiddileName" placeholder="Middile Name" />
+    <input type="text" class="form-control" id="txtLastName" placeholder="Last Name" />
+    <input type="text" class="form-control" id="txtDob" placeholder="Dob" />
+    <input type="text" class="form-control" id="txtGender" placeholder="Gender" />
+    <input type="text" class="form-control" id="txtdoj" placeholder="doj" />
+    <br /><br />
+    <input type="text" class="form-control" id="txtGrade" placeholder="Grade" />
+    <input type="text" class="form-control" id="txtBloodGroup" placeholder="Blood Group" />
+    <input type="text" class="form-control" id="txtMaritalStatus" placeholder="Marital Status" />
+    <input type="text" class="form-control" id="txtOrganization" placeholder="Organization" />
+    <input type="text" class="form-control" id="txtJobResposibility" placeholder="Job Resposibility" />
+    <input type="text" class="form-control" id="txtBranch" placeholder="Branch" />
+    <input type="text" class="form-control" id="txtDesignation" placeholder="Designation" />
+    <input type="text" class="form-control" id="txtEmployeeType" placeholder="Employee Type" />
+    <br /><br />
+    <input type="text" class="form-control" id="txtReportTo" placeholder="ReportTo" />
+    <input type="text" class="form-control" id="txtAddressTypeResidence" placeholder="Address Type Residence" />
+    <input type="text" class="form-control" id="txtCountry_Res" placeholder="Country Res" />
+    <input type="text" class="form-control" id="txtState_res" placeholder="State_res" />
+    <input type="text" class="form-control" id="txtCity_District_Res" placeholder="City_District_Res" />
+    <input type="text" class="form-control" id="txtPin_Zip_Res" placeholder="Pin_Zip_Res" />
+    <input type="text" class="form-control" id="txtPhone_type_res" placeholder="Phone_type_res" />
+    <input type="text" class="form-control" id="txtNumber_Res" placeholder="Number_Res" />
+    <br /><br />
+    <input type="text" class="form-control" id="txtAddressType_off" placeholder="AddressType_off" />
+    <input type="text" class="form-control" id="txtAddress1_off" placeholder="Address1_off" />
+    <input type="text" class="form-control" id="txtCountry_off" placeholder="Country_off" />
+    <input type="text" class="form-control" id="txtState_off" placeholder="State_off" />
+    <input type="text" class="form-control" id="txtCity_District_Off" placeholder="City_District_Off" />
+    <input type="text" class="form-control" id="txtPin_Zip_Off" placeholder="Pin_Zip_Off" />
+    <input type="text" class="form-control" id="txtPhone_type_off" placeholder="Phone_type_off" />
+    <input type="text" class="form-control" id="txtNumber_Off" placeholder="Number_Off" />
+    <br /><br />
+    <input type="text" class="form-control" id="txtEmail_Type" placeholder="Email_Type" />
+    <input type="text" class="form-control" id="txtEmail_Id" placeholder="Email_Id" />
+    <input type="text" class="form-control" id="txtBankName" placeholder="BankName" />
+    <input type="text" class="form-control" id="txtAccount_No" placeholder="Account_No" />
+    <input type="text" class="form-control" id="txtAccountType" placeholder="Account Type" />
+    <input type="text" class="form-control" id="txtPf_Applicable" placeholder="Pf_Applicable" />
+    <input type="text" class="form-control" id="txtPf_No" placeholder="Pf_No" />
+    <input type="text" class="form-control" id="txtUan" placeholder="Uan" />
+    <br /><br />
+    <input type="text" class="form-control" id="txtEsi_Applicable" placeholder="Esi_Applicable" />
+    <input type="text" class="form-control" id="txtEsi_No" placeholder="Esi_No" />
+    <input type="text" class="form-control" id="txtToken" placeholder="Token" value="1234567" />
+    <br /><br />
+    <button id="btnSave" class="btn btn-success" onclick="TalentSave()">Save</button>
+</body>
+</html>

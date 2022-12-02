@@ -1,0 +1,162 @@
+﻿
+        #grid_DXMainTable > tbody > tr > td:last-child {
+            display: none !important;
+        }
+
+        #gridTax_DXStatus {
+            display: none !important;
+        }
+
+        #grid_DXStatus span > a {
+            display: none;
+        }
+
+        #grid_DXStatus {
+            display: none;
+        }
+
+        #txtCreditLimit_EC {
+            position: absolute;
+        }
+
+        #grid_DXStatus span > a {
+            display: none;
+        }
+
+        #txtCreditLimit_EC {
+            position: absolute;
+        }
+
+        #grid_DXStatus span > a {
+            display: none;
+        }
+
+        #aspxGridTax_DXEditingErrorRow0 {
+            display: none;
+        }
+
+        .inline {
+            display: inline !important;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content {
+            overflow: visible !important;
+        }
+
+        .voucherno {
+            position: absolute;
+            right: -3px;
+            top: 22px;
+        }
+
+        .customerno {
+            position: absolute;
+            right: -3px;
+            top: 22px;
+        }
+
+        .abs {
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+
+        .fa.fa-exclamation-circle:before {
+            font-family: FontAwesome;
+        }
+
+        .tp2 {
+            right: 92px;
+            top: 18px;
+            position: absolute;
+        }
+
+        .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+            background: #fff !important;
+        }
+
+        .absolute, #grid_DXMainTable .dxeErrorFrameSys.dxeErrorCellSys {
+            position: absolute;
+        }
+
+        .inline {
+            display: inline-block !important;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content {
+            overflow: visible !important;
+        }
+
+        .abs {
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+
+        .fa.fa-exclamation-circle:before {
+            font-family: FontAwesome;
+        }
+
+        .tp2 {
+            right: -18px;
+            top: 7px;
+            position: absolute;
+        }
+
+        .horizontal-images.content li {
+            float: left;
+        }
+
+        #grid_DXMainTable > tbody > tr > td:last-child, #productLookUp_DDD_gv_DXMainTable > tbody > tr > td:nth-child(2) {
+            display: none !important;
+        }
+
+        #aspxGridTax_DXStatus {
+            display: none !important;
+        }
+
+        .mTop {
+            margin-top: 10px;
+        }
+
+        .mbot5 .col-md-8 {
+            margin-bottom: 5px;
+        }
+
+        .pullleftClass {
+            position: absolute;
+            right: -3px;
+            top: 18px;
+        }
+
+        a.anchorclass, a.anchorclass:hover {
+            color: red;
+        }
+
+        .horizontallblHolder {
+            height: auto;
+            border: 1px solid #12a79b;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+            .horizontallblHolder > table > tbody > tr > td {
+                padding: 8px 10px;
+                background: #ffffff;
+                background: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+                background: -webkit-linear-gradient(top, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                background: linear-gradient(to bottom, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+            }
+
+                .horizontallblHolder > table > tbody > tr > td:first-child {
+                    background: #12a79b;
+                    color: #fff;
+                }
+
+                .horizontallblHolder > table > tbody > tr > td:last-child {
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    color: #121212;
+                }
+ 

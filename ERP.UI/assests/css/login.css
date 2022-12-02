@@ -1,0 +1,285 @@
+/*
+ * Specific styles of signin component
+ */
+/*
+ * General styles
+ */
+body, html {
+    height: 100%;
+    background-repeat: no-repeat;
+    /*background-image: linear-gradient(rgb(41, 79, 95), #c58c8b);*/
+    /*background-image:url('../images/victoria.jpg');*/
+
+}
+.event{
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    z-index: 9;
+    max-width: 100px;
+    
+}
+.card-container.card {
+    max-width: 350px;
+    padding: 40px 40px;
+}
+
+.btn {
+    font-weight: 700;
+    height: 36px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+/*
+ * Card component
+ */
+.card {
+    background-color: #F7F7F7;
+    /* just in case there no content*/
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img-card {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+/*
+ * Form styles
+ */
+.profile-name-card {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 1em;
+}
+
+.reauth-email {
+    display: block;
+    color: #404040;
+    line-height: 2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin #inputEmail,
+.form-signin #inputPassword {
+    direction: ltr;
+    height: 44px;
+    font-size: 16px;
+}
+
+.form-signin input[type=email],
+.form-signin input[type=password],
+.form-signin input[type=text],
+.form-signin button {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    border-color: rgb(104, 145, 162);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+}
+
+.btn.btn-signin {
+    /*background-color: #4d90fe; */
+    background-color: rgb(104, 145, 162);
+    background-color: #3c8dbc;
+    padding: 0px;
+    font-weight: 700;
+    font-size: 14px;
+    height: 36px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+}
+
+.btn.btn-signin:hover,
+.btn.btn-signin:active,
+.btn.btn-signin:focus {
+    background-color: #679c21;
+}
+
+.forgot-password {
+    color: rgb(104, 145, 162);
+}
+
+.forgot-password:hover,
+.forgot-password:active,
+.forgot-password:focus{
+    color: rgb(12, 97, 33);
+}
+
+
+
+.logo-wrap > img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+    }
+    .backColor {
+        width: 80%;
+        height: 200%;
+        position: fixed;
+        background: #288fce;
+        z-index: 2;
+        top: -200px;
+        left: -504px;
+        transform: rotate(72deg);
+    }
+
+    .centerd-box {
+        position: relative;
+        background-color: #fff;
+        padding: 30px 50px;
+        top: 75px;
+        max-width: 390px;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 61Px;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
+        z-index: 5;
+    }
+    .centerd-box .logo-wrap {
+        margin-bottom: 25px;
+        text-align: center;
+        margin-top: 18px;
+    }
+    .logo-wrap > img {
+        width: auto;
+        max-width: 71%;
+        height: auto;
+    }
+    .btn-login {
+        
+    }
+    .btn-login {
+        background: #288fce;
+        border: none;
+        -webkit-font-smoothing: antialiased;
+         font-weight: 400; 
+        font-size: 21px;
+        color: #fff;
+        box-shadow: 0px 5px 8px rgba(0,0,0,0.23); 
+        /* width: 83px !important; */
+         height: auto !important;
+        border-radius: 20px !important;
+        padding:20px 0;
+        text-transform:uppercase;
+    }
+        .btn-login:hover, .btn-login:focus, .btn-login:active, .btn-login.active {
+            background: #2088C7;
+            border: none;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+            font-size: 21px;
+            color: #fff;
+            box-shadow: 0px 5px 8px rgba(0,0,0,0.27);
+            /* width: 83px !important; */
+            height: auto !important;
+            border-radius: 20px !important;
+            padding: 20px 0;
+            text-transform: uppercase;
+            opacity:1;
+            outline:none;
+        }
+    .loginArea .form-control {
+        border: none;
+        border-bottom: 1px solid #e0e0e0;
+        text-align:center;
+        font-size:16px !important;
+        box-shadow:none !important;
+
+    }
+    .loginArea .form-control:focus {
+        border: none;
+        border-bottom: 1px solid #B2B0B0;
+    }
+    .loginArea .form-control:focus + label,
+    .loginArea .form-control.hasText + label {
+        -webkit-transform: translate(-50%, -30px);
+        -moz-transform: translate(-50%, -30px);
+        transform: translate(-50%, -30px);
+    } 
+    .loginArea .form-group {
+        position: relative;
+        text-align: center;
+    }
+    .loginArea .form-group.inp {
+        margin: 50px 0;
+    }
+        .loginArea .form-group label {
+            
+            
+            -webkit-transition: all 0.1s ease;
+            -moz-transition: all 0.1s ease;
+            transition: all 0.1s ease;
+            cursor: inherit;
+        }
+    .mT40 {
+        margin-top:40px;
+    }
+    .fixedfooter {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        height: 50px;
+        bottom: 0;
+        z-index: 5;
+        background: transparent;
+        color: #fff;
+        margin-bottom: 15px;
+    }
+    .copyright a{
+        color:#fff;
+    }
+
+    .loginArea .form-control#ddlConn {
+        font-size: 13px !important;
+    }
+
+    .loginFlex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }

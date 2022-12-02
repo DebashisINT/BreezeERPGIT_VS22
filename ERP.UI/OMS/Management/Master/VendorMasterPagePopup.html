@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Customer Add</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <link href="../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../../assests/js/jquery.min.js"></script>
+    <script src="../../../assests/bootstrap/js/bootstrap.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">--> 
+</head>
+    <style>
+        .input-sm {
+            margin-bottom: 5px;
+        }
+
+        .nogap {
+            padding: 0px;
+        }
+        .case-upp {
+            text-transform: uppercase !important;
+        }
+    </style>
+    
+    <script src="Js/VendormasterPopup.js?var=1.6"></script>
+    <style>
+        .form-group input[type="checkbox"] {
+            display: none;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                    display: none;
+                }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                    display: inline-block;
+                }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;
+            }
+
+        .clear {
+            clear: both;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            if (document.getElementById('typeUnregistered').checked) {               
+                $("#GSTIN1").prop('disabled', true);
+                $("#GSTIN2").prop('disabled', true);
+                $("#GSTIN3").prop('disabled', true);
+            }            
+            else {
+                $("#GSTIN1").prop('disabled', false);
+                $("#GSTIN2").prop('disabled', false);
+                $("#GSTIN3").prop('disabled', false);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "HRrecruitmentagent_general.aspx/GetAccountGroupList",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: "true",
+                cache: "false",
+                success: function (msg) {
+                    var list = msg.d;
+                    for (var i = 0; i < list.length; i++) {
+                        var id = '';
+                        var name = '';
+                        id = list[i].split('|')[1];
+                        name = list[i].split('|')[0];
+                        var opt = ' <option value="' + id + '">' + name + ' </option>';  
+                        $("#accountgroup").append(opt);
+                    }
+                }
+            });
+        });
+        
+          //$( function() {
+          //    $( "#datepicker" ).datepicker();
+          //} );
+      
+        function handleClick(myRadio) {
+            var currentValue = myRadio.value;           
+            if (currentValue == "U") {
+                $("#GSTIN1").prop('disabled', true);
+                $("#GSTIN2").prop('disabled', true);
+                $("#GSTIN3").prop('disabled', true);
+            }
+            else {
+                $("#GSTIN1").prop('disabled', false);
+                $("#GSTIN2").prop('disabled', false);
+                $("#GSTIN3").prop('disabled', false);
+            }
+        }
+
+        //$(document).ready(function () {
+
+        //    $('#ApplicableDate').datepicker({
+        //        format: "dd-mm-yyyy"
+        //    });
+
+        //});
+    </script> 
+    
+     
+</head>
+<body>
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Unique Id </label><label style="color:red">*</label>
+                    <input class="form-control input-sm" placeholder="Unique ID" maxlength="50" id="uniqueId" onblur="CheckUnique()" type="text" data-toggle="tooltip" title="Unique ID ">
+                </div>
+                <div class="col-md-4">
+                    <label>Name</label><label style="color:red">*</label>
+                    <input class="form-control input-sm" placeholder="Name" id="Name" type="text" maxlength="50" data-toggle="tooltip" title="Name">
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Vendor Type</label>
+                        </div>
+                        <div class="clear" />
+                        <input type="radio" id="typeUnregistered"
+                               name="contact" value="U" onclick="handleClick(this);" checked>
+                        <label for="contactChoice1">Unregistered</label>
+
+                        <input type="radio" id="typeRegular"
+                               name="contact" value="R" onclick="handleClick(this);" >
+                        <label for="contactChoice2">Regular</label>
+
+                        <input type="radio" id="typeComposition"
+                               name="contact" value="C" onclick="handleClick(this);">
+                        <label for="contactChoice3">Composition</label>
+
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Address Type</label><label style="color:red">*</label>
+                        <select name="addresstype" class="form-control input-sm" id="addtype">
+                            <option value="Office">Office</option>
+                            <option value="Residence">Residence</option>
+                            <option value="Correspondence">Correspondence</option>
+                            <option value="Billing">Billing</option>
+                            <option value="Shipping">Shipping</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>GSTIN</label>
+                            </div>
+                            <div class="clear" />
+                            <div class="col-md-3">
+                                <input class="form-control input-sm case-upp" id="GSTIN1" type="text" maxlength="2" data-toggle="tooltip" title="GSTIN">
+                            </div>
+                            <div class="col-md-5">
+                                <input class="form-control input-sm case-upp" id="GSTIN2" type="text" maxlength="10" data-toggle="tooltip" title="GSTIN">
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control input-sm case-upp" id="GSTIN3" type="text" maxlength="3" data-toggle="tooltip" title="GSTIN">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-header">
+                            <label style="padding-left: 10px; padding-top: 6px;">Address Details</label>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <div class="col-md-6 nogap">
+                                <label>Pin</label><label style="color:red">*</label>
+                                <input class="form-control input-sm" placeholder="Pin Code" id="pinCode" maxlength="6" onblur="PinChange()" type="text" data-toggle="tooltip" title="Pin Code">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Alternative Phone</label>
+                                <input class="form-control input-sm" placeholder="Alternative Phone" id="BillingPhone" maxlength="12" type="text" data-toggle="tooltip" title="Alternative Phone">
+                            </div>
+                            <div class="clear"></div>
+
+
+                            <div class="col-md-12 nogap">
+                                <label>Address </label><label style="color:red">*</label>
+                                <input class="form-control input-sm" placeholder="Address 1" id="BillingAddress1" maxlength="50" type="text" data-toggle="tooltip" title="Address 1">
+                            </div>
+                            <div class="col-md-12 nogap">
+                                <input class="form-control input-sm" placeholder="Address 2" id="BillingAddress2" maxlength="50" type="text" data-toggle="tooltip" title="Address 2">
+                            </div>
+
+                            <div class="col-md-4 nogap">
+                                <label> Country</label>
+                                <input class="form-control input-sm " placeholder="Country" disabled id="Country" type="text" data-toggle="tooltip" title="Country">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>State</label>
+                                <input class="form-control input-sm" placeholder="State" disabled id="State" type="text" data-toggle="tooltip" title="State">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>City/District</label>
+                                <input class="form-control input-sm" placeholder="City/District" disabled id="City" type="text" data-toggle="tooltip" title="City/District">
+                            </div>                           
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6" id="shippingId">
+                    <div class="panel panel-default">
+                     
+                        <div class="panel-body">
+                            <!--<div class="col-md-6">
+                               <label>Applicable From</label>
+                               
+                                <input class="form-control" type="text" id="ApplicableDate">
+                            </div>-->
+
+                            <div class="clear"></div>
+                            <div class="col-md-12 nogap">
+                                <label>Account Group</label>
+                                <select class="form-control" id="accountgroup">
+                                    <option selected="selected">Select</option>
+                                </select>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+
+
+
+            <div class="col-md-12 pull-left">
+                <input type="button" class="btn btn-primary btn-small" value="Save" onclick="SaveVendor()" />
+                <!--<label style="color: red">[After Save this data, POS Billing/Shipping to be filled automatically.]</label>-->
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+

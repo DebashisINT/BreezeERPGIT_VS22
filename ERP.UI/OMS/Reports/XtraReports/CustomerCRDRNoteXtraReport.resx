@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="xrTable2.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableRow2.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell2.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell4.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell6.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell5.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xrTableCell8.UserDesignerLocked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="sqlDataSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="customSqlQuery1.Sql" xml:space="preserve">
+    <value>select h.DCNote_ID as 'Id',(select ISNULL(cnt_firstName,'')+' '+ISNULL(cnt_middleName,'')+'  '+ISNULL(cnt_lastName,'')
+ from tbl_master_contact where cnt_internalId=h.DCNote_CustomerID) as 'Customer',h.DCNote_FinYear as 'Doc_FinYear',h.DCNote_DocumentNumber as 'Doc_no',h.DCNote_DocumentDate as 'Doc_date',(select branch_description from tbl_master_branch where branch_id=h.DCNote_BranchID) as 'Branch'
+,DCNote_Narration
+,ISNULL(h.DCNote_TotalAmount,0) as 'Total Net Amount' ,h.DCNote_UnPaidAmount as 'Unpaid Amount',
+Cast(ISNULL(h.DCNote_TotalAmount,0) as decimal(18,2)) as 'Format Total Net Amount' ,
+
+c.CNT_GSTIN,pan_no=(select crg_Number from tbl_master_contactRegistration where crg_cntId=c.cnt_internalId and crg_type ='Pan Card')
+,case when h.DCNote_Type='Cr' then 'Customer Credit Note' else 'Customer Debit Note'end as 'DCNote_Type'
+,case when h.DCNote_Type='Cr' then 'Credit Note No' else 'Debit Note No'end as 'Note_No'
+,case when h.DCNote_Type='Cr' then 'Credit Date' else 'Debit Date'end as 'Note_Date'
+,(select user_name from tbl_master_user where user_id=h.DCNote_CreateUser) as 'user_name'
+from Trans_CustDebitCreditNote h
+inner join tbl_master_contact c on h.DCNote_CustomerID=c.cnt_internalId
+where h.DCNote_ID=@Customer_CRDR_id
+
+
+</value>
+  </data>
+  <data name="customSqlQuery2.Sql" xml:space="preserve">
+    <value>select Id,relation_Id,MainAccountCode,MainAccountName,SubAccountCode,SubAccountName,Details_Narration,LocalCurrency_Amount,ForeignCurrency_Amount
+ from 
+
+(
+select DCNoteDetail_ID as 'Id',CAST(DCNoteDetail_DCNote_ID as bigint) as 'relation_Id',Isnull(DCNoteDetail_MainAccountCode,'') as 'MainAccountCode',(select MainAccount_Name+'['+MainAccount_AccountCode+']' from Master_MainAccount where MainAccount_ReferenceID=Trans_CustDebitCreditNoteDetail.DCNoteDetail_MainAccountCode) as 'MainAccountName',Isnull(DCNoteDetail_SubAccountCode,'') as 'SubAccountCode',(select cnt_firstName from tbl_master_contact where cnt_internalId=Trans_CustDebitCreditNoteDetail.DCNoteDetail_SubAccountCode) as 'SubAccountName',DCNoteDetail_Narration as 'Details_Narration',DCNoteDetail_Amount_LocalCurrency as 'LocalCurrency_Amount',DCNoteDetail_Amount_ForeignCurrency as 'ForeignCurrency_Amount'
+
+
+
+ from Trans_CustDebitCreditNoteDetail where DCNoteDetail_DCNote_ID=@Customer_CRDR_id
+ )  details
+
+</value>
+  </data>
+  <data name="customSqlQuery3.Sql" xml:space="preserve">
+    <value>select c.*,phone=(select top 1 phf_phoneNumber from tbl_master_phonefax where phf_cntId=c.cmp_internalid),email=(select top 1 eml_email from tbl_master_email where eml_cntId=c.cmp_internalid)  ,
+
+ISNULL(a.add_address1,'')+', '+ISNULL(a.add_address2,'')+', '+ISNULL(a.add_address3,'')+', '+case when (select ISNULL(city_name,'') from tbl_master_city where city_id=a.add_city)&lt;&gt;'' then (select ISNULL(city_name,'') from tbl_master_city where city_id=a.add_city)+'-'+(select pin_code from tbl_master_pinzip where pin_id=a.add_pin)+'.' else '' end as 'Address',
+
+(select city_name from tbl_master_city where city_id=a.add_city)as add_city,(select pin_code from tbl_master_pinzip where pin_id=a.add_pin) as add_pin  from tbl_master_company c  inner join tbl_master_address a on c.cmp_internalid=a.add_cntId  where c.cmp_internalid=@Company_Id
+
+
+
+</value>
+  </data>
+  <data name="sqlDataSource1.ResultSchemaSerializable" xml:space="preserve">
+    <value>PERhdGFTZXQgTmFtZT0ic3FsRGF0YVNvdXJjZTEiPjxWaWV3IE5hbWU9IkNvbXBhbnlNYXN0ZXIiPjxGaWVsZCBOYW1lPSJjbXBfaWQiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9ImNtcF9pbnRlcm5hbGlkIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9OYW1lIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9wYXJlbnRpZCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfbmF0dXJlT2ZCdXNpbmVzcyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfZGlyZWN0b3JzIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9hdXRob3JpemVkU2lnbmF0b3JpZXMiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX2V4Y2hhbmdlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9yZWdpc3RyYXRpb25ObyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfc2ViaVJlZ25ObyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfcGFuTm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX3NlcnZpY2VUYXhObyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfc2FsZXNUYXhObyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJDcmVhdGVEYXRlIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iQ3JlYXRlVXNlciIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iTGFzdE1vZGlmeURhdGUiIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJMYXN0TW9kaWZ5VXNlciIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iY21wX0RhdGVJbmNvcnBvcmF0aW9uIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iY21wX0NJTiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfQ0lOZHQiIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJjbXBfVnJlZ2lzTm8iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJjbXBfVlBhbk5vIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iY21wX09mZlJvbGVTaG9ydE5hbWUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX09uUm9sZVNob3J0TmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjb21fQWRkIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNvbV9sb2dvcGF0aCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfY3VycmVuY3lpZCIgVHlwZT0iQnl0ZSIgLz48RmllbGQgTmFtZT0iY21wX0tZQ1ByZWZpeCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfS1JBSW50ZXJtZWRpYXJ5SUQiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX0xlZGdlclZpZXciIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX0NvbWJpbmVkQ250ckRhdGUiIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJjbXBfQ29tYkNudHJOdW1iZXIiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJjbXBfQ29tYkNudHJSZXNldCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfQ29tYkNudHJPcmRlciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfdmF0X25vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9FUEZSZWdpc3RyYXRpb25ObyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfRVBGUmVnaXN0cmF0aW9uTm9WYWxpZGZyb20iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJjbXBfRVBGUmVnaXN0cmF0aW9uTm9WYWxpZHVwdG8iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJjbXBfRVNJQ1JlZ2lzdHJhdGlvbk5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9ImNtcF9FU0lDUmVnaXN0cmF0aW9uTm9WYWxpZGZyb20iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJjbXBfRVNJQ1JlZ2lzdHJhdGlvbk5vVmFsaWR1cHRvIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0ib25yb2xlX3NjaGVtYV9pZCIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9Im9mZnJvbGVfc2NoZW1hX2lkIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iY21wX2JpZ0xvZ28iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iY21wX3NtYWxsTG9nbyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJjbXBfZ3N0aW4iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0icGhvbmUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iZW1haWwiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWRkcmVzcyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJhZGRfY2l0eSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJhZGRfcGluIiBUeXBlPSJTdHJpbmciIC8+PC9WaWV3PjxWaWV3IE5hbWU9IkRldGFpbHMiPjxGaWVsZCBOYW1lPSJJZCIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9InJlbGF0aW9uX0lkIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iTWFpbkFjY291bnRDb2RlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik1haW5BY2NvdW50TmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJTdWJBY2NvdW50Q29kZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJTdWJBY2NvdW50TmFtZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJEZXRhaWxzX05hcnJhdGlvbiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJMb2NhbEN1cnJlbmN5X0Ftb3VudCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iRm9yZWlnbkN1cnJlbmN5X0Ftb3VudCIgVHlwZT0iRGVjaW1hbCIgLz48L1ZpZXc+PFZpZXcgTmFtZT0iSGVhZGVyIj48RmllbGQgTmFtZT0iSWQiIFR5cGU9IkludDY0IiAvPjxGaWVsZCBOYW1lPSJDdXN0b21lciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJEb2NfRmluWWVhciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJEb2Nfbm8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRG9jX2RhdGUiIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJCcmFuY2giIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRENOb3RlX05hcnJhdGlvbiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJUb3RhbCBOZXQgQW1vdW50IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJVbnBhaWQgQW1vdW50IiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJGb3JtYXQgVG90YWwgTmV0IEFtb3VudCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iQ05UX0dTVElOIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9InBhbl9ubyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJEQ05vdGVfVHlwZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJOb3RlX05vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik5vdGVfRGF0ZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJ1c2VyX25hbWUiIFR5cGU9IlN0cmluZyIgLz48L1ZpZXc+PFJlbGF0aW9uIE1hc3Rlcj0iSGVhZGVyIiBEZXRhaWw9IkRldGFpbHMiPjxLZXlDb2x1bW4gTWFzdGVyPSJJZCIgRGV0YWlsPSJyZWxhdGlvbl9JZCIgLz48L1JlbGF0aW9uPjwvRGF0YVNldD4=</value>
+  </data>
+  <data name="$this.ScriptsSource" xml:space="preserve">
+    <value>
+private void SubBand1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+//GetCurrentColumnValue("RailName").ToString();
+//xrLabel16.Text=((DataRowView)DetailsProductWiseTax.GetCurrentRow()).Row["Tax"].ToString();
+
+}
+
+double pagewiseTotalAmnt;
+int serial_no=0;
+int sn=0;
+ public string CompanyName { get; set; }
+
+private void xrTableCell26_AfterPrint(object sender, System.EventArgs e) {
+}
+
+private void xrTableCell19_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+serial_no++;
+ XRLabel slno = sender as XRLabel;
+ slno.Text = Convert.ToString(serial_no);
+
+}
+
+private void xrCompanyName_AfterPrint(object sender, System.EventArgs e) {
+         }
+</value>
+  </data>
+</root>

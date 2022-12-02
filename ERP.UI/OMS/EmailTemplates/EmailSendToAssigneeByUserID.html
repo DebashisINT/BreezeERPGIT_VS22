@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <!--<div id="WelcomeMessage" style="text-align:left;">
+        <span id="Msg"><%Message%></span>
+    </div>-->
+    <table style="border:1px;width:100%;">
+        
+        <tr style="text-align:center !important;background-color:#5482DE">
+            <td colspan="2" align="center"><h2>Sales Activity Feedback To - <%AssigneeTo%></h2></td>
+        </tr>
+        <tr></tr>
+        <tr style="background-color: #E1D5D5;">
+            <td>Phone Status :</td>
+            <td><%PhoneStatus%></td>
+        </tr>
+        <tr style="background-color: #E1D5D5;">
+            <td>Remarks :</td>
+            <td><%Remarks%></td>
+        </tr>
+        <tr style="background-color: #C8B1B1;">
+            <td>Assigned To :</td>
+            <td><%AssigneeTo%></td>
+        </tr>
+        <tr style="background-color: #E1D5D5;">
+            <td>Assigned By :</td>
+            <td><%AssignedBy%></td>
+        </tr>
+        <tr style="background-color: #E1D5D5;">
+            <td>Feedback :</td>
+            <td><%Feedback%></td>
+        </tr>
+        <tr style="background-color: #C8B1B1;">
+            <td>Activity Start Date :</td>
+            <td><%ActivityStartDate%></td>
+        </tr>
+        <tr style="background-color: #E1D5D5;">
+            <td>Activity Completion Date :</td>
+            <td><%ActivityCompletionDate%></td>
+        </tr>
+    </table>
+</body>
+</html>

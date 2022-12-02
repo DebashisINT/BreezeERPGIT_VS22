@@ -1,0 +1,81 @@
+﻿@model IEnumerable<EntityLayer.UserGroupsEL.GroupUserListModel>
+
+@*@{
+        int GroupId = ViewBag.GroupId;
+    }
+
+    @{
+        var grid = Html.DevExpress().GridView(settings =>
+        {
+            settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
+            settings.CallbackRouteValues = new { Controller = "Ajax", Action = "_PartialGroupUserListForShow" };
+            settings.Name = "grdGrpUsrLst";
+            //settings.ClientSideEvents.BeginCallback = "OnCallback";
+            settings.Settings.ShowFilterRowMenu = true;
+            settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50", "100" };
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSize = 10;
+
+            settings.KeyFieldName = "UserId";
+            settings.SettingsPager.Visible = true;
+            settings.Settings.ShowGroupPanel = true;
+            settings.Settings.ShowFilterRow = true;
+            settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+            settings.SettingsPager.AlwaysShowPager = true;
+
+            settings.PreRender = (sender, e) =>
+            {
+                var gridView = (MVCxGridView)sender;
+                gridView.SearchPanelFilter = "";
+            };
+            settings.SettingsSearchPanel.Visible = true;
+            settings.CommandColumn.ShowSelectCheckbox = false;
+            settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.None;
+
+            settings.Columns.Add(column =>
+            {
+                column.Caption = "Id";
+                column.FieldName = "UserId";
+                column.Visible = false;
+                column.Width = Unit.Percentage(10);
+            });
+            settings.Columns.Add(column =>
+            {
+                column.Caption = "Users";
+                column.FieldName = "UserName";
+                column.Width = Unit.Percentage(10);
+                column.VisibleIndex = 1;
+            });
+        });
+    }
+    @grid.Bind(Model).GetHtml()
+
+    <script type="text/javascript">
+        function OnCallback(s, e) {
+            e.customArgs["GroupId"] = '@GroupId';
+        }
+    </script>*@
+
+<table style="width:100%">
+    <thead>
+        <tr>
+            <td>User Name</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.UserName</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td>No users found</td></tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,16 @@
+﻿#ghhhtbl td {
+    padding-right: 15px;
+}
+    
+#lstBankList + .chosen-container-single {
+    width: 100% !important;
+}
+.lblBlock {
+    display:block;
+}
+.fullWidth {
+    width:98vw;
+}
+.fullHeight {
+    height:98vh;
+}

@@ -1,0 +1,824 @@
+<%@ Page Title="Sales Activity" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" Inherits="ERP.OMS.Management.Activities.management_Activities_crm_sales" CodeBehind="crm_sales.aspx.cs" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="/assests/pluggins/choosen/choosen.min.js"></script>
+    <script src="JS/crm_sales.js"></script>
+
+    <style>
+        .chosen-container.chosen-container-multi,
+        .chosen-container.chosen-container-single {
+            width: 100% !important;
+        }
+
+        .chosen-choices {
+            width: 100% !important;
+        }
+
+        #lstAssignTo {
+            width: 200px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .mtop3 {
+            margin-top: 3px;
+        }
+
+        /*.documentCollection a, .closedSales a, .clarificationRequired a, .futureSales a  {
+            color:#fff !important;
+        }*/
+        .pull-right {
+            float: right !important;
+        }
+        .dxtc-activeTab {
+            /* position: relative; */
+            overflow: visible !important;
+        }
+        .dxtc-activeTab:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 9px solid #3e5395;
+            position: absolute;
+            /* left: 50%; */
+            z-index: 3;
+            /* bottom: -15px; */
+            margin-left: -9px;
+        }
+        
+    </style>
+    <link href="../../../assests/css/RES.css" rel="stylesheet" />
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Open Activities
+            </h3>
+            <div id="btncross" class="crossBtn" style="display: none; margin-left: 50px;"><a href="crm_sales.aspx"><i class="fa fa-times"></i></a></div>
+
+        </div>
+    </div>
+    <div class="form_main">
+
+        <div class="" id="divadd" style="display: none">
+            <div class="clearfix">
+                <div style="float: left; padding-right: 5px;">
+                    <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-primary" style="display: none"><span>Add New</span> </a>
+
+
+                    <% if (rights.CanExport)
+                       { %>
+                    <asp:DropDownList ID="drdSalesActivity" runat="server" CssClass="btn btn-sm btn-primary expad mtop3" OnSelectedIndexChanged="drdSalesActivity_SelectedIndexChanged" AutoPostBack="true">
+                        <asp:ListItem Value="0">Export to</asp:ListItem>
+                        <asp:ListItem Value="1">PDF</asp:ListItem>
+                        <asp:ListItem Value="2">XLS</asp:ListItem>
+                        <asp:ListItem Value="3">RTF</asp:ListItem>
+                        <asp:ListItem Value="4">CSV</asp:ListItem>
+                    </asp:DropDownList>
+
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="" id="divdetails">
+            <div class="clearfix">
+                <div style="padding-right: 5px;">
+
+
+
+
+
+
+                    <table class="responsive-table">
+                        <tr>
+                            <td>
+                                <span id="spanBudget">
+                                    <a href="javascript:void(0);" onclick="Budget_open()" title="Budget" class="btn btn-primary">Target Sale Of Product</a>
+                                </span>
+                                <span id="spanMyactivities" visible="false">
+                                    <asp:Button ID="btn_myactivity"  Text="My Activities" runat="server" CssClass="btn btn-primary" OnClick="btMyactivities_Click" />
+                                </span>
+
+                                <asp:Button ID="btn_PendingTask"  Text="Pending Task" runat="server" CssClass="btn btn-primary" OnClick="btMyPendingTask_Click" />
+                                <asp:Button ID="btn_PendingActivity"  Text="My Today's Task" runat="server" CssClass="btn btn-primary" OnClick="btMyPendingActivity_Click" />
+
+
+                            </td>
+                            
+                        </tr>
+
+                    </table>
+                    <table class="responsive-table">
+                        <tr>
+                            <td>
+                                <div style="color: #b5285f; font-weight: bold;" class="clsFrom">
+                                    <asp:Label ID="lblFromDate" runat="Server" Text="Next Activity From : " CssClass="mylabel1"
+                                        Width="120px"></asp:Label>
+                                </div>
+                            </td>
+                            <td>
+                                <dxe:ASPxDateEdit ID="ASPxFromDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
+                                    UseMaskBehavior="True" Width="100%" ClientInstanceName="cxdeFromDate">
+                                    <ButtonStyle Width="13px">
+                                    </ButtonStyle>
+                                </dxe:ASPxDateEdit>
+                            </td>
+                            <td style="padding-left: 1px">
+                                <div style="color: #b5285f; font-weight: bold;" class="clsTo">
+                                    <asp:Label ID="lblToDate" runat="Server" Text="To : " CssClass="mylabel1"
+                                        Width="25px"></asp:Label>
+                                </div>
+                            </td>
+                            <td>
+                                <dxe:ASPxDateEdit ID="ASPxToDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
+                                    UseMaskBehavior="True" Width="100%" ClientInstanceName="cxdeToDate">
+                                    <ButtonStyle Width="13px">
+                                    </ButtonStyle>
+                                    <%-- <ClientSideEvents DateChanged="cxdeToDate_OnChaged"></ClientSideEvents>--%>
+                                </dxe:ASPxDateEdit>
+                            </td>
+                            <td style="padding-left: 5px; padding-top: 3px">
+                                <button class="btn btn-primary" onclick="btn_ShowRecordsClick()" type="button">Show</button>
+                                <% if (rights.CanExport)
+                                   { %>
+                                <asp:DropDownList ID="drdSalesActivityDetails" runat="server" Height="34px" CssClass="btn btn-sm btn-primary  expad  " OnSelectedIndexChanged="drdSalesActivityDetails_SelectedIndexChanged" AutoPostBack="true">
+                                    <asp:ListItem Value="0">Export to</asp:ListItem>
+                                    <asp:ListItem Value="1">PDF</asp:ListItem>
+                                    <asp:ListItem Value="2">XLS</asp:ListItem>
+                                    <asp:ListItem Value="3">RTF</asp:ListItem>
+                                    <asp:ListItem Value="4">CSV</asp:ListItem>
+                                </asp:DropDownList>
+                                <% } %>
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+
+
+                    
+                </div>
+            </div>
+        </div>
+        <table class="TableMain100">
+
+            <tr>
+
+                <td>
+                    <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ActiveTabIndex="0" Width="100%"
+                        ClientInstanceName="page">
+
+
+                        <TabPages>
+                            <dxe:TabPage Text="Open Activities" Name="Assigned Sales Activity">
+                                <ContentCollection>
+                                    <dxe:ContentControl runat="server">
+                                        <div id="GridDiv">
+                                            <table width="100%">
+                                                <tr style="display: none;">
+                                                    <td>Filter On</td>
+                                                </tr>
+                                                <tr style="display: none;">
+                                                    <td>Call Type
+                         <asp:DropDownList ID="DropDownListCallDisposition" runat="server" Height="34px" CssClass="btn btn-sm btn-primary expad">
+                             <asp:ListItem Value="0">Select</asp:ListItem>
+                             <asp:ListItem Value="1">New Calls</asp:ListItem>
+                             <asp:ListItem Value="2">Call Back</asp:ListItem>
+                             <asp:ListItem Value="3">Non Contactable</asp:ListItem>
+                             <asp:ListItem Value="4">Non Usable</asp:ListItem>
+                             <asp:ListItem Value="5">Won/Confirm Sale</asp:ListItem>
+                             <asp:ListItem Value="6">Lost/Not Interested</asp:ListItem>
+                             <asp:ListItem Value="7">PipeLine/Sales Visits </asp:ListItem>
+                             <asp:ListItem Value="8">No Response</asp:ListItem>
+                             <asp:ListItem Value="9">Not Reachable </asp:ListItem>
+                             <asp:ListItem Value="10">Number Does Not Exists</asp:ListItem>
+                             <asp:ListItem Value="11">Temp Out of Service</asp:ListItem>
+                         </asp:DropDownList>
+                                                        Sales Visit
+                         <asp:DropDownList ID="DropDownSalesVisit" runat="server" Height="34px" CssClass="btn btn-sm btn-primary expad">
+                             <asp:ListItem Value="0">Select</asp:ListItem>
+                             <asp:ListItem Value="1">Pending</asp:ListItem>
+                             <asp:ListItem Value="2">Open</asp:ListItem>
+                             <asp:ListItem Value="3">Closed</asp:ListItem>
+                             <asp:ListItem Value="4">Confirm</asp:ListItem>
+                         </asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td id="SaleListID" style="display: none">
+
+                                                        <dxe:ASPxGridView ID="SaleGrid" runat="server" AutoGenerateColumns="False" ClientInstanceName="Sgrid"
+                                                            DataSourceID="SalesDataSource" Width="100%" OnCustomCallback="SGrid_CustomCallback" SettingsCookies-StoreGroupingAndSorting="true"
+                                                            SettingsCookies-StorePaging="true">
+                                                            <Columns>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="sls_assignedBy" Caption="Assigned ID" VisibleIndex="0" Visible="false" Width="18%">
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="ActivityID" Caption="Activity ID" VisibleIndex="1" Width="18%">
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="Address" Caption="Address" VisibleIndex="2" Width="18%">
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="ContactNumber" Caption="Contact Details" VisibleIndex="3" Width="18%">
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="Assigned To" Caption="Assigned To" VisibleIndex="4" Width="18%">
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="Assigned Date" Caption="Assigned Date" VisibleIndex="5"
+                                                                    Width="18%">
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="Assigned By" Caption="Assigned By" VisibleIndex="6"
+                                                                    Width="18%">
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="Supervisor"
+                                                                    VisibleIndex="6">
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <%-- <dxe:GridViewDataTextColumn VisibleIndex="6" Caption="Details">
+                                                                    <DataItemTemplate>
+                                                                        <a href="javascript:void(0)" onclick="ShowDetail('<%#Eval("ID") %>','<%#Eval("cnt_id") %>')">Show</a>
+                                                                    </DataItemTemplate>
+                                                                    <EditFormSettings Visible="False" />
+                                                                </dxe:GridViewDataTextColumn>--%>
+                                                                <dxe:GridViewDataTextColumn Caption="" VisibleIndex="7" Width="6%">
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                    <HeaderStyle HorizontalAlign="Center" />
+                                                                    <HeaderTemplate>
+                                                                        Actions
+                                   
+                                                                    </HeaderTemplate>
+                                                                    <DataItemTemplate>
+
+                                                                        <% if (rights.CanDelete)
+                                                                           { %>
+                                                                        <a href="javascript:void(0);" onclick="DeleteRow('<%#Eval("ID") %>')" alt="Delete">
+                                                                            <img src="../../../assests/images/Delete.png" /></a>
+                                                                        <% } %>
+                                                                    </DataItemTemplate>
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                            </Columns>
+
+
+                                                            <SettingsCommandButton>
+                                                                <DeleteButton Image-Url="../../../assests/images/Delete.png" ButtonType="Image" Image-AlternateText="Delete">
+                                                                </DeleteButton>
+
+
+                                                            </SettingsCommandButton>
+                                                            <Styles>
+                                                                <LoadingPanel ImageSpacing="10px">
+                                                                </LoadingPanel>
+                                                                <Header ImageSpacing="5px" SortingImageSpacing="5px">
+                                                                </Header>
+                                                                <Cell CssClass="gridcellleft">
+                                                                </Cell>
+                                                            </Styles>
+
+                                                            <SettingsPager PageSize="10">
+                                                                <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,50,100,150,200" />
+                                                            </SettingsPager>
+
+                                                            <%-- <SettingsPager NumericButtonCount="20" ShowSeparators="True">
+                                                                <FirstPageButton Visible="True">
+                                                                </FirstPageButton>
+                                                                <LastPageButton Visible="True">
+                                                                </LastPageButton>
+                                                            </SettingsPager>--%>
+                                                            <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" />
+
+                                                            <ClientSideEvents EndCallback="function(s, e) {	LastCall(s.cpHeight);
+}" />
+                                                        </dxe:ASPxGridView>
+                                                    </td>
+                                                    <td id="SaleDetailsListID">
+                                                        <dxe:ASPxGridView ID="SalesDetailsGrid"
+                                                            runat="server" AutoGenerateColumns="False" ClientInstanceName="grid" KeyFieldName="sls_id"
+                                                            Width="100%" OnHtmlRowCreated="SalesDetailsGrid_HtmlRowCreated" OnDataBinding="SalesDetailsGrid_DataBinding" OnCustomCallback="SalesDetailsGrid_CustomCallback"
+                                                            SettingsCookies-Enabled="true" SettingsCookies-StorePaging="true" SettingsCookies-StoreFiltering="true" SettingsCookies-StoreGroupingAndSorting="true" SettingsBehavior-AllowFocusedRow="true" SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false">
+                                                            <SettingsSearchPanel Visible="true" Delay="6000" />
+                                                            <Columns>
+
+                                                                <dxe:GridViewDataTextColumn Caption="Activity" VisibleIndex="0" FieldName="LeadId" Visible="false">
+                                                                    <DataItemTemplate>
+                                                                        <dxe:ASPxCheckBox ID="chkDetail" runat="server">
+                                                                        </dxe:ASPxCheckBox>
+
+                                                                        <dxe:ASPxTextBox ID="lblActNo" runat="server" Width="100%" Visible="false"
+                                                                            NullText="0" Value='<%# Eval("LeadId") %>'>
+                                                                        </dxe:ASPxTextBox>
+
+
+                                                                        <dxe:ASPxTextBox ID="lblSalesId" runat="server" Width="100%" Visible="false"
+                                                                            NullText="0" Value='<%# Eval("sls_id") %>'>
+                                                                        </dxe:ASPxTextBox>
+
+                                                                        <dxe:ASPxTextBox ID="lblact_id" runat="server" Width="100%" Visible="false"
+                                                                            NullText="0" Value='<%# Eval("sls_activity_id") %>'>
+                                                                        </dxe:ASPxTextBox>
+                                                                        <dxe:ASPxTextBox ID="lblAssignedTaskId" runat="server" Width="100%" Visible="false"
+                                                                            NullText="0" Value='<%# Eval("act_assignedTo") %>'>
+                                                                        </dxe:ASPxTextBox>
+
+                                                                    </DataItemTemplate>
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <%--<dxe:GridViewDataTextColumn FieldName="Address" Caption="Address" VisibleIndex="1" Width="18%">
+                                                                </dxe:GridViewDataTextColumn>--%>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="ContactNumber" Caption="Contact Details" VisibleIndex="1" Width="18%">
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="Assigned To" VisibleIndex="1" Caption="Salesman" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="Assigned By" VisibleIndex="2" Caption="Assigned By" Visible="false">
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="Industry" VisibleIndex="3" Caption="Industry" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn ReadOnly="True" VisibleIndex="4" FieldName="Name"   Caption="Customer/Lead Name" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                    <DataItemTemplate>
+                                                                        <a href="javascript:void(0);" title="Click here to view Customer." onclick="View_Customer('<%# Eval("LeadId") %>');"><%#Eval("Name")%>
+                                                                            <%--<img src="../../../assests/images/Delete.png" />--%>
+                                                                        </a>
+                                                                    </DataItemTemplate>
+
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <%--   <dxe:GridViewDataTextColumn FieldName="ProductType" ReadOnly="True" Visible="False"
+                                                                    VisibleIndex="4"  Width="18%">
+                                                                </dxe:GridViewDataTextColumn>--%>
+                                                                <dxe:GridViewDataTextColumn FieldName="Id" ReadOnly="True" Visible="False" VisibleIndex="7">
+                                                                    <EditFormSettings Visible="False" />
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="Amount" Visible="False" VisibleIndex="8">
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="Product" ReadOnly="True" Visible="False"
+                                                                    VisibleIndex="9">
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <%--                                                                <dxe:GridViewDataTextColumn FieldName="ProductType" VisibleIndex="10" Caption="Product Type" Visible="false">
+                                                                </dxe:GridViewDataTextColumn>--%>
+
+                                                                <dxe:GridViewDataTextColumn VisibleIndex="12" Caption="Product(s)" Settings-AllowAutoFilterTextInputTimer="False">
+
+                                                                    <DataItemTemplate>
+
+                                                                        <%--  <a href="javascript:void(0);" title="Click here to view Product." onclick="View_product('<%#Eval("product_id") %>');"><%#Eval("ProductName")%></a>--%>
+                                                                        <asp:LinkButton runat="server" ID="lblProduct" OnClientClick='<%# string.Format("ZoomProduct(\"{0}\"); return false;", Eval("product_id").ToString().Trim()) %>'></asp:LinkButton>
+
+
+                                                                        <%-- <asp:Label ID="lblProduct" runat="server" Text=""></asp:Label>--%>
+
+                                                                        <asp:LinkButton runat="server" ID="lnkProduct" OnClientClick='<%# string.Format("ShowDetailProduct(\"{0}\"); return false", Eval("act_id")) %>'><img  src="/assests/images/Viewt1.png"/  title="Details"></asp:LinkButton>
+                                                                    </DataItemTemplate>
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="ProductClasName" VisibleIndex="11" Caption="Product Class" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                    <DataItemTemplate>
+                                                                        <asp:Label ID="lblProductClass" runat="server" Text=""></asp:Label>
+                                                                        <asp:LinkButton runat="server" ID="lnkProductClass" OnClientClick='<%# string.Format("ShowDetailProductClass(\"{0}\"); return false", Eval("sls_id")) %>'><img  src="/assests/images/Viewt1.png"/  title="Details"></asp:LinkButton>
+                                                                    </DataItemTemplate>
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="ExpectedTime" VisibleIndex="13" Caption="Date Of Completion" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="PriorityName" VisibleIndex="14" Caption="Priority">
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="NextVisit" VisibleIndex="15" Caption="Next Activity Date" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn FieldName="budget" VisibleIndex="16" Caption="Product:Budget" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn FieldName="Remarks" VisibleIndex="17" Caption="Budget Remarks" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                </dxe:GridViewDataTextColumn>
+
+                                                                <dxe:GridViewDataTextColumn Visible="false" VisibleIndex="18" Caption="Reassign">
+                                                                    <DataItemTemplate>
+                                                                        <a href="javascript:void(0)" onclick="ShowDetailReassign('<%#Eval("sls_id") %>')">Reassign</a>
+                                                                    </DataItemTemplate>
+                                                                    <EditFormSettings Visible="False" />
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+
+
+                                                                <dxe:GridViewDataTextColumn Visible="false" VisibleIndex="19" Caption="Create Activity">
+                                                                    <DataItemTemplate>
+                                                                        <a href="javascript:void(0)" onclick="ShowCreateActivity('<%#Eval("LeadId") %>','<%#Eval("sls_id") %>','<%#Eval("sls_activity_id") %>','<%#Eval("act_assignedTo") %>','<%#Eval("act_activityNo") %>','<%#Eval("act_assign_task") %>')">Create Activity</a>
+                                                                    </DataItemTemplate>
+                                                                    <EditFormSettings Visible="False" />
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn VisibleIndex="20" Caption="History">
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                    <HeaderStyle HorizontalAlign="Center" />
+                                                                    <DataItemTemplate>
+                                                                        <% if (rights.CanHistory)
+                                                                           { %>
+                                                                        <a href="javascript:void(0)" onclick="ShowHistory('<%#Eval("sls_id") %>')">
+                                                                            <img src="/assests/images/history.png" width="16" height="16" title="History"></a>
+                                                                        <% } %>
+                                                                    </DataItemTemplate>
+                                                                    <EditFormSettings Visible="False" />
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+                                                                <dxe:GridViewDataTextColumn VisibleIndex="21" Caption="Actions" Width="160px">
+                                                                    <CellStyle HorizontalAlign="Center">
+                                                                    </CellStyle>
+                                                                    <HeaderStyle HorizontalAlign="Center" />
+                                                                    <DataItemTemplate>
+                                                                        <a style="display: none;" href="javascript:void(0)" onclick="ShowClosed('<%#Eval("sls_id") %>')">
+                                                                            <img src="/assests/images/CrIcon.png" width="24" height="24" title="Closed Sales"></a>
+
+                                                                        <asp:HyperLink runat="server" ID="hpnPh" CssClass="pad"><img  src="/assests/images/phone_number.png"/ width="16" height="16" title="Phone call"></asp:HyperLink>
+                                                                        <asp:HyperLink runat="server" ID="hpnSv" CssClass="pad"><img  src="/assests/images/sales.png" / width="16" height="16" title="Sales Visit"></asp:HyperLink>
+                                                                        <asp:HyperLink runat="server" ID="hpnOtheractvSms" CssClass="pad"><img  src="/assests/images/sms.png" / width="16" height="16" title="Sms"></asp:HyperLink>
+                                                                        <asp:HyperLink runat="server" ID="hpnOtheractvMeet" CssClass="pad"><img  src="/assests/images/meeting.png" / width="16" height="16" title="Meeting"></asp:HyperLink>
+                                                                        <asp:HyperLink runat="server" ID="hpnOtheractvEmail" CssClass="pad"><img  src="/assests/images/email.png" / width="16" height="16" title="Email"></asp:HyperLink>
+                                                                        <%  if (rights.CanBudget)
+                                                                            { %>
+                                                                        <a href="javascript:void(0);" onclick="OnBudgetCopen('<%# Eval("cnt_Id") %>','<%# Eval("ProductClass_ID") %>','<%#Eval("sls_id") %>')" title="Budget" class="pad">
+                                                                            <img src="/assests/images/cashbudget.png" width="16" height="16" />
+                                                                        </a>
+
+                                                                        <%   }%>
+                                                                        <asp:Label Text='<%#Eval("act_activityTypes") %>' ID="lblactivty" Visible="false" runat="server"></asp:Label>
+                                                                        <asp:HiddenField ID="hdnActivity" Value='<%#Eval("act_activityTypes") %>' runat="server" />
+
+
+                                                                        <asp:Label Text='<%#Eval("Name") %>' ID="lblCustomerName" Visible="false" runat="server"></asp:Label>
+                                                                        <asp:Label Text='<%#Eval("nextactivitystatus") %>' ID="lblnextactivitystatus" Visible="false" runat="server"></asp:Label>
+                                                                    </DataItemTemplate>
+                                                                    <EditFormSettings Visible="False" />
+                                                                    <Settings AllowAutoFilterTextInputTimer="False" />
+                                                                </dxe:GridViewDataTextColumn>
+                                                            </Columns>
+
+                                                            <SettingsContextMenu Enabled="true"></SettingsContextMenu>
+
+                                                            <SettingsPager PageSize="10">
+                                                                <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,50,100,150,200" />
+                                                            </SettingsPager>
+
+                                                            <Styles>
+                                                                <LoadingPanel ImageSpacing="10px">
+                                                                </LoadingPanel>
+                                                                <Header ImageSpacing="5px" SortingImageSpacing="5px">
+                                                                </Header>
+                                                                <Cell CssClass="gridcellleft">
+                                                                </Cell>
+                                                            </Styles>
+                                                            <%--   <SettingsPager NumericButtonCount="20" ShowSeparators="True">
+                                                                <FirstPageButton Visible="True">
+                                                                </FirstPageButton>
+                                                                <LastPageButton Visible="True">
+                                                                </LastPageButton>
+                                                            </SettingsPager>--%>
+                                                            <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" ShowFilterRowMenu="True" />
+
+                                                            <ClientSideEvents EndCallback="function(s, e) {
+	LastActivityDetailsCall(s.cpHeight);
+}" />
+                                                        </dxe:ASPxGridView>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div id="FrameDiv" style="display: none;">
+                                            <iframe width="100%" id="ShowDetails" src="" frameborder="0"></iframe>
+                                        </div>
+                                    </dxe:ContentControl>
+                                </ContentCollection>
+                            </dxe:TabPage>
+                            <dxe:TabPage Text="Document Collection" Name="Document Collection" TabStyle-CssClass="tabOrg">
+                                <ContentCollection>
+                                    <dxe:ContentControl runat="server">
+                                    </dxe:ContentControl>
+                                </ContentCollection>
+                            </dxe:TabPage>
+                            <dxe:TabPage Text="Future Sales" Name="Future Sales" TabStyle-CssClass="tabSk">
+                                <ContentCollection>
+                                    <dxe:ContentControl runat="server">
+                                    </dxe:ContentControl>
+                                </ContentCollection>
+                            </dxe:TabPage>
+                            <dxe:TabPage Text="Clarification Required" Name="Clarification Required" TabStyle-CssClass="tabSg">
+                                <ContentCollection>
+                                    <dxe:ContentControl runat="server">
+                                    </dxe:ContentControl>
+                                </ContentCollection>
+                            </dxe:TabPage>
+                            <dxe:TabPage Text="Closed Sales" Name="Closed Sales" TabStyle-CssClass="tabG">
+                                <ContentCollection>
+                                    <dxe:ContentControl runat="server">
+                                    </dxe:ContentControl>
+                                </ContentCollection>
+                            </dxe:TabPage>
+
+
+                        </TabPages>
+
+
+                        <ClientSideEvents ActiveTabChanged="function(s, e) {
+	                                            var activeTab   = page.GetActiveTab();
+	                                            var Tab0 = page.GetTab(0);
+	                                            var Tab1 = page.GetTab(1);
+	                                            var Tab2 = page.GetTab(2);
+	                                            var Tab3 = page.GetTab(3);
+	                                            var Tab4 = page.GetTab(4);
+	                                            if(activeTab == Tab0)
+	                                            {
+	                                                disp_prompt('tab0');
+	                                            }
+	                                            if(activeTab == Tab1)
+	                                            {
+	                                                disp_prompt('tab1');
+	                                            }
+	                                            else if(activeTab == Tab2)
+	                                            {
+	                                                disp_prompt('tab2');
+	                                            }
+	                                            else if(activeTab == Tab3)
+	                                            {
+	                                                disp_prompt('tab3');
+	                                            }
+                                                else if(activeTab == Tab4)
+	                                            {
+	                                                disp_prompt('tab4');
+	                                            }
+	                                            }"></ClientSideEvents>
+                        <ContentStyle>
+                            <Border BorderColor="#002D96" BorderStyle="Solid" BorderWidth="1px" />
+                        </ContentStyle>
+                        <LoadingPanelStyle ImageSpacing="6px">
+                        </LoadingPanelStyle>
+                        <TabStyle Font-Size="12px">
+                        </TabStyle>
+                    </dxe:ASPxPageControl>
+                </td>
+            </tr>
+        </table>
+        <asp:SqlDataSource ID="SalesDataSource" runat="server" ></asp:SqlDataSource>
+
+
+        <dxe:ASPxGridViewExporter ID="exporter" runat="server" Landscape="true" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
+        </dxe:ASPxGridViewExporter>
+
+
+
+        <dxe:ASPxPopupControl ID="Popup_Reassign" runat="server" ClientInstanceName="cPopup_Reassign"
+            Width="400px" HeaderText="Reassign User" PopupHorizontalAlign="WindowCenter"
+            BackColor="white" Height="100px" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+            Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
+            <ContentCollection>
+                <dxe:PopupControlContentControl runat="server">
+                    <%--<div style="Width:400px;background-color:#FFFFFF;margin:0px;border:1px solid red;">--%>
+                    <div class="Top clearfix">
+
+                        <table>
+                            <tr>
+                                <td>Select User:
+                                </td>
+                                <td>
+                                    <asp:ListBox ID="lstAssignTo" CssClass="hide" runat="server" Font-Size="12px" TabIndex="0" Height="90px" Width="100%" data-placeholder="Select..."></asp:ListBox>
+
+                                    <asp:TextBox ID="txtAssign" runat="server" Width="100%" Style="display: none"></asp:TextBox>
+                                    <span id="MandatoryAssign" style="display: none">
+                                        <img id="gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
+                                    <asp:HiddenField ID="hdnAssign" runat="server" />
+                                    <asp:HiddenField ID="hdnAssignText" runat="server" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3" style="padding-left: 121px;">
+                                    <input id="btnSave" class="btn btn-primary" onclick="Call_save()" type="button" value="Save" />
+                                    <input id="btnCancel" class="btn btn-danger" onclick="cPopup_Reassign.Hide();" type="button" value="Cancel" />
+                                </td>
+
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+                </dxe:PopupControlContentControl>
+            </ContentCollection>
+            <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+        </dxe:ASPxPopupControl>
+
+
+        <dxe:ASPxPopupControl ID="Popup_Product" runat="server" ClientInstanceName="cPopup_Product"
+            Width="400px" HeaderText="Product List" PopupHorizontalAlign="WindowCenter"
+            BackColor="white" Height="100px" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+            Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
+            <ContentCollection>
+                <dxe:PopupControlContentControl runat="server">
+
+
+                    <dxe:PanelContent runat="server">
+
+                        <dxe:ASPxGridView ID="AspxProductGrid" ClientInstanceName="cAspxProductGrid" Width="100%" runat="server" OnCustomCallback="AspxProductGrid_CustomCallback"
+                            AutoGenerateColumns="False">
+
+                            <Columns>
+
+                                <dxe:GridViewDataTextColumn Visible="True" Caption="Product Name">
+
+                                    <DataItemTemplate>
+                                        <a href="javascript:void(0);" title="Click here to view Product." onclick="ZoomProduct                                  ('<%# Eval("sProducts_Code") %>');"><%#Eval("sProducts_Name")%>
+                                            <%--<img src="../../../assests/images/Delete.png" />--%>
+                                        </a>
+                                    </DataItemTemplate>
+                                    <CellStyle CssClass="gridcellleft">
+                                    </CellStyle>
+                                    <EditFormSettings Visible="False"></EditFormSettings>
+                                </dxe:GridViewDataTextColumn>
+
+
+
+                            </Columns>
+
+                            <SettingsBehavior AllowSort="false" AllowGroup="false" />
+                        </dxe:ASPxGridView>
+
+
+                    </dxe:PanelContent>
+
+                </dxe:PopupControlContentControl>
+
+            </ContentCollection>
+            <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+
+
+        </dxe:ASPxPopupControl>
+
+
+
+        <dxe:ASPxPopupControl ID="Popup_ProductClass" runat="server" ClientInstanceName="cPopup_Product_Class"
+            Width="400px" HeaderText="Product Class List" PopupHorizontalAlign="WindowCenter"
+            BackColor="white" Height="100px" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+            Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
+            <ContentCollection>
+                <dxe:PopupControlContentControl runat="server">
+
+
+                    <dxe:PanelContent runat="server">
+
+                        <dxe:ASPxGridView ID="ASPxGridProductClass" ClientInstanceName="cAspxProductClassGrid" Width="100%" runat="server" OnCustomCallback="AspxProductclassGrid_CustomCallback"
+                            AutoGenerateColumns="False">
+
+                            <Columns>
+                                <dxe:GridViewDataTextColumn Visible="True" FieldName="ProductClass_Code" Caption="Product Class">
+                                    <CellStyle CssClass="gridcellleft">
+                                    </CellStyle>
+                                    <EditFormSettings Visible="False"></EditFormSettings>
+                                </dxe:GridViewDataTextColumn>
+
+
+
+                            </Columns>
+
+                            <SettingsBehavior AllowSort="false" AllowGroup="false" />
+                        </dxe:ASPxGridView>
+
+
+                    </dxe:PanelContent>
+
+                </dxe:PopupControlContentControl>
+
+            </ContentCollection>
+            <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+
+
+        </dxe:ASPxPopupControl>
+
+
+
+        <dxe:ASPxPopupControl ID="ASPXPopupControl2" runat="server"
+            CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="popupbudget" Height="300px"
+            Width="350px" HeaderText="Budget" Modal="true" AllowResize="true" ResizingMode="Postponed">
+            <ContentCollection>
+                <dxe:PopupControlContentControl runat="server">
+                </dxe:PopupControlContentControl>
+            </ContentCollection>
+
+            <ClientSideEvents CloseUp="BudgetAfterHide" />
+        </dxe:ASPxPopupControl>
+
+        <dxe:ASPxPopupControl ID="ASPXPopupControl1" runat="server"
+            CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="popupCbudget" Height="300px"
+            Width="350px" HeaderText="Budget" Modal="true" AllowResize="true" ResizingMode="Postponed">
+            <ContentCollection>
+                <dxe:PopupControlContentControl runat="server">
+                    <dxe:ASPxCallbackPanel runat="server" ID="acpCrossBtn" ClientInstanceName="cacpCrossBtn" OnCallback="acpCrossBtn_Callback">
+                        <PanelCollection>
+                            <dxe:PanelContent runat="server">
+
+                                <div id="divbudget" runat="server" class="Top clearfix">
+                                    <div class="col-sm-12">
+                                        <h5>Criteria : Customer's Industrywise, All Products </h5>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label>Product Class</label>
+                                        <dxe:ASPxComboBox ClientInstanceName="gridcomboproductclass" runat="server" Enabled="false" ID="gridproductclass" Width="100%">
+                                            <ClientSideEvents ValueChanged="ProductclassChanged" />
+                                        </dxe:ASPxComboBox>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <label>Input Quantity(Current Financial Year)</label>
+                                        <dxe:ASPxTextBox ClientInstanceName="gridcomboproductclass" runat="server" ID="txt_qtyfinyr" Width="100%">
+                                            <MaskSettings Mask="<0..999999999>.<0..99>" />
+                                        </dxe:ASPxTextBox>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label>Remarks</label>
+                                        <dxe:ASPxMemo ID="txtRemarks" runat="server" Width="100%" Height="50px" ClientInstanceName="ctxtRemarks"></dxe:ASPxMemo>
+                                    </div>
+                                    <div style="padding-top: 8px" class="col-md-12">
+                                        <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
+                                        </dxe:ASPxButton>
+
+                                        <asp:HiddenField runat="server" ID="hdnchkgridbatch" />
+                                    </div>
+                                </div>
+
+                                <div id="divmsg" runat="server" style="display: none">
+                                    <div class="col-md-12">No class is mapped for the selected Customer. Cannot enter budget values.</div>
+                                </div>
+
+                            </dxe:PanelContent>
+                        </PanelCollection>
+                        <ClientSideEvents EndCallback="acpCrossBtnEndCall" />
+                    </dxe:ASPxCallbackPanel>
+                </dxe:PopupControlContentControl>
+
+
+
+            </ContentCollection>
+
+            <ClientSideEvents CloseUp="BudgetCAfterHide" />
+        </dxe:ASPxPopupControl>
+
+    </div>
+
+    <asp:HiddenField runat="server" ID="hdncustid" />
+    <asp:HiddenField runat="server" ID="hdnproductclassid" />
+    <asp:HiddenField runat="server" ID="hdnslsid" />
+    <asp:HiddenField ID="hdnDocumentActivity" runat="server" />
+
+
+    <dxe:ASPxPopupControl ID="AspxDirectCustomerViewPopup" runat="server"
+        CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="CAspxDirectCustomerViewPopup" Height="650px"
+        Width="1020px" HeaderText="Customer View" Modal="true" AllowResize="false">
+
+        <ContentCollection>
+            <dxe:PopupControlContentControl runat="server">
+            </dxe:PopupControlContentControl>
+        </ContentCollection>
+    </dxe:ASPxPopupControl>
+
+    <dxe:ASPxPopupControl ID="AspxDirectProductViewPopup" runat="server"
+        CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="CAspxDirectProductViewPopup" Height="650px"
+        Width="1020px" HeaderText="View Product" Modal="true" AllowResize="false">
+
+        <ContentCollection>
+            <dxe:PopupControlContentControl runat="server">
+            </dxe:PopupControlContentControl>
+        </ContentCollection>
+    </dxe:ASPxPopupControl>
+
+</asp:Content>

@@ -1,0 +1,19 @@
+﻿$(document).ready(function () {
+    cddl_TransporterType.SetEnabled(true);
+    ctxtFreight.SetEnabled(true);
+    ctxtPoint.SetEnabled(true);
+    ctxtLoading.SetEnabled(true);
+    ctxtUnloading.SetEnabled(true);
+    ctxtParking.SetEnabled(true);
+    ctxtWeighment.SetEnabled(true);
+    ctxtTollTax.SetEnabled(true);
+    ctxtServiceCharges.SetEnabled(true);
+    ctxtTotalCharges.SetEnabled(true);
+    ctxtAddress.SetEnabled(true);
+    cddl_Country.SetEnabled(true);
+    cddl_State.SetEnabled(true);
+    cddl_City.SetEnabled(true);
+    cddl_Pin.SetEnabled(true);
+    cddl_Area.SetEnabled(true);
+    ctxtPhone.SetEnabled(true);
+});

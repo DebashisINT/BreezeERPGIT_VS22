@@ -1,0 +1,10 @@
+﻿ 
+#grid_DXMainTable > tbody > tr > td:last-child   {
+           display: none !important;
+       }
+.dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
+    background: #fff !important;
+}
+#grid_DXMainTable>tbody>tr>td:nth-child(12){
+    display:none;
+}

@@ -1,0 +1,89 @@
+﻿.myImage {
+            max-height: 100px;
+            max-width: 100px;
+        }
+    
+        .cityDiv {
+            height: 25px;
+        }
+
+        .cityTextbox {
+            height: 25px;
+            width: 50px;
+        }
+
+        .Top {
+            height: 90px;
+            width: 100%;
+            padding-top: 5px;
+            valign: top;
+        }
+
+        .Footer {
+            height: 30px;
+            width: 400px;
+            padding-top: 10px;
+        }
+
+        .ScrollDiv {
+            height: 250px;
+            width: 400px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        .ContentDiv {
+            width: 100%;
+            height: 300px;
+            border: 2px;
+        }
+
+
+
+        .TitleArea {
+            height: 20px;
+            padding-left: 10px;
+            padding-right: 3px;
+            background-image: url( '../images/EHeaderBack.gif' );
+            background-repeat: repeat-x;
+            background-position: bottom;
+            text-align: center;
+        }
+
+        .FilterSide {
+            float: left;
+            width: 50%;
+        }
+
+        .SearchArea {
+            width: 100%;
+            height: 30px;
+            padding-top: 5px;
+        }
+
+        .newLbl {
+            margin: 5px 0 !important;
+            display: block;
+        }
+        .imageArea {
+            width: 150px;
+            height: 100px !important;
+            overflow: hidden;
+        }
+
+        .popUpHeader {
+            float: right;
+        }
+
+        .blll {
+            margin: 0;
+            padding: 0 !important;
+            margin-top: 6px;
+        }
+
+        .dxeErrorCellSys.dxeNoBorderLeft {
+            position: absolute;
+        }
+        .rgtpad>tbody>tr>td {
+            padding-right:15px;
+        }

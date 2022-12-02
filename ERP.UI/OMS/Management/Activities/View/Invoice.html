@@ -1,0 +1,861 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <script src="../../../../assests/js/jquery.min.js"></script>
+    <script src="JS/Invoice.js?v1"></script>
+
+    <script src="../../../../assests/bootstrap/js/bootstrap.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery-1.11.3.min (1).js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>-->
+    <link href="../../../../assests/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="../../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .scrollPop .modal-body {
+            max-height:70vh;
+            overflow-y:auto;
+        } 
+        .lblInputType {
+            display: block;
+            padding: 5px;
+            border: 1px solid #e2e2e2;
+            background: #f7f7f7;
+            min-height: 32px;
+        } .modal-backdrop {
+            z-index: auto !important;
+        }
+
+        body {
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        td {
+            background: #f7f5f1;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .table-bordered {
+            border: 1px solid #ddd;
+        }
+
+            .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+                border: 1px solid #ddd;
+            }
+
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            padding: 4px 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+
+        .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border: 1px solid #ddd;
+        }
+
+        .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
+            border-top: 0;
+        }
+
+        .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border-bottom-width: 2px;
+        }
+
+        .stTble td > label {
+            font-weight: bold;
+           
+        }
+
+        #Producttr:hover {
+            background-color: yellowgreen;
+        }
+        .stTble {
+            font-size:12px;
+        }
+        .dynamicPopupTbl > tbody > tr > th {
+            background: #566fbd;
+            color: #fff;
+            border: 1px solid #566fbd;
+        }
+        .dynamicPopupTbl > tbody > tr > th, .dynamicPopupTbl > tbody > tr > td {
+            padding:4px 8px;
+        }
+        .modal.w80 .modal-dialog {
+            width: 90% !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="Header col-md-12">
+        <h3>Sales Invoice </h3>
+    </div>
+
+
+
+    <div class="col-md-12">
+        <table class="table table-bordered stTble">
+            <tr>
+                <td>
+                    <label><b>Billing Address</b></label>
+                    <div>
+                        <textarea id="txtAreaBillAddress" rows="2" style="width:100%;" form="usrform" readonly="readonly"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <label><b>Shipping Address</b></label>
+                    <div>
+                        <textarea id="txtAreaShipAddress" rows="2" style="width:100%;" form="usrform" readonly="readonly"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-bordered stTble">
+            <tr>
+                <td>
+                    <label>Invoice Number</label>
+                    <div><label id="lblInvoiceNumber"></label></div>
+                </td>
+                <td>
+                    <label>Invoice Date</label>
+                    <div><label id="lblInvoiceDate"></label></div>
+                </td>
+                <td>
+                    <label>Delivery Date</label>
+                    <div><label id="lblDeliveryDate"></label></div>
+                </td>
+                <td>
+                    <label>Customer Name</label>
+                    <div> <label id="lblCustomerName"></label></div>
+                </td>
+                <td>
+                    <label>Salesman</label>
+                    <div> <label id="lblSalesMan"></label></div>
+                </td>
+                <td>
+                    <label>Challan No.</label>
+                    <div>
+                        <label id="lblChallanNo"></label>
+                    </div>
+                </td>
+                <td>
+                    <label>Challan Date</label>
+                    <div>
+                        <label id="lblChallanDate"></label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Reference</label>
+                    <div><label id="lblReference"></label></div>
+                </td>
+
+                <td>
+                    <div>
+                        <label>Remarks</label>
+                        <label id="lblRemarks"></label>
+                    </div>
+                </td>
+                <td>
+                    <label>Entry Type</label>
+                    <div>
+                        <label id="lblEntryType"></label>
+                    </div>
+                </td>
+                <td>
+                    <label>Taxable Amount</label>
+                    <div>
+                        <label id="lblTaxableAmount">0.00</label>
+                    </div>
+                </td>
+                <!--<td>
+                    <label>Discount Amount</label>
+                    <div>
+                        <label id="lblDisAmount">0.00</label>
+                    </div>
+                </td>-->
+                <td>
+                    <label>Tax Amount</label>
+                    <div>
+                        <label id="lblTaxAmount">0.00</label>
+                    </div>
+                </td>
+                <td>
+                    <label>Total Amount</label>
+                    <div>
+                        <label id="lblNewTotalAmount">0.00</label>
+                    </div>
+                </td>
+                <td>
+                    <label>Vehicle(s)</label>
+                    <div>
+                        <label id="lblVehicleNo"></label>
+                    </div>
+                </td>
+                <td>
+                    <label>Total Main Qty.</label>
+                    <div>
+                        <label id="lblmainqty"></label>
+                    </div>
+                </td>
+                <td>
+                    <label>Total Alt. Qty.</label>
+                    <div>
+                        <label id="lblaltqty"></label>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <div id="divFinanceDetails" class="col-md-12">
+        <table class="table table-bordered stTble">
+            <tr>
+                <td>
+                    <label id="lblFin" style="display:none">Financer</label>
+                    <div>
+                        <label id="lblFinancerName"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblexec" style="display:none">Exec. name</label>
+                    <div>
+                        <label id="lblExecutiveName"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblEMI" style="display:none">EMI Det.</label>
+                    <div>
+                        <label id="lblEmiDetails"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblSC" style="display:none">Scheme</label>
+                    <div>
+                        <label id="lblScheme"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblSF" style="display:none">SF Code</label>
+                    <div>
+                        <label id="lblSfCode"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblDB" style="display:none">DBD</label>
+                    <div>
+                        <label id="lblDbd"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblDBPer" style="display:none">DBD %</label>
+                    <div>
+                        <label id="lblDbdPercent"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblDownpay" style="display:none">Downpayment</label>
+                    <div>
+                        <label id="lblDownpayment"></label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <label id="lblProc" style="display:none">Proc. Fee</label>
+                    <div>
+                        <label id="lblProcFee"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblCharges" style="display:none">EMI Card/Other Charges</label>
+                    <div>
+                        <label id="lblEmiOtherCharges"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblDP" style="display:none">Total DP Amt.</label>
+                    <div>
+                        <label id="lblTotalDpAmt"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblDue" style="display:none">Financer Due</label>
+                    <div>
+                        <label id="lblFinancerDue"></label>
+                    </div>
+                </td>
+                <td>
+                    <label id="lblFinCh" style="display:none">Finance Challan No.</label>
+                    <div>
+                        <label id="lblFinanceChallanNo"></label>
+                    </div>
+                </td>
+                <td colspan="3">
+                    <label id="lblFinDate" style="display:none">Finance Challan Date</label>
+                    <div>
+                        <label id="lblFinanceChallanDate"></label>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+     
+
+
+
+
+    
+    <div class="col-md-12">
+        <table id="tblPosProductDetails" width="100%" border="1" class="table table-bordered stTble">
+            <tr>
+                <td style="display: none"><b>Details Id</b></td>
+                <td><b>Sl. No.</b> </td>
+
+                <td><b>Product Name</b> </td>
+
+                <td><b>Quantity</b></td>
+
+                <td><b>Unit</b></td>
+
+                <td><b>Alt. Qty.</b></td>
+
+                <td><b>Alt. Unit</b></td>
+
+                <!--Mantis Issue 25129-->
+                <td><b>View Multi UOM</b></td>
+                <!--End of Mantis Issue 25129-->
+
+                <td><b>Sell @</b></td>
+
+                <td><b>Amount</b></td>
+
+                <td><b>Tax/Charges</b></td>
+
+                <td><b>Net Amt.</b></td>
+                <td><b>View Stock</b></td>
+            </tr>
+            
+        </table>
+    </div>
+     
+    <div class="clearfix">
+        <div id="divOldUnitDetails" class="col-md-6">
+            <label>Product Details</label>
+            <table id="tblOldUnitDetails" width="100%" class="table table-bordered stTble" border="1">
+                <tr>
+                    <td><b>Product Name</b> </td>
+
+                    <td><b>Quantity</b></td>
+
+                    <td><b>Unit Value</b></td>
+
+                </tr>
+            </table>
+        </div>
+        <div id="divAdjustmentDetails" class="col-md-6">
+            <label>Adjustment Details</label>
+            <table id="tblAdjustmentDetails" width="100%" class="table table-bordered stTble" border="1">
+                <tr>
+                    <td><b>Document Number</b> </td>
+
+                    <td><b>Document Type</b></td>
+
+                    <td><b>Adjustment Amount</b></td>
+
+                </tr>
+            </table>
+        </div>  
+    </div>
+
+    <div class="clearfix">
+        
+        <div id="divPaymentDetails" class="col-md-12" style="padding-top:10px">
+
+            
+            <div class="clearfix">
+                <label class="pull-left">Payment Details</label>
+                <label id="lblAmount" style="padding-left:10px;padding-right: 32px; font-size: 16px; " class="pull-right"></label>
+
+         </div>
+
+
+
+            <table id="tblPosPaymentDetails" border="1" class="table table-bordered stTble">
+                <tr>
+
+                    <td><b>Payment Type</b> </td>
+
+                    <td><b>Instrument Number</b></td>
+
+                    <td><b>Card Type</b></td>
+
+                    <td><b>Approval Code</b></td>
+
+                    <td><b>Enter Date</b></td>
+
+                    <td><b>Drawee Date</b></td>
+
+                    <td><b>Remarks</b></td>
+                    <td><b>Account Code</b></td>
+                    <td><b>Amount </b></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="divSaleInvoiceTax" class="col-md-12">
+        <label>Tax Details</label>
+        <table id="tblSaleInvoiceTax" width="2" class="table table-bordered stTble">
+            <tr>
+                <td><b>Tax Scheme Name</b> </td>
+
+                <td><b>Tax Percentage</b></td>
+
+                <td><b>Tax Amount</b></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="divBillFromDispatch" class="col-md-12">
+        <table class="table table-bordered stTble">
+            <tr>
+                <td>
+                    <label><b>Bill From</b></label>
+                    <div>
+                        <textarea id="txtBillfromAddress" rows="2" style="width:100%;" form="usrform" readonly="readonly"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <label><b>Despatch From</b></label>
+                    <div>
+                        <textarea id="txtShipfromAddress" rows="2" style="width:100%;" form="usrform" readonly="readonly"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary" onclick="OpenSetTransporter();">Transporter</button>
+        <button type="button" class="btn btn-primary" onclick="OpenSetTermsCondition();">Terms and condition</button>
+        <button type="button" class="btn btn-primary" onclick="OpenSetTCS();">TCS  </button>
+       
+    </div>
+
+    <div class="modal fade" role="dialog" id="PosTaxModel">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="PosTaxTable1">
+                        <table border='1' width="100%" class="dynamicPopupTbl">
+                            <tr class="HeaderStyle">
+                                <th class="hide">Product TaxId</th>
+                                <th>Tax Scheme Name</th>
+                                <th>Tax Percentage</th>
+                                <th>Tax Amount</th>
+
+                            </tr>
+                        </table>
+                        <!--<span id="PosTaxTable"> </span>-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" id="PoswarehouseModel">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="Poswarehouse">
+                        <table border='1' width="100%" class="dynamicPopupTbl">
+                            <tr class="HeaderStyle">
+
+                                <th class="text-left">Warehouse</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-center">Alt. Quantity</th>
+
+                            </tr>
+                        </table>
+                        <!--<span id="PosTaxTable"> </span>-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Mantis Issue 25129-->
+    <div class="modal fade" role="dialog" id="MultipleUOMModel">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="Posmultuom">
+                        <table border='1' width="100%" class="dynamicPopupTbl">
+                            <tr class="HeaderStyle">
+
+                                <th class="text-left">Quantity</th>
+                                <th class="text-center">UOM</th>
+                                <th class="text-center">Rate</th>
+                                <th class="text-center">Alt. UOM</th>
+                                <th class="text-center">Alt. Quantity</th>
+                                <th class="text-center">Rate</th>
+                                <th class="text-center">Update Row</th>
+                            </tr>
+                        </table>
+                        <!--<span id="PosTaxTable"> </span>-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--End of Mantis Issue 25129-->
+
+    <div class="modal fade scrollPop" role="dialog" id="TransporterModelPopup">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Transporter</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding-bottom:30px">
+                        <div class="col-md-6">
+                            <label>Transporter Name</label>
+                            <div><label id="lblTrasnsporterName" class="lblInputType"></label></div>
+                        </div>  
+                        <div class="col-md-6">
+                            <label>Final Transporter</label>
+                            <div><label id="lblFinalTransporter" class="lblInputType"></label></div>
+                        </div> 
+                        <div class="col-md-6">
+                            <label>Transporter Type</label>
+                            <div><label id="lblTransporterType" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Registered?</label>
+                            <div><label id="lblRegistered" class="lblInputType"></label></div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>GSTIN</label>
+                            <div><label id="lblGTSIN" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Vehicle No</label>
+                            <div><label id="lblVehicleNumber" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Freight</label>
+                            <div><label id="lblFright" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Point</label>
+                            <div><label id="lblPoint" class="lblInputType"></label></div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Loading</label>
+                            <div><label id="lblLoading" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Unloading</label>
+                            <div><label id="lblUnloading" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Parking</label>
+                            <div><label id="lblParking" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Weighment Charges</label>
+                            <div><label id="lblWeighmentCharges" class="lblInputType"></label></div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label>Toll Tax</label>
+                            <div><label id="lblTollTax" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Other Charges</label>
+                            <div><label id="lblOtherCharges" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Total Charges</label>
+                            <div><label id="lblTotalCharges" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Distance of Delivery</label>
+                            <div><label id="lblDistanceofDelivery" class="lblInputType"></label></div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>CN / Bilty / LR No</label>
+                            <div><label id="lblLRNO" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>LR Date</label>
+                            <div><label id="lblLRDate" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Vehicle Out Date</label>
+                            <div><label id="lblVehicleOutDate" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Vehicle Type</label>
+                            <div><label id="lblVehicleType" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Transportation Mode</label>
+                            <div><label id="lblTransportationMode" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Address</label>
+                            <div><label id="lblAddress" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Country</label>
+                            <div><label id="lblCountry" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>State</label>
+                            <div><label id="lblState" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>City/District</label>
+                            <div><label id="lblCity" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Pin/Zip</label>
+                            <div><label id="lblPin" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Area</label>
+                            <div><label id="lblArea" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Phone No</label>
+                            <div><label id="lblPhoneNo" class="lblInputType"></label></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade scrollPop" role="dialog" id="TermsConditionsModelPopup">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Terms and conditions</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Delivery Schedule / Date</label>
+                            <div><label id="lblDEliveryDate" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Delivery Remarks</label>
+                            <div><label id="lblDeliveryRemarks" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Insurance Coverage</label>
+                            <div><label id="lblInsuranceCoverage" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Freight Charges</label>
+                            <div><label id="lblFreightCharges" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Freight Remarks</label>
+                            <div><label id="lblFreightRemarks" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>E-Permit/Way bill / Road Permit</label>
+                            <div><label id="lblEpermit" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Other Remarks</label>
+                            <div><label id="lblOtherRemarks" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Test Certificate Required ?</label>
+                            <div><label id="lblestCerti" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Delivery Details</label>
+                            <div><label id="lblDeliveryDetails" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Payment Terms</label>
+                            <div><label id="lblPaymentTerms" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Bank Name</label>
+                            <div><label id="lblBankName" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Bank Branch Name</label>
+                            <div><label id="lblBankBranchName" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Bank Branch Address</label>
+                            <div><label id="lblBankBranchAddress" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Bank Branch Landmark</label>
+                            <div><label id="lblBankBranchLandmark" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Bank Branch Pin</label>
+                            <div><label id="lblBankBranchPin" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Account Number</label>
+                            <div><label id="lblAccountNumber" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>SWIFT Code</label>
+                            <div><label id="lblSWIFTCode" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>RTGS</label>
+                            <div><label id="lblRTGS" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>IFSC Code</label>
+                            <div><label id="lblIFSCCode" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Remarks</label>
+                            <div><label id="lblTermsRemarks" class="lblInputType"></label></div>
+                        </div>
+                       <!--Rev work start 09.08.2022 mantise no:0025110: A Text Input field required in the Terms & Condition of the entry Module as "Project"-->
+                        <div class="col-md-6">
+                            <label>Project</label>
+                            <div><label id="lblProject" class="lblInputType"></label></div>
+                           <!-- Rev work close 09.08.2022 mantise no:0025110: A Text Input field required in the Terms & Condition of the entry Module as "Project"-->
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade scrollPop w80" role="dialog" id="TCSModelPopup">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">TCS</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding-bottom:15px">
+                        <div class="col-md-3">
+                            <label>TCS Section</label>
+                            <div><label id="lblTCSSection" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>TCS Applicable Amount</label>
+                            <div><label id="lblTCSApplicableAmount" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>TCS Percentage</label>
+                            <div><label id="lblTCSPercentage" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>TCS Amount</label>
+                            <div><label id="lblTCSAmount" class="lblInputType"></label></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tblTCSDetails" width="100%" border="1" class="table table-bordered stTble">
+                                <tr>
+                                    <td style="display: none"><b>Sl. No.</b></td>
+                                    <td><b>Sl. No.</b> </td>
+
+                                    <td><b>Doc. No.</b> </td>
+
+                                    <td><b>Unit</b></td>
+
+                                    <td><b>Doc. Type</b></td>
+
+                                    <td><b>Doc. Date</b></td>
+
+                                    <td><b>Taxable Amount</b></td>
+
+                                    <td><b>Net Amount</b></td>
+
+                                    <td><b>Taxable Aggr.</b></td>
+
+                                    <td><b>Net Aggr.</b></td>
+
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="hdnInvoiceId" />
+
+</body>
+
+
+
+
+</html>

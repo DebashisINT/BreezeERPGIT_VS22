@@ -1,0 +1,540 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Customer Add</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <link href="../../../assests/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+
+    <link href="../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../../assests/js/jquery.min.js"></script>
+    <script src="../../../assests/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assests/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../../assests/js/modalmsg.js"></script>
+
+    <style>
+
+        #PANNum {
+            text-transform: uppercase;
+        }
+
+        .input-sm {
+            margin-bottom: 5px;
+        }
+
+        .nogap {
+            padding: 0px;
+        }
+        .ui-widget-header {
+            border: 1px solid #272b3c !important;
+            background: #272b3c !important;
+            text-align: center;
+            color:#fff;
+        }
+        .ui-widget.ui-widget-content + .ui-widget-overlay {
+            z-index: 999998 !important;
+            background: #040404;
+            opacity: 0.7;
+        }
+        .ui-widget.ui-widget-content {
+            min-width: 300px !important;
+            min-width: 300px !important;
+            box-shadow: 0px 0px 0px 4px rgba(255,255,255,0.7);
+            border: none;
+            z-index: 999999 !important;
+        }
+        .ui-dialog-buttonset {
+            float: none !important;
+            text-align: center;
+            padding: 0px;
+        }
+        ui-dialog-buttonset>button{
+            margin:0 !important;
+            margin-top:3px
+        }
+    </style>
+    <script src="/assests/pluggins/bootstrap-multiselect/bootstrap-multiselect.min.js"></script>
+    <script src="/OMS/management/Master/Js/customerPopup.js?v=70.3"></script>
+
+
+
+
+    <style>
+        .form-group input[type="checkbox"] {
+            display: none;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                    display: none;
+                }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                    display: inline-block;
+                }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;
+            }
+
+        .clear {
+            clear: both;
+        }
+        .padTble > tbody > tr > td {
+            padding-right: 15px;
+            padding-bottom: 3px;
+            padding-left: 5px;
+        }
+
+        #Table1 {
+            border: 1px solid #ddd;
+        }
+
+            #Table1 > tbody > tr:nth-child(odd) > td {
+                background: #f1f1f1;
+            }
+
+        .gHesder {
+            background: #6aa9ea !important;
+            padding: 4px;
+            font-weight: 600;
+            color: #252525;
+        }
+
+        .tdpTop5 > td {
+            padding-top: 5px;
+        }
+
+        .dSegment {
+            margin-top: 5px;
+            padding: 5px;
+            background: #ececec;
+            font-weight: 600 !important;
+            width: 90%;
+        }
+        select#cddlSegmentMandatory1, select#cddlSegmentMandatory2, select#cddlSegmentMandatory3, select#cddlSegmentMandatory4, select#cddlSegmentMandatory5 {
+            display:none;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-3" id="dvIdType">
+                    <label>ID Type</label><label style="color:red">*</label>
+                    <select name="IdentityType" class="form-control input-sm" id="IdType">
+                        <option value="0" selected="selected">Select</option>
+                        <option value="1">Phone</option>
+                        <option value="2">PAN No.</option>
+                        <option value="3">Aadhar No.</option>
+
+                    </select>
+                </div>
+                <div class="col-md-3" id="dvUniqueId">
+                    <label>Unique Id </label><label style="color:red">*</label>
+                    <input class="form-control input-sm" placeholder="Unique ID" maxlength="50" id="uniqueId" onblur="CheckUnique()" type="text" data-toggle="tooltip" title="Unique ID">
+                </div>
+                <!--rev srijeeta mantis issue 0024515--->
+            </div>
+
+
+            <!-- End OF REV SRIJEETA mantis issue 0024515-->
+            <div class="col-md-4" id="dvNumberingSchemeCust" style="display:none">
+                <label>Numbering Scheme</label>
+                <select class="form-control" id="NumScheme">
+                    <!--<option value="0" selected="selected">Select</option>-->
+                </select>
+            </div>
+            <div class="col-md-3" id="dvdocCust" style="display:none">
+                <label>Unique ID</label><label style="color:red">*</label>
+                <input class="form-control input-sm" placeholder="Unique ID" maxlength="50" id="DocNum" type="text" data-toggle="tooltip" title="Unique ID" onblur="UniqueCodeCheck()">
+            </div>
+
+            <div class="col-md-4">
+                <label>Name</label><label style="color:red">*</label>
+                <input class="form-control input-sm" placeholder="Name" id="Name" type="text" maxlength="50" data-toggle="tooltip" title="Name" onblur="NameForSave()">
+            </div>
+            <div class="col-md-3">
+                <label>Alternative Code</label>
+                <input class="form-control input-sm" placeholder="Alternative Code " maxlength="100" id="copytocustomeruniqueIdALTCODE" type="text" data-toggle="tooltip" title="Alternative Code" />
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>GSTIN</label>
+                    </div>
+                    <div class="clear" />
+                    <div class="col-md-3">
+                        <input class="form-control input-sm" id="GSTIN1" type="text" maxlength="2" data-toggle="tooltip" title="GSTIN">
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control input-sm" id="GSTIN2" type="text" maxlength="10" data-toggle="tooltip" title="GSTIN">
+                    </div>
+                    <div class="col-md-4">
+                        <input class="form-control input-sm" id="GSTIN3" type="text" maxlength="3" data-toggle="tooltip" title="GSTIN" onblur="SetPanNumber()">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-3" style="padding-top: 28px; margin-bottom: 10px;">
+            <input type="checkbox" id="chkTCSAppli" />
+            <label id="lblTCSApplicable">TCS Applicable</label>
+        </div>
+        <div class="col-md-3" id="dvPAN">
+            <label>PAN</label>
+            <input class="form-control input-sm" placeholder="PAN" maxlength="10" id="PANNum" type="text" data-toggle="tooltip" title="Unique ID" onblur="UniquePanNumberCheck()">
+        </div>
+        <div class="clear"></div>
+
+        <div class="clear"></div>
+        <div class="">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-header">
+                        <label style="padding-left: 10px; padding-top: 6px;">Billing Details</label>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <div class="col-md-6 nogap">
+                            <label>Pin</label><label style="color:red">*</label>
+                            <input class="form-control input-sm" placeholder="Pin Code" id="pinCode" maxlength="6" onblur="PinChange()"
+                                   type="text" data-toggle="tooltip" title="Pin Code">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Alternative Phone</label>
+                            <input class="form-control input-sm" placeholder="Alternative Phone" id="BillingPhone" maxlength="12" type="text"
+                                   data-toggle="tooltip" title="Alternative Phone">
+                        </div>
+                        <div class="clear"></div>
+
+                        <!--Mantis Issue 24201-->
+                        <!--<div class="col-md-12 nogap">
+                            <label>Address </label><label style="color:red">*</label>
+
+                            <input class="form-control input-sm" placeholder="Address 1" id="BillingAddress1" maxlength="50" type="text" data-toggle="tooltip" title="Address 1">
+                        </div>
+                        <div class="col-md-12 nogap">
+                            <input class="form-control input-sm" placeholder="Address 2" id="BillingAddress2" maxlength="50" type="text" data-toggle="tooltip" title="Address 2">
+                        </div>-->
+
+                        <div class="col-md-12 nogap">
+                            <label>Address </label><label style="color:red">*</label>
+
+                            <input class="form-control input-sm" placeholder="Address 1" id="BillingAddress1" maxlength="500" type="text" data-toggle="tooltip" title="Address 1">
+                        </div>
+                        <div class="col-md-12 nogap">
+                            <input class="form-control input-sm" placeholder="Address 2" id="BillingAddress2" maxlength="500" type="text" data-toggle="tooltip" title="Address 2">
+                        </div>
+
+                        <!--End of Mantis Issue 24201-->
+
+                        <div class="col-md-4 nogap">
+                            <label> Country</label>
+                            <input class="form-control input-sm " placeholder="Country" disabled id="Country" type="text" data-toggle="tooltip" title="Country">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>State</label>
+                            <input class="form-control input-sm" placeholder="State" disabled id="State" type="text" data-toggle="tooltip" title="State">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>District</label>
+                            <input class="form-control input-sm" placeholder="District" disabled id="City" type="text" data-toggle="tooltip" title="District">
+                        </div>
+                        <!-- <a href="#" onclick="billingCopyToshipping()">-->
+                        <a class="[ form-group ]" href="#" onclick="javascript: BillingCheckChange()">
+                            <input type="checkbox" name="fancy-checkbox-success" id="fancy-checkbox-success" autocomplete="off" />
+                            <div class="[ btn-group ]">
+                                <label for="fancy-checkbox-success" class="[ btn btn-success ]">
+                                    <span class="[ glyphicon glyphicon-ok ]"></span>
+                                    <span> </span>
+                                </label>
+                                <label for="fancy-checkbox-success" class="[ btn btn-default active ]">
+                                    Ship To Same Address
+                                </label>
+                            </div>
+                        </a>
+                        <!--</a>-->
+                    </div>
+                </div>
+                <div style="margin-bottom: 10px">
+                    <label id="lblgrpName">Group</label>
+                    <select class="form-control" id="GroupCust">
+                        <option value="0" selected="selected">Select</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 10px" id="divTransactionCategory">
+
+                    <label id="lblgrpName">Transaction Category</label>
+                    <select class="form-control" id="TransactionCategory">
+                        <option value="0">Select</option>
+                        <option value="B2C" selected="selected">B2C</option>
+                        <option value="B2B">B2B</option>
+                        <option value="SEZWP">SEZWP</option>
+                        <option value="SEZWOP">SEZWOP</option>
+                        <option value="EXPWP">EXPWP</option>
+                        <option value="EXPWOP">EXPWOP</option>
+                        <option value="DEXP">DEXP</option>
+                    </select>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="col-md-6" id="shippingId">
+                <div class="panel panel-default">
+                    <div class="panel-header">
+                        <label style="padding-left: 10px; padding-top: 6px;">Shipping Details</label>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12 nogap">
+                            <label>Contact Person</label>
+                            <input class="form-control input-sm" placeholder="Contact Person" id="contactperson" maxlength="40" type="text" data-toggle="tooltip" title="Contact Person">
+                        </div>
+
+                        <div class="col-md-6 nogap">
+                            <label>Pin</label><label style="color:red">*</label>
+                            <input class="form-control input-sm" placeholder="Pin Code" id="shippingpinCode" maxlength="6" onblur="shippingPinChange()" id="Text4" type="text" data-toggle="tooltip" title="Pin Code">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Alternative Phone</label>
+                            <input class="form-control input-sm" placeholder="Alternative Phone" id="ShippingPhone" maxlength="12" type="text" data-toggle="tooltip" title="Alternative Phone">
+                        </div>
+                        <div class="clear"></div>
+
+
+                        <!--Mantis Issue 24201-->
+                        <!--<div class="col-md-12 nogap">
+                            <label>Address 1</label><label style="color:red">*</label>
+                            <input class="form-control input-sm" placeholder="Address 1" id="shippingAddress1" maxlength="50" type="text" data-toggle="tooltip" title="Address 1">
+                        </div>
+                        <div class="col-md-12 nogap">
+                            <input class="form-control input-sm" placeholder="Address 2" id="shippingAddress2" maxlength="50" type="text" data-toggle="tooltip" title="Address 2">
+                        </div>-->
+                        <div class="col-md-12 nogap">
+                            <label>Address 1</label><label style="color:red">*</label>
+                            <input class="form-control input-sm" placeholder="Address 1" id="shippingAddress1" maxlength="500" type="text" data-toggle="tooltip" title="Address 1">
+                        </div>
+                        <div class="col-md-12 nogap">
+                            <input class="form-control input-sm" placeholder="Address 2" id="shippingAddress2" maxlength="500" type="text" data-toggle="tooltip" title="Address 2">
+                        </div>
+                        <!--End of Mantis Issue 24201-->
+
+                        <div class="col-md-4 nogap">
+                            <label> Country</label>
+                            <input class="form-control input-sm " placeholder="Country" disabled id="shippingCountry" type="text" data-toggle="tooltip" title="Country">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>State</label>
+                            <input class="form-control input-sm" placeholder="State" disabled id="shippingState" type="text" data-toggle="tooltip" title="State">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>District</label>
+                            <input class="form-control input-sm" placeholder="District" disabled id="shippingCity" type="text" data-toggle="tooltip" title="District">
+                        </div>
+
+
+
+                        <a class="[ form-group ]" href="#" onclick="javascript: ShippingCheckChange()">
+                            <input type="checkbox" name="fancy-checkbox-successShipping" id="fancy-checkbox-successShipping" autocomplete="off" />
+                            <div class="[ btn-group ]">
+                                <label for="fancy-checkbox-successShipping" class="[ btn btn-success ]">
+                                    <span class="[ glyphicon glyphicon-ok ]"></span>
+                                    <span> </span>
+                                </label>
+                                <label for="fancy-checkbox-successShipping" class="[ btn btn-default active ]">
+                                    Bill To Same Address
+                                </label>
+                            </div>
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="DivServiceBranch">
+                <label id="">Service Branch</label>
+                <select class="form-control" id="ServiceBranchCust">
+                    <option value="0" selected="selected">Select</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="col-md-12">
+            <asp:Panel ID="PanelDocumentSegment" runat="server" CssClass="col-md-12">
+                <label style="display: block;">Document Segment</label>
+                <table id="Table1" style="width: 90%" class="nbackBtn">
+                    <tr>
+                        <td style="width: 120px" class="gHesder">Segment</td>
+                        <td class="gHesder text-right">
+                            Size
+                        </td>
+                        <td class="gHesder">
+                            Name (Used for)
+                        </td>
+                        <td class="gHesder" style="width:250px;max-width:260px">
+                            Mandatory for
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Segment 1</td>
+                        <td><input class="form-control input-sm charmaxed text-right" id="txtSegment1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="2" min="0" max="15"></td>
+                        <td><input class="form-control input-sm" id="txtUsedFor1" type="text" maxlength="30"></td>
+                        <td><select class="form-control " id="cddlSegmentMandatory1" multiple></select></td>
+                    </tr>
+                    <tr>
+                        <td>Segment 2</td>
+                        <td><input class="form-control input-sm charmaxed text-right" id="txtSegment2" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="2" min="0" max="15" onblur="CheckSegZero()"></td>
+                        <td><input class="form-control input-sm" id="txtUsedFor2" type="text" maxlength="30"></td>
+                        <td><select class="form-control" id="cddlSegmentMandatory2" multiple></select></td>
+                    </tr>
+                    <tr>
+                        <td>Segment 3</td>
+                        <td><input class="form-control input-sm charmaxed text-right" id="txtSegment3" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="2" min="0" max="15" onblur="CheckSegZero1()"></td>
+                        <td><input class="form-control input-sm" id="txtUsedFor3" type="text" maxlength="30"></td>
+                        <td><select class="form-control" id="cddlSegmentMandatory3" multiple> </select></td>
+                    </tr>
+                    <tr>
+                        <td>Segment 4</td>
+                        <td><input class="form-control input-sm charmaxed" id="txtSegment4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="2" min="0" max="15" onblur="CheckSegZero2()"></td>
+                        <td><input class="form-control input-sm" id="txtUsedFor4" type="text" maxlength="30"></td>
+                        <td><select class="form-control" id="cddlSegmentMandatory4" multiple></select></td>
+                    </tr>
+                    <tr>
+                        <td>Segment 5</td>
+                        <td><input class="form-control input-sm charmaxed text-right" id="txtSegment5" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="2" min="0" max="15" onblur="CheckSegZero3()"></td>
+                        <td><input class="form-control input-sm" id="txtUsedFor5" type="text" maxlength="30"></td>
+                        <td><select class="form-control" id="cddlSegmentMandatory5" multiple></select></td>
+                    </tr>
+                </table>
+                <table id="TblDocumentSegment" style="width: 90%" class="nbackBtn hide">
+                    <tr>
+                        <td style="width: 120px">Size</td>
+                        <td>
+                            1
+
+                        </td>
+                        <td>
+                            2
+                        </td>
+                        <td>
+                            3
+
+                        </td>
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            5
+
+                        </td>
+
+                    </tr>
+                </table>
+                <asp:HiddenField ID="HdnDocumentSegment" runat="server" />
+
+                <table id="TblDocumentSegmentUseFor" style="width: 90%" class="nbackBtn hide">
+                    <tr>
+                        <td style="width: 120px">Name(Used For)</td>
+                        <td>
+                            1
+
+                        </td>
+                        <td>
+                            2
+
+
+                        </td>
+                        <td>
+                            3
+
+                        </td>
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            5
+
+                        </td>
+
+                    </tr>
+                </table>
+                <table id="TblDocumentSegmentMandatory" style="width: 90%" class="nbackBtn hide">
+                    <tr>
+                        <td style="width: 120px">Mandatory For</td>
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            2
+
+                        </td>
+                        <td>
+                            3
+
+                        </td>
+                        <td>
+                            4
+
+                        </td>
+                        <td>
+                            5
+
+                        </td>
+                        <td></td>
+
+
+                    </tr>
+                </table>
+
+            </asp:Panel>
+        </div>
+        <div class="clear"></div>
+
+
+        <div class="col-md-12 pull-left">
+            <input type="button" id="btnSaveCust" class="btn btn-primary btn-small" value="Save" onclick="SaveCustomer()" />
+            <label style="color: red">[After Save this data, Billing/Shipping to be filled automatically.]</label>
+        </div>
+        <asp:HiddenField ID="hdnEinvoiceActive" runat="server" />
+        <asp:HiddenField ID="hdnDocumentSegmentActive" runat="server" />
+
+        <asp:HiddenField ID="hdnSegmentMandatory1" runat="server" />
+        <asp:HiddenField ID="hdnSegmentMandatory2" runat="server" />
+        <asp:HiddenField ID="hdnSegmentMandatory3" runat="server" />
+        <asp:HiddenField ID="hdnSegmentMandatory4" runat="server" />
+        <asp:HiddenField ID="hdnSegmentMandatory5" runat="server" />
+    </div>
+    </div>
+</body>
+</html>
