@@ -3257,10 +3257,7 @@ namespace ERP.OMS.Management.Activities
             DataTable dtGlobal = new DataTable();
 
             DataTable AdditionalDetails = new DataTable();
-
             AdditionalDetails = (DataTable)Session["InlineRemarks"];
-
-
             grid.JSProperties["cpProductSrlIDCheck"] = "";
             grid.JSProperties["cpSalesOrderNo"] = "";
             if (Convert.ToString(Session["ActionType"]) == "Add")
@@ -3272,9 +3269,7 @@ namespace ERP.OMS.Management.Activities
                 }
             }
             if (Session["OrderDetails"] != null)
-            {
-                //subhabrata: foreach@deleted extra column 
-
+            {   
                 DataTable dt = new DataTable();
                 dtTemp = (DataTable)Session["OrderDetails"];
                 dt = dtTemp.Copy();
@@ -3284,9 +3279,7 @@ namespace ERP.OMS.Management.Activities
                     if (dtC.Contains("Quotation"))
                     { dt.Columns.Remove("Quotation"); }
                     break;
-                }//End
-
-                //SalesOrderdt = (DataTable)Session["OrderDetails"];
+                }//End              
 
                 SalesOrderdt = dt;
             }
@@ -3383,23 +3376,18 @@ namespace ERP.OMS.Management.Activities
                     {
                         string[] ProductDetailsList = ProductDetails.Split(new string[] { "||@||" }, StringSplitOptions.None);
                         string ProductID = Convert.ToString(ProductDetailsList[0]);
-
                         string ProductName = Convert.ToString(args.NewValues["ProductName"]);
                         string Description = Convert.ToString(args.NewValues["Description"]);
                         string Quantity = Convert.ToString(args.NewValues["Quantity"]);
                         string UOM = Convert.ToString(args.NewValues["UOM"]);
                         string Warehouse = Convert.ToString(args.NewValues["Warehouse"]);
-
                         decimal strMultiplier = Convert.ToDecimal(ProductDetailsList[7]);
                         string StockQuantity = Convert.ToString(Convert.ToDecimal(Quantity) * strMultiplier);
-                        string StockUOM = Convert.ToString(ProductDetailsList[4]);
-                        //string StockQuantity = Convert.ToString(args.NewValues["StockQuantity"]);
-                        //string StockUOM = Convert.ToString(args.NewValues["StockUOM"]);
+                        string StockUOM = Convert.ToString(ProductDetailsList[4]);                      
                         // Mantis Issue 24425, 24428
                         string Order_AltQuantity = Convert.ToString(args.NewValues["Order_AltQuantity"]);
                         string Order_AltUOM = Convert.ToString(args.NewValues["Order_AltUOM"]);
                         // End of Mantis Issue 24425, 24428
-
                         string SalePrice = (Convert.ToString(args.NewValues["SalePrice"]) != "") ? Convert.ToString(args.NewValues["SalePrice"]) : "0";
                         string Discount = (Convert.ToString(args.NewValues["Discount"]) != "") ? Convert.ToString(args.NewValues["Discount"]) : "0";
                         string Amount = (Convert.ToString(args.NewValues["Amount"]) != "") ? Convert.ToString(args.NewValues["Amount"]).Replace(",", string.Empty).Trim() : "0";
@@ -3435,17 +3423,7 @@ namespace ERP.OMS.Management.Activities
                                 if (!string.IsNullOrEmpty(QuotationNumber))
                                 { drr["Quotation_No"] = QuotationNumber; }
                                 drr["ProductName"] = ProductName;
-                                drr["ProjectRemarks"] = ProjectRemarks;
-                                //else
-                                //{ drr["Quotation_No"] = ""; }
-                                //if (!string.IsNullOrEmpty(Quotation))
-                                //{
-                                //    drr["Quotation"] = Quotation;
-                                //}
-                                //else
-                                //{
-                                //    drr["Quotation"] = "N/A";
-                                //}
+                                drr["ProjectRemarks"] = ProjectRemarks;                                
                                 drr["QuoteDetails_Id"] = QuoteDetails_Id;
                                 // Mantis Issue 24425, 24428
                                 drr["Order_AltQuantity"] = Order_AltQuantity;
@@ -3478,10 +3456,8 @@ namespace ERP.OMS.Management.Activities
                     DataRow dr = SalesOrderdt.Rows[i];
                     string delQuotationID = Convert.ToString(dr["OrderID"]);
                     DataRow daddr = AdditionalDetails.Rows[i];
-
                     //chinmoy add for addrprojectDesc
                     string delSrlNo = Convert.ToString(daddr["SrlNo"]);
-
                     if (delQuotationID == OrderID)
                         daddr.Delete();
                     // dr.Delete();
@@ -3493,7 +3469,6 @@ namespace ERP.OMS.Management.Activities
                 {
                     DataRow dr = SalesOrderdt.Rows[i];
                     string delQuotationID = Convert.ToString(dr["OrderID"]);
-
                     if (delQuotationID == OrderID)
                     {
                         SrlNo = Convert.ToString(dr["SrlNo"]);
@@ -3503,16 +3478,15 @@ namespace ERP.OMS.Management.Activities
                 }
                 SalesOrderdt.AcceptChanges();
 
-                DeleteTaxDetails(SrlNo);
-                DeleteWarehouse(SrlNo);
+               // DeleteTaxDetails(SrlNo);
+              //  DeleteWarehouse(SrlNo);
 
                 if (OrderID.Contains("~") != true)
                 {
                     SalesOrderdt.Rows.Add("0", OrderID, "0", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "D", "0", "", "0");
                 }
             }
-
-            ///////////////////////
+                      
 
             if (IsDeleteFrom == "D")
             {
@@ -3536,20 +3510,10 @@ namespace ERP.OMS.Management.Activities
                 }
                 SalesOrderdt.AcceptChanges();
             }
-
-
-            //if (dtTemp != null && dtTemp.Rows.Count > 0)
-            //{
-            //    Session["OrderDetails"] = dtTemp;
-            //}
-            //else
-            //{
+           
             Session["OrderDetails"] = SalesOrderdt;
             Session["InlineRemarks"] = AdditionalDetails;
-            //}
-
-            //////////////////////
-
+           
 
             if (IsDeleteFrom != "D")
             {
@@ -3613,19 +3577,11 @@ namespace ERP.OMS.Management.Activities
                     }
                     string projectValidFrom = Convert.ToString(dtProjValidFrom.Text);
                     string projectValidUpto = Convert.ToString(dtProjValidUpto.Text);
-
-
                     string AppRejRemarks = Convert.ToString(txtAppRejRemarks.Text);
 
                     // Mantis Issue 24913 
                     if (!string.IsNullOrEmpty(Request.QueryString["SalId"]) && string.IsNullOrEmpty(Convert.ToString(hdnSalesManAgentId.Value)) )
-                    {
-                        //string[] SalesManAgentId = oDBEngine.GetFieldValue1("tbl_trans_Sales", "sls_assignedTo", "sls_id ='" + Request.QueryString["SalId"].ToString() + "'", 1);
-                        //if (SalesManAgentId.Length > 0)
-                        //{
-                        //    hdnSalesManAgentId.Value = SalesManAgentId[0].Trim();
-                        //}
-
+                    { 
                         ProcedureExecute proc = new ProcedureExecute("prc_SalesOrder_Details");
                         proc.AddVarcharPara("@Action", 500, "GetSalesmanID");
                         proc.AddVarcharPara("@sla_id", 500, Request.QueryString["SalId"].ToString());
@@ -3635,9 +3591,7 @@ namespace ERP.OMS.Management.Activities
                             hdnSalesManAgentId.Value = dtAgnt.Rows[0]["SalesManAgentId"].ToString().Trim();
                         }
                     }
-                    // End of Mantis Issue 24913 
-
-                    //string strAgents = Convert.ToString(ddl_SalesAgent.SelectedValue);//subhabrata on 12-12-2017
+                    // End of Mantis Issue 24913                   
                     string strAgents = string.Empty;//subhabrata on 03-01-2018
                     if (!string.IsNullOrEmpty(Convert.ToString(hdnSalesManAgentId.Value)))
                     {
@@ -3669,10 +3623,7 @@ namespace ERP.OMS.Management.Activities
                     string[] eachQuo = QuoComponent.Split(',');
                     if (eachQuo.Length == 1)
                     {
-                        QuotationDate = Convert.ToString(dt_Quotation.Text);
-                        //  strQuoteDate = Convert.ToString(dt_Quotation.Text);
-                        // dt_Quotation.Text = "Multiple Select Quotation Dates";
-                        // lbl_MultipleDate.Attributes.Add("style", "display:block");
+                        QuotationDate = Convert.ToString(dt_Quotation.Text);                       
                     }
                     else
                     {
@@ -3862,9 +3813,6 @@ namespace ERP.OMS.Management.Activities
 
                     DataTable tempBillAddress = new DataTable();
 
-
-
-
                     //Party Order Date and Order Date compare 
                     int result = DateTime.Compare(dt_PLSales.Date, dt_OADate.Date);
                     string partyOrderdtMasg = string.Empty;
@@ -3934,10 +3882,10 @@ namespace ERP.OMS.Management.Activities
                     dvData.RowFilter = "Status <> 'D'";
                     duplicatedt = dvData.ToTable();
 
-                    var duplicateRecords = duplicatedt.AsEnumerable()
-                   .GroupBy(r => r["ProductID"]) //coloumn name which has the duplicate values
-                   .Where(gr => gr.Count() > 1)
-                   .Select(g => g.Key);
+                   // var duplicateRecords = duplicatedt.AsEnumerable()
+                   //.GroupBy(r => r["ProductID"]) //coloumn name which has the duplicate values
+                   //.Where(gr => gr.Count() > 1)
+                   //.Select(g => g.Key);
                     //foreach (var d in duplicateRecords)
                     //{
                     //    validate = "duplicateProduct";
@@ -4090,20 +4038,22 @@ namespace ERP.OMS.Management.Activities
                         }
                     }
                     //Check Whether there is Available Stock or Not
-                    foreach (DataRow dr in SalesOrderdt.Rows)
-                    {
-                        string[] list = Convert.ToString(dr["ProductID"]).Split(new string[] { "||@||" }, StringSplitOptions.None);
-                        string ProductId = Convert.ToString(list[0]);
-                        DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableQuotation(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','"
-                            + Convert.ToString(Session["LastFinYear"]) + "','" + ProductId + "') as branchopenstock");
-                        if (!String.IsNullOrEmpty(Convert.ToString(dt2.Rows[0]["branchopenstock"])))
-                        {
-                            if (Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]) == (decimal)0.00)
-                            {
-                                grid.JSProperties["cpSaveSuccessOrFailOnAvaiableStock"] = "IsAvailableStock";
-                            }
-                        }
-                    }
+                    //foreach (DataRow dr in SalesOrderdt.Rows)
+                    //{
+                    //    string[] list = Convert.ToString(dr["ProductID"]).Split(new string[] { "||@||" }, StringSplitOptions.None);
+                    //    string ProductId = Convert.ToString(list[0]);
+                    //    DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableQuotation(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','"
+                    //        + Convert.ToString(Session["LastFinYear"]) + "','" + ProductId + "') as branchopenstock");
+                    //    if (!String.IsNullOrEmpty(Convert.ToString(dt2.Rows[0]["branchopenstock"])))
+                    //    {
+                    //        if (Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]) == (decimal)0.00)
+                    //        {
+                    //            grid.JSProperties["cpSaveSuccessOrFailOnAvaiableStock"] = "IsAvailableStock";
+                    //        }
+                    //    }
+                    //}
+
+
                     foreach (DataRow dr in SalesOrderdt.Rows)
                     {
                         if (Convert.ToDecimal(dr["Quantity"]) == (decimal)0.00)
@@ -4172,6 +4122,9 @@ namespace ERP.OMS.Management.Activities
                             }
                         }
                     }
+
+
+
                     //Subhabrata Is From CRM
                     int IsFromCRM = 0;
                     if (!string.IsNullOrEmpty(Request.QueryString["SalId"]))
@@ -4189,40 +4142,18 @@ namespace ERP.OMS.Management.Activities
 
                     #endregion
 
-                    #region Validation
-                    ////// ############# Added By : Samrat Roy -- 02/05/2017 -- To check Transporter Mandatory Control 
-                    //BusinessLogicLayer.DBEngine objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
-                    //DataTable DT = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Transporter_SOMandatory' AND IsActive=1");
-                    //if (DT != null && DT.Rows.Count > 0)
-                    //{
-                    //    string IsMandatory = Convert.ToString(DT.Rows[0]["Variable_Value"]).Trim();
-                    //    objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
-                    //    DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Transporter' AND IsActive=1");
-                    //    if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
-                    //    {
-                    //        if (IsMandatory == "Yes")
-                    //        {
-                    //            //if (VehicleDetailsControl.GetControlValue("cmbTransporter") == "")
-                    //            if (hfControlData.Value.Trim() == "")
-                    //            {
-                    //                validate = "transporteMandatory";
-                    //            }
-                    //        }
-                    //    }
-                    //}
-
-                    #endregion
+                  
 
                     ////// ############# Added By : Samrat Roy -- 02/05/2017 -- To check Transporter Mandatory Control 
                     #region Dorment Customer Check
 
-                    BusinessLogicLayer.DBEngine objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
-                    DataTable DT1 = objEngine.GetDataTable("tbl_master_Contact", " Statustype ", " cnt_internalId='" + strCustomer + "'");
-                    if (DT1 != null && DT1.Rows.Count > 0)
-                    {
-                        string IsDorment = Convert.ToString(DT1.Rows[0]["Statustype"]).Trim();
-                        if (IsDorment == "D") validate = "Dormant_Customer";
-                    }
+                    //BusinessLogicLayer.DBEngine objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
+                    //DataTable DT1 = objEngine.GetDataTable("tbl_master_Contact", " Statustype ", " cnt_internalId='" + strCustomer + "'");
+                    //if (DT1 != null && DT1.Rows.Count > 0)
+                    //{
+                    //    string IsDorment = Convert.ToString(DT1.Rows[0]["Statustype"]).Trim();
+                    //    if (IsDorment == "D") validate = "Dormant_Customer";
+                    //}
 
                     #endregion
 
@@ -4396,21 +4327,7 @@ namespace ERP.OMS.Management.Activities
                         }
                         else
                         {
-                            //if (ModifySalesOrder(MainOrderID, strSchemeType, UniqueQuotation, strQuoteDate, strQuoteExpiry, strCustomer, strContactName,
-                            //                  Reference, strBranch, strAgents, strCurrency, strRate, strTaxType, strTaxCode, tempSalesOrderdt, TaxDetailTable, ActionType, OANumber, OADate, "0", QuotationDate, QuoComponent, tempWarehousedt, tempBillAddress, tempTaxDetailsdt, approveStatus) == false)
-                            //{
-                            //    grid.JSProperties["cpSaveSuccessOrFail"] = "errorInsert";
-                            //}
-                            //else {
-                            //    DataTable udfTable = (DataTable)Session["UdfDataOnAdd"];
-                            //    if (udfTable != null)
-                            //        Session["UdfDataOnAdd"] = reCat.insertRemarksCategoryAddMode("SO", "SalesChallan" + Convert.ToString(id), udfTable, Convert.ToString(Session["userid"]));
-                            //    grid.JSProperties["cpSalesOrderNo"] = UniqueQuotation; 
-                            //}
-
-
-
-
+                            
                             if (TaxType == "E")
                             {
                                 foreach (DataRow drAmt in tempSalesOrderdt.Rows)
@@ -4419,15 +4336,7 @@ namespace ERP.OMS.Management.Activities
                                 }
                             }
 
-                            //TaxDetailTable = gstTaxDetails.SetTaxTableDataWithProductSerial(tempSalesOrderdt, "SrlNo", "ProductID",
-                            //    "Amount", "TaxAmount", TaxDetailTable, "S", dt_PLSales.Date.ToString("yyyy-MM-dd"), strBranch, ShippingState, "I");
-
-
-                            //New Code block  start 
-                            //Mantis Issue number 0018841     
-                            //Indranil Dey  05-12-2018 
-                            // Parameter added in ModifySalesOrder Method SchemaID
-
+                           
 
                             UniqueQuotation = txt_SlOrderNo.Text;
                             string[] SchemeList = strSchemeType.Split(new string[] { "~" }, StringSplitOptions.None);

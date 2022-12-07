@@ -333,6 +333,7 @@
     <Compile Include="Export\PayslipExport.cs" />
     <Compile Include="Models\EinvoiceModel.cs" />
     <Compile Include="Models\EinvoiceToken.cs" />
+    <Compile Include="Models\EinvoiceWebTelModel.cs" />
     <Compile Include="Models\eWayBill.cs" />
     <Compile Include="OMS\Management\Activities\AdjustReturnFinanceBill.aspx.cs">
       <DependentUpon>AdjustReturnFinanceBill.aspx</DependentUpon>
@@ -1182,6 +1183,13 @@
     </Compile>
     <Compile Include="OMS\Management\eInvoice.aspx.designer.cs">
       <DependentUpon>eInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OMS\Management\EinvoiceWebTel.aspx.cs">
+      <DependentUpon>EinvoiceWebTel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OMS\Management\EinvoiceWebTel.aspx.designer.cs">
+      <DependentUpon>EinvoiceWebTel.aspx</DependentUpon>
     </Compile>
     <Compile Include="OMS\Management\EInvoice\e-popups.aspx.cs">
       <DependentUpon>e-popups.aspx</DependentUpon>
@@ -11508,6 +11516,7 @@
     <Content Include="OMS\Management\Activities\JS\DebitInvoice_Import.js" />
     <Content Include="OMS\Management\Activities\JS\duplicateposbillprint.js" />
     <Content Include="OMS\Management\Activities\JS\eInvoice.js" />
+    <Content Include="OMS\Management\Activities\JS\EinvoiceWebTel.js" />
     <Content Include="OMS\Management\Activities\JS\EstimateCostSheet.js" />
     <Content Include="OMS\Management\Activities\JS\EstimateCostSheetList.js" />
     <Content Include="OMS\Management\Activities\JS\ewaybill.js" />
@@ -11949,6 +11958,7 @@
     <Content Include="OMS\Management\DailyTask\JS\CashBankEntry.js" />
     <Content Include="OMS\Management\E-waybill.aspx" />
     <Content Include="OMS\Management\eInvoice.aspx" />
+    <Content Include="OMS\Management\EinvoiceWebTel.aspx" />
     <Content Include="OMS\Management\EInvoice\e-popups.aspx" />
     <Content Include="OMS\Management\Master\ApproverMaster.aspx" />
     <Content Include="OMS\Management\Master\BackUp.aspx" />

@@ -26,19 +26,7 @@ function CmbWarehouseEndCallback(s, e) {
     }
 }
 
-function CmbBatch_ValueChange() {
-    var WarehouseID = cCmbWarehouse.GetValue();
-    var BatchID = cCmbBatch.GetValue();
-    var type = document.getElementById('hdfProductType').value;
 
-    if (type == "WBS") {
-        checkListBox.PerformCallback('BindSerial~' + WarehouseID + '~' + BatchID);
-    }
-    else if (type == "BS") {
-        checkListBox.PerformCallback('BindSerial~' + "0" + '~' + BatchID);
-    }
-
-}
 
 
 function CmbBatchEndCall(s, e) {
@@ -4690,7 +4678,7 @@ function CmbBatch_ValueChange() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            $("#<%=lblAvailableStock.ClientID %>").html(msg.d.toString())
+            $("#lblAvailableStock").text(msg.d.toString())
 
         }
     });

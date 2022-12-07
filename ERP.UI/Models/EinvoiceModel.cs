@@ -13,14 +13,7 @@ namespace ERP.Models
             this.Version = version;
         }
 
-        public string CDKey { get; set; }
-        public string EInvUserName { get; set; }
-        public string EInvPassword { get; set; }
-        public string EFUserName { get; set; }
-        public string EFPassword { get; set; }
-        public string GSTIN { get; set; }
-        public string GetQRImg { get; set; }
-        public string GetSignedInvoice { get; set; }
+        
         public string Version { get; set; }
         public TrasporterDetails TranDtls { get; set; }
         public DocumentsDetails DocDtls { get; set; }
@@ -38,7 +31,7 @@ namespace ERP.Models
         public List<ProductList> ItemList { get; set; }
     }
 
-
+    
     public class TrasporterDetails
     {
         public string TaxSch { get; set; }
@@ -430,29 +423,7 @@ namespace ERP.Models
         public string task_id { get; set; }
     }
 
-    public class webtelIRNDetails
-    {
-        public string ErrorMessage { get; set; }
-        public string ErrorCode { get; set; }
-        public string Status { get; set; }
-        public string GSTIN { get; set; }
-        public string DocNo { get; set; }
-        public string DocType { get; set; }
-        public string DocDate { get; set; }
-        public string Irn { get; set; }
-        public string AckDate { get; set; }
-        public string AckNo { get; set; }
-        public string EwbNo { get; set; }
-        public string EwbDt { get; set; }
-        public string EwbValidTill { get; set; }
-        public string SignedInvoice { get; set; }
-        public string SignedQRCode { get; set; }
-        public string IrnStatus { get; set; }
-        public InfoDtls InfoDtls { get; set; }
-        public string Remarks { get; set; }
-
-        
-    }
+    
 
     public class InfoDtls
     {
@@ -468,7 +439,11 @@ namespace ERP.Models
         public string Irn { get; set; }
     }
 
-
+    public class Details
+    {
+        public string AckNo { get; set; }
+        public string AckDt { get; set; }
+    }
 
     #region Enrich
 
@@ -707,7 +682,38 @@ namespace ERP.Models
     {
         public List<errorlog> details { get; set; }
         public string data { get; set; }
-        public string info { get; set; }
+
+        public List<infolog> info { get; set; }      
+        public additionalDetailslog additionalDetails { get; set; }
+    }
+    public class additionalDetailslog
+    {
+          [JsonProperty("additionalDetailslog")]
+        public string AckNo { get; set; }
+        public string AckDt { get; set; }
+        public string Irn { get; set; }
+        public string SignedInvoice { get; set; }
+        public string SignedQRCode { get; set; }        
+        public string Status { get; set; }
+        public string EwbNo { get; set; }
+        public string EwbDt { get; set; }
+        public string EwbValidTill { get; set; }
+        public string Remarks { get; set; }
+    }
+
+    public class infolog
+    {
+        public string InfCd { get; set; }
+        public string Desc { get; set; }   
+      
+        public InfoDesclog InfoDesc { get; set; }
+    }
+
+    public class InfoDesclog
+    {
+        public string AckNo { get; set; }
+        public string AckDt { get; set; }
+        public string Irn { get; set; }
 
     }
 
