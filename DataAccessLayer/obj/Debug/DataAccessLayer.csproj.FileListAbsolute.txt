@@ -4,3 +4,9 @@ E:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.A
 E:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
 E:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 E:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\Priti\BreezeERPGIT_VS22\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\Priti\BreezeERPGIT_VS22\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\Priti\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.AssemblyReference.cache
+D:\Priti\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\Priti\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\Priti\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

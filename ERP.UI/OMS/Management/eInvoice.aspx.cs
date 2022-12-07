@@ -1502,17 +1502,7 @@ namespace ERP.OMS.Management
 
             EinvoiceModel objInvoice = new EinvoiceModel("1.01");
 
-            if (IrnOrgId == "webtel")
-            {
-                objInvoice.CDKey = "1000687";
-                objInvoice.EInvUserName = "19AAACW3775F025";
-                objInvoice.EInvPassword = "Admin!23";
-                objInvoice.EFUserName = "29AAACW3775F000";
-                objInvoice.EFPassword = "Admin!23..";
-                objInvoice.GSTIN = "19AAACW3775F025";
-                objInvoice.GetQRImg = "1";
-                objInvoice.GetSignedInvoice = "1";
-            }
+           
 
             TrasporterDetails objTransporter = new TrasporterDetails();
             objTransporter.EcmGstin = null;
@@ -3225,18 +3215,7 @@ namespace ERP.OMS.Management
 
                 EinvoiceModel objInvoice = new EinvoiceModel("1.1");
 
-                if (IrnOrgId == "webtel")
-                {
-                    objInvoice.CDKey = "1000687";
-                    objInvoice.EInvUserName = "19AAACW3775F025";
-                    objInvoice.EInvPassword = "Admin!23";
-                    objInvoice.EFUserName = "29AAACW3775F000";
-                    objInvoice.EFPassword = "Admin!23..";
-                    objInvoice.GSTIN = "19AAACW3775F025";
-                    objInvoice.GetQRImg = "1";
-                    objInvoice.GetSignedInvoice = "1";
-                }
-                
+              
 
 
                 TrasporterDetails objTransporter = new TrasporterDetails();
@@ -3525,9 +3504,9 @@ namespace ERP.OMS.Management
                 }
                 objInvoice.ItemList = objListProd;
 
-
-                if (IrnOrgId != "webtel")
-                {
+               
+                //if (IrnOrgId != "webtel")
+                //{
                     authtokensOutput authObj = new authtokensOutput();
                     if (DateTime.Now > EinvoiceToken.Expiry)
                     {
@@ -3569,7 +3548,7 @@ namespace ERP.OMS.Management
                             error = error + "," + objInvoice.DocDtls.No;
                         }
                     }
-                }
+             //   }
 
                 try
                 {
@@ -3586,126 +3565,7 @@ namespace ERP.OMS.Management
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-                        if (IrnOrgId == "webtel")
-                        {
-
-                            var content = new StringContent(json, Encoding.UTF8, "application/json");
-                            var response = client.PostAsync(IrnGenerationUrl, content).Result;
-
-                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                            {
-                                string jsonString = response.Content.ReadAsStringAsync().Result;
-                               // var content1 = new StringContent(jsonString, Encoding.UTF8, "application/json");
-                               // webtelIRNDetails objIRN1 = response.Content.ReadAsAsync<webtelIRNDetails>().Result;
-                                //var objIRN1 = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
-                                 //var jObj = (JArray)JsonConvert.DeserializeObject(jsonString);
-                                 DBEngine objDb = new DBEngine();
-                                 JArray jsonResponse = JArray.Parse(jsonString);
-                                
-                                 var AckNo = "";
-                                 var AckDate = "";
-                                 var Irn = "";
-
-                                 foreach (var item in jsonResponse)
-                                 {
-                                     //string AckNo = Convert.ToString(item["AckNo"]);
-
-                                      AckNo = item["AckNo"].ToString();
-                                      AckDate = item["AckDate"].ToString();
-                                      Irn = item["Irn"].ToString();
-                                     var SignedInvoice = item["SignedInvoice"].ToString();
-                                     var SignedQRCode = item["SignedQRCode"].ToString();
-                                     var EwbNo = item["EwbNo"].ToString();
-                                     var EwbDt = item["EwbDt"].ToString();
-                                     var IrnStatus = item["IrnStatus"].ToString();
-                                     var EwbValidTill = item["EwbValidTill"].ToString();
-                                     var ErrorCode = item["ErrorCode"].ToString();
-
-                                     if (ErrorCode != "")
-                                     {
-                                         JArray jRaces = (JArray)item["InfoDtls"];
-                                         foreach (var rItem in jRaces)
-                                         {
-                                              AckNo = rItem["AckNo"].ToString();
-                                              AckDate = rItem["AckDate"].ToString();
-                                              Irn = rItem["Irn"].ToString();
-                                         }
-                                     }
-                                 //}
-
-                                //DataTable dtIRN = JsonConvert.DeserializeObject<DataTable>(jsonString);
-                                //for (int i = 0; i < dtIRN.Rows.Count; i++)
-                                //{  
-                                    if (Convert.ToString(AckNo) != "" && AckNo != null)
-                                    {
-
-                                        objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + AckNo + "',AckDt='" + AckDate + "',Irn='" + Irn + "',SignedInvoice='" + SignedInvoice + "',SignedQRCode='" + SignedQRCode + "',Status='" + IrnStatus + "',EWayBillNumber = '" + EwbNo + "',EWayBillDate='" + EwbDt + "',EwayBill_ValidTill='" + EwbValidTill + "' where invoice_id='" + id.ToString() + "'");
-                                       
-                                        IRNsuccess = IRNsuccess + "," + objInvoice.DocDtls.No;
-                                    }
-
-                                    else
-                                    {
-                                        objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + AckNo + "',AckDt='" + AckDate + "',Irn='" + Irn + "',SignedInvoice='" + SignedInvoice + "',SignedQRCode='" + SignedQRCode + "',Status='" + IrnStatus + "' where invoice_id='" + id.ToString() + "'");
-
-                                        IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
-                                    }
-
-                                    success = success + "," + objInvoice.DocDtls.No;
-
-                                   
-                                    string Customer_id = "", IsMailSend = "";
-
-                                    DataTable dtInvDetail = objDBEngineCredential.GetDataTable("SELECT Customer_Id,IsMailSend FROM TBL_TRANS_SALESINVOICE WHERE INVOICE_ID='" + id.ToString() + "'");
-
-                                    if (dtInvDetail != null && dtInvDetail.Rows.Count > 0)
-                                    {
-                                        Customer_id = Convert.ToString(dtInvDetail.Rows[0]["Customer_Id"]);
-                                        IsMailSend = Convert.ToString(dtInvDetail.Rows[0]["IsMailSend"]);
-                                    }
-
-                                    if (IsMailSend == "False")
-                                    {
-                                        SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
-                                        string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/";
-
-                                        string msgBody = " <a href='" + baseUrl + "OMS/Management/Activities/ViewSIPDF.aspx?key=" + id.ToString() + "&dbname=" + con.Database + "'>Click here </a> to get your bill";
-
-                                        SendMail(Convert.ToString(id.ToString()), msgBody, Customer_id);
-                                    }
-                                }
-                               
-                            }
-                            else
-                            {
-
-
-                                EinvoiceError err = new EinvoiceError();
-                                var jsonString = response.Content.ReadAsStringAsync().Result;
-                               
-                                //err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-                                JArray jsonResponse = JArray.Parse(jsonString);
-
-                                DBEngine objDB = new DBEngine();
-                                objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_GEN'");
-
-                                foreach (var item in jsonResponse)
-                                {
-                                    var ErrorCode = item["ErrorCode"].ToString();
-                                    var ErrorMessage = item["ErrorMessage"].ToString();
-
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','" + ErrorCode + "','" + ErrorMessage.Replace("'", "''") + "')");
-
-                                }
-
-                                error = error + "," + objInvoice.DocDtls.No;
-                                IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
-
-                                
-                            }
-                        }
-                        else
-                        {
+                       
                             client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
                             client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
                             client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
@@ -3774,10 +3634,8 @@ namespace ERP.OMS.Management
 
 
                                 EinvoiceError err = new EinvoiceError();
-                                var jsonString = response.Content.ReadAsStringAsync().Result;
-                                // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                                err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-
+                                var jsonString = response.Content.ReadAsStringAsync().Result;                               
+                                err = JsonConvert.DeserializeObject<EinvoiceError>(jsonString);
 
                                 DBEngine objDB = new DBEngine();
                                 objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_GEN'");
@@ -3785,7 +3643,29 @@ namespace ERP.OMS.Management
                                 {
                                     foreach (errorlog item in err.error.args.irp_error.details)
                                     {
-                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+                                        if (Convert.ToString(item.ErrorCode) == "2150")
+                                        {
+                                            if(err.error.args.irp_error.additionalDetails.AckNo!=null)
+                                            {
+                                                objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + err.error.args.irp_error.additionalDetails.AckNo + "',AckDt='" + err.error.args.irp_error.additionalDetails.AckDt + "',Irn='" + err.error.args.irp_error.additionalDetails.Irn + "',SignedInvoice='" + err.error.args.irp_error.additionalDetails.SignedInvoice + "',SignedQRCode='" + err.error.args.irp_error.additionalDetails.SignedQRCode + "',Status='" + err.error.args.irp_error.additionalDetails.Status + "',EWayBillNumber = '" + err.error.args.irp_error.additionalDetails.EwbNo + "',EWayBillDate='" + err.error.args.irp_error.additionalDetails.EwbDt + "',EwayBill_ValidTill='" + err.error.args.irp_error.additionalDetails.EwbValidTill + "' where invoice_id='" + id.ToString() + "'");
+                                            }
+                                            else
+                                            {
+                                                foreach (infolog item1 in err.error.args.irp_error.info)
+                                                {
+                                                    objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + item1.InfoDesc.AckNo + "',AckDt='" + item1.InfoDesc.AckDt + "',Irn='" + item1.InfoDesc.Irn + "' where invoice_id='" + id.ToString() + "'");
+
+                                                }
+                                            }
+                                           
+                                            IRNsuccess = IRNsuccess + "," + objInvoice.DocDtls.No;
+                                        }
+                                        else
+                                        {
+                                            objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+                                            error = error + "," + objInvoice.DocDtls.No;
+                                            IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
+                                        }                                        
                                     }
                                 }
                                 else
@@ -3796,17 +3676,19 @@ namespace ERP.OMS.Management
                                     {
                                         objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','" + "0" + "','" + item + "')");
                                     }
+
+                                    error = error + "," + objInvoice.DocDtls.No;
+                                    IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
                                 }
 
-                                error = error + "," + objInvoice.DocDtls.No;
-                                IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
+                             
 
                                 //grid.JSProperties["cpSucessIRN"] = "No";
                             }
 
 
                         }
-                    }
+                  
                 }
                 catch (AggregateException err)
                 {
