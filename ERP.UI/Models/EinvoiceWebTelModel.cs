@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DocumentFormat.OpenXml.Drawing;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,4 +125,94 @@ namespace ERP.Models
 
         public string GSTIN { get; set; }
     }
+
+    public class EwayBillGenerationDownload
+    {
+        public string GSTIN { get; set; }
+        public string ewbNo { get; set; }
+        public string Year { get; set; }
+        public string Month { get; set; }
+        public string EFUserName { get; set; }
+        public string EFPassword { get; set; }        
+        public string CDKey { get; set; }
+        public string EWbUserName { get; set; }
+        public string EWbPassword { get; set; }      
+
+        
+    }
+    public class EwayBillDownloadWebTel
+    {
+        public string ErrorMessage { get; set; }
+        public string ErrorCode { get; set; }
+        public string Date { get; set; }
+        public string EWBNumber { get; set; }
+        public string SuppGSTIN { get; set; }
+        public string IsSuccess { get; set; }
+        public string PdfFileBase64 { get; set; }       
+
+    }
+
+    //public class WebtelEWayCancelList
+    //{ 
+    //    public EWayCancelList Push_Data_List { get; set; }
+    //}
+        public class EWayCancelList
+    {
+        public List<WebTelCancelDetailsEWAY> Push_Data_List { get; set; }
+        public Int32 Year { get; set; }
+        public Int32 Month { get; set; }
+        public string EFUserName{ get; set; }
+        public string EFPassword{ get; set; }
+        public string CDKey { get; set; }
+
+    }
+    public class WebTelCancelDetailsEWAY
+    {
+        public string GSTIN { get; set; }
+        public Int64 EWBNumber { get; set; }
+        public string CancelReasonCode { get; set; }
+        public string CancelRemark { get; set; }
+       
+        public string EWbUserName { get; set; }
+        public string EWbPassword { get; set; }
+
+
+
+    }
+   
+
+        public class WebTelCancelDetailsEWAYResponse
+    {
+        public string ErrorMessage { get; set; }
+        public string GSTIN { get; set; }
+        public string DocNo { get; set; }
+        public string Date { get; set; }
+
+        public string Old_EWayBill { get; set; }
+        public string EWayBill { get; set; }
+
+        public string ValidUpTo { get; set; }
+        public string IsSuccess { get; set; }
+        public string ErrorCode { get; set; }
+        public string VehicleNo { get; set; }
+
+        public string SupplierState { get; set; }
+        public string EWBDetails { get; set; }
+
+
+        public string Alert { get; set; }
+
+
+
+
+
+
+
+
+
+        
+    }
+
+
+
 }

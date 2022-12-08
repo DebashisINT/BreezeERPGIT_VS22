@@ -27,6 +27,8 @@ using System.Data.SqlClient;
 using System.Threading;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNet.Identity;
+using DevExpress.XtraRichEdit.Import.Html;
+using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
 
 // End of Mantis Issuse 24030 (24/05/2021)
 
@@ -9098,64 +9100,39 @@ namespace ERP.OMS.Management
             if (e.Parameters.Split('~')[0] == "CancelEwayBill")
             {
                 GrdQuotationewaybillSI.JSProperties["cpJson"] = "cancelEwayBill";
-                CancelEwayBill objCancelEwayBill = new CancelEwayBill();
-                objCancelEwayBill.ewbNo = Convert.ToInt64(e.Parameters.Split('~')[1]);
-                objCancelEwayBill.cancelRsnCode = Convert.ToInt32(e.Parameters.Split('~')[2]);
-                objCancelEwayBill.cancelRmrk = Convert.ToString(e.Parameters.Split('~')[3]);
+             
                 DBEngine objDB = new DBEngine();
-                string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_SALESINVOICE WHERE  EWayBillNumber='" + objCancelEwayBill.ewbNo + "'").Rows[0][0]);
+                string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_SALESINVOICE WHERE  EWayBillNumber='" + Convert.ToInt64(e.Parameters.Split('~')[1]) + "'").Rows[0][0]);
 
                 DBEngine objDBEngineCredential = new DBEngine();
                 string Branch_id = Convert.ToString(objDBEngineCredential.GetDataTable("SELECT INVOICE_BranchId FROM TBL_TRANS_SALESINVOICE WHERE INVOICE_ID='" + id.ToString() + "'").Rows[0][0]);
                 DataTable dt = objDBEngineCredential.GetDataTable("select EwayBill_Userid,EwayBill_Password,EwayBill_GSTIN,EInvoice_UserId,EInvoice_Password,branch_GSTIN from tbl_master_branch where branch_id='" + Branch_id + "'");
-                string IRN_API_UserId = Convert.ToString(dt.Rows[0]["EInvoice_UserId"]);
+                string IRN_API_UserId = Convert.ToString(dt.Rows[0]["EwayBill_Userid"]);
                 string IRN_API_Password = Convert.ToString(dt.Rows[0]["EInvoice_Password"]);
-                string IRN_API_GSTIN = Convert.ToString(dt.Rows[0]["branch_GSTIN"]);
+                string IRN_API_GSTIN = Convert.ToString(dt.Rows[0]["EwayBill_GSTIN"]);
+
+             
+                EWayCancelList objCancelList = new EWayCancelList();               
+                WebTelCancelDetailsEWAY objCancelDetails = new WebTelCancelDetailsEWAY();
+                List<WebTelCancelDetailsEWAY> objListCancelDetails = new List<WebTelCancelDetailsEWAY>();
 
 
+                objCancelDetails.GSTIN = IRN_API_GSTIN;
+                objCancelDetails.EWBNumber = Convert.ToInt64(e.Parameters.Split('~')[1]);
+                objCancelDetails.CancelReasonCode = Convert.ToString(e.Parameters.Split('~')[2]);
+                objCancelDetails.CancelRemark= Convert.ToString(e.Parameters.Split('~')[3]);
+                
+                objCancelDetails.EWbUserName = IRN_API_UserId;
+                objCancelDetails.EWbPassword = IRN_API_Password;
 
+                objListCancelDetails.Add(objCancelDetails);
 
-                authtokensOutput authObj = new authtokensOutput();
-
-                if (DateTime.Now > EinvoiceToken.Expiry)
-                {
-                    try
-                    {
-                        using (HttpClient client = new HttpClient())
-                        {
-                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                                               SecurityProtocolType.Tls11 |
-                                               SecurityProtocolType.Tls12;
-                            authtokensInput objI = new authtokensInput(IrnUser, IrnPassword);
-                            var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
-                            var stringContent = new StringContent(json);
-                            var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                            var response = client.PostAsync(IrnBaseURL, stringContent).Result;
-
-                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                            {
-                                var jsonString = response;
-                                var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                                authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
-                                EinvoiceToken.token = authObj.data.token;
-                                long unixDate = authObj.data.expiry;
-                                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                                DateTime date = start.AddMilliseconds(unixDate).ToLocalTime();
-                                EinvoiceToken.Expiry = date;
-                            }
-                        }
-                    }
-                    catch (AggregateException err)
-                    {
-
-                        objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='EWAYBILL_CANCEL'");
-
-                        foreach (var errInner in err.InnerExceptions)
-                        {
-                            objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','EWAYBILL_CANCEL','0','" + err.Message + "')");
-                        }
-                    }
-                }
+                objCancelList.Push_Data_List = objListCancelDetails;
+                objCancelList.Year = 2022;
+                objCancelList.Month = 12;
+                objCancelList.EFUserName = IrnUser;
+                objCancelList.EFPassword = IrnPassword;
+                objCancelList.CDKey = IrnOrgId;
 
                 try
                 {
@@ -9167,77 +9144,47 @@ namespace ERP.OMS.Management
                         SecurityProtocolType.Tls12;
                         client.DefaultRequestHeaders.Clear();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var json = JsonConvert.SerializeObject(objCancelEwayBill, Formatting.Indented);
-                        var stringContent = new StringContent(json);
+                        var json = JsonConvert.SerializeObject(objCancelList, Formatting.Indented);                   
 
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
-                        var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                        var response = client.PostAsync(IrnEwaybilCancellUrl, stringContent).Result;
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        var response = client.PostAsync(IrnEwaybilCancellUrl, content).Result;
 
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             var jsonString = response.Content.ReadAsStringAsync().Result;
-                            objIRN = response.Content.ReadAsAsync<IRN>().Result;
-
-                            //using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
-                            //{
-                            // Deserialization from JSON  
-                            //DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelEwayBillOutput));
-                            //CancelEwayBillOutput objIRNDetails = (CancelEwayBillOutput)deserializer.ReadObject(ms);
-                            //DBEngine objDb = new DBEngine();
-                            //objDb.GetDataTable("update TBL_TRANS_SALESINVOICE EWayBillNumber=NULL,ISEWAYBILLCANCEL=1 SET  where EWayBillNumber='" + objCancelEwayBill.ewbNo + "'");                                
-                            //success = success + "," + objCancelEwayBill.ewbNo;                                
-                            //objDb.GetDataTable("INSERT INTO EWAYBILL_CANCELHOSTORY(DOC_ID,DOC_TYPE,EWAYBILL_NO,CANCEL_DATE) VALUES ('" + id.ToString() + "','SI','" + objIRNDetails.ewayBillNo + "','" + objIRNDetails.cancelDate + "')");
-                            int i = 0;
-                            ProcedureExecute proc = new ProcedureExecute("PRC_UpdatePin");
-                            proc.AddVarcharPara("@Action", 500, "UpdateCancelEWayBill");
-                            proc.AddVarcharPara("@EWayBillNumber", 100, Convert.ToString(objCancelEwayBill.ewbNo));
-                            proc.AddVarcharPara("@DOC_TYPE", 100, Convert.ToString("SI"));
-                            proc.AddVarcharPara("@DOC_ID", 100, Convert.ToString(id));
-                            proc.AddVarcharPara("@ReturnValue", 50, "0", QueryParameterDirection.Output);
-                            i = proc.RunActionQuery();
-
-                            success = success + "," + objCancelEwayBill.ewbNo;
-
-                            //}
-                        }
-                        else
-                        {
-
-                            EinvoiceError err = new EinvoiceError();
-                            var jsonString = response.Content.ReadAsStringAsync().Result;
-                            // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                            err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-
-                            error = error + "," + objCancelEwayBill.ewbNo;
-
-                            objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SR' AND ERROR_TYPE='IRN_GEN'");
-
-                            if (err.error.type != "ClientRequest")
+                            var objText = JsonConvert.DeserializeObject(jsonString);
+                            JArray jsonResponse = JArray.Parse(objText.ToString());
+                            foreach (var item in jsonResponse)
                             {
-                                foreach (errorlog item in err.error.args.irp_error.details)
-                                {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','EWAYBILL_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
-                                }
-                            }
-                            else
-                            {
-                                ClientEinvoiceError cErr = new ClientEinvoiceError();
-                                cErr = JsonConvert.DeserializeObject<ClientEinvoiceError>(response.Content.ReadAsStringAsync().Result);
-                                foreach (string item in cErr.error.args.errors)
-                                {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','EWAYBILL_CANCEL','" + "0" + "','" + item + "')");
-                                }
-                            }
+                                string EWayBill = item["EWayBill"].ToString();
+                                string IsSuccess = item["IsSuccess"].ToString();
+                                string ErrorCode = item["ErrorCode"].ToString();
+                                string ErrorMessage = item["ErrorMessage"].ToString();                          
 
+
+                            if (IsSuccess=="true")
+                                {
+                                    int i = 0;
+                                    ProcedureExecute proc = new ProcedureExecute("PRC_UpdatePin");
+                                    proc.AddVarcharPara("@Action", 500, "UpdateCancelEWayBill");
+                                    proc.AddVarcharPara("@EWayBillNumber", 100, EWayBill);
+                                    proc.AddVarcharPara("@DOC_TYPE", 100, Convert.ToString("SI"));
+                                    proc.AddVarcharPara("@DOC_ID", 100, Convert.ToString(id));
+                                    proc.AddVarcharPara("@ReturnValue", 50, "0", QueryParameterDirection.Output);
+                                    i = proc.RunActionQuery();
+                                    success = success + "," + EWayBill;
+                                }
+                                else
+                                {
+                                    objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_GEN'");
+                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','EWAYBILL_CANCEL','" + ErrorCode + "','" + ErrorMessage.Replace("'", "''") + "')");
+
+                                    error = error + "," + EWayBill;
+                                }
+
+                            }
                         }
-
-
+                        
                     }
                 }
                 catch (AggregateException err)
@@ -9607,99 +9554,68 @@ namespace ERP.OMS.Management
                 string IRN_API_GSTIN = Convert.ToString(dt.Rows[0]["branch_GSTIN"]);
 
 
+                EwayBillGenerationDownload objEwayBillGenerationDownload = new EwayBillGenerationDownload();
 
-                if (DateTime.Now > EinvoiceToken.Expiry)
-                {
-                    try
-                    {
-                        using (HttpClient client = new HttpClient())
-                        {
-                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                                               SecurityProtocolType.Tls11 |
-                                               SecurityProtocolType.Tls12;
-                            authtokensInput objI = new authtokensInput(IrnUser, IrnPassword);
-                            var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
-                            var stringContent = new StringContent(json);
-                            var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                            var response = client.PostAsync(IrnBaseURL, stringContent).Result;
-
-                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                            {
-                                var jsonString = response;
-                                var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                                authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
-                                EinvoiceToken.token = authObj.data.token;
-                                long unixDate = authObj.data.expiry;
-                                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                                DateTime date = start.AddMilliseconds(unixDate).ToLocalTime();
-                                EinvoiceToken.Expiry = date;
-                            }
-                        }
-                    }
-                    catch (AggregateException err)
-                    {
-
-                    }
-                }
+                objEwayBillGenerationDownload.GSTIN = IRN_API_GSTIN;
+                objEwayBillGenerationDownload.ewbNo = eWaybillNumber;
+                objEwayBillGenerationDownload.Year = "";
+                objEwayBillGenerationDownload.Month = "";
+                objEwayBillGenerationDownload.EFUserName = IrnUser;
+                objEwayBillGenerationDownload.EFPassword = IrnPassword;
+                objEwayBillGenerationDownload.CDKey = IrnOrgId;
+                objEwayBillGenerationDownload.EWbUserName = IRN_API_UserId;
+                objEwayBillGenerationDownload.EWbPassword = IRN_API_Password;
 
                 try
                 {
                     IRN objIRN = new IRN();
                     using (var client = new HttpClient())
                     {
-                        client.DefaultRequestHeaders.Clear();
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
-                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", "19b13665-525d-482f-be09-325cca313155");
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
+                        client.DefaultRequestHeaders.Clear();                      
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        var json = JsonConvert.SerializeObject(objEwayBillGenerationDownload, Formatting.Indented);
+                        var stringContent = new StringContent(json);
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        var response = client.PostAsync(IrnEwaybillDownloadUrl, content).Result;
 
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
-                        var response = client.GetAsync(IrnEwaybillDownloadUrl + eWaybillNumber).Result;
+                            //client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
+                            ////client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", "19b13665-525d-482f-be09-325cca313155");
+                            //client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
+
+                            //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
+                            //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
+                            //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
+                            //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                            //var response = client.GetAsync(IrnEwaybillDownloadUrl + eWaybillNumber).Result;
                         //var file = client.GetStreamAsync("https://live.enriched-api.vayana.com/enriched/tasks/v1.0/download/" + objIRN.data.task_id).Result;
                         //var response = await client.GetAsync(uri);
 
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
+                            var jsonString = response.Content.ReadAsStringAsync().Result;
+                            EwayBillDownloadWebTel objEwayBillDownloadWebTel = new EwayBillDownloadWebTel();
+                            objEwayBillDownloadWebTel = JsonConvert.DeserializeObject<EwayBillDownloadWebTel>(jsonString);
 
-                            //using (var fs = new FileStream(
-                            //    HostingEnvironment.MapPath(string.Format("~/Commonfolder/{0}.pdf", eWaybillNumber.ToString())),
-                            //    FileMode.Create))
-                            //{
-                            //    response.Content.CopyToAsync(fs);
-                            //}
+                            System.Net.Http.HttpContent objcontent = new System.Net.Http.StringContent(objEwayBillDownloadWebTel.PdfFileBase64); // actually a System.Net.Http.StreamContent instance but you do not need to cast as the actual type does not matter in this case
+                            if (objEwayBillDownloadWebTel.ErrorCode == "")
+                            {
 
-                            System.Net.Http.HttpContent content = response.Content; // actually a System.Net.Http.StreamContent instance but you do not need to cast as the actual type does not matter in this case
+                                byte[] sPDFDecoded = Convert.FromBase64String(objEwayBillDownloadWebTel.PdfFileBase64);
 
-                            using (var file = System.IO.File.Create(HostingEnvironment.MapPath(string.Format("~/Commonfolder/{0}.pdf", eWaybillNumber.ToString()))))
-                            { // create a new file to write to
-                                var contentStream = content.ReadAsStreamAsync(); // get the actual content stream
-                                contentStream.Result.CopyTo(file); // copy that stream to the file stream
-
-
-                                file.Close();
-
-                                // GrdQuotationewaybillSI.JSProperties["cpeWaybillNumber"] = eWaybillNumber;
-                                //string strPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString("Commonfolder/") + eWaybillNumber.ToString() + ".pdf");
-
+                                string vPath = Server.MapPath("~/CommonFolder/");
+                                File.WriteAllBytes(string.Format(vPath+"{0}.pdf", objEwayBillDownloadWebTel.EWBNumber.ToString()), sPDFDecoded);
                                 string strPath = (Convert.ToString("/Commonfolder/") + eWaybillNumber.ToString() + ".pdf");
-
-                                //Response.ContentType = "application/pdf";
-                                //Response.AppendHeader("Content-Disposition", "attachment; filename=" + eWaybillNumber.ToString()+".pdf");
-                                //Response.TransmitFile(strPath);
-
-                                //try
-                                //{
-                                //    Response.End();
-                                //}
-                                //catch (ThreadAbortException ex)
-                                //{
-                                //}
-
                                 GrdQuotationewaybillSI.JSProperties["cpeWaybillNumber"] = strPath;
 
+                                //using (var file = System.IO.File.Create(HostingEnvironment.MapPath(string.Format("~/Commonfolder/{0}.pdf", objEwayBillDownloadWebTel.EWBNumber.ToString()))))
+                                //{ // create a new file to write to
+                                //    var contentStream = content.ReadAsStreamAsync(); // get the actual content stream
+                                //    contentStream.Result.CopyTo(file); // copy that stream to the file stream
+                                //    file.Close();
+
+                                //    string strPath = (Convert.ToString("/Commonfolder/") + eWaybillNumber.ToString() + ".pdf");
+                                //    GrdQuotationewaybillSI.JSProperties["cpeWaybillNumber"] = strPath;
+                                //}
                             }
 
                         }
