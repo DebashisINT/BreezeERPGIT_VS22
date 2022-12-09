@@ -462,17 +462,17 @@
     <member name="T:VSLangProj.prjBuildAction">
       <summary>Specifies a value indicating the type of build action for the current project item.</summary>
     </member>
-    <member name="F:VSLangProj.prjBuildAction.prjBuildActionNone">
-      <summary>No action is taken.</summary>
-    </member>
     <member name="F:VSLangProj.prjBuildAction.prjBuildActionCompile">
       <summary>The file is compiled.</summary>
     </member>
     <member name="F:VSLangProj.prjBuildAction.prjBuildActionContent">
-      <summary>The file is included in the Content project output group (see Deploying Applications and Components)</summary>
+      <summary>The file is included in the Content project output group (see Deploying Applications, Services, and Components)</summary>
     </member>
     <member name="F:VSLangProj.prjBuildAction.prjBuildActionEmbeddedResource">
       <summary>The file is included in the main generated assembly or in a satellite assembly as a resource.</summary>
+    </member>
+    <member name="F:VSLangProj.prjBuildAction.prjBuildActionNone">
+      <summary>No action is taken.</summary>
     </member>
     <member name="T:VSLangProj.PrjCATID">
       <summary>Used for automation extension of the <see cref="T:EnvDTE.Project" /> object.</summary>
@@ -495,14 +495,14 @@
     <member name="T:VSLangProj.prjCopyProjectOption">
       <summary>This enumeration is used by the <see cref="M:VSLangProj.VSProject.CopyProject(System.String,System.String,VSLangProj.prjCopyProjectOption,System.String,System.String)" /> to determine which project files are copied when the project is copied.</summary>
     </member>
-    <member name="F:VSLangProj.prjCopyProjectOption.prjRunFiles">
-      <summary>Copy only the files needed to run the application.</summary>
+    <member name="F:VSLangProj.prjCopyProjectOption.prjAllFiles">
+      <summary>Copy all the files in the source project folder.</summary>
     </member>
     <member name="F:VSLangProj.prjCopyProjectOption.prjProjectFiles">
       <summary>Copy all the project files.</summary>
     </member>
-    <member name="F:VSLangProj.prjCopyProjectOption.prjAllFiles">
-      <summary>Copy all the files in the source project folder.</summary>
+    <member name="F:VSLangProj.prjCopyProjectOption.prjRunFiles">
+      <summary>Copy only the files needed to run the application.</summary>
     </member>
     <member name="T:VSLangProj.prjExecCommand">
       <summary>Microsoft Internal Use Only.</summary>
@@ -552,26 +552,26 @@
     <member name="T:VSLangProj.prjOriginatorKeyMode">
       <summary>Used by the <see cref="P:VSLangProj.ProjectProperties.AssemblyOriginatorKeyMode" />. If the project has an originator key, it may be supplied through a key file or a key container. </summary>
     </member>
-    <member name="F:VSLangProj.prjOriginatorKeyMode.prjOriginatorKeyModeNone">
-      <summary>Assembly has no key.</summary>
+    <member name="F:VSLangProj.prjOriginatorKeyMode.prjOriginatorKeyModeContainer">
+      <summary>Key is in a container.</summary>
     </member>
     <member name="F:VSLangProj.prjOriginatorKeyMode.prjOriginatorKeyModeFile">
       <summary>Key is in a file.</summary>
     </member>
-    <member name="F:VSLangProj.prjOriginatorKeyMode.prjOriginatorKeyModeContainer">
-      <summary>Key is in a container.</summary>
+    <member name="F:VSLangProj.prjOriginatorKeyMode.prjOriginatorKeyModeNone">
+      <summary>Assembly has no key.</summary>
     </member>
     <member name="T:VSLangProj.prjOutputType">
       <summary>Used by the <see cref="P:VSLangProj.ProjectProperties.OutputType" />. Three output types are supported: Windows application, console application, and class library.</summary>
-    </member>
-    <member name="F:VSLangProj.prjOutputType.prjOutputTypeWinExe">
-      <summary>Windows application.</summary>
     </member>
     <member name="F:VSLangProj.prjOutputType.prjOutputTypeExe">
       <summary>Console application.</summary>
     </member>
     <member name="F:VSLangProj.prjOutputType.prjOutputTypeLibrary">
       <summary>Class library.</summary>
+    </member>
+    <member name="F:VSLangProj.prjOutputType.prjOutputTypeWinExe">
+      <summary>Windows application.</summary>
     </member>
     <member name="T:VSLangProj.prjProjectType">
       <summary>Used by the <see cref="P:VSLangProj.ProjectProperties.ProjectType" />. This enumeration lists the two types of projects, local and Web.</summary>
@@ -585,11 +585,11 @@
     <member name="T:VSLangProj.prjReferenceType">
       <summary>Indicates whether a Reference is a .NET Framework assembly or a COM component.</summary>
     </member>
-    <member name="F:VSLangProj.prjReferenceType.prjReferenceTypeAssembly">
-      <summary>a .NET Framework Assembly.</summary>
-    </member>
     <member name="F:VSLangProj.prjReferenceType.prjReferenceTypeActiveX">
       <summary>A COM object.</summary>
+    </member>
+    <member name="F:VSLangProj.prjReferenceType.prjReferenceTypeAssembly">
+      <summary>a .NET Framework Assembly.</summary>
     </member>
     <member name="T:VSLangProj.prjScriptLanguage">
       <summary>Used by the <see cref="P:VSLangProj.ProjectProperties.DefaultClientScript" />. Two script languages are supported, ECMAScript (JScript, JavaScript) and VBScript.</summary>
@@ -603,17 +603,17 @@
     <member name="T:VSLangProj.prjStartAction">
       <summary>Used by the StartAction property to indicate the start action of a project for debugging.</summary>
     </member>
-    <member name="F:VSLangProj.prjStartAction.prjStartActionProject">
-      <summary>Indicates that the executable file (for Windows Application and Console Application projects) or the Start Page (for Web projects) should be started when the application is debugged. Class library projects cannot be started directly. </summary>
+    <member name="F:VSLangProj.prjStartAction.prjStartActionNone">
+      <summary>Indicates that no project, program, or URL should be started when the application is debugged.</summary>
     </member>
     <member name="F:VSLangProj.prjStartAction.prjStartActionProgram">
       <summary>Indicates that a specific program should be started when the application is debugged. </summary>
     </member>
+    <member name="F:VSLangProj.prjStartAction.prjStartActionProject">
+      <summary>Indicates that the executable file (for Windows Application and Console Application projects) or the Start Page (for Web projects) should be started when the application is debugged. Class library projects cannot be started directly. </summary>
+    </member>
     <member name="F:VSLangProj.prjStartAction.prjStartActionURL">
       <summary>Indicates that a particular URL should be accessed when the application is debugged. </summary>
-    </member>
-    <member name="F:VSLangProj.prjStartAction.prjStartActionNone">
-      <summary>Indicates that no project, program, or URL should be started when the application is debugged.</summary>
     </member>
     <member name="T:VSLangProj.prjTargetSchema">
       <summary>Used by the <see cref="P:VSLangProj.ProjectProperties.DefaultTargetSchema" /> to define the HTML platform the application needs to be compatible with.</summary>
@@ -1198,11 +1198,11 @@
     <member name="T:VSLangProj.webrefUrlBehavior">
       <summary>Used by the UrlBehavior property. </summary>
     </member>
-    <member name="F:VSLangProj.webrefUrlBehavior.webrefUrlBehaviorStatic">
-      <summary>Web reference URL is contained in the proxy code.</summary>
-    </member>
     <member name="F:VSLangProj.webrefUrlBehavior.webrefUrlBehaviorDynamic">
       <summary>Web reference URL is retrieved as a dynamic property.</summary>
+    </member>
+    <member name="F:VSLangProj.webrefUrlBehavior.webrefUrlBehaviorStatic">
+      <summary>Web reference URL is contained in the proxy code.</summary>
     </member>
     <member name="T:VSLangProj.WebSettings">
       <summary>Represents the settings for Web projects.</summary>

@@ -34,6 +34,7 @@ using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Web.Hosting;
+using Newtonsoft.Json.Linq;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -4202,7 +4203,16 @@ namespace ERP.OMS.Management.Activities
             }
             else if (strSplitCommand == "EInvoice")
             {
-                UploadEinvoice(e.Parameters.Split('~')[1]);
+                string IrnOrgId = ConfigurationManager.AppSettings["IRNOrgID"];
+                if(IrnOrgId== "1000687")
+                {
+                    UploadEinvoiceWelTel(e.Parameters.Split('~')[1]);
+                }
+                else
+                {
+                    UploadEinvoice(e.Parameters.Split('~')[1]);
+                }
+                
             }
             else if (strSplitCommand == "CurrencyChangeDisplay")
             {
@@ -5292,8 +5302,721 @@ namespace ERP.OMS.Management.Activities
             }
 
         }
-        #endregion
 
+        private void UploadEinvoiceWelTel(string id)
+        {
+            grid.JSProperties["cpSucessIRN"] = null;
+            CommonBL objBL = new CommonBL();
+            string setting = objBL.GetSystemSettingsResult("IsBasicEInvoice");
+
+
+            if (setting.ToUpper() == "YES")
+            {
+                List<EinvoiceModelWebtel> obj = new List<EinvoiceModelWebtel>();
+                DataSet ds = GetInvoiceDetails(id.ToString());
+
+
+                DataTable Header = ds.Tables[0];
+                DataTable SellerDetails = ds.Tables[1];
+                DataTable BuyerDetails = ds.Tables[2];
+                DataTable ValueDetails = ds.Tables[3];
+                DataTable Products = ds.Tables[4];
+                DataTable ShipDetails = ds.Tables[5];
+                DataTable DispatchFrom = ds.Tables[6];
+
+
+
+                DBEngine objDBEngineCredential = new DBEngine();
+                string Branch_id = Convert.ToString(objDBEngineCredential.GetDataTable("SELECT Invoice_BranchId FROM TBL_TRANS_SALESINVOICE WHERE INVOICE_ID='" + id.ToString() + "'").Rows[0][0]);
+                DataTable dt = objDBEngineCredential.GetDataTable("select EwayBill_Userid,EwayBill_Password,EwayBill_GSTIN,EInvoice_UserId,EInvoice_Password,branch_GSTIN from tbl_master_branch where branch_id='" + Branch_id + "'");
+                string IRN_API_UserId = Convert.ToString(dt.Rows[0]["EInvoice_UserId"]);
+                string IRN_API_Password = Convert.ToString(dt.Rows[0]["EInvoice_Password"]);
+                string IRN_API_GSTIN = Convert.ToString(dt.Rows[0]["branch_GSTIN"]);
+
+
+                string IrnUser = ConfigurationManager.AppSettings["IRNUserId"];
+                string IrnPassword = ConfigurationManager.AppSettings["IRNPasswod"];
+                string IrnBaseURL = ConfigurationManager.AppSettings["IRNBaseURL"];
+                string IrnOrgId = ConfigurationManager.AppSettings["IRNOrgID"];
+                string IrnCancelUrl = ConfigurationManager.AppSettings["IRNCancelURL"];
+                string IrnEwaybillUrl = ConfigurationManager.AppSettings["IrnEwaybillUrl"];
+                string IrnGenerationUrl = ConfigurationManager.AppSettings["IrnGenerationUrl"];
+
+
+
+                EinvoiceModelWebtel objInvoiceWebtel = new EinvoiceModelWebtel("1.1");
+
+
+                objInvoiceWebtel.CDKey = IrnOrgId;
+                objInvoiceWebtel.EInvUserName = IRN_API_UserId;
+                objInvoiceWebtel.EInvPassword = IRN_API_Password;
+
+                objInvoiceWebtel.EFUserName = IrnUser;
+                objInvoiceWebtel.EFPassword = IrnPassword;
+                objInvoiceWebtel.GSTIN = IRN_API_GSTIN;
+                objInvoiceWebtel.GetQRImg = "1";
+                objInvoiceWebtel.GetSignedInvoice = "1";
+
+                TrasporterDetails objTransporter = new TrasporterDetails();
+                objTransporter.EcmGstin = null;
+                objTransporter.IgstOnIntra = "N";
+                if (Convert.ToBoolean(Header.Rows[0]["IsReverseCharge"]))
+                {
+                    objTransporter.RegRev = "Y";     /// From table mantis id 23407
+                }
+                else
+                {
+                    objTransporter.RegRev = "N";
+                }
+                if (Convert.ToString(Header.Rows[0]["TransCategory"]) != "" && Convert.ToString(Header.Rows[0]["TransCategory"]) != "0")
+                    objTransporter.SupTyp = Convert.ToString(Header.Rows[0]["TransCategory"]);   /// From table mantis id 23406
+                else
+                    objTransporter.SupTyp = "B2B";
+                objTransporter.TaxSch = "GST";
+                objInvoiceWebtel.TranDtls = objTransporter;
+
+
+                DocumentsDetails objDoc = new DocumentsDetails();
+                objDoc.Dt = Convert.ToDateTime(Header.Rows[0]["Invoice_Date"]).ToString("dd/MM/yyyy");     // Form table invoice_Date DD/MM/YYYY format
+                objDoc.No = Convert.ToString(Header.Rows[0]["Invoice_Number"]);   // Form table invoice_Number
+                objDoc.Typ = "INV";  //INV-Invoice ,CRN-Credit Note, DBN-Debit Note
+                objInvoiceWebtel.DocDtls = objDoc;
+
+
+                SellerDetails objSeller = new SellerDetails();
+                objSeller.Addr1 = Convert.ToString(SellerDetails.Rows[0]["Addr1"]);   /// Based on settings Branch/Company master
+                objSeller.Addr2 = Convert.ToString(SellerDetails.Rows[0]["Addr2"]); ;   /// Based on settings Branch/Company master 
+                if (Convert.ToString(SellerDetails.Rows[0]["Em"]) != "")
+                    objSeller.Em = Convert.ToString(SellerDetails.Rows[0]["Em"]); ;      /// Based on settings Branch/Company master 
+                //objSeller.Gstin = Convert.ToString(SellerDetails.Rows[0]["Gstin"]); ;   /// Based on settings Branch/Company master
+
+                objSeller.Gstin = IRN_API_GSTIN;//Sandbox
+                objSeller.LglNm = Convert.ToString(SellerDetails.Rows[0]["LglNm"]); ;  /// Based on settings Branch/Company master 
+                if (Convert.ToString(SellerDetails.Rows[0]["Loc"]) != "")
+                    objSeller.Loc = Convert.ToString(SellerDetails.Rows[0]["Loc"]);     /// Based on settings Branch/Company master
+                else
+                    objSeller.Loc = Convert.ToString(SellerDetails.Rows[0]["Addr2"]);
+                /// 
+                if (Convert.ToString(SellerDetails.Rows[0]["Ph"]) != "")
+                    objSeller.Ph = Convert.ToString(SellerDetails.Rows[0]["Ph"]).Replace(",", "");      /// Based on settings Branch/Company master
+                objSeller.Pin = Convert.ToInt32(SellerDetails.Rows[0]["Pin"]); ;     /// Based on settings Branch/Company master
+                objSeller.Stcd = Convert.ToString(SellerDetails.Rows[0]["Stcd"]); ;    /// Based on settings Branch/Company master
+                objSeller.TrdNm = Convert.ToString(SellerDetails.Rows[0]["TrdNm"]); ;   /// Based on settings Branch/Company master
+                objInvoiceWebtel.SellerDtls = objSeller;
+
+
+                BuyerDetails objBuyer = new BuyerDetails();
+                objBuyer.Addr1 = Convert.ToString(BuyerDetails.Rows[0]["Addr1"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.Addr2 = Convert.ToString(BuyerDetails.Rows[0]["Addr2"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                if (Convert.ToString(BuyerDetails.Rows[0]["Em"]) != "")
+                    objBuyer.Em = Convert.ToString(BuyerDetails.Rows[0]["Em"]);    ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.Gstin = Convert.ToString(BuyerDetails.Rows[0]["Gstin"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.LglNm = Convert.ToString(BuyerDetails.Rows[0]["LglNm"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                if (Convert.ToString(BuyerDetails.Rows[0]["Loc"]) != "")
+                    objBuyer.Loc = Convert.ToString(BuyerDetails.Rows[0]["Loc"]);   ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                else
+                    objBuyer.Loc = Convert.ToString(BuyerDetails.Rows[0]["Addr2"]);
+                if (Convert.ToString(BuyerDetails.Rows[0]["Ph"]) != "")
+                    objBuyer.Ph = Convert.ToString(BuyerDetails.Rows[0]["Ph"]);    ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.Pin = Convert.ToInt32(BuyerDetails.Rows[0]["Pin"]);   ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.Stcd = Convert.ToString(BuyerDetails.Rows[0]["Stcd"]);  ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.Pos = Convert.ToString(BuyerDetails.Rows[0]["Stcd"]);
+                objBuyer.TrdNm = Convert.ToString(BuyerDetails.Rows[0]["TrdNm"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objInvoiceWebtel.BuyerDtls = objBuyer;
+
+
+                objInvoiceWebtel.DispDtls = null;  // for now 
+                objInvoiceWebtel .ShipDtls = null; ///Shipping details from invoice i.e tbl_trans_salesinvoiceadddress
+
+                ValueDetails objValue = new ValueDetails();
+                objValue.AssVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Taxable"]).ToString("0.00"));   // Taxable value
+                objValue.CesVal = 0.00M;
+                objValue.CgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_CGST"]).ToString("0.00"));
+                objValue.Discount = 0.00M;
+                objValue.IgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_IGST"]).ToString("0.00"));
+                objValue.OthChrg = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Other_Charge"]).ToString("0.00"));   // Global Tax
+                objValue.RndOffAmt = 0.00M;
+                objValue.SgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_SGST"]).ToString("0.00"));
+                objValue.StCesVal = 0.00M;
+                objValue.TotInvVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["TotalAmount"]).ToString("0.00"));
+                objValue.TotInvValFc = 0.00M;
+                objInvoiceWebtel.ValDtls = objValue;
+
+                ShipToDetails objShip = new ShipToDetails();
+                objShip.Addr1 = Convert.ToString(ShipDetails.Rows[0]["Addr1"]); ;
+                objShip.Addr2 = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
+                objShip.Loc = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
+                objShip.Gstin = Convert.ToString(ShipDetails.Rows[0]["Gstin"]); ;
+                objShip.LglNm = Convert.ToString(ShipDetails.Rows[0]["LglNm"]); ;
+                objShip.TrdNm = Convert.ToString(ShipDetails.Rows[0]["TrdNm"]); ;
+                objShip.Pin = Convert.ToInt32(ShipDetails.Rows[0]["Pin"]); ;
+                objShip.Stcd = Convert.ToString(ShipDetails.Rows[0]["Stcd"]); ;
+                objInvoiceWebtel.ShipDtls = objShip;
+
+
+
+                List<ProductList> objListProd = new List<ProductList>();
+
+                foreach (DataRow dr in Products.Rows)
+                {
+                    ProductList objProd = new ProductList();                   
+
+                    objProd.AssAmt = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                    objProd.Barcde = null;
+                    objProd.BchDtls = null;
+                    objProd.CesAmt = 0.00M;
+                    objProd.CesNonAdvlAmt = 0.00M;
+                    objProd.CesRt = 0.00M;
+                    objProd.CgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["CGSTAmount"]).ToString("0.00"));
+                    objProd.Discount = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Discount"]).ToString("0.00"));
+                    objProd.FreeQty = 0.00M;
+                    objProd.GstRt = Convert.ToDecimal(Convert.ToDecimal(dr["GST_RATE"]).ToString("0.00"));
+                    objProd.HsnCd = Convert.ToString(dr["sProducts_HsnCode"]);
+                    objProd.IgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["IGSTAmount"]).ToString("0.00"));
+                    if (!Convert.ToBoolean(dr["Is_ServiceItem"]))
+                        objProd.IsServc = "N";
+                    else
+                        objProd.IsServc = "Y";
+                    objProd.OrdLineRef = null;
+                    objProd.OrgCntry = null;
+                    objProd.OthChrg = Convert.ToDecimal(Convert.ToDecimal(dr["OtherAmount"]).ToString("0.00"));
+                    objProd.PrdDesc = Convert.ToString(dr["InvoiceDetails_ProductDescription"]);
+                    objProd.PrdSlNo = null;
+                    objProd.PreTaxVal = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                    objProd.Qty = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Quantity"]).ToString("0.000"));
+                    objProd.SgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["SGSTAmount"]).ToString("0.00"));
+                    objProd.SlNo = Convert.ToString(dr["SL"]);
+                    objProd.StateCesAmt = 0.00M;
+                    objProd.StateCesNonAdvlAmt = 0.00M;
+                    objProd.StateCesRt = 0.00M;
+                    objProd.TotAmt = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                    objProd.TotItemVal = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_TotalAmountInBaseCurrency"]).ToString("0.00")); ;
+                    if (Convert.ToString(dr["GST_Print_Name"]) != "")
+                        objProd.Unit = Convert.ToString(dr["GST_Print_Name"]);
+                  
+                    objProd.UnitPrice = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]).ToString("0.00")); ;
+                    objListProd.Add(objProd);
+                }
+                objInvoiceWebtel.ItemList = objListProd;
+
+                obj.Add(objInvoiceWebtel);
+
+                string success = "";
+                string error = "";
+
+
+                string IRNsuccess = "";
+                string IRNerror = "";
+                try
+                {
+                    IRN objIRN = new IRN();
+                    using (var client = new HttpClient())
+                    {
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                        SecurityProtocolType.Tls11 |
+                        SecurityProtocolType.Tls12;
+
+                        var json = JsonConvert.SerializeObject(objInvoiceWebtel, Formatting.Indented);
+                        var stringContent = new StringContent(json);
+                        client.DefaultRequestHeaders.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+
+
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        var response = client.PostAsync(IrnGenerationUrl, content).Result;
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            string jsonString = response.Content.ReadAsStringAsync().Result;
+                            DBEngine objDb = new DBEngine();
+                            JArray jsonResponse = JArray.Parse(jsonString);
+
+                            var AckNo = "";
+                            var AckDate = "";
+                            var Irn = "";
+
+                            foreach (var item in jsonResponse)
+                            {
+
+                                AckNo = item["AckNo"].ToString();
+                                AckDate = item["AckDate"].ToString();
+                                Irn = item["Irn"].ToString();
+                                var SignedInvoice = item["SignedInvoice"].ToString();
+                                var SignedQRCode = item["SignedQRCode"].ToString();
+                                var EwbNo = item["EwbNo"].ToString();
+                                var EwbDt = item["EwbDt"].ToString();
+                                var IrnStatus = item["IrnStatus"].ToString();
+                                var EwbValidTill = item["EwbValidTill"].ToString();
+                                var ErrorCode = item["ErrorCode"].ToString();
+                                var ErrorMessage = item["ErrorMessage"].ToString();
+                                if (ErrorCode == "2150")
+                                {
+                                    JArray jRaces = (JArray)item["InfoDtls"];
+                                    foreach (var rItem in jRaces)
+                                    {
+                                        AckNo = rItem["AckNo"].ToString();
+                                        AckDate = rItem["AckDate"].ToString();
+                                        Irn = rItem["Irn"].ToString();
+                                    }
+                                }
+                                if (Convert.ToString(AckNo) != "0" && AckNo != null)
+                                {
+
+                                    objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + AckNo + "',AckDt='" + AckDate + "',Irn='" + Irn + "',SignedInvoice='" + SignedInvoice + "',SignedQRCode='" + SignedQRCode + "',Status='" + IrnStatus + "',EWayBillNumber = '" + EwbNo + "',EWayBillDate='" + EwbDt + "',EwayBill_ValidTill='" + EwbValidTill + "' where invoice_id='" + id.ToString() + "'");
+
+                                    //IRNsuccess = IRNsuccess + "," + objInvoice.DocDtls.No;
+                                    //success = success + "," + objInvoice.DocDtls.No;
+
+                                    grid.JSProperties["cpSucessIRN"] = "Yes";
+                                    grid.JSProperties["cpSucessIRNNumber"] = Irn;
+                                }
+
+                                else
+                                {
+                                    objDb.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_GEN'");
+
+                                    // objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + AckNo + "',AckDt='" + AckDate + "',Irn='" + Irn + "',SignedInvoice='" + SignedInvoice + "',SignedQRCode='" + SignedQRCode + "',Status='" + IrnStatus + "' where invoice_id='" + id.ToString() + "'");
+                                    objDb.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','" + ErrorCode + "','" + ErrorMessage.Replace("'", "''") + "')");
+
+                                    //error = error + "," + objInvoice.DocDtls.No;
+                                    //IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
+                                    grid.JSProperties["cpSucessIRN"] = "No";
+                                }
+
+
+                                //success = success + "," + objInvoice.DocDtls.No;
+
+
+                            }
+
+                        }
+                        else
+                        {
+
+
+                            EinvoiceError err = new EinvoiceError();
+                            var jsonString = response.Content.ReadAsStringAsync().Result;
+
+                            //err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                            JArray jsonResponse = JArray.Parse(jsonString);
+
+                            DBEngine objDB = new DBEngine();
+                            objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_GEN'");
+
+                            foreach (var item in jsonResponse)
+                            {
+                                var ErrorCode = item["ErrorCode"].ToString();
+                                var ErrorMessage = item["ErrorMessage"].ToString();
+
+                                objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','" + ErrorCode + "','" + ErrorMessage.Replace("'", "''") + "')");
+
+                            }
+
+                            grid.JSProperties["cpSucessIRN"] = "No";
+
+
+                        }
+                        //  }
+
+                    }
+                }
+                catch (AggregateException err)
+                {
+                    DBEngine objDB = new DBEngine();
+                    objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_GEN'");
+
+                    foreach (var errInner in err.InnerExceptions)
+                    {
+                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','0','" + err.Message + "')");
+                    }
+                    error = error + "," + objInvoiceWebtel.DocDtls.No;
+                }
+            }
+            else
+            {
+                Enrich objEnrich = new Enrich();
+                meta objMeta = new meta();
+                List<string> lstEmail = new List<string>();               
+                objMeta.emailRecipientList = lstEmail;
+                objMeta.generatePdf = "Y";
+                objEnrich.meta = objMeta;
+
+                List<EinvoiceModelEnrich> obj = new List<EinvoiceModelEnrich>();
+                DataSet ds = GetInvoiceDetails(id.ToString());
+
+
+                DataTable Header = ds.Tables[0];
+                DataTable SellerDetails = ds.Tables[1];
+                DataTable BuyerDetails = ds.Tables[2];
+                DataTable ValueDetails = ds.Tables[3];
+                DataTable Products = ds.Tables[4];
+                DataTable ShipDetails = ds.Tables[5];
+
+
+
+
+                EinvoiceModelEnrich objInvoice = new EinvoiceModelEnrich("1.1");
+
+                TrasporterDetailsEnrich objTransporter = new TrasporterDetailsEnrich();
+                objTransporter.IgstOnIntra = "N";
+                if (Convert.ToBoolean(Header.Rows[0]["IsReverseCharge"]))
+                {
+                    objTransporter.RegRev = "Y";     /// From table mantis id 23407
+                }
+                else
+                {
+                    objTransporter.RegRev = "N";
+                }
+                if (Convert.ToString(Header.Rows[0]["TransCategory"]) != "" && Convert.ToString(Header.Rows[0]["TransCategory"]) != "0")
+                    objTransporter.SupTyp = Convert.ToString(Header.Rows[0]["TransCategory"]);   /// From table mantis id 23406
+                else
+                    objTransporter.SupTyp = "B2B";
+                objTransporter.TaxSch = "GST";
+                objInvoice.TranDtls = objTransporter;
+
+
+                DocumentsDetailsEnrich objDoc = new DocumentsDetailsEnrich();
+                objDoc.Dt = Convert.ToDateTime(Header.Rows[0]["Invoice_Date"]).ToString("dd/MM/yyyy");     // Form table invoice_Date DD/MM/YYYY format
+                objDoc.No = Convert.ToString(Header.Rows[0]["Invoice_Number"]);   // Form table invoice_Number
+                objDoc.Typ = "INV";  //INV-Invoice ,CRN-Credit Note, DBN-Debit Note
+                objInvoice.DocDtls = objDoc;
+
+
+                SellerDetailsEnrich objSeller = new SellerDetailsEnrich();
+                objSeller.Addr1 = Convert.ToString(SellerDetails.Rows[0]["Addr1"]);   /// Based on settings Branch/Company master               
+
+                //objSeller.Gstin = Convert.ToString(SellerDetails.Rows[0]["Gstin"]); ;   /// Based on settings Branch/Company master
+
+                objSeller.Gstin = "19AABCP5428M1Z0";//Sandbox
+                objSeller.LglNm = Convert.ToString(SellerDetails.Rows[0]["LglNm"]); ;  /// Based on settings Branch/Company master 
+                if (Convert.ToString(SellerDetails.Rows[0]["Loc"]) != "")
+                    objSeller.Loc = Convert.ToString(SellerDetails.Rows[0]["Loc"]);     /// Based on settings Branch/Company master
+                else
+                    objSeller.Loc = Convert.ToString(SellerDetails.Rows[0]["Addr2"]);
+
+                objSeller.Pin = Convert.ToInt32(SellerDetails.Rows[0]["Pin"]); ;     /// Based on settings Branch/Company master
+                objSeller.Stcd = Convert.ToString(SellerDetails.Rows[0]["Stcd"]); ;    /// Based on settings Branch/Company master
+                objSeller.TrdNm = Convert.ToString(SellerDetails.Rows[0]["TrdNm"]); ;   /// Based on settings Branch/Company master
+                objInvoice.SellerDtls = objSeller;
+
+
+                BuyerDetailsEnrich objBuyer = new BuyerDetailsEnrich();
+                objBuyer.Addr1 = Convert.ToString(BuyerDetails.Rows[0]["Addr1"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+
+
+                objBuyer.Gstin = Convert.ToString(BuyerDetails.Rows[0]["Gstin"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.LglNm = Convert.ToString(BuyerDetails.Rows[0]["LglNm"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                if (Convert.ToString(BuyerDetails.Rows[0]["Loc"]) != "")
+                    objBuyer.Loc = Convert.ToString(BuyerDetails.Rows[0]["Loc"]);   ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                else
+                    objBuyer.Loc = Convert.ToString(BuyerDetails.Rows[0]["Addr2"]);
+
+                objBuyer.Pin = Convert.ToInt32(BuyerDetails.Rows[0]["Pin"]);   ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.Stcd = Convert.ToString(BuyerDetails.Rows[0]["Stcd"]);  ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                objBuyer.Pos = Convert.ToString(BuyerDetails.Rows[0]["Stcd"]);
+                objInvoice.BuyerDtls = objBuyer;
+
+
+                objInvoice.DispDtls = null;  // for now 
+                objInvoice.ShipDtls = null; ///Shipping details from invoice i.e tbl_trans_salesinvoiceadddress
+
+                ValueDetailsEnrich objValue = new ValueDetailsEnrich();
+                objValue.AssVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Taxable"]).ToString("0.00"));   // Taxable value                
+                objValue.CgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_CGST"]).ToString("0.00"));
+                objValue.IgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_IGST"]).ToString("0.00"));
+                objValue.SgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_SGST"]).ToString("0.00"));
+                objValue.TotInvVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["TotalAmount"]).ToString("0.00"));
+
+                objInvoice.ValDtls = objValue;
+
+
+                //ExportDetails objExport = new ExportDetails();
+                //objExport.CntCode = ""; ///optional for now
+                //objExport.ExpDuty = 0;  ///optional for now
+                //objExport.ForCur = "";  ///optional for now
+                //objExport.Port = "";    ///optional for now
+                //objExport.RefClm = "";  ///optional for now
+                //objExport.ShipBDt = ""; ///optional for now
+                //objExport.ShipBNo = ""; ///optional for now
+                //objInvoice.ExpDtls = objExport;
+
+
+
+
+                //DispatchDetailsEnrich objDisp = new DispatchDetailsEnrich();
+                //objDisp.Addr1 = Convert.ToString(ShipDetails.Rows[0]["Addr1"]);
+                //objDisp.Addr2 = Convert.ToString(ShipDetails.Rows[0]["Addr2"]);
+                //objDisp.Loc = Convert.ToString(ShipDetails.Rows[0]["Addr2"]);
+                //objDisp.Nm = Convert.ToString(ShipDetails.Rows[0]["Nm"]);
+                //objDisp.Pin = Convert.ToInt32(ShipDetails.Rows[0]["Pin"]);
+                //objDisp.Stcd = Convert.ToString(ShipDetails.Rows[0]["Stcd"]);
+                //objInvoice.DispDtls = objDisp;
+
+
+
+                ShipToDetailsEnrich objShip = new ShipToDetailsEnrich();
+                objShip.Addr1 = Convert.ToString(ShipDetails.Rows[0]["Addr1"]); ;
+                objShip.Addr2 = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
+                objShip.Loc = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
+                objShip.Gstin = Convert.ToString(ShipDetails.Rows[0]["Gstin"]); ;
+                objShip.LglNm = Convert.ToString(ShipDetails.Rows[0]["LglNm"]); ;
+                objShip.TrdNm = Convert.ToString(ShipDetails.Rows[0]["TrdNm"]); ;
+                objShip.Pin = Convert.ToInt32(ShipDetails.Rows[0]["Pin"]); ;
+                objShip.Stcd = Convert.ToString(ShipDetails.Rows[0]["Stcd"]); ;
+                objInvoice.ShipDtls = objShip;
+
+
+                //PaymentDetails objPayment = new PaymentDetails();
+                //objPayment.AccDet = "";   ///Optional For Now
+                //objPayment.CrDay = 0;     ///Optional For Now
+                //objPayment.CrTrn = "";    ///Optional For Now
+                //objPayment.DirDr = "";    ///Optional For Now
+                //objPayment.FinInsBr = ""; ///Optional For Now
+                //objPayment.Mode = "";     ///Optional For Now
+                //objPayment.Nm = "";       ///Optional For Now
+                //objPayment.PaidAmt = 0;   ///Optional For Now
+                //objPayment.PayInstr = ""; ///Optional For Now
+                //objPayment.PaymtDue = 0;  ///Optional For Now
+                //objPayment.PayTerm = "";  ///Optional For Now
+                //objInvoice.PayDtls = objPayment;
+
+
+                //ReferenceDetails objRef = new ReferenceDetails();
+
+                //List<ContractDetails> onjListContact = new List<ContractDetails>();
+                //for (int i = 0; i < 1; i++)
+                //{
+                //    ContractDetails onjContact = new ContractDetails();
+                //    onjContact.ContrRefr = "";
+                //    onjContact.ExtRefr = "";
+                //    onjContact.PORefDt = "";
+                //    onjContact.PORefr = "";
+                //    onjContact.ProjRefr = "";
+                //    onjContact.RecAdvDt = "";
+                //    onjContact.RecAdvRefr = "";
+                //    onjContact.TendRefr = "";
+                //    onjListContact.Add(onjContact);
+                //}
+                //objRef.ContrDtls = onjListContact;
+
+
+                //List<PrecDocumentDetails> onjListPrecDoc = new List<PrecDocumentDetails>();
+                //for (int i = 0; i < 1; i++)
+                //{
+                //    PrecDocumentDetails onjPrecDoc = new PrecDocumentDetails();
+                //    onjPrecDoc.InvDt = "";
+                //    onjPrecDoc.InvNo = "";
+                //    onjPrecDoc.OthRefNo = "";
+                //    onjListPrecDoc.Add(onjPrecDoc);
+                //}
+                //objRef.PrecDocDtls = onjListPrecDoc;
+
+                //DocumentPerdDetails objdocPre = new DocumentPerdDetails();
+                //objdocPre.InvEndDt = "";
+                //objdocPre.InvStDt = "";
+                //objRef.DocPerdDtls = objdocPre;
+
+                //objRef.InvRm = "";  // Remarks from invoice
+                //objInvoice.RefDtls = objRef;   ///////////// Optional For now
+
+
+
+                //List<AdditionalDocumentDetails> objListAddl = new List<AdditionalDocumentDetails>();
+                //for (int i = 0; i < 1; i++)
+                //{
+                //    AdditionalDocumentDetails objAddl = new AdditionalDocumentDetails();
+                //    objAddl.Docs = "";
+                //    objAddl.Info = "";
+                //    objAddl.Url = "";
+                //    objListAddl.Add(objAddl);
+                //}
+                //objInvoice.AddlDocDtls = objListAddl;    /// Optional for now
+
+
+                List<ProductListEnrich> objListProd = new List<ProductListEnrich>();
+
+                foreach (DataRow dr in Products.Rows)
+                {
+                    ProductListEnrich objProd = new ProductListEnrich();
+                    // objProd.AssAmt = 0.00M;
+
+                    //**************Commented for now -- This is foer Attribute adding ********************************//
+
+                    //List<AttributeDetails> objListAttr = new List<AttributeDetails>();
+                    //for (int j = 0; j < 1; j++)
+                    //{
+                    //    AttributeDetails objAttr = new AttributeDetails();
+                    //    objAttr.Nm = "";
+                    //    objAttr.Val = "";
+                    //    objListAttr.Add(objAttr);
+                    //}
+                    //objProd.AttribDtls = objListAttr;
+
+                    //**************End Commented for now -- This is foer Attribute adding ******************************//
+
+                    objProd.AssAmt = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                    objProd.Barcde = null;
+                    objProd.BchDtls = null;
+                    objProd.CesAmt = 0.00M;
+                    objProd.CesNonAdvlAmt = 0.00M;
+                    objProd.CesRt = 0.00M;
+                    objProd.CgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["CGSTAmount"]).ToString("0.00"));
+                    objProd.Discount = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Discount"]).ToString("0.00"));
+                    objProd.FreeQty = 0.00M;
+                    objProd.GstRt = Convert.ToDecimal(Convert.ToDecimal(dr["IGSTAmount"]).ToString("0.00"));
+                    objProd.HsnCd = Convert.ToString(dr["sProducts_HsnCode"]);
+                    objProd.IgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["IGSTAmount"]).ToString("0.00"));
+                    objProd.IsServc = "N";
+                    objProd.OrdLineRef = null;
+                    objProd.OrgCntry = null;
+                    objProd.OthChrg = Convert.ToDecimal(Convert.ToDecimal(dr["OtherAmount"]).ToString("0.00"));
+                    objProd.PrdDesc = Convert.ToString(dr["InvoiceDetails_ProductDescription"]);
+                    objProd.PrdSlNo = null;
+                    objProd.PreTaxVal = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                    objProd.Qty = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Quantity"]).ToString("0.000"));
+                    objProd.SgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["SGSTAmount"]).ToString("0.00"));
+                    objProd.SlNo = Convert.ToString(dr["SL"]);
+                    objProd.StateCesAmt = 0.00M;
+                    objProd.StateCesNonAdvlAmt = 0.00M;
+                    objProd.StateCesRt = 0.00M;
+                    objProd.TotAmt = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                    objProd.TotItemVal = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_TotalAmountInBaseCurrency"]).ToString("0.00")); ;
+                    if (Convert.ToString(dr["GST_Print_Name"]) != "")
+                        objProd.Unit = Convert.ToString(dr["GST_Print_Name"]);
+                    else
+                        objProd.Unit = "BAG";
+                    objProd.UnitPrice = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]).ToString("0.00")); ;
+                    objListProd.Add(objProd);
+                }
+                objInvoice.ItemList = objListProd;
+
+                obj.Add(objInvoice);
+                objEnrich.payload = obj;
+                authtokensOutput authObj = new authtokensOutput();
+
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                                           SecurityProtocolType.Tls11 |
+                                           SecurityProtocolType.Tls12;
+                        authtokensInput objI = new authtokensInput("shivkumar@peekay.co.in", "PeekaY@.!_123");
+                        var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
+                        var stringContent = new StringContent(json);
+                        var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+                        var response = client.PostAsync("https://sandbox.services.vayananet.com/theodore/apis/v1/authtokens", stringContent).Result;
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            var jsonString = response;
+                            var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
+                            authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
+
+                        }
+                    }
+                }
+                catch (AggregateException err)
+                {
+                    foreach (var errInner in err.InnerExceptions)
+                    {
+
+                    }
+                }
+
+                try
+                {
+                    IRNEnrich objIRN = new IRNEnrich();
+                    using (var client = new HttpClient())
+                    {
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                        SecurityProtocolType.Tls11 |
+                        SecurityProtocolType.Tls12;
+                        client.DefaultRequestHeaders.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/zip"));
+                        var json = JsonConvert.SerializeObject(objEnrich, Formatting.Indented);
+                        var stringContent = new StringContent(json);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", authObj.data.token);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", "d16184ae-1699-495c-b276-14c4408e76ba");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", "19AABCP5428M1Z0");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", "PEEKAYAGENCIES");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", "Shiv@2709");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+                        var response = client.PostAsync("https://solo.enriched-api.vayana.com/enriched/einv/v1.0/nic/invoices", stringContent).Result;
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            var jsonString = response.Content.ReadAsStringAsync().Result;
+
+                            objIRN = response.Content.ReadAsAsync<IRNEnrich>().Result;
+                            //TaskModel objIRNDetails = new TaskModel();
+                            //using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //{
+                            //    // Deserialization from JSON  
+                            //    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(IRNDetails));
+                            //    objIRNDetails = (TaskModel)deserializer.ReadObject(ms);
+                            //}
+                            client.DefaultRequestHeaders.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", authObj.data.token);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", "d16184ae-1699-495c-b276-14c4408e76ba");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", "19AABCP5428M1Z0");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", "PEEKAYAGENCIES");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", "Shiv@2709");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                            var response2 = client.GetStringAsync("https://solo.enriched-api.vayana.com/enriched/tasks/v1.0/status/" + objIRN.data.task_id).Result;
+                            client.DefaultRequestHeaders.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/zip"));
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", authObj.data.token);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", "d16184ae-1699-495c-b276-14c4408e76ba");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", "19AABCP5428M1Z0");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", "PEEKAYAGENCIES");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", "Shiv@2709");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                            var response1 = client.GetAsync("https://solo.enriched-api.vayana.com/enriched/tasks/v1.0/download/" + objIRN.data.task_id).Result;
+                            //var file = client.GetStreamAsync("https://solo.enriched-api.vayana.com/enriched/tasks/v1.0/download/" + objIRN.data.task_id).Result;
+                            //var response = await client.GetAsync(uri);
+                            using (var fs = new FileStream(
+                                HostingEnvironment.MapPath(string.Format("~/Commonfolder/{0}.zip", id.ToString())),
+                                FileMode.CreateNew))
+                            {
+                                response1.Content.CopyToAsync(fs);
+                            }
+                            client.DefaultRequestHeaders.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", authObj.data.token);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", "d16184ae-1699-495c-b276-14c4408e76ba");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", "19AABCP5428M1Z0");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", "PEEKAYAGENCIES");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", "Shiv@2709");
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                            var response3 = client.GetStringAsync("https://solo.enriched-api.vayana.com/enriched/tasks/v1.0/result/" + objIRN.data.task_id).Result;
+
+                            grid.JSProperties["cpSucessIRN"] = "Yes";
+                        }
+                        else
+                        {
+                            var jsonString = response.Content.ReadAsStringAsync().Result;
+                            grid.JSProperties["cpSucessIRN"] = "No";
+                        }
+
+
+                    }
+                }
+                catch (AggregateException err)
+                {
+                    foreach (var errInner in err.InnerExceptions)
+                    {
+                        grid.JSProperties["cpSucessIRN"] = "No";
+                    }
+                }
+            }
+
+        }
+        #endregion
+        
         protected string IsMinSalePriceOk(string list, DataTable DetailsTable)
         {
             string validate = "";
