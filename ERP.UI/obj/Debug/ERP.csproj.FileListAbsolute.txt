@@ -303,7 +303,6 @@ D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\DevExpress.XtraTreeList.v15.1.dll
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\DocumentFormat.OpenXml.dll
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\EntityLayer.dll
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.Web.Infrastructure.dll
-D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\System.Net.Http.Formatting.dll
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\System.Web.Http.dll
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\UtilityLayer.dll
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.VisualStudio.TemplateWizardInterface.dll

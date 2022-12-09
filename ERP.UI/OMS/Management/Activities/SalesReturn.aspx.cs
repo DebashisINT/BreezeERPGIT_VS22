@@ -2957,7 +2957,15 @@ namespace ERP.OMS.Management.Activities
 
             else if (strSplitCommand == "EInvoice")
             {
-                UploadEinvoice(e.Parameters.Split('~')[1]);
+                string IrnOrgId = ConfigurationManager.AppSettings["IRNOrgID"];
+                if (IrnOrgId == "1000687")
+                {
+                    UploadEinvoiceWelTel(e.Parameters.Split('~')[1]);
+                }
+                else
+                {
+                    UploadEinvoice(e.Parameters.Split('~')[1]);
+                }
             }
 
         }

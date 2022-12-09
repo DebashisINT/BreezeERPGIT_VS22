@@ -1612,7 +1612,7 @@
       <returns>A <see cref="T:EnvDTE.Window" /> object. Returns Nothing if no windows are open.</returns>
     </member>
     <member name="P:EnvDTE._DTE.AddIns">
-      <summary>Gets the <see cref="T:EnvDTE.AddIns" /> collection, which contains all currently available Add-ins.</summary>
+      <summary>Gets the <see cref="T:EnvDTE.AddIns" /> collection, which contains all currently available add-ins.</summary>
       <returns>A <see cref="T:EnvDTE.AddIns" /> collection.</returns>
     </member>
     <member name="P:EnvDTE._DTE.Application">
@@ -1682,7 +1682,7 @@
       <param name="Name">Required. The name of the object to retrieve.</param>
     </member>
     <member name="P:EnvDTE._DTE.Globals">
-      <summary>Gets the <see cref="T:EnvDTE.Globals" /> object that contains Add-in values that may be saved in the solution (.sln) file, the project file, or in the user's profile data.</summary>
+      <summary>Gets the <see cref="T:EnvDTE.Globals" /> object that contains values that may be saved in the solution (.sln) file, the project file, or in the user's profile data.</summary>
       <returns>A <see cref="T:EnvDTE.Globals" /> object.</returns>
     </member>
     <member name="P:EnvDTE._DTE.IsOpenFile(System.String,System.String)">
@@ -1749,10 +1749,10 @@
       <returns>A string representing the path to the root of the Visual Studio registry settings.</returns>
     </member>
     <member name="M:EnvDTE._DTE.SatelliteDllPath(System.String,System.String)">
-      <summary>Returns the computed path to the satellite DLL when given the installation directory for an Add-in or wizard and the file name of the DLL containing localized resources.</summary>
+      <summary>Returns the computed path to the satellite DLL when given the installation directory and the file name of the DLL containing localized resources.</summary>
       <returns>A string representing the computed path to the satellite DLL.</returns>
-      <param name="Path">Required. Specifies the full path to the directory where the Add-in or wizard is installed.</param>
-      <param name="Name">Required. The filename for the satellite DLL, such as "MyAddinUI.DLL."</param>
+      <param name="Path">Required. Specifies the full path to the directory where the main application is installed.</param>
+      <param name="Name">Required. The filename for the satellite DLL, such as "MyProgramUI.DLL."</param>
     </member>
     <member name="P:EnvDTE._DTE.SelectedItems">
       <summary>Gets a collection containing the items currently selected in the environment.</summary>
@@ -2157,10 +2157,10 @@
     <member name="T:EnvDTE._vsIndentStyle">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE._vsIndentStyle.vsIndentStyleNone">
+    <member name="F:EnvDTE._vsIndentStyle.vsIndentStyleDefault">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE._vsIndentStyle.vsIndentStyleDefault">
+    <member name="F:EnvDTE._vsIndentStyle.vsIndentStyleNone">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE._vsIndentStyle.vsIndentStyleSmart">
@@ -2176,7 +2176,7 @@
       <summary>Microsoft Internal Use Only.</summary>
     </member>
     <member name="T:EnvDTE.AddIn">
-      <summary>Represents an add-in listed in the Add-In Manager dialog box and provides information about an add-in to other add-in objects.</summary>
+      <summary>Add-ins are now deprecated. For more information, see FAQ: Converting Add-ins to VSPackage Extensions.</summary>
     </member>
     <member name="P:EnvDTE.AddIn.Collection">
       <summary>Returns the collection containing the <see cref="T:EnvDTE.AddIn" /> object that supports this property.</summary>
@@ -2196,7 +2196,7 @@
     </member>
     <member name="P:EnvDTE.AddIn.Guid">
       <summary>Gets the GUID for the <see cref="T:EnvDTE.AddIn" /> object.</summary>
-      <returns>A string representing the CLSID of the add-in as obtained from the add-in's registry entry.</returns>
+      <returns>A string representing the CLSID of the add-in.</returns>
     </member>
     <member name="P:EnvDTE.AddIn.Name">
       <summary>Gets the name of the <see cref="T:EnvDTE.AddIn" /> object.</summary>
@@ -2218,7 +2218,7 @@
       <returns>A string representing the path of a DLL containing localized resources.</returns>
     </member>
     <member name="T:EnvDTE.AddIns">
-      <summary>Contains all add-ins listed in the Add-In Manager dialog box if they are DTE.AddIns, or all of the add-ins loaded by a particular solution if they are ProjectSolution.AddIns.</summary>
+      <summary>Contains all known add-ins.</summary>
     </member>
     <member name="M:EnvDTE.AddIns.Add(System.String,System.String,System.String,System.Boolean)">
       <summary>Adds an add-in to the collection of add-ins loaded when a particular solution loads. It fails if the collection is the DTE.AddIns collection.</summary>
@@ -2229,12 +2229,12 @@
       <param name="Connected">Required. Indicates whether the add-in is currently loaded.</param>
     </member>
     <member name="P:EnvDTE.AddIns.Count">
-      <summary>Gets a value indicating the number of objects in the <see cref="T:EnvDTE.AddIns" /> collection.</summary>
-      <returns>An integer value indicating the number of objects in the <see cref="T:EnvDTE.AddIns" /> collection.</returns>
+      <summary>Gets the number of objects in the <see cref="T:EnvDTE.AddIns" /> collection.</summary>
+      <returns>The number of objects in the <see cref="T:EnvDTE.AddIns" /> collection.</returns>
     </member>
     <member name="P:EnvDTE.AddIns.DTE">
       <summary>Gets the top-level extensibility object.</summary>
-      <returns>A <see cref="T:EnvDTE.DTE" /> object.</returns>
+      <returns>The <see cref="T:EnvDTE.DTE" /> object.</returns>
     </member>
     <member name="M:EnvDTE.AddIns.GetEnumerator">
       <summary>Gets an enumerator for items in the collection.</summary>
@@ -2250,7 +2250,7 @@
       <returns>The immediate parent object of a given object.</returns>
     </member>
     <member name="M:EnvDTE.AddIns.Update">
-      <summary>Updates the collection as if the user opened the Add-in Manager dialog box, or sets the object's window layout to the current window layout.</summary>
+      <summary>Updates the collection.</summary>
     </member>
     <member name="T:EnvDTE.Breakpoint">
       <summary>The <see cref="T:EnvDTE.Breakpoint" /> object contains the properties and methods used to programmatically manipulate a <see cref="T:EnvDTE.Breakpoint" />.</summary>
@@ -4663,9 +4663,9 @@
       <param name="Position">Optional. The index position, starting at one, in the command bar to place the new command bar.</param>
     </member>
     <member name="M:EnvDTE.Commands.AddNamedCommand(EnvDTE.AddIn,System.String,System.String,System.String,System.Boolean,System.Int32,System.Object[]@,System.Int32)">
-      <summary>Creates a named command that is saved by the environment and made available the next time the environment starts, even if the Add-in is not loaded on environment startup.</summary>
+      <summary>Creates a named command that is saved by the environment and made available the next time the environment starts, even if the VSPackage is not loaded on environment startup.Add-ins are now deprecated. For more information, see FAQ: Converting Add-ins to VSPackage Extensions.</summary>
       <returns>A <see cref="T:EnvDTE.Command" /> object.</returns>
-      <param name="AddInInstance">Required. The <see cref="T:EnvDTE.AddIn" /> Object is adding the new command.</param>
+      <param name="AddInInstance">Required. The <see cref="T:EnvDTE.AddIn" /> that adds the new command.</param>
       <param name="Name">Required. The short form of the name for your new command. <see cref="M:EnvDTE.Commands.AddNamedCommand(EnvDTE.AddIn,System.String,System.String,System.String,System.Boolean,System.Int32,System.Object[]@,System.Int32)" /> uses the preface Addins.Progid. to create a unique name.</param>
       <param name="ButtonText">Required. The name to use if the command is bound to a button that is displayed by name rather than by icon.</param>
       <param name="Tooltip">Required. The text displayed when a user hovers the mouse pointer over any control bound to the new command.</param>
@@ -4936,7 +4936,7 @@
       <summary>Deprecated in Visual Studio. They are available only for backward compatibility with earlier versions of Visual Studio. For details, see the documentation for the previous version.</summary>
     </member>
     <member name="F:EnvDTE.Constants.vsAddInCmdGroup">
-      <summary>The GUID that is used for a command when you call <see cref="M:EnvDTE.Commands.AddNamedCommand(EnvDTE.AddIn,System.String,System.String,System.String,System.Boolean,System.Int32,System.Object[]@,System.Int32)" />. Each command has a GUID and an ID associated with it, and this is the GUID for all add-in created commands.</summary>
+      <summary>The GUID that is used for a command when you call <see cref="M:EnvDTE.Commands.AddNamedCommand(EnvDTE.AddIn,System.String,System.String,System.String,System.Boolean,System.Int32,System.Object[]@,System.Int32)" />. Each command has a GUID and an ID associated with it.</summary>
     </member>
     <member name="F:EnvDTE.Constants.vsCATIDDocument">
       <summary>The CATID for documents.</summary>
@@ -5241,8 +5241,8 @@
       <param name="Type">Required. A <see cref="T:EnvDTE.vsContextAttributeType" /> constant specifying the type of new attribute.</param>
     </member>
     <member name="P:EnvDTE.ContextAttributes.Count">
-      <summary>Gets a value indicating the number of objects in the <see cref="T:EnvDTE.ContextAttributes" /> collection.</summary>
-      <returns>An integer value indicating the number of objects in the <see cref="T:EnvDTE.ContextAttributes" /> collection.</returns>
+      <summary>Gets the number of objects in the <see cref="T:EnvDTE.ContextAttributes" /> collection.</summary>
+      <returns>The number of objects in the <see cref="T:EnvDTE.ContextAttributes" /> collection.</returns>
     </member>
     <member name="P:EnvDTE.ContextAttributes.DTE">
       <summary>Gets the top-level extensibility object.</summary>
@@ -5275,47 +5275,47 @@
     <member name="T:EnvDTE.dbgBreakpointConditionType">
       <summary>For conditional breakpoints. Indicates a break when the condition is true, or when it has changed. Used by the <see cref="P:EnvDTE.Breakpoint.ConditionType" /> property in the <see cref="T:EnvDTE.Breakpoint" /> object and by the <see cref="M:EnvDTE.Breakpoints.Add(System.String,System.String,System.Int32,System.Int32,System.String,EnvDTE.dbgBreakpointConditionType,System.String,System.String,System.Int32,System.String,System.Int32,EnvDTE.dbgHitCountType)" /> method in the <see cref="T:EnvDTE.Breakpoints" /> collection.</summary>
     </member>
-    <member name="F:EnvDTE.dbgBreakpointConditionType.dbgBreakpointConditionTypeWhenTrue">
-      <summary>Breaks when the condition is true.</summary>
-    </member>
     <member name="F:EnvDTE.dbgBreakpointConditionType.dbgBreakpointConditionTypeWhenChanged">
       <summary>Breaks when the condition has changed.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgBreakpointConditionType.dbgBreakpointConditionTypeWhenTrue">
+      <summary>Breaks when the condition is true.</summary>
     </member>
     <member name="T:EnvDTE.dbgBreakpointLocationType">
       <summary>The breakpoint location type that is used by the <see cref="P:EnvDTE.Breakpoint.LocationType" /> property.</summary>
     </member>
-    <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeNone">
-      <summary>There is no breakpoint.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeFunction">
-      <summary>Breakpoint is a function.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeFile">
-      <summary>Breakpoint is a file.</summary>
+    <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeAddress">
+      <summary>Breakpoint is an address.</summary>
     </member>
     <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeData">
       <summary>Breakpoint is a data element.</summary>
     </member>
-    <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeAddress">
-      <summary>Breakpoint is an address.</summary>
+    <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeFile">
+      <summary>Breakpoint is a file.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeFunction">
+      <summary>Breakpoint is a function.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgBreakpointLocationType.dbgBreakpointLocationTypeNone">
+      <summary>There is no breakpoint.</summary>
     </member>
     <member name="T:EnvDTE.dbgBreakpointType">
       <summary>Indicatesthe type or state of a breakpoint.</summary>
     </member>
-    <member name="F:EnvDTE.dbgBreakpointType.dbgBreakpointTypePending">
-      <summary>Breakpoint indicated a set of points in code.</summary>
-    </member>
     <member name="F:EnvDTE.dbgBreakpointType.dbgBreakpointTypeBound">
       <summary>Breakpoint is at a specific point in code.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgBreakpointType.dbgBreakpointTypePending">
+      <summary>Breakpoint indicated a set of points in code.</summary>
     </member>
     <member name="T:EnvDTE.dbgDebugMode">
       <summary>The current state of the debugger within the development environment. <see cref="T:EnvDTE.dbgDebugMode" /> is used by the <see cref="P:EnvDTE.Debugger.CurrentMode" /> property of the <see cref="T:EnvDTE.Debugger" /> object.</summary>
     </member>
-    <member name="F:EnvDTE.dbgDebugMode.dbgDesignMode">
-      <summary>Design mode specifies changes in code editing. </summary>
-    </member>
     <member name="F:EnvDTE.dbgDebugMode.dbgBreakMode">
       <summary>Break mode specifies that the debugger is running and has stopped at a break point.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgDebugMode.dbgDesignMode">
+      <summary>Design mode specifies changes in code editing. </summary>
     </member>
     <member name="F:EnvDTE.dbgDebugMode.dbgRunMode">
       <summary>Run mode specifies that the application being debugged is running.</summary>
@@ -5323,59 +5323,59 @@
     <member name="T:EnvDTE.dbgEventReason">
       <summary>Specifies the reason for most debugging events.</summary>
     </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonNone">
-      <summary>No reason.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonGo">
-      <summary>Execution started.</summary>
-    </member>
     <member name="F:EnvDTE.dbgEventReason.dbgEventReasonAttachProgram">
       <summary>Attached to program.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonDetachProgram">
-      <summary>Program detached.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonLaunchProgram">
-      <summary>Program launched.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonEndProgram">
-      <summary>Program ended.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonStopDebugging">
-      <summary>Debugging stopped.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonStep">
-      <summary>Execution step.</summary>
     </member>
     <member name="F:EnvDTE.dbgEventReason.dbgEventReasonBreakpoint">
       <summary>Breakpoint encountered.</summary>
     </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonExceptionThrown">
-      <summary>Exception thrown.</summary>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonContextSwitch">
+      <summary>Switch in context.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonDetachProgram">
+      <summary>Program detached.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonEndProgram">
+      <summary>Program ended.</summary>
     </member>
     <member name="F:EnvDTE.dbgEventReason.dbgEventReasonExceptionNotHandled">
       <summary>Unhandled exception encountered.</summary>
     </member>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonExceptionThrown">
+      <summary>Exception thrown.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonGo">
+      <summary>Execution started.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonLaunchProgram">
+      <summary>Program launched.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonNone">
+      <summary>No reason.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonStep">
+      <summary>Execution step.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonStopDebugging">
+      <summary>Debugging stopped.</summary>
+    </member>
     <member name="F:EnvDTE.dbgEventReason.dbgEventReasonUserBreak">
       <summary>Execution interrupted by user.</summary>
     </member>
-    <member name="F:EnvDTE.dbgEventReason.dbgEventReasonContextSwitch">
-      <summary>Switch in context.</summary>
-    </member>
     <member name="T:EnvDTE.dbgExceptionAction">
       <summary>Specifies the action to take in the event of an exception</summary>
-    </member>
-    <member name="F:EnvDTE.dbgExceptionAction.dbgExceptionActionDefault">
-      <summary>Perform the default action, either prompt or not.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgExceptionAction.dbgExceptionActionIgnore">
-      <summary>Ignore the exception.</summary>
     </member>
     <member name="F:EnvDTE.dbgExceptionAction.dbgExceptionActionBreak">
       <summary>Halt execution.</summary>
     </member>
     <member name="F:EnvDTE.dbgExceptionAction.dbgExceptionActionContinue">
       <summary>Continue execution.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgExceptionAction.dbgExceptionActionDefault">
+      <summary>Perform the default action, either prompt or not.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgExceptionAction.dbgExceptionActionIgnore">
+      <summary>Ignore the exception.</summary>
     </member>
     <member name="T:EnvDTE.dbgExecutionAction">
       <summary>Specifies an action to take in a debug session.</summary>
@@ -5386,8 +5386,8 @@
     <member name="F:EnvDTE.dbgExecutionAction.dbgExecutionActionGo">
       <summary>Start execution.</summary>
     </member>
-    <member name="F:EnvDTE.dbgExecutionAction.dbgExecutionActionStopDebugging">
-      <summary>Stop debugging.</summary>
+    <member name="F:EnvDTE.dbgExecutionAction.dbgExecutionActionRunToCursor">
+      <summary>Continue execution, stopping at the cursor.</summary>
     </member>
     <member name="F:EnvDTE.dbgExecutionAction.dbgExecutionActionStepInto">
       <summary>Step into the next function.</summary>
@@ -5398,14 +5398,11 @@
     <member name="F:EnvDTE.dbgExecutionAction.dbgExecutionActionStepOver">
       <summary>Step over the next function</summary>
     </member>
-    <member name="F:EnvDTE.dbgExecutionAction.dbgExecutionActionRunToCursor">
-      <summary>Continue execution, stopping at the cursor.</summary>
+    <member name="F:EnvDTE.dbgExecutionAction.dbgExecutionActionStopDebugging">
+      <summary>Stop debugging.</summary>
     </member>
     <member name="T:EnvDTE.dbgHitCountType">
       <summary>Specifies a hit count condition.</summary>
-    </member>
-    <member name="F:EnvDTE.dbgHitCountType.dbgHitCountTypeNone">
-      <summary>There is no hit count.</summary>
     </member>
     <member name="F:EnvDTE.dbgHitCountType.dbgHitCountTypeEqual">
       <summary>Hit count is equal to specified value.</summary>
@@ -5415,6 +5412,9 @@
     </member>
     <member name="F:EnvDTE.dbgHitCountType.dbgHitCountTypeMultiple">
       <summary>There are multiple hit count conditions.</summary>
+    </member>
+    <member name="F:EnvDTE.dbgHitCountType.dbgHitCountTypeNone">
+      <summary>There is no hit count.</summary>
     </member>
     <member name="T:EnvDTE.Debugger">
       <summary>The <see cref="T:EnvDTE.Debugger" /> object is used to interrogate and manipulate the state of the debugger and the program being debugged.</summary>
@@ -5829,13 +5829,13 @@
     <member name="T:EnvDTE.DsCaseOptions">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
+    <member name="F:EnvDTE.DsCaseOptions.dsCapitalize">
+      <summary> </summary>
+    </member>
     <member name="F:EnvDTE.DsCaseOptions.dsLowercase">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.DsCaseOptions.dsUppercase">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.DsCaseOptions.dsCapitalize">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.DsGoToLineOptions">
@@ -5847,22 +5847,22 @@
     <member name="T:EnvDTE.DsMovementOptions">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE.DsMovementOptions.dsMove">
+    <member name="F:EnvDTE.DsMovementOptions.dsExtend">
       <summary />
     </member>
-    <member name="F:EnvDTE.DsMovementOptions.dsExtend">
+    <member name="F:EnvDTE.DsMovementOptions.dsMove">
       <summary />
     </member>
     <member name="T:EnvDTE.DsSaveChanges">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE.DsSaveChanges.dsSaveChangesYes">
-      <summary> </summary>
-    </member>
     <member name="F:EnvDTE.DsSaveChanges.dsSaveChangesNo">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.DsSaveChanges.dsSaveChangesPrompt">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.DsSaveChanges.dsSaveChangesYes">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.dsSaveStatus">
@@ -5886,10 +5886,16 @@
     <member name="T:EnvDTE.DsTextSearchOptions">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchWord">
+    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchBackward">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.DsTextSearchOptions.dsMatchCase">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchForward">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchFromStart">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.DsTextSearchOptions.dsMatchNoRegExp">
@@ -5901,19 +5907,13 @@
     <member name="F:EnvDTE.DsTextSearchOptions.dsMatchRegExpB">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchRegExpE">
-      <summary> </summary>
-    </member>
     <member name="F:EnvDTE.DsTextSearchOptions.dsMatchRegExpCur">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchForward">
+    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchRegExpE">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchBackward">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchFromStart">
+    <member name="F:EnvDTE.DsTextSearchOptions.dsMatchWord">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.DsWhitespaceOptions">
@@ -5926,7 +5926,7 @@
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.DTE">
-      <summary>The top-level object in the Visual Studio automation object model. Use this object for functionality and refer to <see cref="T:EnvDTE._DTE" /> for this object’s documentation.</summary>
+      <summary>The top-level object in the Visual Studio automation object model. The documentation for the <see cref="T:EnvDTE._DTE" /> type is the most complete.</summary>
     </member>
     <member name="T:EnvDTE.DTEClass">
       <summary>Microsoft Internal Use Only.</summary>
@@ -5948,7 +5948,7 @@
     </member>
     <member name="P:EnvDTE.DTEClass.AddIns">
       <summary>For more information on this property, refer to <see cref="P:EnvDTE._DTE.AddIns" />.</summary>
-      <returns>The addins.</returns>
+      <returns>The add-ins.</returns>
     </member>
     <member name="P:EnvDTE.DTEClass.Application">
       <summary>For more information on this property, refer to <see cref="P:EnvDTE._DTE.Application" />.</summary>
@@ -6278,8 +6278,8 @@
     <member name="M:EnvDTE.EditPoint.GetLines(System.Int32,System.Int32)">
       <summary>Gets a string representing the text between two given lines.</summary>
       <returns>The text between two given lines.</returns>
-      <param name="Start">Optional. The last line number to include the text.</param>
-      <param name="ExclusiveEnd">Required. The first line number to include the text.</param>
+      <param name="Start">Optional. The first line number to include the text.</param>
+      <param name="ExclusiveEnd">Required. The last line number to include the text.</param>
     </member>
     <member name="M:EnvDTE.EditPoint.GetText(System.Object)">
       <summary>Gets the text between the current location and the specified location in the buffer.</summary>
@@ -7749,7 +7749,7 @@
       <returns>A <see cref="T:EnvDTE.ConfigurationManager" /> object.</returns>
     </member>
     <member name="M:EnvDTE.Project.Delete">
-      <summary>Removes the project from the current solution.</summary>
+      <summary>Removes the project from the current solution.Note that this method is not currently implemented.</summary>
     </member>
     <member name="P:EnvDTE.Project.DTE">
       <summary>Gets the top-level extensibility object.</summary>
@@ -7776,15 +7776,16 @@
       <returns>A string representing the full path and name of the <see cref="T:EnvDTE.Project" /> object's file.</returns>
     </member>
     <member name="P:EnvDTE.Project.Globals">
-      <summary>Gets the <see cref="T:EnvDTE.Globals" /> object containing add-in values that may be saved in the solution (.sln) file, the project file, or in the user's profile data.</summary>
+      <summary>Gets the <see cref="T:EnvDTE.Globals" /> object containing values that may be saved in the solution (.sln) file, the project file, or in the user's profile data.</summary>
       <returns>A <see cref="T:EnvDTE.Globals" /> object.</returns>
     </member>
     <member name="P:EnvDTE.Project.IsDirty">
       <summary>Microsoft Internal Use Only.</summary>
+      <returns>true if dirty, otherwise false.</returns>
     </member>
     <member name="P:EnvDTE.Project.Kind">
       <summary>Gets a GUID string indicating the kind or type of the object.</summary>
-      <returns>A GUID string representing the type of object.</returns>
+      <returns>A GUID string representing the type of object.The return value should be converted to a proper <see cref="T:System.Guid" /> or a platform-equivalent type before doing comparisons using native GUID data types. This ensures that differences in the string formatting of the GUID across different project systems and clients (such as capitalization and use of braces) don't cause incorrect results from equality checks.</returns>
     </member>
     <member name="P:EnvDTE.Project.Name">
       <summary>Gets or sets the name of the object.</summary>
@@ -7879,6 +7880,7 @@
     </member>
     <member name="P:EnvDTE.ProjectItem.IsDirty">
       <summary>Microsoft Internal Use Only.</summary>
+      <returns>true if the project item is dirty, otherwise false.</returns>
     </member>
     <member name="P:EnvDTE.ProjectItem.IsOpen(System.String)">
       <summary>Gets a value indicating whether the project item is open in a particular view type.</summary>
@@ -7887,7 +7889,7 @@
     </member>
     <member name="P:EnvDTE.ProjectItem.Kind">
       <summary>Gets a GUID string indicating the kind or type of the object.</summary>
-      <returns>A GUID string representing the type of object.</returns>
+      <returns>A GUID string representing the type of object. The return value should be converted to a proper <see cref="T:System.Guid" /> or a platform-equivalent type before doing comparisons using native GUID data types. This ensures that differences in the string formatting of the GUID across different project systems and clients (such as capitalization and use of braces) don't cause incorrect results from equality checks.</returns>
     </member>
     <member name="P:EnvDTE.ProjectItem.Name">
       <summary>Gets or sets the name of the object.</summary>
@@ -9356,7 +9358,7 @@
       <summary>Microsoft Internal Use Only.</summary>
     </member>
     <member name="M:EnvDTE.TextSelection.ChangeCase(EnvDTE.vsCaseOptions)">
-      <summary>Changes the case of the selected text.</summary>
+      <summary>Changes the case of the text selection.</summary>
       <param name="How">Required. A <see cref="T:EnvDTE.vsCaseOptions" /> constant representing the text to insert.</param>
     </member>
     <member name="M:EnvDTE.TextSelection.CharLeft(System.Boolean,System.Int32)">
@@ -9373,10 +9375,10 @@
       <summary>Clears any unnamed bookmarks in the current text buffer line.</summary>
     </member>
     <member name="M:EnvDTE.TextSelection.Collapse">
-      <summary>Collapses the selected text to the active point.</summary>
+      <summary>Collapses the text selection to the active point.</summary>
     </member>
     <member name="M:EnvDTE.TextSelection.Copy">
-      <summary>Copies the selected text to the clipboard.</summary>
+      <summary>Copies the text selection to the clipboard.</summary>
     </member>
     <member name="P:EnvDTE.TextSelection.CurrentColumn">
       <summary>Microsoft Internal Use Only.</summary>
@@ -9387,10 +9389,10 @@
       <returns>The current line.</returns>
     </member>
     <member name="M:EnvDTE.TextSelection.Cut">
-      <summary>Copies the selected text to the clipboard and deletes it from its original location.</summary>
+      <summary>Copies the text selection to the clipboard and deletes it from its original location.</summary>
     </member>
     <member name="M:EnvDTE.TextSelection.Delete(System.Int32)">
-      <summary>Deletes the selected text.</summary>
+      <summary>Deletes the text selection.</summary>
       <param name="Count">Optional. Represents the number of characters to delete.</param>
     </member>
     <member name="M:EnvDTE.TextSelection.DeleteLeft(System.Int32)">
@@ -9437,7 +9439,7 @@
     </member>
     <member name="M:EnvDTE.TextSelection.Indent(System.Int32)">
       <summary>Indents the selected lines by the given number of indentation levels.</summary>
-      <param name="Count">Optional. The number of display indent levels to indent each line in the selected text. The default is 1.</param>
+      <param name="Count">Optional. The number of display indent levels to indent each line in the text selection. The default is 1.</param>
     </member>
     <member name="M:EnvDTE.TextSelection.Insert(System.String,System.Int32)">
       <summary>Inserts the given string at the current insertion point.</summary>
@@ -9450,7 +9452,7 @@
     </member>
     <member name="P:EnvDTE.TextSelection.IsActiveEndGreater">
       <summary>Gets whether the active point is equal to the bottom point.</summary>
-      <returns>A Boolean value indicating True if the selected text's active end is at a greater absolute character offset than the anchor in the text document, False if not.</returns>
+      <returns>A Boolean value indicating True if the text selection's active end is at a greater absolute character offset than the anchor in the text document, False if not.</returns>
     </member>
     <member name="P:EnvDTE.TextSelection.IsEmpty">
       <summary>Gets whether the anchor point is equal to the active point.</summary>
@@ -9577,11 +9579,11 @@
       <summary>Converts spaces to tabs in the selection according to your tab settings.</summary>
     </member>
     <member name="P:EnvDTE.TextSelection.Text">
-      <summary>Sets or gets the selected text.</summary>
-      <returns>A string representing the selected text.</returns>
+      <summary>Sets or gets the text selection.</summary>
+      <returns>A string representing the text selection.</returns>
     </member>
     <member name="P:EnvDTE.TextSelection.TextPane">
-      <summary>Gets the text pane that contains the selected text.</summary>
+      <summary>Gets the text pane that contains the text selection.</summary>
       <returns>A <see cref="T:EnvDTE.TextPane" /> object.</returns>
     </member>
     <member name="P:EnvDTE.TextSelection.TextRanges">
@@ -9597,19 +9599,19 @@
       <returns>A <see cref="T:EnvDTE.VirtualPoint" /> object.</returns>
     </member>
     <member name="M:EnvDTE.TextSelection.Unindent(System.Int32)">
-      <summary>Removes indents from the selected text by the number of indentation levels given.</summary>
-      <param name="Count">Optional. The number of display indent levels to remove from each line in the selected text. The default is 1.</param>
+      <summary>Removes indents from the text selection by the number of indentation levels given.</summary>
+      <param name="Count">Optional. The number of display indent levels to remove from each line in the text selection. The default is 1.</param>
     </member>
     <member name="M:EnvDTE.TextSelection.Untabify">
       <summary>Converts tabs to spaces in the selection according to the user's tab settings.</summary>
     </member>
     <member name="M:EnvDTE.TextSelection.WordLeft(System.Boolean,System.Int32)">
-      <summary>Moves the selected text left the specified number of words.</summary>
+      <summary>Moves the text selection left the specified number of words.</summary>
       <param name="Extend">Optional. Determines whether the moved text is collapsed or not. The default is false.</param>
       <param name="Count">Optional. Represents the number of words to move left. The default value is 1.</param>
     </member>
     <member name="M:EnvDTE.TextSelection.WordRight(System.Boolean,System.Int32)">
-      <summary>Moves the selected text right the specified number of words.</summary>
+      <summary>Moves the text selection right the specified number of words.</summary>
       <param name="Extend">Optional. Determines whether the moved text is collapsed or not. The default is false.</param>
       <param name="Count">Optional. Represents the number of words to move right. The default value is 1.</param>
     </member>
@@ -9850,7 +9852,7 @@
       <returns>A <see cref="T:EnvDTE.ToolBox" /> object.</returns>
     </member>
     <member name="T:EnvDTE.UIHierarchy">
-      <summary>Represents standard tool windows in the integrated development environment (IDE) that use hierarchical trees of data, such as Solution Explorer, Server Explorer, and Macro Explorer.</summary>
+      <summary>Represents standard tool windows in the integrated development environment (IDE) that use hierarchical trees of data, such as Solution Explorer or Server Explorer.</summary>
     </member>
     <member name="M:EnvDTE.UIHierarchy.DoDefaultAction">
       <summary>In the hierarchy, performs the same action as if the user had double-clicked or pressed ENTER.</summary>
@@ -10067,20 +10069,17 @@
     <member name="T:EnvDTE.vs_exec_Result">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE.vs_exec_Result.RESULT_Success">
+    <member name="F:EnvDTE.vs_exec_Result.RESULT_Cancel">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vs_exec_Result.RESULT_Failure">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vs_exec_Result.RESULT_Cancel">
+    <member name="F:EnvDTE.vs_exec_Result.RESULT_Success">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.vsBrowserViewSource">
       <summary>Indicates which window type is used to view web page source.</summary>
-    </member>
-    <member name="F:EnvDTE.vsBrowserViewSource.vsBrowserViewSourceSource">
-      <summary>View source as HTML.</summary>
     </member>
     <member name="F:EnvDTE.vsBrowserViewSource.vsBrowserViewSourceDesign">
       <summary>View source in the HTML design window.</summary>
@@ -10088,14 +10087,14 @@
     <member name="F:EnvDTE.vsBrowserViewSource.vsBrowserViewSourceExternal">
       <summary>View source in an external editor.</summary>
     </member>
+    <member name="F:EnvDTE.vsBrowserViewSource.vsBrowserViewSourceSource">
+      <summary>View source as HTML.</summary>
+    </member>
     <member name="T:EnvDTE.vsBuildAction">
       <summary>Represents the type of build action that is occurring, such as a build or a deploy action.</summary>
     </member>
     <member name="F:EnvDTE.vsBuildAction.vsBuildActionBuild">
       <summary>A build action is occurring.</summary>
-    </member>
-    <member name="F:EnvDTE.vsBuildAction.vsBuildActionRebuildAll">
-      <summary>A rebuild all action is occurring.</summary>
     </member>
     <member name="F:EnvDTE.vsBuildAction.vsBuildActionClean">
       <summary>A clean action is occurring.</summary>
@@ -10103,11 +10102,11 @@
     <member name="F:EnvDTE.vsBuildAction.vsBuildActionDeploy">
       <summary>A deploy action is occurring.</summary>
     </member>
+    <member name="F:EnvDTE.vsBuildAction.vsBuildActionRebuildAll">
+      <summary>A rebuild all action is occurring.</summary>
+    </member>
     <member name="T:EnvDTE.vsBuildKind">
       <summary>Indicates the kind of build.</summary>
-    </member>
-    <member name="F:EnvDTE.vsBuildKind.vsBuildKindSolution">
-      <summary>Build is a solution build.</summary>
     </member>
     <member name="F:EnvDTE.vsBuildKind.vsBuildKindProject">
       <summary>Build is a project build.</summary>
@@ -10115,11 +10114,11 @@
     <member name="F:EnvDTE.vsBuildKind.vsBuildKindProjectItem">
       <summary>Build is a project item build.</summary>
     </member>
+    <member name="F:EnvDTE.vsBuildKind.vsBuildKindSolution">
+      <summary>Build is a solution build.</summary>
+    </member>
     <member name="T:EnvDTE.vsBuildScope">
       <summary>Represents the scope of the build.</summary>
-    </member>
-    <member name="F:EnvDTE.vsBuildScope.vsBuildScopeSolution">
-      <summary>The build applies to the entire solution.</summary>
     </member>
     <member name="F:EnvDTE.vsBuildScope.vsBuildScopeBatch">
       <summary>The build applies to a batch build. This corresponds to the Batch Build command on the Build menu.</summary>
@@ -10127,20 +10126,26 @@
     <member name="F:EnvDTE.vsBuildScope.vsBuildScopeProject">
       <summary>The build applies to a single project.</summary>
     </member>
+    <member name="F:EnvDTE.vsBuildScope.vsBuildScopeSolution">
+      <summary>The build applies to the entire solution.</summary>
+    </member>
     <member name="T:EnvDTE.vsBuildState">
       <summary>Represents the status of the build operation.</summary>
-    </member>
-    <member name="F:EnvDTE.vsBuildState.vsBuildStateNotStarted">
-      <summary>Build has not yet been started.</summary>
-    </member>
-    <member name="F:EnvDTE.vsBuildState.vsBuildStateInProgress">
-      <summary>Build is currently in progress.</summary>
     </member>
     <member name="F:EnvDTE.vsBuildState.vsBuildStateDone">
       <summary>Build has been completed.</summary>
     </member>
+    <member name="F:EnvDTE.vsBuildState.vsBuildStateInProgress">
+      <summary>Build is currently in progress.</summary>
+    </member>
+    <member name="F:EnvDTE.vsBuildState.vsBuildStateNotStarted">
+      <summary>Build has not yet been started.</summary>
+    </member>
     <member name="T:EnvDTE.vsCaseOptions">
       <summary>Represents options for changing text to lowercase or uppercase.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCaseOptions.vsCaseOptionsCapitalize">
+      <summary>Capitalize the first letter of each word of the selected text.</summary>
     </member>
     <member name="F:EnvDTE.vsCaseOptions.vsCaseOptionsLowercase">
       <summary>Change selected text to lowercase.</summary>
@@ -10148,14 +10153,14 @@
     <member name="F:EnvDTE.vsCaseOptions.vsCaseOptionsUppercase">
       <summary>Change selected text to uppercase.</summary>
     </member>
-    <member name="F:EnvDTE.vsCaseOptions.vsCaseOptionsCapitalize">
-      <summary>Capitalize the first letter of each word of the selected text.</summary>
-    </member>
     <member name="T:EnvDTE.vsCMAccess">
       <summary>Used to determine how a code element may be accessed by other code.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMAccess.vsCMAccessPublic">
-      <summary>Element has public access.</summary>
+    <member name="F:EnvDTE.vsCMAccess.vsCMAccessAssemblyOrFamily">
+      <summary>Element has assembly or family access.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMAccess.vsCMAccessDefault">
+      <summary>Element has default access.</summary>
     </member>
     <member name="F:EnvDTE.vsCMAccess.vsCMAccessPrivate">
       <summary>Element has private access.</summary>
@@ -10163,95 +10168,29 @@
     <member name="F:EnvDTE.vsCMAccess.vsCMAccessProject">
       <summary>Element has project access.</summary>
     </member>
+    <member name="F:EnvDTE.vsCMAccess.vsCMAccessProjectOrProtected">
+      <summary>Element has project or protected access.</summary>
+    </member>
     <member name="F:EnvDTE.vsCMAccess.vsCMAccessProtected">
       <summary>Element has protected access.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMAccess.vsCMAccessDefault">
-      <summary>Element has default access.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMAccess.vsCMAccessAssemblyOrFamily">
-      <summary>Element has assembly or family access.</summary>
+    <member name="F:EnvDTE.vsCMAccess.vsCMAccessPublic">
+      <summary>Element has public access.</summary>
     </member>
     <member name="F:EnvDTE.vsCMAccess.vsCMAccessWithEvents">
       <summary>Element can be accessed via WithEvents.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMAccess.vsCMAccessProjectOrProtected">
-      <summary>Element has project or protected access.</summary>
-    </member>
     <member name="T:EnvDTE.vsCMElement">
       <summary>Indicates the type of code element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementOther">
-      <summary>An element not in the list.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementClass">
-      <summary>A class element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementFunction">
-      <summary>A function element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementVariable">
-      <summary>A variable element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementProperty">
-      <summary>A property element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementNamespace">
-      <summary>A namespace element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementParameter">
-      <summary>A parameter element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementAttribute">
-      <summary>An attribute element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementInterface">
-      <summary>An interface element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementDelegate">
-      <summary>A delegate element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementEnum">
-      <summary>An enumerator element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementStruct">
-      <summary>A structure element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementUnion">
-      <summary>A union element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementLocalDeclStmt">
-      <summary>A local declaration statement element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementFunctionInvokeStmt">
-      <summary>A function invoke statement element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementPropertySetStmt">
-      <summary>A property set statement element.</summary>
     </member>
     <member name="F:EnvDTE.vsCMElement.vsCMElementAssignmentStmt">
       <summary>An assignment statement element.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementInheritsStmt">
-      <summary>An inherits statement element.</summary>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementAttribute">
+      <summary>An attribute element.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementImplementsStmt">
-      <summary>An implements statement element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementOptionStmt">
-      <summary>An option statement element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementVBAttributeStmt">
-      <summary>A VB attributes statement element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementVBAttributeGroup">
-      <summary>A VB attribute group element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementEventsDeclaration">
-      <summary>An events declaration element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementUDTDecl">
-      <summary>A user-defined type declaration element.</summary>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementClass">
+      <summary>A class element.</summary>
     </member>
     <member name="F:EnvDTE.vsCMElement.vsCMElementDeclareDecl">
       <summary>A declare declaration element.</summary>
@@ -10259,20 +10198,26 @@
     <member name="F:EnvDTE.vsCMElement.vsCMElementDefineStmt">
       <summary>A define statement element.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementTypeDef">
-      <summary>A type definition element.</summary>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementDelegate">
+      <summary>A delegate element.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementIncludeStmt">
-      <summary>An include statement element.</summary>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementEnum">
+      <summary>An enumerator element.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementUsingStmt">
-      <summary>A using statement element.</summary>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementEvent">
+      <summary>An event element.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementMacro">
-      <summary>A macro element.</summary>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementEventsDeclaration">
+      <summary>An events declaration element.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementMap">
-      <summary>A map element.</summary>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementFunction">
+      <summary>A function element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementFunctionInvokeStmt">
+      <summary>A function invoke statement element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementIDLCoClass">
+      <summary>An IDL co-class element.</summary>
     </member>
     <member name="F:EnvDTE.vsCMElement.vsCMElementIDLImport">
       <summary>An IDL import element.</summary>
@@ -10280,35 +10225,113 @@
     <member name="F:EnvDTE.vsCMElement.vsCMElementIDLImportLib">
       <summary>An IDL import library element.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementIDLCoClass">
-      <summary>An IDL co-class element.</summary>
-    </member>
     <member name="F:EnvDTE.vsCMElement.vsCMElementIDLLibrary">
       <summary>An IDL library element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementImplementsStmt">
+      <summary>An implements statement element.</summary>
     </member>
     <member name="F:EnvDTE.vsCMElement.vsCMElementImportStmt">
       <summary>An import statement element.</summary>
     </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementIncludeStmt">
+      <summary>An include statement element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementInheritsStmt">
+      <summary>An inherits statement element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementInterface">
+      <summary>An interface element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementLocalDeclStmt">
+      <summary>A local declaration statement element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementMacro">
+      <summary>A macro element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementMap">
+      <summary>A map element.</summary>
+    </member>
     <member name="F:EnvDTE.vsCMElement.vsCMElementMapEntry">
       <summary>A map entry element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementVCBase">
-      <summary>A VC base element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMElement.vsCMElementEvent">
-      <summary>An event element.</summary>
     </member>
     <member name="F:EnvDTE.vsCMElement.vsCMElementModule">
       <summary>A module element.</summary>
     </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementNamespace">
+      <summary>A namespace element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementOptionStmt">
+      <summary>An option statement element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementOther">
+      <summary>An element not in the list.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementParameter">
+      <summary>A parameter element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementProperty">
+      <summary>A property element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementPropertySetStmt">
+      <summary>A property set statement element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementStruct">
+      <summary>A structure element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementTypeDef">
+      <summary>A type definition element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementUDTDecl">
+      <summary>A user-defined type declaration element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementUnion">
+      <summary>A union element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementUsingStmt">
+      <summary>A using statement element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementVariable">
+      <summary>A variable element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementVBAttributeGroup">
+      <summary>A VB attribute group element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementVBAttributeStmt">
+      <summary>A VB attributes statement element.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMElement.vsCMElementVCBase">
+      <summary>A VC base element.</summary>
+    </member>
     <member name="T:EnvDTE.vsCMFunction">
       <summary>A constant indicating the type of function, such as a property-get or a method.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionComMethod">
+      <summary>A COM method.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionConstant">
+      <summary>A constant.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionConstructor">
+      <summary>A constructor.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionDestructor">
+      <summary>A destructor.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionFunction">
+      <summary>A function.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionInline">
+      <summary>An inline function.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionOperator">
+      <summary>An operator.</summary>
     </member>
     <member name="F:EnvDTE.vsCMFunction.vsCMFunctionOther">
       <summary>A type of function not in this list.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionConstructor">
-      <summary>A constructor.</summary>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionPropertyAssign">
+      <summary>A property assignment function.</summary>
     </member>
     <member name="F:EnvDTE.vsCMFunction.vsCMFunctionPropertyGet">
       <summary>A property get.</summary>
@@ -10319,50 +10342,26 @@
     <member name="F:EnvDTE.vsCMFunction.vsCMFunctionPropertySet">
       <summary>A property set.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionPutRef">
-      <summary>A put reference.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionPropertyAssign">
-      <summary>A property assignment function.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionSub">
-      <summary>A subexpression.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionFunction">
-      <summary>A function.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionTopLevel">
-      <summary>A top-level function.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionDestructor">
-      <summary>A destructor.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionOperator">
-      <summary>An operator.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionVirtual">
-      <summary>A virtual function.</summary>
-    </member>
     <member name="F:EnvDTE.vsCMFunction.vsCMFunctionPure">
       <summary>A pure function.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionConstant">
-      <summary>A constant.</summary>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionPutRef">
+      <summary>A put reference.</summary>
     </member>
     <member name="F:EnvDTE.vsCMFunction.vsCMFunctionShared">
       <summary>A shared function.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionInline">
-      <summary>An inline function.</summary>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionSub">
+      <summary>A subexpression.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionComMethod">
-      <summary>A COM method.</summary>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionTopLevel">
+      <summary>A top-level function.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMFunction.vsCMFunctionVirtual">
+      <summary>A virtual function.</summary>
     </member>
     <member name="T:EnvDTE.vsCMInfoLocation">
       <summary>A constant indicating the abilities of the given code model object.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMInfoLocation.vsCMInfoLocationProject">
-      <summary>Indicates if the code model element is located in the same project file. This is important when attempting to navigate to a specific code element.</summary>
     </member>
     <member name="F:EnvDTE.vsCMInfoLocation.vsCMInfoLocationExternal">
       <summary>Information is obtained from external files. Information is available only from metadata, from inspecting a DLL, or from frozen sources (such as shipping MFC sources). You may be able to get a StartPoint and EditPoint, but you cannot edit them, and you cannot set properties or modify the text behind the code element.</summary>
@@ -10370,38 +10369,41 @@
     <member name="F:EnvDTE.vsCMInfoLocation.vsCMInfoLocationNone">
       <summary>No additional information is available. All you have is a code model object that has a name. By its context in the source, you might, for example, infer that the name should be a class or interface. Because the code model could not resolve the name to any real information, however, the object is otherwise useless.</summary>
     </member>
+    <member name="F:EnvDTE.vsCMInfoLocation.vsCMInfoLocationProject">
+      <summary>Indicates if the code model element is located in the same project file. This is important when attempting to navigate to a specific code element.</summary>
+    </member>
     <member name="F:EnvDTE.vsCMInfoLocation.vsCMInfoLocationVirtual">
       <summary>Information is obtained from a virtual project.</summary>
     </member>
     <member name="T:EnvDTE.vsCMPart">
       <summary>Represents the portion of a code construct.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMPart.vsCMPartName">
-      <summary>The name of the code construct.</summary>
-    </member>
     <member name="F:EnvDTE.vsCMPart.vsCMPartAttributes">
       <summary>The attributes that apply to the code construct, minus the attribute delimiters.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPart.vsCMPartHeader">
-      <summary>The header of the code construct.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPart.vsCMPartWhole">
-      <summary>The entire code construct.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPart.vsCMPartBody">
-      <summary>The body of the code construct, minus the body delimiters.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPart.vsCMPartNavigate">
-      <summary>The location in the source code to which the insertion point moves when you double-click an element in Class View.</summary>
     </member>
     <member name="F:EnvDTE.vsCMPart.vsCMPartAttributesWithDelimiter">
       <summary>The applicable attributes and the attribute delimiters.</summary>
     </member>
+    <member name="F:EnvDTE.vsCMPart.vsCMPartBody">
+      <summary>The body of the code construct, minus the body delimiters.</summary>
+    </member>
     <member name="F:EnvDTE.vsCMPart.vsCMPartBodyWithDelimiter">
       <summary>The body of the code construct and its delimiters.</summary>
     </member>
+    <member name="F:EnvDTE.vsCMPart.vsCMPartHeader">
+      <summary>The header of the code construct.</summary>
+    </member>
     <member name="F:EnvDTE.vsCMPart.vsCMPartHeaderWithAttributes">
       <summary>The code construct's header and its attributes.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMPart.vsCMPartName">
+      <summary>The name of the code construct.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMPart.vsCMPartNavigate">
+      <summary>The location in the source code to which the insertion point moves when you double-click an element in Class View.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMPart.vsCMPartWhole">
+      <summary>The entire code construct.</summary>
     </member>
     <member name="F:EnvDTE.vsCMPart.vsCMPartWholeWithAttributes">
       <summary>The entire code construct and its attributes.</summary>
@@ -10409,56 +10411,41 @@
     <member name="T:EnvDTE.vsCMPrototype">
       <summary>A constant specifying prototype options.</summary>
     </member>
-    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeFullname">
-      <summary>Indicates that the code element's full name should be used if it is applicable. This means that classes and namespaces, for example, would have fully qualified names.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeNoName">
-      <summary>Do not include the name in the prototype string. This flag is incompatible with other flags that request specific name information.</summary>
-    </member>
     <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeClassName">
       <summary>If the code element is a member of a class, then include the element's name qualified with a prefix of the class name and a period (.).</summary>
     </member>
-    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeParamTypes">
-      <summary>Include parameter types in the prototype string.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeParamNames">
-      <summary>Include parameter names in the prototype string.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeParamDefaultValues">
-      <summary>Include parameter default value expressions in the prototype string.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeUniqueSignature">
-      <summary>Returns a unique specifier suitable for indexing or searching for this code element later. This can be used, for example, for inserting text to create an overridden or overloaded code element.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeType">
-      <summary>Prefix the returned string with the function or variable's type.</summary>
+    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeFullname">
+      <summary>Indicates that the code element's full name should be used if it is applicable. This means that classes and namespaces, for example, would have fully qualified names.</summary>
     </member>
     <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeInitExpression">
       <summary>Include the variable's initialization expression in the prototype string.</summary>
     </member>
+    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeNoName">
+      <summary>Do not include the name in the prototype string. This flag is incompatible with other flags that request specific name information.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeParamDefaultValues">
+      <summary>Include parameter default value expressions in the prototype string.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeParamNames">
+      <summary>Include parameter names in the prototype string.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeParamTypes">
+      <summary>Include parameter types in the prototype string.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeType">
+      <summary>Prefix the returned string with the function or variable's type.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMPrototype.vsCMPrototypeUniqueSignature">
+      <summary>Returns a unique specifier suitable for indexing or searching for this code element later. This can be used, for example, for inserting text to create an overridden or overloaded code element.</summary>
+    </member>
     <member name="T:EnvDTE.vsCMTypeRef">
       <summary>The data type that the function returns. This can be a <see cref="T:EnvDTE.CodeTypeRef" /> object, a <see cref="T:EnvDTE.vsCMTypeRef" /> constant, or a fully qualified type name.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefOther">
-      <summary>Data type not in this list</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefCodeType">
-      <summary>CodeType</summary>
     </member>
     <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefArray">
       <summary>Array</summary>
     </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefVoid">
-      <summary>Void</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefPointer">
-      <summary>Pointer</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefString">
-      <summary>String</summary>
-    </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefObject">
-      <summary>Object</summary>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefBool">
+      <summary>Bool (Boolean)</summary>
     </member>
     <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefByte">
       <summary>Byte</summary>
@@ -10466,8 +10453,17 @@
     <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefChar">
       <summary>Char</summary>
     </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefShort">
-      <summary>Short</summary>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefCodeType">
+      <summary>CodeType</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefDecimal">
+      <summary>Decimal</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefDouble">
+      <summary>Double</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefFloat">
+      <summary>Float</summary>
     </member>
     <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefInt">
       <summary>Int </summary>
@@ -10475,32 +10471,38 @@
     <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefLong">
       <summary>Long</summary>
     </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefFloat">
-      <summary>Float</summary>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefObject">
+      <summary>Object</summary>
     </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefDouble">
-      <summary>Double</summary>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefOther">
+      <summary>Data type not in this list</summary>
     </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefDecimal">
-      <summary>Decimal</summary>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefPointer">
+      <summary>Pointer</summary>
     </member>
-    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefBool">
-      <summary>Bool (Boolean)</summary>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefShort">
+      <summary>Short</summary>
+    </member>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefString">
+      <summary>String</summary>
     </member>
     <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefVariant">
       <summary>Variant</summary>
     </member>
+    <member name="F:EnvDTE.vsCMTypeRef.vsCMTypeRefVoid">
+      <summary>Void</summary>
+    </member>
     <member name="T:EnvDTE.vsCommandBarType">
       <summary>Represents the scope of the build.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCommandBarType.vsCommandBarTypeMenu">
+      <summary>A menu command bar</summary>
     </member>
     <member name="F:EnvDTE.vsCommandBarType.vsCommandBarTypePopup">
       <summary>A popup command bar</summary>
     </member>
     <member name="F:EnvDTE.vsCommandBarType.vsCommandBarTypeToolbar">
       <summary>A toolbar command bar</summary>
-    </member>
-    <member name="F:EnvDTE.vsCommandBarType.vsCommandBarTypeMenu">
-      <summary>A menu command bar</summary>
     </member>
     <member name="T:EnvDTE.vsCommandDisabledFlags">
       <summary>Describes the accessibility of menu items and toolbars.</summary>
@@ -10520,11 +10522,11 @@
     <member name="F:EnvDTE.vsCommandExecOption.vsCommandExecOptionDoDefault">
       <summary>Performs the default behavior, whether prompting the user for input or not.</summary>
     </member>
-    <member name="F:EnvDTE.vsCommandExecOption.vsCommandExecOptionPromptUser">
-      <summary>Executes the command without prompting the user. For example, clicking Print on the toolbar causes a document to immediately print without user input.</summary>
-    </member>
     <member name="F:EnvDTE.vsCommandExecOption.vsCommandExecOptionDoPromptUser">
       <summary>Executes the command after obtaining user input.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCommandExecOption.vsCommandExecOptionPromptUser">
+      <summary>Executes the command without prompting the user. For example, clicking Print on the toolbar causes a document to immediately print without user input.</summary>
     </member>
     <member name="F:EnvDTE.vsCommandExecOption.vsCommandExecOptionShowHelp">
       <summary>Shows help for the corresponding command, if it exists, but does not execute the command.</summary>
@@ -10532,14 +10534,11 @@
     <member name="T:EnvDTE.vsCommandStatus">
       <summary>The current status of the command.</summary>
     </member>
-    <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusUnsupported">
-      <summary>The command is not supported in this context.</summary>
-    </member>
-    <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusSupported">
-      <summary>The command is supported in this context.</summary>
-    </member>
     <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusEnabled">
       <summary>The command is currently enabled.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusInvisible">
+      <summary>The command is currently hidden.</summary>
     </member>
     <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusLatched">
       <summary>The command is currently latched.</summary>
@@ -10547,17 +10546,20 @@
     <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusNinched">
       <summary>Reserved for future use.</summary>
     </member>
-    <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusInvisible">
-      <summary>The command is currently hidden.</summary>
+    <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusSupported">
+      <summary>The command is supported in this context.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCommandStatus.vsCommandStatusUnsupported">
+      <summary>The command is not supported in this context.</summary>
     </member>
     <member name="T:EnvDTE.vsCommandStatusTextWanted">
       <summary>A constant specifying if information is returned from the check, and if so, what type of information is returned.</summary>
     </member>
-    <member name="F:EnvDTE.vsCommandStatusTextWanted.vsCommandStatusTextWantedNone">
-      <summary>No information is returned.</summary>
-    </member>
     <member name="F:EnvDTE.vsCommandStatusTextWanted.vsCommandStatusTextWantedName">
       <summary>The name of the command is returned.</summary>
+    </member>
+    <member name="F:EnvDTE.vsCommandStatusTextWanted.vsCommandStatusTextWantedNone">
+      <summary>No information is returned.</summary>
     </member>
     <member name="F:EnvDTE.vsCommandStatusTextWanted.vsCommandStatusTextWantedStatus">
       <summary>The status of the command is returned.</summary>
@@ -10577,11 +10579,11 @@
     <member name="F:EnvDTE.vsContextAttributes.vsContextAttributesGlobal">
       <summary>Global context attribute</summary>
     </member>
-    <member name="F:EnvDTE.vsContextAttributes.vsContextAttributesWindow">
-      <summary>Window context attribute</summary>
-    </member>
     <member name="F:EnvDTE.vsContextAttributes.vsContextAttributesHighPriority">
       <summary>High-priority context attribute</summary>
+    </member>
+    <member name="F:EnvDTE.vsContextAttributes.vsContextAttributesWindow">
+      <summary>Window context attribute</summary>
     </member>
     <member name="T:EnvDTE.vsContextAttributeType">
       <summary>Specifies the type of new attribute.</summary>
@@ -10607,6 +10609,9 @@
     <member name="T:EnvDTE.vsEPReplaceTextOptions">
       <summary>Represents the edit behavior in an <see cref="M:EnvDTE.EditPoint.ReplaceText(System.Object,System.String,System.Int32)" /> action.</summary>
     </member>
+    <member name="F:EnvDTE.vsEPReplaceTextOptions.vsEPReplaceTextAutoformat">
+      <summary>Inserts text and automatically formats it.</summary>
+    </member>
     <member name="F:EnvDTE.vsEPReplaceTextOptions.vsEPReplaceTextKeepMarkers">
       <summary>Retains existing markers (for breakpoints, named shortcuts, and so forth) in their current locations.</summary>
     </member>
@@ -10616,26 +10621,20 @@
     <member name="F:EnvDTE.vsEPReplaceTextOptions.vsEPReplaceTextTabsSpaces">
       <summary>Keeps the value of Text and process tabs and spaces according to the value of the KeepTabs setting in the TextEditorOptions dialog box.</summary>
     </member>
-    <member name="F:EnvDTE.vsEPReplaceTextOptions.vsEPReplaceTextAutoformat">
-      <summary>Inserts text and automatically formats it.</summary>
-    </member>
     <member name="T:EnvDTE.VSEXECRESULT">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE.VSEXECRESULT.RESULT_Success">
+    <member name="F:EnvDTE.VSEXECRESULT.RESULT_Cancel">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.VSEXECRESULT.RESULT_Failure">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.VSEXECRESULT.RESULT_Cancel">
+    <member name="F:EnvDTE.VSEXECRESULT.RESULT_Success">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.vsext_Build">
       <summary>Microsoft Internal Use Only.</summary>
-    </member>
-    <member name="F:EnvDTE.vsext_Build.vsext_bld_SAVE_CHANGES">
-      <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_Build.vsext_bld_CONFIRM_SAVE">
       <summary> </summary>
@@ -10643,13 +10642,16 @@
     <member name="F:EnvDTE.vsext_Build.vsext_bld_NO_SAVE">
       <summary> </summary>
     </member>
+    <member name="F:EnvDTE.vsext_Build.vsext_bld_SAVE_CHANGES">
+      <summary> </summary>
+    </member>
     <member name="T:EnvDTE.vsext_DisplayMode">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE.vsext_DisplayMode.vsext_dm_SDI">
+    <member name="F:EnvDTE.vsext_DisplayMode.vsext_dm_MDI">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_DisplayMode.vsext_dm_MDI">
+    <member name="F:EnvDTE.vsext_DisplayMode.vsext_dm_SDI">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.vsext_FontCharSet">
@@ -10658,58 +10660,58 @@
     <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_ANSI">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_DEFAULT">
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_ARABIC">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_SYMBOL">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_SHIFTJIS">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_HANGEUL">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_GB2312">
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_BALTIC">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_CHINESEBIG5">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_OEM">
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_DEFAULT">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_JOHAB">
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_EASTEUROPE">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_GB2312">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_GREEK">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_HANGEUL">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_HEBREW">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_ARABIC">
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_JOHAB">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_GREEK">
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_MAC">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_OEM">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_RUSSIAN">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_SHIFTJIS">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_SYMBOL">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_THAI">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_TURKISH">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_VIETNAMESE">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_THAI">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_EASTEUROPE">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_RUSSIAN">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_MAC">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_FontCharSet.vsext_fontcs_BALTIC">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.vsext_LinkedWindowType">
@@ -10727,49 +10729,49 @@
     <member name="F:EnvDTE.vsext_StartUp.vsext_su_EMPTY_ENVIRONMENT">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_StartUp.vsext_su_NEW_SOLUTION_DIALOG">
+    <member name="F:EnvDTE.vsext_StartUp.vsext_su_LOAD_LAST_SOLUTION">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_StartUp.vsext_su_LOAD_LAST_SOLUTION">
+    <member name="F:EnvDTE.vsext_StartUp.vsext_su_NEW_SOLUTION_DIALOG">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.vsext_WindowState">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowState.vsext_ws_Normal">
+    <member name="F:EnvDTE.vsext_WindowState.vsext_ws_Maximize">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_WindowState.vsext_ws_Minimize">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowState.vsext_ws_Maximize">
+    <member name="F:EnvDTE.vsext_WindowState.vsext_ws_Normal">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.vsext_WindowType">
       <summary>Microsoft Internal Use Only.</summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_CodeWindow">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Designer">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Autos">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Browser">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Watch">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_CallStack">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Locals">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_CodeWindow">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Immediate">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_ColorPalette">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_ProjectWindow">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Designer">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_PropertyWindow">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Document">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_DocumentOutline">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Find">
@@ -10778,62 +10780,65 @@
     <member name="F:EnvDTE.vsext_WindowType.vsext_wt_FindReplace">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Toolbox">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Immediate">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_WindowType.vsext_wt_LinkedWindowFrame">
       <summary> </summary>
     </member>
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Locals">
+      <summary> </summary>
+    </member>
     <member name="F:EnvDTE.vsext_WindowType.vsext_wt_MainWindow">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Preview">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_ColorPalette">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_ToolWindow">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Document">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_WindowType.vsext_wt_OutPutWindow">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_TaskList">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Preview">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Autos">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_ProjectWindow">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_CallStack">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Threads">
-      <summary> </summary>
-    </member>
-    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_DocumentOutline">
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_PropertyWindow">
       <summary> </summary>
     </member>
     <member name="F:EnvDTE.vsext_WindowType.vsext_wt_RunningDocuments">
       <summary> </summary>
     </member>
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_TaskList">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Threads">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Toolbox">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_ToolWindow">
+      <summary> </summary>
+    </member>
+    <member name="F:EnvDTE.vsext_WindowType.vsext_wt_Watch">
+      <summary> </summary>
+    </member>
     <member name="T:EnvDTE.vsFilterProperties">
       <summary>Determines whether a property displays or not.</summary>
     </member>
-    <member name="F:EnvDTE.vsFilterProperties.vsFilterPropertiesNone">
-      <summary>The property is not hidden.</summary>
-    </member>
     <member name="F:EnvDTE.vsFilterProperties.vsFilterPropertiesAll">
       <summary>The property is hidden.</summary>
+    </member>
+    <member name="F:EnvDTE.vsFilterProperties.vsFilterPropertiesNone">
+      <summary>The property is not hidden.</summary>
     </member>
     <member name="F:EnvDTE.vsFilterProperties.vsFilterPropertiesSet">
       <summary>The property is read-only.</summary>
     </member>
     <member name="T:EnvDTE.vsFindAction">
       <summary>Represents the type of find action to take.</summary>
+    </member>
+    <member name="F:EnvDTE.vsFindAction.vsFindActionBookmarkAll">
+      <summary>Bookmarks each instance that is found.</summary>
     </member>
     <member name="F:EnvDTE.vsFindAction.vsFindActionFind">
       <summary>Finds the next matching word in the document.</summary>
@@ -10847,23 +10852,8 @@
     <member name="F:EnvDTE.vsFindAction.vsFindActionReplaceAll">
       <summary>Replaces all matching words in the document.</summary>
     </member>
-    <member name="F:EnvDTE.vsFindAction.vsFindActionBookmarkAll">
-      <summary>Bookmarks each instance that is found.</summary>
-    </member>
     <member name="T:EnvDTE.vsFindOptions">
       <summary>Represents the behavior of the ReplacePattern method, such as how to search, where to begin the search, whether to search forward or backward, and the case sensitivity.</summary>
-    </member>
-    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsNone">
-      <summary>No matching.</summary>
-    </member>
-    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsMatchWholeWord">
-      <summary>Matches whole word in search.</summary>
-    </member>
-    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsMatchCase">
-      <summary>Matches case of word in search.</summary>
-    </member>
-    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsRegularExpression">
-      <summary>Matches regular expression.</summary>
     </member>
     <member name="F:EnvDTE.vsFindOptions.vsFindOptionsBackwards">
       <summary>Searches backward from current point.</summary>
@@ -10871,17 +10861,29 @@
     <member name="F:EnvDTE.vsFindOptions.vsFindOptionsFromStart">
       <summary>Begins search at beginning of document.</summary>
     </member>
+    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsKeepModifiedDocumentsOpen">
+      <summary>Does not close documents that have been modified by the search.</summary>
+    </member>
+    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsMatchCase">
+      <summary>Matches case of word in search.</summary>
+    </member>
     <member name="F:EnvDTE.vsFindOptions.vsFindOptionsMatchInHiddenText">
       <summary>Looks for text matches in hidden text as well as nonhidden text. The <see cref="F:EnvDTE.vsFindOptions.vsFindOptionsMatchInHiddenText" /> constant value does not apply to the FindPattern method, because it searches all text, including hidden text.</summary>
     </member>
-    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsWildcards">
-      <summary>Uses wildcards in string search.</summary>
+    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsMatchWholeWord">
+      <summary>Matches whole word in search.</summary>
+    </member>
+    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsNone">
+      <summary>No matching.</summary>
+    </member>
+    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsRegularExpression">
+      <summary>Matches regular expression.</summary>
     </member>
     <member name="F:EnvDTE.vsFindOptions.vsFindOptionsSearchSubfolders">
       <summary>Includes subfolders in word search.</summary>
     </member>
-    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsKeepModifiedDocumentsOpen">
-      <summary>Does not close documents that have been modified by the search.</summary>
+    <member name="F:EnvDTE.vsFindOptions.vsFindOptionsWildcards">
+      <summary>Uses wildcards in string search.</summary>
     </member>
     <member name="T:EnvDTE.vsFindPatternSyntax">
       <summary>Represents the type of syntax used for the search pattern.</summary>
@@ -10898,32 +10900,29 @@
     <member name="T:EnvDTE.vsFindResult">
       <summary>Represents the results of a search.</summary>
     </member>
-    <member name="F:EnvDTE.vsFindResult.vsFindResultNotFound">
-      <summary>The search item was not found.</summary>
+    <member name="F:EnvDTE.vsFindResult.vsFindResultError">
+      <summary>The search resulted in an error.</summary>
     </member>
     <member name="F:EnvDTE.vsFindResult.vsFindResultFound">
       <summary>The search item was found.</summary>
     </member>
-    <member name="F:EnvDTE.vsFindResult.vsFindResultReplaceAndNotFound">
-      <summary>The search item to replace was not found.</summary>
-    </member>
-    <member name="F:EnvDTE.vsFindResult.vsFindResultReplaceAndFound">
-      <summary>The search item to replace was found.</summary>
-    </member>
-    <member name="F:EnvDTE.vsFindResult.vsFindResultReplaced">
-      <summary>The search item was replaced.</summary>
+    <member name="F:EnvDTE.vsFindResult.vsFindResultNotFound">
+      <summary>The search item was not found.</summary>
     </member>
     <member name="F:EnvDTE.vsFindResult.vsFindResultPending">
       <summary>The search has not yet completed.</summary>
     </member>
-    <member name="F:EnvDTE.vsFindResult.vsFindResultError">
-      <summary>The search resulted in an error.</summary>
+    <member name="F:EnvDTE.vsFindResult.vsFindResultReplaceAndFound">
+      <summary>The search item to replace was found.</summary>
+    </member>
+    <member name="F:EnvDTE.vsFindResult.vsFindResultReplaceAndNotFound">
+      <summary>The search item to replace was not found.</summary>
+    </member>
+    <member name="F:EnvDTE.vsFindResult.vsFindResultReplaced">
+      <summary>The search item was replaced.</summary>
     </member>
     <member name="T:EnvDTE.vsFindResultsLocation">
       <summary>Determines the location where the Find Results list displays.</summary>
-    </member>
-    <member name="F:EnvDTE.vsFindResultsLocation.vsFindResultsNone">
-      <summary>Results are not displayed.</summary>
     </member>
     <member name="F:EnvDTE.vsFindResultsLocation.vsFindResults1">
       <summary>Find Results list number one. (Default)</summary>
@@ -10931,29 +10930,32 @@
     <member name="F:EnvDTE.vsFindResultsLocation.vsFindResults2">
       <summary>Find Results list number two.</summary>
     </member>
+    <member name="F:EnvDTE.vsFindResultsLocation.vsFindResultsNone">
+      <summary>Results are not displayed.</summary>
+    </member>
     <member name="T:EnvDTE.vsFindTarget">
       <summary>Indicates the target for the search operation, such as the current document or files on disk.</summary>
     </member>
     <member name="F:EnvDTE.vsFindTarget.vsFindTargetCurrentDocument">
       <summary>Searches for a match in the current document. (Default)</summary>
     </member>
-    <member name="F:EnvDTE.vsFindTarget.vsFindTargetCurrentDocumentSelection">
-      <summary>Searches for a match in the selected text in the document.</summary>
-    </member>
     <member name="F:EnvDTE.vsFindTarget.vsFindTargetCurrentDocumentFunction">
       <summary>Searches the current document for a match in a function. You do not need to select the function before searching it.</summary>
     </member>
-    <member name="F:EnvDTE.vsFindTarget.vsFindTargetOpenDocuments">
-      <summary>Searches for a match in all open documents.</summary>
+    <member name="F:EnvDTE.vsFindTarget.vsFindTargetCurrentDocumentSelection">
+      <summary>Searches for a match in the selected text in the document.</summary>
     </member>
     <member name="F:EnvDTE.vsFindTarget.vsFindTargetCurrentProject">
       <summary>Searches for a match in the current project.</summary>
     </member>
-    <member name="F:EnvDTE.vsFindTarget.vsFindTargetSolution">
-      <summary>Searches for a match in the open solution.</summary>
-    </member>
     <member name="F:EnvDTE.vsFindTarget.vsFindTargetFiles">
       <summary>Searches for a match in the specified file(s).</summary>
+    </member>
+    <member name="F:EnvDTE.vsFindTarget.vsFindTargetOpenDocuments">
+      <summary>Searches for a match in all open documents.</summary>
+    </member>
+    <member name="F:EnvDTE.vsFindTarget.vsFindTargetSolution">
+      <summary>Searches for a match in the open solution.</summary>
     </member>
     <member name="T:EnvDTE.vsFontCharSet">
       <summary>Enumeration describing what character set to use when displaying items in the integrated development environment (IDE).</summary>
@@ -10961,38 +10963,53 @@
     <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetANSI">
       <summary>ANSI</summary>
     </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetDefault">
-      <summary>Default</summary>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetArabic">
+      <summary>Arabic</summary>
     </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetSymbol">
-      <summary>Symbols</summary>
-    </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetShiftJIS">
-      <summary>Japanese</summary>
-    </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetHangeul">
-      <summary>Korean</summary>
-    </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetGB2312">
-      <summary>Simple Chinese</summary>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetBaltic">
+      <summary>Baltic</summary>
     </member>
     <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetChineseBig5">
       <summary>Traditional Chinese</summary>
     </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetOEM">
-      <summary>OEM</summary>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetDefault">
+      <summary>Default</summary>
     </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetJohab">
-      <summary>Korean (Johab encoding)</summary>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetEastEurope">
+      <summary>East Europe</summary>
+    </member>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetGB2312">
+      <summary>Simple Chinese</summary>
+    </member>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetGreek">
+      <summary>Greek</summary>
+    </member>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetHangeul">
+      <summary>Korean</summary>
     </member>
     <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetHebrew">
       <summary>Hebrew</summary>
     </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetArabic">
-      <summary>Arabic</summary>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetJohab">
+      <summary>Korean (Johab encoding)</summary>
     </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetGreek">
-      <summary>Greek</summary>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetMac">
+      <summary>Macintosh</summary>
+    </member>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetOEM">
+      <summary>OEM</summary>
+    </member>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetRussian">
+      <summary>Russian</summary>
+    </member>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetShiftJIS">
+      <summary>Japanese</summary>
+    </member>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetSymbol">
+      <summary>Symbols</summary>
+    </member>
+    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetThai">
+      <summary>Thai</summary>
     </member>
     <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetTurkish">
       <summary>Turkish</summary>
@@ -11000,56 +11017,41 @@
     <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetVietnamese">
       <summary>Vietnamese</summary>
     </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetThai">
-      <summary>Thai</summary>
-    </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetEastEurope">
-      <summary>East Europe</summary>
-    </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetRussian">
-      <summary>Russian</summary>
-    </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetMac">
-      <summary>Macintosh</summary>
-    </member>
-    <member name="F:EnvDTE.vsFontCharSet.vsFontCharSetBaltic">
-      <summary>Baltic</summary>
-    </member>
     <member name="T:EnvDTE.vsGoToLineOptions">
       <summary>Determines whether the line navigated to is the first or last line of the document.</summary>
-    </member>
-    <member name="F:EnvDTE.vsGoToLineOptions.vsGoToLineOptionsLast">
-      <summary>Goes to the last line.</summary>
     </member>
     <member name="F:EnvDTE.vsGoToLineOptions.vsGoToLineOptionsFirst">
       <summary>Goes to the first line.</summary>
     </member>
+    <member name="F:EnvDTE.vsGoToLineOptions.vsGoToLineOptionsLast">
+      <summary>Goes to the last line.</summary>
+    </member>
     <member name="T:EnvDTE.vsHTMLTabs">
       <summary>Indicates the active tab of an open HTML document.</summary>
-    </member>
-    <member name="F:EnvDTE.vsHTMLTabs.vsHTMLTabsSource">
-      <summary>The source tab.</summary>
     </member>
     <member name="F:EnvDTE.vsHTMLTabs.vsHTMLTabsDesign">
       <summary>The design tab.</summary>
     </member>
+    <member name="F:EnvDTE.vsHTMLTabs.vsHTMLTabsSource">
+      <summary>The source tab.</summary>
+    </member>
     <member name="T:EnvDTE.vsIDEMode">
       <summary>Represents the mode of the integrated development environment (IDE).</summary>
-    </member>
-    <member name="F:EnvDTE.vsIDEMode.vsIDEModeDesign">
-      <summary>The IDE is in Design mode.</summary>
     </member>
     <member name="F:EnvDTE.vsIDEMode.vsIDEModeDebug">
       <summary>The IDE is in Debug mode.</summary>
     </member>
+    <member name="F:EnvDTE.vsIDEMode.vsIDEModeDesign">
+      <summary>The IDE is in Design mode.</summary>
+    </member>
     <member name="T:EnvDTE.vsIndentStyle">
       <summary>Indicates how indenting is handled in a code editor.</summary>
     </member>
-    <member name="F:EnvDTE.vsIndentStyle.vsIndentStyleNone">
-      <summary>Indicates no indenting.</summary>
-    </member>
     <member name="F:EnvDTE.vsIndentStyle.vsIndentStyleDefault">
       <summary>Indicates block indenting.</summary>
+    </member>
+    <member name="F:EnvDTE.vsIndentStyle.vsIndentStyleNone">
+      <summary>Indicates no indenting.</summary>
     </member>
     <member name="F:EnvDTE.vsIndentStyle.vsIndentStyleSmart">
       <summary>Indicates language style specific indenting.</summary>
@@ -11057,10 +11059,10 @@
     <member name="T:EnvDTE.vsInitializeMode">
       <summary>Deprecated. Do not use.</summary>
     </member>
-    <member name="F:EnvDTE.vsInitializeMode.vsInitializeModeStartup">
+    <member name="F:EnvDTE.vsInitializeMode.vsInitializeModeReset">
       <summary> </summary>
     </member>
-    <member name="F:EnvDTE.vsInitializeMode.vsInitializeModeReset">
+    <member name="F:EnvDTE.vsInitializeMode.vsInitializeModeStartup">
       <summary> </summary>
     </member>
     <member name="T:EnvDTE.vsInsertFlags">
@@ -11087,23 +11089,23 @@
     <member name="F:EnvDTE.vsLinkedWindowType.vsLinkedWindowTypeDocked">
       <summary>The window is docked.</summary>
     </member>
-    <member name="F:EnvDTE.vsLinkedWindowType.vsLinkedWindowTypeVertical">
-      <summary>The windows are joined at the same level side by side.</summary>
-    </member>
     <member name="F:EnvDTE.vsLinkedWindowType.vsLinkedWindowTypeHorizontal">
       <summary>The windows are joined at the same level, one above the other.</summary>
     </member>
     <member name="F:EnvDTE.vsLinkedWindowType.vsLinkedWindowTypeTabbed">
       <summary>The windows are tabbed, that is, they are stacked on top of each other with tabs at the top.</summary>
     </member>
+    <member name="F:EnvDTE.vsLinkedWindowType.vsLinkedWindowTypeVertical">
+      <summary>The windows are joined at the same level side by side.</summary>
+    </member>
     <member name="T:EnvDTE.vsMovementOptions">
       <summary>Indicates changes to the TextSelection object.</summary>
     </member>
-    <member name="F:EnvDTE.vsMovementOptions.vsMovementOptionsMove">
-      <summary>Move the TextSelection object.</summary>
-    </member>
     <member name="F:EnvDTE.vsMovementOptions.vsMovementOptionsExtend">
       <summary>Extend the TextSelection object.</summary>
+    </member>
+    <member name="F:EnvDTE.vsMovementOptions.vsMovementOptionsMove">
+      <summary>Move the TextSelection object.</summary>
     </member>
     <member name="T:EnvDTE.vsMoveToColumnLine">
       <summary>Indicates positional changes to the EndPoint object.</summary>
@@ -11138,38 +11140,38 @@
     <member name="T:EnvDTE.vsPaneShowHow">
       <summary>Determines how to display selected text or code.</summary>
     </member>
+    <member name="F:EnvDTE.vsPaneShowHow.vsPaneShowAsIs">
+      <summary>The displayed lines remain the same unless it is necessary to move the display to show the text.</summary>
+    </member>
     <member name="F:EnvDTE.vsPaneShowHow.vsPaneShowCentered">
       <summary>Centers the text pane around the indicated text.</summary>
     </member>
     <member name="F:EnvDTE.vsPaneShowHow.vsPaneShowTop">
       <summary>Puts the first line at the top of the page.</summary>
     </member>
-    <member name="F:EnvDTE.vsPaneShowHow.vsPaneShowAsIs">
-      <summary>The displayed lines remain the same unless it is necessary to move the display to show the text.</summary>
-    </member>
     <member name="T:EnvDTE.vsPromptResult">
       <summary>Describes the user's action after a dialog box is displayed.</summary>
-    </member>
-    <member name="F:EnvDTE.vsPromptResult.vsPromptResultYes">
-      <summary>User pressed Yes.</summary>
-    </member>
-    <member name="F:EnvDTE.vsPromptResult.vsPromptResultNo">
-      <summary>User pressed No.</summary>
     </member>
     <member name="F:EnvDTE.vsPromptResult.vsPromptResultCancelled">
       <summary>User pressed Cancel.</summary>
     </member>
+    <member name="F:EnvDTE.vsPromptResult.vsPromptResultNo">
+      <summary>User pressed No.</summary>
+    </member>
+    <member name="F:EnvDTE.vsPromptResult.vsPromptResultYes">
+      <summary>User pressed Yes.</summary>
+    </member>
     <member name="T:EnvDTE.vsSaveChanges">
       <summary>Determines how to save an item or items.</summary>
-    </member>
-    <member name="F:EnvDTE.vsSaveChanges.vsSaveChangesYes">
-      <summary>If changes were made, saves the document.</summary>
     </member>
     <member name="F:EnvDTE.vsSaveChanges.vsSaveChangesNo">
       <summary>If changes were made, does not save the document.</summary>
     </member>
     <member name="F:EnvDTE.vsSaveChanges.vsSaveChangesPrompt">
       <summary>If changes were made, prompts the user to save the document.</summary>
+    </member>
+    <member name="F:EnvDTE.vsSaveChanges.vsSaveChangesYes">
+      <summary>If changes were made, saves the document.</summary>
     </member>
     <member name="T:EnvDTE.vsSaveStatus">
       <summary>Indicates whether or not the save was successful.</summary>
@@ -11183,20 +11185,20 @@
     <member name="T:EnvDTE.vsSelectionMode">
       <summary>Indicates the type of selection that <see cref="T:EnvDTE.TextSelection" /> represents.</summary>
     </member>
-    <member name="F:EnvDTE.vsSelectionMode.vsSelectionModeStream">
-      <summary>The nonempty selection is a stream mode selection. (Default)</summary>
-    </member>
     <member name="F:EnvDTE.vsSelectionMode.vsSelectionModeBox">
       <summary>The nonempty selection is a block mode selection.</summary>
+    </member>
+    <member name="F:EnvDTE.vsSelectionMode.vsSelectionModeStream">
+      <summary>The nonempty selection is a stream mode selection. (Default)</summary>
     </member>
     <member name="T:EnvDTE.vsSmartFormatOptions">
       <summary>Determines the type of formatting applied to selected code.</summary>
     </member>
-    <member name="F:EnvDTE.vsSmartFormatOptions.vsSmartFormatOptionsNone">
-      <summary>No formatting is applied to the code.</summary>
-    </member>
     <member name="F:EnvDTE.vsSmartFormatOptions.vsSmartFormatOptionsBlock">
       <summary>Code is block-formatted.</summary>
+    </member>
+    <member name="F:EnvDTE.vsSmartFormatOptions.vsSmartFormatOptionsNone">
+      <summary>No formatting is applied to the code.</summary>
     </member>
     <member name="F:EnvDTE.vsSmartFormatOptions.vsSmartFormatOptionsSmart">
       <summary>Code is smart-formatted according to the rules of that language.</summary>
@@ -11213,23 +11215,32 @@
     <member name="T:EnvDTE.vsStartUp">
       <summary>Specifies the startup state of the Visual Studio IDE.</summary>
     </member>
-    <member name="F:EnvDTE.vsStartUp.vsStartUpShowHomePage">
-      <summary>Show the Visual Studio home page on startup.</summary>
+    <member name="F:EnvDTE.vsStartUp.vsStartUpEmptyEnvironment">
+      <summary>Start with an empty environment.</summary>
     </member>
     <member name="F:EnvDTE.vsStartUp.vsStartUpLoadLastSolution">
       <summary>Load the last solution on startup</summary>
     </member>
-    <member name="F:EnvDTE.vsStartUp.vsStartUpOpenProjectDialog">
-      <summary>Start with the Open project dialog.</summary>
-    </member>
     <member name="F:EnvDTE.vsStartUp.vsStartUpNewProjectDialog">
       <summary>Start with the New Project dialog.</summary>
     </member>
-    <member name="F:EnvDTE.vsStartUp.vsStartUpEmptyEnvironment">
-      <summary>Start with an empty environment.</summary>
+    <member name="F:EnvDTE.vsStartUp.vsStartUpOpenProjectDialog">
+      <summary>Start with the Open project dialog.</summary>
+    </member>
+    <member name="F:EnvDTE.vsStartUp.vsStartUpShowHomePage">
+      <summary>Show the Visual Studio home page on startup.</summary>
     </member>
     <member name="T:EnvDTE.vsStatusAnimation">
       <summary>Indicates the icon to display on the Status Bar.</summary>
+    </member>
+    <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationBuild">
+      <summary>Displays a building animation.</summary>
+    </member>
+    <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationDeploy">
+      <summary>Displays a deploying animation.</summary>
+    </member>
+    <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationFind">
+      <summary>Displays a finding animation.</summary>
     </member>
     <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationGeneral">
       <summary>Displays a general activity animation.</summary>
@@ -11240,17 +11251,8 @@
     <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationSave">
       <summary>Displays a saving animation.</summary>
     </member>
-    <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationDeploy">
-      <summary>Displays a deploying animation.</summary>
-    </member>
     <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationSync">
       <summary>Displays a sync animation.</summary>
-    </member>
-    <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationBuild">
-      <summary>Displays a building animation.</summary>
-    </member>
-    <member name="F:EnvDTE.vsStatusAnimation.vsStatusAnimationFind">
-      <summary>Displays a finding animation.</summary>
     </member>
     <member name="T:EnvDTE.vsTaskCategories">
       <summary>Represents the type of task in the Task window.</summary>
@@ -11276,32 +11278,26 @@
     <member name="T:EnvDTE.vsTaskIcon">
       <summary>Represents the category for the new task item.</summary>
     </member>
-    <member name="F:EnvDTE.vsTaskIcon.vsTaskIconNone">
-      <summary>No icon</summary>
+    <member name="F:EnvDTE.vsTaskIcon.vsTaskIconComment">
+      <summary>The comment task icon</summary>
     </member>
     <member name="F:EnvDTE.vsTaskIcon.vsTaskIconCompile">
       <summary>The compile error icon</summary>
     </member>
-    <member name="F:EnvDTE.vsTaskIcon.vsTaskIconSquiggle">
-      <summary>The smart editor icon</summary>
-    </member>
-    <member name="F:EnvDTE.vsTaskIcon.vsTaskIconComment">
-      <summary>The comment task icon</summary>
+    <member name="F:EnvDTE.vsTaskIcon.vsTaskIconNone">
+      <summary>No icon</summary>
     </member>
     <member name="F:EnvDTE.vsTaskIcon.vsTaskIconShortcut">
       <summary>The shortcut icon</summary>
+    </member>
+    <member name="F:EnvDTE.vsTaskIcon.vsTaskIconSquiggle">
+      <summary>The smart editor icon</summary>
     </member>
     <member name="F:EnvDTE.vsTaskIcon.vsTaskIconUser">
       <summary>The user-defined task icon</summary>
     </member>
     <member name="T:EnvDTE.vsTaskListColumn">
       <summary>Represents the column in the Task List that was modified.</summary>
-    </member>
-    <member name="F:EnvDTE.vsTaskListColumn.vsTaskListColumnPriority">
-      <summary>The Priority column</summary>
-    </member>
-    <member name="F:EnvDTE.vsTaskListColumn.vsTaskListColumnGlyph">
-      <summary>The Icon column</summary>
     </member>
     <member name="F:EnvDTE.vsTaskListColumn.vsTaskListColumnCheck">
       <summary>The Check column</summary>
@@ -11312,11 +11308,20 @@
     <member name="F:EnvDTE.vsTaskListColumn.vsTaskListColumnFile">
       <summary>The File column</summary>
     </member>
+    <member name="F:EnvDTE.vsTaskListColumn.vsTaskListColumnGlyph">
+      <summary>The Icon column</summary>
+    </member>
     <member name="F:EnvDTE.vsTaskListColumn.vsTaskListColumnLine">
       <summary>The Line column</summary>
     </member>
+    <member name="F:EnvDTE.vsTaskListColumn.vsTaskListColumnPriority">
+      <summary>The Priority column</summary>
+    </member>
     <member name="T:EnvDTE.vsTaskPriority">
       <summary>Represents the priority for the new task item.</summary>
+    </member>
+    <member name="F:EnvDTE.vsTaskPriority.vsTaskPriorityHigh">
+      <summary>High-priority task</summary>
     </member>
     <member name="F:EnvDTE.vsTaskPriority.vsTaskPriorityLow">
       <summary>Low-priority task</summary>
@@ -11324,59 +11329,56 @@
     <member name="F:EnvDTE.vsTaskPriority.vsTaskPriorityMedium">
       <summary>Medium-priority task</summary>
     </member>
-    <member name="F:EnvDTE.vsTaskPriority.vsTaskPriorityHigh">
-      <summary>High-priority task</summary>
-    </member>
     <member name="T:EnvDTE.vsTextChanged">
       <summary>Indicates one or more reasons why the event occurred, which might help you understand what happened in the buffer.</summary>
-    </member>
-    <member name="F:EnvDTE.vsTextChanged.vsTextChangedMultiLine">
-      <summary>A change to text occurred that affected more than one line, such as pasting with new lines, deleting across lines, or replacing all.</summary>
-    </member>
-    <member name="F:EnvDTE.vsTextChanged.vsTextChangedSave">
-      <summary>A line was committed by saving the file.</summary>
     </member>
     <member name="F:EnvDTE.vsTextChanged.vsTextChangedCaretMoved">
       <summary>The insertion point was moved.</summary>
     </member>
-    <member name="F:EnvDTE.vsTextChanged.vsTextChangedReplaceAll">
-      <summary>A replace all operation occurred.</summary>
+    <member name="F:EnvDTE.vsTextChanged.vsTextChangedFindStarting">
+      <summary>A find operation moved the insertion point.</summary>
+    </member>
+    <member name="F:EnvDTE.vsTextChanged.vsTextChangedMultiLine">
+      <summary>A change to text occurred that affected more than one line, such as pasting with new lines, deleting across lines, or replacing all.</summary>
     </member>
     <member name="F:EnvDTE.vsTextChanged.vsTextChangedNewline">
       <summary>A new line was created.</summary>
     </member>
-    <member name="F:EnvDTE.vsTextChanged.vsTextChangedFindStarting">
-      <summary>A find operation moved the insertion point.</summary>
+    <member name="F:EnvDTE.vsTextChanged.vsTextChangedReplaceAll">
+      <summary>A replace all operation occurred.</summary>
+    </member>
+    <member name="F:EnvDTE.vsTextChanged.vsTextChangedSave">
+      <summary>A line was committed by saving the file.</summary>
     </member>
     <member name="T:EnvDTE.vsToolBoxItemFormat">
       <summary>Indicates the format of the new ToolBox item.</summary>
     </member>
-    <member name="F:EnvDTE.vsToolBoxItemFormat.vsToolBoxItemFormatText">
-      <summary>Plain text item. Double-clicking the item places it into the active document. (Default)</summary>
-    </member>
-    <member name="F:EnvDTE.vsToolBoxItemFormat.vsToolBoxItemFormatHTML">
-      <summary>HTML item. Text, but might be treated differently by certain active documents.</summary>
+    <member name="F:EnvDTE.vsToolBoxItemFormat.vsToolBoxItemFormatDotNETComponent">
+      <summary>.NET Framework component.</summary>
     </member>
     <member name="F:EnvDTE.vsToolBoxItemFormat.vsToolBoxItemFormatGUID">
       <summary>GUID. A string that is the class ID of a control.</summary>
     </member>
-    <member name="F:EnvDTE.vsToolBoxItemFormat.vsToolBoxItemFormatDotNETComponent">
-      <summary>.NET Framework component.</summary>
+    <member name="F:EnvDTE.vsToolBoxItemFormat.vsToolBoxItemFormatHTML">
+      <summary>HTML item. Text, but might be treated differently by certain active documents.</summary>
+    </member>
+    <member name="F:EnvDTE.vsToolBoxItemFormat.vsToolBoxItemFormatText">
+      <summary>Plain text item. Double-clicking the item places it into the active document. (Default)</summary>
     </member>
     <member name="T:EnvDTE.vsUISelectionType">
       <summary>Indicates how the selection is moved or extended in a UIHierarchy window.</summary>
     </member>
-    <member name="F:EnvDTE.vsUISelectionType.vsUISelectionTypeSelect">
-      <summary>The node is selected by itself.</summary>
-    </member>
-    <member name="F:EnvDTE.vsUISelectionType.vsUISelectionTypeToggle">
-      <summary>The selection state is toggled on the new node. That is, if the node was selected, it is no longer. If it was not selected, it now is the only selected node.</summary>
-    </member>
     <member name="F:EnvDTE.vsUISelectionType.vsUISelectionTypeExtend">
       <summary>The new node, the currently selected node, and all intervening nodes are selected.</summary>
     </member>
+    <member name="F:EnvDTE.vsUISelectionType.vsUISelectionTypeSelect">
+      <summary>The node is selected by itself.</summary>
+    </member>
     <member name="F:EnvDTE.vsUISelectionType.vsUISelectionTypeSetCaret">
       <summary>The new node is not selected; only the focus is given to it.</summary>
+    </member>
+    <member name="F:EnvDTE.vsUISelectionType.vsUISelectionTypeToggle">
+      <summary>The selection state is toggled on the new node. That is, if the node was selected, it is no longer. If it was not selected, it now is the only selected node.</summary>
     </member>
     <member name="T:EnvDTE.vsWhitespaceOptions">
       <summary>Determines how and where to remove white space.</summary>
@@ -11390,41 +11392,41 @@
     <member name="T:EnvDTE.vsWindowState">
       <summary>Represents the state of a given window.</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowState.vsWindowStateNormal">
-      <summary>Window is normal.</summary>
+    <member name="F:EnvDTE.vsWindowState.vsWindowStateMaximize">
+      <summary>Window is maximized.</summary>
     </member>
     <member name="F:EnvDTE.vsWindowState.vsWindowStateMinimize">
       <summary>Window is minimized.</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowState.vsWindowStateMaximize">
-      <summary>Window is maximized.</summary>
+    <member name="F:EnvDTE.vsWindowState.vsWindowStateNormal">
+      <summary>Window is normal.</summary>
     </member>
     <member name="T:EnvDTE.vsWindowType">
       <summary>Represents the different types of windows available in the integrated development environment (IDE).</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeCodeWindow">
-      <summary>Code Window</summary>
-    </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeDesigner">
-      <summary>Designer Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeAutos">
+      <summary>Autos Window</summary>
     </member>
     <member name="F:EnvDTE.vsWindowType.vsWindowTypeBrowser">
       <summary>Browser Window</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeWatch">
-      <summary>Watch Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeCallStack">
+      <summary>Call Stack Window</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeLocals">
-      <summary>Locals Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeCodeWindow">
+      <summary>Code Window</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeImmediate">
-      <summary>Immediate Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeColorPalette">
+      <summary>Color Palette</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeSolutionExplorer">
-      <summary>Solution Explorer Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeDesigner">
+      <summary>Designer Window</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeProperties">
-      <summary>Properties Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeDocument">
+      <summary>Document Window</summary>
+    </member>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeDocumentOutline">
+      <summary>Document Outline Window</summary>
     </member>
     <member name="F:EnvDTE.vsWindowType.vsWindowTypeFind">
       <summary>Find Window</summary>
@@ -11432,47 +11434,47 @@
     <member name="F:EnvDTE.vsWindowType.vsWindowTypeFindReplace">
       <summary>Find and Replace Window</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeToolbox">
-      <summary>Toolbox Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeImmediate">
+      <summary>Immediate Window</summary>
     </member>
     <member name="F:EnvDTE.vsWindowType.vsWindowTypeLinkedWindowFrame">
       <summary>Linked Window Frame Window</summary>
     </member>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeLocals">
+      <summary>Locals Window</summary>
+    </member>
     <member name="F:EnvDTE.vsWindowType.vsWindowTypeMainWindow">
       <summary>Main Window</summary>
-    </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypePreview">
-      <summary>Preview Window</summary>
-    </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeColorPalette">
-      <summary>Color Palette</summary>
-    </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeToolWindow">
-      <summary>ToolWindow Window</summary>
-    </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeDocument">
-      <summary>Document Window</summary>
     </member>
     <member name="F:EnvDTE.vsWindowType.vsWindowTypeOutput">
       <summary>Output Window</summary>
     </member>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypePreview">
+      <summary>Preview Window</summary>
+    </member>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeProperties">
+      <summary>Properties Window</summary>
+    </member>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeRunningDocuments">
+      <summary>Running Documents Window</summary>
+    </member>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeSolutionExplorer">
+      <summary>Solution Explorer Window</summary>
+    </member>
     <member name="F:EnvDTE.vsWindowType.vsWindowTypeTaskList">
       <summary>TaskList Window</summary>
-    </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeAutos">
-      <summary>Autos Window</summary>
-    </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeCallStack">
-      <summary>Call Stack Window</summary>
     </member>
     <member name="F:EnvDTE.vsWindowType.vsWindowTypeThreads">
       <summary>Threads Window</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeDocumentOutline">
-      <summary>Document Outline Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeToolbox">
+      <summary>Toolbox Window</summary>
     </member>
-    <member name="F:EnvDTE.vsWindowType.vsWindowTypeRunningDocuments">
-      <summary>Running Documents Window</summary>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeToolWindow">
+      <summary>ToolWindow Window</summary>
+    </member>
+    <member name="F:EnvDTE.vsWindowType.vsWindowTypeWatch">
+      <summary>Watch Window</summary>
     </member>
     <member name="T:EnvDTE.Window">
       <summary>The <see cref="T:EnvDTE.Window" /> object represents a window in the environment.</summary>
@@ -11630,7 +11632,7 @@
       <returns>A string representing the name of the object.</returns>
     </member>
     <member name="M:EnvDTE.WindowConfiguration.Update">
-      <summary>Updates the collection as if the user opened the Add-in Manager dialog box, or sets the object's window layout to the current window layout.</summary>
+      <summary>Updates the collection of windows or sets the object's window layout to the current window layout.</summary>
     </member>
     <member name="T:EnvDTE.WindowConfigurations">
       <summary>The <see cref="T:EnvDTE.WindowConfigurations" /> collection contains all named window configurations created for the environment.</summary>
@@ -11761,17 +11763,17 @@
     <member name="T:EnvDTE.wizardResult">
       <summary>A constant specifying the results of the wizard.</summary>
     </member>
-    <member name="F:EnvDTE.wizardResult.wizardResultSuccess">
-      <summary>The wizard started successfully.</summary>
-    </member>
-    <member name="F:EnvDTE.wizardResult.wizardResultFailure">
-      <summary>The wizard failed to start.</summary>
+    <member name="F:EnvDTE.wizardResult.wizardResultBackOut">
+      <summary>The user clicked the wizard's Back button, nullifying the changes made.</summary>
     </member>
     <member name="F:EnvDTE.wizardResult.wizardResultCancel">
       <summary>The wizard's startup was canceled.</summary>
     </member>
-    <member name="F:EnvDTE.wizardResult.wizardResultBackOut">
-      <summary>The user clicked the wizard's Back button, nullifying the changes made.</summary>
+    <member name="F:EnvDTE.wizardResult.wizardResultFailure">
+      <summary>The wizard failed to start.</summary>
+    </member>
+    <member name="F:EnvDTE.wizardResult.wizardResultSuccess">
+      <summary>The wizard started successfully.</summary>
     </member>
   </members>
 </doc>
