@@ -3677,9 +3677,10 @@ namespace ERP.OMS.Management
 
                                         objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + AckNo + "',AckDt='" + AckDate + "',Irn='" + Irn + "',SignedInvoice='" + SignedInvoice + "',SignedQRCode='" + SignedQRCode + "',Status='" + IrnStatus + "',EWayBillNumber = '" + EwbNo + "',EWayBillDate='" + EwbDt + "',EwayBill_ValidTill='" + EwbValidTill + "' where invoice_id='" + id.ToString() + "'");
 
-                                        IRNsuccess = IRNsuccess + "," + objInvoice.DocDtls.No;
+                                        //IRNsuccess = IRNsuccess + "," + objInvoice.DocDtls.No;
                                         success = success + "," + objInvoice.DocDtls.No;
-                                    }
+                                         IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
+                                     }
 
                                     else
                                     {
