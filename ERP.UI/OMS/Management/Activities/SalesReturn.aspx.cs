@@ -2994,7 +2994,8 @@ namespace ERP.OMS.Management.Activities
 
 
                 DBEngine objDBEngineCredential = new DBEngine();
-                string Branch_id = Convert.ToString(objDBEngineCredential.GetDataTable("SELECT Invoice_BranchId FROM TBL_TRANS_SALESINVOICE WHERE INVOICE_ID='" + id.ToString() + "'").Rows[0][0]);
+                string Branch_id = Convert.ToString(Header.Rows[0]["Return_BranchId"]);
+                // string Branch_id = Convert.ToString(objDBEngineCredential.GetDataTable("SELECT Invoice_BranchId FROM TBL_TRANS_SALESINVOICE WHERE INVOICE_ID='" + id.ToString() + "'").Rows[0][0]);
                 DataTable dt = objDBEngineCredential.GetDataTable("select EwayBill_Userid,EwayBill_Password,EwayBill_GSTIN,EInvoice_UserId,EInvoice_Password,branch_GSTIN from tbl_master_branch where branch_id='" + Branch_id + "'");
                 string IRN_API_UserId = Convert.ToString(dt.Rows[0]["EInvoice_UserId"]);
                 string IRN_API_Password = Convert.ToString(dt.Rows[0]["EInvoice_Password"]);
@@ -3231,7 +3232,7 @@ namespace ERP.OMS.Management.Activities
                                 if (Convert.ToString(AckNo) != "0" && AckNo != null)
                                 {
 
-                                    objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + AckNo + "',AckDt='" + AckDate + "',Irn='" + Irn + "',SignedInvoice='" + SignedInvoice + "',SignedQRCode='" + SignedQRCode + "',Status='" + IrnStatus + "',EWayBillNumber = '" + EwbNo + "',EWayBillDate='" + EwbDt + "',EwayBill_ValidTill='" + EwbValidTill + "' where invoice_id='" + id.ToString() + "'");
+                                    objDb.GetDataTable("update TBL_TRANS_SALESRETURN SET AckNo='" + AckNo + "',AckDt='" + AckDate + "',Irn='" + Irn + "',SignedInvoice='" + SignedInvoice + "',SignedQRCode='" + SignedQRCode + "',Status='" + IrnStatus + "',EWayBillNumber = '" + EwbNo + "',EWayBillDate='" + EwbDt + "',EwayBill_ValidTill='" + EwbValidTill + "' where Return_Id='" + id.ToString() + "'");
 
                                     //IRNsuccess = IRNsuccess + "," + objInvoice.DocDtls.No;
                                     //success = success + "," + objInvoice.DocDtls.No;
@@ -3242,10 +3243,10 @@ namespace ERP.OMS.Management.Activities
 
                                 else
                                 {
-                                    objDb.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_GEN'");
+                                    objDb.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SR' AND ERROR_TYPE='IRN_GEN'");
 
                                     // objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + AckNo + "',AckDt='" + AckDate + "',Irn='" + Irn + "',SignedInvoice='" + SignedInvoice + "',SignedQRCode='" + SignedQRCode + "',Status='" + IrnStatus + "' where invoice_id='" + id.ToString() + "'");
-                                    objDb.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','" + ErrorCode + "','" + ErrorMessage.Replace("'", "''") + "')");
+                                    objDb.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SR','IRN_GEN','" + ErrorCode + "','" + ErrorMessage.Replace("'", "''") + "')");
 
                                     //error = error + "," + objInvoice.DocDtls.No;
                                     //IRNerror = IRNerror + "," + objInvoice.DocDtls.No;

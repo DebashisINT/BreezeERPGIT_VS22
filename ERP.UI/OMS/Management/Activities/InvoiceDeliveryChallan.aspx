@@ -12,7 +12,7 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="JS/SearchPopup.js?v=2.0"></script>
     <link href="CSS/SalesInvoice.css" rel="stylesheet" />
-    <script src="JS/InvoiceDeliveryChallan.js?v=18.2"></script>
+    <script src="JS/InvoiceDeliveryChallan.js?v=18.3"></script>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelNew.js?v=2.3" type="text/javascript"></script>
      <style>
       .wrapHolder#pageheaderContent {

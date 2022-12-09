@@ -476,3 +476,4 @@ D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\es\DevExpress.Sparkline.v15.1.Core.resourc
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\ja\DevExpress.Sparkline.v15.1.Core.resources.dll
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\ru\DevExpress.Sparkline.v15.1.Core.resources.dll
 D:\Priti\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.CopyComplete
+D:\Priti\BreezeERPGIT_VS22\ERP.UI\bin\System.Net.Http.Formatting.xml
