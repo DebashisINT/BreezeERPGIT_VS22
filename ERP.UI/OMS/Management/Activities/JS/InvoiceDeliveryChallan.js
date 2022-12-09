@@ -6802,23 +6802,25 @@ function IrnGrid() {
                 window.open("../../Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=SalesInvoice_PK&modulename=Invoice&id=" + RateDiffVendID + '&PrintOption=4', '_blank')
             }
 
-            // Mantis Issue 24027 (13/05/2021)
-            if (document.getElementById('chkSendMail').checked == true) {
-                
-                $.ajax({
-                    type: "POST",
-                    url: "InvoiceDeliveryChallan.aspx/SendMailAfterIRN",
-                    data: JSON.stringify({ Output: $("#hdnRDECId").val(), paramCustomerId: $("#hdnCustomerId").val() }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: false,
-                    success: function (r) {
+            if (document.getElementById('chkSendMail')) {
+                // Mantis Issue 24027 (13/05/2021)
+                if (document.getElementById('chkSendMail').checked == true) {
 
-                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "InvoiceDeliveryChallan.aspx/SendMailAfterIRN",
+                        data: JSON.stringify({ Output: $("#hdnRDECId").val(), paramCustomerId: $("#hdnCustomerId").val() }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (r) {
 
-                });
+                        }
+
+                    });
+                }
+                //End of Mantis Issue 24027 (13/05/2021)
             }
-            //End of Mantis Issue 24027 (13/05/2021)
 
             if ($("#hdnIsfromOrder").val() == "Y" && $("#hdnSalesrderId").val != "") {
                 window.location.assign("InvoiceCumChallanSO.aspx");
