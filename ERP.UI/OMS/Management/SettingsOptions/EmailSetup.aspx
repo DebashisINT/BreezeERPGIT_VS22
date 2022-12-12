@@ -230,10 +230,10 @@
                         <%--<Settings ShowHorizontalScrollBar="True" />--%>
                     </dxe:ASPxGridView>
                     <asp:SqlDataSource ID="gridStatusDataSource" runat="server"
-                        SelectCommand="">
-                        <SelectParameters>
+                        SelectCommand="select EmailAccounts_ID,(select cmp_name from tbl_master_company where cmp_internalid=EmailAccounts_CompanyID) as Company,(select seg_name from tbl_master_segment where seg_id= EmailAccounts_SegmentID) as Segment,EmailAccounts_EmailID,Case when EmailAccounts_UsedFor='N' then 'Normal' when EmailAccounts_UsedFor='S' then 'Self Service' when EmailAccounts_UsedFor='E' then 'ECN Email' when EmailAccounts_UsedFor='B' then 'Bulk Email'  end  as EmailType ,EmailAccounts_Password,EmailAccounts_SMTP,EmailAccounts_SMTPPort,EmailAccounts_POP,EmailAccounts_POPPort,EmailAccounts_ReplyToAccount,EmailAccounts_Disclaimer,case when EmailAccounts_InUse='Y' then 'Active' else 'Deactive' end as ActiveInd,EmailAccounts_CreateUser,EmailAccounts_CreateDateTime,EmailAccounts_ModifyUser,EmailAccounts_ModifyDateTime,EmailAccounts_SSLMode  from config_emailAccounts">
+                      <%--  <SelectParameters>
                             <asp:SessionParameter Name="userlist" SessionField="userchildHierarchy" Type="string" />
-                        </SelectParameters>
+                        </SelectParameters>--%>
                     </asp:SqlDataSource>
                 </td>
             </tr>
