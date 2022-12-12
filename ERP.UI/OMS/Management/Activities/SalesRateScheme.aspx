@@ -55,6 +55,12 @@
             e.returnValue = false;
             e.stopPropagation();
         }
+        function clookup_entity_GotFocus() {
+            clookup_Entity.gridView.Refresh();
+            clookup_Entity.ShowDropDown();
+            
+            
+        }
     </script>
     <script>
         //***Customer***//
@@ -952,8 +958,10 @@
                             &nbsp;
                     <input type="checkbox" id="chkAll" onchange="AllCustCheck()" />
                             All
-                    <dxe:ASPxGridLookup ID="lookup_Entity" runat="server" ClientInstanceName="clookup_Entity" DataSourceID="EntityServerModeData" SelectionMode="Multiple"
-                        KeyFieldName="cnt_internalid" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
+                    <dxe:ASPxGridLookup ID="lookup_Entity" runat="server" ClientInstanceName="clookup_Entity" DataSourceID="EntityServerModeData" 
+                        SelectionMode="Multiple" 
+                        KeyFieldName="cnt_internalid" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}" 
+                        AutoGenerateColumns="False" MultiTextSeparator=", ">
                         <Columns>
                             <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
                             <dxe:GridViewDataColumn FieldName="Name" Visible="true" VisibleIndex="1" Caption="Entity Name" Settings-AutoFilterCondition="Contains" Width="200px">
@@ -982,7 +990,7 @@
                             <SettingsBehavior AllowFocusedRow="True" AllowSelectSingleRowOnly="false"></SettingsBehavior>
                             <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
                         </GridViewProperties>
-                        <ClientSideEvents GotFocus="function(s,e){clookup_Entity.ShowDropDown();}" />
+                        <ClientSideEvents GotFocus="clookup_entity_GotFocus" />
                         <%--LostFocus="Project_LostFocus" ValueChanged="ProjectValueChange"--%>
 
                         <ClearButton DisplayMode="Always">

@@ -16,7 +16,7 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <%-- <script src="JS/SearchPopup.js?v=2.0"></script>--%>
     <link href="CSS/SalesInvoice.css" rel="stylesheet" />
-    <script src="JS/SalesInvoice.js?v=2.5"></script>
+    <script src="JS/SalesInvoice.js?v=3.0"></script>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelNew.js?v=3.0" type="text/javascript"></script>
     <style>
         .wrapHolder#pageheaderContent {
@@ -547,7 +547,30 @@
                 var Quote_Msg = "Sales Invoice No. '" + Quote_Number + "' saved.";
                 var EInvQuote_Msg = "Sales Invoice No. '" + Quote_Number + "' generated.";
 
+                var IsEinvoice1 = grid.cpisEinvoice;
+                if (IsEinvoice1 == 'true') {
+                    $.ajax({
+                        type: "POST",
+                        url: "SalesInvoiceList.aspx/GetEditablePermissionFromEInvoice",
+                        data: "{'SalesInvoiceID':'" + $("#hdnRDECId").val() + "','Action':'ExemptedChecked'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (msg) {
+                            var status = msg.d;
+                            if (status == "Yes") {
+
+                            }
+                            else {
+                                grid.cpisEinvoice = null;
+                                Quote_Msg = Quote_Msg + "" + "This Invoice contains an Exempted Item.No Need to generate IRN."
+
+                            }
+                        }
+                    });
+                }
                 var IsEinvoice = grid.cpisEinvoice;
+               
                 grid.cpisEinvoice = null;
                 if (IsEinvoice == 'true') {
                     jAlert(EInvQuote_Msg, 'Alert Dialog: [Sales Invoice]', function (r) {
@@ -560,6 +583,7 @@
                             LoadingPanel.Hide();
                             //cUploadConfirmation.Show();
                             $("#exampleModalSI").modal("show");
+                           
                         }
 
                     });
