@@ -460,7 +460,7 @@
     <asp:HiddenField ID="hdAdjustmentType" runat="server" />
     <asp:HiddenField ID="hddnProjectId" runat="server" />
     <asp:HiddenField ID="hdnProjectSelectInEntryModule" runat="server" />
-
+     <asp:HiddenField ID="hdnAutocalculationAdjustmentInvoice" runat="server" />
     <asp:HiddenField ID="hdnLockFromDate" runat="server" />
     <asp:HiddenField ID="hdnLockToDate" runat="server" />
     <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />

@@ -356,26 +356,28 @@ function populateDocument(id) {
         PushOnPicked(id);
         
     }
-    var OsAmt = cOsAmt.GetValue();
-    var AdjAmt = cAdjAmt.GetValue();
-    if (parseFloat(cAdjAmt.GetValue()) < parseFloat(cOsAmt.GetValue())) {
-        if (parseFloat(cAdjAmt.GetValue()) == 0) {
-            if (parseFloat(grid.GetEditor("OsAmt").GetValue()) <= parseFloat(cOsAmt.GetValue())) {
-                grid.GetEditor("AdjAmt").SetValue(grid.GetEditor("OsAmt").GetValue());
+    var AutocalculationAdjustmentInvoice = GetObjectID('hdnAutocalculationAdjustmentInvoice').value;
+    if (AutocalculationAdjustmentInvoice == 1) {
+        var OsAmt = cOsAmt.GetValue();
+        var AdjAmt = cAdjAmt.GetValue();
+        if (parseFloat(cAdjAmt.GetValue()) < parseFloat(cOsAmt.GetValue())) {
+            if (parseFloat(cAdjAmt.GetValue()) == 0) {
+                if (parseFloat(grid.GetEditor("OsAmt").GetValue()) <= parseFloat(cOsAmt.GetValue())) {
+                    grid.GetEditor("AdjAmt").SetValue(grid.GetEditor("OsAmt").GetValue());
+                }
+                else {
+                    //grid.GetEditor("AdjAmt").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue() + parseFloat(cAdjAmt.GetValue()) - parseFloat(cOsAmt.GetValue())));
+                    grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()));
+                }
             }
             else {
-                //grid.GetEditor("AdjAmt").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue() + parseFloat(cAdjAmt.GetValue()) - parseFloat(cOsAmt.GetValue())));
-                grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()));
-            }
-        }
-        else {
-            if (parseFloat(grid.GetEditor("OsAmt").GetValue()) < (parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()))) {
-                /* grid.GetEditor("AdjAmt").SetValue((parseFloat(cOsAmt.GetValue()) + parseFloat(cAdjAmt.GetValue())) -parseFloat(cOsAmt.GetValue()));*/               
-                grid.GetEditor("AdjAmt").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue()));
-            }
-            else if (parseFloat(grid.GetEditor("OsAmt").GetValue()) > (parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()))) {
-                grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()));
-                
+                if (parseFloat(grid.GetEditor("OsAmt").GetValue()) < (parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()))) {
+                    /* grid.GetEditor("AdjAmt").SetValue((parseFloat(cOsAmt.GetValue()) + parseFloat(cAdjAmt.GetValue())) -parseFloat(cOsAmt.GetValue()));*/
+                    grid.GetEditor("AdjAmt").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue()));
+                }
+                else if (parseFloat(grid.GetEditor("OsAmt").GetValue()) > (parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()))) {
+                    grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()));
+
                     //if (parseFloat(cOsAmt.GetValue()) > (parseFloat(cOsAmt.GetValue()) + parseFloat(cAdjAmt.GetValue()))) {
                     //    grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()));
                     //}
@@ -384,13 +386,11 @@ function populateDocument(id) {
                     //}
                 }
             }
-        
 
-        ShowRunningTotal();
+
+            ShowRunningTotal();
+        }
     }
-
-    
-
 
 }
 
@@ -445,7 +445,10 @@ function gridAdjustAmtLostFocus(s, e) {
     }
     grid.GetEditor("RemainingBalance").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue()) - s.GetValue());
 
-    ShowRunningTotal();
+    var AutocalculationAdjustmentInvoice = GetObjectID('hdnAutocalculationAdjustmentInvoice').value;
+    if (AutocalculationAdjustmentInvoice == 1) {
+        ShowRunningTotal();
+    }
     
 }
 
