@@ -31,6 +31,7 @@ using System.Globalization;
 using System.Web.Script.Services;
 using System.Net;
 using System.IO;
+using DocumentFormat.OpenXml.Vml.Office;
 
 
 namespace ERP.OMS.Management.Activities
@@ -4664,6 +4665,10 @@ namespace ERP.OMS.Management.Activities
                                     proc1.AddPara("@Action", Convert.ToString("ApprovalSendSMS"));
                                     proc1.AddPara("@tinyURL", Convert.ToString(tinyURL));
                                     proc1.AddPara("@EmpId", Convert.ToString(EmpId));
+                                    // Mantis Issue 25513
+                                    proc1.AddPara("@POID", OrderId);
+                                    proc1.AddPara("@DataBase", DataBase);
+                                    // End of Mantis Issue 25513
                                     proc1.GetTable();
                                 }
                             }
@@ -4774,6 +4779,10 @@ namespace ERP.OMS.Management.Activities
                     proc.AddVarcharPara("@Action", 500, "ApprovalSendSMS");
                     proc.AddPara("@tinyURL", Convert.ToString(tinyURL));
                     proc.AddPara("@EmpId", Convert.ToString(EmpId));
+                    // Mantis Issue 25513
+                    proc.AddPara("@POID", IndentId);
+                    proc.AddPara("@DataBase", DataBase);
+                    // End of Mantis Issue 25513
                     NoOfRowEffected = proc.RunActionQuery();
                     if (NoOfRowEffected > 0)
                     {

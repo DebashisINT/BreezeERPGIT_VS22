@@ -17,6 +17,8 @@ using System.Linq;
 using System.Data.SqlClient;
 using System.Net;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Vml.Office;
+
 namespace ERP.OMS.Management.Activities
 {
     public partial class PurchaseOrderList : ERP.OMS.ViewState_class.VSPage
@@ -1489,6 +1491,10 @@ namespace ERP.OMS.Management.Activities
                     proc.AddVarcharPara("@Action", 500, "ApprovalSendSMS");
                     proc.AddPara("@tinyURL", Convert.ToString(tinyURL));
                     proc.AddPara("@EmpId", Convert.ToString(EmpId));
+                    // Mantis Issue 25513
+                    proc.AddPara("@POID", OrderId);
+                    proc.AddPara("@DataBase", DataBase);
+                    // End of Mantis Issue 25513
                     NoOfRowEffected = proc.RunActionQuery();
                     if (NoOfRowEffected > 0)
                     {
