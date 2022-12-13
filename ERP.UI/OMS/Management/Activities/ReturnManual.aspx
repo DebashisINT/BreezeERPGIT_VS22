@@ -906,6 +906,29 @@
         var SalesReturn_Msg = "Sale Return Manual No. " + SalesReturn_Number + " saved.";
         var EinvSalesReturn_Msg = "Sale Return Manual No. " + SalesReturn_Number + " generated.";
         $("#hdnRDECId").val(grid.cpRecetId);
+
+        var IsEinvoice1 = grid.cpisEinvoice;
+        if (IsEinvoice1 == 'true') {
+            $.ajax({
+                type: "POST",
+                url: "SalesReturnList.aspx/Prc_EInvoiceChecking_details",
+                data: "{'returnid':'" + $("#hdnRDECId").val() + "','Action':'ExemptedChecked'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    var status = msg.d;
+                    if (status == "Yes") {
+
+                    }
+                    else {
+                        grid.cpisEinvoice = null;
+                        SalesReturn_Msg = SalesReturn_Msg + "" + "This Invoice contains an Exempted Item.No Need to generate IRN."
+
+                    }
+                }
+            });
+        }
         var IsEinvoice = grid.cpisEinvoice;
                 grid.cpisEinvoice=null;
                 if (IsEinvoice == 'true') {

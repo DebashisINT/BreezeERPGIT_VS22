@@ -3619,7 +3619,7 @@ function PerformCallToGridBind() {
 
     <div>
         <asp:HiddenField runat="server" ID="hdnIsDistanceCalculate" />
-
+        <asp:HiddenField runat="server" ID="hdnTransCategory" />
         <asp:HiddenField runat="server" ID="hdnConvertionOverideVisible" />
         <asp:HiddenField runat="server" ID="hdnShowUOMConversionInEntry" />
         <asp:HiddenField runat="server" ID="hdnGuid" />

@@ -10,7 +10,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="JS/CustomerReceiptAdjustment.js?v=6.0"></script>
+    <script src="JS/CustomerReceiptAdjustment.js?v=6.4"></script>
 
 
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">

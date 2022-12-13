@@ -477,6 +477,28 @@ function OnEndCallback(s, e) {
                 var SalesReturn_Msg = "Sales Return No. " + SalesReturn_Number + " saved.";
                 var SalesReturnEinv_Msg = "Sales Return No. " + SalesReturn_Number + " generated..";
 
+                var IsEinvoice1 = grid.cpisEinvoice;
+                if (IsEinvoice1 == 'true') {
+                    $.ajax({
+                        type: "POST",
+                        url: "SalesReturnList.aspx/Prc_EInvoiceChecking_details",
+                        data: "{'returnid':'" + $("#hdnRDECId").val() + "','Action':'ExemptedChecked'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (msg) {
+                            var status = msg.d;
+                            if (status == "Yes") {
+
+                            }
+                            else {
+                                grid.cpisEinvoice = null;
+                                SalesReturn_Msg = SalesReturn_Msg + "" + "This Invoice contains an Exempted Item.No Need to generate IRN."
+
+                            }
+                        }
+                    });
+                }
 
                 var IsEinvoice = grid.cpisEinvoice;
                 grid.cpisEinvoice=null;
