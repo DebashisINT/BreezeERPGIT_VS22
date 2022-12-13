@@ -3181,7 +3181,29 @@ function CloseGridLookup() {
 
 function GetContactPersonOnJSON(id, Name) {
 
-    var CustomerID=id;
+    var CustomerID = id;
+
+    var OtherDetail = {};
+    OtherDetail.CustomerID = id;
+    $.ajax({
+        type: "POST",
+        url: "SalesReturn.aspx/GetCustomerStateCode",
+        data: JSON.stringify(OtherDetail),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+            StateCodeList = msg.d;
+            if (StateCodeList.length > 0) {
+                if (StateCodeList[0].TransactionType != "") {
+                    $("#hdnTransCategory").val(StateCodeList[0].TransactionType);
+                }
+            }
+        },
+        error: function (msg) {
+            jAlert('Please try again later');
+        }
+    });
 
     $.ajax({
         type: "POST",

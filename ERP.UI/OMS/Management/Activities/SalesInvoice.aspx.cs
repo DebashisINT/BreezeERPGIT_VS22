@@ -3222,86 +3222,99 @@ namespace ERP.OMS.Management.Activities
                 }
 
                 CommonBL ComBL = new CommonBL();
+
                 string GSTRateTaxMasterMandatory = ComBL.GetSystemSettingsResult("GSTRateTaxMasterMandatory");
-                if (!String.IsNullOrEmpty(GSTRateTaxMasterMandatory))
+                if (drdTransCategory.SelectedValue != "SEZWOP" || drdTransCategory.SelectedValue != "EXWOP")
                 {
-                    if (GSTRateTaxMasterMandatory == "Yes")
+                    if (!String.IsNullOrEmpty(GSTRateTaxMasterMandatory))
                     {
-
-                        // Mantis Issue 24195 [Fixed error while saving Serice Invoice]
-                        if (tempQuotation.Columns.Contains("SONetAmount"))
+                        if (GSTRateTaxMasterMandatory == "Yes")
                         {
-                            tempQuotation.Columns.Remove("SONetAmount");
-                        }
-                        // Mantis Issue 24195
 
-                        // Mantis Issue 24425, 25528
-                        DataTable temp_Quotation = tempQuotation.Copy();
-                        if (temp_Quotation.Columns.Contains("InvoiceDetails_AltQuantity"))
-                        {
-                            temp_Quotation.Columns.Remove("InvoiceDetails_AltQuantity");
-                        }
-                        if (temp_Quotation.Columns.Contains("InvoiceDetails_AltUOM"))
-                        {
-                            temp_Quotation.Columns.Remove("InvoiceDetails_AltUOM");
-                        }
-                        // End of Mantis Issue 24425, 25528
-
-                        if (temp_Quotation.Columns.Contains("DeliverySchedule"))
-                        {
-                            temp_Quotation.Columns.Remove("DeliverySchedule");
-                        }
-
-                        if (temp_Quotation.Columns.Contains("DeliveryScheduleID"))
-                        {
-                            temp_Quotation.Columns.Remove("DeliveryScheduleID");
-                        }
-
-                        if (temp_Quotation.Columns.Contains("DeliveryScheduleDetailsID"))
-                        {
-                            temp_Quotation.Columns.Remove("DeliveryScheduleDetailsID");
-                        }
-
-                        DataTable dtTaxDetails = new DataTable();
-                        ProcedureExecute procT = new ProcedureExecute("prc_CRMSalesInvoice_Details");
-                        procT.AddVarcharPara("@Action", 500, "GetTaxDetailsByProductID");
-                        // Mantis Issue 24425, 25528
-                        //procT.AddPara("@ProductDetails", tempQuotation);
-                        procT.AddPara("@ProductDetails", temp_Quotation);
-                        // End of Mantis Issue 24425, 25528
-                        procT.AddVarcharPara("@TaxOption", 10, Convert.ToString(strTaxType));
-                        procT.AddVarcharPara("@SupplyState", 15, Convert.ToString(sstateCode));
-                        procT.AddVarcharPara("@BRANCHID", 10, Convert.ToString(strBranch));
-                        procT.AddVarcharPara("@COMPANYID", 500, Convert.ToString(Session["LastCompany"]));
-                        procT.AddVarcharPara("@ENTITY_ID", 100, Convert.ToString(strCustomer));
-                        procT.AddVarcharPara("@TaxDATE", 100, Convert.ToString(dt_PLQuote.Date.ToString("yyyy-MM-dd")));
-                        dtTaxDetails = procT.GetTable();
-
-                        if (dtTaxDetails != null && dtTaxDetails.Rows.Count > 0)
-                        {
-                            foreach (DataRow dr in dtTaxDetails.Rows)
+                            // Mantis Issue 24195 [Fixed error while saving Serice Invoice]
+                            if (tempQuotation.Columns.Contains("SONetAmount"))
                             {
-                                string SerialID = Convert.ToString(dr["SrlNo"]);
-                                string TaxID = Convert.ToString(dr["TaxCode"]);
-                                decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2, MidpointRounding.AwayFromZero);
-                                string ProductName = Convert.ToString(dr["ProductName"]);
+                                tempQuotation.Columns.Remove("SONetAmount");
+                            }
+                            // Mantis Issue 24195
 
-                                if (TaxDetailTable.Rows.Count == 0 || TaxDetailTable == null)
+                            // Mantis Issue 24425, 25528
+                            DataTable temp_Quotation = tempQuotation.Copy();
+                            if (temp_Quotation.Columns.Contains("InvoiceDetails_AltQuantity"))
+                            {
+                                temp_Quotation.Columns.Remove("InvoiceDetails_AltQuantity");
+                            }
+                            if (temp_Quotation.Columns.Contains("InvoiceDetails_AltUOM"))
+                            {
+                                temp_Quotation.Columns.Remove("InvoiceDetails_AltUOM");
+                            }
+                            // End of Mantis Issue 24425, 25528
+
+                            if (temp_Quotation.Columns.Contains("DeliverySchedule"))
+                            {
+                                temp_Quotation.Columns.Remove("DeliverySchedule");
+                            }
+
+                            if (temp_Quotation.Columns.Contains("DeliveryScheduleID"))
+                            {
+                                temp_Quotation.Columns.Remove("DeliveryScheduleID");
+                            }
+
+                            if (temp_Quotation.Columns.Contains("DeliveryScheduleDetailsID"))
+                            {
+                                temp_Quotation.Columns.Remove("DeliveryScheduleDetailsID");
+                            }
+
+                            DataTable dtTaxDetails = new DataTable();
+                            ProcedureExecute procT = new ProcedureExecute("prc_CRMSalesInvoice_Details");
+                            procT.AddVarcharPara("@Action", 500, "GetTaxDetailsByProductID");
+                            // Mantis Issue 24425, 25528
+                            //procT.AddPara("@ProductDetails", tempQuotation);
+                            procT.AddPara("@ProductDetails", temp_Quotation);
+                            // End of Mantis Issue 24425, 25528
+                            procT.AddVarcharPara("@TaxOption", 10, Convert.ToString(strTaxType));
+                            procT.AddVarcharPara("@SupplyState", 15, Convert.ToString(sstateCode));
+                            procT.AddVarcharPara("@BRANCHID", 10, Convert.ToString(strBranch));
+                            procT.AddVarcharPara("@COMPANYID", 500, Convert.ToString(Session["LastCompany"]));
+                            procT.AddVarcharPara("@ENTITY_ID", 100, Convert.ToString(strCustomer));
+                            procT.AddVarcharPara("@TaxDATE", 100, Convert.ToString(dt_PLQuote.Date.ToString("yyyy-MM-dd")));
+                            dtTaxDetails = procT.GetTable();
+
+                            if (dtTaxDetails != null && dtTaxDetails.Rows.Count > 0)
+                            {
+                                foreach (DataRow dr in dtTaxDetails.Rows)
                                 {
-                                    validate = "checkAcurateTaxAmount";
-                                    grid.JSProperties["cpSerialNo"] = SerialID;
-                                    grid.JSProperties["cpProductName"] = ProductName;
-                                    break;
+                                    string SerialID = Convert.ToString(dr["SrlNo"]);
+                                    string TaxID = Convert.ToString(dr["TaxCode"]);
+                                    decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2, MidpointRounding.AwayFromZero);
+                                    string ProductName = Convert.ToString(dr["ProductName"]);
 
-                                }
-                                DataRow[] rows = TaxDetailTable.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
+                                    if (TaxDetailTable.Rows.Count == 0 || TaxDetailTable == null)
+                                    {
+                                        validate = "checkAcurateTaxAmount";
+                                        grid.JSProperties["cpSerialNo"] = SerialID;
+                                        grid.JSProperties["cpProductName"] = ProductName;
+                                        break;
 
-                                if (rows != null && rows.Length > 0)
-                                {
-                                    //decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
-                                    decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2, MidpointRounding.AwayFromZero);
+                                    }
+                                    DataRow[] rows = TaxDetailTable.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
 
-                                    if (EntryTaxAmount != _TaxAmount)
+                                    if (rows != null && rows.Length > 0)
+                                    {
+                                        //decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
+                                        decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2, MidpointRounding.AwayFromZero);
+
+                                        if (EntryTaxAmount != _TaxAmount)
+                                        {
+                                            validate = "checkAcurateTaxAmount";
+                                            grid.JSProperties["cpSerialNo"] = SerialID;
+                                            grid.JSProperties["cpProductName"] = ProductName;
+                                            break;
+                                        }
+
+
+                                    }
+                                    else
                                     {
                                         validate = "checkAcurateTaxAmount";
                                         grid.JSProperties["cpSerialNo"] = SerialID;
@@ -3309,18 +3322,9 @@ namespace ERP.OMS.Management.Activities
                                         break;
                                     }
 
-
-                                }
-                                else
-                                {
-                                    validate = "checkAcurateTaxAmount";
-                                    grid.JSProperties["cpSerialNo"] = SerialID;
-                                    grid.JSProperties["cpProductName"] = ProductName;
-                                    break;
                                 }
 
                             }
-
                         }
                     }
                 }

@@ -338,10 +338,11 @@ function showDocumentList() {
 }
 
 function populateDocument(id) {
-     
+   
     $('#DocumentModel').modal('hide');
     grid.batchEditApi.StartEdit(globalRowindex, 8);
-    
+    grid.GetEditor("AdjAmt").SetValue(0);
+    ShowRunningTotal();
     var SelectedDocument = $.grep(DocumentList, function (e) { return e.uniqueid == id; });
     if (SelectedDocument.length > 0) {
         var setObj = SelectedDocument[0];
@@ -355,6 +356,42 @@ function populateDocument(id) {
         PushOnPicked(id);
         
     }
+    var OsAmt = cOsAmt.GetValue();
+    var AdjAmt = cAdjAmt.GetValue();
+    if (parseFloat(cAdjAmt.GetValue()) < parseFloat(cOsAmt.GetValue())) {
+        if (parseFloat(cAdjAmt.GetValue()) == 0) {
+            if (parseFloat(grid.GetEditor("OsAmt").GetValue()) <= parseFloat(cOsAmt.GetValue())) {
+                grid.GetEditor("AdjAmt").SetValue(grid.GetEditor("OsAmt").GetValue());
+            }
+            else {
+                //grid.GetEditor("AdjAmt").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue() + parseFloat(cAdjAmt.GetValue()) - parseFloat(cOsAmt.GetValue())));
+                grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()));
+            }
+        }
+        else {
+            if (parseFloat(grid.GetEditor("OsAmt").GetValue()) < (parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()))) {
+                /* grid.GetEditor("AdjAmt").SetValue((parseFloat(cOsAmt.GetValue()) + parseFloat(cAdjAmt.GetValue())) -parseFloat(cOsAmt.GetValue()));*/               
+                grid.GetEditor("AdjAmt").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue()));
+            }
+            else if (parseFloat(grid.GetEditor("OsAmt").GetValue()) > (parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()))) {
+                grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()));
+                
+                    //if (parseFloat(cOsAmt.GetValue()) > (parseFloat(cOsAmt.GetValue()) + parseFloat(cAdjAmt.GetValue()))) {
+                    //    grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()));
+                    //}
+                    //else {
+                    //    grid.GetEditor("AdjAmt").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue()) - (parseFloat(cOsAmt.GetValue()) + parseFloat(cAdjAmt.GetValue())));
+                    //}
+                }
+            }
+        
+
+        ShowRunningTotal();
+    }
+
+    
+
+
 }
 
 
@@ -388,14 +425,11 @@ function GetTotalAmount() {
 
     return totalAmount;
 }
-function ShowRunningTotal() {
-    //var VoucherAmount = ctxtVoucherAmount.GetValue();
-
-    var TotAmt = DecimalRoundoff(GetTotalAmount(), 2);
-
-   // c_txt_Debit.SetText(TotAmt.toString());
-    cAdjAmt.SetValue(TotAmt.toString());
-    //clblRunningBalanceCapsul.SetValue(DecimalRoundoff(parseFloat(VoucherAmount) - parseFloat(TotAmt), 2));
+function ShowRunningTotal() { 
+    //if (parseFloat(cAdjAmt.GetValue()) < parseFloat(cOsAmt.GetValue())) {
+        var TotAmt = DecimalRoundoff(GetTotalAmount(), 2);
+        cAdjAmt.SetValue(TotAmt.toString());
+    //}
 }
 function gridAdjustAmtLostFocus(s, e) {
     console.log('1');
