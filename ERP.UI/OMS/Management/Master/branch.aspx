@@ -230,6 +230,92 @@
             }
         }
         // End of Mantis Issue 24142
+
+        <%--Rev Mantis Issue 25456--%>
+
+        var projectlist = []
+        function ProjectPushPop() {
+            var BranchID = $("#hdnBranchID_2").val();
+            let a = [];
+
+            $(".statecheckall:checked").each(function () {
+                a.push(this.value);
+            });
+
+            $(".statecheck:checked").each(function () {
+                a.push(this.value);
+            });
+            var str1
+            //  alert(a);
+
+            str1 = { BranchID: BranchID, projectlist: a }
+            $.ajax({
+                type: "POST",
+                url: "Branch.aspx/GetProjectListSubmit",
+                data: JSON.stringify(str1),
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (responseFromServer) {
+                    // alert(responseFromServer.d)
+                    $("#project-list").modal('hide');
+                    jAlert('Project assigned successfully');
+                }
+            });
+        }
+
+        function CheckParticular(v) {
+            if (v == false) {
+                $(".statecheckall").prop('checked', false);
+            }
+        }
+
+        function CheckAll(id) {
+            var ischecked = $(".statecheckall").is(':checked');
+            if (ischecked == true) {
+                $('input:checkbox.statecheck').each(function () {
+                    $(this).prop('checked', true);
+                });
+
+            }
+            else {
+                $('input:checkbox.statecheck').each(function () {
+                    $(this).prop('checked', false);
+                });
+
+            }
+
+
+        }
+
+        function fn_ProjectMap(BranchID) {
+            //$("#hdnEMPID").val(empID);
+            $("#hdnBranchID_2").val(BranchID);
+            var str
+            //str = { EMPID: empID }
+            str = { BranchID: BranchID }
+            var html = "";
+            // alert();
+            $.ajax({
+                type: "POST",
+                url: "branch.aspx/Getprojectlist",
+                data: JSON.stringify(str),
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (responseFromServer) {
+                    for (i = 0; i < responseFromServer.d.length; i++) {
+                        if (responseFromServer.d[i].IsChecked == true) {
+                            html += "<li><input type='checkbox' id=" + responseFromServer.d[i].Proj_Id + "  class='statecheck' onclick=CheckParticular($(this).is(':checked')) value=" + responseFromServer.d[i].Proj_Id + " checked  /><a href='#'><label id='lblstatename' class='lblstate' for=" + responseFromServer.d[i].Proj_Id + " >" + responseFromServer.d[i].Proj_Name + "</label></a></li>";
+                        }
+                        else {
+                            html += "<li><input type='checkbox' id=" + responseFromServer.d[i].Proj_Id + " class='statecheck'  onclick=CheckParticular($(this).is(':checked')) value=" + responseFromServer.d[i].Proj_Id + "   /><a href='#'><label id='lblstatename' class='lblstate' for=" + responseFromServer.d[i].Proj_Id + ">" + responseFromServer.d[i].Proj_Name + "</label></a></li>";
+                        }
+                    }
+                    $("#projectlisting").html(html);
+                    $("#project-list").modal('show');
+                }
+            });
+        }
+        <%--Rev End Mantis Issue 25456--%>
     </script>
     <style>
         .pl5 {
@@ -242,6 +328,54 @@
         }
         /*End of Mantis Issue 24142*/
     </style>
+    <%--Rev Mantis Issue 25456--%>
+    <style>
+        .listStyle > li {
+            list-style-type: none;
+            padding: 5px;
+        }
+
+        .listStyle {
+            height: 420px;
+            overflow-y: auto;
+        }
+
+            .listStyle > li > input[type="checkbox"] {
+                -webkit-transform: translateY(3px);
+                -moz-transform: translateY(3px);
+                transform: translateY(3px);
+            }
+
+        #projectlisting li a:hover:not(.header) {
+            background-color: none;
+        }
+
+        .modal-backdrop {
+            z-index: auto !important;
+        }
+        #projectlisting {
+            /* Remove default list styling */
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 8px;
+        }
+
+         #projectlisting li {
+                padding: 5px 10px;
+         }
+
+        #projectlisting li a {
+            margin-top: -1px; /* Prevent double borders */
+            padding: 0 12px; /* Add some padding */
+            text-decoration: none; /* Remove default text underline */
+            font-size: 14px; /* Increase the font-size */
+            color: black; /* Add a black text color */
+            display: inline-block; /* Make it into a block element to fill the whole list */
+            cursor: pointer;
+        }
+    </style>
+    <%--Rev End Mantis Issue 25456--%>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -404,6 +538,13 @@
                                         <a href="javascript:void(0);" onclick="upload_Signature('<%# Container.KeyValue %>')" title="">
                                             <span class='ico attachColor'><i class='fa fa-sitemap' aria-hidden='true'></i></span><span class='hidden-xs'>Add Signature</span></a>
                                         <%--End of Mantis Issue 24142--%>
+                                        <%--Rev Mantis Issue 25456--%>
+                                        <%--<% if (rights.CanAssignbranch && SrvBranchMap)
+                                               { %>--%>
+                                            <a href="javascript:void(0);" onclick="fn_ProjectMap('<%#Eval("branch_id") %>')" title="">
+                                                <span class='ico deleteColor'><i class='fa fa-sitemap' aria-hidden='true'></i></span><span class='hidden-xs'>Project Mapping</span></a>
+                                            <%--<% } %>--%>
+                                        <%--Rev End Mantis Issue 25456--%>
                                     </div>
                                 </DataItemTemplate>
                                 <HeaderTemplate></HeaderTemplate>
@@ -477,6 +618,34 @@
 
         </div>
     </div>
+    <%--Rev Mantis Issue 25456--%>
+    <div id="project-list" class="modal fade" data-backdrop="static" role="dialog">
+        <div class="modal-dialog" style="width: 450px;">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Project List</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+
+                        <input type="text" id="myInput_project" onkeyup="myFunction()" placeholder="Search for Branch.">
+
+                        <ul id="projectlisting" class="listStyle">
+                            <%--<input type="checkbox" id="idstate" class="statecheck" /><label id="lblstatename" class="lblstate"></label>--%>
+                        </ul>
+                    </div>
+                    <input type="button" id="btnprojsubmit" title="SUBMIT" value="SUBMIT" class="btn btn-primary" onclick="ProjectPushPop()" />
+                    <input type="hidden" id="hdnstatelist" class="btn btn-primary" />
+                    <input type="hidden" id="hdnBranchID_2" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <%--Rev End Mantis Issue 25456--%>
+
     <%--Mantis Issue 24142--%>
     <div id="ModalSignature" class="modal fade pmsModal w40" data-backdrop="static" role="dialog">
         <div class="modal-dialog" style="width: 550px; ">
@@ -578,5 +747,28 @@
 
             }
         }
+        <%--Rev Mantis Issue 25456--%>
+        function myFunction() {
+            // Declare variables
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('myInput_project');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("projectlisting");
+            li = ul.getElementsByTagName('li');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+
+            }
+        }
+        <%--Rev End Mantis Issue 25456--%>
     </script>
 </asp:Content>
