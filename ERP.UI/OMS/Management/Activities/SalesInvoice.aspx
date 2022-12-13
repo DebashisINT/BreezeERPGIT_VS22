@@ -563,7 +563,7 @@
                             }
                             else {
                                 grid.cpisEinvoice = null;
-                                Quote_Msg = Quote_Msg + "" + "This Invoice contains an Exempted Item.No Need to generate IRN."
+                                Quote_Msg = Quote_Msg + "<br>" + "This Invoice contains an Exempted Item.No Need to generate IRN."
 
                             }
                         }

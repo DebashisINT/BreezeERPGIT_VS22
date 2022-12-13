@@ -493,7 +493,7 @@ function OnEndCallback(s, e) {
                             }
                             else {
                                 grid.cpisEinvoice = null;
-                                SalesReturn_Msg = SalesReturn_Msg + "" + "This Invoice contains an Exempted Item.No Need to generate IRN."
+                                SalesReturn_Msg = SalesReturn_Msg + "<br>" + "This Invoice contains an Exempted Item.No Need to generate IRN."
 
                             }
                         }

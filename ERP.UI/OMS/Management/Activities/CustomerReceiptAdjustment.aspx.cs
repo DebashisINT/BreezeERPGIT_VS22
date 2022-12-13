@@ -28,6 +28,20 @@ namespace ERP.OMS.Management.Activities
             if (!IsPostBack) 
             {
                 rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/Management/Activities/CustomerReceiptAdjustmentList.aspx");
+                string AutocalculationAdjustmentInvoice = cbl.GetSystemSettingsResult("AutocalculationAdjustmentInvoice");
+                if (!String.IsNullOrEmpty(AutocalculationAdjustmentInvoice))
+                {
+                    if (AutocalculationAdjustmentInvoice == "Yes")
+                    { 
+                        hdnAutocalculationAdjustmentInvoice.Value = "1";
+                    }
+                    else if (AutocalculationAdjustmentInvoice.ToUpper().Trim() == "NO")
+                    {   
+                        hdnAutocalculationAdjustmentInvoice.Value = "0";
+                    }
+                }
+
+
                 string ProjectSelectInEntryModule = cbl.GetSystemSettingsResult("ProjectSelectInEntryModule");
                 if (!String.IsNullOrEmpty(ProjectSelectInEntryModule))
                 {
