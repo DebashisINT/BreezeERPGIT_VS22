@@ -436,9 +436,70 @@ namespace ERP.OMS.Management.Master
 
 
         }
-         //End of Mantis Issue 24142
-    }
+        //End of Mantis Issue 24142
 
+        //Rev Mantis Issue 25456
+        [WebMethod]
+        public static List<projectlist> Getprojectlist(string BranchID)
+        {
+            BusinessLogicLayer.DBEngine objEngine = new BusinessLogicLayer.DBEngine();
+            List<projectlist> omodel = new List<projectlist>();
+            DataTable dt = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("Proc_AddSignature");
+            //proc.AddPara("@EMPID", EMPID);
+            proc.AddPara("@Action", "PROJECTMAPPING");
+            proc.AddPara("@BranchId", BranchID);
+            dt = proc.GetTable();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                omodel = UtilityLayer.APIHelperMethods.ToModelList<projectlist>(dt);
+            }
+            return omodel;
+        }
+
+        [WebMethod]
+        public static bool GetProjectListSubmit(string BranchID, List<string> projectlist)
+        {
+            //Employee_BL objEmploye = new Employee_BL();
+            string Proj_Id = "";
+            int i = 1;
+
+            if (projectlist != null && projectlist.Count > 0)
+            {
+                foreach (string item in projectlist)
+                {
+                    if (item == "0")
+                    {
+                        Proj_Id = "0";
+                        break;
+                    }
+                    else
+                    {
+                        if (i > 1)
+                            Proj_Id = Proj_Id + "," + item;
+                        else
+                            Proj_Id = item;
+                        i++;
+                    }
+                }
+
+            }
+
+            //DataTable dtfromtosumervisor = objEmploye.SubmitEmployeeBranch(BranchID, Proj_Id, Convert.ToString(HttpContext.Current.Session["userid"]));
+            DataTable dt = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("Proc_AddSignature");
+            proc.AddPara("@Action", "PROJECTINSERT");
+            proc.AddPara("@BranchId", BranchID);
+            proc.AddPara("@User_id", Convert.ToString(HttpContext.Current.Session["userid"]));
+            proc.AddPara("@ProjectId", Proj_Id);
+            dt = proc.GetTable();
+          
+            return true;
+        }
+
+        public static string BranchID { get; set; }
+    }
+    //Rev End Mantis Issue 25456
     public class ModelList
     {
         public long ModuleID { get; set; }
@@ -446,4 +507,14 @@ namespace ERP.OMS.Management.Master
         public bool IsChecked { get; set; }
         public string status { get; set; }
     }
+    //Rev Mantis Issue 25456
+    public class projectlist
+    {
+        public long Proj_Id { get; set; }
+        public string Proj_Name { get; set; }
+        public string Proj_Description { get; set; }
+        public string Proj_Code { get; set; }
+        public bool IsChecked { get; set; }
+    }
+    //Rev end Mantis Issue 25456
 }
