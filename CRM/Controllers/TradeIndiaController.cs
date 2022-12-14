@@ -76,7 +76,8 @@ namespace CRM.Controllers
                         string js = new JavaScriptSerializer().Serialize(json);
                         return Json(js, JsonRequestBehavior.AllowGet);
                     }
-   
+
+                    // Mantis Issue 25518 [ .Replace("'","''") added for s2.message items]
                     foreach (var s2 in tradeindialist)
                     {
                         string rand = GenerateRandomNo();
@@ -106,7 +107,7 @@ namespace CRM.Controllers
                             sender_name = s2.sender_name,
                             month_slot = s2.month_slot,
                             sender_country = s2.sender_country,
-                            message = s2.message,
+                            message = s2.message.Replace("'", "''"),
                             product_userid = s2.product_userid,
                             rfi_id = s2.rfi_id,
                             sender_uid = s2.sender_uid,
