@@ -2951,18 +2951,18 @@ function SaveExit_ButtonClick() {
     } else {
         $('#mandetorydchallanNoScheme').attr('style', 'display:none');
     }
-    var amtare = cddl_AmountAre.GetValue();
-    if (amtare == '2') {
-        var taxcodeid = cddlVatGstCst.GetValue();
-        if (taxcodeid == '' || taxcodeid == null) {
-            LoadingPanel.Hide();
-            $('#Mandatorytaxcode').attr('style', 'display:block');
-            flag = false;
-        }
-        else {
-            $('#Mandatorytaxcode').attr('style', 'display:none');
-        }
-    }
+    //var amtare = cddl_AmountAre.GetValue();
+    //if (amtare == '2') {
+    //    var taxcodeid = cddlVatGstCst.GetValue();
+    //    if (taxcodeid == '' || taxcodeid == null) {
+    //        LoadingPanel.Hide();
+    //        $('#Mandatorytaxcode').attr('style', 'display:block');
+    //        flag = false;
+    //    }
+    //    else {
+    //        $('#Mandatorytaxcode').attr('style', 'display:none');
+    //    }
+    //}
 
     //if ($('#AltCrDateMandatoryInSI').val() == "1" || ctxtCreditDays.GetValue() == 0) {
     //        LoadingPanel.Hide();
@@ -4099,9 +4099,9 @@ function OnWarehouseEndCallback(s, e) {
         }
 
         setTimeout(function () {
-            grid.batchEditApi.StartEdit(globalRowIndex, 10);
+            grid.batchEditApi.StartEdit(globalRowIndex, 11);
         }, 200)
-        grid.batchEditApi.StartEdit(globalRowIndex, 10);
+        grid.batchEditApi.StartEdit(globalRowIndex, 11);
         //End of Rev Subhra 26-04-2019
 
     }
