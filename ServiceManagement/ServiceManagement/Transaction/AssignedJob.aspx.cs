@@ -245,7 +245,10 @@ namespace ServiceManagement.ServiceManagement.Transaction
                             }
                             if (item["STATUS"].ToString() == "DU")
                             {
-                                if (rights.CanAssignTo)
+                                // Mantis Issue 25503
+                                //if (rights.CanAssignTo)
+                                if (rights.CanUnassign)
+                                    // End of Mantis Issue 25503
                                 {
                                     Action = Action + " <span data-toggle='modal' class='actionInput' onclick='UnAssignJob(" + item["ReceiptChallan_ID"].ToString() + ")'><i class='fa fa-undo' data-toggle='tooltip' data-placement='left' title='Unassign'></i></span>";
                                 }
@@ -966,7 +969,10 @@ namespace ServiceManagement.ServiceManagement.Transaction
                             }
                             if (item["STATUS"].ToString() == "DU")
                             {
-                                if (rights.CanAssignTo)
+                                // Mantis Issue 25503
+                                //if (rights.CanAssignTo)
+                                if (rights.CanUnassign)
+                                    // End of Mantis Issue 25503
                                 {
                                     Action = Action + " <span data-toggle='modal' class='actionInput' onclick='UnAssignJob(" + item["ReceiptChallan_ID"].ToString() + ")'><i class='fa fa-undo' data-toggle='tooltip' data-placement='left' title='Unassign'></i></span>";
                                 }

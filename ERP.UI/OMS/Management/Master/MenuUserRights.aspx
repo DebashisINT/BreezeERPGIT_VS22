@@ -658,6 +658,14 @@
                                 <input type="checkbox" id="UpdatePartyInvNoDT" /></td>
                         </tr>
                         <%--End of Mantis Issue 0024702--%>
+                        <%--Mantis Issue 25503--%>
+                         <tr>
+                            <td>
+                                <label id="lblUnassign">Unassign</label></td>
+                            <td>
+                                <input type="checkbox" id="Unassign" /></td>
+                        </tr>
+                        <%--End of Mantis Issue 25503--%>
                     </table>
 
 

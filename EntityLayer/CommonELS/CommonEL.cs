@@ -115,6 +115,9 @@ namespace EntityLayer.CommonELS
         //Mantis Issue 0024702
         public bool UpdatePartyInvNoDT { get; set; }
         //End of Mantis Issue 0024702
+        // Mantis Issue 25503
+        public bool CanUnassign { get; set; }
+        // End of Mantis Issue 25503
     }
     public  class RightEL
     {

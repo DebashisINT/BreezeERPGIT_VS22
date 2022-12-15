@@ -371,6 +371,13 @@ obj.field = "acc_UpdatePartyInvNoDT";
 RightsArray[70] = obj;
 //End of Mantis Issue 25087
 
+// Mantis Issue 25503
+obj = {};
+obj.id = "Unassign";
+obj.field = "acc_Unassign";
+RightsArray[71] = obj;
+// End of Mantis Issue 25503
+
 function AddEditRights(id, lbl2, lbl3) {
     if (lbl3)
         $('#modName').text(lbl3);
