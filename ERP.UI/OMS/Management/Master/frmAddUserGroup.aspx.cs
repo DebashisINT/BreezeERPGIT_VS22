@@ -287,9 +287,10 @@ namespace ERP.OMS.Management.Master
                     // Mantis Issue 24893 [ model.TotalAssigned|| model.RepairingPending || model.ServiceEntered || model.ServicePending  added]
                     // Mantis Issue 25087 [ model.SendSMS  added]
                     // Mantis Issue 0024702 [ model.UpdatePartyInvNoDT  added]
+                    // Mantis Issue 25503 [model.Unassign added]
                     if (model.CanAdd || model.CanEdit || model.CanDelete || model.CanView || model.CanIndustry || model.CanCreateActivity || model.CanContactPerson || model.CanHistory || model.CanAddUpdateDocuments || model.CanMembers || model.CanOpeningAddUpdate || model.CanAssetDetails || model.CanExport || model.CanPrint || model.CanBudget || model.CanAssignbranch || model.Cancancelassignmnt || model.CanReassignSupervisor || model.CanReassignSalesman || model.CanClose || model.CanCancel || model.CreateOrder || model.Imagaeupload || model.RePrintBarcode || model.DocumentCollection || model.ClosedSales || model.FutureSales || model.ClarificationRequired || model.CanViewAdjustment || model.Influencer || model.CanRestore || model.CanAssignTo || model.CanConvertTo || model.CanSalesActivity || model.CanApproved || model.CanReadyToInvoice || model.CanMakeInvoice || model.CanUpdateTransporter
                         || model.CanIRN || model.CanEWayBill || model.CanMRCancellation || model.CanWRCancellation || model.CanSTBRequisition || model.CanHolds || model.CanDirectorApproval || model.CanInventoryCancellation || model.CanReturn || model.CanPendingDispatch || model.CanDispatchAcknowledgment || model.CanCreateOpportunities || model.CanAutoCloseOpportunities || model.CanCloseOpportunities || model.CanReopenOpportunities || model.TotalAssigned || model.RepairingPending || model.ServiceEntered
-                        || model.ServicePending || model.CanQuotationStatus || model.CanReOpen || model.SendSMS || model.UpdatePartyInvNoDT)
+                        || model.ServicePending || model.CanQuotationStatus || model.CanReOpen || model.SendSMS || model.UpdatePartyInvNoDT || model.CanUnassign)
                     {
                         if (model.CanAdd)
                         {
@@ -1011,6 +1012,19 @@ namespace ERP.OMS.Management.Master
                             }
                         }
                         //End of Mantis Issue 0024702
+                        // Mantis Issue 25503
+                        if (model.CanUnassign)
+                        {
+                            if (!string.IsNullOrWhiteSpace(TempString))
+                            {
+                                TempString += "|71";
+                            }
+                            else
+                            {
+                                TempString += "71";
+                            }
+                        }
+                        // End of Mantis Issue 25503
                         TempString = model.MenuId + "^" + TempString;
                     }
 

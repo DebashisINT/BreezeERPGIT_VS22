@@ -328,7 +328,7 @@ namespace ServiceManagement.ServiceManagement.Transaction.ServiceData
                         }
                         if (item["STATUS"].ToString() == "DU")
                         {
-                            // Rev Sanchita
+                            // Mantis Issue 25503
                             //Status = " <span class='badge badge-warning'>Assigned</span>";
                             if (SearchType == "TotalRepairingPending")
                             {
@@ -338,7 +338,7 @@ namespace ServiceManagement.ServiceManagement.Transaction.ServiceData
                             {
                                 Status = " <span class='badge badge-warning'>Assigned</span>";
                             }
-                            // End of Rev Sanchita
+                            // End of Mantis Issue 25503
                         }
                         else if (item["STATUS"].ToString() == "DE")
                         {
@@ -391,7 +391,10 @@ namespace ServiceManagement.ServiceManagement.Transaction.ServiceData
                             else if (item["RepairStatus"].ToString() == "Pending" || item["RepairStatus"].ToString() == "Reject")
                             //End of rev Pratik
                             {
-                                if (rights.CanAssignTo)
+                                // Mantis Issue 25503
+                                //if (rights.CanAssignTo)
+                                if (rights.CanUnassign)
+                                    // End of Mantis Issue 25503
                                 {
                                     Action = Action + " <span data-toggle='modal' class='actionInput text-center' onclick='UnAssignJob(" + item["ReceiptChallan_ID"].ToString() + ")'><i class='fa fa-undo' data-toggle='tooltip' data-placement='bottom' title='Unassign'></i></span>";
                                 }
