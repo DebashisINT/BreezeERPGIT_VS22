@@ -1798,7 +1798,10 @@ namespace ERP.OMS.Management.Activities
             if (Session["WHST_WarehouseData"] != null)
             {
                 DataTable Warehousedt = (DataTable)Session["WHST_WarehouseData"];
-                tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID");
+                //tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID");
+                tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID", "MfgDate", "ExpiryDate");
+
+                //tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID", "AltQty", "AltUOM", "MfgDate", "ExpiryDate");
             }
             else
             {
@@ -1808,7 +1811,42 @@ namespace ERP.OMS.Management.Activities
                 tempWarehousedt.Columns.Add("TotalQuantity", typeof(string));
                 tempWarehousedt.Columns.Add("BatchID", typeof(string));
                 tempWarehousedt.Columns.Add("SerialID", typeof(string));
+                tempWarehousedt.Columns.Add("MfgDate", typeof(string));
+                tempWarehousedt.Columns.Add("ExpiryDate", typeof(string));
             }
+
+            if (tempWarehousedt != null && tempWarehousedt.Rows.Count > 0)
+            {
+                for (int i = 0; i < tempWarehousedt.Rows.Count; i++)
+                {
+                    DataRow dr = tempWarehousedt.Rows[i];
+                    string strMfgDate = Convert.ToString(dr["MfgDate"]);
+                    string strExpiryDate = Convert.ToString(dr["ExpiryDate"]);
+                    if (strMfgDate != "")
+                    {
+                        string DD = strMfgDate.Substring(0, 2);
+                        string MM = strMfgDate.Substring(3, 2);
+                        string YYYY = strMfgDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        dr["MfgDate"] = Date;
+                    }
+
+                    if (strExpiryDate != "")
+                    {
+                        string DD = strExpiryDate.Substring(0, 2);
+                        string MM = strExpiryDate.Substring(3, 2);
+                        string YYYY = strExpiryDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        dr["ExpiryDate"] = Date;
+                    }
+
+                }
+                tempWarehousedt.AcceptChanges();
+            }
+
+
             //datatable for MultiUOm start chinmoy 14-01-2020
             // Mantis Issue 24428
             DataTable MultiUOMDetails = new DataTable();
