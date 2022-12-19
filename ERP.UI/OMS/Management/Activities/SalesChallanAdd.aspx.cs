@@ -5246,6 +5246,15 @@ namespace ERP.OMS.Management.Activities
                     Session["SC_ProductDetails"] = dt_OrderDetails;
                     grid_Products.DataSource = GetProductsInfo(dt_OrderDetails);
                     grid_Products.DataBind();
+
+                    if (grid_Products.VisibleRowCount > 0)
+                    {
+                        grid_Products.Enabled = false;
+                        for (int i = 0; i < grid_Products.VisibleRowCount; i++)
+                        {
+                            grid_Products.Selection.SelectRow(i);
+                        }
+                    }
                 }
                 else
                 {
