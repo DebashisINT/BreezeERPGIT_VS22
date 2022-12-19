@@ -11065,6 +11065,8 @@ namespace ERP.OMS.Management.Activities
                     Session["SI_ProductDetails"] = dtDetails;
                     grid_Products.DataSource = dtDetails;
                     grid_Products.DataBind();
+
+                    
                 }
                 else
                 {

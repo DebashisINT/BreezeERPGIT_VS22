@@ -4406,6 +4406,11 @@
                     cbnrLblTaxAmtval.SetText(TaxAmount);
                     cbnrlblAmountWithTaxValue.SetText(AmountWithTaxValue);
                     cbnrLblInvValue.SetText(TotalAmt);
+
+                    var type = ($("[id$='rdl_SaleInvoice']").find(":checked").val() != null) ? $("[id$='rdl_SaleInvoice']").find(":checked").val() : "";
+                    if (key != null && key != '') {
+                        grid.GetEditor("Quantity").SetEnabled(false);
+                    }
                 }
             }
             //End Rev Rajdip For Running Total
@@ -5679,6 +5684,7 @@
 
                         $("#ADelete").css("display", "block");//Subhabrata
                         SelectedWarehouseID = "0";
+                        cCmbBatch.SetValue("0");
                         cPopup_Warehouse.Show();
                     }
                     else if (Ptype == "WS") {
