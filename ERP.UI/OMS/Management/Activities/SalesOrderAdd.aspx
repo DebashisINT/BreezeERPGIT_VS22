@@ -17,7 +17,7 @@
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <link href="CSS/salesorderAdd.css" rel="stylesheet" />
-    <script src="JS/SalesOrderAdd.js?v=4.4"></script>
+    <script src="JS/SalesOrderAdd.js?v=5.1"></script>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelNew.js?v=2.1" type="text/javascript"></script>
 
     <%--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>    --%>
@@ -4025,7 +4025,7 @@ function PerformCallToGridBind() {
     <asp:HiddenField runat="server" ID="hdnSegment3" />
     <asp:HiddenField runat="server" ID="hdnSegment4" />
     <asp:HiddenField runat="server" ID="hdnSegment5" />
-
+     <asp:HiddenField runat="server" ID="hdnShowDeliverySchedule" />
     <asp:HiddenField runat="server" ID="hdnValueSegment1" />
     <asp:HiddenField runat="server" ID="hdnValueSegment2" />
     <asp:HiddenField runat="server" ID="hdnValueSegment3" />

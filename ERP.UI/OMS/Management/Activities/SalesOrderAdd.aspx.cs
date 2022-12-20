@@ -333,7 +333,22 @@ namespace ERP.OMS.Management.Activities
                     }
                 }
 
-
+                string DeliveryScheduleRequired = ComBL.GetSystemSettingsResult("DeliveryScheduleRequired");
+                if (!String.IsNullOrEmpty(DeliveryScheduleRequired))
+                {
+                    if (DeliveryScheduleRequired == "Yes")
+                    {
+                        hdnShowDeliverySchedule.Value = "1";
+                    }
+                    else if (DeliveryScheduleRequired.ToUpper().Trim() == "NO")
+                    {
+                        hdnShowDeliverySchedule.Value = "0";
+                    }
+                }
+                else
+                {
+                    hdnShowDeliverySchedule.Value = "0";
+                }
                 string SalesRateBuyRateChecking = cbl.GetSystemSettingsResult("SalesRateBuyRateChecking");
                 if (!String.IsNullOrEmpty(SalesRateBuyRateChecking))
                 {
@@ -11709,7 +11724,47 @@ namespace ERP.OMS.Management.Activities
         }
         //Tanmoy Hierarchy End
 
+        [WebMethod]
+        public static string CheckDeliveryScheduleProductWise(string SODetails_ID,string ProductID,string OrderId)
+        {
+            string IsExist = "";
+            ProcedureExecute proc = new ProcedureExecute("prc_SalesOrder_Details");
+            proc.AddVarcharPara("@Action", 500, "CheckDeliverySchedule");            
+            proc.AddVarcharPara("@ORDER_ID", 100, Convert.ToString(OrderId));
+            proc.AddVarcharPara("@Details_Id", 100, Convert.ToString(SODetails_ID));
+            proc.AddVarcharPara("@ProductID", 100, Convert.ToString(ProductID));
+            DataTable dt = proc.GetTable();
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                IsExist = Convert.ToString(dt.Rows[0]["IsExist"]);
+            }
+
+            return Convert.ToString(IsExist);
+        }
+        [WebMethod]
+        public static string CheckDeliveryScheduleProductQtyWise(string QuantityValue, string ProductID, string OrderId)
+        {
+            string IsExist = "";
+            ProcedureExecute proc = new ProcedureExecute("prc_SalesOrder_Details");
+            proc.AddVarcharPara("@Action", 500, "CheckDeliveryScheduleQTY");
+            proc.AddVarcharPara("@ORDER_ID", 100, Convert.ToString(OrderId));
+            proc.AddVarcharPara("@QTY", 100, Convert.ToString(QuantityValue));
+            proc.AddVarcharPara("@ProductID", 100, Convert.ToString(ProductID));
+            DataTable dt = proc.GetTable();
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                IsExist = Convert.ToString(dt.Rows[0]["IsExist"]);
+            }
+
+            return Convert.ToString(IsExist);
+        }
+        
+
     }
+
+
 
     public class ContactPerson
     {
