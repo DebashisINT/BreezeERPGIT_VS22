@@ -238,6 +238,7 @@
     <Content Include="Reports\GridReports\DebtorsDetailsCR.aspx" />
     <Content Include="Reports\GridReports\DebtorsDetailsDR.aspx" />
     <Content Include="Reports\GridReports\DeliverySchedule.aspx" />
+    <Content Include="Reports\GridReports\DeliveryScheduleDetails.aspx" />
     <Content Include="Reports\GridReports\Demo_Register.aspx" />
     <Content Include="Reports\GridReports\DSR-Summary.aspx" />
     <Content Include="Reports\GridReports\DSROnOpportunities.aspx" />
@@ -1118,6 +1119,13 @@
     </Compile>
     <Compile Include="Reports\GridReports\DeliverySchedule.aspx.designer.cs">
       <DependentUpon>DeliverySchedule.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\DeliveryScheduleDetails.aspx.cs">
+      <DependentUpon>DeliveryScheduleDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\DeliveryScheduleDetails.aspx.designer.cs">
+      <DependentUpon>DeliveryScheduleDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\GridReports\Demo_Register.aspx.cs">
       <DependentUpon>Demo_Register.aspx</DependentUpon>

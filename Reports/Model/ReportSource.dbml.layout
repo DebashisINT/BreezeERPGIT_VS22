@@ -872,5 +872,11 @@
         <elementListCompartment Id="4dcb5526-e466-439f-bd9e-8cb14cefc08a" absoluteBounds="0.51499999999999968, 15.96, 1.9700000000000002, 9.2875569661458321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="8d52ff6b-05f1-4b7f-bb71-4108923c6729" isExpanded="false" absoluteBounds="2.75, 15.5, 2, 0.45">
+      <DataClassMoniker Name="/ReportSourceDataContext/DELIVERYSCHEDULEDETAILS_REPORT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c1637c53-dce0-4cf4-85df-05814dfef415" absoluteBounds="2.7649999999999997, 15.96, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
