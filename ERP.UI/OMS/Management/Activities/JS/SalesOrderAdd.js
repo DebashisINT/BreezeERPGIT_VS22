@@ -5599,6 +5599,34 @@ function OnCustomButtonClick(s, e) {
             {
                 if ($("#hddnMultiUOMSelection").val() == "1") 
                 {
+
+                    if ($("#hdAddOrEdit").val() == "Edit") {
+                        if ($("#hdnShowDeliverySchedule").val() == "1") {
+
+                            var SODetails_ID = s.GetRowKey(e.visibleIndex);
+                            var OrderId = $("#hdnEditOrderId").val();
+                            $.ajax({
+                                type: "POST",
+                                url: "SalesOrderAdd.aspx/CheckDeliveryScheduleProductWise",
+                                data: JSON.stringify({ SODetails_ID: SODetails_ID, ProductID: ProductID, OrderId: OrderId }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                async:false,
+                                success: function (msg) {
+
+                                    LoadingPanel.Hide();
+                                    OutStandingAmount = msg.d;
+                                    if (OutStandingAmount === "1") {
+                                        cbtnfinalUomSave.SetEnabled(false);
+                                    }                                   
+                                }
+                            });
+                        }
+                    }
+                   
+
+
+
                     ccmbUOM.SetEnabled(false);
                     var index = e.visibleIndex;
                     grid.batchEditApi.StartEdit(e.visibleIndex, 7);
@@ -7045,18 +7073,36 @@ var TaxOfProduct = [];
 function ProductButnClick(s, e) {
             
     if (e.buttonIndex == 0) {
-        //var ProductID = grid.GetEditor('ProductID').GetText();
-        //var SpliteDetails = ProductID.split("||@||");
-        //strProductName = grid.GetEditor('ProductName').GetText();
-        //if (cproductLookUp.Clear()) {
+        var OutStandingAmount = "0";
+        if ($("#hdAddOrEdit").val() == "Edit") {
+            if ($("#hdnShowDeliverySchedule").val() == "1") {
+                var index = e.visibleIndex;
+                grid.batchEditApi.StartEdit(e.visibleIndex, 3);
+                var Productdetails = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
+                var ProductID = Productdetails.split("||@||")[0];
+                var QuantityValue = (grid.GetEditor('Quantity').GetValue() != null) ? grid.GetEditor('Quantity').GetValue() : "0";
+                //var SODetails_ID = s.GetRowKey(e.visibleIndex);
+                var OrderId = $("#hdnEditOrderId").val();
+                $.ajax({
+                    type: "POST",
+                    url: "SalesOrderAdd.aspx/CheckDeliveryScheduleProductQtyWise",
+                    data: JSON.stringify({ QuantityValue: QuantityValue, ProductID: ProductID, OrderId: OrderId }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: function (msg) {                       
+                        OutStandingAmount = msg.d;
+                        
+                    }
+                });
+            }
+        }
 
-        //    cProductpopUp.Show();
-        //    cproductLookUp.Focus();
-        //    cproductLookUp.ShowDropDown();
-        //}
-
-        $('#txtProdSearch').val('');
-        $('#ProductModel').modal('show');
+        if (OutStandingAmount == "0") {
+            $('#txtProdSearch').val('');
+            $('#ProductModel').modal('show');
+        }
+    
     }
 }
 
