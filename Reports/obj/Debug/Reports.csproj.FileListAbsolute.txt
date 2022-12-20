@@ -50,8 +50,6 @@ E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.XtraLayout.v15.1.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.Charts.v15.1.Core.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.XtraGauges.v15.1.Core.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.Sparkline.v15.1.Core.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Razor.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.Razor.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\BusinessLogicLayer.pdb
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DataAccessLayer.pdb
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\EntityLayer.pdb
@@ -79,8 +77,6 @@ E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.Spreadsheet.v15.1.Core.xml
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.XtraEditors.v15.1.xml
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.XtraBars.v15.1.xml
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.XtraLayout.v15.1.xml
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Razor.xml
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.Razor.xml
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\de\DevExpress.RichEdit.v15.1.Core.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\es\DevExpress.RichEdit.v15.1.Core.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\ja\DevExpress.RichEdit.v15.1.Core.resources.dll
@@ -200,8 +196,6 @@ E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\de\DevExpress.Sparkline.v15.1.Core.res
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\es\DevExpress.Sparkline.v15.1.Core.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\ja\DevExpress.Sparkline.v15.1.Core.resources.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\ru\DevExpress.Sparkline.v15.1.Core.resources.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Mvc.xml
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Mvc.dll
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.AssemblyReference.cache
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\PrintPLBS.resources
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.GenerateResource.cache
@@ -405,3 +399,4 @@ D:\Priti\BreezeERPGIT_VS22\Reports\bin\ru\DevExpress.Sparkline.v15.1.Core.resour
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CoreCompileInputs.cache
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CopyComplete
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.dll
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\Microsoft.Web.Infrastructure.xml
