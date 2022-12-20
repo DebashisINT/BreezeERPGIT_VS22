@@ -22,7 +22,7 @@ namespace Reports.Model
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Tube")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="EVAC02122020")]
 	public partial class ReportSourceDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -1219,6 +1219,14 @@ namespace Reports.Model
 			get
 			{
 				return this.GetTable<WAREHOUSEWISESTOCKOUTDETAILS_REPORT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DELIVERYSCHEDULEDETAILS_REPORT> DELIVERYSCHEDULEDETAILS_REPORTs
+		{
+			get
+			{
+				return this.GetTable<DELIVERYSCHEDULEDETAILS_REPORT>();
 			}
 		}
 		
@@ -68679,6 +68687,429 @@ namespace Reports.Model
 				if ((this._EWAYBILLDATE != value))
 				{
 					this._EWAYBILLDATE = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DELIVERYSCHEDULEDETAILS_REPORT")]
+	public partial class DELIVERYSCHEDULEDETAILS_REPORT
+	{
+		
+		private System.Nullable<int> _USERID;
+		
+		private System.Nullable<long> _SEQ;
+		
+		private System.Nullable<long> _ORDER_ID;
+		
+		private System.Nullable<long> _BRANCHID;
+		
+		private string _BRANCHDESC;
+		
+		private string _PARTYID;
+		
+		private string _PARTYNAME;
+		
+		private string _ORDNO;
+		
+		private string _ORDER_DATE;
+		
+		private string _ORDDTORDBY;
+		
+		private string _TRANTYPE;
+		
+		private System.Nullable<long> _PRODID;
+		
+		private string _PRODCODE;
+		
+		private string _PRODNAME;
+		
+		private string _UOM_NAME;
+		
+		private System.Nullable<decimal> _SCHEDULEDELIVERYQTY;
+		
+		private string _SCHEDULEDELIVERYDT;
+		
+		private System.Nullable<int> _WARRANTYDAYS;
+		
+		private string _ACTDELVDATE;
+		
+		private System.Nullable<decimal> _ACTDELVQTY;
+		
+		private System.Nullable<decimal> _SCHLDBALQTY;
+		
+		private string _WARRANTYENDDATE;
+		
+		private string _SERIALNUMBER;
+		
+		public DELIVERYSCHEDULEDETAILS_REPORT()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="Int")]
+		public System.Nullable<int> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="BigInt")]
+		public System.Nullable<long> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ORDER_ID", DbType="BigInt")]
+		public System.Nullable<long> ORDER_ID
+		{
+			get
+			{
+				return this._ORDER_ID;
+			}
+			set
+			{
+				if ((this._ORDER_ID != value))
+				{
+					this._ORDER_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRANCHID", DbType="BigInt")]
+		public System.Nullable<long> BRANCHID
+		{
+			get
+			{
+				return this._BRANCHID;
+			}
+			set
+			{
+				if ((this._BRANCHID != value))
+				{
+					this._BRANCHID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRANCHDESC", DbType="NVarChar(300)")]
+		public string BRANCHDESC
+		{
+			get
+			{
+				return this._BRANCHDESC;
+			}
+			set
+			{
+				if ((this._BRANCHDESC != value))
+				{
+					this._BRANCHDESC = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PARTYID", DbType="NVarChar(50)")]
+		public string PARTYID
+		{
+			get
+			{
+				return this._PARTYID;
+			}
+			set
+			{
+				if ((this._PARTYID != value))
+				{
+					this._PARTYID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PARTYNAME", DbType="NVarChar(300)")]
+		public string PARTYNAME
+		{
+			get
+			{
+				return this._PARTYNAME;
+			}
+			set
+			{
+				if ((this._PARTYNAME != value))
+				{
+					this._PARTYNAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ORDNO", DbType="NVarChar(50)")]
+		public string ORDNO
+		{
+			get
+			{
+				return this._ORDNO;
+			}
+			set
+			{
+				if ((this._ORDNO != value))
+				{
+					this._ORDNO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ORDER_DATE", DbType="NVarChar(10)")]
+		public string ORDER_DATE
+		{
+			get
+			{
+				return this._ORDER_DATE;
+			}
+			set
+			{
+				if ((this._ORDER_DATE != value))
+				{
+					this._ORDER_DATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ORDDTORDBY", DbType="NVarChar(10)")]
+		public string ORDDTORDBY
+		{
+			get
+			{
+				return this._ORDDTORDBY;
+			}
+			set
+			{
+				if ((this._ORDDTORDBY != value))
+				{
+					this._ORDDTORDBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRANTYPE", DbType="NVarChar(5)")]
+		public string TRANTYPE
+		{
+			get
+			{
+				return this._TRANTYPE;
+			}
+			set
+			{
+				if ((this._TRANTYPE != value))
+				{
+					this._TRANTYPE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRODID", DbType="BigInt")]
+		public System.Nullable<long> PRODID
+		{
+			get
+			{
+				return this._PRODID;
+			}
+			set
+			{
+				if ((this._PRODID != value))
+				{
+					this._PRODID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRODCODE", DbType="NVarChar(100)")]
+		public string PRODCODE
+		{
+			get
+			{
+				return this._PRODCODE;
+			}
+			set
+			{
+				if ((this._PRODCODE != value))
+				{
+					this._PRODCODE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRODNAME", DbType="NVarChar(300)")]
+		public string PRODNAME
+		{
+			get
+			{
+				return this._PRODNAME;
+			}
+			set
+			{
+				if ((this._PRODNAME != value))
+				{
+					this._PRODNAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UOM_NAME", DbType="NVarChar(300)")]
+		public string UOM_NAME
+		{
+			get
+			{
+				return this._UOM_NAME;
+			}
+			set
+			{
+				if ((this._UOM_NAME != value))
+				{
+					this._UOM_NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCHEDULEDELIVERYQTY", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SCHEDULEDELIVERYQTY
+		{
+			get
+			{
+				return this._SCHEDULEDELIVERYQTY;
+			}
+			set
+			{
+				if ((this._SCHEDULEDELIVERYQTY != value))
+				{
+					this._SCHEDULEDELIVERYQTY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCHEDULEDELIVERYDT", DbType="NVarChar(10)")]
+		public string SCHEDULEDELIVERYDT
+		{
+			get
+			{
+				return this._SCHEDULEDELIVERYDT;
+			}
+			set
+			{
+				if ((this._SCHEDULEDELIVERYDT != value))
+				{
+					this._SCHEDULEDELIVERYDT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WARRANTYDAYS", DbType="Int")]
+		public System.Nullable<int> WARRANTYDAYS
+		{
+			get
+			{
+				return this._WARRANTYDAYS;
+			}
+			set
+			{
+				if ((this._WARRANTYDAYS != value))
+				{
+					this._WARRANTYDAYS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ACTDELVDATE", DbType="NVarChar(10)")]
+		public string ACTDELVDATE
+		{
+			get
+			{
+				return this._ACTDELVDATE;
+			}
+			set
+			{
+				if ((this._ACTDELVDATE != value))
+				{
+					this._ACTDELVDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ACTDELVQTY", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> ACTDELVQTY
+		{
+			get
+			{
+				return this._ACTDELVQTY;
+			}
+			set
+			{
+				if ((this._ACTDELVQTY != value))
+				{
+					this._ACTDELVQTY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCHLDBALQTY", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SCHLDBALQTY
+		{
+			get
+			{
+				return this._SCHLDBALQTY;
+			}
+			set
+			{
+				if ((this._SCHLDBALQTY != value))
+				{
+					this._SCHLDBALQTY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WARRANTYENDDATE", DbType="NVarChar(10)")]
+		public string WARRANTYENDDATE
+		{
+			get
+			{
+				return this._WARRANTYENDDATE;
+			}
+			set
+			{
+				if ((this._WARRANTYENDDATE != value))
+				{
+					this._WARRANTYENDDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SERIALNUMBER", DbType="NVarChar(200)")]
+		public string SERIALNUMBER
+		{
+			get
+			{
+				return this._SERIALNUMBER;
+			}
+			set
+			{
+				if ((this._SERIALNUMBER != value))
+				{
+					this._SERIALNUMBER = value;
 				}
 			}
 		}
