@@ -1031,7 +1031,7 @@
         }
         .search-result .search-result__content .search-result__content__title {
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 15px;
             font-size:15px;
             position:relative;
         }
@@ -1043,22 +1043,36 @@
             position: absolute;
             bottom: -7px;
         }
-        #clonedMenus{
-            list-style-type:none;
-            padding:0;
-            columns:2;
+        #clonedMenus {
+            list-style-type: none;
+            padding: 0;
+            /*rev Pallab 25528*/
+            /*columns: 2;*/
+            display: flex;
+            flex-flow: wrap;
+            /*max-height: 390px;*/
+            overflow-y: auto;
+            align-items: flex-start;
+            /*rev end Pallab 25528*/
         }
         #clonedMenus i {
             display:none;
         }
-        #clonedMenus>li{
-            display:inline-block;
-            width: 100%;
-        }
+            #clonedMenus > li {
+                display: inline-block;
+                /*rev Pallab 25528*/
+                /*width: 100%;*/
+                width: 47%;
+                background: #50c7331a;
+                margin: 0 6px 10px 6px;
+                border-radius: 10px;
+                min-height: 55px;
+                /*rev end Pallab 25528*/
+            }
          #clonedMenus>li>a{
             display: flex;
             color: #484c5a;
-            padding: 10px 0 10px 38px;
+            padding: 10px 0 10px 48px;
             position: relative;
             flex-direction: column;
          }
@@ -1078,54 +1092,86 @@
              max-height:70vh;
             overflow-y:auto;
          }
-         #clonedMenus>li>a:after{
-             content: '\f0c1';
+        #clonedMenus > li > a:after {
+            content: '\f0f6';
             font-family: FontAwesome;
             position: absolute;
-            left: 0;
-           
+            left: 10px;
             width: 30px;
             line-height: 30px;
             height: 30px;
             display: inline-block;
             text-align: center;
-            background: #D8F8BC;
+            background: #50c733;
             border-radius: 50%;
-            color: #91c714;
+            color: #fff;
+        }
+/*rev Pallab 25528*/
+#clonedMenus > li.mblue {
+    background: #79cd301a;
+}
 
-         }
-         #clonedMenus>li.mblue>a:after{
-             background: #D8F8BC;
-             color: #91c714;
-         }
-         #clonedMenus>li.Cpink>a:after{
-             background: #ffb0dc;
-            color: #f32d9b;
-         }
-         #clonedMenus>li.delta>a:after{
-             background: #7bacf5;
-            color: #4b6284;
-         }
-         #clonedMenus>li.alphaE>a:after{
-             background: #ceb0ff;
-             color: #7330e0;
-         }
-         #clonedMenus>li.ramGr>a:after{
-             background: #a3e4e1;
-             color: #0e9c96;
-         }
-         #clonedMenus>li.ieCle>a:after{
-             background: #aad83c;
-             color: #40560c;
-         }
-         #clonedMenus>li.samsoon>a:after{
-                 background: #afa2b7;
-                color: #372244;
-         }
-         #clonedMenus>li.regxs>a:after{
-             background: #ffe3b4;
-             color: #773e0c;
-         }
+#clonedMenus > li.Cpink {
+    background: #dd3f971a;
+}
+
+#clonedMenus > li.delta {
+    background: #1b5ec11a;
+}
+
+#clonedMenus > li.alphaE {
+    background: #c033d11a;
+}
+
+#clonedMenus > li.ramGr {
+    background: #30c5be1a;
+}
+
+#clonedMenus > li.ieCle {
+    background: #78a3141a;
+}
+
+#clonedMenus > li.samsoon {
+    background: #803da91a;
+}
+
+#clonedMenus > li.regxs {
+    background: #7153331a;
+}
+/*rev end Pallab 25528*/
+
+        #clonedMenus > li.mblue > a:after {
+            background: #79cd30;
+            color: #fff;
+        }
+        #clonedMenus > li.Cpink > a:after {
+            background: #dd3f97;
+            color: #fff;
+        }
+        #clonedMenus > li.delta > a:after {
+            background: #1b5ec1;
+            color: #fff;
+        }
+        #clonedMenus > li.alphaE > a:after {
+            background: #c033d1;
+            color: #fff;
+        }
+        #clonedMenus > li.ramGr > a:after {
+            background: #30c5be;
+            color: #fff;
+        }
+        #clonedMenus > li.ieCle > a:after {
+            background: #78a314;
+            color: #fff;
+        }
+        #clonedMenus > li.samsoon > a:after {
+            background: #803da9;
+            color: #fff;
+        }
+        #clonedMenus > li.regxs > a:after {
+            background: #715333;
+            color: #fff;
+        }
          #clonedMenus>li>a:before{
              background: #ffcecb;
             color: #a52f28;
