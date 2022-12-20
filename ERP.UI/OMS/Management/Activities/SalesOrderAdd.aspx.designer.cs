@@ -2877,6 +2877,15 @@ namespace ERP.OMS.Management.Activities
         protected global::System.Web.UI.WebControls.HiddenField hdnSegment5;
 
         /// <summary>
+        /// hdnShowDeliverySchedule control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnShowDeliverySchedule;
+
+        /// <summary>
         /// hdnValueSegment1 control.
         /// </summary>
         /// <remarks>
