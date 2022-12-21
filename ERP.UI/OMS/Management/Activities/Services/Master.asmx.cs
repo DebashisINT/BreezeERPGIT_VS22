@@ -1,5 +1,7 @@
 ﻿using BusinessLogicLayer;
 using DataAccessLayer;
+//using DocumentFormat.OpenXml.Drawing.Charts;
+using ERP.Models;
 using ERP.OMS.Management.Master;
 using System;
 using System.Collections.Generic;
@@ -32,7 +34,7 @@ namespace ERP.OMS.Management.Activities.Services
                 proc.AddVarcharPara("@action", 50, "GetEntity");
                 proc.AddIntegerPara("@BranchId", Convert.ToInt32(BranchId));
                 proc.AddVarcharPara("@filter", 100, SearchKey);
-                DataTable Addresstbl = proc.GetTable();
+                System.Data.DataTable Addresstbl = proc.GetTable();
 
                 listMainAct = (from DataRow dr in Addresstbl.Rows
                                select new Entity()
@@ -5000,11 +5002,30 @@ namespace ERP.OMS.Management.Activities.Services
             {
                 SearchKey = SearchKey.Replace("'", "''");
 
-                string Query = "Select DeliveryScheduleId,DeliverySchedule_Number,sProducts_Code,DeliverySchedule_DeliveryQty From (select * from v_DeliveryScheduleDetails where DeliverySchedule_DocID=" + OrderID + "    and DeliverySchedule_DocDetailsID=" + OrderDetailsId + "   and DeliveryScheduleDetails_ProductId=" + ProductID + ")tbl";
+                //string Query = "Select DeliveryScheduleId,DeliverySchedule_Number,sProducts_Code,DeliverySchedule_DeliveryQty" +
+                //    " From (select * from v_DeliveryScheduleDetails where DeliverySchedule_DocID=" + OrderID + "    and DeliverySchedule_DocDetailsID=" + OrderDetailsId + "   and DeliveryScheduleDetails_ProductId=" + ProductID + ")tbl";
 
                 
-                BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
-                DataTable cust = oDBEngine.GetDataTable(Query);
+                BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();        
+
+
+                DataTable cust = new DataTable();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("prc_DeliveryScheduleDetails", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@action", "BindDeliveryScheduleList");
+                cmd.Parameters.AddWithValue("@DocDetailsID", OrderDetailsId);
+                cmd.Parameters.AddWithValue("@DocID", OrderID);
+                cmd.Parameters.AddWithValue("@ProductID", ProductID);
+                //cmd.Parameters.AddWithValue("@filtertext", SearchKey);
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(cust);
+
+                cmd.Dispose();
+                con.Dispose();
+                //DataTable cust = oDBEngine.GetDataTable(Query);
 
                 listCust = (from DataRow dr in cust.Rows
                             select new DeliverySchedule()
@@ -5012,7 +5033,9 @@ namespace ERP.OMS.Management.Activities.Services
                                 DeliverySchedule_Id = Convert.ToString(dr["DeliveryScheduleId"]),
                                 DeliverySchedule_Number = Convert.ToString(dr["DeliverySchedule_Number"]),
                                 Products_Name = Convert.ToString(dr["sProducts_Code"]),
-                                DeliverySchedule_Quantity = Convert.ToString(dr["DeliverySchedule_DeliveryQty"]),                              
+                                DeliverySchedule_Quantity = Convert.ToString(dr["DeliverySchedule_DeliveryQty"]),
+                                SerialNumber = Convert.ToString(dr["SerialNumber"]),
+                                DeliverySchedule_DeliveryDate = Convert.ToString(dr["DeliverySchedule_DeliveryDate"]),
                             }).ToList();
             }
 
@@ -5024,7 +5047,9 @@ namespace ERP.OMS.Management.Activities.Services
             public string DeliverySchedule_Id { get; set; }
             public string DeliverySchedule_Number { get; set; }
             public string Products_Name { get; set; }
-            public string DeliverySchedule_Quantity { get; set; }            
+            public string DeliverySchedule_Quantity { get; set; }
+            public string SerialNumber { get; set; }
+            public string DeliverySchedule_DeliveryDate { get; set; }
         }
     }
 }

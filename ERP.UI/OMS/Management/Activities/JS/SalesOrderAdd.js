@@ -5618,7 +5618,14 @@ function OnCustomButtonClick(s, e) {
                                     OutStandingAmount = msg.d;
                                     if (OutStandingAmount === "1") {
                                         cbtnfinalUomSave.SetEnabled(false);
-                                    }                                   
+                                       // cbtnfinalUomSave.SetVisible(true);
+                                        $("#lblUOMmsg").text("Delivery Schedule exists for this Item. Allowed to Change the Item and Quantity only if the Schedule is deleted.");
+                                    }
+                                    else {
+                                        cbtnfinalUomSave.SetEnabled(true);
+                                        $("#lblUOMmsg").text("");
+
+                                    }
                                 }
                             });
                         }
@@ -7101,6 +7108,10 @@ function ProductButnClick(s, e) {
         if (OutStandingAmount == "0") {
             $('#txtProdSearch').val('');
             $('#ProductModel').modal('show');
+        }
+        else {
+            jAlert("Delivery Schedule exists for this Item. Allowed to Change the Item and Quantity only if the Schedule is deleted.");
+            return;
         }
     
     }

@@ -3898,6 +3898,8 @@ function PerformCallToGridBind() {
                                 <ClientSideEvents Click="function(s, e) {FinalMultiUOM();}" />
                             </dxe:ASPxButton>
                         </div>
+                        <br />
+                        <asp:Label ID="lblUOMmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
                     </div>
                 </div>
             </dxe:PopupControlContentControl>

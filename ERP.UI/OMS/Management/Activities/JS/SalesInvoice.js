@@ -7717,7 +7717,8 @@ function ScheduleList()
     HeaderCaption.push("Order No.");
     HeaderCaption.push("Product Name");
     HeaderCaption.push("Schedule balance Quantity");
-
+    HeaderCaption.push("Schedule Serial No");
+    HeaderCaption.push("Schedule Delivery Date");
     callonServer("Services/Master.asmx/GetProductDeliverySchedule", OtherDetails, "ScheduleTable", HeaderCaption, "ProdIndex", "SetDeliverySchedule");
 }
 
