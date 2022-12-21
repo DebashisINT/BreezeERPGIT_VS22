@@ -4413,7 +4413,9 @@ $(document).ready(function () {
                                 <th class="hide">id</th>
                                 <th>Delivery Schedule Number</th>
                                 <th>Product Name</th>
-                                <th>Schedule Balance Quantity</th>                              
+                                <th>Schedule Balance Quantity</th> 
+                                 <th>Schedule Serial No</th>
+                                <th>Schedule Delivery Date</th>
                             </tr>
                         </table>
                     </div>
