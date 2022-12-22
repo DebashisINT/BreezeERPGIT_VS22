@@ -2724,7 +2724,7 @@
                 if (IsEinvoice1 == 'true') {
                     $.ajax({
                         type: "POST",
-                        url: "TSalesInvoice.aspx/GetEditablePermissionFromEInvoice",
+                        url: "TSalesInvoiceList.aspx/GetEditablePermissionFromEInvoice",
                         data: "{'TSalesInvoiceID':'" + $("#hdnTInvId").val() + "','Action':'ExemptedChecked'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
