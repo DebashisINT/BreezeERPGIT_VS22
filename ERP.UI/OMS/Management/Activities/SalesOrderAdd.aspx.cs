@@ -4255,67 +4255,71 @@ namespace ERP.OMS.Management.Activities
 
                     CommonBL ComBL = new CommonBL();                   
                     string GSTRateTaxMasterMandatory = ComBL.GetSystemSettingsResult("GSTRateTaxMasterMandatory");
-                    if (hdnTransCategory.Value != "SEZWOP" || hdnTransCategory.Value != "EXWOP")
+
+                    if (hdnTransCategory.Value != "EXWOP")
                     {
-                        if (!String.IsNullOrEmpty(GSTRateTaxMasterMandatory))
+                        if (hdnTransCategory.Value != "SEZWOP")
                         {
-                            if (GSTRateTaxMasterMandatory == "Yes")
+                            if (!String.IsNullOrEmpty(GSTRateTaxMasterMandatory))
                             {
-                                // Rev 24425, 24428
-                                DataTable temp_SalesOrderdt = tempSalesOrderdt.Copy();
-                                if (temp_SalesOrderdt.Columns.Contains("Order_AltQuantity"))
+                                if (GSTRateTaxMasterMandatory == "Yes")
                                 {
-                                    temp_SalesOrderdt.Columns.Remove("Order_AltQuantity");
-                                }
-                                if (temp_SalesOrderdt.Columns.Contains("Order_AltUOM"))
-                                {
-                                    temp_SalesOrderdt.Columns.Remove("Order_AltUOM");
-                                }
-                                // End of Rev 24425, 24428
-
-                                DataTable dtTaxDetails = new DataTable();
-                                ProcedureExecute procT = new ProcedureExecute("PRC_SALESORDER_DETAILS");
-                                procT.AddVarcharPara("@Action", 500, "GetTaxDetailsByProductID");
-                                // Mantis Issue 24425, 25528
-                                //procT.AddPara("@SalesOrderDetails", tempSalesOrderdt);
-                                procT.AddPara("@SalesOrderDetails", temp_SalesOrderdt);
-                                // End of Mantis Issue 24425, 25528
-                                procT.AddVarcharPara("@TaxOption", 10, Convert.ToString(strTaxType));
-                                procT.AddVarcharPara("@SupplyState", 15, Convert.ToString(sstateCode));
-                                procT.AddVarcharPara("@BRANCHID", 10, Convert.ToString(strBranch));
-                                procT.AddVarcharPara("@COMPANYID", 500, Convert.ToString(Session["LastCompany"]));
-                                procT.AddVarcharPara("@ENTITY_ID", 100, Convert.ToString(strCustomer));
-                                procT.AddVarcharPara("@DATE", 100, Convert.ToString(dt_PLSales.Date.ToString("yyyy-MM-dd")));
-
-                                dtTaxDetails = procT.GetTable();
-
-                                if (dtTaxDetails != null && dtTaxDetails.Rows.Count > 0)
-                                {
-
-                                    foreach (DataRow dr in dtTaxDetails.Rows)
+                                    // Rev 24425, 24428
+                                    DataTable temp_SalesOrderdt = tempSalesOrderdt.Copy();
+                                    if (temp_SalesOrderdt.Columns.Contains("Order_AltQuantity"))
                                     {
-                                        string SerialID = Convert.ToString(dr["SrlNo"]);
-                                        string TaxID = Convert.ToString(dr["TaxCode"]);
-                                        decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
-                                        string ProductName = Convert.ToString(dr["ProductName"]);
-                                        DataRow[] rows = TaxDetailTable.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
+                                        temp_SalesOrderdt.Columns.Remove("Order_AltQuantity");
+                                    }
+                                    if (temp_SalesOrderdt.Columns.Contains("Order_AltUOM"))
+                                    {
+                                        temp_SalesOrderdt.Columns.Remove("Order_AltUOM");
+                                    }
+                                    // End of Rev 24425, 24428
 
-                                        if (rows != null && rows.Length > 0)
+                                    DataTable dtTaxDetails = new DataTable();
+                                    ProcedureExecute procT = new ProcedureExecute("PRC_SALESORDER_DETAILS");
+                                    procT.AddVarcharPara("@Action", 500, "GetTaxDetailsByProductID");
+                                    // Mantis Issue 24425, 25528
+                                    //procT.AddPara("@SalesOrderDetails", tempSalesOrderdt);
+                                    procT.AddPara("@SalesOrderDetails", temp_SalesOrderdt);
+                                    // End of Mantis Issue 24425, 25528
+                                    procT.AddVarcharPara("@TaxOption", 10, Convert.ToString(strTaxType));
+                                    procT.AddVarcharPara("@SupplyState", 15, Convert.ToString(sstateCode));
+                                    procT.AddVarcharPara("@BRANCHID", 10, Convert.ToString(strBranch));
+                                    procT.AddVarcharPara("@COMPANYID", 500, Convert.ToString(Session["LastCompany"]));
+                                    procT.AddVarcharPara("@ENTITY_ID", 100, Convert.ToString(strCustomer));
+                                    procT.AddVarcharPara("@DATE", 100, Convert.ToString(dt_PLSales.Date.ToString("yyyy-MM-dd")));
+
+                                    dtTaxDetails = procT.GetTable();
+
+                                    if (dtTaxDetails != null && dtTaxDetails.Rows.Count > 0)
+                                    {
+
+                                        foreach (DataRow dr in dtTaxDetails.Rows)
                                         {
-                                            //decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
-                                            decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
+                                            string SerialID = Convert.ToString(dr["SrlNo"]);
+                                            string TaxID = Convert.ToString(dr["TaxCode"]);
+                                            decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
+                                            string ProductName = Convert.ToString(dr["ProductName"]);
+                                            DataRow[] rows = TaxDetailTable.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
 
-                                            if (EntryTaxAmount != _TaxAmount)
+                                            if (rows != null && rows.Length > 0)
                                             {
-                                                validate = "checkAcurateTaxAmount";
-                                                grid.JSProperties["cpSerialNo"] = SerialID;
-                                                grid.JSProperties["cpProductName"] = ProductName;
-                                                break;
+                                                //decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
+                                                decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
+
+                                                if (EntryTaxAmount != _TaxAmount)
+                                                {
+                                                    validate = "checkAcurateTaxAmount";
+                                                    grid.JSProperties["cpSerialNo"] = SerialID;
+                                                    grid.JSProperties["cpProductName"] = ProductName;
+                                                    break;
+                                                }
+
+
                                             }
 
-
                                         }
-
                                     }
                                 }
                             }
