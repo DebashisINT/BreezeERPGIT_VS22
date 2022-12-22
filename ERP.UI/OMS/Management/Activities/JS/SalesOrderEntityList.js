@@ -430,7 +430,8 @@ function grid_EndCallBack() {
     if (cGrdOrder.cpDelete != null) {
         jAlert(cGrdOrder.cpDelete);
         cGrdOrder.cpDelete = null;
-        cGrdOrder.Refresh();
+        //cGrdOrder.Refresh();
+        updateGridByDate();
     }
 }
 function SavePrpformaStatus() {

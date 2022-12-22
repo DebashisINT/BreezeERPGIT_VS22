@@ -6755,21 +6755,25 @@ function GetSalesRateSchemePrice(CustomerID, ProductID, SalesPrice) {
 
 function UploadGridbindCancel() {
     $("#exampleModalInvChallan").modal("hide");
-    // Mantis Issue 24027 (13/05/2021)
-    if (document.getElementById('chkSendMail').checked == true) {
-        
-        $.ajax({
-            type: "POST",
-            url: "InvoiceDeliveryChallan.aspx/SendMailAfterIRN",
-            data: JSON.stringify({ Output: $("#hdnRDECId").val(), paramCustomerId: $("#hdnCustomerId").val() }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async:false,
-            success: function (r) {
-                
-            }
+ 
+    if (document.getElementById('chkSendMail')) {  //Mantis 0025534 
 
-        });
+         // Mantis Issue 24027 (13/05/2021)
+        if (document.getElementById('chkSendMail').checked == true) {
+
+            $.ajax({
+                type: "POST",
+                url: "InvoiceDeliveryChallan.aspx/SendMailAfterIRN",
+                data: JSON.stringify({ Output: $("#hdnRDECId").val(), paramCustomerId: $("#hdnCustomerId").val() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (r) {
+
+                }
+
+            });
+        }
     }
     //End of Mantis Issue 24027 (13/05/2021)
 
