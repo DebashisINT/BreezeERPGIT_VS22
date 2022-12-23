@@ -78,14 +78,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .avtarHolder {
     /*width: 46px;*/
-    height: 42px;
+    /*height: 42px;*/
     border-radius: 50%;
     overflow: hidden;
     float: left;
     margin-right: 8px;
     text-align: center;
     position: relative;
-    left: 20px;
+    left: 10px;
 }
 
     .avtarHolder > img {
@@ -455,14 +455,15 @@ p.copyright {
 ************Dashboard styles**********
 ***************************************/
 #header {
-    background: #0176c5 url(../../images/headbg.jpg) no-repeat top left;
+    background: #0176c5 url(../../images/headbg-2.jpg) no-repeat top left;
     background-position: -59px 0;
-    height: 60px;
+    height: 70px;
     position: fixed;
     top: 0;
     left: 0;
     width: calc(100% - 167px);
     z-index: 9;
+    background-size: cover;
 }
 #header 
 .mainWraper {
@@ -471,10 +472,10 @@ p.copyright {
 }
 
 .sidebar {
-    background: #272b3c;
-    width: 167px;
+    background: #063566;
+    width: 180px;
     position: absolute;
-    top: 60px;
+    top: 70px;
     bottom: 0;
     left: 0;
     /*overflow-y: scroll;*/
@@ -487,7 +488,7 @@ p.copyright {
     position: relative !important;
     margin-left: 175px;
     padding: 5px 15px;
-    margin-top:60px;
+    margin-top:75px;
 }
 .tpLbl {
     background: #61d2ac;
@@ -545,7 +546,7 @@ p.copyright {
         display:none;
     }
 .leftLogowrap {
-    width: 167px;
+    width: 180px;
     /*padding: 5px 0;*/
     float: left;
     /*background: rgba(0,0,0,0.2);*/
@@ -567,7 +568,8 @@ p.copyright {
     /*padding: 4px 12px;*/
     font-size: 23px !important;
     float: left;
-    padding: 12px 15px !important;
+    padding: 18px 15px !important;
+    margin-bottom: 0 !important;
 }
 
     .navbar-minimalize:hover {
@@ -611,7 +613,8 @@ p.copyright {
 }
 
     .navbar-top-links.navbar-right.user-dropdown-custom {
-        margin-right: 0;
+        margin-right: 20px;
+        min-height: 65px;
     }
 
     .navbar-top-links > li {
@@ -626,6 +629,9 @@ p.copyright {
 
         .navbar-top-links li a.user {
             /*padding-bottom: 0px;*/
+            border-radius: 50px;
+            background: #f8666f;
+            transition: all .4s;
         }
 
     .navbar-top-links li i.icon {
@@ -668,10 +674,11 @@ p.copyright {
 .navbar-top-links li .label {
     float: left;
     text-align: left;
-    line-height: 32px;
+    line-height: 22px;
     font-size: 14px;
     font-weight: normal;
     color: #fff;
+    padding-top: 3px;
 }
 
 .navbar-top-links li .icon.icon-ios-contact {
@@ -757,7 +764,7 @@ p.copyright {
 }
 
     .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-        background: transparent !important;
+        background: #df3d47 !important;
     }
 
 .navbar-top-links li .dropdown-menu {
@@ -805,7 +812,7 @@ p.copyright {
 }
 
 .nav > li > a:hover, .nav > li > a:focus {
-    background-color: #0e689d !important;
+    background-color: #df3d47 !important;
 }
 
 
@@ -864,11 +871,11 @@ p.copyright {
         padding: 12px 10px 6px;
         display: block;
         color: #bec6e4;
-        background: #272b3c;
+        background: #063566;
         line-height: 17px;
         /*font-size: 0.92em;*/
         font-size: 12px;
-        opacity:1;
+        opacity: 1;
         position: relative;
     }
 
@@ -956,7 +963,7 @@ p.copyright {
 }		
 .sidenav > ul > li:nth-child(17) > a > i {		
     color: #ff6075;		
-}		
+}
 
 
 
@@ -966,6 +973,7 @@ p.copyright {
 .sidenav ul > li a i {
     margin-right: 8px;
     float: left;
+    margin-left: 3px;
 }
 .sidenav ul > li a.active, .sidenav ul > li a.active:hover {
     background: #bfe7f9;
@@ -1105,8 +1113,8 @@ p.copyright {
 
 .mini-navbar .sidenav > ul > li > a {
     margin-bottom: 1px;
-    border-bottom: 1px solid #1d202f;
-    box-shadow: 0px 1px 1px #3a415d;
+    border-bottom: 1px solid #062546;
+    box-shadow: 0px 1px 1px #0e4b8b;
     padding-bottom: 8px;
 }
 
@@ -2301,6 +2309,8 @@ i[data-toggle="tooltip"] + .tooltip {
 
 .navbar-header {
     float: left;
+    display: flex;
+    align-items: center;
 }
 
 .user-dropdown-custom {
@@ -2669,8 +2679,9 @@ li.dxtc-rightIndent {
 .pad {
     padding-right: 4px !important;
 }
-.aaadv{
-    background:#076fa9;
+.aaadv {
+    background: #ffffff33;
+    box-shadow: 1px 1px 10px #04315e73;
 }
 .aaadv:hover {
     background:#076fa9;
@@ -3993,4 +4004,13 @@ button:focus
 }
 .dxgvSearchPanel_PlasticBlue {
         background: #f7f7f7 !important;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown.usr {
+    margin-top: 11px;
 }
