@@ -1578,6 +1578,16 @@ function grdEndcallbackewaybillSR(s, e) {
     }
     else if (s.cpJson == "DownloadEwaybill") {
 
+        s.cpJson = null;
+        var pathbillNumber = s.cpeWaybillNumber;
+        var link = document.createElement('a');
+        link.href = pathbillNumber;
+        link.download = pathbillNumber;
+
+        window.open(pathbillNumber);
+        link.dispatchEvent(new MouseEvent('click'));
+        s.cpeWaybillNumber = null;
+
     }
 }
 
