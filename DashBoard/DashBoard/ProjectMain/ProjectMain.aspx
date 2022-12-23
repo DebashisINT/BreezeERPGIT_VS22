@@ -445,7 +445,7 @@
         <div class=" dashitems ">
             <div class="widget" runat="server" id="SalesDbButton" visible="false" onclick="SalesDbButtonClick()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/sale.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/sale.webp" /></div>
                     <div class="Ntilt">Sales Analytics</div>
                 </div>
             </div>

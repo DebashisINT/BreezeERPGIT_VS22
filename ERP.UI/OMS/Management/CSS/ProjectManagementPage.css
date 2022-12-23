@@ -118,17 +118,18 @@
             font-weight: 600;
         }
 
-        .widget {
-            margin-top: 10px;
-            margin-bottom: 15px;
-            color: #333;
-            cursor: pointer;
-            border-radius: 3px;
-            -webkit-transition: all 0.3s ease-out;
-            transition: all 0.3s ease-out;
-            position: relative;
-            border-radius: 3px;
-        }
+.widget {
+    margin-top: 10px;
+    /*margin-bottom: 45px;*/
+    margin-bottom: 15px;
+    color: #333;
+    cursor: pointer;
+    border-radius: 3px;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    position: relative;
+    border-radius: 3px;
+}
 
         .iconH {
             padding: 15px;
@@ -828,28 +829,34 @@
             background:antiquewhite;
         }
         .dashboardRight {
-            background: #eaeaea;
-            margin-left: 167px;
+            background: #fff;
+            margin-left: 180px;
         }
 
-        
-        .nBoxes{
-                text-align: center;
-                background: #ffffff;
-                /* background: #fbfbfb; */
-                border-radius: 2px;
-                padding: 15px;
-                -moz-transition: all 0.25s ease-in-out;
-                -webkit-transition: all 0.25s ease-in-out;
-                transition: all 0.25s ease-in-out;
-                border: 2px solid #ffffff;
-                box-shadow: 0px 3px 5px rgba(0,0,0,0.075);
-                min-height: 157px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-        }
+
+.nBoxes {
+    /* text-align: center;*/
+    background: #ffffff;
+    /* background: #fbfbfb; */
+    border-radius: 20px;
+    /*padding: 15px;*/
+    /*padding: 32px 15px 20px;*/
+    -moz-transition: all 0.25s ease-in-out;
+    -webkit-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    border: 2px solid #ffffff;
+    /*box-shadow: 0px 3px 5px rgba(0,0,0,0.075);*/
+    box-shadow: 1px 2px 10px rgb(0 0 0 / 20%);
+    /*min-height: 157px;*/
+    min-height: 85px;
+    display: flex;
+    /*flex-direction: column;
+    justify-content: center;*/
+    align-items: center;
+    overflow: hidden;
+
+    padding: 0 10px 0 0;
+}
         .nBoxes:hover{
             box-shadow: 0px 10px 8px rgba(0,0,0,0.15);
             transform: scale(1.03);
@@ -858,14 +865,19 @@
         .nBoxes>img {
             max-width:48px;
         }
-        .Ntilt {
-            margin-top: 8px;
-            font-weight: 500;
-            font-size: 13px;
-            
-            font-family: poppins;
-            color: #656262;
-        }
+.Ntilt {
+    /*margin-top: 8px;*/
+    font-weight: 600;
+    /*font-weight: 500;*/
+    /*font-size: 16px;*/
+    font-size: 14px;
+    font-family: poppins;
+    /*color: #032b54;*/
+    color: #fff;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+}
         #loadeddiv {
             border-radius:5px;
         }
@@ -996,4 +1008,274 @@
 }
 .tskPr.md {
     background: #dc9411;
+}
+
+
+
+#fullpageDiv {
+    /*margin-top: 40px;*/
+    margin-top: 10px;
+}
+
+.icon-part img {
+    width: 35px;
+}
+
+/*.icon-part {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 64px;
+    background: #fff;
+    border-radius: 50px;
+    position: absolute;
+    top: -28px;
+    box-shadow: 1px 1px 14px #0000004f;
+}*/
+
+.icon-part {
+    min-width: 60px;
+    min-height: 82px;
+    text-align: center;
+    line-height: 82px;
+    /*background: #fff;*/
+    /*border-radius: 50px;
+    position: absolute;
+    top: -28px;
+    box-shadow: 1px 1px 14px #0000004f;*/
+    margin-right: 10px;
+    background: #ffffffb3;
+    box-shadow: 0 2px 6px #1a5da33d;
+}
+
+.right-arw
+{
+    margin-top: 15px;
+}
+
+/*#SalesDbButton .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86 / 15%) 0%, rgb(239 151 161 / 15%) 100%);
+}
+#PurchaseDbButton .nBoxes {
+    background: rgb(138,80,130);
+    background: linear-gradient(326deg, rgb(138 80 130 / 15%) 0%, rgb(230 123 215 / 15%) 100%);
+}
+#CRMButton .nBoxes {
+    background: rgb(48,117,98);
+    background: linear-gradient(326deg, rgba(48 117 98 / 15%) 0%, rgba(92 200 170 / 15%) 100%);
+}
+#Attbtn .nBoxes {
+    background: rgb(0,78,153);
+    background: linear-gradient(326deg, rgba(0 78 153 / 15%) 0%, rgba(66 148 227 / 15%) 100%);
+}
+#followupBtn .nBoxes {
+    background: rgb(173,27,118);
+    background: linear-gradient(326deg, rgba(173 27 118 / 15%) 0%, rgba(232 71 172 / 15%) 100%);
+}
+#AccountsBtn .nBoxes {
+    background: rgb(203,11,9);
+    background: linear-gradient(326deg, rgba(203 11 9 / 15%) 0%, rgba(251 96 95 / 15%) 100%);
+}
+#tasklistbtn .nBoxes {
+    background: rgb(26,56,232);
+    background: linear-gradient(326deg, rgba(26 56 232 / 15%) 0%, rgba(109 129 244 / 15%) 100%);
+}
+
+#PMSButton .nBoxes {
+    background: rgb(89,114,154);
+    background: linear-gradient(326deg, rgba(89 114 154 / 15%) 0%, rgba(161 195 250 / 15%) 100%);
+}
+
+#FinancialButton .nBoxes {
+    background: rgb(138,80,130);
+    background: linear-gradient(326deg, rgba(138 80 130 / 15%) 0%, rgba(230 123 215 / 15%) 100%);
+}
+
+#CustRMButton .nBoxes {
+    background: rgb(48,117,98);
+    background: linear-gradient(326deg, rgba(48 117 98 / 15%) 0%, rgba(92 200 170 / 15%) 100%);
+}
+
+#dvKPISummary .nBoxes {
+    background: rgb(153,159,14);
+    background: linear-gradient(326deg, rgb(123 129 6 / 15%) 0%, rgb(209 217 54 / 15%) 100%);
+}
+#dvInveDashboard .nBoxes {
+    background: rgb(14,159,116);
+    background: linear-gradient(326deg, rgba(14 159 116 / 15%) 0%, rgba(59 236 183 / 15%) 100%);
+}
+
+#dvManagementNotification .nBoxes {
+    background: rgb(50,14,159);
+    background: linear-gradient(326deg, rgba(50 14 159 / 15%) 0%, rgba(127 89 242 / 15%) 100%);
+}
+
+#dvApprovalWaiting .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86 / 15%) 0%, rgb(239 151 161 / 15%) 100%);
+}
+
+#Div1 .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86 / 15%) 0%, rgb(239 151 161 / 15%) 100%);
+}
+
+#CUSTButton .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86 / 15%) 0%, rgb(239 151 161 / 15%) 100%);
+}*/
+
+
+
+#SalesDbButton .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(203 3 77 / 90%) 0%, rgb(249 103 119 / 90%) 100%);
+}
+#PurchaseDbButton .nBoxes {
+    background: rgb(138,80,130);
+    background: linear-gradient(326deg, rgb(131 53 120 / 90%) 0%, rgb(221 105 205 / 90%) 100%);
+}
+#CRMButton .nBoxes {
+    background: rgb(48,117,98);
+    background: linear-gradient(326deg, rgba(48 117 98 / 90%) 0%, rgba(92 200 170 / 90%) 100%);
+}
+#Attbtn .nBoxes {
+    background: rgb(0,78,153);
+    background: linear-gradient(326deg, rgba(0 78 153 / 90%) 0%, rgba(66 148 227 / 90%) 100%);
+}
+#followupBtn .nBoxes {
+    background: rgb(173,27,118);
+    background: linear-gradient(326deg, rgba(173 27 118 / 90%) 0%, rgba(232 71 172 / 90%) 100%);
+}
+#AccountsBtn .nBoxes {
+    background: rgb(203,11,9);
+    background: linear-gradient(326deg, rgba(203 11 9 / 90%) 0%, rgba(251 96 95 / 90%) 100%);
+}
+#tasklistbtn .nBoxes {
+    background: rgb(26,56,232);
+    background: linear-gradient(326deg, rgba(26 56 232 / 90%) 0%, rgba(109 129 244 / 90%) 100%);
+}
+
+#PMSButton .nBoxes {
+    background: rgb(89,114,154);
+    background: linear-gradient(326deg, rgb(43 77 133 / 90%) 0%, rgb(128 171 241 / 90%) 100%);
+}
+
+#FinancialButton .nBoxes {
+    background: rgb(138,80,130);
+    background: linear-gradient(326deg, rgb(120 21 107 / 90%) 0%, rgb(237 104 218 / 90%) 100%);
+}
+
+#CustRMButton .nBoxes {
+    background: rgb(48,117,98);
+    background: linear-gradient(326deg, rgba(48 117 98 / 90%) 0%, rgba(92 200 170 / 90%) 100%);
+}
+
+#dvKPISummary .nBoxes {
+    background: rgb(153,159,14);
+    background: linear-gradient(326deg, rgb(123 129 6 / 90%) 0%, rgb(209 217 54 / 90%) 100%);
+}
+#dvInveDashboard .nBoxes {
+    background: rgb(14,159,116);
+    background: linear-gradient(326deg, rgba(14 159 116 / 90%) 0%, rgba(59 236 183 / 90%) 100%);
+}
+
+#dvManagementNotification .nBoxes {
+    background: rgb(50,14,159);
+    background: linear-gradient(326deg, rgba(50 14 159 / 90%) 0%, rgba(127 89 242 / 90%) 100%);
+}
+
+#dvApprovalWaiting .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(203 3 77 / 90%) 0%, rgb(249 103 119 / 90%) 100%);
+}
+
+#Div1 .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86 / 90%) 0%, rgb(239 151 161 / 90%) 100%);
+}
+
+#CUSTButton .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86 / 90%) 0%, rgb(239 151 161 / 90%) 100%);
+}
+
+/*#SalesDbButton .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86) 0%, rgb(239 151 161) 100%);
+}
+#PurchaseDbButton .nBoxes {
+    background: rgb(138,80,130);
+    background: linear-gradient(326deg, rgb(138 80 130) 0%, rgb(230 123 215) 100%);
+}
+#CRMButton .nBoxes {
+    background: rgb(48,117,98);
+    background: linear-gradient(326deg, rgba(48 117 98) 0%, rgba(92 200 170) 100%);
+}
+#Attbtn .nBoxes {
+    background: rgb(0,78,153);
+    background: linear-gradient(326deg, rgba(0 78 153) 0%, rgba(66 148 227) 100%);
+}
+#followupBtn .nBoxes {
+    background: rgb(173,27,118);
+    background: linear-gradient(326deg, rgba(173 27 118) 0%, rgba(232 71 172) 100%);
+}
+#AccountsBtn .nBoxes {
+    background: rgb(203,11,9);
+    background: linear-gradient(326deg, rgba(203 11 9) 0%, rgba(251 96 95) 100%);
+}
+#tasklistbtn .nBoxes {
+    background: rgb(26,56,232);
+    background: linear-gradient(326deg, rgba(26 56 232) 0%, rgba(109 129 244) 100%);
+}
+
+#PMSButton .nBoxes {
+    background: rgb(89,114,154);
+    background: linear-gradient(326deg, rgba(89 114 154) 0%, rgba(161 195 250) 100%);
+}
+
+#FinancialButton .nBoxes {
+    background: rgb(138,80,130);
+    background: linear-gradient(326deg, rgba(138 80 130) 0%, rgba(230 123 215) 100%);
+}
+
+#CustRMButton .nBoxes {
+    background: rgb(48,117,98);
+    background: linear-gradient(326deg, rgba(48 117 98) 0%, rgba(92 200 170) 100%);
+}
+
+#dvKPISummary .nBoxes {
+    background: rgb(153,159,14);
+    background: linear-gradient(326deg, rgb(123 129 6) 0%, rgb(209 217 54) 100%);
+}
+#dvInveDashboard .nBoxes {
+    background: rgb(14,159,116);
+    background: linear-gradient(326deg, rgba(14 159 116) 0%, rgba(59 236 183) 100%);
+}
+
+#dvManagementNotification .nBoxes {
+    background: rgb(50,14,159);
+    background: linear-gradient(326deg, rgba(50 14 159) 0%, rgba(127 89 242) 100%);
+}
+
+#dvApprovalWaiting .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86) 0%, rgb(239 151 161) 100%);
+}
+
+#Div1 .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86) 0%, rgb(239 151 161) 100%);
+}
+
+#CUSTButton .nBoxes {
+    background: rgb(255,123,137);
+    background: linear-gradient(326deg, rgb(227 69 86) 0%, rgb(239 151 16) 100%);
+}*/
+
+
+#NotLight, .notLight
+{
+    text-align: center;
 }

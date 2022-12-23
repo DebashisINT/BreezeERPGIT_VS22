@@ -666,119 +666,273 @@
         
       
 
-        <div class=" dashitems ">
+        <%--<div class=" dashitems ">
             <div class="widget" runat="server" id="SalesDbButton" visible="false" onclick="SalesDbButtonClick()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/sale.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/sale.webp" /></div>
                     <div class="Ntilt">Sales Analytics</div>
+                    <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" runat="server" id="PurchaseDbButton" visible="false" onclick="PurchaseDbButtonClick()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/analytics%20(2).webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/analytics%20(2).webp" /></div>
                     <div class="Ntilt"> Purchase Analytics</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" runat="server" id="CRMButton" visible="false" onclick="CRMButtonClick()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/crm.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/crm.webp" /></div>
                     <div class="Ntilt">CRM Analytics </div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" runat="server" id="Attbtn" visible="false" onclick="AttbtnButtonClick()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/attendance.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/attendance.webp" /></div>
                     <div class="Ntilt">Today's Attendance</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" runat="server" id="followupBtn" visible="false" onclick="FollowupButtonClick()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/analytics%20(1).webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/analytics%20(1).webp" /></div>
                     <div class="Ntilt">Payment Followup</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" runat="server" id="AccountsBtn" visible="false" onclick="showDashboard()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/accounting.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/accounting.webp" /></div>
                     <div class="Ntilt">Account Dashboard</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" runat="server" id="tasklistbtn" visible="false" onclick="showTasklist()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/scheduling.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/scheduling.webp" /></div>
                     <div class="Ntilt">Task List </div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" onclick="showProjectDB()" visible="false" id="PMSButton" runat="server">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/project.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/project.webp" /></div>
                     <div class="Ntilt">Project Management </div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" onclick="showFinancialDB()" visible="false" id="FinancialButton" runat="server">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/stock.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/stock.webp" /></div>
                     <div class="Ntilt">Financial</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" onclick="showCustomerRMDB()" id="CustRMButton" runat="server" visible="false">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/customer.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/customer.webp" /></div>
                     <div class="Ntilt">Customer Relations...</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
 
             <div class="widget hide" onclick="showProjectlist()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/stock.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/stock.webp" /></div>
                     <div class="Ntilt">Project Analytics</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget hide" onclick="showquickReports()">
                 <div class="nBoxes" >
-                    <img src="../../assests/images/webP/DashboardIcons/customer.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/customer.webp" /></div>
                     <div class="Ntilt">Quick Reports</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget" onclick="showkpi()" id="dvKPISummary" runat="server"  visible="false">
                 <div class="nBoxes">
-                    <img src="../../assests/images/webP/DashboardIcons/kpi.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/kpi.webp" /></div>
                     <div class="Ntilt">KPI Summary</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             <div class="widget " onclick="showInventory()" id="dvInveDashboard" runat="server" visible="false">
                 <div class="nBoxes">
-                    <img src="../../assests/images/webP/DashboardIcons/inventory.webp" />
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/inventory.webp" /></div>
                     <div class="Ntilt">Inventory Analytics</div>
+                        <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                 </div>
             </div>
             
             <div class="widget" onclick="showMngNot()" id="dvManagementNotification" runat="server" visible="false">
                     <div class="nBoxes">
                         <span id="NotLight">0</span>
-                        <img src="../../assests/images/webP/DashboardIcons/mangementNotify.webp" />
+                        <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/mangementNotify.webp" /></div>
                         <div class="Ntilt">Management Notification</div>
+                            <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                     </div>
             </div>
              <asp:HiddenField ID="ManagementNot" runat="server" />
             <div class="widget" onclick="showappWaiting()" id="dvApprovalWaiting" runat="server" visible="false" >
                     <div class="nBoxes">
                         <span id="spnApprovalWaitingCount" class="notLight">0</span>
-                        <img src="../../assests/images/DashboardIcons/approvalWaiting.png" />
+                        <div class="icon-part"><img src="../../assests/images/DashboardIcons/approvalWaiting.png" /></div>
                         <div class="Ntilt">Approval Waiting</div>
+                            <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                     </div>
             </div>
             <div class="widget hide" onclick="showSTB()" id="Div1" runat="server" visible="true" >
                     <div class="nBoxes">
-                        <img src="/assests/images/DashboardIcons/router.png" />
+                        <div class="icon-part"><img src="/assests/images/DashboardIcons/router.png" /></div>
                         <div class="Ntilt">STB Dashboard</div>
+                            <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
                     </div>
             </div>
 
             <div class="widget" onclick="showCSTProfile()" id="CUSTButton" runat="server" visible="false" >
                     <div class="nBoxes">
-                        <img src="/assests/images/DashboardIcons/customerProfile.png" />
+                        <div class="icon-part"><img src="/assests/images/DashboardIcons/customerProfile.png" /></div>
                         <div class="Ntilt">Customer Profile</div>
+                            <div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>
+                    </div>
+            </div>
+        </div>--%>
+
+        <%--new-design-try--%>
+        <div class=" dashitems ">
+            <div class="widget" runat="server" id="SalesDbButton" visible="false" onclick="SalesDbButtonClick()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/sale.webp" /></div>
+                    <div class="Ntilt">Sales Analytics</div>
+                    <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" runat="server" id="PurchaseDbButton" visible="false" onclick="PurchaseDbButtonClick()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/analytics%20(2).webp" /></div>
+                    <div class="Ntilt"> Purchase Analytics</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" runat="server" id="CRMButton" visible="false" onclick="CRMButtonClick()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/crm.webp" /></div>
+                    <div class="Ntilt">CRM Analytics </div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" runat="server" id="Attbtn" visible="false" onclick="AttbtnButtonClick()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/attendance.webp" /></div>
+                    <div class="Ntilt">Today's Attendance</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" runat="server" id="followupBtn" visible="false" onclick="FollowupButtonClick()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/analytics%20(1).webp" /></div>
+                    <div class="Ntilt">Payment Followup</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" runat="server" id="AccountsBtn" visible="false" onclick="showDashboard()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/accounting.webp" /></div>
+                    <div class="Ntilt">Account Dashboard</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" runat="server" id="tasklistbtn" visible="false" onclick="showTasklist()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/scheduling.webp" /></div>
+                    <div class="Ntilt">Task List </div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" onclick="showProjectDB()" visible="false" id="PMSButton" runat="server">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/project.webp" /></div>
+                    <div class="Ntilt">Project Management </div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" onclick="showFinancialDB()" visible="false" id="FinancialButton" runat="server">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/stock.webp" /></div>
+                    <div class="Ntilt">Financial</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" onclick="showCustomerRMDB()" id="CustRMButton" runat="server" visible="false">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/customer.webp" /></div>
+                    <div class="Ntilt">Customer Relations...</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+
+            <div class="widget hide" onclick="showProjectlist()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/stock.webp" /></div>
+                    <div class="Ntilt">Project Analytics</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget hide" onclick="showquickReports()">
+                <div class="nBoxes" >
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/customer.webp" /></div>
+                    <div class="Ntilt">Quick Reports</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget" onclick="showkpi()" id="dvKPISummary" runat="server"  visible="false">
+                <div class="nBoxes">
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/kpi.webp" /></div>
+                    <div class="Ntilt">KPI Summary</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            <div class="widget " onclick="showInventory()" id="dvInveDashboard" runat="server" visible="false">
+                <div class="nBoxes">
+                    <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/inventory.webp" /></div>
+                    <div class="Ntilt">Inventory Analytics</div>
+                        <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                </div>
+            </div>
+            
+            <div class="widget" onclick="showMngNot()" id="dvManagementNotification" runat="server" visible="false">
+                    <div class="nBoxes">
+                        <span id="NotLight">0</span>
+                        <div class="icon-part"><img src="../../assests/images/webP/DashboardIcons/mangementNotify.webp" /></div>
+                        <div class="Ntilt">Management Notification</div>
+                            <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                    </div>
+            </div>
+             <asp:HiddenField ID="ManagementNot" runat="server" />
+            <div class="widget" onclick="showappWaiting()" id="dvApprovalWaiting" runat="server" visible="false" >
+                    <div class="nBoxes">
+                        <span id="spnApprovalWaitingCount" class="notLight">0</span>
+                        <div class="icon-part"><img src="../../assests/images/DashboardIcons/approvalWaiting.png" /></div>
+                        <div class="Ntilt">Approval Waiting</div>
+                            <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                    </div>
+            </div>
+            <div class="widget hide" onclick="showSTB()" id="Div1" runat="server" visible="true" >
+                    <div class="nBoxes">
+                        <div class="icon-part"><img src="/assests/images/DashboardIcons/router.png" /></div>
+                        <div class="Ntilt">STB Dashboard</div>
+                            <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
+                    </div>
+            </div>
+
+            <div class="widget" onclick="showCSTProfile()" id="CUSTButton" runat="server" visible="false" >
+                    <div class="nBoxes">
+                        <div class="icon-part"><img src="/assests/images/DashboardIcons/customerProfile.png" /></div>
+                        <div class="Ntilt">Customer Profile</div>
+                            <%--<div class="right-arw"><img src="../../assests/images/right-arw-2.png" /></div>--%>
                     </div>
             </div>
         </div>

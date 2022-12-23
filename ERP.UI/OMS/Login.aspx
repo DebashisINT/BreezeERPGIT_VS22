@@ -13,6 +13,7 @@
 
      
     <link rel="stylesheet" href="/assests/bootstrap/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700;800&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" />
     <link href="../assests/css/jquery-ui.css" rel="stylesheet" />
@@ -309,13 +310,14 @@
         }
 
         .mLogo {
-            background: #e4dff4;
+            background: #fff;
             display: inline-block;
             border-radius: 9px;
             padding: 9px 10px;
             text-align: center;
             margin-top: 20px;
             box-sizing: border-box;
+                box-shadow: 1px 1px 10px #1111112e;
         }
 
         .mLogo > img {
@@ -324,19 +326,20 @@
 
         .sectionWraper {
             display: flex;
-            justify-content: space-between;
+            /*justify-content: space-between;*/
             z-index: 100;
             position: relative;
         }
 
         .textSection h1 {
-            font-family: 'opcen', Montserrat, sans-serif !important;
-            font-weight: 400;
+            /*font-family: 'opcen', Montserrat, sans-serif !important;*/
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 800;
             font-size: 41px;
             margin-bottom: 10px;
-            color: #323030;
-            font-family: revert;
-            line-height: 51px;;
+            color: #1a1a1a;
+            /*font-family: revert;*/
+            line-height: 51px;
         }
 
         .scndSize {
@@ -366,24 +369,29 @@
         .formBox {
             background: #fff;
             border-radius: 24px;
-            width: 345px;
-            margin-top: 80px;
-            margin-right:50px;
-            box-shadow: 0px 8px 18px 4px rgb(0 0 0 / 10%);
+            width: 35%;
+            /*margin-top: 80px;*/
+            /*margin-right:50px;*/
+            margin-right:0;
+            /*box-shadow: 0px 8px 18px 4px rgb(0 0 0 / 10%);*/
+            box-shadow: 0px 8px 18px 4px rgb(25 3 88 / 30%);
+            margin-left: 50px;
         }
 
         .wlHeader {
             font-family: "Playfair Display", serif;
-            color: #41326c;
+            color: #062aa5;
             margin-bottom: 0px !important;
-            font-size: 26px;
+            font-size: 30px;
             font-weight: 700;
+                text-align: center;
         }
 
         .f2Para {
             font-family: revert;
             margin-top: 5px !important;
-            font-size: 13px;
+            font-size: 14px;
+                text-align: center;
         }
 
         .bliner {
@@ -395,7 +403,8 @@
             font-size: 21px;
         }
         .textSection {
-            margin-top: 30px;
+            /*margin-top: 30px;*/
+            width: 55%;
         }
 
         .inputwraps {
@@ -404,11 +413,11 @@
         }
         .inputL {
             width:100%;
-            border:2px solid #b2baeb;
-            height:48px;
+            border:1px solid #d1d1d1;
+            height:45px;
             box-sizing:border-box;
-            border-radius:7px;
-            padding-left:35px
+            border-radius:50px;
+            padding-left:45px
         }
         .inputL:focus {
             outline:none;
@@ -419,11 +428,20 @@
             margin-bottom:15px
         }
         .submitButton {
-            background:#8a57f1;
+            /*background:#8a57f1;
             border:none;
             padding:8px  15px 8px 15px;
             color:#fff;
-            border-radius:6px;
+            border-radius:6px;*/
+            background: #5d23d1;
+            border: none;
+            padding: 11px 15px 11px 15px;
+            color: #fff;
+            border-radius: 50px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            height: 45px;
         }
         .submitButton:hover {
                 background: #7035E6;
@@ -454,16 +472,18 @@
         }
         .ftFooter {
             text-align:center;
-            border-top:1px solid #eee;
+            border-top:1px solid #d7d7d7;
             padding:12px;
             font-size:13px;
-            line-height:25px
+            line-height:25px;
+            background: #e7e7e7;
+    border-radius: 0 0 25px 25px;
         }
         .inputImgs {
             position:absolute;
-            left: 15px;
-            top: 14px;
-            max-width:18px;
+            left: 12px;
+            top: 11px;
+            /*max-width:18px;*/
         }
         .passWordView {
             position: absolute;
@@ -837,6 +857,7 @@
             .spEmpa {
                 font-weight: 600;
                 color: #3a5ac6;
+                font-family: 'Playfair Display', serif;
             }
             .screenDark  .spEmpa {
                 color: #fff !important;
@@ -1129,9 +1150,10 @@
 .button-26 {
     margin-top:15px;
   appearance: button;
-  background-color: #1652F0;
-  border: 1px solid #1652F0;
-  border-radius: 4px;
+  background-color: #201f66;
+  border: 1px solid #201f66;
+  /*border-radius: 4px;*/
+  border-radius:50px;
   box-sizing: border-box;
   color: #FFFFFF;
   cursor: pointer;
@@ -1192,6 +1214,7 @@
 .sectionWraper
 {
     align-items: center;
+    margin-top: 10%;
 }
 
 .event-img
@@ -1202,12 +1225,31 @@
     width: 340px;
     height: 152px;
     overflow: hidden;
+    box-shadow: 1px 1px 15px #00000063;
 }
 .event-img img
 {
     border-radius: 10px;
     box-shadow: 1px 1px 10px #11111160;
-        width: 100%;
+    width: 100%;
+}
+
+.cust-position
+{
+    left: -30px !important;
+    top: -20px !important;
+}
+
+#ddlConn.form-control
+{
+    border-radius: 50px;
+    min-height: 45px;
+    padding-left: 41px;
+}
+
+.database-dropdown
+{
+    position: relative;
 }
     </style>
 
@@ -1225,15 +1267,19 @@
         </label>
     </div>
     <div id="themeClass" class="screenLight">
-      <div class="relative setHeight bgforDark" style="margin-bottom:35px;min-height:100vh;overflow:hidden">
-        <div id="scene" style="position:absolute;right:-50px;top:-50px;">
+      <div class="relative setHeight bgforDark" style="margin-bottom:35px;min-height:100vh;overflow:hidden; 
+/*background: linear-gradient(158deg, rgb(44 9 150 / 10%) 0%, rgb(116 77 233 / 10%) 100%);*/ background-image: url(/assests/images/login-total-bg.jpg);">
+            <%--<div id="scene" style="position:absolute;right:-50px;top:-50px;">--%>
+            <div id="scene" style="position:absolute;right:-100px;top: 0;">
             <%--<div class="layer" data-depth="0.1"><img src="/assests/images/bkfive.png" alt="" style="max-width: 600px;" /></div>  
           <div class="layer" data-depth="0.6"><img src="/assests/images/bkone.png" alt="" style="max-width: 600px;" /></div>
           <div class="layer" data-depth="0.2"><img src="/assests/images/bktwo.png" alt="" style="max-width: 600px;" /></div>  
             <div class="layer" data-depth="0.8"><img src="/assests/images/bkthree.png" alt="" style="max-width: 600px;" /></div>
             <div class="layer" data-depth="0.1"><img src="/assests/images/bkfour.png" alt="" style="max-width: 600px;" /></div>     --%>
-             <div class="layer" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky.png" alt="" style="max-width: 800px;" /></div>
-            <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bg1Gr.png" alt="" style="max-width: 800px;" /></div>
+             <%--<div class="layer" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky.png" alt="" style="max-width: 800px;" /></div>--%>
+                <div class="layer cust-position" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky-2.png" alt="" style="height: 100vh;" /></div>
+            <%--<div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bg1Gr.png" alt="" style="max-width: 800px;" /></div>--%>
+            <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/login-fm-bg.png" alt="" style="height: 100vh;" /></div>
         </div>
         <div id="sceneDark" style="position:absolute;right:0px;top:0px;">
             <%--<div class="layer" data-depth="0.1"><img src="/assests/images/bkfive.png" alt="" style="max-width: 600px;" /></div>  
@@ -1246,7 +1292,7 @@
         </div>
         <div class="animatedIcc">
             <img class="animatedIco a1" src="/assests/images/NLoginIcon/a1.png" alt="" />
-            <img class="animatedIco a2" src="/assests/images/NLoginIcon/a2.png" alt="" />
+            <img class="animatedIco a2" src="/assests/images/NLoginIcon/a2-2.png" alt="" />
             <img class="animatedIco a3" src="/assests/images/NLoginIcon/a3.png" alt="" />
             <img class="animatedIco a4" src="/assests/images/NLoginIcon/a4.png" alt="" />
             <img class="animatedIco a5" src="/assests/images/NLoginIcon/a5.png" alt="" />
@@ -1259,16 +1305,16 @@
           <div class="textSection">
               <div class="d-flex">
                   <div class="mLogo">
-                    <img src="/assests/images/logo.png"  />
+                    <img src="/assests/images/logo-2.png"  />
                   </div>
                   <div class="event-img">
                     <img src="/assests/images/event-banner.jpg"  />
                 </div>
             </div>
-            <h1>Power-packed <span class="spEmpa" style="font-weight: 600;color: #3a5ac6;">Digital ERP</span> For <br />
+            <h1>Power-packed <span class="spEmpa" style="font-weight: 600;color: #062aa5;">Digital ERP</span> For <br />
                 Indian Businesses.</h1>
             <h3 class="scndSize" style="display:none">We are focussed on getting your business disruption-ready.</h3>
-              <h3 class="scndSize" style="line-height: 27px;font-size: 17px;">BreezeERP is digital first CLOUD ERP that AUTOMATES & CONNECTS <br />
+              <h3 class="scndSize" style="line-height: 27px;font-size: 16px;">BreezeERP is digital first CLOUD ERP that AUTOMATES & CONNECTS <br />
                   all aspects of your business with a built in INTELLIGENCE that proactively manages<br />
                    your business process and tasks letting you focus on the core of your business. <br />
                   Lead your team from a single platform with real time updates and analytics.</h3>
@@ -1287,7 +1333,8 @@
           <div class="formBox relative">
               <div class="onlySm aCenter" style="z-index:9999;"><div class="mLogo"><img src="/assests/images/logo.png"  /></div></div>
               <div style="padding: 10px 30px;">
-                <h1 class="wlHeader">Welcome ...</h1>
+                <%--<h1 class="wlHeader">Welcome ...</h1>--%>
+                  <h1 class="wlHeader">Login</h1>
                 <p class="f2Para">Please enter your username and password</p>
 
                   <div style="margin-top: 20px">
@@ -1297,8 +1344,9 @@
                       <form action="" method="post" runat="server" novalidate="novalidate">
                         <input id="rurl" name="rurl" runat="server" type="hidden" value="" />
                       <div class="inputwraps">
-                          <img  class="inputImgs" src="/assests/images/NLoginIcon/user.png" alt="arr" />
-                          <%--<input type="text" class="inputL" />--%>
+                          <%--<img  class="inputImgs" src="/assests/images/NLoginIcon/user.png" alt="arr" />--%>
+                          <img  class="inputImgs" src="/assests/images/NLoginIcon/user-2.png" alt="arr" />
+                          
                           <asp:TextBox ID="txtUserName" onblur="return ChangeCompany();" CssClass="inputL" runat="server" placeholder="" TabIndex="1"></asp:TextBox>
                       </div>
                       <div style="text-align: left">
@@ -1311,8 +1359,9 @@
                                 </asp:RequiredFieldValidator></span>
                         </div>
                       <div class="inputwraps">
-                          <img class="inputImgs" src="/assests/images/NLoginIcon/password.png" alt="arr" />
-                          <%--<input type="text" class="inputL" />--%>
+                          <%--<img class="inputImgs" src="/assests/images/NLoginIcon/password.png" alt="arr" />--%>
+                          <img class="inputImgs" src="/assests/images/NLoginIcon/password-2.png" alt="arr" />
+                          
                           <asp:TextBox ID="txtPassword" CssClass="inputL" placeholder="" runat="server" TextMode="Password" TabIndex="2"></asp:TextBox>
                           <span class="passWordView"><i class="fa fa-eye-slash"></i></span>
                       </div>
@@ -1327,29 +1376,26 @@
                         </div>
 
                            <div runat="server" id="divConn">
-                                <div class="form-group">
+                                <div class="form-group database-dropdown">
+                                    <img class="inputImgs" src="/assests/images/NLoginIcon/database.png" alt="arr" />
                                     <asp:DropDownList ID="ddlConn" CssClass="form-control smalltext fontAwesome" placeholder=" Company" runat="server" TabIndex="3"></asp:DropDownList>
                                 </div>
                                 <div style="text-align: left">
                                     <em style="color: red; position: relative; right: 55px; top: 160px;"></em>
                                     <span style="color: red">
-                                        <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
-                                            ControlToValidate="ddlConn"
-                                            ErrorMessage="Please select company."
-                                            ForeColor="Red" ValidationGroup="login" Display="Dynamic">
-                                        </asp:RequiredFieldValidator>--%></span>
+                                        </span>
                                 </div>
                             </div>
                     
-                     <%-- <div>By login, you agree to our <a href="#">Terms and Conditions</a></div>--%>
-                    <div style="font-size:12px">Application best viewed at <a href="#">1280 x 720</a> resolution in <a href="#">Google Chrome</a> 59 or above</div>
+                     
+                    <div style="font-size:12px; text-align: center;">Application best viewed at <a href="#">1280 x 720</a> resolution in<br /><a href="#">Google Chrome</a> 59 or above</div>
                     <div id="btnProceed" runat="server" class="callArea" style="text-align: center">
                         <asp:Button ID="ShowDB" runat="server" CssClass="btn submitButton " Text="Proceed" OnClick="ShowDB_Click" TabIndex="3" UseSubmitBehavior="false" />
                         <a href="#" class="fPass hide">Forgot password? </a>
                     </div>
 
                     <div id="btnLoginCls" runat="server" class="callArea" style="text-align: center">
-                       <%-- <button  type="button" ID="Submit1" runat="server" onserverclick="Login_User">Submit <img src="/assests/images/NLoginIcon/right-arrow.png"  /></button>--%>
+                      
                         <asp:Button ID="Submit1" ValidationGroup="login" runat="server" CssClass="btn submitButton" Text="Submit " OnClick="Login_User" TabIndex="3" UseSubmitBehavior="false" />
                         <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" TabIndex="4" CssClass="compemail hide" OnClick="LinkButton1_Click1">Forgot  Password?</asp:LinkButton>
                         <a href="#" class="fPass hide">Forgot password? </a>

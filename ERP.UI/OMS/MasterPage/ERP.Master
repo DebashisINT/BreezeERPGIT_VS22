@@ -207,6 +207,15 @@
 
     </script>
 
+    <style>
+        #btnHelpPopupRec img{
+            width: 25px;
+        } 
+        ##btnHelpPopup img{
+            width: 25px;
+        }
+    </style>
+
     <script type="text/javascript" src="/assests/js/modalmsg.js"></script>
     <script src="/OMS/MasterPage/Js/MasterPage.js?v=0.2" type="text/javascript"></script>
 
@@ -475,7 +484,8 @@
                         <ul class="nav navbar-top-links navbar-right user-dropdown-custom">
                             <li class="" >
                                 <span id="btnHelpPopupRec" class="HelpMasterClass" data-toggle="tooltip" data-placement="bottom" title="Open Favourite">
-                                    <i class="fa fa-star str"></i>
+                                    <%--<i class="fa fa-star str"></i>--%>
+                                    <img src="/assests/images/favourite-icon.png" />
                                     <%--<svg class="ico" width="30" height="30" viewBox="0 0 24 24">
                                         <polygon points="50 160 55 180 70 180 60 190 65 205 50 195 35 205 40 190 30 180 45 180" stroke="green" fill="transparent" stroke-width="5"/>
                                     </svg>--%>
@@ -483,7 +493,8 @@
                             </li>
                             <li>
                                 <span id="btnHelpPopup" style="display: none" onclick="ShowHelpPopup()" class="HelpMasterClass" data-toggle="tooltip" data-placement="bottom" title="Help">
-                                    <i class="fa fa-question-circle" style="margin-top: 6px;"></i>
+                                    <%--<i class="fa fa-question-circle" style="margin-top: 6px;"></i>--%>
+                                    <img src="/assests/images/help.png" />
                                 </span>
                             </li>
 
@@ -520,9 +531,10 @@
                           
                             </li>
                             <li class="dropdown usr">
-                                <a class="dropdown-toggle user" data-toggle="dropdown" href="#" aria-expanded="true" style="padding: 9px 15px 6px 0px;">
-                                    <div class="avtarHolder" style="margin-right: 24px; margin-top: 3px; border-radius: 0 !important;">
-                                        <img id="imgpp" src="/assests/images/webP/profile1.webp" runat="server" /> <%--src="/assests/images/profile1.png"--%>
+                                <a class="dropdown-toggle user" data-toggle="dropdown" href="#" aria-expanded="true" style="padding: 2px 8px 3px 0px;">
+                                    <div class="avtarHolder" style="margin-right: 12px; margin-top: 3px; border-radius: 0 !important;">
+                                       <%-- <img id="imgpp" src="/assests/images/webP/profile1.webp" runat="server" />--%> <%--src="/assests/images/profile1.png"--%>
+                                        <img id="imgpp" src="/assests/images/profile2.png" runat="server" />
                                     </div>
                                     <span class="label hidden-xs">Welcome,
                                     <asp:Label runat="server" ID="LogedUser"></asp:Label>
