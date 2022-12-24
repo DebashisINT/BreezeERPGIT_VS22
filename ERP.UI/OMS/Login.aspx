@@ -1251,6 +1251,12 @@
 {
     position: relative;
 }
+
+.screenLight .bgforDark
+{
+    /*background: linear-gradient(158deg, rgb(44 9 150 / 10%) 0%, rgb(116 77 233 / 10%) 100%);*/
+    background-image: url(/assests/images/login-total-bg.jpg);
+}
     </style>
 
 
@@ -1267,8 +1273,7 @@
         </label>
     </div>
     <div id="themeClass" class="screenLight">
-      <div class="relative setHeight bgforDark" style="margin-bottom:35px;min-height:100vh;overflow:hidden; 
-/*background: linear-gradient(158deg, rgb(44 9 150 / 10%) 0%, rgb(116 77 233 / 10%) 100%);*/ background-image: url(/assests/images/login-total-bg.jpg);">
+      <div class="relative setHeight bgforDark" style="margin-bottom:35px;min-height:100vh;overflow:hidden;">
             <%--<div id="scene" style="position:absolute;right:-50px;top:-50px;">--%>
             <div id="scene" style="position:absolute;right:-100px;top: 0;">
             <%--<div class="layer" data-depth="0.1"><img src="/assests/images/bkfive.png" alt="" style="max-width: 600px;" /></div>  
