@@ -901,11 +901,11 @@ p.copyright {
 
 .sidenav ul > li a:hover, .sidenav ul > li a.active:hover {
     text-decoration: none;
-    background: #363c53;
+    background: #021b36;
 }
 
 .sidenav > ul > li:hover > a {
-    background-color: #575d77;
+    background-color: #021b36;
 }
 .sidenav > ul > li > a > i
 {
@@ -990,7 +990,7 @@ p.copyright {
 }
 
 .sidenav ul > li .dropdown-menu {
-    background: #3f455d;
+    background: #032548;
     left: 100%;
     top: 0;
     bottom: 0;
@@ -1003,16 +1003,16 @@ p.copyright {
 }
 
     .sidenav ul > li .dropdown-menu.thrdlevel {
-        background: #575d77;
+        background: #224b78;
         box-shadow: none;
     }
 
         .sidenav ul > li .dropdown-menu.thrdlevel ul li a:hover {
-            background: #656C88;
+            background: #0781ff;
         }
 
 .sidenav ul .seclevel {
-    background: #3f455d;
+    background: #032548;
 }
 
     .sidenav ul .seclevel li {
@@ -1024,8 +1024,8 @@ p.copyright {
             padding: 8px 20px 8px 20px;
         }
 
-        .sidenav ul .seclevel li:hover > a, .sidenav ul .seclevel li.active a  {
-            background: #575d77;
+        .sidenav ul .seclevel li:hover > a, .sidenav ul .seclevel li.active a {
+            background: #224b78;
         }
 
 .sidenav ul .thrdlevel > li, .sidenav ul>li>ul>li {
