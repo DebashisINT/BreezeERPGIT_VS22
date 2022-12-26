@@ -23,7 +23,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700;800&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+
     <script>
 
         //localStorage.setItem("TaxDetailsForSale", "");
@@ -39,40 +40,40 @@
             var md = new MobileDetect(window.navigator.userAgent);
             if (md.mobile()) {
                 //console.log('Mobile Name' + md.mobile());
-               //console.log('Phone' + md.phone());
-             //console.log('Is Tablet' + md.tablet());
-               //console.log(md.userAgent());
+                //console.log('Phone' + md.phone());
+                //console.log('Is Tablet' + md.tablet());
+                //console.log(md.userAgent());
                 //console.log(md.os());
-               //console.log('Is iphone' + md.is('iPhone'));
-              //console.log(md.is('bot'));
-             //console.log(md.version('Webkit'));
-               //console.log(md.versionStr('Build'));
-             //console.log(md.match('playstation|xbox'));
+                //console.log('Is iphone' + md.is('iPhone'));
+                //console.log(md.is('bot'));
+                //console.log(md.version('Webkit'));
+                //console.log(md.versionStr('Build'));
+                //console.log(md.match('playstation|xbox'));
 
-              if ($('#ismobile').val() == '0' || $('#ismobile').val() == '') {
-                  $.confirm({
-                      title: 'What do you want to visit',
-                      content: 'Choose one to continue',
-                      buttons: {
-                         Report: {
-                            text: 'MIS Reports',
-                            btnClass: 'btn-purple',
-                             keys: ['enter', 'shift'],
-                            action: function () {
-                                   $('#ismobile').val('1');
+                if ($('#ismobile').val() == '0' || $('#ismobile').val() == '') {
+                    $.confirm({
+                        title: 'What do you want to visit',
+                        content: 'Choose one to continue',
+                        buttons: {
+                            Report: {
+                                text: 'MIS Reports',
+                                btnClass: 'btn-purple',
+                                keys: ['enter', 'shift'],
+                                action: function () {
+                                    $('#ismobile').val('1');
+                                }
+                            },
+                            Erp: {
+                                text: 'BreezeERP',
+                                btnClass: 'btn-dark',
+                                keys: ['enter', 'shift'],
+                                action: function () {
+                                    $('#ismobile').val('0');
+                                }
                             }
-                      },
-                         Erp: {
-                              text: 'BreezeERP',
-                              btnClass: 'btn-dark',
-                              keys: ['enter', 'shift'],
-                            action: function () {
-                                 $('#ismobile').val('0');
-                             }
-                         }
-                     }
-                  });
-               } else { }
+                        }
+                    });
+                } else { }
 
 
             } else {
@@ -106,7 +107,7 @@
                         $('.greetWrap').removeClass('hide')
                         $('.greetWrap').find('img').attr('src', imageUri)
                     } else {
-                       
+
                     }
                 }
             }
@@ -133,14 +134,17 @@
         .slick-slide {
             margin: 0 20px;
         }
+
         @@font-face {
             font-family: 'opcen';
             src: url('/assests/fonts/OpenSans-CondBold.ttf') format('truetype');
-        } 
+        }
+
         .centerd-box {
             top: auto !important;
             padding: 24px 50px;
         }
+
         .greetWrap {
             position: fixed;
             right: 15px;
@@ -168,7 +172,6 @@
             font-size: 16px;
             height: 20px;
             display: flex;
-            
             justify-content: center;
             align-items: center;
             border-radius: 5px;
@@ -233,12 +236,12 @@
             });
         });
     </script>
- 
+
     <style type="text/css">
 
         body {
             font-family: "Poppins", sans-serif;
-            overflow-x:hidden
+            overflow-x: hidden
         }
 
         .container {
@@ -255,33 +258,36 @@
         }
 
         .mLogo {
-            background: #e4dff4;
+            /*background: #e4dff4;*/
+            background: #fff;
             display: inline-block;
             border-radius: 9px;
             padding: 9px 10px;
             text-align: center;
             margin-top: 20px;
             box-sizing: border-box;
+            box-shadow: 1px 1px 10px #1111112e;
         }
 
-        .mLogo > img {
-           width: 135px;
-        }
+            .mLogo > img {
+                width: 135px;
+            }
 
         .sectionWraper {
             display: flex;
-            justify-content: space-between;
+            /*justify-content: space-between;*/
             z-index: 100;
             position: relative;
         }
 
         .textSection h1 {
-            font-family: 'opcen', Montserrat, sans-serif !important;
-            font-weight: 400;
+            /*font-family: 'opcen', Montserrat, sans-serif !important;*/
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 800;
             font-size: 41px;
             margin-bottom: 10px;
-            color: #323030;
-            font-family: revert;
+            color: #1a1a1a;
+            /*font-family: revert;*/
             line-height: 51px;
         }
 
@@ -312,24 +318,29 @@
         .formBox {
             background: #fff;
             border-radius: 24px;
-            width: 345px;
-            margin-top: 80px;
-            margin-right:50px;
-            box-shadow: 0px 8px 18px 4px rgb(0 0 0 / 10%);
+            width: 35%;
+            /*margin-top: 80px;*/
+            /*margin-right:50px;*/
+            margin-right: 0;
+            /*box-shadow: 0px 8px 18px 4px rgb(0 0 0 / 10%);*/
+            box-shadow: 0px 8px 18px 4px rgb(25 3 88 / 30%);
+            margin-left: 50px;
         }
 
         .wlHeader {
             font-family: "Playfair Display", serif;
-            color: #41326c;
+            color: #062aa5;
             margin-bottom: 0px !important;
-            font-size: 26px;
+            font-size: 30px;
             font-weight: 700;
+            text-align: center;
         }
 
         .f2Para {
             font-family: revert;
             margin-top: 5px !important;
-            font-size: 13px;
+            font-size: 14px;
+            text-align: center;
         }
 
         .bliner {
@@ -340,72 +351,92 @@
             font-weight: 600;
             font-size: 21px;
         }
+
         .textSection {
-            margin-top: 30px;
+            /*margin-top: 30px;*/
+            width: 55%;
         }
-         
+
         .inputwraps {
-            position:relative;
-            margin-bottom:15px
+            position: relative;
+            margin-bottom: 15px
         }
+
         .inputL {
-            width:100%;
-            border:2px solid #b2baeb;
-            height:48px;
-            box-sizing:border-box;
-            border-radius:7px;
-            padding-left:35px
+            width: 100%;
+            border: 1px solid #d1d1d1;
+            height: 45px;
+            box-sizing: border-box;
+            border-radius: 50px;
+            padding-left: 45px
         }
-        .inputL:focus {
-            outline:none;
-            border:2px solid #9AA4E6;
-        }
+
+            .inputL:focus {
+                outline: none;
+                border: 2px solid #9AA4E6;
+            }
+
         .callArea {
-            padding:15px 0;
-            margin-bottom:15px
+            padding: 15px 0;
+            margin-bottom: 15px
         }
+
         .submitButton {
-            background:#8a57f1;
-            border:1px solid #8a57f1;
-            padding:8px  15px 8px 25px;
+            /*background:#8a57f1;
+            border:none;
+            padding:8px  15px 8px 15px;
             color:#fff;
-            border-radius:6px;
+            border-radius:6px;*/
+            background: #5d23d1;
+            border: none;
+            padding: 11px 15px 11px 15px;
+            color: #fff;
+            border-radius: 50px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            height: 45px;
         }
-        .submitButton:hover {
+
+            .submitButton:hover {
                 background: #7035E6;
-            border: 1px solid #642bd5;
-            box-shadow: 0px 4px 5px rgb(0 0 0 / 20%);
-        }
-        .submitButton>img{
-            max-width: 28px;
-            /* float: right; */
-            margin-left: 10px;
-        }
+                border: 1px solid #642bd5;
+                box-shadow: 0px 4px 5px rgb(0 0 0 / 20%);
+            }
+
+            .submitButton > img {
+                max-width: 28px;
+                /* float: right; */
+                margin-left: 10px;
+            }
+
         .fPass {
-
-            color:#444242;
-            margin-left:20px;
-            text-decoration:underline;
-
-            font-size:12px
+            color: #444242;
+            margin-left: 20px;
+            text-decoration: underline;
+            font-size: 12px
         }
+
         .ftFooter {
-            text-align:center;
-            border-top:1px solid #eee;
-            padding:12px;
-            font-size:13px;
-            line-height:25px
+            text-align: center;
+            border-top: 1px solid #d7d7d7;
+            padding: 12px;
+            font-size: 13px;
+            line-height: 25px;
+            background: #e7e7e7;
+            border-radius: 0 0 25px 25px;
         }
+
         .inputImgs {
-            position:absolute;
-            left: 15px;
-            top: 14px;
-            max-width:18px;
+            position: absolute;
+            left: 12px;
+            top: 11px;
+            /*max-width:18px;*/
         }
+
         .passWordView {
             position: absolute;
             right: 14px;
-
             top: 14px;
             width: 21px;
             height: 20px;
@@ -416,15 +447,16 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         .bg11 {
-            min-height:250px;
-            background:#333 url('/assests/images/NLoginIcon/bg11.jpg');
+            min-height: 250px;
+            background: #333 url('/assests/images/NLoginIcon/bg11.jpg');
             background-size: cover;
             background-position: center;
-            padding:50px 0
+            padding: 50px 0
         }
 
-        
+
         .secToggler {
             width: 35px;
             height: 35px;
@@ -439,31 +471,36 @@
             background: #333;
         }
 
-        .secToggler i {
-            font-size: 23px;
-            cursor: pointer;
-            display: inline-block;
+            .secToggler i {
+                font-size: 23px;
+                cursor: pointer;
+                display: inline-block;
+            }
+
+            .secToggler:hover {
+                background: #333;
+                border-color: #fff;
+                box-shadow: 0 0 0 3px #288fce, 0 0 0 4px rgb(255 255 255 / 20%);
+            }
+
+        .aCenter {
+            text-align: center
         }
 
-        .secToggler:hover {
-            background: #333;
-            border-color: #fff;
-            box-shadow: 0 0 0 3px #288fce, 0 0 0 4px rgb(255 255 255 / 20%);
-        }
-        .aCenter {
-            text-align:center
-        }
         .sectionHeader .hd, .sectionHeader p {
-            color:#fff;
+            color: #fff;
             font-family: revert;
         }
+
         .lister li {
             display: inline-block;
             min-width: 180px;
         }
-        .lister li:not(:last-child) {
-            margin-right: 35px;
-        }
+
+            .lister li:not(:last-child) {
+                margin-right: 35px;
+            }
+
         .boxDB {
             background: #fff;
             border-radius: 15px;
@@ -471,59 +508,66 @@
             box-shadow: 0px 10px 10px rgba(0,0,0,0.08);
             min-height: 180px;
         }
+
             .boxDB > img {
                 max-width: 70px;
             }
+
             .boxDB .hding {
                 font-weight: 700;
                 font-size: 16px;
                 margin-top: 15px;
             }
+
         .animatedIco {
-            position:absolute;
+            position: absolute;
         }
+
         .a1 {
             top: 0;
             left: -46px;
             /* transform: rotate(90deg); */
             opacity: 0.2;
         }
+
         .a2 {
             top: 100px;
             left: 40%;
             opacity: 0.2;
             -webkit-animation: movable 15s infinite linear;
         }
+
         .a3 {
             bottom: 100px;
             left: 54%;
             opacity: 0.3;
         }
+
         .a4 {
-                bottom: 102px;
-                left: 20%;
-                opacity: 0.3;
+            bottom: 102px;
+            left: 20%;
+            opacity: 0.3;
         }
+
         .a5 {
             top: 190px;
             left: 20%;
             opacity: 0.1;
         }
+
         .a6 {
             top: 190px;
             left: 58%;
             opacity: 0.2;
             -webkit-animation: rotation 6s infinite linear;
         }
+
         .a7 {
             bottom: 200px;
             left: -50px;
             transform: rotate(90deg);
             opacity: 0.2
         }
-
-
-        
     </style>
     <style type="text/css">
         #scene, #sceneDark {
@@ -640,19 +684,21 @@
             .slider.round:before {
                 border-radius: 50%;
             }
-            .spEmpa {
-                font-weight: 600;
-                color: #3a5ac6;
-            }
 
-            .screenDark .spEmpa {
-                color: #fff !important;
-                border-bottom: 3px solid #dbdb2b;
-            }
+        .spEmpa {
+            font-weight: 600;
+            color: #3a5ac6;
+            font-family: 'Playfair Display', serif;
+        }
 
-            .screenDark .mainlist li {
-                color: #fff;
-            }
+        .screenDark .spEmpa {
+            color: #fff !important;
+            border-bottom: 3px solid #dbdb2b;
+        }
+
+        .screenDark .mainlist li {
+            color: #fff;
+        }
     </style>
     <script type="text/javascript">
         $(function () {
@@ -684,11 +730,12 @@
     </script>
     <style type="text/css">
         .styleList {
-            list-style-type:none;
-            margin-top:23px;
-            display:block;
-            padding-left:15px
+            list-style-type: none;
+            margin-top: 23px;
+            display: block;
+            padding-left: 15px
         }
+
             .styleList li {
                 font-family: "Segoe UI","Helvetica Neue",Helvetica,Verdana,"san-serif";
                 line-height: 35px;
@@ -696,6 +743,7 @@
                 padding-left: 30px;
                 background: transparent url("/assests/images/verified.png") no-repeat center left;
             }
+
         @@media screen and (min-width: 480px) {
             .nameCR {
                 font-weight: 500;
@@ -716,7 +764,7 @@
                 min-width: 250px;
                 border-radius: 11px;
                 overflow: hidden;
-                display:none;
+                display: none;
                 opacity: 0;
                 -webkit-transition: all 0.3s ease-in-out;
                 transition: all 0.3s ease-in-out;
@@ -868,6 +916,7 @@
                 -webkit-transform: scale(1);
             }
         }
+
         @@media only screen and (max-width: 762px) {
             .textSection {
                 display: none;
@@ -890,13 +939,14 @@
             }
 
             .lister li:last-child {
-                margin-right: 35px ;
+                margin-right: 35px;
             }
         }
-        @@media only screen and (min-width: 763px){
+
+        @@media only screen and (min-width: 763px) {
 
             .onlySm {
-                display:none;
+                display: none;
             }
         }
         /*login button*/
@@ -1042,29 +1092,33 @@
                 .effect.egeon a:hover i {
                     transform: rotate(90deg);
                 }
+
         .slickCont {
             position: relative;
             margin-bottom: -150px;
         }
-        .slick-slide{
-            height:auto !important
-        } .slickCont .boxDB > img {
+
+        .slick-slide {
+            height: auto !important
+        }
+
+        .slickCont .boxDB > img {
             margin: auto;
         }
 
-            .slickCont .slide-arrow {
-                position: absolute;
-                top: -40px;
-                right: 20px;
+        .slickCont .slide-arrow {
+            position: absolute;
+            top: -40px;
+            right: 20px;
+        }
+
+            .slickCont .slide-arrow.prev-arrow {
+                right: 55px;
             }
 
-                .slickCont .slide-arrow.prev-arrow {
-                    right: 55px;
-                }
-
-            .slickCont .slick-track {
-                padding-bottom: 50px;
-            }
+        .slickCont .slick-track {
+            padding-bottom: 50px;
+        }
 
         /* button */
         .button-7 {
@@ -1110,9 +1164,10 @@
         .button-26 {
             margin-top: 15px;
             appearance: button;
-            background-color: #1652F0;
-            border: 1px solid #1652F0;
-            border-radius: 4px;
+            background-color: #201f66;
+            border: 1px solid #201f66;
+            /*border-radius: 4px;*/
+            border-radius: 50px;
             box-sizing: border-box;
             color: #FFFFFF;
             cursor: pointer;
@@ -1174,11 +1229,12 @@
     </style>
     <style type="text/css">
         .hide {
-            display:none !important
+            display: none !important
         }
 
         .sectionWraper {
             align-items: center;
+            margin-top: 10%;
         }
 
         .event-img {
@@ -1188,6 +1244,7 @@
             width: 340px;
             height: 152px;
             overflow: hidden;
+            box-shadow: 1px 1px 15px #00000063;
         }
 
             .event-img img {
@@ -1195,6 +1252,26 @@
                 box-shadow: 1px 1px 10px #11111160;
                 width: 100%;
             }
+
+        .cust-position {
+            left: -30px !important;
+            top: -20px !important;
+        }
+
+        #ddlConn.form-control {
+            border-radius: 50px;
+            min-height: 45px;
+            padding-left: 41px;
+        }
+
+        .database-dropdown {
+            position: relative;
+        }
+
+        .screenLight .bgforDark {
+            /*background: linear-gradient(158deg, rgb(44 9 150 / 10%) 0%, rgb(116 77 233 / 10%) 100%);*/
+            background-image: url(/assests/images/login-total-bg.jpg);
+        }
     </style>
 
 
@@ -1213,171 +1290,177 @@
         </label>
     </div>
      <div id="themeClass" class="screenLight">
-      <div class="relative setHeight bgforDark" style="margin-bottom:35px;min-height:100vh;overflow:hidden">
-        <div id="scene" style="position:absolute;right:-50px;top:-50px;">
-            <div class="layer" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky.png" alt="" style="max-width: 800px;" /></div>
-            <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bg1Gr.png" alt="" style="max-width: 800px;" /></div>
-        </div>
-        <div id="sceneDark" style="position:absolute;right:0px;top:0px;">
-            <div class="layer" data-depth="0.5"><img src="/assests/images/NLoginIcon/bgg2.png" class="" alt="" style="max-width: 620px;" /></div>
-            <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bgg3.png" alt="" style="max-width: 620px;" /></div>
-        </div>
-        <div class="animatedIcc">
-            <img class="animatedIco a1" src="/assests/images/NLoginIcon/a1.png" alt="" />
-            <img class="animatedIco a2" src="/assests/images/NLoginIcon/a2.png" alt="" />
-            <img class="animatedIco a3" src="/assests/images/NLoginIcon/a3.png" alt="" />
-            <img class="animatedIco a4" src="/assests/images/NLoginIcon/a4.png" alt="" />
-            <img class="animatedIco a5" src="/assests/images/NLoginIcon/a5.png" alt="" />
-            <img class="animatedIco a6" src="/assests/images/NLoginIcon/a6.png" alt="" />
-            <img class="animatedIco a7" src="/assests/images/NLoginIcon/a7.png" alt="" />
-        </div>
-        <div class="container">
+         <div class="relative setHeight bgforDark" style="margin-bottom:35px;min-height:100vh;overflow:hidden">
+             @*<div id="scene" style="position:absolute;right:-50px;top:-50px;">*@
+             <div id="scene" style="position:absolute;right:-100px;top: 0;">
+                 @*<div class="layer" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky.png" alt="" style="max-width: 800px;" /></div>*@
+                 <div class="layer cust-position" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky-2.png" alt="" style="height: 100vh;" /></div>
+                 @*<div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bg1Gr.png" alt="" style="max-width: 800px;" /></div>*@
+                 <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/login-fm-bg.png" alt="" style="height: 100vh;" /></div>
+             </div>
+             <div id="sceneDark" style="position:absolute;right:0px;top:0px;">
+                 <div class="layer" data-depth="0.5"><img src="/assests/images/NLoginIcon/bgg2.png" class="" alt="" style="max-width: 620px;" /></div>
+                 <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bgg3.png" alt="" style="max-width: 620px;" /></div>
+             </div>
+             <div class="animatedIcc">
+                 <img class="animatedIco a1" src="/assests/images/NLoginIcon/a1.png" alt="" />
+                 <img class="animatedIco a2" src="/assests/images/NLoginIcon/a2-2.png" alt="" />
+                 <img class="animatedIco a3" src="/assests/images/NLoginIcon/a3.png" alt="" />
+                 <img class="animatedIco a4" src="/assests/images/NLoginIcon/a4.png" alt="" />
+                 <img class="animatedIco a5" src="/assests/images/NLoginIcon/a5.png" alt="" />
+                 <img class="animatedIco a6" src="/assests/images/NLoginIcon/a6.png" alt="" />
+                 <img class="animatedIco a7" src="/assests/images/NLoginIcon/a7.png" alt="" />
+             </div>
+             <div class="container">
 
-            <div class="sectionWraper">
-                <div class="textSection">
-                    <div class="mLogo">
-                        <img src="/assests/images/logo.png" />
-                    </div>
-                    <div class="event-img">
-                        <img src="/assests/images/event-banner.jpg" />
-                    </div>
-                    <h1>
-                        Power-packed <span class="spEmpa" style="font-weight: 600;color: #3a5ac6;">Digital ERP</span> For <br />
-                        Indian Businesses.
-                    </h1>
-                    <h3 class="scndSize" style="display:none">We are focussed on getting your business disruption-ready.</h3>
-                    <h3 class="scndSize" style="line-height: 27px;font-size: 17px;">
-                        BreezeERP is digital first CLOUD ERP that AUTOMATES & CONNECTS <br />
-                        all aspects of your business with a built in INTELLIGENCE that proactively manages<br />
-                        your business process and tasks letting you focus on the core of your business. <br />
-                        Lead your team from a single platform with real time updates and analytics.
-                    </h3>
-                    <a href="https://www.breezeerp.in/contact-us/" target="_blank" class="button-26">START MY FREE TRIAL</a>
-                    <h3 class="scndSize">
-                        <span class="bliner txt-rotate hide"
-                              data-period="2000"
-                              data-rotate='[ "Payroll Management ", "Service Management ", "STB Management", "Employee Self Service", "Sales and Purchase" ]'></span>
-                    </h3>
-                    <div style="margin-top:20px" class="hide">
-                        <span class="iconBXX"><img src="/assests/images/NLoginIcon/invoice1.png" /></span>
-                        <span class="iconBXX"><img src="/assests/images/NLoginIcon/export.png" /></span>
-                        <span class="iconBXX"><img src="/assests/images/NLoginIcon/global.png" /></span>
-                    </div>
-                </div>
-                <div class="formBox relative">
-                    <div class="onlySm aCenter" style="z-index:9999;"><div class="mLogo"><img src="/assests/images/logo.png" /></div></div>
-                    <div style="padding: 10px 30px;">
-                        <h1 class="wlHeader">Welcome ...</h1>
-                        <p class="f2Para">Please enter your username and password</p>
+                 <div class="sectionWraper">
+                     <div class="textSection">
+                         <div class="mLogo">
+                             <img src="/assests/images/logo.png" />
+                         </div>
+                         <div class="event-img">
+                             <img src="/assests/images/event-banner.jpg" />
+                         </div>
+                         <h1>
+                             Power-packed <span class="spEmpa" style="font-weight: 600; color: #062aa5;">Digital ERP</span> For <br />
+                             Indian Businesses.
+                         </h1>
+                         <h3 class="scndSize" style="display:none">We are focussed on getting your business disruption-ready.</h3>
+                         <h3 class="scndSize" style="line-height: 27px;font-size: 16px;">
+                             BreezeERP is digital first CLOUD ERP that AUTOMATES & CONNECTS <br />
+                             all aspects of your business with a built in INTELLIGENCE that proactively manages<br />
+                             your business process and tasks letting you focus on the core of your business. <br />
+                             Lead your team from a single platform with real time updates and analytics.
+                         </h3>
+                         <a href="https://www.breezeerp.in/contact-us/" target="_blank" class="button-26">START MY FREE TRIAL</a>
+                         <h3 class="scndSize">
+                             <span class="bliner txt-rotate hide"
+                                   data-period="2000"
+                                   data-rotate='[ "Payroll Management ", "Service Management ", "STB Management", "Employee Self Service", "Sales and Purchase" ]'></span>
+                         </h3>
+                         <div style="margin-top:20px" class="hide">
+                             <span class="iconBXX"><img src="/assests/images/NLoginIcon/invoice1.png" /></span>
+                             <span class="iconBXX"><img src="/assests/images/NLoginIcon/export.png" /></span>
+                             <span class="iconBXX"><img src="/assests/images/NLoginIcon/global.png" /></span>
+                         </div>
+                     </div>
+                     <div class="formBox relative">
+                         <div class="onlySm aCenter" style="z-index:9999;"><div class="mLogo"><img src="/assests/images/logo.png" /></div></div>
+                         <div style="padding: 10px 30px;">
+                             @*<h1 class="wlHeader">Welcome ...</h1>*@
+                             <h1 class="wlHeader">Login</h1>
+                             <p class="f2Para">Please enter your username and password</p>
 
-                        <div style="margin-top: 20px">
-                            <div>
+                             <div style="margin-top: 20px">
+                                 <div>
 
-                            </div>
+                                 </div>
 
-                            <div class="inputwraps">
-                                <img class="inputImgs" src="/assests/images/NLoginIcon/user.png" alt="arr" />
-                                @Html.TextBoxFor(m => m.UserId, new { @class = "inputL smalltext fontAwesome" })
+                                 <div class="inputwraps">
+                                     @*<img class="inputImgs" src="/assests/images/NLoginIcon/user.png" alt="arr" />*@
+                                     <img class="inputImgs" src="/assests/images/NLoginIcon/user-2.png" alt="arr" />
+                                     @Html.TextBoxFor(m => m.UserId, new { @class = "inputL smalltext fontAwesome" })
 
-                            </div>
-                            <div style="text-align: left">
+                                 </div>
+                                 <div style="text-align: left">
 
-                            </div>
-                            <div class="inputwraps">
-                                <img class="inputImgs" src="/assests/images/NLoginIcon/password.png" alt="arr" />
-                                @Html.PasswordFor(m => m.PassWord, new { @class = "inputL smalltext fontAwesome" })
-                               
-                                @if (ViewBag.Validate == false)
-                                {
-                                    <span id="spnMismath" class="text-danger">User id or password mismatch</span>
-                                }
+                                 </div>
+                                 <div class="inputwraps">
+                                     @*<img class="inputImgs" src="/assests/images/NLoginIcon/password.png" alt="arr" />*@
+                                     <img class="inputImgs" src="/assests/images/NLoginIcon/password-2.png" alt="arr" />
+                                     @Html.PasswordFor(m => m.PassWord, new { @class = "inputL smalltext fontAwesome" })
 
-                                @Html.HiddenFor(m => m.ismobile)
+                                     @if (ViewBag.Validate == false)
+                                     {
+                                         <span id="spnMismath" class="text-danger">User id or password mismatch</span>
+                                     }
 
-                                <span class="passWordView"><i class="fa fa-eye-slash"></i></span>
-                            </div>
-                            <div style="text-align: left">
+                                     @Html.HiddenFor(m => m.ismobile)
 
-                            </div>
+                                     <span class="passWordView"><i class="fa fa-eye-slash"></i></span>
+                                 </div>
+                                 <div style="text-align: left">
 
-                            <div>
-                                <div class="form-group">
+                                 </div>
 
-                                </div>
-                                <div style="text-align: left">
-                                    <em style="color: red; position: relative; right: 55px; top: 160px;"></em>
-                                    <span style="color: red">
-                                    </span>
-                                </div>
-                            </div>
+                                 <div>
+                                     <div class="form-group">
+
+                                     </div>
+                                     <div style="text-align: left">
+                                         <em style="color: red; position: relative; right: 55px; top: 160px;"></em>
+                                         <span style="color: red">
+                                         </span>
+                                     </div>
+                                 </div>
 
 
-                            <div style="font-size:12px">Application best viewed at <a href="#">1280 x 720</a> resolution in <a href="#">Google Chrome</a> 59 or above</div>
-                            <div class="callArea" style="">
-                                <button type="submit" class="btn submitButton">Submit</button>
-                                <a id="LinkButton1" tabindex="4" class="compemail hide">Forgot  Password?</a>
-                                <button type="button" class="btn btn-primary hide" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ftFooter">
-                        © Copyright <span id="year"></span> Indus Net Technologies.<br />
-                        [BreezeERP Version <span id="lblVersion">@HttpContext.Current.Session["LastVersion"] ]</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Credit-->
-    <div class="creditsSec " id="rc_app_1562">
-        <div class="secToggler" id="rc_app_15652"><img src="/assests/images/group.png" style="width:24px" /></div>
-        <div class="droper">
-            <div class="mnHeader">Team Behind <span id="clCr"><i class="fa fa-close"></i></span></div>
-            <div class="scrCnter" id="rc_app_156655">
-                <ul class="tc_s5621f_fg">
-                    <li><span class="nameCR">Ankan Das</span></li>
-                    <li><span class="nameCR">Arindam Ghosal</span></li>
-                    <li><span class="nameCR">Arunabha Saha</span></li>
-                    <li><span class="nameCR">Abhishek Munshi</span></li>
-                    <li><span class="nameCR">Ashmitar Chowdhury</span></li>
-                    <li><span class="nameCR">Ananya Deb</span></li>
-                    <li><span class="nameCR">Bhaskar Chatterjee</span></li>
-                    <li><span class="nameCR">Bapi Dutta</span></li>
-                    <li><span class="nameCR">Chinmoy Maiti</span></li>
-                    <li class="tc_sfsf_fg"><span class="nameCR">Debashis Talukder</span></li>
-                    <li><span class="nameCR">Debjyoti Dhar</span></li>
-                    <li><span class="nameCR">Deep Narayan Mahajan</span></li>
-                    <li><span class="nameCR">Goutam Kumar Das</span></li>
-                    <li><span class="nameCR">Indranil Dey</span></li>
-                    <li><span class="nameCR">Jitendra Jha</span></li>
-                    <li><span class="nameCR">Kaushik Gupta</span></li>
-                    <li><span class="nameCR">Maynak Nandi</span></li>
-                    <li class="tc_s5221f_fg"><span class="nameCR">Priti Ghosh</span></li>
-                    <li><span class="nameCR">Pijush Kumar Bhattacharya</span></li>
-                    <li><span class="nameCR">Pratik Ghosh</span></li>
-                    <li><span class="nameCR">Rajdip Mukherjee</span></li>
-                    <li><span class="nameCR">Susanta Kundu</span></li>
-                    <li><span class="nameCR">Sanchita Saha</span></li>
-                    <li><span class="nameCR">Saheli Bhattacharya</span></li>
-                    <li><span class="nameCR">Suman Bachar</span></li>
-                    <li><span class="nameCR">Suman Roy</span></li>
-                    <li><span class="nameCR">Shantanu Saha</span></li>
-                    <li><span class="nameCR">Saikat Das</span></li>
-                    <li><span class="nameCR">Sanjoy Ganguly</span></li>
-                    <li><span class="nameCR">Sayantani Mandal</span></li>
-                    <li><span class="nameCR">Subhra Mukherjee</span></li>
-                    <li><span class="nameCR">Sudip Biswas</span></li>
-                    <li><span class="nameCR">Sudip Kumar Pal</span></li>
-                    <li><span class="nameCR">Surojit Chatterjee</span></li>
-                    <li><span class="nameCR">Suvankar Dey</span></li>
-                    <li><span class="nameCR">Shantanu Saha</span></li>
-                    <li><span class="nameCR">Swatilekha Mukherjee</span></li>
-                    <li><span class="nameCR">Tanmoy Ghosh</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+                                 <div style="font-size:12px">Application best viewed at <a href="#">1280 x 720</a> resolution in<br /><a href="#">Google Chrome</a> 59 or above</div>
+                                 <div class="callArea" style="">
+                                     <button type="submit" class="btn submitButton">Submit</button>
+                                     <a id="LinkButton1" tabindex="4" class="compemail hide">Forgot  Password?</a>
+                                     <button type="button" class="btn btn-primary hide" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="ftFooter">
+                             © Copyright <span id="year"></span> Indus Net Technologies.<br />
+                             [BreezeERP Version <span id="lblVersion">@HttpContext.Current.Session["LastVersion"] ]</span>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <!--Credit-->
+             <div class="creditsSec " id="rc_app_1562">
+                 <div class="secToggler" id="rc_app_15652"><img src="/assests/images/group.png" style="width:24px" /></div>
+                 <div class="droper">
+                     <div class="mnHeader">Team Behind <span id="clCr"><i class="fa fa-close"></i></span></div>
+                     <div class="scrCnter" id="rc_app_156655">
+                         <ul class="tc_s5621f_fg">
+                             <li><span class="nameCR">Ankan Das</span></li>
+                             <li><span class="nameCR">Arindam Ghosal</span></li>
+                             <li><span class="nameCR">Arunabha Saha</span></li>
+                             <li><span class="nameCR">Abhishek Munshi</span></li>
+                             <li><span class="nameCR">Ashmitar Chowdhury</span></li>
+                             <li><span class="nameCR">Ananya Deb</span></li>
+                             <li><span class="nameCR">Bhaskar Chatterjee</span></li>
+                             <li><span class="nameCR">Bapi Dutta</span></li>
+                             <li><span class="nameCR">Chinmoy Maiti</span></li>
+                             <li class="tc_sfsf_fg"><span class="nameCR">Debashis Talukder</span></li>
+                             <li><span class="nameCR">Debjyoti Dhar</span></li>
+                             <li><span class="nameCR">Deep Narayan Mahajan</span></li>
+                             <li><span class="nameCR">Goutam Kumar Das</span></li>
+                             <li><span class="nameCR">Indranil Dey</span></li>
+                             <li><span class="nameCR">Jitendra Jha</span></li>
+                             <li><span class="nameCR">Kaushik Gupta</span></li>
+                             <li><span class="nameCR">Maynak Nandi</span></li>
+                             <li class="tc_s5221f_fg"><span class="nameCR">Priti Ghosh</span></li>
+                             <li><span class="nameCR">Pijush Kumar Bhattacharya</span></li>
+                             <li><span class="nameCR">Pratik Ghosh</span></li>
+                             <li><span class="nameCR">Rajdip Mukherjee</span></li>
+                             <li><span class="nameCR">Susanta Kundu</span></li>
+                             <li><span class="nameCR">Sanchita Saha</span></li>
+                             <li><span class="nameCR">Saheli Bhattacharya</span></li>
+                             <li><span class="nameCR">Suman Bachar</span></li>
+                             <li><span class="nameCR">Suman Roy</span></li>
+                             <li><span class="nameCR">Shantanu Saha</span></li>
+                             <li><span class="nameCR">Saikat Das</span></li>
+                             <li><span class="nameCR">Sanjoy Ganguly</span></li>
+                             <li><span class="nameCR">Sayantani Mandal</span></li>
+                             <li><span class="nameCR">Subhra Mukherjee</span></li>
+                             <li><span class="nameCR">Sudip Biswas</span></li>
+                             <li><span class="nameCR">Sudip Kumar Pal</span></li>
+                             <li><span class="nameCR">Surojit Chatterjee</span></li>
+                             <li><span class="nameCR">Suvankar Dey</span></li>
+                             <li><span class="nameCR">Shantanu Saha</span></li>
+                             <li><span class="nameCR">Swatilekha Mukherjee</span></li>
+                             <li><span class="nameCR">Tanmoy Ghosh</span></li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
 
-</div>
+         </div>
     </div>
      
         
