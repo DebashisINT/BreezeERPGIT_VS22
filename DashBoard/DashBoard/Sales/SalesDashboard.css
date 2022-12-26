@@ -432,18 +432,24 @@
             }
 
 
-        .card {
-            background: #fff;
-            background: #f1f1f1;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+            .card {
+                background: #fff;
+                background: #f1f1f1;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 1px 1px 15px #042f5a5e;
+            }
 
         .card-header {
             padding: 10px 15px;
-            border-bottom: 1px solid #485c5f;
-            background: #485c5f;
+            /*border-bottom: 1px solid #485c5f;
+            background: #485c5f;*/
+            border-bottom: 1px solid #0f4985;
+            background: #0f4985;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .card-body {
@@ -519,8 +525,9 @@
 
         /* Styling Checkbox Starts */
             .salesAmt {
-                font-size:18px;
-                margin-right:12px;
+                font-size: 18px;
+                margin-right: 12px;
+                line-height: 20px;
             }
             .checkbox-label {
                 display: inline-block;
@@ -640,7 +647,8 @@
                 -o-transition: all 0.3s ease-out;
             }
             .mtop3 {
-                margin-top:3px;
+                /*margin-top:3px;*/
+                height: 20px;
             }
    
     .swiper-container {

@@ -264,19 +264,21 @@
                 <div class="card">
 
                       <div class="card-header clearfix">
-                           <span style="font-size:20px;cursor:pointer" onclick="ChangeviewtotSale()"  class="hidden-xs"> <i class="fa fa-arrows-alt"></i></span>
-
-                          <div class="pull-right mtop3">
-                              <label class="checkbox-label" title="Show Decimal">
-                                <input type="checkbox" id="chkSaleShowDecimal" onchange="totalSaleCheckChange()" />
-                                <span class="checkbox-custom rectangular"></span>
-                             </label>
+                          <div style="width: 50%">
+                              <span style="font-size:20px;cursor:pointer" onclick="ChangeviewtotSale()"  class="hidden-xs"> <i class="fa fa-arrows-alt"></i></span>
                           </div>
-                          <div class="pull-right glow salesAmt">
-                              <span>Total Sale</span>
-                              <span  id="TotsaleinInr"> 0</span> <span class="inrColor" id="lblCurrencySymbol" runat="server">(INR)</span>
-                          </div>
-                            
+                          <div style="width: 50%">
+                              <div class="pull-right mtop3">
+                                  <label class="checkbox-label" title="Show Decimal">
+                                    <input type="checkbox" id="chkSaleShowDecimal" onchange="totalSaleCheckChange()" />
+                                    <span class="checkbox-custom rectangular"></span>
+                                 </label>
+                              </div>
+                              <div class="pull-right glow salesAmt">
+                                  <span>Total Sale</span>
+                                  <span  id="TotsaleinInr"> 0</span> <span class="inrColor" id="lblCurrencySymbol" runat="server">(INR)</span>
+                              </div>
+                           </div> 
                     </div>
                      
                     <div class="card-body">
