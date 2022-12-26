@@ -1710,8 +1710,8 @@ h4.dbhead {
 
 .panel-heading {
     padding: 0px 5px !important;
-    background: #f1f1f1;
-    border-radius: 10px;
+    /*background: #f1f1f1;
+    border-radius: 10px;*/
 }
 
 .headerclose {
