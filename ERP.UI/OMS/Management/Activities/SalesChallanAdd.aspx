@@ -39,6 +39,11 @@
         #DivCost {
             min-width: 100px;
         }
+
+        .dxgvTable_PlasticBlue
+        {
+                width: 90% !important;
+        }
     </style>
     <script>
         var taxSchemeUpdatedDate = '<%=Convert.ToString(Cache["SchemeMaxDate"])%>';
@@ -8941,7 +8946,7 @@ function ProjectValueChange(s, e) {
                                                         </dxe:ASPxHyperLink>
                                                     </HeaderCaptionTemplate>
                                                 </dxe:GridViewCommandColumn>
-                                                <dxe:GridViewDataTextColumn FieldName="SrlNo" Caption="Sl" ReadOnly="true" VisibleIndex="1" Width="40px">
+                                                <dxe:GridViewDataTextColumn FieldName="SrlNo" Caption="Sl" ReadOnly="true" VisibleIndex="1" Width="30px">
                                                     <PropertiesTextEdit>
                                                     </PropertiesTextEdit>
                                                 </dxe:GridViewDataTextColumn>
@@ -8973,7 +8978,7 @@ function ProjectValueChange(s, e) {
                                                 </dxe:GridViewDataTextColumn>
 
 
-                                                <dxe:GridViewCommandColumn VisibleIndex="5" Caption="Addl. Desc." Width="210px">
+                                                <dxe:GridViewCommandColumn VisibleIndex="5" Caption="Addl. Desc." Width="110px">
                                                     <CustomButtons>
                                                         <dxe:GridViewCommandColumnCustomButton Text=" " ID="addlDesc" Image-Url="/assests/images/more.png" Image-ToolTip="Warehouse">
                                                             <Image ToolTip="Warehouse" Url="/assests/images/more.png">

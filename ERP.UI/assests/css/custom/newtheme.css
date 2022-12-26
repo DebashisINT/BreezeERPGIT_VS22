@@ -253,7 +253,7 @@ input[type="radio"] {
     border-width: 1px;
     padding: 4px 10px;
     font-size: 14px !important;
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
     margin-right: 6px;
 }
 
@@ -328,11 +328,11 @@ input[type="radio"] {
         color: #fff;
     }
 
-.btn-success {
+/*.btn-success {
     background-color: #34a634 !important;
     border-color: #4cae4c !important;
     color: #fff !important;
-}
+}*/
 
 
     .btn-success:hover {
@@ -360,14 +360,15 @@ input[type="radio"] {
     }
 
 .btn-primary {
-    background-image: -webkit-linear-gradient(top,#688bb7 0,#324763 100%) !important;
+    /*background-image: -webkit-linear-gradient(top,#688bb7 0,#324763 100%) !important;
     background-image: -o-linear-gradient(top,#337ab7 0,#265a88 100%) !important;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#688bb7),to(#324763 )) !important;
     background-image: linear-gradient(to bottom,#7e9fca 0,#54749d 100%) !important;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff265a88', GradientType=0) !important;
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
-    background-repeat: repeat-x;
+    background-repeat: repeat-x;*/
     border-color: #446998 !important;
+    background: #195ca0 !important;
 }
 
     .btn-primary:hover {
@@ -1709,6 +1710,8 @@ h4.dbhead {
 
 .panel-heading {
     padding: 0px 5px !important;
+    background: #f1f1f1;
+    border-radius: 10px;
 }
 
 .headerclose {
@@ -2329,8 +2332,8 @@ i[data-toggle="tooltip"] + .tooltip {
     border: 1px solid #ccc;
     overflow: hidden;
     padding: 20px;*/
-    border-top: 1px solid #ccc;
-    padding: 5px 0 0 0;
+    /*border-top: 1px solid #ccc;*/
+    padding: 10px 0 0 0;
 }
 
 .form-control {
@@ -3040,8 +3043,10 @@ body {
 
 }
 .dxeButtonEditSys.dxeButtonEdit_PlasticBlue {
-        margin-bottom: 0px !important;
-        height:23px; 
+    margin-bottom: 0px !important;
+    /*height:23px;*/
+    height: 24px;
+    /*border-radius: 4px;*/
 }
 .dxeTextBoxSys td.dxic {
     padding: 0px 3px 0px 3px;
@@ -3223,8 +3228,9 @@ hr.tfour {
 }
 .dxeButtonEditButton_PlasticBlue {
     padding: 0 2px;
-    background:  #54749D !important;
-    border: 1px Solid #3e597b;
+    background: #195ca0 !important;
+    border: 1px Solid #195ca0;
+    /*border-radius: 3px;*/
 }
 .dxeCalendarHeader_PlasticBlue {
     background: #54749D !important;
@@ -3238,7 +3244,7 @@ hr.tfour {
     border-left: 1px solid #3e597b;
 }
 .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue {
-    background: #54749D !important;
+    background: #195ca0 !important;
 }
 /*calender */
 .dxpLite_PlasticBlue .dxp-dropDownButton {
@@ -3649,9 +3655,11 @@ textarea.form-control.input-sm {
 }
 
 .btn.btn-success .btn-icon {
-   -webkit-box-shadow: 0px 0px 3px rgba(35, 31, 31, 0.42);
-   -moz-box-shadow: 0px 0px 3px rgba(35, 31, 31, 0.42);
-   box-shadow: 0px 0px 3px rgba(35, 31, 31, 0.42);
+    -webkit-box-shadow: 0px 0px 3px rgba(35, 31, 31, 0.42);
+    -moz-box-shadow: 0px 0px 3px rgba(35, 31, 31, 0.42);
+    box-shadow: 0px 0px 3px rgba(35, 31, 31, 0.42);
+    background: #0d4d91;
+    padding-top: 1px;
 }
 .btn.btn-danger .btn-icon{
         background: #843634;
@@ -3957,11 +3965,14 @@ button:focus
 .mainAlertTable>tbody>tr:nth-child(even) {background-color: #f2f2f2;}
 
 .GridViewArea  {
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .dxgvControl_PlasticBlue, .dxgvDisabled_PlasticBlue {
-    font:12px 'Roboto', sans-serif !important;
-    text-transform: capitalize !important
+    font: 12px 'Roboto', sans-serif !important;
+    text-transform: capitalize !important;
+    /*box-shadow: 1px 1px 15px #04386c40;
+    border-radius: 10px;
+    overflow: hidden;*/
 }
 
 
@@ -4016,3 +4027,23 @@ button:focus
 .dropdown.usr {
     margin-top: 11px;
 }
+
+.btn-primary {
+    background-color: #195ca0 !important;
+}
+    .btn-primary:hover {
+        background-color: #05488d !important;
+        border-color: #05488d !important;
+    }
+
+.btn-success {
+    background-color: #f8666f !important;
+    border-color: #f8666f !important;
+    color: #fff !important;
+    background-image: none !important;
+}
+
+    .btn-success:hover {
+        background-color: #dd444d !important;
+        border-color: #dd444d !important;
+    }
