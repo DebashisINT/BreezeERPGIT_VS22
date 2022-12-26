@@ -140,7 +140,13 @@
                 var maxMenuH = SideNavHeight - LogoutBtnHeight;
                 //alert(maxMenuH);
                 $('.sidenav > ul').css({ 'max-height': maxMenuH + 'px' });
+                /*rev Pallab*/
+                $('.fixedMenuNew').on('mouseover', function (e) {
+                    $('.sidenav > ul').css({ 'max-height': maxMenuH + 'px' });
+                });
+                /*rev end Pallab*/
             }
+            
             menuScrollerInit();
             $(window).resize(function () {
                 menuScrollerInit();
