@@ -641,8 +641,16 @@ namespace Manufacturing.Controllers
                     foreach (DataRow row in dt.Tables[0].Rows)
                     {
                         Success = Convert.ToBoolean(row["Success"]);
-                        // ProductionID = Convert.ToInt32(row["ProductionID"]);
-                        BOMRelationID = Convert.ToInt32(row["DetailsID"]);
+                        if(Success== false)
+                        {
+                            TempData["BOMChildDetails"] = dt_ChildBOM;
+                            BOMRelationID = Convert.ToInt32("-15");
+                        }
+                        else
+                        {
+                            BOMRelationID = Convert.ToInt32(row["DetailsID"]);
+                        }
+                       
                        
                     }
                 }
