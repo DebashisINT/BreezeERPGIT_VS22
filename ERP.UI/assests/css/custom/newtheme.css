@@ -830,9 +830,11 @@ p.copyright {
 *************SIDEBAR NAVIGATION************
 *******************************************/
 .sidenav {
-    
     padding-top: 0px;
-    min-height: 80%;
+    /*rev Pallab*/
+    /*min-height: 80%;*/
+    min-height: 90%;
+    /*rev end Pallab*/
 }
 
     .sidenav ul {
