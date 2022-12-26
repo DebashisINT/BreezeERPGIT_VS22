@@ -1310,7 +1310,7 @@
           <div class="textSection">
               <div class="d-flex">
                   <div class="mLogo">
-                    <img src="/assests/images/logo-2.png"  />
+                    <img src="/assests/images/logo.png"  />
                   </div>
                   <div class="event-img">
                     <img src="/assests/images/event-banner.jpg"  />
