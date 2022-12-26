@@ -1347,6 +1347,20 @@ function CancelEwayBillSI(ewaybill) {
     $("#EwayBillcancelModal").modal('show')
 }
 
+function CancelEwayBillTSI(ewaybill) {
+
+    $("#hdnEwayBillType").val("TSI");
+    $("#hdnEwayBillNo").val(ewaybill);
+
+    $("#EwayBillcancelModal").modal('show')
+}
+function CancelEwayBillSR(ewaybill) {
+
+    $("#hdnEwayBillType").val("SR");
+    $("#hdnEwayBillNo").val(ewaybill);
+
+    $("#EwayBillcancelModal").modal('show')
+}
 function UpdateEwayBillSI(ewaybill) {
 
     $("#hdnEwayBillType").val("UPDATESI");

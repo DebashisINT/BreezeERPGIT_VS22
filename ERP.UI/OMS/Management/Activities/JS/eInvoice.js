@@ -1579,7 +1579,18 @@ function grdEndcallbackewaybillSR(s, e) {
         })
     }
     else if (s.cpJson == "DownloadEwaybill") {
+        s.cpJson = null;
+        var pathbillNumber = s.cpeWaybillNumber;
 
+        var link = document.createElement('a');
+        link.href = pathbillNumber;
+        link.download = pathbillNumber;
+        console.log(pathbillNumber);
+        //link.trigger("click");
+        window.open(pathbillNumber);
+        link.dispatchEvent(new MouseEvent('click'));
+
+        s.cpeWaybillNumber = null;
     }
 }
 
@@ -1667,9 +1678,7 @@ function grdEndcallbackewaybillSI(s, e) {
     }
 }
 
-function grdEndcallbackewaybillSR(s, e) {
 
-}
 
 //function grdEndcallbackewaybillTSI(s, e) {
 
