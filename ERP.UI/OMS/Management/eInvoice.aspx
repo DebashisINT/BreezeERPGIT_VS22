@@ -3873,7 +3873,7 @@
                                                                 <Settings AutoFilterCondition="Contains" />
                                                             </dxe:GridViewDataTextColumn>
 
-                                                            <dxe:GridViewDataTextColumn Caption="Type" FieldName="Pos_EntryType" Width="70"
+                                                            <%--<dxe:GridViewDataTextColumn Caption="Type" FieldName="Pos_EntryType" Width="70"
                                                                 VisibleIndex="6">
                                                                 <CellStyle CssClass="gridcellleft" Wrap="true">
                                                                 </CellStyle>
@@ -3889,23 +3889,23 @@
                                                                 </CellStyle>
                                                                 <Settings AllowAutoFilterTextInputTimer="False" />
                                                                 <Settings AutoFilterCondition="Contains" />
-                                                            </dxe:GridViewDataTextColumn>
+                                                            </dxe:GridViewDataTextColumn>--%>
 
-                                                            <dxe:GridViewDataTextColumn Caption="Delv. Date" FieldName="Pos_DeliveryDate"
+                                                           <%-- <dxe:GridViewDataTextColumn Caption="Delv. Date" FieldName="Pos_DeliveryDate"
                                                                 VisibleIndex="8">
                                                                 <CellStyle CssClass="gridcellleft" Wrap="true">
                                                                 </CellStyle>
                                                                 <Settings AllowAutoFilterTextInputTimer="False" />
                                                                 <Settings AutoFilterCondition="Contains" />
-                                                            </dxe:GridViewDataTextColumn>
+                                                            </dxe:GridViewDataTextColumn>--%>
 
-                                                            <dxe:GridViewDataTextColumn Caption="Delv. Status" FieldName="DelvStatus"
+                                                           <%-- <dxe:GridViewDataTextColumn Caption="Delv. Status" FieldName="DelvStatus"
                                                                 VisibleIndex="9">
                                                                 <CellStyle CssClass="gridcellleft" Wrap="true">
                                                                 </CellStyle>
                                                                 <Settings AllowAutoFilterTextInputTimer="False" />
                                                                 <Settings AutoFilterCondition="Contains" />
-                                                            </dxe:GridViewDataTextColumn>
+                                                            </dxe:GridViewDataTextColumn>--%>
 
                                                             <dxe:GridViewDataTextColumn Caption="Challan No" FieldName="ChallanNo"
                                                                 VisibleIndex="10" Width="180">

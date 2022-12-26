@@ -4042,7 +4042,7 @@
 
                                                                      <% if (rights.CanEWayBill)
                                                                        { %>
-                                                                  <a href="javascript:void(0);" onclick="CancelEwayBillSI('<%# Eval("EWayBillNumber") %>')" id="a_CancelEwaybillSI" class="" title="">
+                                                                  <a href="javascript:void(0);" onclick="CancelEwayBillSR('<%# Eval("EWayBillNumber") %>')" id="a_CancelEwaybillSI" class="" title="">
                                                                             <span class='ico deleteColor'><i class='fa fa-ban' aria-hidden='true'></i></span><span class='hidden-xs'>Cancel E-Way Bill</span></a>
                                                                     <% } %>
                                                                      <% if (rights.CanEWayBill)
