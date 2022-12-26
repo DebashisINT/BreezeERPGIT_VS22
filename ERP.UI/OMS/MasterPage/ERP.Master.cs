@@ -671,7 +671,10 @@ namespace ERP.OMS.MasterPage
                     }
                     else
                     {
-                        imgpp.Src = "/assests/images/profile1.png";
+                        //rev Pallab
+                        //imgpp.Src = "/assests/images/profile1.png";
+                        imgpp.Src = "/assests/images/profile2.png";
+                        //rev end Pallab
                     }
                     #endregion Showlastdatetime
                 }
