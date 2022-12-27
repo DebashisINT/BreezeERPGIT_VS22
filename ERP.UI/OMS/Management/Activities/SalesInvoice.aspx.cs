@@ -4536,6 +4536,152 @@ namespace ERP.OMS.Management.Activities
 
 
 
+                //EinvoiceModel objInvoice = new EinvoiceModel("1.1");
+
+                //TrasporterDetails objTransporter = new TrasporterDetails();
+                //objTransporter.EcmGstin = null;
+                //objTransporter.IgstOnIntra = "N";
+                //if (Convert.ToBoolean(Header.Rows[0]["IsReverseCharge"]))
+                //{
+                //    objTransporter.RegRev = "Y";     /// From table mantis id 23407
+                //}
+                //else
+                //{
+                //    objTransporter.RegRev = "N";
+                //}
+                //if (Convert.ToString(Header.Rows[0]["TransCategory"]) != "" && Convert.ToString(Header.Rows[0]["TransCategory"]) != "0")
+                //    objTransporter.SupTyp = Convert.ToString(Header.Rows[0]["TransCategory"]);   /// From table mantis id 23406
+                //else
+                //    objTransporter.SupTyp = "B2B";
+                //objTransporter.TaxSch = "GST";
+                //objInvoice.TranDtls = objTransporter;
+
+
+                //DocumentsDetails objDoc = new DocumentsDetails();
+                //objDoc.Dt = Convert.ToDateTime(Header.Rows[0]["Invoice_Date"]).ToString("dd/MM/yyyy");     // Form table invoice_Date DD/MM/YYYY format
+                //objDoc.No = Convert.ToString(Header.Rows[0]["Invoice_Number"]);   // Form table invoice_Number
+                //objDoc.Typ = "INV";  //INV-Invoice ,CRN-Credit Note, DBN-Debit Note
+                //objInvoice.DocDtls = objDoc;
+
+
+                //SellerDetails objSeller = new SellerDetails();
+                //objSeller.Addr1 = Convert.ToString(SellerDetails.Rows[0]["Addr1"]);   /// Based on settings Branch/Company master
+                //objSeller.Addr2 = Convert.ToString(SellerDetails.Rows[0]["Addr2"]); ;   /// Based on settings Branch/Company master 
+                //if (Convert.ToString(SellerDetails.Rows[0]["Em"]) != "")
+                //    objSeller.Em = Convert.ToString(SellerDetails.Rows[0]["Em"]); ;      /// Based on settings Branch/Company master 
+                ////objSeller.Gstin = Convert.ToString(SellerDetails.Rows[0]["Gstin"]); ;   /// Based on settings Branch/Company master
+
+                //objSeller.Gstin = IRN_API_GSTIN;//Sandbox
+                //objSeller.LglNm = Convert.ToString(SellerDetails.Rows[0]["LglNm"]); ;  /// Based on settings Branch/Company master 
+                //if (Convert.ToString(SellerDetails.Rows[0]["Loc"]) != "")
+                //    objSeller.Loc = Convert.ToString(SellerDetails.Rows[0]["Loc"]);     /// Based on settings Branch/Company master
+                //else
+                //    objSeller.Loc = Convert.ToString(SellerDetails.Rows[0]["Addr2"]);
+                ///// 
+                //if (Convert.ToString(SellerDetails.Rows[0]["Ph"]) != "")
+                //    objSeller.Ph = Convert.ToString(SellerDetails.Rows[0]["Ph"]).Replace(",", "");      /// Based on settings Branch/Company master
+                //objSeller.Pin = Convert.ToInt32(SellerDetails.Rows[0]["Pin"]); ;     /// Based on settings Branch/Company master
+                //objSeller.Stcd = Convert.ToString(SellerDetails.Rows[0]["Stcd"]); ;    /// Based on settings Branch/Company master
+                //objSeller.TrdNm = Convert.ToString(SellerDetails.Rows[0]["TrdNm"]); ;   /// Based on settings Branch/Company master
+                //objInvoice.SellerDtls = objSeller;
+
+
+                //BuyerDetails objBuyer = new BuyerDetails();
+                //objBuyer.Addr1 = Convert.ToString(BuyerDetails.Rows[0]["Addr1"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //objBuyer.Addr2 = Convert.ToString(BuyerDetails.Rows[0]["Addr2"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //if (Convert.ToString(BuyerDetails.Rows[0]["Em"]) != "")
+                //    objBuyer.Em = Convert.ToString(BuyerDetails.Rows[0]["Em"]);    ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //objBuyer.Gstin = Convert.ToString(BuyerDetails.Rows[0]["Gstin"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //objBuyer.LglNm = Convert.ToString(BuyerDetails.Rows[0]["LglNm"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //if (Convert.ToString(BuyerDetails.Rows[0]["Loc"]) != "")
+                //    objBuyer.Loc = Convert.ToString(BuyerDetails.Rows[0]["Loc"]);   ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //else
+                //    objBuyer.Loc = Convert.ToString(BuyerDetails.Rows[0]["Addr2"]);
+                //if (Convert.ToString(BuyerDetails.Rows[0]["Ph"]) != "")
+                //    objBuyer.Ph = Convert.ToString(BuyerDetails.Rows[0]["Ph"]);    ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //objBuyer.Pin = Convert.ToInt32(BuyerDetails.Rows[0]["Pin"]);   ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //objBuyer.Stcd = Convert.ToString(BuyerDetails.Rows[0]["Stcd"]);  ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //objBuyer.Pos = Convert.ToString(BuyerDetails.Rows[0]["Stcd"]);
+                //objBuyer.TrdNm = Convert.ToString(BuyerDetails.Rows[0]["TrdNm"]); ///Billing details from invoice i.e tbl_trans_salesinvoiceadddress
+                //objInvoice.BuyerDtls = objBuyer;
+
+
+                //objInvoice.DispDtls = null;  // for now 
+                //objInvoice.ShipDtls = null; ///Shipping details from invoice i.e tbl_trans_salesinvoiceadddress
+
+                //ValueDetails objValue = new ValueDetails();
+                //objValue.AssVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Taxable"]).ToString("0.00"));   // Taxable value
+                //objValue.CesVal = 0.00M;
+                //objValue.CgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_CGST"]).ToString("0.00"));
+                //objValue.Discount = 0.00M;
+                //objValue.IgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_IGST"]).ToString("0.00"));
+                //objValue.OthChrg = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Other_Charge"]).ToString("0.00"));   // Global Tax
+                //objValue.RndOffAmt = 0.00M;
+                //objValue.SgstVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["Total_SGST"]).ToString("0.00"));
+                //objValue.StCesVal = 0.00M;
+                //objValue.TotInvVal = Convert.ToDecimal(Convert.ToDecimal(ValueDetails.Rows[0]["TotalAmount"]).ToString("0.00"));
+                //objValue.TotInvValFc = 0.00M;
+                //objInvoice.ValDtls = objValue;
+
+                //ShipToDetails objShip = new ShipToDetails();
+                //objShip.Addr1 = Convert.ToString(ShipDetails.Rows[0]["Addr1"]); ;
+                //objShip.Addr2 = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
+                //objShip.Loc = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
+                //objShip.Gstin = Convert.ToString(ShipDetails.Rows[0]["Gstin"]); ;
+                //objShip.LglNm = Convert.ToString(ShipDetails.Rows[0]["LglNm"]); ;
+                //objShip.TrdNm = Convert.ToString(ShipDetails.Rows[0]["TrdNm"]); ;
+                //objShip.Pin = Convert.ToInt32(ShipDetails.Rows[0]["Pin"]); ;
+                //objShip.Stcd = Convert.ToString(ShipDetails.Rows[0]["Stcd"]); ;
+                //objInvoice.ShipDtls = objShip;
+
+
+                //List<ProductList> objListProd = new List<ProductList>();
+
+                //foreach (DataRow dr in Products.Rows)
+                //{
+                //    ProductList objProd = new ProductList();                   
+
+                //    objProd.AssAmt = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                //    objProd.Barcde = null;
+                //    objProd.BchDtls = null;
+                //    objProd.CesAmt = 0.00M;
+                //    objProd.CesNonAdvlAmt = 0.00M;
+                //    objProd.CesRt = 0.00M;
+                //    objProd.CgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["CGSTAmount"]).ToString("0.00"));
+                //    objProd.Discount = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Discount"]).ToString("0.00"));
+                //    objProd.FreeQty = 0.00M;
+                //    objProd.GstRt = Convert.ToDecimal(Convert.ToDecimal(dr["GST_RATE"]).ToString("0.00"));
+                //    objProd.HsnCd = Convert.ToString(dr["sProducts_HsnCode"]);
+                //    objProd.IgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["IGSTAmount"]).ToString("0.00"));
+                //    if (!Convert.ToBoolean(dr["Is_ServiceItem"]))
+                //        objProd.IsServc = "N";
+                //    else
+                //        objProd.IsServc = "Y";
+                //    objProd.OrdLineRef = null;
+                //    objProd.OrgCntry = null;
+                //    objProd.OthChrg = Convert.ToDecimal(Convert.ToDecimal(dr["OtherAmount"]).ToString("0.00"));
+                //    objProd.PrdDesc = Convert.ToString(dr["InvoiceDetails_ProductDescription"]);
+                //    objProd.PrdSlNo = null;
+                //    objProd.PreTaxVal = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                //    objProd.Qty = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Quantity"]).ToString("0.000"));
+                //    objProd.SgstAmt = Convert.ToDecimal(Convert.ToDecimal(dr["SGSTAmount"]).ToString("0.00"));
+                //    objProd.SlNo = Convert.ToString(dr["SL"]);
+                //    objProd.StateCesAmt = 0.00M;
+                //    objProd.StateCesNonAdvlAmt = 0.00M;
+                //    objProd.StateCesRt = 0.00M;
+                //    objProd.TotAmt = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+                //    objProd.TotItemVal = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_TotalAmountInBaseCurrency"]).ToString("0.00")); ;
+                //    if (Convert.ToString(dr["GST_Print_Name"]) != "")
+                //        objProd.Unit = Convert.ToString(dr["GST_Print_Name"]);
+                //    //else
+                //    //    objProd.Unit = "BAG";
+                //    objProd.UnitPrice = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]).ToString("0.00")); ;
+                //    objListProd.Add(objProd);
+                //}
+                //objInvoice.ItemList = objListProd;
+
+                //obj.Add(objInvoice);
+
                 EinvoiceModel objInvoice = new EinvoiceModel("1.1");
 
                 TrasporterDetails objTransporter = new TrasporterDetails();
@@ -4543,7 +4689,7 @@ namespace ERP.OMS.Management.Activities
                 objTransporter.IgstOnIntra = "N";
                 if (Convert.ToBoolean(Header.Rows[0]["IsReverseCharge"]))
                 {
-                    objTransporter.RegRev = "Y";     /// From table mantis id 23407
+                    objTransporter.RegRev = "Y";     
                 }
                 else
                 {
@@ -4577,7 +4723,7 @@ namespace ERP.OMS.Management.Activities
                     objSeller.Loc = Convert.ToString(SellerDetails.Rows[0]["Loc"]);     /// Based on settings Branch/Company master
                 else
                     objSeller.Loc = Convert.ToString(SellerDetails.Rows[0]["Addr2"]);
-                /// 
+               
                 if (Convert.ToString(SellerDetails.Rows[0]["Ph"]) != "")
                     objSeller.Ph = Convert.ToString(SellerDetails.Rows[0]["Ph"]).Replace(",", "");      /// Based on settings Branch/Company master
                 objSeller.Pin = Convert.ToInt32(SellerDetails.Rows[0]["Pin"]); ;     /// Based on settings Branch/Company master
@@ -4624,150 +4770,43 @@ namespace ERP.OMS.Management.Activities
                 objInvoice.ValDtls = objValue;
 
 
-                //ExportDetails objExport = new ExportDetails();
-                //objExport.CntCode = ""; ///optional for now
-                //objExport.ExpDuty = 0;  ///optional for now
-                //objExport.ForCur = "";  ///optional for now
-                //objExport.Port = "";    ///optional for now
-                //objExport.RefClm = "";  ///optional for now
-                //objExport.ShipBDt = ""; ///optional for now
-                //objExport.ShipBNo = ""; ///optional for now
-                //objInvoice.ExpDtls = objExport;
-
-                //EwayBillDetails objEway = new EwayBillDetails();
-                //if (Header.Rows[0]["Trans_Distance"] != null && Convert.ToDecimal(Header.Rows[0]["Trans_Distance"]) != 0)
-                //    objEway.Distance = Convert.ToInt32(Header.Rows[0]["Trans_Distance"]);    ///from table Mantis id 23408 
-                //else
-                //    objEway.Distance = 0;
-                /////
-                //if (Header.Rows[0]["Transporter_DocDate"] != DBNull.Value && Header.Rows[0]["Transporter_DocDate"] != null)
-                //    objEway.TransDocDt = Convert.ToDateTime(Header.Rows[0]["Transporter_DocDate"]).ToString("dd/MM/yyy"); ///from table Mantis id 23408 
-                //if (Header.Rows[0]["Transporter_DocNo"] != DBNull.Value && Header.Rows[0]["Transporter_DocNo"] != null)
-                //    objEway.TransDocNo = Convert.ToString(Header.Rows[0]["Transporter_DocNo"]); ///from table Mantis id 23408 
-                //if (Header.Rows[0]["Transporter_GSTIN"] != DBNull.Value && Header.Rows[0]["Transporter_DocNo"] != null)
-                //    objEway.TransId = Convert.ToString(Header.Rows[0]["Transporter_GSTIN"]);    ///from table Mantis id 23408 
-                //if (Header.Rows[0]["Transporter_Mode"] != DBNull.Value && Header.Rows[0]["Transporter_DocNo"] != null)
-                //    objEway.TransMode = Convert.ToString(Header.Rows[0]["Transporter_Mode"]);  ///from table Mantis id 23408 
-                //if (Header.Rows[0]["Transporter_Name"] != DBNull.Value && Header.Rows[0]["Transporter_DocNo"] != null)
-                //    objEway.TransName = Convert.ToString(Header.Rows[0]["Transporter_Name"]);  ///from table Mantis id 23408 
-                //if (Header.Rows[0]["Vehicle_No"] != DBNull.Value && Header.Rows[0]["Transporter_DocNo"] != null)
-                //    objEway.VehNo = Convert.ToString(Header.Rows[0]["Vehicle_No"]);      ///from table Mantis id 23408 
-                //if (Header.Rows[0]["Vehicle_Type"] != DBNull.Value && Header.Rows[0]["Transporter_DocNo"] != null)
-                //    objEway.VehType = Convert.ToString(Header.Rows[0]["Vehicle_Type"]);    ///from table Mantis id 23408 
-                //objInvoice.EwbDtls = objEway;
+             
 
 
-
-                //DispatchDetails objDisp = new DispatchDetails();
-                //objDisp.Addr1 = Convert.ToString(ShipDetails.Rows[0]["Addr1"]);
-                //objDisp.Addr2 = Convert.ToString(ShipDetails.Rows[0]["Addr2"]);
-                //objDisp.Loc = Convert.ToString(ShipDetails.Rows[0]["Addr2"]);
-                //objDisp.Nm = Convert.ToString(ShipDetails.Rows[0]["Nm"]);
-                //objDisp.Pin = Convert.ToInt32(ShipDetails.Rows[0]["Pin"]);
-                //objDisp.Stcd = Convert.ToString(ShipDetails.Rows[0]["Stcd"]);
-                //objInvoice.DispDtls = objDisp;
-
-
-
-                ShipToDetails objShip = new ShipToDetails();
-                objShip.Addr1 = Convert.ToString(ShipDetails.Rows[0]["Addr1"]); ;
-                objShip.Addr2 = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
-                objShip.Loc = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
-                objShip.Gstin = Convert.ToString(ShipDetails.Rows[0]["Gstin"]); ;
-                objShip.LglNm = Convert.ToString(ShipDetails.Rows[0]["LglNm"]); ;
-                objShip.TrdNm = Convert.ToString(ShipDetails.Rows[0]["TrdNm"]); ;
-                objShip.Pin = Convert.ToInt32(ShipDetails.Rows[0]["Pin"]); ;
-                objShip.Stcd = Convert.ToString(ShipDetails.Rows[0]["Stcd"]); ;
-                objInvoice.ShipDtls = objShip;
-
-
-                //PaymentDetails objPayment = new PaymentDetails();
-                //objPayment.AccDet = "";   ///Optional For Now
-                //objPayment.CrDay = 0;     ///Optional For Now
-                //objPayment.CrTrn = "";    ///Optional For Now
-                //objPayment.DirDr = "";    ///Optional For Now
-                //objPayment.FinInsBr = ""; ///Optional For Now
-                //objPayment.Mode = "";     ///Optional For Now
-                //objPayment.Nm = "";       ///Optional For Now
-                //objPayment.PaidAmt = 0;   ///Optional For Now
-                //objPayment.PayInstr = ""; ///Optional For Now
-                //objPayment.PaymtDue = 0;  ///Optional For Now
-                //objPayment.PayTerm = "";  ///Optional For Now
-                //objInvoice.PayDtls = objPayment;
-
-
-                //ReferenceDetails objRef = new ReferenceDetails();
-
-                //List<ContractDetails> onjListContact = new List<ContractDetails>();
-                //for (int i = 0; i < 1; i++)
-                //{
-                //    ContractDetails onjContact = new ContractDetails();
-                //    onjContact.ContrRefr = "";
-                //    onjContact.ExtRefr = "";
-                //    onjContact.PORefDt = "";
-                //    onjContact.PORefr = "";
-                //    onjContact.ProjRefr = "";
-                //    onjContact.RecAdvDt = "";
-                //    onjContact.RecAdvRefr = "";
-                //    onjContact.TendRefr = "";
-                //    onjListContact.Add(onjContact);
-                //}
-                //objRef.ContrDtls = onjListContact;
-
-
-                //List<PrecDocumentDetails> onjListPrecDoc = new List<PrecDocumentDetails>();
-                //for (int i = 0; i < 1; i++)
-                //{
-                //    PrecDocumentDetails onjPrecDoc = new PrecDocumentDetails();
-                //    onjPrecDoc.InvDt = "";
-                //    onjPrecDoc.InvNo = "";
-                //    onjPrecDoc.OthRefNo = "";
-                //    onjListPrecDoc.Add(onjPrecDoc);
-                //}
-                //objRef.PrecDocDtls = onjListPrecDoc;
-
-                //DocumentPerdDetails objdocPre = new DocumentPerdDetails();
-                //objdocPre.InvEndDt = "";
-                //objdocPre.InvStDt = "";
-                //objRef.DocPerdDtls = objdocPre;
-
-                //objRef.InvRm = "";  // Remarks from invoice
-                //objInvoice.RefDtls = objRef;   ///////////// Optional For now
-
-
-
-                //List<AdditionalDocumentDetails> objListAddl = new List<AdditionalDocumentDetails>();
-                //for (int i = 0; i < 1; i++)
-                //{
-                //    AdditionalDocumentDetails objAddl = new AdditionalDocumentDetails();
-                //    objAddl.Docs = "";
-                //    objAddl.Info = "";
-                //    objAddl.Url = "";
-                //    objListAddl.Add(objAddl);
-                //}
-                //objInvoice.AddlDocDtls = objListAddl;    /// Optional for now
-
+              
+                if (DispatchFrom.Rows.Count > 0)
+                {
+                    // End of Mantis Issue 24608
+                    DispatchDetails objDisp = new DispatchDetails();
+                    objDisp.Addr1 = Convert.ToString(DispatchFrom.Rows[0]["Addr1"]);
+                    objDisp.Addr2 = Convert.ToString(DispatchFrom.Rows[0]["Addr2"]);
+                    objDisp.Loc = Convert.ToString(DispatchFrom.Rows[0]["Addr2"]);
+                    objDisp.Nm = Convert.ToString(DispatchFrom.Rows[0]["Nm"]);
+                    objDisp.Pin = Convert.ToInt32(DispatchFrom.Rows[0]["Pin"]);
+                    objDisp.Stcd = Convert.ToString(DispatchFrom.Rows[0]["Stcd"]);
+                    objInvoice.DispDtls = objDisp;
+                }
+             
+                if (ShipDetails.Rows.Count > 0)
+                {
+                    
+                    ShipToDetails objShip = new ShipToDetails();
+                    objShip.Addr1 = Convert.ToString(ShipDetails.Rows[0]["Addr1"]); ;
+                    objShip.Addr2 = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
+                    objShip.Loc = Convert.ToString(ShipDetails.Rows[0]["Addr2"]); ;
+                    objShip.Gstin = Convert.ToString(ShipDetails.Rows[0]["Gstin"]); ;
+                    objShip.LglNm = Convert.ToString(ShipDetails.Rows[0]["LglNm"]); ;
+                    objShip.TrdNm = Convert.ToString(ShipDetails.Rows[0]["TrdNm"]); ;
+                    objShip.Pin = Convert.ToInt32(ShipDetails.Rows[0]["Pin"]); ;
+                    objShip.Stcd = Convert.ToString(ShipDetails.Rows[0]["Stcd"]); ;
+                    objInvoice.ShipDtls = objShip;
+                }
 
                 List<ProductList> objListProd = new List<ProductList>();
 
                 foreach (DataRow dr in Products.Rows)
                 {
-                    ProductList objProd = new ProductList();
-                    // objProd.AssAmt = 0.00M;
-
-                    //**************Commented for now -- This is foer Attribute adding ********************************//
-
-                    //List<AttributeDetails> objListAttr = new List<AttributeDetails>();
-                    //for (int j = 0; j < 1; j++)
-                    //{
-                    //    AttributeDetails objAttr = new AttributeDetails();
-                    //    objAttr.Nm = "";
-                    //    objAttr.Val = "";
-                    //    objListAttr.Add(objAttr);
-                    //}
-                    //objProd.AttribDtls = objListAttr;
-
-                    //**************End Commented for now -- This is foer Attribute adding ******************************//
+                    ProductList objProd = new ProductList();                    
 
                     objProd.AssAmt = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
                     objProd.Barcde = null;
@@ -4798,17 +4837,26 @@ namespace ERP.OMS.Management.Activities
                     objProd.StateCesNonAdvlAmt = 0.00M;
                     objProd.StateCesRt = 0.00M;
                     objProd.TotAmt = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_Amount"]).ToString("0.00"));
+
                     objProd.TotItemVal = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_TotalAmountInBaseCurrency"]).ToString("0.00")); ;
                     if (Convert.ToString(dr["GST_Print_Name"]) != "")
                         objProd.Unit = Convert.ToString(dr["GST_Print_Name"]);
                     //else
                     //    objProd.Unit = "BAG";
-                    objProd.UnitPrice = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]).ToString("0.00")); ;
+                    objProd.UnitPrice = Convert.ToDecimal(Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]).ToString("0.00"));
+
+
+
+                    if (Convert.ToDecimal(dr["InvoiceDetails_Discount"]) < 0)
+                    {
+                        objProd.TotAmt = Convert.ToDecimal((Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]) * Convert.ToDecimal(dr["InvoiceDetails_Quantity"])).ToString("0.00"));
+                        objProd.Discount = Convert.ToDecimal(((Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]) * Convert.ToDecimal(dr["InvoiceDetails_Quantity"])) - Convert.ToDecimal(dr["InvoiceDetails_Amount"])).ToString("0.00"));
+                        Decimal Discount_Amount = Convert.ToDecimal(((Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]) * Convert.ToDecimal(dr["InvoiceDetails_Quantity"])) - Convert.ToDecimal(dr["InvoiceDetails_Amount"])).ToString("0.00"));
+                        objProd.AssAmt = Convert.ToDecimal(Convert.ToDecimal((Convert.ToDecimal(dr["InvoiceDetails_SalePrice"]) * Convert.ToDecimal(dr["InvoiceDetails_Quantity"])) - Discount_Amount).ToString("0.00"));
+                    }
                     objListProd.Add(objProd);
                 }
                 objInvoice.ItemList = objListProd;
-
-                obj.Add(objInvoice);
 
                 authtokensOutput authObj = new authtokensOutput();
                 if (DateTime.Now > EinvoiceToken.Expiry)
@@ -4824,8 +4872,8 @@ namespace ERP.OMS.Management.Activities
                             var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
                             var stringContent = new StringContent(json);
                             var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                            var response = client.PostAsync("https://sandbox.services.vayananet.com/theodore/apis/v1/authtokens", stringContent).Result;
-
+                            //var response = client.PostAsync("https://sandbox.services.vayananet.com/theodore/apis/v1/authtokens", stringContent).Result;
+                            var response = client.PostAsync(IrnBaseURL, stringContent).Result;
                             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                             {
                                 var jsonString = response;
@@ -4859,12 +4907,23 @@ namespace ERP.OMS.Management.Activities
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         var json = JsonConvert.SerializeObject(objInvoice, Formatting.Indented);
                         var stringContent = new StringContent(json);
+
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", "19AABCP5428M1Z0");
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", "PEEKAYAGENCIES");
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", "Shiv@2709");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+
+
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", "19AABCP5428M1Z0");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", "PEEKAYAGENCIES");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", "Shiv@2709");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+
+
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
                         var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
