@@ -536,7 +536,7 @@ namespace ERP.OMS.Management
                         SecurityProtocolType.Tls12;
                         client.DefaultRequestHeaders.Clear();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var json = JsonConvert.SerializeObject(objCancelDetails, Formatting.Indented);
+                        var json = JsonConvert.SerializeObject(objCancelList, Formatting.Indented);
                         var stringContent = new StringContent(json);
                         var content = new StringContent(json, Encoding.UTF8, "application/json");
                         var response = client.PostAsync(IrnCancelUrl, content).Result;
@@ -671,7 +671,7 @@ namespace ERP.OMS.Management
                         SecurityProtocolType.Tls12;
                         client.DefaultRequestHeaders.Clear();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var json = JsonConvert.SerializeObject(objCancelDetails, Formatting.Indented);
+                        var json = JsonConvert.SerializeObject(objCancelList, Formatting.Indented);
                         var stringContent = new StringContent(json);                       
                         var content = new StringContent(json, Encoding.UTF8, "application/json");                      
                         var response = client.PostAsync(IrnCancelUrl, content).Result;
