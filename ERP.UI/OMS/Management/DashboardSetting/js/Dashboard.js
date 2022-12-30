@@ -273,13 +273,17 @@ function apply() {
         var rights_dtls = [];
 
         var jsonobj = JSON.parse($("#jsonlistdiv").text());
+        //var jsonobj = JSON.parse($("#jsonlisteditdiv").text());
+        
         var ParentObj = $.grep(jsonobj, function (e) { return e.parent_id != "0" })
         //console.log(ParentObj);
         for (var pid = 0; pid < ParentObj.length; pid++) {
             var rights = {};
 
             rights['column_name'] = ParentObj[pid].column_name;
-            rights['status'] = document.getElementById('chk' + ParentObj[pid].id).checked;
+            if (document.getElementById('chk' + ParentObj[pid].id) != null) {
+                rights['status'] = document.getElementById('chk' + ParentObj[pid].id).checked;
+            }
             rights_dtls.push(rights);
 
         }
