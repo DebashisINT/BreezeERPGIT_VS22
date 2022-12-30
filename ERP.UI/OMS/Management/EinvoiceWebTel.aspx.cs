@@ -554,13 +554,13 @@ namespace ERP.OMS.Management
                                 {
                                     objDb.GetDataTable("update TBL_TRANS_TRANSITSALESINVOICE SET IsIRNCancelled=1,IRN_Cancell_Date='" + item["CancelDate"].ToString() + "' WHERE Irn='" + item["Irn"].ToString() + "'");
 
-                                    string id = Convert.ToString(objDb.GetDataTable("select return_id from TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + item["Irn"].ToString() + "'").Rows[0][0]);
+                                    string id = Convert.ToString(objDb.GetDataTable("select Invoice_Id from TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + item["Irn"].ToString() + "'").Rows[0][0]);
                                     objDb.GetDataTable("EXEC PRC_CANCELIRNTSI " + id + "");
                                     output = "IRN Cancelled successfully.";
                                 }
                                 else
                                 {
-                                    string id = Convert.ToString(objDb.GetDataTable("SELECT RETURN_ID FROM TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + item["Irn"].ToString() + "'").Rows[0][0]);
+                                    string id = Convert.ToString(objDb.GetDataTable("SELECT Invoice_Id FROM TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + item["Irn"].ToString() + "'").Rows[0][0]);
 
                                     objDb.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='TSI' and ERROR_TYPE='IRN_CANCEL'");
                                     objDb.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','TSI','IRN_CANCEL','" + item["ErrorCode"].ToString() + "','" + item["ErrorMessage"].ToString().Replace("'", "''") + "')");
