@@ -20,6 +20,8 @@ using ERP.Models;
 using System.Linq;
 using iTextSharp.text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Office2010.Excel;
+
 namespace ERP.OMS.Management.Activities
 {
     public partial class SalesOrderEntityList : System.Web.UI.Page
@@ -560,14 +562,14 @@ namespace ERP.OMS.Management.Activities
                     dtdata = objERPDocPendingApproval.PopulateERPDocApprovalPendingListByUserLevel(userid, "SO");
                     if (dtdata != null && dtdata.Rows.Count > 0)
                     {
-                        gridPendingApproval.DataSource = dtdata;
-                        gridPendingApproval.DataBind();
+                        //gridPendingApproval.DataSource = dtdata;
+                      //  gridPendingApproval.DataBind();
                         Session["PendingApproval"] = dtdata;  // Commented For Temporary Purpose
                     }
                     else
                     {
-                        gridPendingApproval.DataSource = null;
-                        gridPendingApproval.DataBind();
+                        //gridPendingApproval.DataSource = null;
+                       // gridPendingApproval.DataBind();
                     }
                 }
             }
@@ -625,7 +627,7 @@ namespace ERP.OMS.Management.Activities
             if (Session["watingOrder"] != null)
             {
                 DataTable Quotationdt = (DataTable)Session["watingOrder"];               
-                gridPendingApproval.DataSource = Quotationdt;
+                //gridPendingApproval.DataSource = Quotationdt;
             }
         }
         protected void gridPendingApproval_CustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e) // Checked and Modified By Sandip
@@ -1298,16 +1300,16 @@ namespace ERP.OMS.Management.Activities
             }
         }
 
-        protected void gridPendingApproval_DataBinding(object sender, EventArgs e)
-        {
-            if (Session["PendingApproval"] != null)
-            {
-                DataTable Quotationdt = (DataTable)Session["PendingApproval"];
-                DataView dvData = new DataView(Quotationdt);
-                gridPendingApproval.DataSource = Quotationdt;
-            }
+        //protected void gridPendingApproval_DataBinding(object sender, EventArgs e)
+        //{
+        //    if (Session["PendingApproval"] != null)
+        //    {
+        //        DataTable Quotationdt = (DataTable)Session["PendingApproval"];
+        //        DataView dvData = new DataView(Quotationdt);
+        //        gridPendingApproval.DataSource = Quotationdt;
+        //    }
             
-        }
+        //}
 
         protected void gridUserWiseQuotation_DataBinding(object sender, EventArgs e)
         {
@@ -1390,6 +1392,68 @@ namespace ERP.OMS.Management.Activities
             }
 
             return cls;
+        }
+
+        protected void EntityServerModeDataSalesOrder_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
+        {
+            e.KeyExpression = "ID";
+
+            string IsFilter = Convert.ToString(hdnIsFilter.Value);
+            string connectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
+            ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+            string  User_id = Convert.ToString(Session["userid"]);
+            string Userid = Convert.ToString(HttpContext.Current.Session["userid"]);
+            BusinessLogicLayer.DBEngine BEngine = new BusinessLogicLayer.DBEngine();
+
+            if (IsFilter == "Y")
+            {
+                var q = from d in dc.v_PendingApprovals
+                        where d.ERPApprover_UserId == Convert.ToInt64(User_id)
+                        orderby d.CreateDate descending
+                        select d;
+
+                e.QueryableSource = q;
+            }
+            else
+            {
+                
+                var q = from d in dc.v_PendingApprovals
+                        where d.ERPApprover_UserId == 0
+                        select d;
+                e.QueryableSource = q;
+            }
+        }
+
+        protected void EntityServerModeDataSalesOrderUserWise_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
+        {
+            e.KeyExpression = "ID";
+
+            string IsFilter = Convert.ToString(hdnIsFilter.Value);
+            string connectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
+            ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+            string User_id = Convert.ToString(Session["userid"]);
+            string Userid = Convert.ToString(HttpContext.Current.Session["userid"]);
+            BusinessLogicLayer.DBEngine BEngine = new BusinessLogicLayer.DBEngine();
+
+
+            if (IsFilter == "Y")
+            {
+                var q = from d in dc.v_SalesOrderStatus
+                        where d.CreatedBy == Convert.ToInt64(User_id)
+                        orderby d.ID, d.UserLevel descending
+                        select d;
+
+                e.QueryableSource = q;
+            }
+            else
+            {
+
+                var q = from d in dc.v_SalesOrderStatus
+                        where d.CreatedBy == 0
+                        select d;
+                e.QueryableSource = q;
+            }
+
         }
     }
     public class ApprovalCount

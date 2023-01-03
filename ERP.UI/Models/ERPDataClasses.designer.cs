@@ -1536,6 +1536,22 @@ namespace ERP.Models
 				return this.GetTable<PurchaseOrderList>();
 			}
 		}
+		
+		public System.Data.Linq.Table<v_PendingApproval> v_PendingApprovals
+		{
+			get
+			{
+				return this.GetTable<v_PendingApproval>();
+			}
+		}
+		
+		public System.Data.Linq.Table<v_SalesOrderStatus> v_SalesOrderStatus
+		{
+			get
+			{
+				return this.GetTable<v_SalesOrderStatus>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_FinanceReconciliationList")]
@@ -75222,6 +75238,384 @@ namespace ERP.Models
 				if ((this._IsInventory != value))
 				{
 					this._IsInventory = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_PendingApproval")]
+	public partial class v_PendingApproval
+	{
+		
+		private long _ID;
+		
+		private string _customer;
+		
+		private string _Number;
+		
+		private string _CreateDate;
+		
+		private string _branch_description;
+		
+		private string _craetedby;
+		
+		private int _Approved;
+		
+		private int _Rejected;
+		
+		private System.Nullable<int> _ERPApprover_UserId;
+		
+		public v_PendingApproval()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL")]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer", DbType="VarChar(252) NOT NULL", CanBeNull=false)]
+		public string customer
+		{
+			get
+			{
+				return this._customer;
+			}
+			set
+			{
+				if ((this._customer != value))
+				{
+					this._customer = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
+		public string Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this._Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="VarChar(10)")]
+		public string CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_branch_description", DbType="VarChar(200)")]
+		public string branch_description
+		{
+			get
+			{
+				return this._branch_description;
+			}
+			set
+			{
+				if ((this._branch_description != value))
+				{
+					this._branch_description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_craetedby", DbType="VarChar(50)")]
+		public string craetedby
+		{
+			get
+			{
+				return this._craetedby;
+			}
+			set
+			{
+				if ((this._craetedby != value))
+				{
+					this._craetedby = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Approved", DbType="Int NOT NULL")]
+		public int Approved
+		{
+			get
+			{
+				return this._Approved;
+			}
+			set
+			{
+				if ((this._Approved != value))
+				{
+					this._Approved = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rejected", DbType="Int NOT NULL")]
+		public int Rejected
+		{
+			get
+			{
+				return this._Rejected;
+			}
+			set
+			{
+				if ((this._Rejected != value))
+				{
+					this._Rejected = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ERPApprover_UserId", DbType="Int")]
+		public System.Nullable<int> ERPApprover_UserId
+		{
+			get
+			{
+				return this._ERPApprover_UserId;
+			}
+			set
+			{
+				if ((this._ERPApprover_UserId != value))
+				{
+					this._ERPApprover_UserId = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_SalesOrderStatus")]
+	public partial class v_SalesOrderStatus
+	{
+		
+		private long _ID;
+		
+		private string _Branch;
+		
+		private string _number;
+		
+		private string _Customer;
+		
+		private string _OrderedDate;
+		
+		private string _createddate;
+		
+		private string _approvedby;
+		
+		private string _UserLevel;
+		
+		private string _status;
+		
+		private string _ApprovedOn;
+		
+		private System.Nullable<int> _CreatedBy;
+		
+		public v_SalesOrderStatus()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL")]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Branch", DbType="VarChar(200)")]
+		public string Branch
+		{
+			get
+			{
+				return this._Branch;
+			}
+			set
+			{
+				if ((this._Branch != value))
+				{
+					this._Branch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_number", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
+		public string number
+		{
+			get
+			{
+				return this._number;
+			}
+			set
+			{
+				if ((this._number != value))
+				{
+					this._number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer", DbType="VarChar(252) NOT NULL", CanBeNull=false)]
+		public string Customer
+		{
+			get
+			{
+				return this._Customer;
+			}
+			set
+			{
+				if ((this._Customer != value))
+				{
+					this._Customer = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderedDate", DbType="NVarChar(10)")]
+		public string OrderedDate
+		{
+			get
+			{
+				return this._OrderedDate;
+			}
+			set
+			{
+				if ((this._OrderedDate != value))
+				{
+					this._OrderedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_createddate", DbType="NVarChar(10)")]
+		public string createddate
+		{
+			get
+			{
+				return this._createddate;
+			}
+			set
+			{
+				if ((this._createddate != value))
+				{
+					this._createddate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_approvedby", DbType="VarChar(50)")]
+		public string approvedby
+		{
+			get
+			{
+				return this._approvedby;
+			}
+			set
+			{
+				if ((this._approvedby != value))
+				{
+					this._approvedby = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserLevel", DbType="VarChar(1)")]
+		public string UserLevel
+		{
+			get
+			{
+				return this._UserLevel;
+			}
+			set
+			{
+				if ((this._UserLevel != value))
+				{
+					this._UserLevel = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="VarChar(8) NOT NULL", CanBeNull=false)]
+		public string status
+		{
+			get
+			{
+				return this._status;
+			}
+			set
+			{
+				if ((this._status != value))
+				{
+					this._status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovedOn", DbType="NVarChar(10)")]
+		public string ApprovedOn
+		{
+			get
+			{
+				return this._ApprovedOn;
+			}
+			set
+			{
+				if ((this._ApprovedOn != value))
+				{
+					this._ApprovedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="Int")]
+		public System.Nullable<int> CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
 				}
 			}
 		}
