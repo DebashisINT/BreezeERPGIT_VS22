@@ -22,50 +22,45 @@
             ApprovalButtonVisible();
         });
 
-        function ShowApprovalWaiting()
-        {
-             $.ajax({
-            type: "POST",
-            url: "SalesOrderEntityList.aspx/ButtonCountApprovalWaiting",
-            //data: JSON.stringify({ FormDate: $("#hfFromDate").val(), toDate: $("#hfToDate").val(), Branch: $("#hfBranchID").val() }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-           // async: false,
-            success: function (msg) {
-                //alert(msg.d);
-                var status = msg.d;
-                //if (msg.d.All != null) {
-                $("#lblWaiting").text(msg.d.ApprovalPending);
-                if(msg.d.OrderWaiting==null)
-                {
-                    $("#lblQuoteweatingCount").text("0");
-                    $("#waitingOrderCount").val("0");
-                }
-            else
-                {
-                    $("#lblQuoteweatingCount").text(msg.d.OrderWaiting);
-                    $("#waitingOrderCount").val(msg.d.OrderWaiting);
+        function ShowApprovalWaiting() {
+            $.ajax({
+                type: "POST",
+                url: "SalesOrderEntityList.aspx/ButtonCountApprovalWaiting",
+                //data: JSON.stringify({ FormDate: $("#hfFromDate").val(), toDate: $("#hfToDate").val(), Branch: $("#hfBranchID").val() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // async: false,
+                success: function (msg) {
+                    //alert(msg.d);
+                    var status = msg.d;
+                    //if (msg.d.All != null) {
+                    $("#lblWaiting").text(msg.d.ApprovalPending);
+                    if (msg.d.OrderWaiting == null) {
+                        $("#lblQuoteweatingCount").text("0");
+                        $("#waitingOrderCount").val("0");
+                    }
+                    else {
+                        $("#lblQuoteweatingCount").text(msg.d.OrderWaiting);
+                        $("#waitingOrderCount").val(msg.d.OrderWaiting);
+
+                    }
 
                 }
-                
-            }
-        });
+            });
         }
 
 
-        function ApprovalButtonVisible()
-        {
+        function ApprovalButtonVisible() {
             $.ajax({
                 type: "POST",
                 url: "SalesOrderEntityList.aspx/ApprovalButtonVisible",
                 //data: JSON.stringify({ FormDate: $("#hfFromDate").val(), toDate: $("#hfToDate").val(), Branch: $("#hfBranchID").val() }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-              //  async: false,
-                success: function (msg) {                   
+                //  async: false,
+                success: function (msg) {
                     var status = msg.d;
-                    if (msg.d.spanStatus == "0")
-                    {
+                    if (msg.d.spanStatus == "0") {
                         //$("#spanStatus").css("display", "none");
                         $("#spanStatus").hide();
                     }
@@ -73,16 +68,16 @@
                         //$("#spanStatus").css("display", "block");
                         $("#spanStatus").show();
                     }
-                    
+
                     if (msg.d.divPendingWaiting == "0") {
                         //$("#divPendingWaiting").css("display", "none");
                         $("#divPendingWaiting").hide();
                     }
                     else {
-                      //  $("#divPendingWaiting").css("display", "block");
+                        //  $("#divPendingWaiting").css("display", "block");
                         $("#divPendingWaiting").show();
                     }
-                  
+
                 }
             });
         }
@@ -317,13 +312,11 @@
     </script>
     <%--rev Pallab--%>
     <style>
-        #popupApproval_PW-1
-        {
-             left: -40px !important;  
+        #popupApproval_PW-1 {
+            left: -40px !important;
         }
 
-        #PopupUserWiseQuotation_PW-1
-        {
+        #PopupUserWiseQuotation_PW-1 {
             top: 15px !important;
             left: -15px !important;
         }
@@ -446,12 +439,12 @@
     <div class="form_main">
         <div class="clearfix">
             <% if (rights.CanAdd)
-               { %>
+                { %>
             <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>New</span> </a>
             <% } %>
 
             <% if (rights.CanExport)
-               { %>
+                { %>
             <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
@@ -752,7 +745,7 @@
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Party Order No" FieldName="Order_OANumber"
-                        VisibleIndex="27"  Width="140px" Settings-ShowFilterRowMenu="True">
+                        VisibleIndex="27" Width="140px" Settings-ShowFilterRowMenu="True">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
@@ -769,25 +762,25 @@
                             <div class="floatedIcons">
                                 <div class='floatedBtnArea'>
                                     <% if (rights.CanView)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="OnViewClick('<%#Eval("Order_Id")%>')" class="" title="">
                                         <span class='ico ColorSix'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>
                                     <% } %>
                                     <% if (rights.CanEdit)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" title="" style='<%#Eval("SOLastEntryStaus")%>'>
 
                                         <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Modify</span></a>  <% } %>
                                     <%-- rev Pratik Copy--%>
                                     <% if (rights.CanAdd)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="OnCopyClick('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" title="">
 
                                         <span class='ico editColor'><i class='fa fa-files-o' aria-hidden='true'></i></span><span class='hidden-xs'>Copy</span></a>  <% } %>
-                                   <%-- End of rev Pratik Copy--%>
+                                    <%-- End of rev Pratik Copy--%>
 
                                     <% if (rights.CanApproved && isApprove)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="OnApproveClick('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" title="">
 
                                         <span class='ico editColor'><i class='fa fa-check' aria-hidden='true'></i></span><span class='hidden-xs'>Approve/Reject</span>
@@ -795,13 +788,13 @@
                                     </a><% } %>
 
                                     <% if (rights.CanDelete)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" title="" style='<%#Eval("SOLastEntryStaus")%>'>
                                         <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>
                                     <% } %>
 
                                     <% if (rights.CanCancel)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="OnCancelClick('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" title="" style='<%#Eval("SOLastEntryStaus")%>'>
 
                                         <span class='ico deleteColor'><i class='fa fa-times' aria-hidden='true'></i></span><span class='hidden-xs'>Cancel Order</span>
@@ -809,7 +802,7 @@
                                     </a><% } %>
 
                                     <% if (rights.CanClose)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="OnClosedClick('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" title="" style='<%#Eval("SOLastEntryStaus")%>'>
 
                                         <span class='ico deleteColor'><i class='fa fa-times' aria-hidden='true'></i></span><span class='hidden-xs'>Closed Order</span>
@@ -822,35 +815,35 @@
                                     <a href="javascript:void(0);" onclick="OnClickStatus('<%#Eval("Order_Id")%>')" class="" title="" style="display: none">
                                         <span class='ico ColorFive'><i class='fa fa-check'></i></span><span class='hidden-xs'>Status</span></a>
                                     <% if (rights.CanView)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="OnclickViewAttachment('<%#Eval("Order_Id")%>')" class="" title="">
                                         <span class='ico ColorSix'><i class='fa fa-paperclip'></i></span><span class='hidden-xs'>Add/View Attachment</span>
                                     </a>
                                     <% } %>
                                     <% if (rights.CanPrint)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="onPrintJv('<%#Eval("Order_Id")%>')" class="" title="">
                                         <span class='ico ColorSeven'><i class='fa fa-print'></i></span><span class='hidden-xs'>Print</span>
                                     </a><%} %>
 
                                     <% if (rights.CanUpdateTransporter)
-                                       { %>
+                                        { %>
                                     <a href="javascript:void(0);" onclick="UpdateTransporter('<%#Eval("Order_Id")%>')" class="" title="">
                                         <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Update Transporter</span></a>
                                     <% } %>
 
                                     <% if (rights.CanClose)
-                                       { %>
+                                        { %>
                                     <% if (ShowProductWiseClose.ToUpper() == "1")
-                                       {%>
+                                        {%>
                                     <a href="javascript:void(0);" onclick="OnProductWiseClosedClick('<%#Eval("Order_Id")%>','<%# Container.VisibleIndex %>','<%#Eval("OrderNo") %>')" class="" title="">
                                         <span class='ico deleteColor'><i class='fa fa-times' aria-hidden='true'></i></span><span class='hidden-xs'>Product Wise Closed</span></a>
                                     <% } %>
                                     <% } %>
                                     <% if (rights.CanAdd)
-                                       { %>
+                                        { %>
                                     <% if (ShowDeliverySchedule.ToUpper() == "1")
-                                       {%>
+                                        {%>
                                     <a href="javascript:void(0);" onclick="OnProductDeliveryScheduleClick('<%#Eval("Order_Id")%>','<%# Container.VisibleIndex %>')" class="" title="">
                                         <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Delivery Schedule</span></a>
                                     <% } %>
@@ -1076,7 +1069,7 @@
                                 <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="17" Width="60">
                                     <DataItemTemplate>
                                         <% if (rights.CanDelete)
-                                           { %>
+                                            { %>
                                         <a href="javascript:void(0);" onclick="RemoveQuote('<%# Container.KeyValue %>')" class="pad" title="Remove">
                                             <%--   <img src="../../../assests/images/Delete.png" />--%>
                                             <i class="fa fa-close" aria-hidden="true" id="CloseRemoveWattingBtn" style="font-size: 19px; color: #f35248;"></i>
@@ -1120,9 +1113,12 @@
     <div class="PopUpArea">
         <%-- <button class="btn btn-primary" onclick="ApproveAll();">Approve Selection</button>
         <button class="btn btn-primary" onclick="RejectAll();">Reject Selection</button>--%>
+        <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrder" runat="server" OnSelecting="EntityServerModeDataSalesOrder_Selecting"
+            ContextTypeName="ERPDataClassesDataContext"  />
 
+      
         <dxe:ASPxPopupControl ID="popupApproval" runat="server" ClientInstanceName="cpopupApproval"
-            Width="800px" HeaderText="Pending Approvals" PopupHorizontalAlign="WindowCenter" 
+            Width="1000px" HeaderText="Pending Approvals" PopupHorizontalAlign="WindowCenter"
             PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
             Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
             ContentStyle-CssClass="pad">
@@ -1132,13 +1128,13 @@
                     <%--<div style="Width:400px;background-color:#FFFFFF;margin:0px;border:1px solid red;">--%>
                     <div class="row">
                         <div class="col-md-12">
-                            <dxe:ASPxGridView ID="gridPendingApproval" runat="server" KeyFieldName="ID" AutoGenerateColumns="False" 
-                                
-                                Width="100%" ClientInstanceName="cgridPendingApproval" OnCustomCallback="gridPendingApproval_CustomCallback"
+                             <dxe:ASPxGridView ID="gridPendingApproval" runat="server" KeyFieldName="ID" AutoGenerateColumns="False"
+                                Width="100%" ClientInstanceName="cgridPendingApproval"
+                                OnCustomCallback="gridPendingApproval_CustomCallback"
                                 SettingsBehavior-ColumnResizeMode="Control" Settings-VerticalScrollBarMode="Auto" Settings-VerticalScrollableHeight="350"
-                                OnDataBinding="gridPendingApproval_DataBinding">
+                                DataSourceID="EntityServerModeDataSalesOrder">
                                 <Columns>
-                                    <%-- <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />--%>
+                                    
                                     <dxe:GridViewDataTextColumn Caption="Document No." FieldName="Number" Width="200px"
                                         VisibleIndex="0" FixedStyle="Left">
                                         <CellStyle CssClass="gridcellleft" Wrap="true">
@@ -1167,10 +1163,10 @@
                                         </CellStyle>
                                     </dxe:GridViewDataTextColumn>
 
-                                    <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Approved" Width="100px"> 
+                                    <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Approved" Width="100px">
                                         <DataItemTemplate>
                                             <dxe:ASPxCheckBox ID="chkapprove" runat="server" AllowGrayed="false" OnInit="chkapprove_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
-                                                <%--<ClientSideEvents CheckedChanged="function (s, e) {ch_fnApproved();}" />--%>
+                                              
                                             </dxe:ASPxCheckBox>
                                         </DataItemTemplate>
                                         <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
@@ -1179,7 +1175,7 @@
                                     <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Rejected" Width="100px">
                                         <DataItemTemplate>
                                             <dxe:ASPxCheckBox ID="chkreject" runat="server" AllowGrayed="false" OnInit="chkreject_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
-                                                <%--<ClientSideEvents CheckedChanged="function (s, e) {ch_fnApproved();}" />--%>
+                                               
                                             </dxe:ASPxCheckBox>
                                         </DataItemTemplate>
                                         <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
@@ -1199,6 +1195,74 @@
                                 <SettingsLoadingPanel Text="Please Wait..." />
                                 <ClientSideEvents EndCallback="OnApprovalEndCall" />
                             </dxe:ASPxGridView>
+                           <%--   <dxe:ASPxGridLookup ID="lookup_PendingApproval" runat="server" ClientInstanceName="clookup_PendingApproval" DataSourceID="EntityServerModeDataSalesOrder"
+            KeyFieldName="ID" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False">
+            <Columns>
+                <dxe:GridViewDataTextColumn Caption="Document No." FieldName="Number" Width="200px"
+                    VisibleIndex="0" FixedStyle="Left">
+                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                    </CellStyle>
+                </dxe:GridViewDataTextColumn>
+
+                <dxe:GridViewDataTextColumn Caption="Party Name" FieldName="customer" Width="200px"
+                    VisibleIndex="0" FixedStyle="Left">
+                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                    </CellStyle>
+                </dxe:GridViewDataTextColumn>
+
+                <dxe:GridViewDataTextColumn Caption="Posting Date" FieldName="CreateDate" Width="100px"
+                    VisibleIndex="1" FixedStyle="Left">
+                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                    </CellStyle>
+                </dxe:GridViewDataTextColumn>
+                <dxe:GridViewDataTextColumn Caption="Unit" FieldName="branch_description" Width="200px"
+                    VisibleIndex="2" FixedStyle="Left">
+                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                    </CellStyle>
+                </dxe:GridViewDataTextColumn>
+                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="craetedby" Width="100px"
+                    VisibleIndex="3" FixedStyle="Left">
+                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                    </CellStyle>
+                </dxe:GridViewDataTextColumn>
+                <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Approved" Width="100px">
+                    <DataItemTemplate>
+                        <dxe:ASPxCheckBox ID="chkapprove" runat="server" AllowGrayed="false" OnInit="chkapprove_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
+                          
+                        </dxe:ASPxCheckBox>
+                    </DataItemTemplate>
+                    <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
+                </dxe:GridViewDataCheckColumn>
+
+                <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Rejected" Width="100px">
+                    <DataItemTemplate>
+                        <dxe:ASPxCheckBox ID="chkreject" runat="server" AllowGrayed="false" OnInit="chkreject_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
+                          
+                        </dxe:ASPxCheckBox>
+                    </DataItemTemplate>
+                    <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
+                </dxe:GridViewDataCheckColumn>
+            </Columns>
+            <GridViewProperties Settings-VerticalScrollBarMode="Auto">
+                <Templates>
+                    <StatusBar>
+                        <table class="OptionsTable" style="float: right">
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </StatusBar>
+                </Templates>
+                <SettingsBehavior AllowFocusedRow="True" AllowSelectSingleRowOnly="True"></SettingsBehavior>
+
+                <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
+            </GridViewProperties>
+        
+
+            <ClearButton DisplayMode="Always">
+            </ClearButton>
+        </dxe:ASPxGridLookup>--%>
+                          
                         </div>
                         <div class="clear"></div>
 
@@ -1213,6 +1277,7 @@
                 </dxe:PopupControlContentControl>
             </ContentCollection>
         </dxe:ASPxPopupControl>
+         
         <dxe:ASPxPopupControl ID="ASPXPopupControl" runat="server" ClientInstanceName="popup"
             CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="630px"
             Width="1200px" HeaderText="Quotation Approval" Modal="true" AllowResize="true" ResizingMode="Postponed">
@@ -1225,6 +1290,10 @@
                 </dxe:PopupControlContentControl>
             </ContentCollection>
         </dxe:ASPxPopupControl>
+
+          <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrderUserWise" runat="server" OnSelecting="EntityServerModeDataSalesOrderUserWise_Selecting"
+            ContextTypeName="ERPDataClassesDataContext"/>
+
         <dxe:ASPxPopupControl ID="PopupUserWiseQuotation" runat="server" ClientInstanceName="cPopupUserWiseQuotation"
             Width="900px" HeaderText="User Wise Sales Order Status" PopupHorizontalAlign="WindowCenter" HeaderStyle-CssClass="wht"
             PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
@@ -1236,10 +1305,10 @@
                         <div class="col-md-12">
 
                             <dxe:ASPxGridView ID="gridUserWiseQuotation" runat="server" KeyFieldName="ID" AutoGenerateColumns="False"
-                                Width="100%" ClientInstanceName="cgridUserWiseQuotation" OnCustomCallback="gridUserWiseQuotation_CustomCallback" 
-                                OnDataBinding="gridUserWiseQuotation_DataBinding">
+                                Width="100%" ClientInstanceName="cgridUserWiseQuotation" OnCustomCallback="gridUserWiseQuotation_CustomCallback"
+                                DataSourceID="EntityServerModeDataSalesOrderUserWise">
                                 <Columns>
-                                   <%-- OnPageIndexChanged="gridUserWiseQuotation_PageIndexChanged"--%>
+                                    <%--OnDataBinding="gridUserWiseQuotation_DataBinding" OnPageIndexChanged="gridUserWiseQuotation_PageIndexChanged"--%>
                                     <dxe:GridViewDataTextColumn Caption="Branch" FieldName="Branch"
                                         VisibleIndex="0" FixedStyle="Left">
                                         <CellStyle CssClass="gridcellleft" Wrap="true">
@@ -1565,6 +1634,7 @@ popup.Hide();
         <asp:HiddenField ID="hdnOrderID" runat="server" />
         <asp:HiddenField ID="hFilterType" runat="server" />
         <asp:HiddenField ID="hdnIsMultiuserApprovalRequired" runat="server" />
+       <asp:HiddenField ID="hdnIsFilter" runat="server" />
 
     </div>
     <dxe:ASPxPopupControl ID="PopupProductwiseClose" runat="server" ClientInstanceName="cPopupProductwiseClose"
@@ -1643,9 +1713,9 @@ popup.Hide();
         </ContentCollection>
     </dxe:ASPxPopupControl>
 
-     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
         <PanelCollection>
-            <dxe:PanelContent runat="server">           
+            <dxe:PanelContent runat="server">
             </dxe:PanelContent>
         </PanelCollection>
         <ClientSideEvents EndCallback="CallbackPanelEndCall" />

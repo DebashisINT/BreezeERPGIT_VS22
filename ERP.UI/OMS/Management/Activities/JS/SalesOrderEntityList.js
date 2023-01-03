@@ -109,24 +109,30 @@ function watingOrdergridEndCallback() {
 }
 
 function OpenPopUPUserWiseQuotaion() {
-    cgridUserWiseQuotation.PerformCallback();
+    // cgridUserWiseQuotation.PerformCallback();
+    $("#hdnIsFilter").val("Y");
+    
+    cgridUserWiseQuotation.Refresh();
     cPopupUserWiseQuotation.Show();
 }
 // function above  End
 
 //This function is called to show all Pending Approval of Sales Order whose Userid has been set LevelWise using Approval Configuration Module 
 function OpenPopUPApprovalStatus() {
-    cgridPendingApproval.PerformCallback();
+   // cgridPendingApproval.PerformCallback();
+   // clookup_PendingApproval.gridView.Refresh();
+    $("#hdnIsFilter").val("Y");
+    cgridPendingApproval.Refresh();
     cpopupApproval.Show();
+    //clookup_PendingApproval.ShowDropDown();
 }
 // function above  End
 
 
 // Status 2 is passed If Approved Check box is checked by User Both Below function is called and used to show in POPUP,  the Add Page of Respective Segment(like Page for Adding Quotation ,Sale Order ,Challan)
 function GetApprovedQuoteId(s, e, itemIndex) {
-    var rowvalue = cgridPendingApproval.GetRowValues(itemIndex, 'ID', OnGetApprovedRowValues);
-    //cgridPendingApproval.PerformCallback('Status~' + rowvalue);
-    //cgridPendingApproval.GetRowValues(itemIndex, 'ID', OnGetApprovedRowValues);
+   var rowvalue = cgridPendingApproval.GetRowValues(itemIndex, 'ID', OnGetApprovedRowValues);
+    //var rowvalue = clookup_PendingApproval.gridView.GetRowValues(itemIndex, 'ID', OnGetApprovedRowValues);
 
 }
 function OnGetApprovedRowValues(obj) {
@@ -136,13 +142,16 @@ function OnGetApprovedRowValues(obj) {
 }
 function closeUserApproval() {
     popup.Hide();
+  
+    //clookup_PendingApproval.ShowDropDown();
 }
 // function above  End For Approved
 
 // Status 3 is passed If Approved Check box is checked by User Both Below function is called and used to show in POPUP,  the Add Page of Respective Segment(like Page for Adding Quotation ,Sale Order ,Challan)
 function GetRejectedQuoteId(s, e, itemIndex) {
-    //debugger;
+    
     cgridPendingApproval.GetRowValues(itemIndex, 'ID', OnGetRejectedRowValues);
+    //clookup_PendingApproval.gridView.GetRowValues(itemIndex, 'ID', OnGetRejectedRowValues);
 
 }
 function OnGetRejectedRowValues(obj) {
