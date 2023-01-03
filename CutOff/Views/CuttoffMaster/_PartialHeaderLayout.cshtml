@@ -104,19 +104,19 @@
                 </div>
             </li>
             <li class="dropdown usr">
-                <a class="dropdown-toggle user" data-toggle="dropdown" href="#" aria-expanded="true" style="padding: 9px 15px 6px 0px;">
-                    <div class="avtarHolder" style="margin-right: 24px; margin-top: 3px; border-radius: 0 !important;">
+                <a class="dropdown-toggle user" data-toggle="dropdown" href="#" aria-expanded="true" style="padding: 2px 8px 3px 0px;">
+                    <div class="avtarHolder" style="margin-right: 12px; margin-top: 3px; border-radius: 0 !important;">
                        @if (HttpContext.Current.Session["UserImage"] != "") { 
                         <img src=@Convert.ToString("/"+System.Configuration.ConfigurationManager.AppSettings["SaveFile"] + HttpContext.Current.Session["UserImage"]) />
                        }
                        else
                        {
-                            <img src="/assests/images/profile1.png" />
+                            <img src="/assests/images/profile2.png" />
                        }
                     </div>
                     <span class="label hidden-xs">
                         Welcome,
-                        <label>@Session["username"].ToString().Trim()</label>
+                        <label style="margin-bottom: 0;">@Session["username"].ToString().Trim()</label>
                         <i class="fa fa-caret-down"></i>
                     </span>
                 </a>

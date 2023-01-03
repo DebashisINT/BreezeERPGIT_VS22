@@ -373,13 +373,14 @@
                 <div class="abtContent clearfix">
                     <div>
                         <%--<img src="/assests/images/logo.png" style="width: 170px;" class="AbtImage" />--%>
-                        <img src="/assests/images/webP/logo.webp" style="width: 170px;" class="AbtImage" />
+                        <%--<img src="/assests/images/webP/logo.webp" style="width: 170px;" class="AbtImage" />--%>
+                        <img src="/assests/images/logo.png" style="width: 170px;" class="AbtImage" />
                     </div>
                     <div class="aboutText">
                         <p>Version : <b id="lblVersion" runat="server"></b></p>
                         <p><i class="fa fa-copyright" aria-hidden="true"></i>Copyright <span id="yrCopy">2021</span> Indus Net Technologies </p>
-                        <p>Application best viewed at 1280 x 720 resolution in Google Chrome <b>59 or above</b> </p>
-                        <button type="button" id="CRSAbtButton">Close</button>
+                        <p style="font-size:13px;">Application best viewed at 1280 x 720 resolution in Google Chrome <b style="color: #1a5da3;">59 or above</b> </p>
+                        <%--<button type="button" id="CRSAbtButton">Close</button>--%>
                     </div>
                 </div>
             </div>

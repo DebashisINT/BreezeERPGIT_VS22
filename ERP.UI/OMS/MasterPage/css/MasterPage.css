@@ -530,39 +530,61 @@
             z-index: 9999;
         }
 
-        .AboutBox {
-            width: 400px;
-            margin: auto;
-            background: #fff;
-            margin-top: 152px;
-            padding: 6px 15px 15px 15px;
-            border-radius: 4px;
-            border: 3px solid #309dff;
-            box-shadow: 0px 0px 0px 1px #094780;
-        }
+.AboutBox {
+    width: 500px;
+    margin: auto;
+    background: #fff;
+    margin-top: 152px;
+    /*padding: 6px 15px 15px 15px;*/
+    border-radius: 4px;
+    /*border: 3px solid #309dff;*/
+    /*box-shadow: 0px 0px 0px 1px #094780;*/
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 1px 1px 10px #00000052;
+}
 
         .AbtImage {
-            -webkit-transform: translateX(-17px);
-            -moz-transform: translateX(-17px);
-            -o-transform: translateX(-17px);
-            transform: translateX(-17px);
+            -webkit-transform: translateX(-1px);
+            -moz-transform: translateX(-1px);
+            -o-transform: translateX(-1px);
+            transform: translateX(-1px);
             margin-bottom: 14px;
         }
 
         .abtContent {
-            padding: 20px 0 0 0;
+            /*padding: 20px 0 0 0;*/
+            padding: 25px 15px;
         }
 
-        .AboutPop .CrossIconAbout {
-            position: absolute;
-            right: 7px;
-            top: 4px;
-            font-size: 19px;
-            cursor: pointer;
-        }
+.aboutText #lblVersion {
+    color: #eb4650;
+}
+
+.aboutText p{
+    font-size: 14px;
+}
+
+.AbtImage {
+    box-shadow: 1px 1px 10px #11111138;
+    border-radius: 6px;
+    padding: 5px;
+    margin-bottom: 18px;
+}
+
+.AboutPop .CrossIconAbout {
+    position: absolute;
+    right: 12px;
+    top: 6px;
+    font-size: 19px;
+    cursor: pointer;
+    color: #fff;
+    transition: all .3s;
+}
 
             .AboutPop .CrossIconAbout:hover {
-                color: #094e8c;
+                color: #fff;
+                transform: scale(1.2, 1.2);
             }
 
         #CRSAbtButton {
@@ -577,11 +599,14 @@
                 background: #d2d2d2;
             }
 
-        .AboutBoxHeader {
-            font-size: 16px;
-            border-bottom: 1px solid #f1eded;
-            padding-bottom: 5px;
-        }
+.AboutBoxHeader {
+    font-size: 16px;
+    border-bottom: 1px solid #f1eded;
+    /*padding-bottom: 5px;*/
+    padding: 10px 15px;
+    background: #1a5da3;
+    color: #fff;
+}
         /*End of Calculator*/
         /*Menu design changes*/
         .fixedMenuNew {
