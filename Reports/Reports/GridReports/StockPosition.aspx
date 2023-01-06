@@ -500,7 +500,22 @@
             popupdocument.Hide();
         }
 
-        function OpenWHDetails(BranchId, ProdId,BranchDesc,ProdDesc) {
+        /*Rev Debashis*/
+        //function OpenWHDetails(BranchId, ProdId,BranchDesc,ProdDesc) {
+        //    $("#hfIsBranWHWiseDetFilter").val("Y");
+        //    $("#ddldetails").val(0);
+        //    if (ProdId.trim() == "9999999999") {
+        //        jAlert('Details not available for total section.');
+        //        cpopupWHDetails.Hide();
+        //        return false;
+        //    }
+        //    else {
+        //        cCallbackPanelDetail.PerformCallback('BndPopupgrid~' + BranchId + '~' + ProdId + '~' + BranchDesc + '~' + ProdDesc);
+        //        cpopupWHDetails.Show();
+        //        return true;
+        //    }
+        //}
+        function OpenWHDetails(BranchId, ProdId) {
             $("#hfIsBranWHWiseDetFilter").val("Y");
             $("#ddldetails").val(0);
             if (ProdId.trim() == "9999999999") {
@@ -509,11 +524,12 @@
                 return false;
             }
             else {
-                cCallbackPanelDetail.PerformCallback('BndPopupgrid~' + BranchId + '~' + ProdId + '~' + BranchDesc + '~' + ProdDesc);
+                cCallbackPanelDetail.PerformCallback('BndPopupgrid~' + BranchId + '~' + ProdId);
                 cpopupWHDetails.Show();
                 return true;
             }
         }
+        /*End of Rev Debashis*/
         function popupHide(s, e) {
             cpopupWHDetails.Hide();
             $("#ddldetails").val(0);
@@ -838,12 +854,20 @@
                                 <dxe:GridViewDataTextColumn FieldName="WHDESC" Width="120px" Caption="Warehouse Details" VisibleIndex="2" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Center"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
-                                    <DataItemTemplate>
+                                    <%--Rev Debashis--%>
+                                    <%--<DataItemTemplate>
                                         <a href="javascript:void(0)" onclick="OpenWHDetails('<%#Eval("BRANCH_ID") %>','<%#Eval("PRODID") %>','<%#Eval("BRANCHDESC") %>','<%#Eval("PRODDESC") %>')" class="pad">
                                             <dxe:ASPxLabel ID="ASPxTextBox2" runat="server" Text='Warehouse Details' ToolTip="Warehouse Details">
                                             </dxe:ASPxLabel>
                                         </a>
+                                    </DataItemTemplate>--%>
+                                    <DataItemTemplate>
+                                        <a href="javascript:void(0)" onclick="OpenWHDetails('<%#Eval("BRANCH_ID") %>','<%#Eval("PRODID") %>')" class="pad">
+                                            <dxe:ASPxLabel ID="ASPxTextBox2" runat="server" Text='Warehouse Details' ToolTip="Warehouse Details">
+                                            </dxe:ASPxLabel>
+                                        </a>
                                     </DataItemTemplate>
+                                    <%--Rev Debashis--%>
                                     <EditFormSettings Visible="False" />
                                     <Settings AllowAutoFilterTextInputTimer="False" />
                                     <Settings AllowAutoFilter="False" />
