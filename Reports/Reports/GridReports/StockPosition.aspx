@@ -1,4 +1,9 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="StockPosition.aspx.cs" Inherits="Reports.Reports.GridReports.StockPosition" %>
+﻿<%--Revision History--%>
+<%--1.0   v2 .0.35    Debashis    06/01/2023  Unable to view Detail Report in Stock Position if the Item name consists Double or single Quotes.
+                              Now it has been taken care of.Refer: 0025569--%>
+<%--End of Revision History--%>
+
+<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="StockPosition.aspx.cs" Inherits="Reports.Reports.GridReports.StockPosition" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
      Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -500,7 +505,7 @@
             popupdocument.Hide();
         }
 
-        /*Rev Debashis*/
+        /*Rev 1.0*/
         //function OpenWHDetails(BranchId, ProdId,BranchDesc,ProdDesc) {
         //    $("#hfIsBranWHWiseDetFilter").val("Y");
         //    $("#ddldetails").val(0);
@@ -529,7 +534,7 @@
                 return true;
             }
         }
-        /*End of Rev Debashis*/
+        /*End of Rev 1.0*/
         function popupHide(s, e) {
             cpopupWHDetails.Hide();
             $("#ddldetails").val(0);
@@ -854,7 +859,7 @@
                                 <dxe:GridViewDataTextColumn FieldName="WHDESC" Width="120px" Caption="Warehouse Details" VisibleIndex="2" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Center"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
-                                    <%--Rev Debashis--%>
+                                    <%--Rev 1.0--%>
                                     <%--<DataItemTemplate>
                                         <a href="javascript:void(0)" onclick="OpenWHDetails('<%#Eval("BRANCH_ID") %>','<%#Eval("PRODID") %>','<%#Eval("BRANCHDESC") %>','<%#Eval("PRODDESC") %>')" class="pad">
                                             <dxe:ASPxLabel ID="ASPxTextBox2" runat="server" Text='Warehouse Details' ToolTip="Warehouse Details">
@@ -867,7 +872,7 @@
                                             </dxe:ASPxLabel>
                                         </a>
                                     </DataItemTemplate>
-                                    <%--Rev Debashis--%>
+                                    <%--End of Rev 1.0--%>
                                     <EditFormSettings Visible="False" />
                                     <Settings AllowAutoFilterTextInputTimer="False" />
                                     <Settings AllowAutoFilter="False" />
