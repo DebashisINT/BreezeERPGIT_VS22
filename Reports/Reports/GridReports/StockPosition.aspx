@@ -1,6 +1,7 @@
 ﻿<%--Revision History--%>
-<%--1.0   v2 .0.35    Debashis    06/01/2023  Unable to view Detail Report in Stock Position if the Item name consists Double or single Quotes.
-                              Now it has been taken care of.Refer: 0025569--%>
+<%--1.0   v2 .0.35    Debashis    06/01/2023    Unable to view Detail Report in Stock Position if the Item name consists Double or single Quotes.
+                                                Now it has been taken care of.Refer: 0025569--%>
+<%--2.0   v2 .0.35    Debashis    06/01/2023    Switch off the column Sorting feature.Refer: 0025555--%>
 <%--End of Revision History--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="StockPosition.aspx.cs" Inherits="Reports.Reports.GridReports.StockPosition" %>
@@ -1083,27 +1084,32 @@
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="TRANS_TYPE" Width="130px" Caption="Document Type" VisibleIndex="11">
+                                <%--Rev 2.0 && Added HeaderStyle-CssClass="colDisable"--%>
+                                <dxe:GridViewDataTextColumn FieldName="TRANS_TYPE" Width="130px" Caption="Document Type" VisibleIndex="11" HeaderStyle-CssClass="colDisable">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTY" Width="200px" Caption="Party Name" VisibleIndex="12">
+                                <%--Rev 2.0 && Added HeaderStyle-CssClass="colDisable"--%>
+                                <dxe:GridViewDataTextColumn FieldName="PARTY" Width="200px" Caption="Party Name" VisibleIndex="12" HeaderStyle-CssClass="colDisable">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTYINVNO" Width="130px" Caption="Party Inv. No." VisibleIndex="13">
+                                <%--Rev 2.0 && Added HeaderStyle-CssClass="colDisable"--%>
+                                <dxe:GridViewDataTextColumn FieldName="PARTYINVNO" Width="130px" Caption="Party Inv. No." VisibleIndex="13" HeaderStyle-CssClass="colDisable">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTYINVDT" Width="90px" Caption="Party Inv. Date" VisibleIndex="14">
+                                <%--Rev 2.0 && Added HeaderStyle-CssClass="colDisable"--%>
+                                <dxe:GridViewDataTextColumn FieldName="PARTYINVDT" Width="90px" Caption="Party Inv. Date" VisibleIndex="14" HeaderStyle-CssClass="colDisable">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="SERIALNO" Width="130px" Caption="Serial No." VisibleIndex="15">
+                                <%--Rev 2.0 && Added HeaderStyle-CssClass="colDisable"--%>
+                                <dxe:GridViewDataTextColumn FieldName="SERIALNO" Width="130px" Caption="Serial No." VisibleIndex="15" HeaderStyle-CssClass="colDisable">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
@@ -1132,7 +1138,8 @@
                                 </dxe:GridViewDataTextColumn>
                             </Columns>
 
-                            <SettingsBehavior AllowFocusedRow="true" AllowGroup="true" />
+                            <%--Rev 2.0 && Added AllowSort="false"--%>
+                            <SettingsBehavior AllowFocusedRow="true" AllowGroup="true" AllowSort="false" />
 
                             <SettingsEditing Mode="Inline">
                             </SettingsEditing>
