@@ -400,7 +400,3 @@ D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CoreCompileInputs.ca
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CopyComplete
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\Microsoft.Web.Infrastructure.xml
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Razor.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.Razor.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.Deployment.dll
