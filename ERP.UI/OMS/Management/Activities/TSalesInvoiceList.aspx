@@ -5,7 +5,7 @@
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Filteration Section Start By Sam--%>
-    <script src="JS/TransitSalesInvoice.js"></script>
+    <script src="JS/TransitSalesInvoice.js?v1.0"></script>
     <script type="text/javascript" src="../../CentralData/JSScript/GenericJScript.js"></script>
     <%-- Filteration Section Start By Sam--%>
     <%--Code Added By Sandip For Approval Detail Section Start--%>
@@ -822,7 +822,13 @@
         <dxe:ASPxGridViewExporter ID="exporter" GridViewID="GrdQuotation" runat="server" Landscape="true" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
         </dxe:ASPxGridViewExporter>
     </div>
-
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
     <%--DEBASHIS--%>
     <div class="PopUpArea">
         <dxe:ASPxPopupControl ID="ASPxDocumentsPopup" runat="server" ClientInstanceName="cDocumentsPopup"
@@ -1026,6 +1032,7 @@
         <asp:HiddenField ID="hddnInvoiceID" runat="server" />
         <asp:HiddenField ID="hfIsUserwise" runat="server" />
         <asp:HiddenField runat="server" ID="hdnActiveEInvoice" />
+           <asp:HiddenField ID="hFilterType" runat="server" />
     </div>
 
     <dxe:ASPxPopupControl ID="Popup_EWayBill" runat="server" ClientInstanceName="cPopup_EWayBill"

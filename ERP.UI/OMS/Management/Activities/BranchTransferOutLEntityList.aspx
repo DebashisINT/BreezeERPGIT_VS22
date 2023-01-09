@@ -22,7 +22,7 @@
             }
     </style>
 
-    <script src="JS/BranchTransferOutLEntityList.js?v2.0"></script>
+    <script src="JS/BranchTransferOutLEntityList.js?v2.1"></script>
     <script>
         function OnMoreInfoClick(keyValue) {
             debugger;
@@ -654,7 +654,7 @@
     <%--Rev work close 12.07.2022 mantise no :0025011: Update E-way Bill--%>
     <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
 <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
- 
+    <asp:HiddenField ID="hFilterType" runat="server" />
  <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
 </asp:Content>

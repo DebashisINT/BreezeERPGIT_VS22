@@ -94,15 +94,18 @@ function updateGridByDate() {
         $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
-        cGrdOrder.Refresh();
-
+        //cGrdOrder.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
         //cGrdOrder.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue());
 
     }
 }
 //End
 
-
+function CallbackPanelEndCall(s, e) {
+    cGrdOrder.Refresh();
+}
 
 document.onkeydown = function (e) {
     if (event.keyCode == 18) isCtrl = true;

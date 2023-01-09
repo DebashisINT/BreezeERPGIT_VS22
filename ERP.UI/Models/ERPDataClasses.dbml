@@ -4723,4 +4723,88 @@
       <Column Name="IsInventory" Type="System.String" DbType="NVarChar(2)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.BranchStockOutList" Member="BranchStockOutLists">
+    <Type Name="BranchStockOutList">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SlNo" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Out_Date" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Out_MapDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Stk_TransferFormBranch" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Stk_Company" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="Stk_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Out_No" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="From_Branch" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="To_Branch" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Purpose" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Indent_RequisitionNumber" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EnteredOn" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Updated" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Editlock" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Deletelock" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EWayBillNumber" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="EWayBillDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_PendingApproval" Member="v_PendingApprovals">
+    <Type Name="v_PendingApproval">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="customer" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
+      <Column Name="Number" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="branch_description" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="craetedby" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Approved" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Rejected" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ERPApprover_UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_SalesOrderStatus" Member="v_SalesOrderStatus">
+    <Type Name="v_SalesOrderStatus">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Branch" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="number" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
+      <Column Name="OrderedDate" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="createddate" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="approvedby" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UserLevel" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedOn" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TransitSBList" Member="TransitSBLists">
+    <Type Name="TransitSBList">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Invoice_Id" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="InvoiceNo" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="InvoiceDt" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="InvoiceDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CustomerName" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="branchid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GrossAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="ChargesAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="NetAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EWayBillNumber" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="EWayBillDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="EWayBillValue" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PosState" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Unit" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Invoice_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="IsIRN" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="IRN" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AckNo" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AckDt" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
