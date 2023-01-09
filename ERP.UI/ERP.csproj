@@ -1495,6 +1495,13 @@
     <Compile Include="OMS\Management\Master\VersionUpload.aspx.designer.cs">
       <DependentUpon>VersionUpload.aspx</DependentUpon>
     </Compile>
+    <Compile Include="OMS\Management\Master\WebUpdate.aspx.cs">
+      <DependentUpon>WebUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OMS\Management\Master\WebUpdate.aspx.designer.cs">
+      <DependentUpon>WebUpdate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OMS\Management\Payroll\PayslipConfiguration.aspx.cs">
       <DependentUpon>PayslipConfiguration.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -12016,6 +12023,7 @@
     <Content Include="OMS\Management\Master\TransporterMasterList.aspx" />
     <Content Include="OMS\Management\Master\UserSyncList.aspx" />
     <Content Include="OMS\Management\Master\VersionUpload.aspx" />
+    <Content Include="OMS\Management\Master\WebUpdate.aspx" />
     <Content Include="OMS\Management\Payroll\PayslipConfiguration.aspx" />
     <Content Include="OMS\Management\Service\General.asmx" />
     <Content Include="OMS\Management\Master\TransactionLockConfigouration.aspx" />
