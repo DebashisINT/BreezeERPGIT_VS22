@@ -31,10 +31,14 @@ updateTSIGridByDate = function () {
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
 
-        cgrid.Refresh();
-
+        //cgrid.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
         $("#drdExport").val(0);
     }
+}
+function CallbackPanelEndCall(s, e) {
+    cGrdOrder.Refresh();
 }
 updateGridAfterDelete = function () {
     var sdate = cFormDate.GetValue();

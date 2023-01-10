@@ -21,6 +21,7 @@ using ERP.Models;
 using System.Data.SqlClient;
 using System.Net;
 using System.Threading.Tasks;
+using static ERP.OMS.Management.Master.Mobileaccessconfiguration;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -547,33 +548,35 @@ namespace ERP.OMS.Management.Activities
 
         protected void EntityServerModeDataSource_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
         {
-            e.KeyExpression = "SlNo";
-
-            //string connectionString = ConfigurationManager.ConnectionStrings["crmConnectionString"].ConnectionString;
+            e.KeyExpression = "SlNo";          
             string connectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
             string IsFilter = Convert.ToString(hfIsFilter.Value);
             string strFromDate = Convert.ToString(hfFromDate.Value);
             string strToDate = Convert.ToString(hfToDate.Value);
             string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
             string DlvType = Convert.ToString(Request.QueryString["type"]);
-
             string lastCompany = Convert.ToString(HttpContext.Current.Session["LastCompany"]);
-
+            int userid = Convert.ToInt32(Session["UserID"]);
             List<int> branchidlist;
-
             if (IsFilter == "Y")
             {
                 if (strBranchID == "0")
                 {
                     string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
                     branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
-
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_EntityListBranchStockOuts
-                            where d.Out_MapDate >= Convert.ToDateTime(strFromDate) && d.Out_MapDate <= Convert.ToDateTime(strToDate)
-                            && branchidlist.Contains(Convert.ToInt32(d.Stk_TransferFormBranch))
-                            && d.Stk_Company == lastCompany
-                            orderby d.Out_MapDate descending
+
+                    //var q = from d in dc.v_EntityListBranchStockOuts
+                    //        where d.Out_MapDate >= Convert.ToDateTime(strFromDate) && d.Out_MapDate <= Convert.ToDateTime(strToDate)
+                    //        && branchidlist.Contains(Convert.ToInt32(d.Stk_TransferFormBranch))
+                    //        && d.Stk_Company == lastCompany
+                    //        orderby d.Out_MapDate descending
+                    //        select d;
+                    //e.QueryableSource = q;
+
+                    var q = from d in dc.BranchStockOutLists
+                            where d.USERID == userid
+                            orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
                 }
@@ -582,12 +585,18 @@ namespace ERP.OMS.Management.Activities
                     branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_EntityListBranchStockOuts
-                            where
-                            d.Out_MapDate >= Convert.ToDateTime(strFromDate) && d.Out_MapDate <= Convert.ToDateTime(strToDate) &&
-                            branchidlist.Contains(Convert.ToInt32(d.Stk_TransferFormBranch))
-                            &&  d.Stk_Company == lastCompany
-                            orderby d.Out_MapDate descending
+                    //var q = from d in dc.v_EntityListBranchStockOuts
+                    //        where
+                    //        d.Out_MapDate >= Convert.ToDateTime(strFromDate) && d.Out_MapDate <= Convert.ToDateTime(strToDate) &&
+                    //        branchidlist.Contains(Convert.ToInt32(d.Stk_TransferFormBranch))
+                    //        &&  d.Stk_Company == lastCompany
+                    //        orderby d.Out_MapDate descending
+                    //        select d;
+                    //e.QueryableSource = q;
+
+                    var q = from d in dc.BranchStockOutLists
+                            where d.USERID == userid
+                            orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
                 }
@@ -595,9 +604,14 @@ namespace ERP.OMS.Management.Activities
             else
             {
                 ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                var q = from d in dc.v_EntityListBranchStockOuts
-                        where d.From_Branch == "0"
-                        orderby d.Out_MapDate descending
+                //var q = from d in dc.v_EntityListBranchStockOuts
+                //        where d.From_Branch == "0"
+                //        orderby d.Out_MapDate descending
+                //        select d;
+                //e.QueryableSource = q;
+
+                var q = from d in dc.BranchStockOutLists
+                        where d.SEQ == 0
                         select d;
                 e.QueryableSource = q;
             }
@@ -625,16 +639,16 @@ namespace ERP.OMS.Management.Activities
             string TODATE = dtTo.ToString("yyyy-MM-dd");
 
             string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
-            Task PopulateStockTrialDataTask = new Task(() => GetSalesInvoicedata(FROMDATE, TODATE, strBranchID));
+            Task PopulateStockTrialDataTask = new Task(() => GetBranchTransferOutdata(FROMDATE, TODATE, strBranchID));
             PopulateStockTrialDataTask.RunSynchronously();
         }
-        public void GetSalesInvoicedata(string FROMDATE, string TODATE, string BRANCH_ID)
+        public void GetBranchTransferOutdata(string FROMDATE, string TODATE, string BRANCH_ID)
         {
             try
             {
                 DataSet ds = new DataSet();
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
-                SqlCommand cmd = new SqlCommand("prc_SalesInvoice_List", con);
+                SqlCommand cmd = new SqlCommand("prc_EntityListBranchStockOut_List", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
                 cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
@@ -649,7 +663,7 @@ namespace ERP.OMS.Management.Activities
                     cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
                 }
                 cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
-               // cmd.Parameters.AddWithValue("@ACTION", hFilterType.Value);
+                cmd.Parameters.AddWithValue("@ACTION", hFilterType.Value);
                 cmd.CommandTimeout = 0;
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = cmd;
