@@ -470,8 +470,16 @@
                     $('#hdnRefreshType').val('');
                     //#region Sandip Section For Approval Section Start
                     if (grid.cpApproverStatus == "approve") {
+                       // window.parent.PendingApproval();
+                        window.parent.PendingApproval();
                         window.parent.popup.Hide();
-                        window.parent.cgridPendingApproval.PerformCallback();
+                       
+                        //window.onunload = function (e) {
+                        //    /*opener.PendingApproval();*/
+                        //    window.parent.PendingApproval();
+                        //    window.parent.popup.Hide();
+                        //}; 
+                       
                     }
                     else if (grid.cpApproverStatus == "rejected") {
                         window.parent.popup.Hide();

@@ -121,11 +121,90 @@ function OpenPopUPUserWiseQuotaion() {
 function OpenPopUPApprovalStatus() {
    // cgridPendingApproval.PerformCallback();
    // clookup_PendingApproval.gridView.Refresh();
-    $("#hdnIsFilter").val("Y");
-    cgridPendingApproval.Refresh();
-    cpopupApproval.Show();
+   // $("#hdnIsFilter").val("Y");
+   // cgridPendingApproval.Refresh();
+    //cpopupApproval.Show();
     //clookup_PendingApproval.ShowDropDown();
+
+    $('#popupApprovalModel').modal('show');
+    PendingApproval();
 }
+
+function PendingApproval() {
+    LoadingPanel.Show();
+    //$("#hdnSearchType").val("PendingApproval");
+    //$('.circulerUl>li').removeClass('activeCrcl').addClass('ds');
+    //$('#d1').addClass('activeCrcl');
+
+    $.ajax({
+        type: "POST",
+        url: "SalesOrderEntityList.aspx/PendingApproval_List",
+     /*   data: JSON.stringify({ model: $("#hdnUserType").val(), SearchType: "PendingApproval" }),*/
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {           
+
+            var status = "";
+            status = status + "<table id='dataTable' class='table table-striped table-bordered display nowrap' style='width: 100%'>";
+            status = status + " <thead><tr>";
+            status = status + " <th>Document No.</th><th>Party Name</th><th>Posting Date</th><th>Unit</th>";
+            status = status + " <th>Entered By</th><th>Approved </th><th>Rejected </th>";           
+            status = status + " </tr></thead>";
+
+            status = status + " </table>";
+
+            $('#divListData').html(status);
+
+            $('#dataTable').DataTable({
+                scrollX: true,
+                fixedColumns: {
+                    rightColumns: 2
+                },
+                data: msg.d.DetailsList,
+                columns: [
+                    { 'data': 'DocumentNo' },
+                    { 'data': 'PartyName' },
+                    { 'data': 'PostingDate' },
+                    { 'data': 'Unit' },
+                    { 'data': 'EnteredBy' },
+                    { 'data': 'Approved' },
+                    { 'data': 'Rejected' },
+                   
+                ],
+                dom: 'Bfrtip',
+                //buttons: [
+                //    {
+                //        extend: 'excel',
+                //        title: null,
+                //        filename: 'Service Entry',
+                //        text: 'Save as Excel',
+                //        customize: function (xlsx) {
+                //            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                //            $('row:first c', sheet).attr('s', '42');
+                //        },
+
+                //        exportOptions: {
+                //        }
+                //    }
+                //],
+                error: function (error) {
+                    alert(error);
+                    LoadingPanel.Hide();
+                }
+            });
+            LoadingPanel.Hide();
+        }
+    });
+}
+function OnGetApprovedRowValues(obj) {
+    uri = "SalesOrderAdd.aspx?key=" + obj + "&status=2" + '&type=SO' + '&isformApprove=YES' + '&UpperApprove=UpApprove';
+    popup.SetContentUrl(uri);
+    popup.Show();
+}
+
+
+
+
 // function above  End
 
 
@@ -172,6 +251,7 @@ function OnApprovalEndCall(s, e) {
             $('#lblWaiting').text(data.d);
         }
     });
+    PendingApproval();
 }
 // function above  End 
 //<%-- Code Added By Sandip For Approval Detail Section End--%>
