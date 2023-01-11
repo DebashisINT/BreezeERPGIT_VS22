@@ -6,17 +6,352 @@
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
+    <script src="/assests/pluggins/DataTable/dataTables.fixedColumns.min.js"></script>
 
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.css">--%>
     <link href="../../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />
     <%--Code Added By Sandip For Approval Detail Section Start--%>
 
     <script src="JS/SalesOrderEntityList.js?v=1.8"></script>
 
+    <style>
+        .modal-dialog {
+    width: 1000px !important;
+}
+        .fullWidth .select2-container {
+            width: 100% !important;
+        }
+
+        .mBot10 {
+            margin-bottom: 10px;
+        }
+
+        .font-pp {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .pmsForm input[type="text"], .pmsForm input[type="password"], .pmsForm textarea, .pmsForm select {
+            height: 29px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #d4d2d2;
+            border-radius: 0;
+            min-height: 28px;
+        }
+
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+                line-height: 25px;
+            }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                height: 28px;
+            }
+
+        .select2-container {
+            max-width: 100% !important;
+        }
+
+        .hrBoder {
+            border-color: #cecece;
+        }
+
+        .flex-wraper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+
+            .flex-wraper > .flex-item {
+                min-width: 200px;
+                text-align: center;
+                border: 1px solid #ccc;
+                padding: 8px 10px;
+            }
+
+                .flex-wraper > .flex-item:not(:last-child) {
+                    border-right: none;
+                }
+
+                .flex-wraper > .flex-item:first-child {
+                    border-radius: 3px 0 0 3px;
+                }
+
+                .flex-wraper > .flex-item:last-child {
+                    border-radius: 0px 3px 3px 0;
+                }
+
+                .flex-wraper > .flex-item .lb {
+                    font-size: 13px;
+                    font-weight: 500;
+                }
+
+                .flex-wraper > .flex-item .nm {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #565353;
+                }
+
+                .flex-wraper > .flex-item.active {
+                    border-bottom: 5px solid #1555b5;
+                }
+
+        #filterToggle {
+            padding: 10px 15px;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .togglerSlide {
+        }
+
+            .togglerSlide:hover {
+                box-shadow: 0px 5px 10px rgba(0,0,0,0.13);
+                cursor: pointer;
+            }
+
+        .togglerSlidecut {
+            color: #e22222;
+            font-size: 20px;
+            position: absolute;
+            right: 5px;
+            top: 6px;
+            cursor: pointer;
+        }
+
+        #myTab {
+            border-bottom: 1px solid #24243e;
+        }
+
+            #myTab > .nav-item > a {
+                font-family: 'Poppins', sans-serif !important;
+                font-size: 13px;
+            }
+
+            #myTab > .nav-item.active > a, #myTab > .nav-item.active > a:hover {
+                border: 1px solid #24243e;
+                border-bottom: none;
+                background: #0f0c29; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                color: #fff;
+                min-width: 120px;
+            }
+
+            #myTab > .nav-item:hover > a {
+                background: #11998e; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #09b94b, #11998e); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #09b94b, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                border: 1px solid #11998e;
+                color: #fff;
+            }
+
+        #myTabContent {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-top: none;
+            padding-top: 10px;
+        }
+
+        #dataTable > thead > tr > th, #dataTable2 > thead > tr > th,
+        .dataTables_scrollHeadInner table > thead > tr > th, table.DTFC_Cloned > thead > tr > th {
+            font-size: 14px !important;
+            background: #5568f1;
+            border-top: 1px solid #5568ef;
+            color: #fff;
+            font-weight: 400;
+            border-bottom: 1px solid #1f32b5;
+            padding: 10px 12px;
+        }
+
+        table.DTFC_Cloned.dataTable.no-footer {
+            border-bottom: none;
+        }
+
+        #dataTable > tbody > tr > td, #dataTable2 > tbody > tr > td {
+            font-size: 13px;
+        }
+
+        .badge {
+            font-weight: 500;
+            font-size: 10px;
+        }
+
+        .badge-danger {
+            color: #fff;
+            background-color: #dc3545;
+        }
+
+        .badge-info {
+            color: #fff;
+            background-color: #17a2b8;
+        }
+
+        .badge-success {
+            color: #fff;
+            background-color: #28a745;
+        }
+
+        .badge-warning {
+            color: #212529;
+            background-color: #ffc107;
+        }
+
+        .pmsModal .modal-header {
+            background: #11998e; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #1f5fbf, #11998e); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #1f5fbf, #11998e) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        label.deep {
+            font-weight: 500 !important;
+        }
+
+
+        .centerd {
+            width: auto;
+            margin: 0 auto;
+            list-style-type: none;
+            display: inline-block;
+            border-radius: 15px;
+            padding: 0;
+            margin-top: -23px;
+        }
+
+            .centerd > li {
+                position: relative;
+                display: inline-block;
+                padding: 10px 35px;
+                padding-left: 55px;
+                border-radius: 20px;
+                cursor: pointer;
+                background: #fff;
+                box-shadow: 0px 2px 5px rgba(0,0,0,0.12);
+            }
+
+                .centerd > li:not(:last-child) {
+                    margin-right: 20px;
+                }
+
+                .centerd > li.active {
+                    background: #2cb9ae;
+                    color: #fff;
+                    -webkit-transform: scale(1.1);
+                    -moz-transform: scale(1.1);
+                    transform: scale(1.1);
+                }
+
+                .centerd > li .lb {
+                    font-size: 13px;
+                    font-weight: 500;
+                }
+
+                .centerd > li .nm {
+                    font-size: 23px;
+                    font-weight: 600;
+                    color: #ffffff;
+                }
+
+        .tooltip {
+            min-width: auto;
+        }
+
+        .mtop25N {
+            margin-top: -23px;
+        }
+
+        .hddd {
+            display: inline-block;
+            padding: 10px 23px;
+            background: #1c86c4;
+            font-weight: 500;
+            font-size: 15px;
+            margin-top: -11px;
+            border-radius: 0 0 8px 8px;
+            color: #fff;
+        }
+
+        .setIcon {
+            position: absolute;
+            left: 13px;
+            top: 20px;
+            border: 1px dashed #fff;
+            padding: 5px;
+            font-size: 15px;
+            min-width: 29px;
+            border-radius: 9px;
+        }
+
+            .setIcon.green {
+                border-color: #5bbd7e;
+                color: #5bbd7e;
+            }
+
+            .setIcon.red {
+                border-color: #e81b1b;
+            }
+
+        .centerd > li.active .setIcon {
+            border: 2px dashed #fff;
+        }
+
+        .dataTables_wrapper input[type="search"] {
+            height: 26px;
+        }
+
+        .dataTables_length select {
+            margin-left: 10px;
+            border-radius: 4px;
+        }
+
+        .actionInput i {
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .actionInput i.assig {
+                color: #0949ff;
+                margin-right: 5px;
+            }
+
+            .actionInput i.det {
+                color: #b30a9e;
+            }
+
+            .actionInput i[data-toggle="tooltip"] + .tooltip {
+                visibility: visible;
+            }
+
+        .pmsForm label {
+            font-size: 13px;
+        }
+
+        table.dataTable thead .sorting {
+            background-image: none;
+        }
+
+        td.reWrap {
+            white-space: normal !important;
+            min-width: 150px !important;
+        }
+    </style>
     <link href="CSS/SalesOrderEntityList.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
             $("#btntransporter").hide();
+            $(".dt - buttons").hide();
 
             ShowApprovalWaiting();
             ApprovalButtonVisible();
@@ -320,7 +655,18 @@
             top: 15px !important;
             left: -15px !important;
         }
+
+        .dt-buttons {
+            display: none;
+        }
+
+        /*#popupApproval_PW-1
+        {
+
+        }*/
     </style>
+
+
     <%--rev end Pallab--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -1114,9 +1460,44 @@
         <%-- <button class="btn btn-primary" onclick="ApproveAll();">Approve Selection</button>
         <button class="btn btn-primary" onclick="RejectAll();">Reject Selection</button>--%>
         <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrder" runat="server" OnSelecting="EntityServerModeDataSalesOrder_Selecting"
-            ContextTypeName="ERPDataClassesDataContext"  />
+            ContextTypeName="ERPDataClassesDataContext" />
 
-      
+
+        <div class="modal fade" id="popupApprovalModel" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="ModuleSegment5Header">Pending Approvals</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="divListData">
+                            <table id="dataTable" class="table table-striped table-bordered display nowrap" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Document No.</th>
+                                        <th>Party Name</th>
+                                        <th>Posting Date</th>
+                                        <th>Unit</th>
+                                        <th>Entered By</th>
+                                        <th>Approved</th>
+                                        <th>Rejected </th>
+
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <dxe:ASPxPopupControl ID="popupApproval" runat="server" ClientInstanceName="cpopupApproval"
             Width="1000px" HeaderText="Pending Approvals" PopupHorizontalAlign="WindowCenter"
             PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
@@ -1124,160 +1505,89 @@
             ContentStyle-CssClass="pad">
             <ContentCollection>
                 <dxe:PopupControlContentControl runat="server">
-                    <%--OnPageIndexChanged="gridPendingApproval_PageIndexChanged"--%>
-                    <%--<div style="Width:400px;background-color:#FFFFFF;margin:0px;border:1px solid red;">--%>
+
                     <div class="row">
                         <div class="col-md-12">
-                             <dxe:ASPxGridView ID="gridPendingApproval" runat="server" KeyFieldName="ID" AutoGenerateColumns="False"
-                                Width="100%" ClientInstanceName="cgridPendingApproval"
-                                OnCustomCallback="gridPendingApproval_CustomCallback"
-                                SettingsBehavior-ColumnResizeMode="Control" Settings-VerticalScrollBarMode="Auto" Settings-VerticalScrollableHeight="350"
-                                DataSourceID="EntityServerModeDataSalesOrder">
-                                <Columns>
-                                    
-                                    <dxe:GridViewDataTextColumn Caption="Document No." FieldName="Number" Width="200px"
-                                        VisibleIndex="0" FixedStyle="Left">
-                                        <CellStyle CssClass="gridcellleft" Wrap="true">
-                                        </CellStyle>
-                                    </dxe:GridViewDataTextColumn>
 
-                                    <dxe:GridViewDataTextColumn Caption="Party Name" FieldName="customer" Width="200px"
-                                        VisibleIndex="0" FixedStyle="Left">
-                                        <CellStyle CssClass="gridcellleft" Wrap="true">
-                                        </CellStyle>
-                                    </dxe:GridViewDataTextColumn>
 
-                                    <dxe:GridViewDataTextColumn Caption="Posting Date" FieldName="CreateDate" Width="100px"
-                                        VisibleIndex="1" FixedStyle="Left">
-                                        <CellStyle CssClass="gridcellleft" Wrap="true">
-                                        </CellStyle>
-                                    </dxe:GridViewDataTextColumn>
-                                    <dxe:GridViewDataTextColumn Caption="Unit" FieldName="branch_description" Width="200px"
-                                        VisibleIndex="2" FixedStyle="Left">
-                                        <CellStyle CssClass="gridcellleft" Wrap="true">
-                                        </CellStyle>
-                                    </dxe:GridViewDataTextColumn>
-                                    <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="craetedby" Width="100px"
-                                        VisibleIndex="3" FixedStyle="Left">
-                                        <CellStyle CssClass="gridcellleft" Wrap="true">
-                                        </CellStyle>
-                                    </dxe:GridViewDataTextColumn>
+                           
+                                <dxe:ASPxGridView ID="gridPendingApproval" runat="server" KeyFieldName="ID" AutoGenerateColumns="False"
+                                    Width="100%" ClientInstanceName="cgridPendingApproval"
+                                    OnCustomCallback="gridPendingApproval_CustomCallback"
+                                    SettingsBehavior-ColumnResizeMode="Control" Settings-VerticalScrollBarMode="Auto" Settings-VerticalScrollableHeight="350"
+                                    DataSourceID="EntityServerModeDataSalesOrder">
+                                    <Columns>
 
-                                    <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Approved" Width="100px">
-                                        <DataItemTemplate>
-                                            <dxe:ASPxCheckBox ID="chkapprove" runat="server" AllowGrayed="false" OnInit="chkapprove_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
-                                              
-                                            </dxe:ASPxCheckBox>
-                                        </DataItemTemplate>
-                                        <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
-                                    </dxe:GridViewDataCheckColumn>
+                                        <dxe:GridViewDataTextColumn Caption="Document No." FieldName="Number" Width="200px"
+                                            VisibleIndex="0" FixedStyle="Left">
+                                            <CellStyle CssClass="gridcellleft" Wrap="true">
+                                            </CellStyle>
+                                        </dxe:GridViewDataTextColumn>
 
-                                    <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Rejected" Width="100px">
-                                        <DataItemTemplate>
-                                            <dxe:ASPxCheckBox ID="chkreject" runat="server" AllowGrayed="false" OnInit="chkreject_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
-                                               
-                                            </dxe:ASPxCheckBox>
-                                        </DataItemTemplate>
-                                        <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
-                                    </dxe:GridViewDataCheckColumn>
-                                </Columns>
-                                <SettingsBehavior AllowFocusedRow="true" />
-                                <SettingsPager NumericButtonCount="20" PageSize="50" ShowSeparators="True">
-                                    <FirstPageButton Visible="True">
-                                    </FirstPageButton>
-                                    <LastPageButton Visible="True">
-                                    </LastPageButton>
-                                </SettingsPager>
-                                <SettingsEditing Mode="Inline">
-                                </SettingsEditing>
-                                <SettingsSearchPanel Visible="True" />
-                                <Settings ShowGroupPanel="True" ShowStatusBar="Hidden" ShowHorizontalScrollBar="False" ShowFilterRow="true" ShowFilterRowMenu="true" />
-                                <SettingsLoadingPanel Text="Please Wait..." />
-                                <ClientSideEvents EndCallback="OnApprovalEndCall" />
-                            </dxe:ASPxGridView>
-                           <%--   <dxe:ASPxGridLookup ID="lookup_PendingApproval" runat="server" ClientInstanceName="clookup_PendingApproval" DataSourceID="EntityServerModeDataSalesOrder"
-            KeyFieldName="ID" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False">
-            <Columns>
-                <dxe:GridViewDataTextColumn Caption="Document No." FieldName="Number" Width="200px"
-                    VisibleIndex="0" FixedStyle="Left">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                </dxe:GridViewDataTextColumn>
+                                        <dxe:GridViewDataTextColumn Caption="Party Name" FieldName="customer" Width="200px"
+                                            VisibleIndex="0" FixedStyle="Left">
+                                            <CellStyle CssClass="gridcellleft" Wrap="true">
+                                            </CellStyle>
+                                        </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn Caption="Party Name" FieldName="customer" Width="200px"
-                    VisibleIndex="0" FixedStyle="Left">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                </dxe:GridViewDataTextColumn>
+                                        <dxe:GridViewDataTextColumn Caption="Posting Date" FieldName="CreateDate" Width="100px"
+                                            VisibleIndex="1" FixedStyle="Left">
+                                            <CellStyle CssClass="gridcellleft" Wrap="true">
+                                            </CellStyle>
+                                        </dxe:GridViewDataTextColumn>
+                                        <dxe:GridViewDataTextColumn Caption="Unit" FieldName="branch_description" Width="200px"
+                                            VisibleIndex="2" FixedStyle="Left">
+                                            <CellStyle CssClass="gridcellleft" Wrap="true">
+                                            </CellStyle>
+                                        </dxe:GridViewDataTextColumn>
+                                        <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="craetedby" Width="100px"
+                                            VisibleIndex="3" FixedStyle="Left">
+                                            <CellStyle CssClass="gridcellleft" Wrap="true">
+                                            </CellStyle>
+                                        </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn Caption="Posting Date" FieldName="CreateDate" Width="100px"
-                    VisibleIndex="1" FixedStyle="Left">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Unit" FieldName="branch_description" Width="200px"
-                    VisibleIndex="2" FixedStyle="Left">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="craetedby" Width="100px"
-                    VisibleIndex="3" FixedStyle="Left">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Approved" Width="100px">
-                    <DataItemTemplate>
-                        <dxe:ASPxCheckBox ID="chkapprove" runat="server" AllowGrayed="false" OnInit="chkapprove_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
-                          
-                        </dxe:ASPxCheckBox>
-                    </DataItemTemplate>
-                    <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
-                </dxe:GridViewDataCheckColumn>
+                                        <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Approved" Width="100px">
+                                            <DataItemTemplate>
+                                                <dxe:ASPxCheckBox ID="chkapprove" runat="server" AllowGrayed="false" OnInit="chkapprove_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
+                                                </dxe:ASPxCheckBox>
+                                            </DataItemTemplate>
+                                            <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
+                                        </dxe:GridViewDataCheckColumn>
 
-                <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Rejected" Width="100px">
-                    <DataItemTemplate>
-                        <dxe:ASPxCheckBox ID="chkreject" runat="server" AllowGrayed="false" OnInit="chkreject_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
-                          
-                        </dxe:ASPxCheckBox>
-                    </DataItemTemplate>
-                    <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
-                </dxe:GridViewDataCheckColumn>
-            </Columns>
-            <GridViewProperties Settings-VerticalScrollBarMode="Auto">
-                <Templates>
-                    <StatusBar>
-                        <table class="OptionsTable" style="float: right">
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </StatusBar>
-                </Templates>
-                <SettingsBehavior AllowFocusedRow="True" AllowSelectSingleRowOnly="True"></SettingsBehavior>
+                                        <dxe:GridViewDataCheckColumn UnboundType="Boolean" Caption="Rejected" Width="100px">
+                                            <DataItemTemplate>
+                                                <dxe:ASPxCheckBox ID="chkreject" runat="server" AllowGrayed="false" OnInit="chkreject_Init" ValueType="System.Boolean" ValueChecked="true" ValueUnchecked="false">
+                                                </dxe:ASPxCheckBox>
+                                            </DataItemTemplate>
+                                            <Settings ShowFilterRowMenu="False" AllowFilterBySearchPanel="False" AllowAutoFilter="False" />
+                                        </dxe:GridViewDataCheckColumn>
+                                    </Columns>
+                                    <SettingsBehavior AllowFocusedRow="true" />
+                                    <SettingsPager NumericButtonCount="20" PageSize="50" ShowSeparators="True">
+                                        <FirstPageButton Visible="True">
+                                        </FirstPageButton>
+                                        <LastPageButton Visible="True">
+                                        </LastPageButton>
+                                    </SettingsPager>
+                                    <SettingsEditing Mode="Inline">
+                                    </SettingsEditing>
+                                    <SettingsSearchPanel Visible="True" />
+                                    <Settings ShowGroupPanel="True" ShowStatusBar="Hidden" ShowHorizontalScrollBar="False" ShowFilterRow="true" ShowFilterRowMenu="true" />
+                                    <SettingsLoadingPanel Text="Please Wait..." />
+                                    <ClientSideEvents EndCallback="OnApprovalEndCall" />
+                                </dxe:ASPxGridView>
+                            </div>
 
-                <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
-            </GridViewProperties>
-        
-
-            <ClearButton DisplayMode="Always">
-            </ClearButton>
-        </dxe:ASPxGridLookup>--%>
-                          
-                        </div>
+                      
                         <div class="clear"></div>
 
 
-                        <%--<div class="col-md-12" style="padding-top: 10px;">
-                            <dxe:ASPxButton ID="ASPxButton1" CausesValidation="true" ClientInstanceName="cbtn_PrpformaStatus" runat="server"
-                                AutoPostBack="False" Text="Save" CssClass="btn btn-primary">
-                                <ClientSideEvents Click="function (s, e) {SaveApprovalStatus();}" />
-                            </dxe:ASPxButton>
-                        </div>--%>
+
                     </div>
                 </dxe:PopupControlContentControl>
             </ContentCollection>
         </dxe:ASPxPopupControl>
-         
+
         <dxe:ASPxPopupControl ID="ASPXPopupControl" runat="server" ClientInstanceName="popup"
             CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="630px"
             Width="1200px" HeaderText="Quotation Approval" Modal="true" AllowResize="true" ResizingMode="Postponed">
@@ -1291,8 +1601,8 @@
             </ContentCollection>
         </dxe:ASPxPopupControl>
 
-          <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrderUserWise" runat="server" OnSelecting="EntityServerModeDataSalesOrderUserWise_Selecting"
-            ContextTypeName="ERPDataClassesDataContext"/>
+        <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrderUserWise" runat="server" OnSelecting="EntityServerModeDataSalesOrderUserWise_Selecting"
+            ContextTypeName="ERPDataClassesDataContext" />
 
         <dxe:ASPxPopupControl ID="PopupUserWiseQuotation" runat="server" ClientInstanceName="cPopupUserWiseQuotation"
             Width="900px" HeaderText="User Wise Sales Order Status" PopupHorizontalAlign="WindowCenter" HeaderStyle-CssClass="wht"
@@ -1634,7 +1944,7 @@ popup.Hide();
         <asp:HiddenField ID="hdnOrderID" runat="server" />
         <asp:HiddenField ID="hFilterType" runat="server" />
         <asp:HiddenField ID="hdnIsMultiuserApprovalRequired" runat="server" />
-       <asp:HiddenField ID="hdnIsFilter" runat="server" />
+        <asp:HiddenField ID="hdnIsFilter" runat="server" />
 
     </div>
     <dxe:ASPxPopupControl ID="PopupProductwiseClose" runat="server" ClientInstanceName="cPopupProductwiseClose"
@@ -1720,4 +2030,8 @@ popup.Hide();
         </PanelCollection>
         <ClientSideEvents EndCallback="CallbackPanelEndCall" />
     </dxe:ASPxCallbackPanel>
+
+    <dxe:ASPxLoadingPanel ID="LoadingPanel" runat="server" ClientInstanceName="LoadingPanel" ContainerElementID="LodingId"
+        Modal="True">
+    </dxe:ASPxLoadingPanel>
 </asp:Content>

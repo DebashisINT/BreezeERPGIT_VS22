@@ -12401,22 +12401,17 @@ namespace ERP.OMS.Management.Activities
         public static object GetWarehouseWisePRoductStock(string WarehouseID, string productid,string BranchID)
         {
             string availablestock = "0";
-
             DataTable dtMainAccount = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("prc_PosSalesInvoice");
             proc.AddVarcharPara("@Action", 100, "GetstockSalesInvoiceCumChallan");
             proc.AddVarcharPara("@productid", 500, productid);
             proc.AddVarcharPara("@WarehouseID", 100, WarehouseID);
             proc.AddIntegerPara("@branch", Convert.ToInt32(BranchID));
-
             dtMainAccount = proc.GetTableModified();
-
             if (dtMainAccount != null && dtMainAccount.Rows.Count > 0)
             {
                 availablestock = Convert.ToString(dtMainAccount.Rows[0][0]);
             }
-
-
             return availablestock;
         }
 

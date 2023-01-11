@@ -21,6 +21,8 @@ using System.Linq;
 using iTextSharp.text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using BusinessLogicLayer.ServiceManagement;
+using Aspose.Pdf.Kit;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -1455,6 +1457,71 @@ namespace ERP.OMS.Management.Activities
             }
 
         }
+
+        public class PendingApprovalData
+        {
+          
+            public List<PendingApprovalDataList> DetailsList { get; set; }
+        }
+
+        public class PendingApprovalDataList
+        {
+            public String DocumentNo { get; set; }
+            public string PartyName { get; set; }
+            public string PostingDate { get; set; }
+            public string Unit { get; set; }
+            public string EnteredBy { get; set; }
+            public string Approved { get; set; }
+            public string Rejected { get; set; }
+            
+        }
+
+        [WebMethod]
+        public static PendingApprovalData PendingApproval_List()
+        {
+            EntityLayer.CommonELS.UserRightsForPage rights = new UserRightsForPage();
+            rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/Transaction/serviceData/serviceDataList.aspx");
+            PendingApprovalData ret = new PendingApprovalData();
+            List<PendingApprovalDataList> listStatues = new List<PendingApprovalDataList>();
+
+            DataTable dtdata = new DataTable();
+            ERPDocPendingApprovalBL objERPDocPendingApproval = new ERPDocPendingApprovalBL();
+            int userid = 0;
+            userid = Convert.ToInt32(HttpContext.Current.Session["userid"]);
+            dtdata = objERPDocPendingApproval.PopulateERPDocApprovalPendingListByUserLevel(userid, "SO");
+
+            if (dtdata != null && dtdata.Rows.Count > 0)
+            {
+                    foreach (DataRow item in dtdata.Rows) 
+                    { 
+                        string _Approved = "", _Rejected="";
+                    //_Approved = _Approved + " <span class='actionInput text-center' onclick='Edit(" + item["ID"].ToString() + ")'><i class='fa fa-pencil-square-o assig' data-toggle='tooltip' data-placement='bottom' title='Approved' ></i> </span>";
+                    //_Rejected = _Rejected + " <span class='actionInput text-center' onclick='Edit(" + item["ID"].ToString() + ")'><i class='fa fa-pencil-square-o assig' data-toggle='tooltip' data-placement='bottom' title='Rejected' ></i> </span>";
+
+                    _Approved = _Approved + " <input type='checkbox' class='form-check-input' onclick='OnGetApprovedRowValues(" + item["ID"].ToString() + ")'>";
+                    _Rejected = _Rejected + " <input type='checkbox' class='form-check-input' onclick='OnGetRejectedRowValues(" + item["ID"].ToString() + ")'>";
+
+                    listStatues.Add(new PendingApprovalDataList
+                        {
+                            DocumentNo = item["Number"].ToString(),
+                            PartyName = item["customer"].ToString(),
+                            PostingDate = item["CreateDate"].ToString(),
+                            Unit = item["branch_description"].ToString(),
+                            EnteredBy = item["craetedby"].ToString(),
+                            Approved = _Approved,
+                            Rejected = _Rejected,                        
+
+                        });                  
+                }
+                ret.DetailsList = listStatues;
+            }
+            return ret;
+        }
+
+
+
+
+
     }
     public class ApprovalCount
     {

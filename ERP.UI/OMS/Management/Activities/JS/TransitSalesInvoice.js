@@ -38,7 +38,7 @@ updateTSIGridByDate = function () {
     }
 }
 function CallbackPanelEndCall(s, e) {
-    cGrdOrder.Refresh();
+    cgrid.Refresh();
 }
 updateGridAfterDelete = function () {
     var sdate = cFormDate.GetValue();
