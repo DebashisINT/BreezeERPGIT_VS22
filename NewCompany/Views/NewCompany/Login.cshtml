@@ -1,4 +1,9 @@
-﻿@model NewCompany.Models.LoginClass
+﻿@*====================================================== Revision History ===========================================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                12-01-2023        2.0.35           Pallab              Change login url attached image(Image show when url share in social media)
+====================================================== Revision History ===========================================================*@
+
+@model NewCompany.Models.LoginClass
 @{
     Layout = null;
     ViewBag.Title = "Login To BreezeERP";
@@ -1278,193 +1283,196 @@
 
 
 </head>
-    @using (Html.BeginForm("LogInToERP", "LogIn", FormMethod.Post))
+@using (Html.BeginForm("LogInToERP", "LogIn", FormMethod.Post))
 {
     <div class="greetWrap hide">
-        <img src="/assests/images/greet2.gif" />
+        @*Rev 1.0 *@
+        @*<img src="/assests/images/greet2.gif" />*@
+        <img src="/assests/images/event-banner.jpg" />
+        @*Rev end 1.0 *@
     </div>
     <div id="switchArea" class="">
         <label class="switch">
-          <input type="checkbox" checked />
-          <span class="slider round"></span>
+            <input type="checkbox" checked />
+            <span class="slider round"></span>
         </label>
     </div>
-     <div id="themeClass" class="screenLight">
-         <div class="relative setHeight bgforDark" style="margin-bottom:35px;min-height:100vh;overflow:hidden">
-             @*<div id="scene" style="position:absolute;right:-50px;top:-50px;">*@
-             <div id="scene" style="position:absolute;right:-100px;top: 0;">
-                 @*<div class="layer" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky.png" alt="" style="max-width: 800px;" /></div>*@
-                 <div class="layer cust-position" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky-2.png" alt="" style="height: 100vh;" /></div>
-                 @*<div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bg1Gr.png" alt="" style="max-width: 800px;" /></div>*@
-                 <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/login-fm-bg.png" alt="" style="height: 100vh;" /></div>
-             </div>
-             <div id="sceneDark" style="position:absolute;right:0px;top:0px;">
-                 <div class="layer" data-depth="0.5"><img src="/assests/images/NLoginIcon/bgg2.png" class="" alt="" style="max-width: 620px;" /></div>
-                 <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bgg3.png" alt="" style="max-width: 620px;" /></div>
-             </div>
-             <div class="animatedIcc">
-                 <img class="animatedIco a1" src="/assests/images/NLoginIcon/a1.png" alt="" />
-                 <img class="animatedIco a2" src="/assests/images/NLoginIcon/a2-2.png" alt="" />
-                 <img class="animatedIco a3" src="/assests/images/NLoginIcon/a3.png" alt="" />
-                 <img class="animatedIco a4" src="/assests/images/NLoginIcon/a4.png" alt="" />
-                 <img class="animatedIco a5" src="/assests/images/NLoginIcon/a5.png" alt="" />
-                 <img class="animatedIco a6" src="/assests/images/NLoginIcon/a6.png" alt="" />
-                 <img class="animatedIco a7" src="/assests/images/NLoginIcon/a7.png" alt="" />
-             </div>
-             <div class="container">
+    <div id="themeClass" class="screenLight">
+        <div class="relative setHeight bgforDark" style="margin-bottom:35px;min-height:100vh;overflow:hidden">
+            @*<div id="scene" style="position:absolute;right:-50px;top:-50px;">*@
+            <div id="scene" style="position:absolute;right:-100px;top: 0;">
+                @*<div class="layer" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky.png" alt="" style="max-width: 800px;" /></div>*@
+                <div class="layer cust-position" data-depth="0.3"><img src="/assests/images/NLoginIcon/milky-2.png" alt="" style="height: 100vh;" /></div>
+                @*<div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bg1Gr.png" alt="" style="max-width: 800px;" /></div>*@
+                <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/login-fm-bg.png" alt="" style="height: 100vh;" /></div>
+            </div>
+            <div id="sceneDark" style="position:absolute;right:0px;top:0px;">
+                <div class="layer" data-depth="0.5"><img src="/assests/images/NLoginIcon/bgg2.png" class="" alt="" style="max-width: 620px;" /></div>
+                <div class="layer" data-depth="0.1"><img src="/assests/images/NLoginIcon/bgg3.png" alt="" style="max-width: 620px;" /></div>
+            </div>
+            <div class="animatedIcc">
+                <img class="animatedIco a1" src="/assests/images/NLoginIcon/a1.png" alt="" />
+                <img class="animatedIco a2" src="/assests/images/NLoginIcon/a2-2.png" alt="" />
+                <img class="animatedIco a3" src="/assests/images/NLoginIcon/a3.png" alt="" />
+                <img class="animatedIco a4" src="/assests/images/NLoginIcon/a4.png" alt="" />
+                <img class="animatedIco a5" src="/assests/images/NLoginIcon/a5.png" alt="" />
+                <img class="animatedIco a6" src="/assests/images/NLoginIcon/a6.png" alt="" />
+                <img class="animatedIco a7" src="/assests/images/NLoginIcon/a7.png" alt="" />
+            </div>
+            <div class="container">
 
-                 <div class="sectionWraper">
-                     <div class="textSection">
-                         <div class="mLogo">
-                             <img src="/assests/images/logo.png" />
-                         </div>
-                         <div class="event-img">
-                             <img src="/assests/images/event-banner.jpg" />
-                         </div>
-                         <h1>
-                             Power-packed <span class="spEmpa" style="font-weight: 600; color: #062aa5;">Digital ERP</span> For <br />
-                             Indian Businesses.
-                         </h1>
-                         <h3 class="scndSize" style="display:none">We are focussed on getting your business disruption-ready.</h3>
-                         <h3 class="scndSize" style="line-height: 27px;font-size: 16px;">
-                             BreezeERP is digital first CLOUD ERP that AUTOMATES & CONNECTS <br />
-                             all aspects of your business with a built in INTELLIGENCE that proactively manages<br />
-                             your business process and tasks letting you focus on the core of your business. <br />
-                             Lead your team from a single platform with real time updates and analytics.
-                         </h3>
-                         <a href="https://www.breezeerp.in/contact-us/" target="_blank" class="button-26">START MY FREE TRIAL</a>
-                         <h3 class="scndSize">
-                             <span class="bliner txt-rotate hide"
-                                   data-period="2000"
-                                   data-rotate='[ "Payroll Management ", "Service Management ", "STB Management", "Employee Self Service", "Sales and Purchase" ]'></span>
-                         </h3>
-                         <div style="margin-top:20px" class="hide">
-                             <span class="iconBXX"><img src="/assests/images/NLoginIcon/invoice1.png" /></span>
-                             <span class="iconBXX"><img src="/assests/images/NLoginIcon/export.png" /></span>
-                             <span class="iconBXX"><img src="/assests/images/NLoginIcon/global.png" /></span>
-                         </div>
-                     </div>
-                     <div class="formBox relative">
-                         <div class="onlySm aCenter" style="z-index:9999;"><div class="mLogo"><img src="/assests/images/logo.png" /></div></div>
-                         <div style="padding: 10px 30px;">
-                             @*<h1 class="wlHeader">Welcome ...</h1>*@
-                             <h1 class="wlHeader">Login</h1>
-                             <p class="f2Para">Please enter your username and password</p>
+                <div class="sectionWraper">
+                    <div class="textSection">
+                        <div class="mLogo">
+                            <img src="/assests/images/logo.png" />
+                        </div>
+                        <div class="event-img">
+                            <img src="/assests/images/event-banner.jpg" />
+                        </div>
+                        <h1>
+                            Power-packed <span class="spEmpa" style="font-weight: 600; color: #062aa5;">Digital ERP</span> For <br />
+                            Indian Businesses.
+                        </h1>
+                        <h3 class="scndSize" style="display:none">We are focussed on getting your business disruption-ready.</h3>
+                        <h3 class="scndSize" style="line-height: 27px;font-size: 16px;">
+                            BreezeERP is digital first CLOUD ERP that AUTOMATES & CONNECTS <br />
+                            all aspects of your business with a built in INTELLIGENCE that proactively manages<br />
+                            your business process and tasks letting you focus on the core of your business. <br />
+                            Lead your team from a single platform with real time updates and analytics.
+                        </h3>
+                        <a href="https://www.breezeerp.in/contact-us/" target="_blank" class="button-26">START MY FREE TRIAL</a>
+                        <h3 class="scndSize">
+                            <span class="bliner txt-rotate hide"
+                                  data-period="2000"
+                                  data-rotate='[ "Payroll Management ", "Service Management ", "STB Management", "Employee Self Service", "Sales and Purchase" ]'></span>
+                        </h3>
+                        <div style="margin-top:20px" class="hide">
+                            <span class="iconBXX"><img src="/assests/images/NLoginIcon/invoice1.png" /></span>
+                            <span class="iconBXX"><img src="/assests/images/NLoginIcon/export.png" /></span>
+                            <span class="iconBXX"><img src="/assests/images/NLoginIcon/global.png" /></span>
+                        </div>
+                    </div>
+                    <div class="formBox relative">
+                        <div class="onlySm aCenter" style="z-index:9999;"><div class="mLogo"><img src="/assests/images/logo.png" /></div></div>
+                        <div style="padding: 10px 30px;">
+                            @*<h1 class="wlHeader">Welcome ...</h1>*@
+                            <h1 class="wlHeader">Login</h1>
+                            <p class="f2Para">Please enter your username and password</p>
 
-                             <div style="margin-top: 20px">
-                                 <div>
+                            <div style="margin-top: 20px">
+                                <div>
 
-                                 </div>
+                                </div>
 
-                                 <div class="inputwraps">
-                                     @*<img class="inputImgs" src="/assests/images/NLoginIcon/user.png" alt="arr" />*@
-                                     <img class="inputImgs" src="/assests/images/NLoginIcon/user-2.png" alt="arr" />
-                                     @Html.TextBoxFor(m => m.UserId, new { @class = "inputL smalltext fontAwesome" })
+                                <div class="inputwraps">
+                                    @*<img class="inputImgs" src="/assests/images/NLoginIcon/user.png" alt="arr" />*@
+                                    <img class="inputImgs" src="/assests/images/NLoginIcon/user-2.png" alt="arr" />
+                                    @Html.TextBoxFor(m => m.UserId, new { @class = "inputL smalltext fontAwesome" })
 
-                                 </div>
-                                 <div style="text-align: left">
+                                </div>
+                                <div style="text-align: left">
 
-                                 </div>
-                                 <div class="inputwraps">
-                                     @*<img class="inputImgs" src="/assests/images/NLoginIcon/password.png" alt="arr" />*@
-                                     <img class="inputImgs" src="/assests/images/NLoginIcon/password-2.png" alt="arr" />
-                                     @Html.PasswordFor(m => m.PassWord, new { @class = "inputL smalltext fontAwesome" })
+                                </div>
+                                <div class="inputwraps">
+                                    @*<img class="inputImgs" src="/assests/images/NLoginIcon/password.png" alt="arr" />*@
+                                    <img class="inputImgs" src="/assests/images/NLoginIcon/password-2.png" alt="arr" />
+                                    @Html.PasswordFor(m => m.PassWord, new { @class = "inputL smalltext fontAwesome" })
 
-                                     @if (ViewBag.Validate == false)
-                                     {
-                                         <span id="spnMismath" class="text-danger">User id or password mismatch</span>
-                                     }
+                                    @if (ViewBag.Validate == false)
+                                    {
+                                        <span id="spnMismath" class="text-danger">User id or password mismatch</span>
+                                    }
 
-                                     @Html.HiddenFor(m => m.ismobile)
+                                    @Html.HiddenFor(m => m.ismobile)
 
-                                     <span class="passWordView"><i class="fa fa-eye-slash"></i></span>
-                                 </div>
-                                 <div style="text-align: left">
+                                    <span class="passWordView"><i class="fa fa-eye-slash"></i></span>
+                                </div>
+                                <div style="text-align: left">
 
-                                 </div>
+                                </div>
 
-                                 <div>
-                                     <div class="form-group">
+                                <div>
+                                    <div class="form-group">
 
-                                     </div>
-                                     <div style="text-align: left">
-                                         <em style="color: red; position: relative; right: 55px; top: 160px;"></em>
-                                         <span style="color: red">
-                                         </span>
-                                     </div>
-                                 </div>
+                                    </div>
+                                    <div style="text-align: left">
+                                        <em style="color: red; position: relative; right: 55px; top: 160px;"></em>
+                                        <span style="color: red">
+                                        </span>
+                                    </div>
+                                </div>
 
 
-                                 <div style="font-size:12px">Application best viewed at <a href="#">1280 x 720</a> resolution in<br /><a href="#">Google Chrome</a> 59 or above</div>
-                                 <div class="callArea" style="">
-                                     <button type="submit" class="btn submitButton">Submit</button>
-                                     <a id="LinkButton1" tabindex="4" class="compemail hide">Forgot  Password?</a>
-                                     <button type="button" class="btn btn-primary hide" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="ftFooter">
-                             © Copyright <span id="year"></span> Indus Net Technologies.<br />
-                             [BreezeERP Version <span id="lblVersion">@HttpContext.Current.Session["LastVersion"] ]</span>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-             <!--Credit-->
-             <div class="creditsSec " id="rc_app_1562">
-                 <div class="secToggler" id="rc_app_15652"><img src="/assests/images/group.png" style="width:24px" /></div>
-                 <div class="droper">
-                     <div class="mnHeader">Team Behind <span id="clCr"><i class="fa fa-close"></i></span></div>
-                     <div class="scrCnter" id="rc_app_156655">
-                         <ul class="tc_s5621f_fg">
-                             <li><span class="nameCR">Ankan Das</span></li>
-                             <li><span class="nameCR">Arindam Ghosal</span></li>
-                             <li><span class="nameCR">Arunabha Saha</span></li>
-                             <li><span class="nameCR">Abhishek Munshi</span></li>
-                             <li><span class="nameCR">Ashmitar Chowdhury</span></li>
-                             <li><span class="nameCR">Ananya Deb</span></li>
-                             <li><span class="nameCR">Bhaskar Chatterjee</span></li>
-                             <li><span class="nameCR">Bapi Dutta</span></li>
-                             <li><span class="nameCR">Chinmoy Maiti</span></li>
-                             <li class="tc_sfsf_fg"><span class="nameCR">Debashis Talukder</span></li>
-                             <li><span class="nameCR">Debjyoti Dhar</span></li>
-                             <li><span class="nameCR">Deep Narayan Mahajan</span></li>
-                             <li><span class="nameCR">Goutam Kumar Das</span></li>
-                             <li><span class="nameCR">Indranil Dey</span></li>
-                             <li><span class="nameCR">Jitendra Jha</span></li>
-                             <li><span class="nameCR">Kaushik Gupta</span></li>
-                             <li><span class="nameCR">Maynak Nandi</span></li>
-                             <li class="tc_s5221f_fg"><span class="nameCR">Priti Ghosh</span></li>
-                             <li><span class="nameCR">Pijush Kumar Bhattacharya</span></li>
-                             <li><span class="nameCR">Pratik Ghosh</span></li>
-                             <li><span class="nameCR">Rajdip Mukherjee</span></li>
-                             <li><span class="nameCR">Susanta Kundu</span></li>
-                             <li><span class="nameCR">Sanchita Saha</span></li>
-                             <li><span class="nameCR">Saheli Bhattacharya</span></li>
-                             <li><span class="nameCR">Suman Bachar</span></li>
-                             <li><span class="nameCR">Suman Roy</span></li>
-                             <li><span class="nameCR">Shantanu Saha</span></li>
-                             <li><span class="nameCR">Saikat Das</span></li>
-                             <li><span class="nameCR">Sanjoy Ganguly</span></li>
-                             <li><span class="nameCR">Sayantani Mandal</span></li>
-                             <li><span class="nameCR">Subhra Mukherjee</span></li>
-                             <li><span class="nameCR">Sudip Biswas</span></li>
-                             <li><span class="nameCR">Sudip Kumar Pal</span></li>
-                             <li><span class="nameCR">Surojit Chatterjee</span></li>
-                             <li><span class="nameCR">Suvankar Dey</span></li>
-                             <li><span class="nameCR">Shantanu Saha</span></li>
-                             <li><span class="nameCR">Swatilekha Mukherjee</span></li>
-                             <li><span class="nameCR">Tanmoy Ghosh</span></li>
-                         </ul>
-                     </div>
-                 </div>
-             </div>
+                                <div style="font-size:12px">Application best viewed at <a href="#">1280 x 720</a> resolution in<br /><a href="#">Google Chrome</a> 59 or above</div>
+                                <div class="callArea" style="">
+                                    <button type="submit" class="btn submitButton">Submit</button>
+                                    <a id="LinkButton1" tabindex="4" class="compemail hide">Forgot  Password?</a>
+                                    <button type="button" class="btn btn-primary hide" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ftFooter">
+                            © Copyright <span id="year"></span> Indus Net Technologies.<br />
+                            [BreezeERP Version <span id="lblVersion">@HttpContext.Current.Session["LastVersion"] ]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Credit-->
+            <div class="creditsSec " id="rc_app_1562">
+                <div class="secToggler" id="rc_app_15652"><img src="/assests/images/group.png" style="width:24px" /></div>
+                <div class="droper">
+                    <div class="mnHeader">Team Behind <span id="clCr"><i class="fa fa-close"></i></span></div>
+                    <div class="scrCnter" id="rc_app_156655">
+                        <ul class="tc_s5621f_fg">
+                            <li><span class="nameCR">Ankan Das</span></li>
+                            <li><span class="nameCR">Arindam Ghosal</span></li>
+                            <li><span class="nameCR">Arunabha Saha</span></li>
+                            <li><span class="nameCR">Abhishek Munshi</span></li>
+                            <li><span class="nameCR">Ashmitar Chowdhury</span></li>
+                            <li><span class="nameCR">Ananya Deb</span></li>
+                            <li><span class="nameCR">Bhaskar Chatterjee</span></li>
+                            <li><span class="nameCR">Bapi Dutta</span></li>
+                            <li><span class="nameCR">Chinmoy Maiti</span></li>
+                            <li class="tc_sfsf_fg"><span class="nameCR">Debashis Talukder</span></li>
+                            <li><span class="nameCR">Debjyoti Dhar</span></li>
+                            <li><span class="nameCR">Deep Narayan Mahajan</span></li>
+                            <li><span class="nameCR">Goutam Kumar Das</span></li>
+                            <li><span class="nameCR">Indranil Dey</span></li>
+                            <li><span class="nameCR">Jitendra Jha</span></li>
+                            <li><span class="nameCR">Kaushik Gupta</span></li>
+                            <li><span class="nameCR">Maynak Nandi</span></li>
+                            <li class="tc_s5221f_fg"><span class="nameCR">Priti Ghosh</span></li>
+                            <li><span class="nameCR">Pijush Kumar Bhattacharya</span></li>
+                            <li><span class="nameCR">Pratik Ghosh</span></li>
+                            <li><span class="nameCR">Rajdip Mukherjee</span></li>
+                            <li><span class="nameCR">Susanta Kundu</span></li>
+                            <li><span class="nameCR">Sanchita Saha</span></li>
+                            <li><span class="nameCR">Saheli Bhattacharya</span></li>
+                            <li><span class="nameCR">Suman Bachar</span></li>
+                            <li><span class="nameCR">Suman Roy</span></li>
+                            <li><span class="nameCR">Shantanu Saha</span></li>
+                            <li><span class="nameCR">Saikat Das</span></li>
+                            <li><span class="nameCR">Sanjoy Ganguly</span></li>
+                            <li><span class="nameCR">Sayantani Mandal</span></li>
+                            <li><span class="nameCR">Subhra Mukherjee</span></li>
+                            <li><span class="nameCR">Sudip Biswas</span></li>
+                            <li><span class="nameCR">Sudip Kumar Pal</span></li>
+                            <li><span class="nameCR">Surojit Chatterjee</span></li>
+                            <li><span class="nameCR">Suvankar Dey</span></li>
+                            <li><span class="nameCR">Shantanu Saha</span></li>
+                            <li><span class="nameCR">Swatilekha Mukherjee</span></li>
+                            <li><span class="nameCR">Tanmoy Ghosh</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-         </div>
+        </div>
     </div>
-     
-        
-     <section style="padding-bottom:80px">
+
+
+    <section style="padding-bottom:80px">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 aCenter">
@@ -1484,94 +1492,94 @@
                     </ul>
                 </div>
             </div>
-            
+
         </div>
     </section>
-   <div class="bg11" style="margin-bottom:100px">
+    <div class="bg11" style="margin-bottom:100px">
         <div class="container sectionHeader" style="margin-bottom:35px">
             <h3 class="aCenter hd" style="font-family: 'opcen', Montserrat, sans-serif !important;font-size: 33px;">Industry Specific ERP Solutions</h3>
-            <p class="aCenter" style="font-family: 'Segoe UI','Helvetica Neue',Helvetica,Verdana,'san-serif';" >Enterprise Resources Planning solutions, built to meet your industry needs.</p>
+            <p class="aCenter" style="font-family: 'Segoe UI','Helvetica Neue',Helvetica,Verdana,'san-serif';">Enterprise Resources Planning solutions, built to meet your industry needs.</p>
         </div>
-       <div class="container aCenter slickCont" style="margin-bottom:-110px">
-           <div class="multiple-items">
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/003-accounts.png" alt="arr" />
-                   <div class="hding">Accounts & Finance</div>
-               </div>
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/005-crm.png" alt="arr" />
-                   <div class="hding">CRM</div>
-               </div>
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/004-sales.png" alt="arr" />
-                   <div class="hding">SALES</div>
-               </div>
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/shopping-cart.png" alt="arr" />
-                   <div class="hding">Purchases</div>
-               </div>
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/inventorG.png" alt="arr" />
-                   <div class="hding">Invetory & Warehouse</div>
-               </div>
+        <div class="container aCenter slickCont" style="margin-bottom:-110px">
+            <div class="multiple-items">
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/003-accounts.png" alt="arr" />
+                    <div class="hding">Accounts & Finance</div>
+                </div>
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/005-crm.png" alt="arr" />
+                    <div class="hding">CRM</div>
+                </div>
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/004-sales.png" alt="arr" />
+                    <div class="hding">SALES</div>
+                </div>
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/shopping-cart.png" alt="arr" />
+                    <div class="hding">Purchases</div>
+                </div>
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/inventorG.png" alt="arr" />
+                    <div class="hding">Invetory & Warehouse</div>
+                </div>
 
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/factory.png" alt="arr" />
-                   <div class="hding">Manufacturing</div>
-               </div>
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/005-project-management.png" alt="arr" />
-                   <div class="hding">Project Management</div>
-               </div>
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/payroll.png" alt="arr" />
-                   <div class="hding">Payroll Management</div>
-               </div>
-               <div class="boxDB">
-                   <img src="/assests/images/NLoginIcon/teamwork.png" alt="arr" />
-                   <div class="hding">FIELD SALES MANAGEMENT</div>
-               </div>
-           </div>
-           <ul class="lister hide">
-               <li>
-                   <div class="boxDB">
-                       <img src="/assests/images/NLoginIcon/003-accounts.png" alt="arr" />
-                       <div class="hding">ACCOUNTING</div>
-                   </div>
-               </li>
-               <li>
-                   <div class="boxDB">
-                       <img src="/assests/images/NLoginIcon/004-sales.png" alt="arr" />
-                       <div class="hding">SALES</div>
-                   </div>
-               </li>
-               <li>
-                   <div class="boxDB">
-                       <img src="/assests/images/NLoginIcon/inventorG.png" alt="arr" />
-                       <div class="hding">INVENTORY</div>
-                   </div>
-               </li>
-               <li>
-                   <div class="boxDB">
-                       <img src="/assests/images/NLoginIcon/005-crm.png" alt="arr" />
-                       <div class="hding">CRM</div>
-                   </div>
-               </li>
-           </ul>
-       </div>
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/factory.png" alt="arr" />
+                    <div class="hding">Manufacturing</div>
+                </div>
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/005-project-management.png" alt="arr" />
+                    <div class="hding">Project Management</div>
+                </div>
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/payroll.png" alt="arr" />
+                    <div class="hding">Payroll Management</div>
+                </div>
+                <div class="boxDB">
+                    <img src="/assests/images/NLoginIcon/teamwork.png" alt="arr" />
+                    <div class="hding">FIELD SALES MANAGEMENT</div>
+                </div>
+            </div>
+            <ul class="lister hide">
+                <li>
+                    <div class="boxDB">
+                        <img src="/assests/images/NLoginIcon/003-accounts.png" alt="arr" />
+                        <div class="hding">ACCOUNTING</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="boxDB">
+                        <img src="/assests/images/NLoginIcon/004-sales.png" alt="arr" />
+                        <div class="hding">SALES</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="boxDB">
+                        <img src="/assests/images/NLoginIcon/inventorG.png" alt="arr" />
+                        <div class="hding">INVENTORY</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="boxDB">
+                        <img src="/assests/images/NLoginIcon/005-crm.png" alt="arr" />
+                        <div class="hding">CRM</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-   <section>
+    <section>
         <div class="container aCenter">
             <h3 style="font-family: 'opcen', Montserrat, sans-serif !important;font-size:26px">Log in to Start Your Digital Journey with Breeze .</h3>
             <div style="height:30px"></div>
             <a href="#" class="cta" id="toLogin">
-              <span>Login Now</span>
-              <svg width="13px" height="10px" viewBox="0 0 13 10">
-                <path d="M1,5 L11,5"></path>
-                <polyline points="8 1 12 5 8 9"></polyline>
-              </svg>
+                <span>Login Now</span>
+                <svg width="13px" height="10px" viewBox="0 0 13 10">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
             </a>
-            <div ></div>
+            <div></div>
             <div class="socialArea">
                 <div class="effect egeon">
                     <div class="buttons">
@@ -1581,29 +1589,29 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </section>
     <div style="height:100px"></div>
-        
-      <!-- new area-->   
-        
-        
-        
-        
-        <div class="backColor hide"></div>
-        <div class="bgImage hide" style="background-image: url(&quot;undefined&quot;);">
-            <img src="/assests/images/bglogin.jpg" style="width: 100%; height: 100%;">
-        </div>
+
+    <!-- new area-->
 
 
-    
+
+
+    <div class="backColor hide"></div>
+    <div class="bgImage hide" style="background-image: url(&quot;undefined&quot;);">
+        <img src="/assests/images/bglogin.jpg" style="width: 100%; height: 100%;">
+    </div>
+
+
+
     <div class="container boxWraper loginFlex hide">
         <div class="centerd-box">
             <div class="logo-wrap relative">
                 <img src="/assests/images/webP/logo.webp" width="230" height="70" alt="" style="margin-left: 19px;" />
                 <div class="text-center"><span id="privilage"></span></div>
-               
+
             </div>
             @*msg*@
             <div>
@@ -1614,7 +1622,7 @@
                 <div class="form-group inp mT40">
                     <label for="txtUserName">User Name </label>
                     <div>
-                        
+
                         @*<input id="username" type="text" class="form-control smalltext fontAwesome" placeholder="User Name" />*@
                     </div>
                 </div>
@@ -1622,29 +1630,29 @@
                     <label for="txtPassword">Password </label>
                     <div class="relative">
                         <span class="passWordView"><i class="fa fa-eye"></i></span>
-                        
+
                     </div>
-                    </div>
+                </div>
 
                 <div class="form-group" style="text-align: center">
-                    
+
                 </div>
             </div>
         </div>
     </div>
-        <footer class="fixedfooter hide">
-            <div class="container">
-                <p class="copyright">
-                    © Copyright  Indus Net Technologies.
- [BreezeERP Version
-                      <!--<a href="Management/Master/view-version-features.aspx" target="_blank">( What's New )</a>--><br>
-                    Application best viewed at 1280 x 720 resolution in Google Chrome 59 or above 
-                </p>
-                
-            </div>
-        </footer>
-        
-        @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+    <footer class="fixedfooter hide">
+        <div class="container">
+            <p class="copyright">
+                © Copyright  Indus Net Technologies.
+                [BreezeERP Version
+                <!--<a href="Management/Master/view-version-features.aspx" target="_blank">( What's New )</a>--><br>
+                Application best viewed at 1280 x 720 resolution in Google Chrome 59 or above
+            </p>
+
+        </div>
+    </footer>
+
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/parallax/2.1.3/parallax.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -1720,11 +1728,11 @@
             var css = document.createElement("style");
             css.type = "text/css";
             css.innerHTML =
-              ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+                ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
             document.body.appendChild(css);
         };
     </script>
-   
 
-    }
+
+}
 

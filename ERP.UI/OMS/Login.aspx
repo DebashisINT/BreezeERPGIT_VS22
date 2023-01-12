@@ -1,4 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="pLogin"
+﻿
+<%--====================================================== Revision History ===========================================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                12-01-2023        2.0.35           Pallab              Change login url attached image(Image show when url share in social media)
+====================================================== Revision History ===========================================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="pLogin"
     EnableEventValidation="false" CodeBehind="Login.aspx.cs" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -1602,7 +1608,10 @@
 
 
     <div class="greetWrap hide">
-        <img src="/assests/images/greet2.gif"  />
+        <%--Rev 1.0 --%>
+        <%--<img src="/assests/images/greet2.gif" />--%>
+        <img src="/assests/images/event-banner.jpg" />
+        <%--Rev end 1.0 --%>
     </div>
     
    <div class="backColor hide"></div>
