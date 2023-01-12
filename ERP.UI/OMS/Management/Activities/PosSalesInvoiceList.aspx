@@ -1,4 +1,9 @@
-﻿<%@ Page Title="Sales Invoice (POS)" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PosSalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesInvoiceList" %>
+﻿<%--﻿====================================================== Revision History ===========================================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                12-01-2023        2.0.35           Pallab              button overlapping issue fix
+====================================================== Revision History ===========================================================--%>
+
+<%@ Page Title="Sales Invoice (POS)" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PosSalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesInvoiceList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -2873,6 +2878,12 @@
             top: -9px;
             line-height: 22px;
         }
+        /*Rev 1.0*/
+        .btn.btn-radius
+        {
+            margin-bottom: 15px;
+        }
+        /*Rev end 1.0*/
     </style>
     <script>
 
