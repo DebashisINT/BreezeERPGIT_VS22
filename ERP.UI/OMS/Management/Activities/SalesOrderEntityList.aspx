@@ -1,15 +1,18 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
-    Inherits="ERP.OMS.Management.Activities.SalesOrderEntityList" EnableEventValidation="false" %>
+﻿
+<%--1.0 Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table --%>
 
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
+    Inherits="ERP.OMS.Management.Activities.SalesOrderEntityList" EnableEventValidation="false" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+   <%--REV 1.0 ADD DATATABLE SCRIPT FOR HTML TABLE--%>
     <link href="/assests/pluggins/DataTable/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="/assests/pluggins/DataTable/jquery.dataTables.min.js"></script>
     <script src="/assests/pluggins/DataTable/dataTables.fixedColumns.min.js"></script>
-
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -17,12 +20,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+    <%-- END DATATABLE SCRIPT FOR HTML TABLE--%>
+
+
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.css">--%>
-    <link href="../../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />
-    <%--Code Added By Sandip For Approval Detail Section Start--%>
+    <link href="../../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />    
+    <script src="JS/SalesOrderEntityList.js?v=2.0"></script>
 
-    <script src="JS/SalesOrderEntityList.js?v=1.8"></script>
-
+     <%--REV 1.0 ADD DATATABLE STYLE--%>
     <style>
         .modal-dialog {
     width: 1000px !important;
@@ -347,6 +352,8 @@
             min-width: 150px !important;
         }
     </style>
+      <%-- END DATATABLE STYLE--%>
+
     <link href="CSS/SalesOrderEntityList.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
@@ -650,23 +657,18 @@
         #popupApproval_PW-1 {
             left: -40px !important;
         }
-
         #PopupUserWiseQuotation_PW-1 {
             top: 15px !important;
             left: -15px !important;
         }
-
         .dt-buttons {
             display: none;
         }
-
         /*#popupApproval_PW-1
         {
 
         }*/
     </style>
-
-
     <%--rev end Pallab--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -808,8 +810,7 @@
 
             <span id="spanStatus" runat="server">
                 <a href="javascript:void(0);" onclick="OpenPopUPUserWiseQuotaion()" class="btn btn-primary btn-radius">
-                    <span>My Sales Order Status</span>
-                    <%--<asp:Label ID="Label1" runat="server" Text=""></asp:Label>--%>                   
+                    <span>My Sales Order Status</span>                                  
                 </a>
             </span>
             <span id="divPendingWaiting" runat="server">
@@ -1453,17 +1454,15 @@
 
     </div>
     <dxe:ASPxTimer runat="server" Interval="3600000" ClientInstanceName="Timer1">
-        <ClientSideEvents Tick="timerTick" />
+    <ClientSideEvents Tick="timerTick" />
     </dxe:ASPxTimer>
     <asp:HiddenField ID="waitingOrderCount" runat="server" />
     <div class="PopUpArea">
-        <%-- <button class="btn btn-primary" onclick="ApproveAll();">Approve Selection</button>
-        <button class="btn btn-primary" onclick="RejectAll();">Reject Selection</button>--%>
-        <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrder" runat="server" OnSelecting="EntityServerModeDataSalesOrder_Selecting"
-            ContextTypeName="ERPDataClassesDataContext" />
+       
+      
 
 
-        <div class="modal fade" id="popupApprovalModel" role="dialog">
+     <div class="modal fade" id="popupApprovalModel" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -1471,8 +1470,8 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title" id="ModuleSegment5Header">Pending Approvals</h4>
                     </div>
-                    <div class="modal-body">
-                        <div id="divListData">
+                    <div class="modal-body" style="overflow: auto; height: 380px;">
+                        <div id="divListData"  >
                             <table id="dataTable" class="table table-striped table-bordered display nowrap" style="width: 100%">
                                 <thead>
                                     <tr>
@@ -1498,6 +1497,9 @@
         </div>
 
 
+
+      <%--  <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrder" runat="server" OnSelecting="EntityServerModeDataSalesOrder_Selecting"
+            ContextTypeName="ERPDataClassesDataContext" />
         <dxe:ASPxPopupControl ID="popupApproval" runat="server" ClientInstanceName="cpopupApproval"
             Width="1000px" HeaderText="Pending Approvals" PopupHorizontalAlign="WindowCenter"
             PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
@@ -1505,12 +1507,8 @@
             ContentStyle-CssClass="pad">
             <ContentCollection>
                 <dxe:PopupControlContentControl runat="server">
-
                     <div class="row">
-                        <div class="col-md-12">
-
-
-                           
+                        <div class="col-md-12">                           
                                 <dxe:ASPxGridView ID="gridPendingApproval" runat="server" KeyFieldName="ID" AutoGenerateColumns="False"
                                     Width="100%" ClientInstanceName="cgridPendingApproval"
                                     OnCustomCallback="gridPendingApproval_CustomCallback"
@@ -1576,17 +1574,15 @@
                                     <SettingsLoadingPanel Text="Please Wait..." />
                                     <ClientSideEvents EndCallback="OnApprovalEndCall" />
                                 </dxe:ASPxGridView>
-                            </div>
-
-                      
+                            </div>                      
                         <div class="clear"></div>
-
-
-
                     </div>
                 </dxe:PopupControlContentControl>
             </ContentCollection>
-        </dxe:ASPxPopupControl>
+        </dxe:ASPxPopupControl>--%>
+
+
+
 
         <dxe:ASPxPopupControl ID="ASPXPopupControl" runat="server" ClientInstanceName="popup"
             CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="630px"
@@ -1601,9 +1597,45 @@
             </ContentCollection>
         </dxe:ASPxPopupControl>
 
-        <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrderUserWise" runat="server" OnSelecting="EntityServerModeDataSalesOrderUserWise_Selecting"
-            ContextTypeName="ERPDataClassesDataContext" />
+    <%--    REV 1.0 Start--%>
+            <div class="modal fade" id="UserWiseApprovalModel" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">User Wise Sales Order Status</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="divListUserWiseData">
+                            <table id="UserWisedataTable" class="table table-striped table-bordered display nowrap" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Branch</th>
+                                        <th>Sale Order No.</th>
+                                        <th>Posting Date</th>
+                                        <th>Date</th>
+                                        <th>Customer</th>
+                                        <th>Approval User</th>
+                                        <th>User Level </th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
 
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%--    REV 1.0 End--%>
+
+       <%--    REV 1.0 Start--%>
+       <%-- <dx:LinqServerModeDataSource ID="EntityServerModeDataSalesOrderUserWise" runat="server" OnSelecting="EntityServerModeDataSalesOrderUserWise_Selecting"
+        ContextTypeName="ERPDataClassesDataContext" />
         <dxe:ASPxPopupControl ID="PopupUserWiseQuotation" runat="server" ClientInstanceName="cPopupUserWiseQuotation"
             Width="900px" HeaderText="User Wise Sales Order Status" PopupHorizontalAlign="WindowCenter" HeaderStyle-CssClass="wht"
             PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
@@ -1618,7 +1650,7 @@
                                 Width="100%" ClientInstanceName="cgridUserWiseQuotation" OnCustomCallback="gridUserWiseQuotation_CustomCallback"
                                 DataSourceID="EntityServerModeDataSalesOrderUserWise">
                                 <Columns>
-                                    <%--OnDataBinding="gridUserWiseQuotation_DataBinding" OnPageIndexChanged="gridUserWiseQuotation_PageIndexChanged"--%>
+                                    <%--OnDataBinding="gridUserWiseQuotation_DataBinding" OnPageIndexChanged="gridUserWiseQuotation_PageIndexChanged"
                                     <dxe:GridViewDataTextColumn Caption="Branch" FieldName="Branch"
                                         VisibleIndex="0" FixedStyle="Left">
                                         <CellStyle CssClass="gridcellleft" Wrap="true">
@@ -1684,12 +1716,16 @@
                     </div>
                 </dxe:PopupControlContentControl>
             </ContentCollection>
-        </dxe:ASPxPopupControl>
+        </dxe:ASPxPopupControl>--%>
+       <%--    REV 1.0 End--%>
+
+
+
+
     </div>
     <%-- Sandip Approval Dtl Section End--%>
 
     <%--Kaushik--%>
-
     <div class="PopUpArea">
         <dxe:ASPxPopupControl ID="ASPxInvoiceDocumentsPopup" runat="server" ClientInstanceName="cInvoiceDocumentsPopup"
             Width="350px" HeaderText="Select Design(s)" PopupHorizontalAlign="WindowCenter"
