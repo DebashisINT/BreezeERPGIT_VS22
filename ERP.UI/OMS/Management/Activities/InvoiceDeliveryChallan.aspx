@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InvoiceDeliveryChallan.aspx.cs" Inherits="ERP.OMS.Management.Activities.InvoiceDeliveryChallan" EnableEventValidation="false" %>
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti   V2.0.36     0025577:Alt UOM is enabled false if we want to modify the stock details after saving the document.cmbSecondUOM remove ClientEnabled="false"
+========================================== End Revision History =======================================================================================================--%>
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InvoiceDeliveryChallan.aspx.cs" Inherits="ERP.OMS.Management.Activities.InvoiceDeliveryChallan" EnableEventValidation="false" %>
 
 <%--<%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>--%>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/Sales_BillingShipping.ascx" TagPrefix="ucBS" TagName="Sales_BillingShipping" %>
@@ -4645,6 +4650,7 @@
                                                 <dxe:ASPxTextBox ID="ASPxTextBox2" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" DisplayFormatString="0.0000" Font-Size="12px" Width="100%" Height="15px">
                                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
                                                     <%--<ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />--%>
+                                                    <ClientSideEvents TextChanged="function(s,e) { ChangePackingByQuantityinjs();}" />
                                                 </dxe:ASPxTextBox>
                                                 <span id="spntxtQuantity" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                             </div>
@@ -4663,7 +4669,7 @@
                                             <div style="margin-bottom: 2px;">
                                                 Alt. UOM
                                             </div>
-                                            <dxe:ASPxComboBox ID="cmbSecondUOM" ClientEnabled="false" ClientInstanceName="ccmbSecondUOM" runat="server" SelectedIndex="0" DataSourceID="AltUomSelect"
+                                            <dxe:ASPxComboBox ID="cmbSecondUOM"  ClientInstanceName="ccmbSecondUOM" runat="server" SelectedIndex="0" DataSourceID="AltUomSelect"
                                                 ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" ValueField="UOM_ID" TextField="UOM_Name">
                                             </dxe:ASPxComboBox>
 
@@ -4910,5 +4916,9 @@
     <asp:HiddenField ID="hdTDSappl" runat="server" />
     <asp:HiddenField ID="hdTDSpercentage" runat="server" />
     <asp:HiddenField ID="hdTDSamout" runat="server" />
+   <%-- REV 1.0--%>
+    <asp:HiddenField runat="server" ID="hdnpackingqty" />
+    <asp:HiddenField runat="server" ID="hdnuomFactor" />
+    <%--END REV 1.0--%>
 </asp:Content>           
                           
