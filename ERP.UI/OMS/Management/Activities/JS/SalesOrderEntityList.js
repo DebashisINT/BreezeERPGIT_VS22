@@ -110,12 +110,75 @@ function watingOrdergridEndCallback() {
 
 function OpenPopUPUserWiseQuotaion() {
     // cgridUserWiseQuotation.PerformCallback();
-    $("#hdnIsFilter").val("Y");
-    
-    cgridUserWiseQuotation.Refresh();
-    cPopupUserWiseQuotation.Show();
+    //$("#hdnIsFilter").val("Y");
+    $('#UserWiseApprovalModel').modal('show');
+    UserWiseSalesOrder();
+    //cgridUserWiseQuotation.Refresh();
+    //cPopupUserWiseQuotation.Show();
 }
 // function above  End
+
+function UserWiseSalesOrder() {
+    LoadingPanel.Show();
+
+    $.ajax({
+        type: "POST",
+        url: "SalesOrderEntityList.aspx/UserWiseApproval_List",
+        /*   data: JSON.stringify({ model: $("#hdnUserType").val(), SearchType: "PendingApproval" }),*/
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+
+            var status = "";
+            status = status + "<table id='UserWisedataTable' class='table table-striped table-bordered display nowrap' style='width: 100%'>";
+            status = status + " <thead><tr>";
+            status = status + " <th>Branch</th><th>Sale Order No.</th><th>Date</th><th>Customer</th>";
+            status = status + " <th>Approval User</th><th>User Level </th><th>Status </th>";
+            status = status + " </tr></thead>";
+            status = status + " </table>";
+            $('#divListUserWiseData').html(status);
+
+            $('#UserWisedataTable').DataTable({
+                scrollX: true,
+                fixedColumns: {
+                    rightColumns: 2
+                },
+                data: msg.d.DetailsList,
+                columns: [
+                    { 'data': 'Branch' },
+                    { 'data': 'SaleOrderNo' },
+                    { 'data': 'Date' },
+                    { 'data': 'Customer' },
+                    { 'data': 'ApprovalUser' },
+                    { 'data': 'UserLevel' },
+                    { 'data': 'Status' },
+
+                ],
+                dom: 'Bfrtip',
+                //buttons: [
+                //    {
+                //        extend: 'excel',
+                //        title: null,
+                //        filename: 'Service Entry',
+                //        text: 'Save as Excel',
+                //        customize: function (xlsx) {
+                //            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                //            $('row:first c', sheet).attr('s', '42');
+                //        },
+
+                //        exportOptions: {
+                //        }
+                //    }
+                //],
+                error: function (error) {
+                    alert(error);
+                    LoadingPanel.Hide();
+                }
+            });
+            LoadingPanel.Hide();
+        }
+    });
+}
 
 //This function is called to show all Pending Approval of Sales Order whose Userid has been set LevelWise using Approval Configuration Module 
 function OpenPopUPApprovalStatus() {
@@ -127,14 +190,13 @@ function OpenPopUPApprovalStatus() {
     //clookup_PendingApproval.ShowDropDown();
 
     $('#popupApprovalModel').modal('show');
+   // $("#divListData").html("");
+  
     PendingApproval();
 }
 
 function PendingApproval() {
     LoadingPanel.Show();
-    //$("#hdnSearchType").val("PendingApproval");
-    //$('.circulerUl>li').removeClass('activeCrcl').addClass('ds');
-    //$('#d1').addClass('activeCrcl');
 
     $.ajax({
         type: "POST",

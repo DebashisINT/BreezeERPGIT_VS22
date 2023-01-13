@@ -909,6 +909,13 @@
     <Compile Include="OMS\Management\Activities\SalesInquiryAdd.aspx.designer.cs">
       <DependentUpon>SalesInquiryAdd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="OMS\Management\Activities\SalesOrderListHTML.aspx.cs">
+      <DependentUpon>SalesOrderListHTML.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OMS\Management\Activities\SalesOrderListHTML.aspx.designer.cs">
+      <DependentUpon>SalesOrderListHTML.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OMS\Management\Activities\SalesRateScheme.aspx.cs">
       <DependentUpon>SalesRateScheme.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -11791,6 +11798,7 @@
     <Content Include="OMS\Management\Activities\SalesInquiryAdd.aspx" />
     <Content Include="OMS\Management\Activities\SalesInvoice.aspx" />
     <Content Include="OMS\Management\Activities\SalesOrderEntityList.aspx" />
+    <Content Include="OMS\Management\Activities\SalesOrderListHTML.aspx" />
     <Content Include="OMS\Management\Activities\SalesOrderSpecialEdit.aspx" />
     <Content Include="OMS\Management\Activities\SalesQuotationList.aspx" />
     <Content Include="OMS\Management\Activities\SalesRateScheme.aspx" />

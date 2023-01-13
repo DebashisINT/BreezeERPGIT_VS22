@@ -294,33 +294,6 @@ namespace ERP.OMS.Management.Activities
         protected global::System.Web.UI.WebControls.HiddenField waitingOrderCount;
 
         /// <summary>
-        /// EntityServerModeDataSalesOrder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Data.Linq.LinqServerModeDataSource EntityServerModeDataSalesOrder;
-
-        /// <summary>
-        /// popupApproval control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxPopupControl popupApproval;
-
-        /// <summary>
-        /// gridPendingApproval control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView gridPendingApproval;
-
-        /// <summary>
         /// ASPXPopupControl control.
         /// </summary>
         /// <remarks>
@@ -328,33 +301,6 @@ namespace ERP.OMS.Management.Activities
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl ASPXPopupControl;
-
-        /// <summary>
-        /// EntityServerModeDataSalesOrderUserWise control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Data.Linq.LinqServerModeDataSource EntityServerModeDataSalesOrderUserWise;
-
-        /// <summary>
-        /// PopupUserWiseQuotation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxPopupControl PopupUserWiseQuotation;
-
-        /// <summary>
-        /// gridUserWiseQuotation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView gridUserWiseQuotation;
 
         /// <summary>
         /// ASPxInvoiceDocumentsPopup control.
