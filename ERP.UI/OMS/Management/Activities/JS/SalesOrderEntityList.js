@@ -1,4 +1,7 @@
-﻿
+﻿//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table
+
+//====================================================End Revision History=====================================================================
 function OnProductWiseClosedClick(keyValue, visibleIndex, PurchaseOrder) {
     $("#hddnKeyValue").val(keyValue);
     cGrdOrder.SetFocusedRowIndex(visibleIndex);
@@ -109,12 +112,16 @@ function watingOrdergridEndCallback() {
 }
 
 function OpenPopUPUserWiseQuotaion() {
+    ///REV 1.0
     // cgridUserWiseQuotation.PerformCallback();
     //$("#hdnIsFilter").val("Y");
-    $('#UserWiseApprovalModel').modal('show');
-    UserWiseSalesOrder();
     //cgridUserWiseQuotation.Refresh();
     //cPopupUserWiseQuotation.Show();
+
+    $('#UserWiseApprovalModel').modal('show');
+    setTimeout(UserWiseSalesOrder, 0);
+    UserWiseSalesOrder();
+    ///REV 1.0 End
 }
 // function above  End
 
@@ -182,6 +189,8 @@ function UserWiseSalesOrder() {
 
 //This function is called to show all Pending Approval of Sales Order whose Userid has been set LevelWise using Approval Configuration Module 
 function OpenPopUPApprovalStatus() {
+
+     ///REV 1.0
    // cgridPendingApproval.PerformCallback();
    // clookup_PendingApproval.gridView.Refresh();
    // $("#hdnIsFilter").val("Y");
@@ -189,10 +198,15 @@ function OpenPopUPApprovalStatus() {
     //cpopupApproval.Show();
     //clookup_PendingApproval.ShowDropDown();
 
+
     $('#popupApprovalModel').modal('show');
-   // $("#divListData").html("");
+    //Rev Pallab: setTimeout add/
+    setTimeout(PendingApproval, 0);
+    //Rev end Pallab/
   
     PendingApproval();
+
+    ///REV 1.0 End
 }
 
 function PendingApproval() {
