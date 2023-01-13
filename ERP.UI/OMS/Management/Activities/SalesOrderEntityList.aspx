@@ -1,5 +1,7 @@
 ﻿
-<%--1.0 Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table --%>
+<%--==========================================================Revision History============================================
+    1.0 Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table
+    ==========================================End Revision History=========================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
     Inherits="ERP.OMS.Management.Activities.SalesOrderEntityList" EnableEventValidation="false" %>
@@ -25,7 +27,7 @@
 
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.css">--%>
     <link href="../../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />    
-    <script src="JS/SalesOrderEntityList.js?v=2.0"></script>
+    <script src="JS/SalesOrderEntityList.js?v=2.1"></script>
 
      <%--REV 1.0 ADD DATATABLE STYLE--%>
     <style>
