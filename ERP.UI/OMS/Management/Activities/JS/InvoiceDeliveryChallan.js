@@ -1,4 +1,6 @@
-﻿
+﻿//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36     0025577:In the Stock selection window, alternate quantity is not calculating automatically if the main qty has been changed.
+//========================================== End Revision History =======================================================================================================--%>
 function closeWarehouse(s, e) {
     e.cancel = false;
     cGrdWarehouse.PerformCallback('WarehouseDelete');
@@ -5103,6 +5105,19 @@ function QuantityGotFocus(s, e) {
     var sProduct_quantity = SpliteDetails[22];
     var packing_quantity = SpliteDetails[20];
 
+    //---------REV 1.0
+    var prodquantity = sProduct_quantity;
+    var packingqty = packing_quantity;
+    $('#hdnpackingqty').val(packingqty);
+    if (prodquantity != 0 && packingqty != 0) {
+        // uomfactor = parseFloat(packingqty / prodquantity).toFixed(4);
+        $('#hdnuomFactor').val(parseFloat(packingqty / prodquantity));
+    }
+    else {
+        $('#hdnuomFactor').val(0);
+    }
+    //---------END REV 1.0
+
     var slno = (grid.GetEditor('SrlNo').GetText() != null) ? grid.GetEditor('SrlNo').GetText() : "0";
 
     var ComponentNumber = (grid.GetEditor('ComponentNumber').GetText() != null) ? grid.GetEditor('ComponentNumber').GetText() : "0";
@@ -7342,3 +7357,29 @@ function GetMulUOM(Action, srl, productid, ScheduleID, DetailsId, DeliverySchedu
         }
     });
 }
+
+///REV  1.0
+function ChangePackingByQuantityinjs() {
+    if ($("#hdnShowUOMConversionInEntry").val() == "1") {
+        var Quantity = ctxtQuantity.GetValue();
+        var packing = $('#txtAltQuantity').val();
+        if (packing == null || packing == '') {
+            $('#txtAltQuantity').val(parseFloat(0).toFixed(4));
+            packing = $('#txtAltQuantity').val();
+        }
+        if (Quantity == null || Quantity == '') {
+            $(e).val(parseFloat(0).toFixed(4));
+            Quantity = ctxtQuantity.GetValue();
+        }
+        var packingqty = parseFloat($('#hdnpackingqty').val()).toFixed(4);
+        var uomfac_Qty_to_stock = $('#hdnuomFactor').val();
+        var calcQuantity = parseFloat(Quantity * uomfac_Qty_to_stock).toFixed(4);
+        ctxtAltQuantity.SetText(calcQuantity);
+        ChkDataDigitCount(Quantity);
+    }
+}
+function ChkDataDigitCount(e) {
+    var data = $(e).val();
+    $(e).val(parseFloat(data).toFixed(4));
+}
+ //Rev 1.0 END
