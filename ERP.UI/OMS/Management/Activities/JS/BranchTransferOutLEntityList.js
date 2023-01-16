@@ -1,4 +1,8 @@
-﻿
+﻿//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36     0025372: Listing view upgradation required of Branch Transfer Out of Inventory
+//========================================== End Revision History =======================================================================================================--%>
+
+
 var StockId = 0;
 function onPrintJv(id) { 
     
@@ -94,18 +98,24 @@ function updateGridByDate() {
         $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
+
+        //REV 1.0
         //cGrdOrder.Refresh();
         $("#hFilterType").val("All");
         cCallbackPanel.PerformCallback("");
+        //END REV 1.0
         //cGrdOrder.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue());
 
     }
 }
 //End
 
+
+ //REV 1.0
 function CallbackPanelEndCall(s, e) {
     cGrdOrder.Refresh();
 }
+ //END REV 1.0
 
 document.onkeydown = function (e) {
     if (event.keyCode == 18) isCtrl = true;

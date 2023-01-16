@@ -1,4 +1,10 @@
-﻿using System;
+﻿//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.36    0025324: Views to be converted to Procedures in the Listing Page of Transaction / Transit Sales/Purchase / Sales Invoice
+
+//====================================================End Revision History=====================================================================
+
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -832,6 +838,7 @@ namespace ERP.OMS.Management.Activities
 
                     if (IsUserwise == "Y")
                     {
+                        //REV 1.0
                         //ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
                         //var q = from d in dc.v_TransitSBLists
                         //        where d.InvoiceDate >= Convert.ToDateTime(strFromDate) && d.InvoiceDate <= Convert.ToDateTime(strToDate)
@@ -846,9 +853,11 @@ namespace ERP.OMS.Management.Activities
                                 orderby d.SEQ descending                               
                                 select d;
                         e.QueryableSource = q;
+                        //END REV 1.0
                     }
                     else
                     {
+                        //REV 1.0
                         //ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
                         //var q = from d in dc.v_TransitSBLists
                         //        where d.InvoiceDate >= Convert.ToDateTime(strFromDate) && d.InvoiceDate <= Convert.ToDateTime(strToDate)
@@ -862,6 +871,7 @@ namespace ERP.OMS.Management.Activities
                                 orderby d.SEQ descending
                                 select d;
                         e.QueryableSource = q;
+                        //END REV 1.0
 
                     }
                 }
@@ -871,6 +881,7 @@ namespace ERP.OMS.Management.Activities
 
                     if (IsUserwise == "Y")
                     {
+                        //REV 1.0
                         //ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
                         //var q = from d in dc.v_TransitSBLists
                         //        where
@@ -886,9 +897,11 @@ namespace ERP.OMS.Management.Activities
                                 orderby d.SEQ descending
                                 select d;                      
                         e.QueryableSource = q;
+                        //END REV 1.0
                     }
                     else
                     {
+                        //REV 1.0
                         //ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
                         //var q = from d in dc.v_TransitSBLists
                         //        where
@@ -903,6 +916,7 @@ namespace ERP.OMS.Management.Activities
                                 orderby d.SEQ descending
                                 select d;
                         e.QueryableSource = q;
+                        //END REV 1.0
                     }
                 }
             }
@@ -910,7 +924,7 @@ namespace ERP.OMS.Management.Activities
             {
                 string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
                 branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
-
+                //REV 1.0
                 //ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
                 //var q = from d in dc.v_TransitSBLists
                 //        where d.InvoiceDate >= Convert.ToDateTime(strFromDate) && d.InvoiceDate <= Convert.ToDateTime(strToDate)
@@ -927,10 +941,11 @@ namespace ERP.OMS.Management.Activities
                         orderby d.SEQ descending
                         select d;
                 e.QueryableSource = q;
+                //END REV 1.0
 
             }
         }
-
+        //REV 1.0
         protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
         {
             string returnPara = Convert.ToString(e.Parameter);
@@ -980,6 +995,7 @@ namespace ERP.OMS.Management.Activities
 
             }
         }
+        //END REV 1.0
 
         [WebMethod]
         public static object EditEWayBill(string DocID)

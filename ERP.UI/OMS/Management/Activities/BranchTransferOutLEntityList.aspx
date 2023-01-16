@@ -1,4 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BranchTransferOutLEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti   V2.0.36     0025372: Listing view upgradation required of Branch Transfer Out of Inventory
+========================================== End Revision History =======================================================================================================--%>
+
+
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BranchTransferOutLEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
     Inherits="ERP.OMS.Management.Activities.BranchTransferOutLEntityList" EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -556,7 +562,7 @@
         <dxe:ASPxGridViewExporter ID="exporter" runat="server" Landscape="false" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
         </dxe:ASPxGridViewExporter>
     </div>
-
+   <%-- REV 1.0--%>
      <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
         <PanelCollection>
             <dxe:PanelContent runat="server">           
@@ -564,6 +570,7 @@
         </PanelCollection>
         <ClientSideEvents EndCallback="CallbackPanelEndCall" />
     </dxe:ASPxCallbackPanel>
+    <%--END REV 1.0--%>
     <%--DEBASHIS--%>
     <div class="PopUpArea">
         <dxe:ASPxPopupControl ID="ASPxDocumentsPopup" runat="server" ClientInstanceName="cDocumentsPopup"
