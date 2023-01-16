@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 29.5, 24" name="ERPDataClasses">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 29.625, 24" name="ERPDataClasses">
   <DataContextMoniker Name="/ERPDataClassesDataContext" />
   <nestedChildShapes>
     <classShape Id="42b8dce0-9bc6-4a34-82ff-c3e9bb571e8e" isExpanded="false" absoluteBounds="2.875, 7.875, 2, 0.45">
@@ -1130,10 +1130,28 @@
         <elementListCompartment Id="508c3835-886d-4b99-b135-b5a87de892f2" absoluteBounds="3.265, 21.335, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ab67ba96-d631-436d-a770-9186cf8bda2d" absoluteBounds="27.25, 1.5, 2, 5.2323225911458326">
+    <classShape Id="ab67ba96-d631-436d-a770-9186cf8bda2d" isExpanded="false" absoluteBounds="27.25, 1.5, 2, 0.45">
       <DataClassMoniker Name="/ERPDataClassesDataContext/TransitSBList" />
       <nestedChildShapes>
         <elementListCompartment Id="263a8028-4841-4ae7-9692-fd5ef1640d82" absoluteBounds="27.265, 1.96, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b91730dd-d0ba-4c8d-b15e-7cf1b527f99c" isExpanded="false" absoluteBounds="27.375, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/JournalAdjSalesInvoiceList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="58455b29-7bce-44a3-bbae-205049791735" absoluteBounds="27.39, 2.835, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0bcb104d-57ab-412c-8bfe-7735751e682e" isExpanded="false" absoluteBounds="27.375, 3.25, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/CreditNoteAdjDebitNoteList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c3c9d352-d96f-4781-8c92-28036a695639" absoluteBounds="27.39, 3.71, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d5a66417-418f-474d-b636-2642ab8b90f0" absoluteBounds="27.375, 4.125, 2, 4.0785139973958326">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/AdvanceAdjustmentList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e07d9adb-eac0-4827-808c-0542012196e7" absoluteBounds="27.39, 4.585, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
