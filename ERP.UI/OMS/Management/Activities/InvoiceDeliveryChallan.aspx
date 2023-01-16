@@ -17,7 +17,7 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="JS/SearchPopup.js?v=2.0"></script>
     <link href="CSS/SalesInvoice.css" rel="stylesheet" />
-    <script src="JS/InvoiceDeliveryChallan.js?v=18.3"></script>
+    <script src="JS/InvoiceDeliveryChallan.js?v=18.4"></script>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelNew.js?v=2.3" type="text/javascript"></script>
      <style>
       .wrapHolder#pageheaderContent {
@@ -4647,7 +4647,7 @@
                                                 Quantity
                                             </div>
                                             <div class="Left_Content" style="">
-                                                <dxe:ASPxTextBox ID="ASPxTextBox2" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" DisplayFormatString="0.0000" Font-Size="12px" Width="100%" Height="15px">
+                                                <dxe:ASPxTextBox ID="ASPxTextBox2" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" DisplayFormatString="0.0000" Font-Size="12px" Width="100%" Height="15px" ClientSideEvents-GotFocus="ALTQuantityGotFocus">
                                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
                                                     <%--<ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />--%>
                                                     <ClientSideEvents TextChanged="function(s,e) { ChangePackingByQuantityinjs();}" />

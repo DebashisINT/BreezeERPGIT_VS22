@@ -1,4 +1,9 @@
-﻿using System;
+﻿//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.36    0025372: Listing view upgradation required of Branch Transfer Out of Inventory
+
+//====================================================End Revision History=====================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -566,6 +571,7 @@ namespace ERP.OMS.Management.Activities
                     branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
 
+                    //----REV 1.0
                     //var q = from d in dc.v_EntityListBranchStockOuts
                     //        where d.Out_MapDate >= Convert.ToDateTime(strFromDate) && d.Out_MapDate <= Convert.ToDateTime(strToDate)
                     //        && branchidlist.Contains(Convert.ToInt32(d.Stk_TransferFormBranch))
@@ -579,12 +585,14 @@ namespace ERP.OMS.Management.Activities
                             orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
                 else
                 {
                     branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                    //----REV 1.0
                     //var q = from d in dc.v_EntityListBranchStockOuts
                     //        where
                     //        d.Out_MapDate >= Convert.ToDateTime(strFromDate) && d.Out_MapDate <= Convert.ToDateTime(strToDate) &&
@@ -599,11 +607,13 @@ namespace ERP.OMS.Management.Activities
                             orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
             }
             else
             {
                 ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                //----REV 1.0
                 //var q = from d in dc.v_EntityListBranchStockOuts
                 //        where d.From_Branch == "0"
                 //        orderby d.Out_MapDate descending
@@ -614,6 +624,7 @@ namespace ERP.OMS.Management.Activities
                         where d.SEQ == 0
                         select d;
                 e.QueryableSource = q;
+                //----END REV 1.0
             }
 
         }
@@ -628,6 +639,8 @@ namespace ERP.OMS.Management.Activities
         }
         //Rev work close 12.07.2022 mantise no :0025011: Update E-way Bill
 
+
+        //REV 1.0
         protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
         {
             string returnPara = Convert.ToString(e.Parameter);
@@ -677,5 +690,7 @@ namespace ERP.OMS.Management.Activities
 
             }
         }
+
+        //END REV 1.0
     }
 }
