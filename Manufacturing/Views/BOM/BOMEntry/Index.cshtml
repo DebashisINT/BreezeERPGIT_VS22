@@ -1,4 +1,8 @@
-﻿@using System.Web.UI.WebControls
+﻿@*==========================================================Revision History ============================================================================================
+       1.0   Priti   V2.0.36   17-01-2023     	0025581: Page Navigation to be implemented in the Product Selection Window of BOM entry Module
+    ========================================== End Revision History =======================================================================================================*@
+
+@using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
 @model Manufacturing.Models.ViewModel.BOMEntryModel.BOMEntryViewModel
@@ -7,11 +11,14 @@
     ViewBag.Title = "Bill of Materials (BOM)";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@*REV 1.0*@
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
-<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
 <script src="~/Scripts/SearchPopupDatatable.js"></script>
+@*REV 1.0 END*@
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
 <link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
 <script>
     function MPSStartCallback(s, e) {
@@ -784,8 +791,10 @@
         HeaderCaption.push("HSN/SAC");
         HeaderCaption.push("Brand");
         HeaderCaption.push("Class");
-
+        //REV 1.0
+        //callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "ProductTable", HeaderCaption, "ProductIndex", "SetProduct");
         callonServer("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "ProductTable", HeaderCaption, "ProductIndex", "SetProduct");
+       /* REV 1.0 END*/
     }
     function PartNolist(SearchKey, type) {
         finishedproductlist = 1;

@@ -15,7 +15,7 @@
     <script src="JS/SearchPopupDatatable.js"></script>
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
-    <script src="JS/JSPurchaseOrder.js?v=4.9"></script>
+    <script src="JS/JSPurchaseOrder.js?v=4.10"></script>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelPurchase.js"></script>
     <style type="text/css">
         .HeaderStyle {
