@@ -1592,6 +1592,14 @@ namespace ERP.Models
 				return this.GetTable<AdvanceAdjustmentList>();
 			}
 		}
+		
+		public System.Data.Linq.Table<CustomerCrNoteAdjustmentList> CustomerCrNoteAdjustmentLists
+		{
+			get
+			{
+				return this.GetTable<CustomerCrNoteAdjustmentList>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_FinanceReconciliationList")]
@@ -77442,6 +77450,339 @@ namespace ERP.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Code", DbType="NVarChar(200)")]
+		public string Proj_Code
+		{
+			get
+			{
+				return this._Proj_Code;
+			}
+			set
+			{
+				if ((this._Proj_Code != value))
+				{
+					this._Proj_Code = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HIERARCHY_NAME", DbType="VarChar(500)")]
+		public string HIERARCHY_NAME
+		{
+			get
+			{
+				return this._HIERARCHY_NAME;
+			}
+			set
+			{
+				if ((this._HIERARCHY_NAME != value))
+				{
+					this._HIERARCHY_NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Editlock", DbType="VarChar(50)")]
+		public string Editlock
+		{
+			get
+			{
+				return this._Editlock;
+			}
+			set
+			{
+				if ((this._Editlock != value))
+				{
+					this._Editlock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deletelock", DbType="VarChar(50)")]
+		public string Deletelock
+		{
+			get
+			{
+				return this._Deletelock;
+			}
+			set
+			{
+				if ((this._Deletelock != value))
+				{
+					this._Deletelock = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CustomerCrNoteAdjustmentList")]
+	public partial class CustomerCrNoteAdjustmentList
+	{
+		
+		private System.Nullable<int> _SEQ;
+		
+		private System.Nullable<long> _USERID;
+		
+		private System.Nullable<long> _Adj_id;
+		
+		private string _Adjustment_No;
+		
+		private System.Nullable<System.DateTime> _Adjustment_Date;
+		
+		private string _Adjusted_Doc_no;
+		
+		private System.Nullable<decimal> _Adjusted_Amount;
+		
+		private string _Remarks;
+		
+		private string _CreatedBy;
+		
+		private string _LastUpdatedBy;
+		
+		private System.Nullable<long> _Branch;
+		
+		private string _UpdatedOn;
+		
+		private string _Customer;
+		
+		private System.Nullable<long> _Proj_Id;
+		
+		private string _Proj_Code;
+		
+		private string _HIERARCHY_NAME;
+		
+		private string _Editlock;
+		
+		private string _Deletelock;
+		
+		public CustomerCrNoteAdjustmentList()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
+		public System.Nullable<int> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="BigInt")]
+		public System.Nullable<long> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Adj_id", DbType="BigInt")]
+		public System.Nullable<long> Adj_id
+		{
+			get
+			{
+				return this._Adj_id;
+			}
+			set
+			{
+				if ((this._Adj_id != value))
+				{
+					this._Adj_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Adjustment_No", DbType="VarChar(50)")]
+		public string Adjustment_No
+		{
+			get
+			{
+				return this._Adjustment_No;
+			}
+			set
+			{
+				if ((this._Adjustment_No != value))
+				{
+					this._Adjustment_No = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Adjustment_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Adjustment_Date
+		{
+			get
+			{
+				return this._Adjustment_Date;
+			}
+			set
+			{
+				if ((this._Adjustment_Date != value))
+				{
+					this._Adjustment_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Adjusted_Doc_no", DbType="VarChar(50)")]
+		public string Adjusted_Doc_no
+		{
+			get
+			{
+				return this._Adjusted_Doc_no;
+			}
+			set
+			{
+				if ((this._Adjusted_Doc_no != value))
+				{
+					this._Adjusted_Doc_no = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Adjusted_Amount", DbType="Decimal(18,9)")]
+		public System.Nullable<decimal> Adjusted_Amount
+		{
+			get
+			{
+				return this._Adjusted_Amount;
+			}
+			set
+			{
+				if ((this._Adjusted_Amount != value))
+				{
+					this._Adjusted_Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="VarChar(500)")]
+		public string Remarks
+		{
+			get
+			{
+				return this._Remarks;
+			}
+			set
+			{
+				if ((this._Remarks != value))
+				{
+					this._Remarks = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="VarChar(50)")]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdatedBy", DbType="VarChar(50)")]
+		public string LastUpdatedBy
+		{
+			get
+			{
+				return this._LastUpdatedBy;
+			}
+			set
+			{
+				if ((this._LastUpdatedBy != value))
+				{
+					this._LastUpdatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Branch", DbType="BigInt")]
+		public System.Nullable<long> Branch
+		{
+			get
+			{
+				return this._Branch;
+			}
+			set
+			{
+				if ((this._Branch != value))
+				{
+					this._Branch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedOn", DbType="VarChar(50)")]
+		public string UpdatedOn
+		{
+			get
+			{
+				return this._UpdatedOn;
+			}
+			set
+			{
+				if ((this._UpdatedOn != value))
+				{
+					this._UpdatedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer", DbType="VarChar(500)")]
+		public string Customer
+		{
+			get
+			{
+				return this._Customer;
+			}
+			set
+			{
+				if ((this._Customer != value))
+				{
+					this._Customer = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Id", DbType="BigInt")]
+		public System.Nullable<long> Proj_Id
+		{
+			get
+			{
+				return this._Proj_Id;
+			}
+			set
+			{
+				if ((this._Proj_Id != value))
+				{
+					this._Proj_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Code", DbType="NVarChar(250)")]
 		public string Proj_Code
 		{
 			get
