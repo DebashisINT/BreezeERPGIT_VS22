@@ -7,9 +7,11 @@
     ViewBag.Title = "Bill of Materials (BOM)";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
 <link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
-<script src="~/Scripts/SearchPopup.js"></script>
+<script src="~/Scripts/SearchPopupDatatable.js"></script>
 <link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
 <script>
     function MPSStartCallback(s, e) {
@@ -60,18 +62,18 @@
     function ProjectLookupValChange() {
         //ProjectGridLookup.SetValue("");
         //$('#ddlHierarchy').val("");
-        //ProjectGridLookup.GetGridView().Refresh();       
+        //ProjectGridLookup.GetGridView().Refresh();
     }
     function ProjectLookupValChange() {
         //ProjectGridLookup.SetValue("");
         //$('#ddlHierarchy').val("");
-        //ProjectGridLookup.GetGridView().Refresh();       
+        //ProjectGridLookup.GetGridView().Refresh();
     }
 </script>
 <link href="~/assests/css/ManufacturingCSS/bomIndex.css" rel="stylesheet" />
 <style>
-    .eqTble>tbody>tr>td {
-        padding:0 4px;
+    .eqTble > tbody > tr > td {
+        padding: 0 4px;
     }
 </style>
 @*<link href="~/Views/BOM/BOMEntry/bomIndex.css" rel="stylesheet" />*@
@@ -400,7 +402,7 @@
         HeaderCaption.push("HSN/SAC");
         HeaderCaption.push("Brand");
         HeaderCaption.push("Class");
-        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "NonIProductIndex", "SetGridNonInventoryProduct");
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "NonIProductIndex", "SetGridNonInventoryProduct");
         setTimeout(function () {
             $('#txtGridProductName').focus();
         }, 600);
@@ -716,7 +718,7 @@
         HeaderCaption.push("Revision No.");
         HeaderCaption.push("Revision Date");
 
-        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetBOMList", OtherDetails, "GridBOMTable", HeaderCaption, "BOMIndex", "SetGridBOMProduct");
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetBOMList", OtherDetails, "GridBOMTable", HeaderCaption, "BOMIndex", "SetGridBOMProduct");
 
     }
 
@@ -736,7 +738,7 @@
         HeaderCaption.push("Brand");
         HeaderCaption.push("Class");
 
-        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "GridProductIndex", "SetPartNo");
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "GridProductIndex", "SetPartNo");
 
         setTimeout(function () {
             $('#txtGridProductName').focus();
@@ -760,7 +762,7 @@
         HeaderCaption.push("Brand");
         HeaderCaption.push("Class");
 
-        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "GridProductIndex", "SetGridProduct");
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "GridProductTable", HeaderCaption, "GridProductIndex", "SetGridProduct");
 
         setTimeout(function () {
             $('#txtGridProductName').focus();
@@ -783,7 +785,7 @@
         HeaderCaption.push("Brand");
         HeaderCaption.push("Class");
 
-        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "ProductTable", HeaderCaption, "ProductIndex", "SetProduct");
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetProductDetailsList", OtherDetails, "ProductTable", HeaderCaption, "ProductIndex", "SetProduct");
     }
     function PartNolist(SearchKey, type) {
         finishedproductlist = 1;
@@ -800,7 +802,7 @@
         //HeaderCaption.push("Brand");
         //HeaderCaption.push("Class");
 
-        callonServerScroll("../Models/pManufacturing_WebServiceList.asmx/GetPartNoDetailsList", OtherDetails, "PartNoTable", HeaderCaption, "PartNoIndex", "SetPartNo");
+        callonServer("../Models/pManufacturing_WebServiceList.asmx/GetPartNoDetailsList", OtherDetails, "PartNoTable", HeaderCaption, "PartNoIndex", "SetPartNo");
     }
 
 
@@ -1491,7 +1493,7 @@
             success: function (data) {
                 if (data != "Invalid") {
                     $.each(data, function (i, data) {
-                    
+
                             //gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 16);
                             gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 9);
                             var FixedAltQty = parseFloat(data.AltQuantity).toFixed(4);
@@ -1502,8 +1504,8 @@
                             gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 6);
                             gridBOMProductEntryList.GetEditor("ProductQty").SetValue(data.Quantity);
                             $("#Popup_MultiUOM").hide();
-                    
-                    
+
+
                     });
                 }
                 else {
@@ -2424,7 +2426,7 @@
     }
 
     function BOMEntrySave(mode) {
-        
+
 
         savemode = mode;
         hasmsg = 0;
@@ -2531,7 +2533,7 @@
             RevisionDate = GetServerDateFormat(new Date);
         }
         if (oneproduct != "" && oneproduct != null) {
-            
+
             if (hdnDetailsID != "") {
                 if ('@ViewBag.BOMRevisionRequired' == "Yes") {
                     if (hdnDetailsID > 0 && hdnRevisionNo == RevisionNo) {
@@ -3029,7 +3031,7 @@
         var hdnBOMTYPE = $('#hdnBOMTYPE').val();
         var hdnDetailsID = $('#hdnDetailsID').val();
         //Rev work start 29.07.2022 mantise no:0025098: Copy feature is required in Bill of Material Module
-        var hdnIsView = $('#hdnIsView').val();        
+        var hdnIsView = $('#hdnIsView').val();
         //if (hdnBOMTYPE != '' && hdnDetailsID > 0) {
         if (hdnBOMTYPE != '' && hdnDetailsID > 0 && hdnIsView!=2) {
             //Rev work close 29.07.2022 mantise no:0025098: Copy feature is required in Bill of Material Module
@@ -3039,7 +3041,7 @@
             $('#slcbomtype').val(hdnBOMTYPE);
             $('#BOMNo').attr("disabled", "disabled");
             $('#ddlSchema').attr("disabled", "disabled");
-            $('#slcbomtype').attr("disabled", "disabled");          
+            $('#slcbomtype').attr("disabled", "disabled");
 
             //$('#BOMDate_dt').attr("disabled", "disabled");
             //btnFinishedItem.SetButtonVisible(0, '');
@@ -3090,10 +3092,10 @@
             setTimeout(function () { var noofrow = gridBOMResourcesList.GetVisibleRowsOnPage(); if (noofrow > 1) { $('#showResources').click(); } }, 800);
 
         }
-            //Rev work start 29.07.2022   mantise no:0025098: Copy feature is required in Bill of Material Module     
+            //Rev work start 29.07.2022   mantise no:0025098: Copy feature is required in Bill of Material Module
         else if (hdnBOMTYPE != '' && hdnDetailsID > 0 && hdnIsView==2) {
             MPSGridLookup.GetGridView().Refresh();
-            MPSGridLookup.GetGridView().Refresh();            
+            MPSGridLookup.GetGridView().Refresh();
             $('#slcbomtype').val(hdnBOMTYPE);
             $('#BOMNo').attr("disabled", "disabled");
             $("#ddlSchema").removeAttr("disabled");
@@ -3102,7 +3104,7 @@
             $('#FinishedQty').removeAttr("disabled");
             $('#ddlWarehouse').removeAttr("disabled");
 
-            $('#ddlBankBranch').attr("disabled", "disabled");            
+            $('#ddlBankBranch').attr("disabled", "disabled");
             BOMDate_dt.SetEnabled(true);
 
             //RevisionDate_dt.SetEnabled(true);
@@ -3118,7 +3120,7 @@
                 $('#txtGridProductEntryTotalAmount').val(parseFloat(BOMEntryProductsTotal).toFixed(2));
                 $('#txtActualComponentCost').val(parseFloat(BOMEntryProductsTotal).toFixed(2));
 
-            }            
+            }
             var hdnBOMResourcesTotalAm = $('#hdnBOMResourcesTotalAm').val();
             if (hdnBOMResourcesTotalAm != "" && hdnBOMResourcesTotalAm != undefined) {
                 $('#txtGridResourcesTotalAmount').val(parseFloat(hdnBOMResourcesTotalAm).toFixed(2));
@@ -3143,7 +3145,7 @@
             $('#txtActualProductCost').val(TotalActualProductCost);
 
 
-            $('#btnSaveandNew').show();           
+            $('#btnSaveandNew').show();
             $('#hdnBOM_SCHEMAID').val('');
 
             setTimeout(function () { var noofrow = gridBOMResourcesList.GetVisibleRowsOnPage(); if (noofrow > 1) { $('#showResources').click(); } }, 800);
@@ -3351,7 +3353,7 @@
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
-    
+
 </script>
 @Html.Hidden("hdnProductID")
 
@@ -3369,7 +3371,7 @@
 <input type="hidden" value="@ViewBag.AutoPrint" id="hdnIsAutoPrint" />
 <input type="hidden" value="@ViewBag.MPS_ID" id="hdnMPS_ID" />
 
-<input type="hidden"  id="hdnBranchID" />
+<input type="hidden" id="hdnBranchID" />
 @*rev Pratik*@
 <input type="hidden" id="hdnProDetString" />
 <input type="hidden" id="hddnuomFactor">
@@ -3666,7 +3668,7 @@
                         <button type="button" class="inline-block addResourceBtn themeColor " onclick="BOMEntrySave('Exit');"><div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div><span>Save and E<u>x</u>it</span></button>
                     }
                     @*Rev work start 29.07.2022 mantise no:0025098: Copy feature is required in Bill of Material Module*@
-                    @if (Convert.ToInt16(ViewBag.IsView) ==2)
+                    @if (Convert.ToInt16(ViewBag.IsView) == 2)
                     {
                         <button type="button" class="inline-block addResourceBtn themeColor mRight5" id="btnSaveandNew" onclick="BOMEntrySave('New');"><div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div><span><u>S</u>ave and New</span></button>
                         <button type="button" class="inline-block addResourceBtn themeColor " onclick="BOMEntrySave('Exit');"><div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div><span>Save and E<u>x</u>it</span></button>
@@ -3927,11 +3929,11 @@
                                             </select>
                                         </div>
                                         @*<div class="Left_Content" style="">
-                                <dxe:ASPxComboBox ID="cmbSecondUOM" ClientInstanceName="ccmbSecondUOM" runat="server" SelectedIndex="0" DataSourceID="AltUomSelect"
-                                                  ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" ValueField="UOM_ID" TextField="UOM_Name">
-                                    <clientsideevents textchanged="function(s,e) { PopulateMultiUomAltQuantity();setTwoNumberDecimal(this);}" />
-                                </dxe:ASPxComboBox>
-                            </div>*@
+                                                <dxe:ASPxComboBox ID="cmbSecondUOM" ClientInstanceName="ccmbSecondUOM" runat="server" SelectedIndex="0" DataSourceID="AltUomSelect"
+                                                                  ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" ValueField="UOM_ID" TextField="UOM_Name">
+                                                    <clientsideevents textchanged="function(s,e) { PopulateMultiUomAltQuantity();setTwoNumberDecimal(this);}" />
+                                                </dxe:ASPxComboBox>
+                                            </div>*@
                                     </div>
                                 </td>
                                 <td>
@@ -3943,9 +3945,9 @@
                                             <input type="text" id="AltUOMQuantity" style="text-align:right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseQty()" />
                                             @*<dxe:ASPxTextBox ID="AltUOMQuantity" runat="server" ClientInstanceName="cAltUOMQuantity" DisplayFormatString="0.0000" MaskSettings-Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
 
-                                    <clientsideevents textchanged="function(s,e) { CalcBaseQty();}" />
+                                                    <clientsideevents textchanged="function(s,e) { CalcBaseQty();}" />
 
-                                </dxe:ASPxTextBox>*@
+                                                </dxe:ASPxTextBox>*@
                                         </div>
                                     </div>
                                 </td>
@@ -3956,8 +3958,8 @@
                                         </div>
                                         <div>
                                             @*<dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
-                                    <clientsideevents textchanged="function(s,e) { CalcBaseRate();}" />
-                                </dxe:ASPxTextBox>*@
+                                                    <clientsideevents textchanged="function(s,e) { CalcBaseRate();}" />
+                                                </dxe:ASPxTextBox>*@
                                             <input type="text" id="cmbAltRate" style="text-align:right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
                                         </div>
                                     </div>
@@ -3969,7 +3971,7 @@
                                                 <input type="checkbox" id="chkUpdateRow" />
                                                 <span style="margin: 0px 0; display: block">
                                                     @*<dxe:ASPxLabel ID="ASPxLabel18" runat="server" Text="Update Row">
-                                        </dxe:ASPxLabel>*@
+                                                        </dxe:ASPxLabel>*@
                                                     <label>Update Row</label>
                                                 </span>
                                             </label>
@@ -3982,8 +3984,8 @@
 
                                 <td style="padding-top: 14px;">
                                     @*<dxe:ASPxButton ID="btnMUltiUOM" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary">
-                            <clientsideevents click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
-                        </dxe:ASPxButton>*@
+                                            <clientsideevents click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
+                                        </dxe:ASPxButton>*@
                                     <button type="button" id="btnMUltiUOM" class="btn btn-success" onclick="SaveMultiUOM()">Add</button>
                                 </td>
                             </tr>
@@ -3993,9 +3995,9 @@
                 <div class="clearfix col-md-12" style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;">
                     @*@{
 
-                        Html.RenderAction("MultiUomList", "BOMEntry");
+                            Html.RenderAction("MultiUomList", "BOMEntry");
 
-                    }*@
+                        }*@
                     <table id="datatableMultiUom" class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -4017,12 +4019,12 @@
                     </table>
                 </div>
                 @*<div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusItemRevNo();">Close</button>
-                </div>*@
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SetFocusItemRevNo();">Close</button>
+                    </div>*@
                 <div class="modal-footer">
                     <button type="button" id="SaveMultiUom_btn" class="btn btn-primary" onclick="SaveMultiUomFn();" style="float:left">Save</button>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     <!-- Multi Uom PopUp-->
