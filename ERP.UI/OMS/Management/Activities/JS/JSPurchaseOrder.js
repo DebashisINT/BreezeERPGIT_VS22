@@ -54,6 +54,10 @@ function gridProducts_EndCallback(s, e) {
         });
     }
 }
+//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36  17-01-2023   0025582:Error while creating Purchase Order by Tagging Indent.
+//========================================== End Revision History =======================================================================================================--%>
+
 function taggingListKeyDown(s, e) {
     if (e.htmlEvent.key == "Enter") {
         s.OnButtonClick(0);
@@ -66,8 +70,10 @@ function taggingListButnClick(s, e) {
     cpopup_taggingGrid.Show();
 }
 
-function  selectValueForRadioBtn() {
-
+function selectValueForRadioBtn() {
+    //Rev  1.0
+    var key = GetObjectID('hdnCustomerId').value;
+    //Rev  1.0 END
     var checked = $("[id$='rdl_Salesquotation']").find(":checked").val();
     if (checked=="Indent" || checked=="Quotation") {
         ctaggingList.SetEnabled(true);
@@ -84,8 +90,8 @@ function  selectValueForRadioBtn() {
     if (key == null || key == "") {
         jAlert("Customer required !", 'Alert Dialog: [Quoation]', function (r) {
             if (r == true) {
-                ctxtCustName.Focus();
-                gridquotationLookup.SetEnabled(false);
+                ctxtVendorName.Focus();
+               // gridquotationLookup.SetEnabled(false);
                 $('input[type=radio]').prop('checked', false);
             }
         });
