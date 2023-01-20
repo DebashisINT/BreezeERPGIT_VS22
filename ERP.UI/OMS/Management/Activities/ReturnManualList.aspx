@@ -1,4 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReturnManualList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.ReturnManualList" %>
+﻿<%--==========================================================Revision History ============================================================================================   
+ 1.0   Priti   V2.0.36   19-01-2023    	0025313: Views to be converted to Procedures in the Listing Page of Transaction / Return-Sales / Sale Return-Manual
+========================================== End Revision History =======================================================================================================--%>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReturnManualList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.ReturnManualList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -532,16 +535,27 @@
 
     </dxe:ASPxPopupControl>
 
-        <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
-<asp:HiddenField ID="hdnLockToDateedit" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
  
- <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
 
-     <asp:HiddenField ID="hdnLockFromDateeditDataFreeze" runat="server" />
-<asp:HiddenField ID="hdnLockToDateeditDataFreeze" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDateeditDataFreeze" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateeditDataFreeze" runat="server" />
  
- <asp:HiddenField ID="hdnLockFromDatedeleteDataFreeze" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDatedeleteDataFreeze" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedeleteDataFreeze" runat="server" />
     <asp:HiddenField ID="hdnActiveEInvoice" runat="server" />
+
+     <%-- REV 1.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+    <PanelCollection>
+    <dxe:PanelContent runat="server">           
+    </dxe:PanelContent>
+    </PanelCollection>
+    <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
 </asp:Content>

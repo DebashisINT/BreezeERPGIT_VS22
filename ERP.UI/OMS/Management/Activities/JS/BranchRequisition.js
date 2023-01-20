@@ -1,4 +1,7 @@
-﻿
+﻿//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36   19 - 01 - 2023    0025371: Listing view upgradation required of Branch Requisition of Inventory
+//========================================== End Revision History =======================================================================================================
+
 function OnClosedClick(keyValue, visibleIndex) {
     $("#hddnKeyValue").val(keyValue);
     CgvPurchaseIndent.SetFocusedRowIndex(visibleIndex);
@@ -149,12 +152,22 @@ function updateGridByDate() {
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
 
-        CgvPurchaseIndent.Refresh();
+        
+
+        //REV 1.0
+        //CgvPurchaseIndent.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
+        //END REV 1.0
 
         $("#drdExport").val(0);
     }
 }
-
+//REV 1.0
+function CallbackPanelEndCall(s, e) {
+    CgvPurchaseIndent.Refresh();
+}
+//END REV 1.0
 //This function is called to show the Status of All Sales Order Created By Login User Start
 function OpenPopUPUserWiseQuotaion() {
     cgridUserWiseQuotation.PerformCallback();

@@ -1,4 +1,10 @@
-﻿using BusinessLogicLayer;
+﻿//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.36  16-01-2023  0025319:Views to be converted to Procedures in the Listing Page of Transaction / Adjustment of Documents - Cu / Credit Note With Invoice
+
+//====================================================End Revision History=====================================================================
+
+
+using BusinessLogicLayer;
 using EntityLayer.CommonELS;
 using ERP.Models;
 using System;
@@ -11,6 +17,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static ERP.OMS.Management.Master.Mobileaccessconfiguration;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -95,41 +102,61 @@ namespace ERP.OMS.Management.Activities
             string strFromDate = Convert.ToString(hfFromDate.Value);
             string strToDate = Convert.ToString(hfToDate.Value);
             string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
-
+            int userid = Convert.ToInt32(Session["UserID"]);
             List<int> branchidlist;
             ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
             if (IsFilter == "Y")
             {
                 if (strBranchID == "0")
                 {
-                    string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
-                    branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
-                    var q = from d in dc.v_CreditNoteAdjustments
-                            where d.Adjustment_Date >= Convert.ToDateTime(strFromDate) &&
-                                  d.Adjustment_Date <= Convert.ToDateTime(strToDate)
-                            orderby d.Adjustment_Date descending
+                    //---- REV 1.0
+                    //string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
+                    //branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
+                    //var q = from d in dc.v_CreditNoteAdjustments
+                    //        where d.Adjustment_Date >= Convert.ToDateTime(strFromDate) &&
+                    //              d.Adjustment_Date <= Convert.ToDateTime(strToDate)
+                    //        orderby d.Adjustment_Date descending
+                    //        select d;
+                    //e.QueryableSource = q;
+                    var q = from d in dc.CustomerCrNoteAdjustmentLists
+                            where d.USERID == userid
+                            orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
                 else
                 {
-                    branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
-                    var q = from d in dc.v_CreditNoteAdjustments
-                            where d.Adjustment_Date >= Convert.ToDateTime(strFromDate) &&
-                                  d.Adjustment_Date <= Convert.ToDateTime(strToDate) &&
-                                  branchidlist.Contains(Convert.ToInt32(d.Branch))
-                            orderby d.Adjustment_Date descending
+                    //---- REV 1.0
+                    //branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
+                    //var q = from d in dc.v_CreditNoteAdjustments
+                    //        where d.Adjustment_Date >= Convert.ToDateTime(strFromDate) &&
+                    //              d.Adjustment_Date <= Convert.ToDateTime(strToDate) &&
+                    //              branchidlist.Contains(Convert.ToInt32(d.Branch))
+                    //        orderby d.Adjustment_Date descending
+                    //        select d;
+                    //e.QueryableSource = q;
+                    var q = from d in dc.CustomerCrNoteAdjustmentLists
+                            where d.USERID == userid
+                            orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
             }
             else
             {
-                var q = from d in dc.v_CreditNoteAdjustments
-                        where d.Branch == '0'
-                        orderby d.Adjustment_Date descending
+                //---- REV 1.0
+                //var q = from d in dc.v_CreditNoteAdjustments
+                //        where d.Branch == '0'
+                //        orderby d.Adjustment_Date descending
+                //        select d;
+                //e.QueryableSource = q;
+                var q = from d in dc.CustomerCrNoteAdjustmentLists
+                        where d.SEQ == 0
                         select d;
                 e.QueryableSource = q;
+                //----END REV 1.0
             }
         }
         protected void gridAdvanceAdj_CustomCallback(object sender, DevExpress.Web.ASPxGridViewCustomCallbackEventArgs e)
@@ -205,7 +232,7 @@ namespace ERP.OMS.Management.Activities
             {
                 DataSet ds = new DataSet();
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
-                SqlCommand cmd = new SqlCommand("prc_AdvanceAdjustment_List", con);
+                SqlCommand cmd = new SqlCommand("prc_CustomerCrNoteAdjustment_List", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
                 cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));

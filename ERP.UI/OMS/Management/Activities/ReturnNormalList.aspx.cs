@@ -1,4 +1,8 @@
-﻿using System;
+﻿//<% --========================================================== Revision History ============================================================================================
+// 1.0   Priti V2.0.36   19-01-2023    	0025314: Views to be converted to Procedures in the Listing Page of Transaction / Return-Sales / Return With Invoice
+//========================================== End Revision History =======================================================================================================--%>
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -19,6 +23,9 @@ using System.IO;
 using ERP.Models;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using static ERP.OMS.Management.Master.Mobileaccessconfiguration;
+
 namespace ERP.OMS.Management.Activities
 {
     public partial class ReturnNormalList : ERP.OMS.ViewState_class.VSPage// System.Web.UI.Page
@@ -501,6 +508,7 @@ namespace ERP.OMS.Management.Activities
             string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
             string strCompanyID = Convert.ToString(Session["LastCompany"]);
             string FinYear = Convert.ToString(Session["LastFinYear"]);
+            int userid = Convert.ToInt32(Session["UserID"]);  //---- REV 1.0
             List<int> branchidlist;
 
             if (IsFilter == "Y")
@@ -524,43 +532,114 @@ namespace ERP.OMS.Management.Activities
                     //        select d;   
                     //e.QueryableSource = q;
 
-                    var q = from d in dc.v_SalesReturnNormalLists
-                            where d.Rn_Date >= Convert.ToDateTime(strFromDate) && d.Rn_Date <= Convert.ToDateTime(strToDate)
+                    //---- REV 1.0
+                    //var q = from d in dc.v_SalesReturnNormalLists
+                    //        where d.Rn_Date >= Convert.ToDateTime(strFromDate) && d.Rn_Date <= Convert.ToDateTime(strToDate)
 
-                            && branchidlist.Contains(Convert.ToInt32(d.BranchID))
-                            && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
-                           && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
+                    //        && branchidlist.Contains(Convert.ToInt32(d.BranchID))
+                    //        && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
+                    //       && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
 
-                            orderby d.Rn_Date descending
+                    //        orderby d.Rn_Date descending
+                    //        select d;
+
+                    //e.QueryableSource = q;
+                    var q = from d in dc.SalesReturnNormalLists
+                            where d.USERID == userid
+                            orderby d.SEQ descending
                             select d;
-
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
                 else
                 {
                     branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_SalesReturnNormalLists
-                            where
-                            d.Rn_Date >= Convert.ToDateTime(strFromDate) && d.Rn_Date <= Convert.ToDateTime(strToDate) &&
-                            branchidlist.Contains(Convert.ToInt32(d.BranchID))
-                            && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
-                           && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
-                            orderby d.Rn_Date descending
+                    //---- REV 1.0
+                    //var q = from d in dc.v_SalesReturnNormalLists
+                    //        where
+                    //        d.Rn_Date >= Convert.ToDateTime(strFromDate) && d.Rn_Date <= Convert.ToDateTime(strToDate) &&
+                    //        branchidlist.Contains(Convert.ToInt32(d.BranchID))
+                    //        && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
+                    //       && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
+                    //        orderby d.Rn_Date descending
+                    //        select d;
+                    //e.QueryableSource = q;
+                    var q = from d in dc.SalesReturnNormalLists
+                            where d.USERID == userid
+                            orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
             }
             else
             {
                 ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                var q = from d in dc.v_SalesReturnNormalLists
-                        where d.BranchID == '0'
-                        orderby d.Rn_Date descending
+                //---- REV 1.0
+                //var q = from d in dc.v_SalesReturnNormalLists
+                //        where d.BranchID == '0'
+                //        orderby d.Rn_Date descending
+                //        select d;
+                //e.QueryableSource = q;
+                var q = from d in dc.SalesReturnNormalLists
+                        where d.SEQ == 0
                         select d;
                 e.QueryableSource = q;
+                //----END REV 1.0
             }
         }
+
+        //REV 1.0
+        protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        {
+            string returnPara = Convert.ToString(e.Parameter);
+            DateTime dtFrom;
+            DateTime dtTo;
+            dtFrom = Convert.ToDateTime(FormDate.Date);
+            dtTo = Convert.ToDateTime(toDate.Date);
+            string FROMDATE = dtFrom.ToString("yyyy-MM-dd");
+            string TODATE = dtTo.ToString("yyyy-MM-dd");
+
+            string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            Task PopulateStockTrialDataTask = new Task(() => GetSalesReturnNormaldata(FROMDATE, TODATE, strBranchID));
+            PopulateStockTrialDataTask.RunSynchronously();
+        }
+        public void GetSalesReturnNormaldata(string FROMDATE, string TODATE, string BRANCH_ID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("prc_SalesReturnNormal_List", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
+                cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                cmd.Parameters.AddWithValue("@FROMDATE", FROMDATE);
+                cmd.Parameters.AddWithValue("@TODATE", TODATE);
+                if (BRANCH_ID == "0")
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", Convert.ToString(Session["userbranchHierarchy"]));
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
+                }
+                cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
+                cmd.Parameters.AddWithValue("@ACTION", hFilterType.Value);
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                cmd.Dispose();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        //END REV 1.0
     }
 }

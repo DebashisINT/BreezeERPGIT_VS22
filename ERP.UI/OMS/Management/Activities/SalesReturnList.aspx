@@ -1,7 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="SalesReturnList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesReturnList" %>
+﻿<%--==========================================================Revision History ============================================================================================   
+ 1.0   Priti   V2.0.36   18-01-2023     	0025311: Views to be converted to Procedures in the Listing Page of Transaction / Return-Sales / Sales Return
+========================================== End Revision History =======================================================================================================--%>
 
 
 
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="SalesReturnList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesReturnList" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 
@@ -746,7 +749,16 @@
 
     <asp:HiddenField ID="hdnLockFromDatedeleteDataFreeze" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedeleteDataFreeze" runat="server" />
-
+       <%-- REV 1.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
 
 
 </asp:Content>

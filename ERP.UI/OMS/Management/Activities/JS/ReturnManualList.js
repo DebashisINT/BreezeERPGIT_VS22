@@ -1,4 +1,6 @@
-﻿
+﻿//<% --==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36   19 - 01 - 2023    	0025313: Views to be converted to Procedures in the Listing Page of Transaction / Return - Sales / Sale Return - Manual
+//========================================== End Revision History =======================================================================================================--%>
 var ReturnId = 0;
 function onPrintJv(id) {
    
@@ -372,11 +374,21 @@ function updateGridByDate() {
         $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
-        cGrdSalesReturn.Refresh();
+     
+
+        //REV 1.0
+        //    cGrdSalesReturn.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
+                //END REV 1.0
         // cGrdSalesReturn.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
     }
 }
-
+//REV 1.0
+function CallbackPanelEndCall(s, e) {
+    cGrdSalesReturn.Refresh();
+}
+//END REV 1.0
     $(document).ready(function () {
         if ($('body').hasClass('mini-navbar')) {
             var windowWidth = $(window).width();

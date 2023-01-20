@@ -1,4 +1,9 @@
-﻿<%@ Page Title="Branch Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BranchRequisition.aspx.cs"
+﻿<%--==========================================================Revision History ============================================================================================   
+ 1.0   Priti   V2.0.36   19-01-2023    0025371: Listing view upgradation required of Branch Requisition of Inventory
+========================================== End Revision History =======================================================================================================--%>
+
+
+<%@ Page Title="Branch Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BranchRequisition.aspx.cs"
     Inherits="ERP.OMS.Management.Activities.BranchRequisition" EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -2012,5 +2017,15 @@ function Currency_Rate() {
     <%--Rev work start 28.07.2022 mantise no:0025074: A setting required "Is Online Printing Require For Branch Requisition ?"--%>
     <asp:HiddenField ID="hdnPrintingBranchRequisition" runat="server" />
     <%--Rev work close 28.07.2022 mantise no:0025074: A setting required "Is Online Printing Require For Branch Requisition ?--%>
+    <%-- REV 1.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+    <PanelCollection>
+    <dxe:PanelContent runat="server">           
+    </dxe:PanelContent>
+    </PanelCollection>
+    <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
 
 </asp:Content>
