@@ -1,4 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RateDifferenceEntryCustomerList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.RateDifferenceEntryCustomerList" %>
+﻿<%--==========================================================Revision History ============================================================================================   
+ 1.0   Priti   V2.0.36   18-01-2023     	0025318: Views to be converted to Procedures in the Listing Page of Transaction / Return-Sales / Rate Difference Entry Customer
+========================================== End Revision History =======================================================================================================--%>
+
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RateDifferenceEntryCustomerList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.RateDifferenceEntryCustomerList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -143,10 +148,21 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-                cGrdSalesReturn.Refresh();
+              
+                //REV 1.0
+                 // cGrdSalesReturn.Refresh();
+                $("#hFilterType").val("All");
+                cCallbackPanel.PerformCallback("");
+                  //END REV 1.0
+
                 //  cGrdSalesReturn.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
             }
         }
+        //REV 1.0
+        function CallbackPanelEndCall(s, e) {
+            cGrdSalesReturn.Refresh();
+        }
+        //END REV 1.0
 
     </script>
     <%--Subhra--%>
@@ -757,5 +773,16 @@
         <asp:HiddenField ID="hfBranchID" runat="server" />
          <asp:HiddenField ID="hdnActiveEInvoice" runat="server" />
     </div>
+        <%-- REV 1.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
+
 </asp:Content>
 

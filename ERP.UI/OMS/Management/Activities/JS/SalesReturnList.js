@@ -510,10 +510,21 @@ function updateGridByDate() {
         $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
-        cGrdSalesReturn.Refresh();
+
+
+        //REV 1.0
+        // cGrdSalesReturn.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
+        //END REV 1.0       
         // cGrdSalesReturn.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
     }
 }
+//REV 1.0
+function CallbackPanelEndCall(s, e) {
+    cGrdSalesReturn.Refresh();
+}
+        //END REV 1.0
 
 function OnEWayBillClick(id, EWayBillNumber, EWayBillDate, EWayBillValue) {
 
