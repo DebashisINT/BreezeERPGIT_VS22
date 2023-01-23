@@ -26,3 +26,17 @@ D:\Priti\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CoreCompil
 D:\Priti\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CopyComplete
 D:\Priti\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.dll
 D:\Priti\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.pdb
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\UtilityLayer.pdb
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\BusinessLogicLayer.dll
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\EntityLayer.dll
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\DataAccessLayer.dll
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\Aspose.Pdf.Kit.dll
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\Ionic.Zip.dll
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\BusinessLogicLayer.pdb
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\EntityLayer.pdb
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\DataAccessLayer.pdb
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.AssemblyReference.cache
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CoreCompileInputs.cache
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CopyComplete
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.dll
+D:\GITV22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.pdb

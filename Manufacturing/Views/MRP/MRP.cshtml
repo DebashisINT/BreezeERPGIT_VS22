@@ -1,4 +1,9 @@
-﻿@using System.Web.UI.WebControls
+﻿@*====================================================Revision History=========================================================================
+     1.0  Priti   V2.0.36    23-01-2023  0025610:MRP Close Feature required
+    ====================================================End Revision History=====================================================================*@
+
+
+@using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
 @model Manufacturing.Models.ViewModel.BOMEntryModel.BOMEntryViewModel
@@ -15,16 +20,55 @@
     #LineProductionDetailsList_DXStatus {
         display: none;
     }
-
-   
 </style>
 
 <script>
+   /* REV 1.0*/
+    function ClosedMRPData(detailsid) {
+        if (parseInt(detailsid) > 0) {
+            jConfirm('Do you want to close the MRP ?', 'Alert!', function (r) {
+                if (r) {
+                    $('#hdndetailsid').val(parseInt(detailsid));
+                    $('#ClosedModal').modal('show');
+                }
+            });
+        }
+    }
+     function ClosedMRP() {
+        var txtClosedMRPRemarks = $('#txtClosedMRPRemarks').val();
+        var detailsid = $('#hdndetailsid').val();
+        if (txtClosedMRPRemarks != "" && parseInt(detailsid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ClosedMRPDataByID", "MRP")",
+                data: { detailsid: detailsid, ClosedMRPRemarks: txtClosedMRPRemarks },
+                success: function (response) {
+                    if (response != null) {
+                        if (response.Success) {
+                            $('#ClosedModal').modal('hide');
+                            jAlert("MRP closed successfully");
+                            gridBOMList.Refresh();
+                            gridBOMList.Refresh();
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                            return false;
+                        }
+                    }
+                }
+            });
+        }
+        else {
+            jAlert("Please enter Remarks to close BOM!");
+            return false;
+        }
+    }
+    /* END REV 1.0*/
     var globalrowindex = 0;
     function gridclick(s, e) {
         globalrowindex = e.visibleIndex;
     }
-   
+
     function OnclickAddBOMRelation() {
         var url = "/MRP/MRPAdd?ActionType=ADD";
         window.location.href = url;
@@ -45,25 +89,25 @@
     }
     function OnclickPreviewLineItems(detailsid) {
         if (parseInt(detailsid) > 0) {
-        
+
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("SetMRPID", "MRP")",
                 data: { Details_ID: parseInt(detailsid) },
                 success: function (response) {
 
-              
+
                 $('#PreviewLineItemsModal').modal('show');
-              
+
                 setTimeout(function () {
                     LineProductionDetailsList.Refresh();
                 }, 500);
-               
+
             }
         });
         }
     }
-    
+
 
     function ClosedBOMData(detailsid) {
         if (parseInt(detailsid) > 0) {
@@ -117,14 +161,14 @@
         }
     }
 
-    function ClosedBOM() {
-        var txtClosedBOMRemarks = $('#txtClosedBOMRemarks').val();
+    @*function ClosedBOM() {
+        var txtClosedMRPRemarks = $('#txtClosedMRPRemarks').val();
         var detailsid = $('#hdndetailsid').val();
-        if (txtClosedBOMRemarks != "" && parseInt(detailsid) > 0) {
+        if (txtClosedMRPRemarks != "" && parseInt(detailsid) > 0) {
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("ClosedBOMDataByID", "BOMEntry")",
-                data: { detailsid: detailsid, ClosedBOMRemarks: txtClosedBOMRemarks },
+                data: { detailsid: detailsid, ClosedBOMRemarks: txtClosedMRPRemarks },
                 success: function (response) {
                     if (response != null) {
                         if (response.Success) {
@@ -145,7 +189,7 @@
             jAlert("Please enter Remarks to close BOM!");
             return false;
         }
-    }
+    }*@
 
 
     function RemoveBOMData(detailsid) {
@@ -441,13 +485,13 @@
 <div class="mainarea form_main">
 
     @*<input type="hidden" value="@Url.Action("Index", "BOMEntry")" id="hdnBOMAddUpdate" />
-    <input type="hidden" value="@Url.Action("AttachmentDocument", "Attachment", new { module = "BOM" })" id="hdnAttachmentDocument" />*@
+        <input type="hidden" value="@Url.Action("AttachmentDocument", "Attachment", new { module = "BOM" })" id="hdnAttachmentDocument" />*@
     <input type="hidden" id="hdnBOMNo" />
     @*<div>
-        @{
-            Html.RenderAction("AttachmentDocument", "Attachment", new { module = "BillOfMaterials", DocNo = "" });
-        }
-    </div>*@
+            @{
+                Html.RenderAction("AttachmentDocument", "Attachment", new { module = "BillOfMaterials", DocNo = "" });
+            }
+        </div>*@
 
 
 
@@ -461,11 +505,11 @@
                         @if (ViewBag.CanAdd)
                         {
                             @*<button type="button" id="btnAddNew" class="btn btn-success btn-radius" onclick="location.href='@Url.Action("MRPAdd", "MRP")'"><span class="btn-icon"><i class="fa fa-plus"></i></span><u>A</u>dd New</button>*@
-                           <button type="button" id="btnAddNew" class="btn btn-success  btn-radius" onclick="OnclickAddBOMRelation();">
-                               <span class="btn-icon"><i class="fa fa-plus"></i></span>MRP
-                           </button>
-                        
-                        
+                            <button type="button" id="btnAddNew" class="btn btn-success  btn-radius" onclick="OnclickAddBOMRelation();">
+                                <span class="btn-icon"><i class="fa fa-plus"></i></span>MRP
+                            </button>
+
+
                         }
                         <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
                             <option value="0">Export to</option>
@@ -615,6 +659,35 @@
         </div>
     </div>
 
-  
-    
+    @*REV 1.0*@
+    <!-- Closed Modal -->
+    <div class="modal fade pmsModal w30" id="ClosedModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Close MRP</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="detailsarea">
 
+                        <input type="hidden" id="hdndetailsid" value="0" />
+
+                        <div>
+                            <label>Remarks <span style="color:red">*</span></label>
+
+                            <textarea id="txtClosedMRPRemarks" class="textareaBig"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" id="btnDegOK" class="btn btn-success btn-radius" onclick="ClosedMRP()">Ok</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Closed Modal -->
+    @*END REV 1.0*@

@@ -10,3 +10,9 @@ D:\Priti\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.AssemblyRefe
 D:\Priti\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache
 D:\Priti\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.dll
 D:\Priti\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.pdb
+D:\GITV22\BreezeERPGIT_VS22\EntityLayer\bin\Debug\EntityLayer.dll
+D:\GITV22\BreezeERPGIT_VS22\EntityLayer\bin\Debug\EntityLayer.pdb
+D:\GITV22\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.AssemblyReference.cache
+D:\GITV22\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache
+D:\GITV22\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.dll
+D:\GITV22\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.pdb
