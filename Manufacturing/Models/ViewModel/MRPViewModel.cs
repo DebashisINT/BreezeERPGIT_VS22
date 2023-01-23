@@ -1,4 +1,9 @@
-﻿using System;
+﻿//==================================================== Revision History =========================================================================
+// 1.0  Priti V2.0.36    23-01-2023  0025610:MRP Close Feature required
+//====================================================End Revision History=====================================================================
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -75,7 +80,10 @@ namespace Manufacturing.Models.ViewModel
             public String MPS_ID { get; set; }
 
             public String FG_ID { get; set; }
-        }
+            
+            public String Status { get; set; }//REV 1.0
+
+    }
      
         public class MRPProduct
         {

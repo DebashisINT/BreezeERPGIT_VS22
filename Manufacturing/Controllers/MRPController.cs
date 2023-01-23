@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿//==================================================== Revision History =========================================================================
+// 1.0  Priti V2.0.36    23-01-2023  0025610:MRP Close Feature required
+//====================================================End Revision History=====================================================================
+
+using BusinessLogicLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
@@ -971,6 +975,9 @@ namespace Manufacturing.Controllers
                       //  obj.BOMRelationshipID = Convert.ToString(item["BOMRelation_ID"]);
                         obj.BOMRelationshipNo = Convert.ToString(item["BOMRelation_No"]);
                         obj.UOM_Name =Convert.ToString(item["UOM_Name"]);
+                        // REV 1.0
+                        obj.Status = Convert.ToString(item["Status"]);
+                        //END REV 1.0
                         list.Add(obj);
                     }
                 }
@@ -980,7 +987,10 @@ namespace Manufacturing.Controllers
             ViewBag.CanView = rights.CanView;
             ViewBag.CanEdit = rights.CanEdit;
             ViewBag.CanDelete = rights.CanDelete;
-           // ViewBag.CanAddUpdateDocuments = rights.CanAddUpdateDocuments;
+            // REV 1.0
+            ViewBag.CanClose = rights.CanClose;
+            //END REV 1.0
+            // ViewBag.CanAddUpdateDocuments = rights.CanAddUpdateDocuments;
 
             return PartialView("~/Views/MRP/MRPList.cshtml", list);
         }
@@ -1648,10 +1658,12 @@ namespace Manufacturing.Controllers
                         {
                             obj.ModifyDate = null;
                         }
-                        //obj.ModifyDate = Convert.ToDateTime(item["ModifyDate"]);
-                        //  obj.BOMRelationshipID = Convert.ToString(item["BOMRelation_ID"]);
+                        
                         obj.BOMRelationshipNo = Convert.ToString(item["BOMRelation_No"]);
                         obj.UOM_Name = Convert.ToString(item["UOM_Name"]);
+                        //REV 1.0
+                        obj.Status = Convert.ToString(item["Status"]);
+                        //END REV 1.0
                         list.Add(obj);
                     }
                 }
@@ -1661,6 +1673,9 @@ namespace Manufacturing.Controllers
             ViewBag.CanView = rights.CanView;
             ViewBag.CanEdit = rights.CanEdit;
             ViewBag.CanDelete = rights.CanDelete;
+            //REV 1.0
+            ViewBag.CanClose = rights.CanClose;
+            //END REV 1.0
             // ViewBag.CanAddUpdateDocuments = rights.CanAddUpdateDocuments;
 
             return PartialView("~/Views/MRP/MRPList.cshtml", list);
@@ -1828,6 +1843,30 @@ namespace Manufacturing.Controllers
 
             return settings;
         }
-	}
+
+        //REV 1.0
+
+        [WebMethod]
+        public JsonResult ClosedMRPDataByID(Int32 detailsid, String ClosedMRPRemarks = "")
+        {
+            ReturnData obj = new ReturnData();
+            try
+            {
+                var datasetobj = objdata.DropDownDetailForBOM("ClosedMRPData", null, null, null, 0, detailsid, ClosedMRPRemarks);
+                if (datasetobj.Tables[0].Rows.Count > 0)
+                {
+
+                    foreach (DataRow item in datasetobj.Tables[0].Rows)
+                    {
+                        obj.Success = Convert.ToBoolean(item["Success"]);
+                        obj.Message = Convert.ToString(item["Message"]);
+                    }
+                }
+            }
+            catch { }
+            return Json(obj);
+        }
+        //END REV 1.0
+    }
     
 }

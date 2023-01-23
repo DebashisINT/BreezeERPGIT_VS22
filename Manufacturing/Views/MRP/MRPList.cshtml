@@ -1,4 +1,9 @@
-﻿@Html.DevExpress().GridView(settings =>
+﻿@*====================================================Revision History=========================================================================
+ 1.0  Priti   V2.0.36    23-01-2023  0025610:MRP Close Feature required
+====================================================End Revision History=====================================================================*@
+
+
+@Html.DevExpress().GridView(settings =>
 {
     settings.Name = "gridBOMList";
 
@@ -114,7 +119,7 @@
         x.FixedStyle = GridViewColumnFixedStyle.Left;
     });
 
-    
+
 
     settings.Columns.Add(x =>
     {
@@ -166,7 +171,7 @@
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
     });
 
-    
+
 
     settings.Columns.Add(x =>
     {
@@ -192,10 +197,10 @@
 
     });
 
-   
 
-    
-    
+
+
+
     settings.Columns.Add(x =>
     {
         x.FieldName = "CreatedBy";
@@ -261,32 +266,45 @@
         //End of Rev Maynak
     });
 
+    //REV 1.0
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Status";
+        x.Caption = "Status";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(70);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.CellStyle.CssClass = "statuscell";
 
-    
+    });
 
+    //END REV 1.0
     settings.ClientSideEvents.RowClick = "gridRowclick";
 
-    //settings.HtmlDataCellPrepared += (s, e) =>
-    //{
+    //REV 1.0
+    settings.HtmlDataCellPrepared += (s, e) =>
+    {
 
-    //    if (e.DataColumn.Caption == "Status")
-    //    {
-    //        var buttonHtml = "";
-    //        if (Convert.ToString(e.CellValue) == "Closed")
-    //        {
-    //            buttonHtml = string.Format(" <span class='ClosedRowBOM'>" + e.CellValue + "</span>");
-    //        }
-    //        else
-    //        {
-    //            buttonHtml = string.Format(" <span>" + e.CellValue + "</span>");
-    //        }
+        if (e.DataColumn.Caption == "Status")
+        {
+            var buttonHtml = "";
+            if (Convert.ToString(e.CellValue) == "Closed")
+            {
+                buttonHtml = string.Format(" <span class='ClosedRowBOM'>" + e.CellValue + "</span>");
+            }
+            else
+            {
+                buttonHtml = string.Format(" <span>" + e.CellValue + "</span>");
+            }
 
-    //        e.Cell.ID = "StatusBOM";
+            e.Cell.ID = "StatusBOM";
 
-    //        e.Cell.Text = buttonHtml;
-    //    }
-    //};
-
+            e.Cell.Text = buttonHtml;
+        }
+    };
+    //END REV 1.0
 
     settings.Columns.Add(x =>
     {
@@ -311,31 +329,23 @@
                 EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"OpenBOMData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "MRP_ID")) + "')\"><span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>";
             }
 
-            //if (Convert.ToString(DataBinder.Eval(c.DataItem, "Status")) != "Closed")
-            //{
-            //    EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"ClosedBOMData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "')\"><span class='ico deleteColor'><i class='fa fa-times'></i></span><span class='hidden-xs'>Close </span></a>";
-            //}
+
             if (ViewBag.CanDelete)
             {
                 EnqRights = EnqRights +
                     "<a style='cursor:pointer; ' onclick=\"RemoveBOMData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "MRP_ID")) + "')\"><span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>";
             }
-            //EnqRights = EnqRights + "<a style='cursor:pointer' title='print' onclick=\"onPrintJv('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "','" + c.VisibleIndex.ToString() + "')\"><span class='ico ColorSeven'><i class='fa fa-print'></i></span><span class='hidden-xs'>Print</span></a>";
-            //if (ViewBag.CanAddUpdateDocuments)
-            //{
-            //    EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"OnclickViewAttachment('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "')\"><span class='ico ColorSix'><i class='fa fa-paperclip'></i></span><span class='hidden-xs'>View Attachment</span></a>";
-            //}
-            //if (Convert.ToString(DataBinder.Eval(c.DataItem, "Status")) != "Closed")
-            //{
-            //    EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"StandardCostData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "','" + Convert.ToString(DataBinder.Eval(c.DataItem, "BOMNo")) + "')\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>Show Standard Cost </span></a>";
-            //}
-            //if (Convert.ToString(DataBinder.Eval(c.DataItem, "Status")) != "Closed")
-            //{
-            //    EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"ActualCostData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "DetailsID")) + "','" + Convert.ToString(DataBinder.Eval(c.DataItem, "BOMNo")) + "')\"><span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>Show Actual Cost </span></a>";
-            //}
-
+            //REV 1.0
+            if (ViewBag.CanClose)
+            {
+                if (Convert.ToString(DataBinder.Eval(c.DataItem, "Status")) != "Closed")
+                {
+                    EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"ClosedMRPData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "MRP_ID")) + "')\"><span class='ico deleteColor'><i class='fa fa-times'></i></span><span class='hidden-xs'>Close </span></a>";
+                }
+            }
+            //END REV 1.0
             EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"OnclickPreviewLineItems('" + Convert.ToString(DataBinder.Eval(c.DataItem, "MRP_ID")) + "')\"><span class='ico ColorSix'><i class='fa fa-paperclip'></i></span><span class='hidden-xs'>Preview Line Items</span></a>";
-           
+
             EnqRights = EnqRights + "</div>";
             ViewContext.Writer.Write(EnqRights);
         });
