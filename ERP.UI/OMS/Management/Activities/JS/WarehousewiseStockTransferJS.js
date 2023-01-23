@@ -1,4 +1,9 @@
-﻿var globalRowIndex;
+﻿//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36   23 - 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+//========================================== End Revision History =======================================================================================================
+
+
+var globalRowIndex;
 var saveNewOrExit = '';
 var canCallBack = true;
 var RowCount = 0;
@@ -1125,6 +1130,22 @@ function gridCustomButtonClick(s, e) {
             $('#hdnProductQuantity').val(QuantityValue);
 
 
+            //REV 1.0
+            if (grid.GetEditor("ProductID").GetValue() != "" && grid.GetEditor("ProductID").GetValue() != null) {
+                var SpliteDetails = ProductID.split("||@||");
+                var strProductID = SpliteDetails[0];
+                var sl = grid.GetEditor("SrlNo").GetValue();
+                var branch = $("#ddlBranch").val();
+                GETAVAILABLESTOCK(sl, strProductID, branch, SourceWarehouseID);
+            }
+            var Packing_UOM = SpliteDetails[9];
+            var sProduct_quantity = SpliteDetails[6];
+            var packing_quantity = SpliteDetails[5];
+            var htmlfactor = "";
+            htmlfactor = parseFloat(sProduct_quantity).toFixed(4) + " ";
+            htmlfactor = htmlfactor + " " + strUOM + " = " + parseFloat(packing_quantity).toFixed(4) + " " + Packing_UOM;
+            $('#lbluomfactor1').text(htmlfactor);
+            //END REV 1.0
             if (Ptype == "W") {
                 div_Warehouse.style.display = 'block';
                 div_Batch.style.display = 'none';
@@ -1275,12 +1296,18 @@ function CmbBatch_ValueChange() {
     var WarehouseID = cCmbWarehouse.GetValue();
     var BatchID = cCmbBatch.GetValue();
     var type = document.getElementById('hdfProductType').value;
-
+    var strProductID = $("#hdfProductID").val();
+    var sl = grid.GetEditor("SrlNo").GetValue();
+    var branch = $("#ddlBranch").val();
     if (type == "WBS") {
         checkListBox.PerformCallback('BindSerial~' + WarehouseID + '~' + BatchID);
     }
     else if (type == "BS") {
         checkListBox.PerformCallback('BindSerial~' + "0" + '~' + BatchID);
+    }
+
+    if (BatchID != null) {
+        GetWirehouseBatchWiseAviableStock(sl, strProductID, branch, WarehouseID, BatchID);
     }
 }
 function CmbBatchEndCall(s, e) {
@@ -2833,6 +2860,8 @@ function SetProduct(Id, code, name) {
     grid.GetEditor("Discription").SetText(ProductDescription);
 
 
+    
+
     if ($('#hdnWarehouseRepeatStockTransfer').val() == "1")
     {
         //grid.GetEditor("SourceWarehouseID").SetText("");
@@ -3442,3 +3471,57 @@ function PerformCallToGridBind() {
     }
 }
 
+//REV 1.0
+var cpstockVal;
+function GETAVAILABLESTOCK(sl, strProductID, branch, WarehouseID) {
+
+   
+    grid.batchEditApi.StartEdit(globalRowIndex);
+   
+
+    $.ajax({
+        type: "POST",
+        url: "WarehousewiseStockTransferAdd.aspx/getWarehousewisestock",
+        data: JSON.stringify({ sl: sl, strProductID: strProductID, branch: branch, WarehouseID: WarehouseID }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+
+            cpstockVal = msg.d;
+            divpopupAvailableStock.style.display = "block";            
+            document.getElementById('lblAvailableStock').innerHTML = cpstockVal;        
+           
+            document.getElementById('lblAvailableStockUOM').innerHTML = document.getElementById('txt_StockUOM').innerHTML;
+            cpstockVal = null;
+            grid.batchEditApi.StartEdit(globalRowIndex, 5);
+            return false;
+
+
+        }
+    });
+}
+
+function GetWirehouseBatchWiseAviableStock(sl, strProductID, branch, WarehouseID, BatchID) {
+    grid.batchEditApi.StartEdit(globalRowIndex);
+
+    $.ajax({
+        type: "POST",
+        url: "WarehousewiseStockTransferAdd.aspx/getWarehouseBatchwisestock",
+        data: JSON.stringify({ sl: sl, strProductID: strProductID, branch: branch, WarehouseID: WarehouseID, BatchID: BatchID }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+            cpstockVal = msg.d;
+            divpopupAvailableStock.style.display = "block";
+            document.getElementById('lblAvailableStock').innerHTML = cpstockVal;
+
+            cpstockVal = null;
+            grid.batchEditApi.StartEdit(globalRowIndex, 5);
+            return false;
+        }
+    });
+}
+
+//END REV 1.0
