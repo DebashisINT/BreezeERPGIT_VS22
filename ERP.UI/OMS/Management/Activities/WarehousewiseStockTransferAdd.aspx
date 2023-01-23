@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockTransferAdd.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockTransferAdd" %>
+﻿<%--==========================================================Revision History ============================================================================================
+    1.0   Priti   V2.0.36   23 - 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+========================================== End Revision History =======================================================================================================--%>
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockTransferAdd.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockTransferAdd" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc1" TagName="UOMConversionControl" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -11,7 +16,7 @@
      <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
-   <script src="JS/WarehousewiseStockTransferJS.js?v=20.0"></script>
+   <script src="JS/WarehousewiseStockTransferJS.js?v=20.3"></script>
      <%--<script src="https://cdn3.devexpress.com/jslib/20.2.3/js/dx.all.js"></script>
     <link href="https://cdn3.devexpress.com/jslib/20.2.3/css/dx.common.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/20.2.3/css/dx.light.css" />--%>
@@ -1263,6 +1268,7 @@
                                             </table>
                                         </div>
                                     </li>
+                                   <%--START REV 1.0--%>
                                     <li>
                                         <div class="lblHolder" id="divpopupAvailableStock" style="display: none;">
                                             <table>
@@ -1281,6 +1287,23 @@
                                             </table>
                                         </div>
                                     </li>
+                                    <li>
+                                        <div class="lblHolder" id="divuom">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><span><b>UOM Conversion: </b></span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>                                                           
+                                                            <asp:Label ID="lbluomfactor1" runat="server"></asp:Label>                                                           
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </li>
+                                  <%--  END REV 1.0--%>
                                     <li style="display: none;">
                                         <div class="lblHolder">
                                             <table>

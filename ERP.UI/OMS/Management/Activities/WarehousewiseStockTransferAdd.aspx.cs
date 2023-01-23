@@ -1,4 +1,8 @@
-﻿using System;
+﻿//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36   23 - 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+//========================================== End Revision History =======================================================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -4008,5 +4012,67 @@ namespace ERP.OMS.Management.Activities
 
             e.QueryableSource = q;
         }
+
+
+        //REV 1.0
+        #region Wirehousewise Aviable Stock
+        [WebMethod]
+        public static object getWarehousewisestock(string sl, string strProductID, string branch, string WarehouseID)
+        {
+            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+            string strBranch = Convert.ToString(branch);           
+            string cpstockVal = "0.00";
+            try
+            {
+                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableQuotationForWareHouseWiseStock(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + ") as branchopenstock");
+
+                if (dt2.Rows.Count > 0)
+                {
+                    cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
+                }
+                else
+                {
+                    cpstockVal = "0.00";
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return cpstockVal;
+        }
+
+        #endregion Wirehousewise Aviable Stock
+
+
+        #region Wirehousewise Batch Aviable Stock
+        [WebMethod]
+        public static object getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID)
+        {
+            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+
+            string strBranch = Convert.ToString(branch);
+            string cpstockVal = "0.00";
+
+            try
+            {
+                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
+
+                if (dt2.Rows.Count > 0)
+                {
+                    cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
+                }
+                else
+                {
+                    cpstockVal = "0.00";
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return cpstockVal;
+        }
+
+        #endregion Wirehousewise Batch Aviable Stock
+        //END REV 1.0
     }
 }
