@@ -1,4 +1,7 @@
-﻿using Manufacturing.Models.ViewModel.BOMEntryModel;
+﻿//@*==================================================== Revision History =========================================================================
+//     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+//====================================================End Revision History=====================================================================*@
+using Manufacturing.Models.ViewModel.BOMEntryModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,6 +100,11 @@ namespace Manufacturing.Models.ViewModel
         public String FinishedItemID { get; set; }
 
         public String WarehouseID { get; set; }
+        //REV 1.0
+        public String MRP_ID { get; set; }
+        public String MRP_No { get; set; }
+        public String MRPDate { get; set; }
+        //END REV 1.0
     }
 
     public class udtProductionIssueDetails
@@ -184,4 +192,13 @@ namespace Manufacturing.Models.ViewModel
 
         public String ViewExpiryDate { get; set; }
     }
+    //REV 1.0
+    public class MRPNOList
+    {
+        public long MRP_ID { get; set; }
+        public String MRP_No { get; set; }
+        public String MRP_Date { get; set; }
+
+    }
+    //END REV 1.0
 }

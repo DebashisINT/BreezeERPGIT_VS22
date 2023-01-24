@@ -1,7 +1,11 @@
-﻿using DataAccessLayer;
+﻿//@*==================================================== Revision History =========================================================================
+//     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+//====================================================End Revision History=====================================================================*@
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -94,7 +98,7 @@ namespace Manufacturing.Models
         public DataSet ProductionIssueBOMProductInsertUpdate(String action, Int64 ProductionIssueID, Int64 WorkOrderID, Int64 ProductionOrderID,Int64 Details_ID, Int64 WorkCenterID, String Issue_No, Int64 Issue_SchemaID, DateTime Issue_Date,
         Decimal Issue_Qty, Decimal TotalCost, Int64 BRANCH_ID, Int64 userid,String CompanyID,String FinYear,String Remarks,string PartNo,
             string WarehouseID,string FinishedItemID,
-            DataTable dtBOM_PRODUCTS,DataTable dtWarehouseFresh, DataTable dtWarehouse,string DocType)
+            DataTable dtBOM_PRODUCTS,DataTable dtWarehouseFresh, DataTable dtWarehouse,string DocType,string MRP_ID)
         {
             DataSet ds = new DataSet();
             ProcedureExecute proc = new ProcedureExecute("usp_ProductionIssueInsertUpdate");
@@ -123,17 +127,35 @@ namespace Manufacturing.Models
             foreach (DataRow dr in dtWarehouse.Rows)
             {
                 string _ViewMfgDate = Convert.ToString(dr["ViewMfgDate"]);
-                string ViewMfgDate = Convert.ToDateTime(_ViewMfgDate).ToString("yyyy-MM-dd");
-
-                DateTime ViewExpiryDate = Convert.ToDateTime(dr["ViewExpiryDate"]);
-
-                if (ViewMfgDate!=null)
+                if (_ViewMfgDate != "")
                 {
-                    dr["ViewMfgDate"] = ViewMfgDate;
-                }
-                if (ViewExpiryDate != null)
-                {
-                    dr["ViewExpiryDate"] = ViewExpiryDate.ToString("yyyy-MM-dd");
+                    string ViewMfgDate = Convert.ToDateTime(_ViewMfgDate).ToString("yyyy-MM-dd");
+
+                    DateTime ViewExpiryDate = Convert.ToDateTime(dr["ViewExpiryDate"]);
+
+
+                    //IFormatProvider culture = new CultureInfo("en-US", true);
+
+                    //string _ViewMfgDate = Convert.ToString(dr["ViewMfgDate"]);
+                    //DateTime dateVal4 = DateTime.ParseExact(_ViewMfgDate, "dd-MM-yyyy", culture);
+                    //string ViewMfgDate = dateVal4.ToString("yyyy-MM-dd");
+
+
+                    //string _ViewExpiryDate = Convert.ToString(dr["ViewExpiryDate"]);
+                    //DateTime dateVal5 = DateTime.ParseExact(_ViewExpiryDate, "dd-MM-yyyy", culture);
+                    //string ViewExpiryDate = dateVal5.ToString("yyyy-MM-dd");
+
+
+
+                    if (ViewMfgDate != null)
+                    {
+                        dr["ViewMfgDate"] = ViewMfgDate;
+                    }
+                    if (ViewExpiryDate != null)
+                    {
+                        dr["ViewExpiryDate"] = ViewExpiryDate.ToString("yyyy-MM-dd");
+                        //dr["ViewExpiryDate"] = ViewExpiryDate;
+                    }
                 }
                 
             }
@@ -148,8 +170,22 @@ namespace Manufacturing.Models
                 proc.AddPara("@UDTWAREHOUSE_DETAILSFresh", dtWarehouseFresh);
             }
             proc.AddPara("@DocType", DocType);
+            proc.AddPara("@MRP_ID", MRP_ID);//REV 1.0
+
             ds = proc.GetDataSet();
             return ds;
         }
+
+        //REV 1.0
+        public DataTable GetMRPNO(Int32 BRANCH)
+        {
+            DataTable ds = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("usp_ProductionIssueDataGet");
+            proc.AddVarcharPara("@ACTION", 500, "GetMRPNO");
+            proc.AddIntegerPara("@BRANCHID",BRANCH);
+            ds = proc.GetTable();
+            return ds;
+        }
+        //END REV 1.0
     }
 }

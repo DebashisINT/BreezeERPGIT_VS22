@@ -1,0 +1,72 @@
+﻿@*====================================================Revision History=========================================================================
+     1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+====================================================End Revision History=====================================================================*@
+@Html.DevExpress().GridLookup(
+    settings =>
+    {
+        settings.Properties.Caption = " ";
+        settings.Properties.CaptionCellStyle.CssClass = "hide";
+        settings.Name = "MRPGridLookup";
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "ProductionIssue", Action = "GetMRPNO" };
+        settings.KeyFieldName = "MRP_ID";
+        settings.Properties.EnableClientSideAPI = true;
+        settings.GridViewClientSideEvents.BeginCallback = "MRPStartCallback";
+        settings.Properties.ClientSideEvents.ValueChanged = "MRPSelectionChanged";
+       // settings.Properties.ClientSideEvents.DropDown = "MPSLookupValChange";
+        settings.Properties.TextFormatString = "{1}";
+
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+        settings.GridViewProperties.SettingsPager.EnableAdaptivity = true;
+        settings.GridViewProperties.SettingsPager.PageSize = 7;
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "MRP_ID";
+            column.Caption = "MRP ID";
+            column.Width = 0;
+            column.Visible = false;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "MRP_No";
+            column.Caption = "MRP No";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(150);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "MRP_Date";
+            column.Caption = "MRP Date";
+            column.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        });
+
+        settings.GridViewProperties.CallbackRouteValues = new { Controller = "ProductionIssue", Action = "GetMRPNO" };
+        settings.GridViewProperties.Settings.ShowFilterRow = true;
+        settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+        settings.GridViewClientSideEvents.SelectionChanged = "MRPSelectionChanged";
+        settings.DataBound = (sender, e) =>
+        {
+            var gridLookup = (MVCxGridLookup)sender;
+            gridLookup.GridView.Width = 600;
+        };
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.MPS_ID != null)
+            {
+                MVCxGridLookup l = s as MVCxGridLookup;
+                l.GridView.Selection.SelectRowByKey(ViewBag.MRP_ID);
+            }
+
+        };
+
+    }).BindList(Model).GetHtml()
+
+
+
+
+
+
+
+
