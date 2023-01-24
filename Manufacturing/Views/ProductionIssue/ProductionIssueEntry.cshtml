@@ -1,4 +1,9 @@
-﻿@using System.Web.UI.WebControls
+﻿@*====================================================Revision History=========================================================================
+         1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+    ====================================================End Revision History=====================================================================*@
+
+
+@using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
 @model Manufacturing.Models.ViewModel.ProductionIssueViewModel
@@ -268,7 +273,42 @@
 </script>
 
 <script>
+    //REV 1.0
+    function MRPStartCallback(s, e) {
+
+        e.customArgs["MPS_ID"] = '@ViewBag.MRP_ID';
+        if ('@ViewBag.Unit' != "") {
+            e.customArgs["Unit"] = '@ViewBag.Unit';
+        }
+        else {
+            e.customArgs["Unit"] = $('#ddlBankBranch option:selected').val();
+        }
+    }
+    var globalindexcheck = 0;
+    function MRPSelectionChanged(s, e) {
+        globalindexcheck = MRPGridLookup.GetGridView().GetFocusedRowIndex();
+        var MRPId = (MRPGridLookup.GetGridView().GetRowKey(MRPGridLookup.GetGridView().GetFocusedRowIndex()));
+        $('#hdnMRP_ID').val(MRPId);
+        var key = MRPGridLookup.gridView.GetRowKey(globalindexcheck)
+        if (key != null && globalindexcheck > -1) {
+            var MRPdate = MRPGridLookup.gridView.GetRow(globalindexcheck).children[1].innerHTML;
+            $('#MRPDate').val(MRPdate);
+        }
+
+    }
+    //END REV 1.0
     $(document).ready(function () {
+        //REV 1.0
+        if ('@ViewBag.ShowMRPTaggingIssueForProduction' == "Yes") {
+            $("#divMRPNo").removeClass("hidden");
+            $("#divMRPDate").removeClass("hidden");
+        }
+        else {
+            $("#divMRPNo").addClass("hidden");
+            $("#divMRPDate").addClass("hidden");
+        }
+        //END REV 1.0
+
         if ('@ViewBag.ProjectShow' == "Yes") {
             $("#divProj").removeClass("hidden");
         }
@@ -294,6 +334,15 @@
         else {
             $('#divHierarchy').addClass('hidden');
         }
+        //REV 1.0
+        //var hdnProductionIssueID = $('#hdnProductionIssueID').val();
+        //if (hdnProductionIssueID > 0)
+        //{
+        //    MRPGridLookup.GetGridView().Refresh();
+        //    MRPGridLookup.GetGridView().Refresh();
+        //}
+        //END REV 1.0
+
     });
     function AddRowKeyDown(s, e) {
         if (e.htmlEvent.key == "Enter") {
@@ -319,9 +368,9 @@
                     }
                 }
             });
-           
+
         }
-    
+
     }
     var DetailsID = 0;
     $(document).ready(function () {
@@ -348,6 +397,13 @@
         // var fromdate = (schemetypeValue.toString().split('~')[4] != null) ? schemetypeValue.toString().split('~')[4] : "";
         //var todate = (schemetypeValue.toString().split('~')[5] != null) ? schemetypeValue.toString().split('~')[5] : "";
 
+        //REV 1.0
+        if (branchID > 0) {
+            MRPGridLookup.gridView.UnselectRows(1);
+            MRPGridLookup.GetGridView().Refresh();
+            MRPGridLookup.GetGridView().Refresh();
+        }
+        //END REV 1.0
         if (schemetype == '0') {
             $('#Issue_No').removeAttr("disabled");
             $('#Issue_No').val('');
@@ -844,6 +900,7 @@
         var FinishedItemID = $('#FinishedItemID').val();
         var WarehouseID = $('#WarehouseID').val();
 
+        var MRP_ID = $('#hdnMRP_ID').val();//REV 1.0
 
         if (e != undefined) {
             e.customArgs["ProductionIssueID"] = ProductionIssueID;
@@ -863,6 +920,8 @@
             e.customArgs["PartNo"] = PartNO;
             e.customArgs["FinishedItemID"] = FinishedItemID;
             e.customArgs["WarehouseID"] = WarehouseID;
+            e.customArgs["MRP_ID"] = MRP_ID;//REV 1.0
+
 
         }
     }
@@ -922,7 +981,7 @@
                         Quantity: response[i].Quantity, SalesQuantity: response[i].SalesQuantity, Batch: response[i].Batch, ViewBatch: BatchName, SerialNo: response[i].SerialNo, //MfgDate: MfgDate, ExpiryDate: ExprieyDate, Rate: Rate,
                         //SerialNo: Serial, Barcode: "", ViewBatch: Batch, //ViewMfgDate: MfgDate, ViewExpiryDate: ExprieyDate, ViewRate: Rate,
                         IsOutStatus: response[i].IsOutStatus, IsOutStatusMsg: "", LoopID: response[i].LoopID, Status: response[i].Status, ProductID: response[i].ProductID
-                         , ViewMfgDate: response[i].MfgDate, ViewExpiryDate: response[i].ExpiryDate 
+                         , ViewMfgDate: response[i].MfgDate, ViewExpiryDate: response[i].ExpiryDate
                     }
                     StockOfProduct.push(ProductStock);
                 }
@@ -2048,8 +2107,8 @@
                 var ExpiryDate = data.split("~")[1];
 
                 $('#hdfMfgDate').val(MfgDate);
-                $('#hdfExpiryDate').val(ExpiryDate);             
-                
+                $('#hdfExpiryDate').val(ExpiryDate);
+
             }
         });
     }
@@ -2518,7 +2577,12 @@
 @*<input type="hidden" id="hdnProductionOrderID" />*@
 @*End of rev Pratik*@
 <input type="hidden" value="@Model.Details_ID" id="hdnDetailsID" />
+@*REV 1.0*@
+<input type="hidden" value="@Model.MRP_ID" id="hdnMRP_ID" />
+<input type="hidden" value="@Model.ProductionIssueID" id="hdnProductionIssueID" />
 
+
+@*END REV 1.0*@
 <div class="boxBorder">
     <div class="styledBox">
         <div class="row">
@@ -2696,8 +2760,24 @@
                 <label class="mtop10">Drawing Rev. No:</label>
                 @Html.TextBoxFor(m => m.ItemRevNo, new { @class = "form-control", @disabled = "disabled" })
             </div>
-
         </div>
+        @*REV 1.0*@
+        <div class="row">
+            <div class=" col-sm-2" id="divMRPNo">
+                <label class="mtop10">MRP No. </label>
+                <div class="relative">
+                    @Html.Action("GetMRPNO", "ProductionIssue", new { @class = "form-control", MRP_ID = ViewBag.MRP_ID, Branchs = ViewBag.Unit })
+
+                </div>
+            </div>
+            <div class=" col-sm-2" id="divMRPDate">
+                <label class="mtop10">MRP Date </label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.MRPDate, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        @*END REV 1.0*@
         <div class="row">
             <div class=" col-sm-2" id="divProj">
                 <label class="mtop10">Project Code:</label>

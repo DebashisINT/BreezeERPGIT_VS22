@@ -1,4 +1,7 @@
-﻿using BusinessLogicLayer;
+﻿//@*==================================================== Revision History =========================================================================
+//     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+//====================================================End Revision History=====================================================================*@
+using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -13,6 +16,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using UtilityLayer;
 
 namespace Manufacturing.Controllers
 {
@@ -58,6 +62,8 @@ namespace Manufacturing.Controllers
             string ProjectSelectInEntryModule = cSOrder.GetSystemSettingsResult("ProjectSelectInEntryModule");
             string HierarchySelectInEntryModule = cSOrder.GetSystemSettingsResult("Show_Hierarchy");
             string ProductionOrderShowNoOutstanding = cSOrder.GetSystemSettingsResult("ProductionOrderShowNoOutstanding");
+            string IsMRPTaggingIssueForProduction = cSOrder.GetSystemSettingsResult("IsMRPTaggingIssueForProduction");//REV 1.0
+
             if (!String.IsNullOrEmpty(HierarchySelectInEntryModule))
             {
                 if (HierarchySelectInEntryModule.ToUpper().Trim() == "YES")
@@ -158,7 +164,14 @@ namespace Manufacturing.Controllers
                                 obj.Hierarchy = Convert.ToString(row["HIERARCHY_NAME"]);
                                 obj.FinishedItemID = Convert.ToString(row["Finished_ProductID"]);
                                 obj.WarehouseID = Convert.ToString(row["WarehouseID"]);
+                                
                                 TempData["DetailsID"] = Convert.ToString(row["Details_ID"]);
+
+
+                                obj.MRP_ID = Convert.ToString(row["MRP_ID"]);
+                                obj.MRPDate = Convert.ToString(row["MRPDate"]);
+                                ViewBag.MRP_ID = Convert.ToString(row["MRP_ID"]);
+                                ViewBag.Unit = Convert.ToString(row["BRANCH_ID"]);
                             }
                         }
                     }
@@ -190,6 +203,7 @@ namespace Manufacturing.Controllers
             ViewBag.ProjectShow = ProjectSelectInEntryModule;
             ViewBag.WorkOrderModuleSkipped = WorkOrderModuleSkipped;
             ViewBag.POShowNoOutstanding = ProductionOrderShowNoOutstanding;
+            ViewBag.ShowMRPTaggingIssueForProduction = IsMRPTaggingIssueForProduction;//REV 1.0
             TempData["Count"] = 1;
             TempData.Keep();
 
@@ -1028,7 +1042,7 @@ namespace Manufacturing.Controllers
                     dt = objPI.ProductionIssueBOMProductInsertUpdate("INSERTPIBOM", obj2.ProductionIssueID, WorkOrderID, obj2.ProductionOrderID, obj2.Details_ID, Convert.ToInt64(obj2.WorkCenterID), JVNumStr, obj2.Issue_SchemaID, Convert.ToDateTime(obj2.Issue_Date),
                         obj2.Issue_Qty, obj2.TotalCost, obj2.BRANCH_ID, Convert.ToInt64(Session["userid"]), Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]),
                         obj2.strRemarks,obj2.PartNo,obj2.WarehouseID,obj2.FinishedItemID,
-                        dtBOM_PRODUCTS, dtWarehouseFresh, dtWarehouse, DocType);
+                        dtBOM_PRODUCTS, dtWarehouseFresh, dtWarehouse, DocType,obj2.MRP_ID);
                 }
                 Session["PIssue_WarehouseData"] = null;
                 //else
@@ -1668,5 +1682,37 @@ namespace Manufacturing.Controllers
             return Json(obj);
         }
 
+        //REV 1.0
+        public ActionResult GetMRPNO(ProductionIssueViewModel model, string MRP_ID, string Branchs)
+        {
+            try
+            {
+                Int32 Branch = 0;
+                if (model.Unit != null && model.Unit !=0)
+                {
+                    Branch = Convert.ToInt32(model.Unit);
+                }
+                else
+                {
+                    Branch = Convert.ToInt32(Branchs);
+                }
+
+                DataTable dtMRP = new DataTable();
+
+                dtMRP = objPI.GetMRPNO(Branch);
+
+                List<MRPNOList> modelMRP = new List<MRPNOList>();
+                modelMRP = APIHelperMethods.ToModelList<MRPNOList>(dtMRP);
+                ViewBag.MRP_ID = MRP_ID;
+
+
+                return PartialView("~/Views/ProductionIssue/_PartialMRPNO.cshtml", modelMRP);
+            }
+            catch
+            {
+                return RedirectToAction("Logout", "Login", new { Area = "" });
+            }
+        }
+        //END REV 1.0
     }
 }
