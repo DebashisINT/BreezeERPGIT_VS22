@@ -1,5 +1,6 @@
 ﻿@*====================================================Revision History=========================================================================
      1.0  Priti   V2.0.36    23-01-2023  0025610:MRP Close Feature required
+     2.0  Pallab  V2.0.36    24-01-2023  0025610:MRP Close Feature required(red through line issue fix)
     ====================================================End Revision History=====================================================================*@
 
 
@@ -15,11 +16,19 @@
 
 <link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
 <script src="~/Scripts/SearchPopup.js"></script>
-<link href="~/Views/BOM/BOMEntry/BOMEntryList.css" rel="stylesheet" />
+@*Rev 2.0*@
+@*<link href="~/Views/BOM/BOMEntry/BOMEntryList.css" rel="stylesheet" />*@
+<link href="~/assests/css/ManufacturingCSS/BOMEntryList.css" rel="stylesheet" />
+@*Rev end 2.0*@
 <style>
     #LineProductionDetailsList_DXStatus {
         display: none;
     }
+    /*Rev 2.0*/
+    .gridHeadersec {
+        margin-bottom: 10px;
+    }
+    /*Rev end 2.0*/
 </style>
 
 <script>
