@@ -53,7 +53,7 @@
         };
         settings.PreRender = (s, e) =>
         {
-            if (ViewBag.MPS_ID != null)
+            if (ViewBag.MRP_ID != null)
             {
                 MVCxGridLookup l = s as MVCxGridLookup;
                 l.GridView.Selection.SelectRowByKey(ViewBag.MRP_ID);
