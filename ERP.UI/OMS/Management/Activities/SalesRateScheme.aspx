@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesRateScheme.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesRateScheme" %>
+﻿<%--========================================================== Revision History ============================================================================================
+1.0   Priti V2.0.36   31-01-2023    0025507:An error message is appearing while modifying Sales rate scheme
+========================================== End Revision History =======================================================================================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesRateScheme.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesRateScheme" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -32,6 +36,14 @@
         }
     </style>
     <script>
+        //REV 1.0
+        $(function () {
+            cQuotationComponentPanel.PerformCallback('BINDEntity');
+        });
+        $(function () {
+            cQuotationComponentPanel.PerformCallback('BINDPRODUCT');
+        });
+        //REV 1.0 END
         /***Short cut key handling***/
         document.onkeydown = function (e) {
             if (event.keyCode == 83 && event.altKey == true) { //run code for Ctrl+S -- ie, Save & New  
@@ -56,7 +68,7 @@
             e.stopPropagation();
         }
         function clookup_entity_GotFocus() {
-            clookup_Entity.gridView.Refresh();
+            //clookup_Entity.gridView.Refresh();
             clookup_Entity.ShowDropDown();
             
             
@@ -949,7 +961,8 @@
                     title="Mandatory"></span>
             </div>
             <div class="clear"></div>
-            <%-- <div style="background: #f5f4f3; padding: 17px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">--%>
+            <%-- <div style="background: #f5f4f3; padding: 17px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+                 DataSourceID="EntityServerModeData" DataSourceID="EntityServerModeDataProduct"--%>
             <dxe:ASPxCallbackPanel runat="server" ID="ComponentQuotationPanel" ClientInstanceName="cQuotationComponentPanel" OnCallback="ComponentQuotationPanel_Callback">
                 <PanelCollection>
                     <dxe:PanelContent runat="server">
@@ -958,19 +971,20 @@
                             &nbsp;
                     <input type="checkbox" id="chkAll" onchange="AllCustCheck()" />
                             All
-                    <dxe:ASPxGridLookup ID="lookup_Entity" runat="server" ClientInstanceName="clookup_Entity" DataSourceID="EntityServerModeData" 
+                    <dxe:ASPxGridLookup ID="lookup_Entity" runat="server" ClientInstanceName="clookup_Entity" 
+                        OnDataBinding="lookup_Entity_DataBinding"                       
                         SelectionMode="Multiple" 
-                        KeyFieldName="cnt_internalid" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}" 
+                        KeyFieldName="CNT_INTERNALID" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}" 
                         AutoGenerateColumns="False" MultiTextSeparator=", ">
                         <Columns>
                             <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
-                            <dxe:GridViewDataColumn FieldName="Name" Visible="true" VisibleIndex="1" Caption="Entity Name" Settings-AutoFilterCondition="Contains" Width="200px">
+                            <dxe:GridViewDataColumn FieldName="NAME" Visible="true" VisibleIndex="1" Caption="Entity Name" Settings-AutoFilterCondition="Contains" Width="200px">
                             </dxe:GridViewDataColumn>
-                            <dxe:GridViewDataColumn FieldName="uniquename" Visible="true" VisibleIndex="2" Caption="Unique Id" Settings-AutoFilterCondition="Contains" Width="200px">
+                            <dxe:GridViewDataColumn FieldName="UNIQUENAME" Visible="true" VisibleIndex="2" Caption="Unique Id" Settings-AutoFilterCondition="Contains" Width="200px">
                             </dxe:GridViewDataColumn>
-                            <dxe:GridViewDataColumn FieldName="Billing" Visible="true" VisibleIndex="3" Caption="Address" Settings-AutoFilterCondition="Contains" Width="200px">
+                            <dxe:GridViewDataColumn FieldName="BILLING" Visible="true" VisibleIndex="3" Caption="Address" Settings-AutoFilterCondition="Contains" Width="200px">
                             </dxe:GridViewDataColumn>
-                            <dxe:GridViewDataColumn FieldName="Type" Visible="true" VisibleIndex="3" Caption="Type" Settings-AutoFilterCondition="Contains" Width="200px">
+                            <dxe:GridViewDataColumn FieldName="TYPE" Visible="true" VisibleIndex="3" Caption="Type" Settings-AutoFilterCondition="Contains" Width="200px">
                             </dxe:GridViewDataColumn>
                         </Columns>
                         <GridViewProperties Settings-VerticalScrollBarMode="Auto">
@@ -990,14 +1004,16 @@
                             <SettingsBehavior AllowFocusedRow="True" AllowSelectSingleRowOnly="false"></SettingsBehavior>
                             <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
                         </GridViewProperties>
-                        <ClientSideEvents GotFocus="clookup_entity_GotFocus" />
+                       <%-- <ClientSideEvents GotFocus="clookup_entity_GotFocus" />--%>
                         <%--LostFocus="Project_LostFocus" ValueChanged="ProjectValueChange"--%>
 
                         <ClearButton DisplayMode="Always">
                         </ClearButton>
                     </dxe:ASPxGridLookup>
-                            <dx:LinqServerModeDataSource ID="EntityServerModeData" runat="server" OnSelecting="EntityServerModeData_Selecting"
-                                ContextTypeName="ERPDataClassesDataContext" TableName="v_SaleRateLock_customerDetails" />
+                          <%--  REV 1.0--%>
+                            <%--<dx:LinqServerModeDataSource ID="EntityServerModeData" runat="server" OnSelecting="EntityServerModeData_Selecting"
+                                ContextTypeName="ERPDataClassesDataContext" TableName="v_SaleRateLock_customerDetails" />--%>
+                          <%--  REV 1.0 END--%>
                         </div>
                         <div class="col-md-2">
                             <label>Product <span class="red">*</span></label>
@@ -1005,15 +1021,15 @@
                     <input type="checkbox" id="chkAllProduct" onchange="AllProdCheck()" />
                             All
                   
-                    <dxe:ASPxGridLookup ID="lookup_Product" runat="server" ClientInstanceName="clookup_Product" DataSourceID="EntityServerModeDataProduct" SelectionMode="Multiple"
-                        KeyFieldName="sProductsID" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
+                    <dxe:ASPxGridLookup ID="lookup_Product" runat="server" ClientInstanceName="clookup_Product"  SelectionMode="Multiple"  OnDataBinding="lookup_Product_DataBinding"
+                        KeyFieldName="SPRODUCTSID" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
                         <Columns>
                             <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
-                            <dxe:GridViewDataColumn FieldName="Products_Name" Visible="true" VisibleIndex="1" Caption="Product Name" Settings-AutoFilterCondition="Contains" Width="200px">
+                            <dxe:GridViewDataColumn FieldName="PRODUCTS_NAME" Visible="true" VisibleIndex="1" Caption="Product Name" Settings-AutoFilterCondition="Contains" Width="200px">
                             </dxe:GridViewDataColumn>
-                            <dxe:GridViewDataColumn FieldName="Products_Description" Visible="true" VisibleIndex="2" Caption="Product Description" Settings-AutoFilterCondition="Contains" Width="200px">
+                            <dxe:GridViewDataColumn FieldName="PRODUCTS_DESCRIPTION" Visible="true" VisibleIndex="2" Caption="Product Description" Settings-AutoFilterCondition="Contains" Width="200px">
                             </dxe:GridViewDataColumn>
-                            <dxe:GridViewDataColumn FieldName="sProduct_MinSalePrice" Visible="true" VisibleIndex="3" Caption="Min Sale Price" Settings-AutoFilterCondition="Contains" Width="200px">
+                            <dxe:GridViewDataColumn FieldName="SPRODUCT_MINSALEPRICE" Visible="true" VisibleIndex="3" Caption="Min Sale Price" Settings-AutoFilterCondition="Contains" Width="200px">
                             </dxe:GridViewDataColumn>
                         </Columns>
                         <GridViewProperties Settings-VerticalScrollBarMode="Auto">
@@ -1039,8 +1055,10 @@
                         <ClearButton DisplayMode="Always">
                         </ClearButton>
                     </dxe:ASPxGridLookup>
-                            <dx:LinqServerModeDataSource ID="EntityServerModeDataProduct" runat="server" OnSelecting="EntityServerModeDataProduct_Selecting"
-                                ContextTypeName="ERPDataClassesDataContext" TableName="v_Product_SaleRateLock" />
+                          <%--  REV 1.0--%>
+                          <%--  <dx:LinqServerModeDataSource ID="EntityServerModeDataProduct" runat="server" OnSelecting="EntityServerModeDataProduct_Selecting"
+                                ContextTypeName="ERPDataClassesDataContext" TableName="v_Product_SaleRateLock" />--%>
+                          <%--  REV 1.0 END--%>
                         </div>
                     </dxe:PanelContent>
                 </PanelCollection>
