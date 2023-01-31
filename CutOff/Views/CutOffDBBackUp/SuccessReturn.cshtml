@@ -1,4 +1,9 @@
-﻿@{
+﻿﻿@*====================================================== Revision History ==========================================================*@
+@*Rev Number         DATE              VERSION          DEVELOPER           CHANGES*@
+@*1.0                31-01-2023        2.0.36           Pallab              Data Cutoff page design modification *@
+@*====================================================== Revision History ==========================================================*@
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,17 +16,21 @@
     }
 
     .itm {
-        width: 550px;
+        /*Rev 1.0*/
+        /*width: 550px;*/
+        width: 630px;
+        /*Rev end 1.0*/
     }
-
-        .itm .bordered {
-            border: 1px solid #d0d2c9;
-            border-radius: 20px;
-            min-height: 120px;
-            padding: 15px;
-            background: #f9f7f6;
-            box-shadow: 0 0 5px rgba(0,0,0,0.2);
-        }
+    /*Rev 1.0 : ".bordered" removed */
+    /*.itm .bordered*/
+    .itm {
+        border: 1px solid #d0d2c9;
+        border-radius: 20px;
+        min-height: 120px;
+        padding: 15px;
+        background: #f9f7f6;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
 
         .itm .hdr {
             font-weight: 500;
@@ -38,7 +47,7 @@
 
     <div class="itm">
         <h3 class="hdr">Year Ending CutOff</h3>
-        <div class="bordered">           
+        <div class="bordered">
             <div class="text-left mtop-2">
                 <div>@TempData["msg"]</div>
             </div>
