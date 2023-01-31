@@ -1,4 +1,9 @@
-﻿using ClosedXML.Excel;
+﻿//========================================================== Revision History ============================================================================================
+//    1.0   Priti V2.0.36   31-01-2023    0025507:An error message is appearing while modifying Sales rate scheme
+//========================================== End Revision History =======================================================================================================
+
+
+using ClosedXML.Excel;
 using DataAccessLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -29,6 +34,8 @@ namespace ERP.OMS.Management.Activities
         {
             if (!IsPostBack)
             {
+                Session["EntityData"]= null;//REV 1.0
+                Session["PRODUCTSDATA"] = null;//REV 1.0
                 Session["Datlog"] = null;
                 Fromdt.Date = DateTime.Now;
                 ToDate.Date = DateTime.Now;
@@ -358,46 +365,47 @@ namespace ERP.OMS.Management.Activities
             return listSaleRateLock;
 
         }
+        //REV 1.0
+        //protected void EntityServerModeDataProduct_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
+        //{
+        //    e.KeyExpression = "sProductsID";
 
-        protected void EntityServerModeDataProduct_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
-        {
-            e.KeyExpression = "sProductsID";
+        //    //string connectionString = ConfigurationManager.ConnectionStrings["crmConnectionString"].ConnectionString;
+        //    string connectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
 
-            //string connectionString = ConfigurationManager.ConnectionStrings["crmConnectionString"].ConnectionString;
-            string connectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
+        //    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
 
-            ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+        //    string Userid = Convert.ToString(HttpContext.Current.Session["userid"]);
+        //    BusinessLogicLayer.DBEngine BEngine = new BusinessLogicLayer.DBEngine();
 
-            string Userid = Convert.ToString(HttpContext.Current.Session["userid"]);
-            BusinessLogicLayer.DBEngine BEngine = new BusinessLogicLayer.DBEngine();
+        //    var q = from d in dc.v_Product_SaleRateLocks
+        //            orderby d.sProductsID descending
+        //            select d;
 
-            var q = from d in dc.v_Product_SaleRateLocks
-                    orderby d.sProductsID descending
-                    select d;
+        //    e.QueryableSource = q;
 
-            e.QueryableSource = q;
+        //}
 
-        }
+        //REV 1.0
+        //protected void EntityServerModeData_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
+        //{
+        //    e.KeyExpression = "cnt_internalid";
 
-        protected void EntityServerModeData_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
-        {
-            e.KeyExpression = "cnt_internalid";
+        //    //string connectionString = ConfigurationManager.ConnectionStrings["crmConnectionString"].ConnectionString;
+        //    string connectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
 
-            //string connectionString = ConfigurationManager.ConnectionStrings["crmConnectionString"].ConnectionString;
-            string connectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
+        //    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
 
-            ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+        //    string Userid = Convert.ToString(HttpContext.Current.Session["userid"]);
+        //    BusinessLogicLayer.DBEngine BEngine = new BusinessLogicLayer.DBEngine();
 
-            string Userid = Convert.ToString(HttpContext.Current.Session["userid"]);
-            BusinessLogicLayer.DBEngine BEngine = new BusinessLogicLayer.DBEngine();
+        //    var q = from d in dc.v_SaleRateLock_customerDetails
+        //            orderby d.Name //descending
+        //            select d;
+        //    e.QueryableSource = q;
 
-            var q = from d in dc.v_SaleRateLock_customerDetails
-                    orderby d.Name //descending
-                    select d;
-            e.QueryableSource = q;
-
-        }
-
+        //}
+        //REV 1.0 END
 
         public class SaleRateLock
         {
@@ -678,6 +686,8 @@ namespace ERP.OMS.Management.Activities
                 proc.AddVarcharPara("@SaleRateLockID", 10, HiddenSaleRateLockID.Value);
                 DataSet dtSaleRateLock = proc.GetDataSet();
 
+
+
                 foreach (DataRow val in dtSaleRateLock.Tables[2].Rows)
                 {
                     lookup_Entity.GridView.Selection.SelectRowByKey(Convert.ToString(val["ENTITY_CODE"]));
@@ -689,6 +699,45 @@ namespace ERP.OMS.Management.Activities
                 }
 
             }
+            //REV 1.0
+            else if (strSplitCommand == "BINDEntity")
+            {
+                ProcedureExecute proc = new ProcedureExecute("PRC_SaleRateScheme");
+                proc.AddVarcharPara("@Action", 50, "BINDEntity");
+                DataTable dtEntity = proc.GetTable();
+                if (dtEntity.Rows.Count > 0)
+                {
+                    Session["EntityData"] = dtEntity;
+                    lookup_Entity.DataSource = dtEntity;
+                    lookup_Entity.DataBind();
+                }
+                else
+                {
+                    Session["EntityData"] = dtEntity;
+                    lookup_Entity.DataSource = null;
+                    lookup_Entity.DataBind();
+                }
+            }
+
+            else if (strSplitCommand == "BINDPRODUCT")
+            {
+                ProcedureExecute proc = new ProcedureExecute("PRC_SaleRateScheme");
+                proc.AddVarcharPara("@Action", 50, "BINDPRODUCTS");
+                DataTable dtProduct = proc.GetTable();
+                if (dtProduct.Rows.Count > 0)
+                {
+                    Session["PRODUCTSDATA"] = dtProduct;
+                    lookup_Product.DataSource = dtProduct;
+                    lookup_Product.DataBind();
+                }
+                else
+                {
+                    Session["PRODUCTSDATA"] = dtProduct;
+                    lookup_Product.DataSource = null;
+                    lookup_Product.DataBind();
+                }
+            }
+            //REV 1.0 END
             //else if (strSplitCommand == "Products")
             //{
             //    ProcedureExecute proc = new ProcedureExecute("PRC_SaleRateScheme");
@@ -696,9 +745,28 @@ namespace ERP.OMS.Management.Activities
             //    proc.AddVarcharPara("@SaleRateLockID", 10, HiddenSaleRateLockID.Value);
             //    DataSet dtSaleRateLock = proc.GetDataSet();
 
-                
+
             //}
+
+
+
+        }
+        //REV 1.0
+        protected void lookup_Entity_DataBinding(object sender, EventArgs e)
+        {
+            if (Session["EntityData"] != null)
+            {
+                lookup_Entity.DataSource = (DataTable)Session["EntityData"];
+            }
         }
 
+        protected void lookup_Product_DataBinding(object sender, EventArgs e)
+        {
+            if (Session["PRODUCTSDATA"] != null)
+            {
+                lookup_Product.DataSource = (DataTable)Session["PRODUCTSDATA"];
+            }
+        }
+        //REV 1.0 END
     }
 }

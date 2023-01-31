@@ -204,7 +204,7 @@ function OpenPopUPApprovalStatus() {
     setTimeout(PendingApproval, 0);
     //Rev end Pallab/
   
-    PendingApproval();
+    //PendingApproval();
 
     ///REV 1.0 End
 }

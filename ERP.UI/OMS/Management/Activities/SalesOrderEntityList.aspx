@@ -361,9 +361,9 @@
         $(document).ready(function () {
             $("#btntransporter").hide();
             $(".dt - buttons").hide();
-
-            ShowApprovalWaiting();
             ApprovalButtonVisible();
+            ShowApprovalWaiting();
+           
         });
 
         function ShowApprovalWaiting() {
