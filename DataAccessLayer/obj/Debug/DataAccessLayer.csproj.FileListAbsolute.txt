@@ -16,3 +16,9 @@ D:\GITV22\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.Ass
 D:\GITV22\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
 D:\GITV22\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 D:\GITV22\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.AssemblyReference.cache
+D:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\PROJECTS\BreezeERPGIT_VS22\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

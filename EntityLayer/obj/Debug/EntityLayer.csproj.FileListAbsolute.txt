@@ -16,3 +16,9 @@ D:\GITV22\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.AssemblyRef
 D:\GITV22\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache
 D:\GITV22\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.dll
 D:\GITV22\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.pdb
+D:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\bin\Debug\EntityLayer.dll
+D:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\bin\Debug\EntityLayer.pdb
+D:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.AssemblyReference.cache
+D:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache
+D:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.dll
+D:\PROJECTS\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.pdb
