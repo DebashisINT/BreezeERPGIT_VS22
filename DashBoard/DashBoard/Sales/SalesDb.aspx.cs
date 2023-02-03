@@ -1,4 +1,9 @@
-﻿using System;
+﻿//====================================================== Revision History ==========================================================
+//Rev Number       DATE             VERSION          DEVELOPER           CHANGES
+//1.0              03-02-2023       2.0.36           Pallab              25579: Product Category wise & Product wise top 10 customer report required
+//====================================================== Revision History ==========================================================
+
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -106,7 +111,10 @@ namespace DashBoard.DashBoard.Sales
         }
 
         [WebMethod]
-        public static object GetTopNCustomer(string FromDtae, string toDate, string branchid, string Prodid)
+        //Rev 1.0
+        //public static object GetTopNCustomer(string FromDtae, string toDate, string branchid, string Prodid)
+        public static object GetTopNCustomer(string FromDtae, string toDate, string branchid, string Prodid, string ProdClass)
+        //Rev end 1.0
         {
             List<NameValue> CustList = new List<NameValue>();
             SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
@@ -117,6 +125,9 @@ namespace DashBoard.DashBoard.Sales
             com.Parameters.AddWithValue("@toDate", toDate);
             com.Parameters.AddWithValue("@BranchId", branchid);
             com.Parameters.AddWithValue("@Prodid", Prodid);
+            //Rev 1.0
+            com.Parameters.AddWithValue("@ProdClass", ProdClass);
+            //Rev end 1.0
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(com);
             da.Fill(dt);
