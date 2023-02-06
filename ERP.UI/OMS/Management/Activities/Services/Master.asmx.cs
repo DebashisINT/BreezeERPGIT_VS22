@@ -1,4 +1,6 @@
-﻿using BusinessLogicLayer;
+﻿//1.0   Priti V2.0.36   06-02-2023    0025645: Branch Requisition - While Adding a Product, the Search is not working properly
+
+using BusinessLogicLayer;
 using DataAccessLayer;
 //using DocumentFormat.OpenXml.Drawing.Charts;
 using ERP.Models;
@@ -2963,7 +2965,8 @@ namespace ERP.OMS.Management.Activities.Services
             if (HttpContext.Current.Session["userid"] != null)
             {
                 SearchKey = SearchKey.Replace("'", "''");
-                string Query = "Select Top 10 Products_ID,ProductsName,Products_Code,ProductsDescription,IsInventory,HSNSAC,ClassCode,BrandName From (select * from v_BranchRequisitionProductList";
+                //string Query = "Select Top 10 Products_ID,ProductsName,Products_Code,ProductsDescription,IsInventory,HSNSAC,ClassCode,BrandName From (select * from v_BranchRequisitionProductList";//1.0
+                string Query = "Select Top 250 Products_ID,ProductsName,Products_Code,ProductsDescription,IsInventory,HSNSAC,ClassCode,BrandName From (select * from v_BranchRequisitionProductList";
 
                 Query = Query + ") as tbl Where ProductsName like '%" + SearchKey + "%' OR Products_Code like '%" + SearchKey + "%'";
                 BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
@@ -2991,7 +2994,8 @@ namespace ERP.OMS.Management.Activities.Services
             if (HttpContext.Current.Session["userid"] != null)
             {
                 SearchKey = SearchKey.Replace("'", "''");
-                string Query = "Select Top 10 Products_ID,ProductsName,Products_Code,ProductsDescription,IsInventory,HSNSAC,ClassCode,BrandName From (select * from v_BranchRequisitionNonInventoryProductList";
+               // string Query = "Select Top 10 Products_ID,ProductsName,Products_Code,ProductsDescription,IsInventory,HSNSAC,ClassCode,BrandName From (select * from v_BranchRequisitionNonInventoryProductList";//1.0
+                string Query = "Select Top 250 Products_ID,ProductsName,Products_Code,ProductsDescription,IsInventory,HSNSAC,ClassCode,BrandName From (select * from v_BranchRequisitionNonInventoryProductList";
 
                 Query = Query + ") as tbl Where ProductsName like '%" + SearchKey + "%' OR Products_Code like '%" + SearchKey + "%'";
                 BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();

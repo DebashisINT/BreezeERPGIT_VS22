@@ -1,0 +1,8 @@
+Page :    http://localhost:7670/OMS/management/dailytask/frm_ManualBRSEntityListFetch.aspx
+Error Message : Exception of type 'System.Web.HttpUnhandledException' was thrown.
+Inner Message : System.NullReferenceException: Object reference not set to an instance of an object.
+   at ERP.OMS.MasterPage.ERP.Page_Load(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

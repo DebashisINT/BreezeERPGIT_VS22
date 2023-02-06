@@ -1,4 +1,9 @@
-﻿using BusinessLogicLayer;
+﻿//========================================================== Revision History ============================================================================================
+//   1.0   Priti V2.0.36    02-02-2023   0025262: Listing view upgradation required of Manual BRS of Accounts & Finance
+//========================================== End Revision History =======================================================================================================
+
+
+using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using EntityLayer.CommonELS;
@@ -16,6 +21,10 @@ using DevExpress.XtraPrinting;
 using DevExpress.Export;
 using ERP.Models;
 using System.Globalization;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using EO.Web;
+using static ERP.OMS.Management.Master.Mobileaccessconfiguration;
 
 namespace ERP.OMS.Management.DailyTask
 {
@@ -741,7 +750,7 @@ namespace ERP.OMS.Management.DailyTask
             string strToDate = Convert.ToString(hfToDate.Value);
             string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
             string DlvType = Convert.ToString(Request.QueryString["type"]);
-
+            int userid = Convert.ToInt32(Session["UserID"]);  //---- REV 1.0
             string lastCompany = Convert.ToString(HttpContext.Current.Session["LastCompany"]);
 
             List<int> branchidlist;
@@ -773,36 +782,57 @@ namespace ERP.OMS.Management.DailyTask
                     {
                         string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
                         branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
-
                         ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                        var q = from d in dc.v_FetchManualBRS_ListCs
-                                where d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate)
-                                && branchidlist.Contains(Convert.ToInt32(d.Account_Id))
 
+                        //----REV 1.0
+                        //var q = from d in dc.v_FetchManualBRS_ListCs
+                        //        where d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate)
+                        //        && branchidlist.Contains(Convert.ToInt32(d.Account_Id))
+
+                        //        select d;
+                        //e.QueryableSource = q;
+
+                        var q = from d in dc.MANUALBRSLISTCs
+                                where d.USERID == userid
+                                orderby d.SEQ descending
                                 select d;
                         e.QueryableSource = q;
+                        //----END REV 1.0
                     }
                     else
                     {
                         //branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
                         ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                        var q = from d in dc.v_FetchManualBRS_ListCs
-                                where
-                                d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate) &&
-                                    //branchidlist.Contains(Convert.ToInt32(d.Account_Id))
-                                (d.Account_Id == strBranchID)
+                        //----REV 1.0
+                        //var q = from d in dc.v_FetchManualBRS_ListCs
+                        //        where
+                        //        d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate) &&
+                        //            //branchidlist.Contains(Convert.ToInt32(d.Account_Id))
+                        //        (d.Account_Id == strBranchID)
+                        //        select d;
+                        //e.QueryableSource = q;
+                        var q = from d in dc.MANUALBRSLISTCs
+                                where d.USERID == userid
+                                orderby d.SEQ descending
                                 select d;
                         e.QueryableSource = q;
+                        //----END REV 1.0
                     }
                 }
                 else
                 {
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_FetchManualBRS_ListCs
-                            where d.Account_Id == ""
+                    //----REV 1.0
+                    //var q = from d in dc.v_FetchManualBRS_ListCs
+                    //        where d.Account_Id == ""
+                    //        select d;
+                    //e.QueryableSource = q;
+                    var q = from d in dc.MANUALBRSLISTCs
+                            where d.SEQ == 0
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
             }
             else if (CheckStatus == "U")
@@ -815,35 +845,55 @@ namespace ERP.OMS.Management.DailyTask
                         branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
 
                         ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                        var q = from d in dc.v_FetchManualBRS_ListUs
-                                where d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate)
-                                && branchidlist.Contains(Convert.ToInt32(d.Account_Id))
-                                orderby d.cashbank_CheckDate descending
+                        //----REV 1.0
+                        //var q = from d in dc.v_FetchManualBRS_ListUs
+                        //        where d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate)
+                        //        && branchidlist.Contains(Convert.ToInt32(d.Account_Id))
+                        //        orderby d.cashbank_CheckDate descending
+                        //        select d;
+                        //e.QueryableSource = q;
+                        var q = from d in dc.MANUALBRSLISTUs
+                                where d.USERID == userid
+                                orderby d.SEQ descending
                                 select d;
                         e.QueryableSource = q;
+                        //----END REV 1.0
                     }
                     else
                     {
                         //branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
                         ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                        var q = from d in dc.v_FetchManualBRS_ListUs
-                                where
-                                d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate) &&
-                                    //branchidlist.Contains(Convert.ToInt32(d.Account_Id))
-                                (d.Account_Id == strBranchID)
-                                orderby d.cashbank_CheckDate descending
+                        //----REV 1.0
+                        //var q = from d in dc.v_FetchManualBRS_ListUs
+                        //        where
+                        //        d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate) &&
+                        //            //branchidlist.Contains(Convert.ToInt32(d.Account_Id))
+                        //        (d.Account_Id == strBranchID)
+                        //        orderby d.cashbank_CheckDate descending
+                        //        select d;
+                        //e.QueryableSource = q;
+                        var q = from d in dc.MANUALBRSLISTUs
+                                where d.USERID == userid
+                                orderby d.SEQ descending
                                 select d;
                         e.QueryableSource = q;
+                        //----END REV 1.0
                     }
                 }
                 else
                 {
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_FetchManualBRS_ListUs
-                            where d.Account_Id == "-1"
+                    //----REV 1.0
+                    //var q = from d in dc.v_FetchManualBRS_ListUs
+                    //        where d.Account_Id == "-1"
+                    //        select d;
+                    //e.QueryableSource = q;
+                    var q = from d in dc.MANUALBRSLISTUs
+                            where d.SEQ == 0
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
             }
             else if (CheckStatus == "A")
@@ -856,40 +906,57 @@ namespace ERP.OMS.Management.DailyTask
                         branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
 
                         ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                        var q = from d in dc.v_FetchManualBRS_ListAs
-                                where d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate)
-                                && branchidlist.Contains(Convert.ToInt32(d.Account_Id))
-                                orderby d.cashbank_CheckDate descending
+                        //var q = from d in dc.v_FetchManualBRS_ListAs
+                        //        where d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate)
+                        //        && branchidlist.Contains(Convert.ToInt32(d.Account_Id))
+                        //        orderby d.cashbank_CheckDate descending
+                        //        select d;
+                        //e.QueryableSource = q;
+                        //----REV 1.0
+                        var q = from d in dc.MANUALBRSLISTAs
+                                where d.USERID == userid
+                                orderby d.SEQ descending
                                 select d;
                         e.QueryableSource = q;
+                        //----END REV 1.0
                     }
                     else
                     {
                         //branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
                         ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                        var q = from d in dc.v_FetchManualBRS_ListAs
-                                where
-                                d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate) &&
-                                    //branchidlist.Contains(Convert.ToInt32(d.Account_Id))
-                                (d.Account_Id == strBranchID)
-                                orderby d.cashbank_CheckDate descending
+                        //----REV 1.0
+                        //var q = from d in dc.v_FetchManualBRS_ListAs
+                        //        where
+                        //        d.cashbank_CheckDate >= Convert.ToDateTime(strFromDate) && d.cashbank_CheckDate <= Convert.ToDateTime(strToDate) &&
+                        //            //branchidlist.Contains(Convert.ToInt32(d.Account_Id))
+                        //        (d.Account_Id == strBranchID)
+                        //        orderby d.cashbank_CheckDate descending
+                        //        select d;
+                        //e.QueryableSource = q;
+                        var q = from d in dc.MANUALBRSLISTAs
+                                where d.USERID == userid
+                                orderby d.SEQ descending
                                 select d;
                         e.QueryableSource = q;
+                        //----END REV 1.0
                     }
                 }
                 else
                 {
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_FetchManualBRS_ListAs
-                            where d.Account_Id == "-1"
+                    //----REV 1.0
+                    //var q = from d in dc.v_FetchManualBRS_ListAs
+                    //        where d.Account_Id == "-1"
+                    //        select d;
+                    //e.QueryableSource = q;
+                    var q = from d in dc.MANUALBRSLISTAs
+                            where d.SEQ == 0
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
             }
-
-
-
         }
 
         [WebMethod]
@@ -949,5 +1016,72 @@ namespace ERP.OMS.Management.DailyTask
 
             return Convert.ToString(Amounts);
         }
+
+
+        //REV 1.0
+
+        protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        {
+            string returnPara = Convert.ToString(e.Parameter);
+            DateTime dtFrom;
+            DateTime dtTo;
+            dtFrom = Convert.ToDateTime(FormDate.Date);
+            dtTo = Convert.ToDateTime(toDate.Date);
+            string FROMDATE = dtFrom.ToString("yyyy-MM-dd");
+            string TODATE = dtTo.ToString("yyyy-MM-dd");
+            if (RdAll.Checked == true)
+            {
+                CheckStatus = "A";
+            }
+            else if (RdUnCleared.Checked == true)
+            {
+
+                CheckStatus = "U";
+
+            }
+            else if (RdCleared.Checked == true)
+            {
+                CheckStatus = "C";
+            }
+            string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            Task PopulateStockTrialDataTask = new Task(() => GetMANUALBRSdata(FROMDATE, TODATE, strBranchID, CheckStatus));
+            PopulateStockTrialDataTask.RunSynchronously();
+        }
+        public void GetMANUALBRSdata(string FROMDATE, string TODATE, string BRANCH_ID, string CheckStatus)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("PRC_MANUALBRS_LIST", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
+                cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                cmd.Parameters.AddWithValue("@FROMDATE", FROMDATE);
+                cmd.Parameters.AddWithValue("@TODATE", TODATE);
+                if (BRANCH_ID == "0")
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", Convert.ToString(Session["userbranchHierarchy"]));
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
+                }
+                cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
+                cmd.Parameters.AddWithValue("@ACTION", CheckStatus);
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+
+                cmd.Dispose();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        //END REV 1.0
     }
 }

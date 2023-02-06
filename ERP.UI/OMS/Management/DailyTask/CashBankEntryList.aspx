@@ -1,4 +1,9 @@
-﻿<%@ Page Title="Cash/Bank Voucher List" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CashBankEntryList.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.CashBankEntryList" %>
+﻿<%--=======================================================Revision History=========================================================================    
+    1.0 Priti   V2.0.36  02-02-2023     0025263: Listing view upgradation required of Cash/Bank Voucher of Accounts & Finance
+=========================================================End Revision History========================================================================--%>
+
+
+<%@ Page Title="Cash/Bank Voucher List" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CashBankEntryList.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.CashBankEntryList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -197,11 +202,23 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-                cGvCBSearch.Refresh();
+
+                //rev 1.0
+                // cGvCBSearch.Refresh();
+                $("#hFilterType").val("All");
+                cCallbackPanel.PerformCallback("");
+                 //end rev 1.0
+
+                
                 $("#drdExport").val(0);
 
             }
         }
+        //rev 1.0
+        function CallbackPanelEndCall(s, e) {
+            cCallbackPanel.Refresh();
+        }
+        //end rev 1.0
         function gridRowclick(s, e) {
             //alert('hi');          
             $('#gridcrmCampaign').find('tr').removeClass('rowActive');
@@ -620,10 +637,21 @@
     </div>
     <%--DEBASHIS--%>
 
-    <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+<asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
 <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
  
- <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
-    <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+<asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+<asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
 
+
+    <%--  REV 1.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
 </asp:Content>

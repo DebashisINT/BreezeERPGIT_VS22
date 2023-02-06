@@ -5080,4 +5080,130 @@
       <Column Name="PlaceOfSupply" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.JOURNALENTRYLIST" Member="JOURNALENTRYLISTs">
+    <Type Name="JOURNALENTRYLIST">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="JvID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="VoucherNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BillNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TransactionDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="JournalVoucher_TransactionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BranchNameCode" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Narration" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="IBRef" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="WhichTypeItem" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="JournalVoucher_CreateUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="JournalVoucher_ModifyUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="JournalVoucher_ModifyDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BranchID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="IsTDS" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="visible" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VISIBLE_RETENTION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MANUALBRSLISTA" Member="MANUALBRSLISTAs">
+    <Type Name="MANUALBRSLISTA">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SLNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TYPE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CASHBANK_VOUCHERNUMBER" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CASHBANK_TRANSACTIONDATE" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_INSTRUMENTDATE" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_INSTRUMENTNUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TYPE1" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_PAYMENTAMOUNT" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_RECEIPTAMOUNT" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_BANKVALUEDATE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PAIDTO" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="ACCOUNT_ID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cashbank_CheckDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CASHBANK_RO_AMOUNT" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MANUALBRSLISTC" Member="MANUALBRSLISTCs">
+    <Type Name="MANUALBRSLISTC">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SLNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TYPE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CASHBANK_VOUCHERNUMBER" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CASHBANK_TRANSACTIONDATE" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_INSTRUMENTDATE" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_INSTRUMENTNUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TYPE1" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_PAYMENTAMOUNT" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_RECEIPTAMOUNT" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_BANKVALUEDATE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PAIDTO" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="ACCOUNT_ID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cashbank_CheckDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MANUALBRSLISTU" Member="MANUALBRSLISTUs">
+    <Type Name="MANUALBRSLISTU">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SLNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TYPE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CASHBANK_VOUCHERNUMBER" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CASHBANK_TRANSACTIONDATE" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_INSTRUMENTDATE" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_INSTRUMENTNUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TYPE1" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_PAYMENTAMOUNT" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_RECEIPTAMOUNT" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="CASHBANKDETAIL_BANKVALUEDATE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PAIDTO" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="ACCOUNT_ID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cashbank_CheckDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CASHBANK_RO_AMOUNT" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CASHBANKLIST" Member="CASHBANKLISTs">
+    <Type Name="CASHBANKLIST">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CBID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CashBankID" Type="System.String" DbType="Char(50)" CanBeNull="true" />
+      <Column Name="CashBank_TransactionType" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TransactionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="VoucherNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CashBank_Currency" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Column Name="ValueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BankStatementDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="InstrumentNumber" Type="System.String" DbType="Char(50)" CanBeNull="true" />
+      <Column Name="Narration" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ExchangeSegmentID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="IBRef" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CashBank_CreateUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CashBank_ModifyUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CashBankDetail_InstrumentType" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CashBank_EnteredBranchID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CashBank_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="CashBank_BranchID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CashBank_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="CashBank_TransactionDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Total_taxable_amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_CGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_SGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_UTGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_IGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ForBranchName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="EnteredBranchName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="CashBank_CreateDateTime" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CashBank_PaidTo" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="IsTDS" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsTDSVoucher" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Voucher_Type" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Paymentreqhead_Id" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Paymentrequisition_Number" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="Editlock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Deletelock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

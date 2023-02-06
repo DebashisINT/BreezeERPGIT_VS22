@@ -1,4 +1,9 @@
-﻿@Html.DevExpress().GridView(settings =>
+﻿@*==================================================== Revision History =========================================================================
+     1.0  Priti V2.0.36    24-01-2023  0025613: Rename the column Qty in the Grid as MRP Qty and Avl. Stock as Phy. Stock in MRP
+     2.0  Priti V2.0.36    01-02-2023  0025634:Available Stock to be calculated in MRP product Wise
+    ====================================================End Revision History=====================================================================*@
+
+@Html.DevExpress().GridView(settings =>
 {
     settings.Name = "gridProductionBOMProductList";
 
@@ -11,10 +16,10 @@
     settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
     settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
     settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
-   // settings.ClientSideEvents.EndCallback = "ProductionBOMProductEndCallBack";
-   
+    // settings.ClientSideEvents.EndCallback = "ProductionBOMProductEndCallBack";
+
     settings.SettingsBehavior.AllowSort = false;
-    
+
     settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
     settings.CommandColumn.Visible = false;
     settings.SettingsEditing.BatchEditSettings.EditMode = DevExpress.Web.GridViewBatchEditMode.Cell;
@@ -101,19 +106,19 @@
     settings.Columns.Add(x =>
     {
         x.FieldName = "ProductQty";
-        x.Caption = "MRP Qty";
+        x.Caption = "MRP Qty";//1.0
         //x.VisibleIndex = 7;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
-       // x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        // x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
-       // DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        // DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
         //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
         //(x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         //x.Settings.AllowSort = false;
-       x.ReadOnly = true;
+        x.ReadOnly = true;
     });
 
     settings.Columns.Add(x =>
@@ -130,7 +135,7 @@
 
     });
 
-    
+
 
 
     settings.Columns.Add(x =>
@@ -160,8 +165,8 @@
         //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<00..99>";
 
-       // DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
-       // txtEditProperties.ClientSideEvents.LostFocus = "SetTotalAmountAndLostFous";
+        // DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        // txtEditProperties.ClientSideEvents.LostFocus = "SetTotalAmountAndLostFous";
         //txtEditProperties.ClientSideEvents.GotFocus = "BOMGridSetAmount";
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
@@ -173,7 +178,7 @@
     settings.Columns.Add(x =>
     {
         x.FieldName = "AvlStk";
-        x.Caption = "Phy. Stock";
+        x.Caption = "Phy. Stock";//1.0
         //x.VisibleIndex = 7;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
@@ -185,9 +190,27 @@
         //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         //x.Settings.AllowSort = false;
-           x.ReadOnly = true;
+        x.ReadOnly = true;
     });
-
+    //Rev 2.0
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "NewAvlStk";
+        x.Caption = "Avl. Stock";
+        //x.VisibleIndex = 7;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        //x.Settings.AllowSort = false;
+        x.ReadOnly = true;
+    });
+    //Rev 2.0 End
     settings.Columns.Add(x =>
     {
         x.FieldName = "IndentQty";
@@ -198,11 +221,11 @@
         x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
-       
+
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<-999999999999..999999999999>.<0000..9999>";
-       // DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        // DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
         //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
-       // (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        // (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         //x.Settings.AllowSort = false;
         x.ReadOnly = true;
     });
@@ -268,10 +291,10 @@
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
-     //   x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        //   x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         //(x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
-       // DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
-      //  //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
+        // DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        //  //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
         //(x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         //x.Settings.AllowSort = false;
         x.ReadOnly = true;
@@ -312,10 +335,10 @@
     settings.Columns.Add(x =>
     {
         x.FieldName = "ProductId";
-        x.Caption = "";     
+        x.Caption = "";
 
         x.CellStyle.CssClass = "hide";
-        x.HeaderStyle.CssClass = "hide";        
+        x.HeaderStyle.CssClass = "hide";
     });
     settings.Columns.Add(x =>
     {
@@ -417,7 +440,7 @@
 
 
 
-   settings.ClientSideEvents.BeginCallback = "OnStartCallback";
+    settings.ClientSideEvents.BeginCallback = "OnStartCallback";
 
 
     settings.ClientSideEvents.EndCallback = "OnEndCallback";
