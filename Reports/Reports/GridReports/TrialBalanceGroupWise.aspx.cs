@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region======================================Revision History=========================================================================
+//1.0   V2.0.35     Debashis    06/02/2023      Enhancement required in Trial balance(Group wise) Report.
+//                                              Refer: 0025608
+#endregion===================================End of Revision History==================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -39,6 +43,13 @@ namespace Reports.Reports.GridReports
         string LedgerTotalClDr = "";
         string LedgerTotalClCr = "";
         string LedgerTotalBalDesc = "";
+        //Rev 1.0 Mantis: 0025608
+        ExcelFile objExcel = new ExcelFile();
+        DataTable CompanyInfo = new DataTable();
+        DataTable dtExport = new DataTable();
+        DataTable dtReportHeader = new DataTable();
+        DataTable dtReportFooter = new DataTable();
+        //End of Rev 1.0 Mantis: 0025608
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
@@ -190,100 +201,263 @@ namespace Reports.Reports.GridReports
 
         }
 
+        #region Export
         public void cmbExport_SelectedIndexChanged(object sender, EventArgs e)
         {
             Int32 Filter = int.Parse(Convert.ToString(drdExport.SelectedItem.Value));
-            if (Filter != 0)
+            //Rev 1.0 Mantis: 0025608
+            //if (Filter != 0)
+            //{
+            //    if (Session["exportval"] == null)
+            //    {
+            //        bindexport(Filter);
+            //    }
+            //    else if (Convert.ToInt32(Session["exportval"]) != Filter)
+            //    {
+            //        bindexport(Filter);
+            //    }
+            //    drdExport.SelectedValue = "0";
+            //}
+            if (Convert.ToString(Session["IsTrialBalanceGrpWiseFilter"]) == "Y")
             {
-                if (Session["exportval"] == null)
+                if (Filter != 0)
                 {
                     bindexport(Filter);
                 }
-                else if (Convert.ToInt32(Session["exportval"]) != Filter)
-                {
-                    bindexport(Filter);
-                }
-                drdExport.SelectedValue = "0";
-            }
-
-        }
-
-        public void BindDropDownList()
-        {
-            // Declare a Dictionary to hold all the Options with Value and Text.
-            Dictionary<string, string> options = new Dictionary<string, string>();
-            options.Add("0", "Export to");
-            options.Add("1", "XLSX");
-            options.Add("2", "PDF");
-            options.Add("3", "CSV");
-            options.Add("4", "RTF");
-
-            // Bind the Dictionary to the DropDownList.
-            drdExport.DataSource = options;
-            drdExport.DataTextField = "value";
-            drdExport.DataValueField = "key";
-            drdExport.DataBind();
-            drdExport.SelectedValue = "0";
-        }
-
-        protected void exporter_RenderBrick(object sender, ASPxGridViewExportRenderingEventArgs e)
-        {
-            e.BrickStyle.BackColor = Color.White;
-            e.BrickStyle.ForeColor = Color.Black;
-        }
-
-        public void bindexport(int Filter)
-        {
-            string filename = "Trial Balance (Group wise)";
-            exporter.FileName = filename;
-            string FileHeader = "";
-            BusinessLogicLayer.Reports RptHeader = new BusinessLogicLayer.Reports();
-
-            if (radAsDate.Checked == true)
-            {
-                FileHeader = RptHeader.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), true, true, true, true, true, true) + Environment.NewLine + "Trial Balance (Group wise)" + Environment.NewLine + "As on " + Convert.ToDateTime(ASPxFromDate.Date).ToString("dd-MM-yyyy");
-                FileHeader = ReplaceFirst(FileHeader, "\r\n", Convert.ToString(Session["BranchNames"]));
             }
             else
             {
-                FileHeader = RptHeader.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), true, true, true, true, true, true) + Environment.NewLine + "Trial Balance (Group wise)" + Environment.NewLine + "For the period " + Convert.ToDateTime(ASPxFromDate.Date).ToString("dd-MM-yyyy") + " To " + Convert.ToDateTime(ASPxToDate.Date).ToString("dd-MM-yyyy");
-                FileHeader = ReplaceFirst(FileHeader, "\r\n", Convert.ToString(Session["BranchNames"]));
+                BranchHoOffice();
             }
+            //End of Rev 1.0 Mantis: 0025608
+        }
 
-            exporter.RenderBrick += exporter_RenderBrick;
-            exporter.PageHeader.Left = FileHeader;
-            exporter.PageHeader.Font.Size = 10;
-            exporter.PageHeader.Font.Name = "Tahoma";
-            exporter.Landscape = true;
-            exporter.MaxColumnWidth = 100;
-            exporter.GridViewID = "ShowGrid";
+        //Rev 1.0 Mantis: 0025608
+        //public void BindDropDownList()
+        //{
+        //    // Declare a Dictionary to hold all the Options with Value and Text.
+        //    Dictionary<string, string> options = new Dictionary<string, string>();
+        //    options.Add("0", "Export to");
+        //    options.Add("1", "XLSX");
+        //    options.Add("2", "PDF");
+        //    options.Add("3", "CSV");
+        //    options.Add("4", "RTF");
+
+        //    // Bind the Dictionary to the DropDownList.
+        //    drdExport.DataSource = options;
+        //    drdExport.DataTextField = "value";
+        //    drdExport.DataValueField = "key";
+        //    drdExport.DataBind();
+        //    drdExport.SelectedValue = "0";
+        //}
+
+        //protected void exporter_RenderBrick(object sender, ASPxGridViewExportRenderingEventArgs e)
+        //{
+        //    e.BrickStyle.BackColor = Color.White;
+        //    e.BrickStyle.ForeColor = Color.Black;
+        //}
+
+        //public void bindexport(int Filter)
+        //{
+        //    string filename = "Trial Balance (Group wise)";
+        //    exporter.FileName = filename;
+        //    string FileHeader = "";
+        //    BusinessLogicLayer.Reports RptHeader = new BusinessLogicLayer.Reports();
+
+        //    if (radAsDate.Checked == true)
+        //    {
+        //        FileHeader = RptHeader.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), true, true, true, true, true, true) + Environment.NewLine + "Trial Balance (Group wise)" + Environment.NewLine + "As on " + Convert.ToDateTime(ASPxFromDate.Date).ToString("dd-MM-yyyy");
+        //        FileHeader = ReplaceFirst(FileHeader, "\r\n", Convert.ToString(Session["BranchNames"]));
+        //    }
+        //    else
+        //    {
+        //        FileHeader = RptHeader.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), true, true, true, true, true, true) + Environment.NewLine + "Trial Balance (Group wise)" + Environment.NewLine + "For the period " + Convert.ToDateTime(ASPxFromDate.Date).ToString("dd-MM-yyyy") + " To " + Convert.ToDateTime(ASPxToDate.Date).ToString("dd-MM-yyyy");
+        //        FileHeader = ReplaceFirst(FileHeader, "\r\n", Convert.ToString(Session["BranchNames"]));
+        //    }
+
+        //    exporter.RenderBrick += exporter_RenderBrick;
+        //    exporter.PageHeader.Left = FileHeader;
+        //    exporter.PageHeader.Font.Size = 10;
+        //    exporter.PageHeader.Font.Name = "Tahoma";
+        //    exporter.Landscape = true;
+        //    exporter.MaxColumnWidth = 100;
+        //    exporter.GridViewID = "ShowGrid";
+        //    switch (Filter)
+        //    {
+        //        case 1:                    
+        //            exporter.WriteXlsxToResponse(new XlsxExportOptionsEx() { ExportType = ExportType.WYSIWYG });
+        //            break;
+        //        case 2:
+        //            exporter.WritePdfToResponse();
+        //            break;
+        //        case 3:
+        //            exporter.WriteCsvToResponse();
+        //            break;
+        //        case 4:
+        //            exporter.WriteRtfToResponse();
+        //            break;
+        //    }
+        //}
+
+        //public string ReplaceFirst(string text, string search, string replace)
+        //{
+        //    int pos = text.IndexOf(search);
+        //    if (pos < 0)
+        //    {
+        //        return text;
+        //    }
+        //    return text.Substring(0, pos) + Environment.NewLine + replace + Environment.NewLine + text.Substring(pos + search.Length);
+        //}
+
+        public void bindexport(int Filter)
+        {
+            string filename = "Trial_Balance_Group_Wise";
+            exporter.FileName = filename;
+
+            if (Filter == 1 || Filter == 2)
+            {
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                con.Open();
+                string selectQuery = "SELECT LEDGER,OP_DR,OP_CR,PR_DR,PR_CR,CLOSE_DR,CLOSE_CR FROM TRIALBALANCEGROUPWISE_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SL<>7 AND PARENTGRPID<>9999999999999 AND LEDGER<>'NET TOTAL:' order by SEQ";
+                SqlDataAdapter myCommand = new SqlDataAdapter(selectQuery, con);
+
+                // Create and fill a DataSet.
+                DataSet ds = new DataSet();
+                myCommand.Fill(ds, "Main");
+                myCommand = new SqlDataAdapter("Select LEDGER,OP_DR,OP_CR,PR_DR,PR_CR,CLOSE_DR,CLOSE_CR FROM TRIALBALANCEGROUPWISE_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SL=7 AND PARENTGRPID=9999999999999 AND LEDGER='NET TOTAL:'", con);
+                myCommand.Fill(ds, "GrossTotal");
+                myCommand.Dispose();
+                con.Dispose();
+                Session["exporttbgwdataset"] = ds;
+
+                dtExport = ds.Tables[0].Copy();
+                dtExport.Clear();
+                dtExport.Columns.Add(new DataColumn("Group/Ledger/Sub Ledger", typeof(string)));
+                dtExport.Columns.Add(new DataColumn("Dr.(Opening)", typeof(decimal)));
+                dtExport.Columns.Add(new DataColumn("Cr.(Opening)", typeof(decimal)));
+                dtExport.Columns.Add(new DataColumn("Dr.(Period)", typeof(decimal)));
+                dtExport.Columns.Add(new DataColumn("Cr.(Period)", typeof(decimal)));
+                dtExport.Columns.Add(new DataColumn("Dr.(Closing)", typeof(decimal)));
+                dtExport.Columns.Add(new DataColumn("Cr.(Closing)", typeof(decimal)));
+
+                foreach (DataRow dr1 in ds.Tables[0].Rows)
+                {
+                    DataRow row2 = dtExport.NewRow();
+
+                    row2["Group/Ledger/Sub Ledger"] = dr1["LEDGER"];
+                    row2["Dr.(Opening)"] = dr1["OP_DR"];
+                    row2["Cr.(Opening)"] = dr1["OP_CR"];
+                    row2["Dr.(Period)"] = dr1["PR_DR"];
+                    row2["Cr.(Period)"] = dr1["PR_CR"];
+                    row2["Dr.(Closing)"] = dr1["CLOSE_DR"];
+                    row2["Cr.(Closing)"] = dr1["CLOSE_CR"];
+
+                    dtExport.Rows.Add(row2);
+                }
+
+                if (Convert.ToString(Session["Isasondate"]) == "Y")
+                {
+                    dtExport.Columns.Remove("Dr.(Opening)");
+                    dtExport.Columns.Remove("Cr.(Opening)");
+                }
+
+                dtExport.Columns.Remove("LEDGER");
+                dtExport.Columns.Remove("OP_DR");
+                dtExport.Columns.Remove("OP_CR");
+                dtExport.Columns.Remove("PR_DR");
+                dtExport.Columns.Remove("PR_CR");
+                dtExport.Columns.Remove("CLOSE_DR");
+                dtExport.Columns.Remove("CLOSE_CR");
+
+                DataRow row3 = dtExport.NewRow();
+                row3["Group/Ledger/Sub Ledger"] = ds.Tables[1].Rows[0]["LEDGER"].ToString();
+                if (Convert.ToString(Session["Isasondate"]) == "N")
+                {
+                    row3["Dr.(Opening)"] = ds.Tables[1].Rows[0]["OP_DR"].ToString();
+                    row3["Cr.(Opening)"] = ds.Tables[1].Rows[0]["OP_CR"].ToString();
+                }
+                row3["Dr.(Period)"] = ds.Tables[1].Rows[0]["PR_DR"].ToString();
+                row3["Cr.(Period)"] = ds.Tables[1].Rows[0]["PR_CR"].ToString();
+                row3["Dr.(Closing)"] = ds.Tables[1].Rows[0]["CLOSE_DR"].ToString();
+                row3["Cr.(Closing)"] = ds.Tables[1].Rows[0]["CLOSE_CR"].ToString();
+                dtExport.Rows.Add(row3);
+
+                //For Excel/PDF Header
+                BusinessLogicLayer.Reports GridHeaderDet = new BusinessLogicLayer.Reports();
+                dtReportHeader.Columns.Add(new DataColumn("Header", typeof(String)));
+
+                string GridHeader = "";
+                GridHeader = GridHeaderDet.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), true, false, false, false, false, false);
+                DataRow HeaderRow = dtReportHeader.NewRow();
+                HeaderRow[0] = GridHeader.ToString();
+                dtReportHeader.Rows.Add(HeaderRow);
+                DataRow HeaderRow1 = dtReportHeader.NewRow();
+                HeaderRow1[0] = Convert.ToString(Session["BranchNames"]);
+                dtReportHeader.Rows.Add(HeaderRow1);
+                GridHeader = GridHeaderDet.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), false, true, false, false, false, false);
+                DataRow HeaderRow2 = dtReportHeader.NewRow();
+                HeaderRow2[0] = GridHeader.ToString();
+                dtReportHeader.Rows.Add(HeaderRow2);
+                GridHeader = GridHeaderDet.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), false, false, true, false, false, false);
+                DataRow HeaderRow3 = dtReportHeader.NewRow();
+                HeaderRow3[0] = GridHeader.ToString();
+                dtReportHeader.Rows.Add(HeaderRow3);
+                GridHeader = GridHeaderDet.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), false, false, false, true, false, false);
+                DataRow HeaderRow4 = dtReportHeader.NewRow();
+                HeaderRow4[0] = GridHeader.ToString();
+                dtReportHeader.Rows.Add(HeaderRow4);
+                GridHeader = GridHeaderDet.CommonReportHeader(Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["LastFinYear"]), false, false, false, false, false, true);
+                DataRow HeaderRow5 = dtReportHeader.NewRow();
+                HeaderRow5[0] = GridHeader.ToString();
+                dtReportHeader.Rows.Add(HeaderRow5);
+                DataRow HeaderRow6 = dtReportHeader.NewRow();
+                HeaderRow6[0] = "Trial Balance (Group wise)";
+                dtReportHeader.Rows.Add(HeaderRow6);
+                DataRow HeaderRow7 = dtReportHeader.NewRow();
+                if (Convert.ToString(Session["Isasondate"]) == "Y")
+                {
+                    HeaderRow7[0] = "As On: " + Convert.ToDateTime(ASPxToDate.Date).ToString("dd-MM-yyyy");
+                }
+                else
+                {
+                    HeaderRow7[0] = "For the period: " + Convert.ToDateTime(ASPxFromDate.Date).ToString("dd-MM-yyyy") + "To "+Convert.ToDateTime(ASPxToDate.Date).ToString("dd-MM-yyyy");
+                }
+                dtReportHeader.Rows.Add(HeaderRow7);
+
+                //For Excel/PDF Footer
+                dtReportFooter.Columns.Add(new DataColumn("Footer", typeof(String))); //0
+                DataRow FooterRow1 = dtReportFooter.NewRow();
+                dtReportFooter.Rows.Add(FooterRow1);
+                DataRow FooterRow2 = dtReportFooter.NewRow();
+                dtReportFooter.Rows.Add(FooterRow2);
+                DataRow FooterRow = dtReportFooter.NewRow();
+                FooterRow[0] = "* * *  End Of Report * * *   ";
+                dtReportFooter.Rows.Add(FooterRow);
+            }
+            else
+            {
+                exporter.PageHeader.Font.Size = 10;
+                exporter.PageHeader.Font.Name = "Tahoma";
+                exporter.GridViewID = "ShowGrid";
+            }
             switch (Filter)
             {
-                case 1:                    
-                    exporter.WriteXlsxToResponse(new XlsxExportOptionsEx() { ExportType = ExportType.WYSIWYG });
+                case 1:
+                    objExcel.ExportToExcelforExcel(dtExport, "Trial_Balance_Group_Wise", "Total:", "NET TOTAL:", dtReportHeader, dtReportFooter);
                     break;
                 case 2:
-                    exporter.WritePdfToResponse();
+                    objExcel.ExportToPDF(dtExport, "Trial_Balance_Group_Wise", "Total:", "NET TOTAL:", dtReportHeader, dtReportFooter);
                     break;
                 case 3:
                     exporter.WriteCsvToResponse();
                     break;
-                case 4:
-                    exporter.WriteRtfToResponse();
-                    break;
+
+                default:
+                    return;
             }
         }
-
-        public string ReplaceFirst(string text, string search, string replace)
-        {
-            int pos = text.IndexOf(search);
-            if (pos < 0)
-            {
-                return text;
-            }
-            return text.Substring(0, pos) + Environment.NewLine + replace + Environment.NewLine + text.Substring(pos + search.Length);
-        }
-
+        //End of Rev 1.0 Mantis: 0025608
+        #endregion
 
         #region main grid details
         protected void CallbackPanel_Callback(object source, DevExpress.Web.CallbackEventArgsBase e)

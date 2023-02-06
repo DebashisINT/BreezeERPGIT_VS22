@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="TrialBalanceGroupWise.aspx.cs" Inherits="Reports.Reports.GridReports.TrialBalanceGroupWise" %>
+﻿<%--======================================Revision History=========================================================================
+1.0   V2.0.35     Debashis    06/02/2023      Enhancement required in Trial balance(Group wise) Report.
+                                              Refer: 0025608
+===================================End of Revision History=====================================================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="TrialBalanceGroupWise.aspx.cs" Inherits="Reports.Reports.GridReports.TrialBalanceGroupWise" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
      Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -607,10 +611,15 @@
                    <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-sm btn-primary"
                         OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                         <asp:ListItem Value="0">Export to</asp:ListItem>
-                        <asp:ListItem Value="1">XLSX</asp:ListItem>
+                       <%--Rev 1.0 Mantis: 0025608--%>
+                        <%--<asp:ListItem Value="1">XLSX</asp:ListItem>
                         <asp:ListItem Value="2">PDF</asp:ListItem>
                         <asp:ListItem Value="3">CSV</asp:ListItem>
-                        <asp:ListItem Value="4">RTF</asp:ListItem>
+                        <asp:ListItem Value="4">RTF</asp:ListItem>--%>
+                        <asp:ListItem Value="1">EXCEL</asp:ListItem>
+                        <asp:ListItem Value="2">PDF</asp:ListItem>
+                        <asp:ListItem Value="3">CSV</asp:ListItem>
+                       <%--End of Rev 1.0 Mantis: 0025608--%>
                    </asp:DropDownList>
                 <% } %>
             </div>
