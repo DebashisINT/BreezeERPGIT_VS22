@@ -216,7 +216,7 @@
         }
         //rev 1.0
         function CallbackPanelEndCall(s, e) {
-            cCallbackPanel.Refresh();
+            cGvCBSearch.Refresh();
         }
         //end rev 1.0
         function gridRowclick(s, e) {
