@@ -1,5 +1,6 @@
 ﻿//==================================================== Revision History =========================================================================
 // 1.0  Priti V2.0.36    23-01-2023  0025610:MRP Close Feature required
+// 2.0  Priti V2.0.36    01-02-2023  0025634:Available Stock to be calculated in MRP product Wise
 //====================================================End Revision History=====================================================================
 
 using BusinessLogicLayer;
@@ -306,6 +307,7 @@ namespace Manufacturing.Controllers
                             bomproductdataobj.OLDQty = Convert.ToString(row["BalQty"]);
                             bomproductdataobj.OldAltQty = Convert.ToString(row["packing_quantity"]);
                             bomproductdataobj.VendorName = Convert.ToString(row["Vendor_Name"]);
+                            bomproductdataobj.NewAvlStk = Convert.ToString(row["NewAvlStock"]);//2.0
                             bomproductdata.Add(bomproductdataobj);
 
                         }
@@ -355,6 +357,8 @@ namespace Manufacturing.Controllers
                             bomproductdataobj.OLDQty = Convert.ToString(row["FactorQty"]);
                             bomproductdataobj.OldAltQty = Convert.ToString(row["packing_quantity"]);
                             bomproductdataobj.VendorName = Convert.ToString(row["Vendor_Name"]);
+                            bomproductdataobj.NewAvlStk = Convert.ToString(row["NewAvlStock"]);//2.0
+
                             bomproductdata.Add(bomproductdataobj);
 
                         }

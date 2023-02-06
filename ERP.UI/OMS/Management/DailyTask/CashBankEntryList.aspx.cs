@@ -1,4 +1,9 @@
-﻿using System;
+﻿//========================================================== Revision History ============================================================================================
+//   1.0   Priti V2.0.36  02-02-2023  0025263: Listing view upgradation required of Cash/Bank Voucher of Accounts & Finance
+//========================================== End Revision History =======================================================================================================
+
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -16,6 +21,7 @@ using DataAccessLayer;
 using DevExpress.Web.Data;
 using System.Threading.Tasks;
 using ERP.Models;
+using static ERP.OMS.Management.Master.Mobileaccessconfiguration;
 
 namespace ERP.OMS.Management.DailyTask
 {
@@ -153,7 +159,7 @@ namespace ERP.OMS.Management.DailyTask
             string strCompanyID = Convert.ToString(Session["LastCompany"]);
             string FinYear = Convert.ToString(Session["LastFinYear"]);
             List<int> branchidlist;
-
+            int userid = Convert.ToInt32(Session["UserID"]);  //---- REV 1.0
             if (IsFilter == "Y")
             {
                 if (strBranchID == "0")
@@ -162,43 +168,63 @@ namespace ERP.OMS.Management.DailyTask
                     branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
 
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_CashBankLists
-                            where 
-                            d.CashBank_TransactionDate >= Convert.ToDateTime(strFromDate) && d.CashBank_TransactionDate <= Convert.ToDateTime(strToDate)
-                            && 
-                            (branchidlist.Contains(Convert.ToInt32(d.CashBank_EnteredBranchID)) ||branchidlist.Contains(Convert.ToInt32(d.CashBank_BranchID)))
+                    //---- REV 1.0
+                    //var q = from d in dc.v_CashBankLists
+                    //        where 
+                    //        d.CashBank_TransactionDate >= Convert.ToDateTime(strFromDate) && d.CashBank_TransactionDate <= Convert.ToDateTime(strToDate)
+                    //        && 
+                    //        (branchidlist.Contains(Convert.ToInt32(d.CashBank_EnteredBranchID)) ||branchidlist.Contains(Convert.ToInt32(d.CashBank_BranchID)))
 
-                            && Convert.ToString(d.CashBank_FinYear) == Convert.ToString(FinYear)
-                            && Convert.ToString(d.CashBank_CompanyID) == Convert.ToString(strCompanyID)
-                            orderby d.CashBank_TransactionDate
+                    //        && Convert.ToString(d.CashBank_FinYear) == Convert.ToString(FinYear)
+                    //        && Convert.ToString(d.CashBank_CompanyID) == Convert.ToString(strCompanyID)
+                    //        orderby d.CashBank_TransactionDate
+                    //        select d;
+                    //e.QueryableSource = q;
+                    var q = from d in dc.CASHBANKLISTs
+                            where d.USERID == userid
+                            orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
                 else
                 {
                     branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
                     ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_CashBankLists
-                            where
-                            d.CashBank_TransactionDate >= Convert.ToDateTime(strFromDate) && d.CashBank_TransactionDate <= Convert.ToDateTime(strToDate) 
-                            &&
-                            (branchidlist.Contains(Convert.ToInt32(d.CashBank_EnteredBranchID)) ||branchidlist.Contains(Convert.ToInt32(d.CashBank_BranchID)))
-                            && Convert.ToString(d.CashBank_FinYear) == Convert.ToString(FinYear)
-                            && Convert.ToString(d.CashBank_CompanyID) == Convert.ToString(strCompanyID)
-                            orderby d.CashBank_TransactionDate
+                    //---- REV 1.0
+                    //var q = from d in dc.v_CashBankLists
+                    //        where
+                    //        d.CashBank_TransactionDate >= Convert.ToDateTime(strFromDate) && d.CashBank_TransactionDate <= Convert.ToDateTime(strToDate) 
+                    //        &&
+                    //        (branchidlist.Contains(Convert.ToInt32(d.CashBank_EnteredBranchID)) ||branchidlist.Contains(Convert.ToInt32(d.CashBank_BranchID)))
+                    //        && Convert.ToString(d.CashBank_FinYear) == Convert.ToString(FinYear)
+                    //        && Convert.ToString(d.CashBank_CompanyID) == Convert.ToString(strCompanyID)
+                    //        orderby d.CashBank_TransactionDate
+                    //        select d;
+                    //e.QueryableSource = q;
+                    var q = from d in dc.CASHBANKLISTs
+                            where d.USERID == userid
+                            orderby d.SEQ descending
                             select d;
                     e.QueryableSource = q;
+                    //----END REV 1.0
                 }
             }
             else
             {
                 ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                var q = from d in dc.v_CashBankLists
-                        where (d.CashBank_EnteredBranchID == '0' || d.CashBank_BranchID=='0')
-                        orderby d.CashBank_TransactionDate
+                //---- REV 1.0
+                //var q = from d in dc.v_CashBankLists
+                //        where (d.CashBank_EnteredBranchID == '0' || d.CashBank_BranchID=='0')
+                //        orderby d.CashBank_TransactionDate
+                //        select d;
+                //e.QueryableSource = q;
+                var q = from d in dc.CASHBANKLISTs
+                        where d.SEQ == 0
                         select d;
                 e.QueryableSource = q;
+                //----END REV 1.0
             }
         }
 
@@ -364,5 +390,59 @@ namespace ERP.OMS.Management.DailyTask
                 SelectPanel.JSProperties["cpSuccess"] = "Success";
             }
         }
+
+
+        //REV 1.0
+
+        protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        {
+            string returnPara = Convert.ToString(e.Parameter);
+            DateTime dtFrom;
+            DateTime dtTo;
+            dtFrom = Convert.ToDateTime(FormDate.Date);
+            dtTo = Convert.ToDateTime(toDate.Date);
+            string FROMDATE = dtFrom.ToString("yyyy-MM-dd");
+            string TODATE = dtTo.ToString("yyyy-MM-dd");
+
+            string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            Task PopulateStockTrialDataTask = new Task(() => GetCashBankEntrydata(FROMDATE, TODATE, strBranchID));
+            PopulateStockTrialDataTask.RunSynchronously();
+        }
+        public void GetCashBankEntrydata(string FROMDATE, string TODATE, string BRANCH_ID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("PRC_CASHBANK_LIST", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
+                cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                cmd.Parameters.AddWithValue("@FROMDATE", FROMDATE);
+                cmd.Parameters.AddWithValue("@TODATE", TODATE);
+                if (BRANCH_ID == "0")
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", Convert.ToString(Session["userbranchHierarchy"]));
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
+                }
+                cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
+                cmd.Parameters.AddWithValue("@ACTION", hFilterType.Value);
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+
+                cmd.Dispose();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        //END REV 1.0
     }
 }

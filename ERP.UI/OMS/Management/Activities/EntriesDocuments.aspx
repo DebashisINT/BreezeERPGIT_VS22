@@ -67,12 +67,13 @@
         var n;
         var chk = obj2.includes("~");
         if (chk) {
-            n = d.getFullYear();
+            //Rev mantis 0025559
+            n = obj2.split('~')[1];
             filename = obj2.split('~')[1];
         }
         else {
             //Rev mantis 0025559
-            n = obj2.split('~')[1];
+            n = obj2.split('/')[1];
               //Rev mantis 0025559 end
             filename = obj2.split('/')[2];
         }

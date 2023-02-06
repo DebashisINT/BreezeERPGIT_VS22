@@ -1715,7 +1715,7 @@
         for (var i = 0; i < 1000; i++) {
             if (gridProductionBOMProductList.GetRow(i)) {
                 if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 16);
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 17);
                     gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(i);
                 }
             }
@@ -1724,7 +1724,7 @@
         for (i = -1; i > -1000; i--) {
             if (gridProductionBOMProductList.GetRow(i)) {
                 if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 16);
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 17);
                     gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(i);
                 }
             }

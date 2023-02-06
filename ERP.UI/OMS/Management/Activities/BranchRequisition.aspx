@@ -1,5 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
  1.0   Priti   V2.0.36   19-01-2023    0025371: Listing view upgradation required of Branch Requisition of Inventory
+ 2.0   Priti   V2.0.36   06-02-2023    0025645: Branch Requisition - While Adding a Product, the Search is not working properly
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -9,12 +10,16 @@
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="CSS/SearchPopup.css" rel="stylesheet" />
-    <script src="JS/SearchPopup.js"></script>
-    <%--Code Added By Sandip For Approval Detail Section Start--%>
+    <link href="CSS/SearchPopup.css" rel="stylesheet" />  
+   
+    <%-- REV 2.0--%>
+    <%--<script src="JS/SearchPopup.js"></script>--%>
+    <script src="JS/SearchPopupDatatable.js"></script>
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <%-- REV 2.0 END--%>
 
-
-    <%-- Code Added By Sandip For Approval Detail Section End--%>
     <style>
         .BranchTo {
             position: absolute;

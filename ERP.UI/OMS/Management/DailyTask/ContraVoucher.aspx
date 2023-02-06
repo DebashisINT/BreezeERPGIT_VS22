@@ -1,4 +1,9 @@
-﻿<%@ Page Title="Contra Voucher" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ContraVoucher.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.ContraVoucher" %>
+﻿<%--=======================================================Revision History=========================================================================    
+    1.0 Priti   V2.0.36  02-02-2023     0025264: listing view upgradation required of Contra Voucher of Accounts & Finance
+=========================================================End Revision History========================================================================--%>
+
+
+<%@ Page Title="Contra Voucher" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ContraVoucher.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.ContraVoucher" %>
 
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -89,11 +94,22 @@
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
 
-                gvContraVoucherInstance.Refresh();
+                
+                //rev 1.0
+                // gvContraVoucherInstance.Refresh();
+                $("#hFilterType").val("All");
+                cCallbackPanel.PerformCallback("");
+                 //end rev 1.0
+
 
                 //gvContraVoucherInstance.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
             }
         }
+        //rev 1.0
+        function CallbackPanelEndCall(s, e) {
+            gvContraVoucherInstance.Refresh();
+        }
+        //end rev 1.0
         $(function () {
 
             var IsEdit = false;
@@ -2744,11 +2760,20 @@ function gridRowclick(s, e) {
     <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
     <asp:HiddenField ID="hdnValAfterLock" runat="server" />
     <asp:HiddenField ID="hdnValAfterLockMSG" runat="server" />
-
     <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
-<asp:HiddenField ID="hdnLockToDateedit" runat="server" />
- 
- <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateedit" runat="server" /> 
+    <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+
+      <%--  REV 1.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
 
 </asp:Content>

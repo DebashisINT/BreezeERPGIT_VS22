@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frm_ManualBRSEntityListFetch.aspx.cs" 
+﻿<%--=======================================================Revision History=========================================================================
+ 1.0 Priti   V2.0.36  02-02-2023    0025262: Listing view upgradation required of Manual BRS of Accounts & Finance
+=========================================================End Revision History========================================================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frm_ManualBRSEntityListFetch.aspx.cs" 
     Inherits="ERP.OMS.Management.DailyTask.frm_ManualBRSEntityListFetch" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -162,12 +166,22 @@
 
               
                 TotalTabValue();
-                cgrdmanualBRS.Refresh();
+
+                //rev 2.0
+                //  cgrdmanualBRS.Refresh();
+                //$("#hFilterType").val("All");
+                cCallbackPanel.PerformCallback("");
+                    //end rev 2.0
+               
 
                 //cgrdmanualBRS.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBankfilter.GetValue());
             }
         }
-
+        //rev 1.0
+        function CallbackPanelEndCall(s, e) {
+            cgrdmanualBRS.Refresh();
+        }
+        //end rev 1.0
         function TotalTabValue() {
             $.ajax({
                 type: "POST",
@@ -647,41 +661,41 @@
                       
                     </dxe:GridViewCommandColumn>
                       
-                    <dxe:GridViewDataTextColumn Caption="Posting Date" VisibleIndex="1" FieldName="cashbank_transactionDate" Settings-ShowFilterRowMenu="True" Width="100px" FixedStyle="Left">
+                    <dxe:GridViewDataTextColumn Caption="Posting Date" VisibleIndex="1" FieldName="CASHBANK_TRANSACTIONDATE" Settings-ShowFilterRowMenu="True" Width="100px" FixedStyle="Left">
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn Caption="Document No." VisibleIndex="2" FieldName="cashbank_vouchernumber" Settings-ShowFilterRowMenu="True" Width="140px" FixedStyle="Left">
+                    <dxe:GridViewDataTextColumn Caption="Document No." VisibleIndex="2" FieldName="CASHBANK_VOUCHERNUMBER" Settings-ShowFilterRowMenu="True" Width="140px" FixedStyle="Left">
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn Caption="Type" VisibleIndex="3" FieldName="Type" Settings-ShowFilterRowMenu="True" Width="140px" FixedStyle="Left">
+                    <dxe:GridViewDataTextColumn Caption="Type" VisibleIndex="3" FieldName="TYPE" Settings-ShowFilterRowMenu="True" Width="140px" FixedStyle="Left">
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn Caption="Instrument Date" VisibleIndex="4" FieldName="cashbankdetail_instrumentdate" Settings-ShowFilterRowMenu="True" Width="120px">
+                    <dxe:GridViewDataTextColumn Caption="Instrument Date" VisibleIndex="4" FieldName="CASHBANKDETAIL_INSTRUMENTDATE" Settings-ShowFilterRowMenu="True" Width="120px">
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn Caption="Instrument No." VisibleIndex="5" FieldName="cashbankdetail_instrumentnumber" Width="170px">
+                    <dxe:GridViewDataTextColumn Caption="Instrument No." VisibleIndex="5" FieldName="CASHBANKDETAIL_INSTRUMENTNUMBER" Width="170px">
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                     <dxe:GridViewDataTextColumn Caption="Instrument Type" VisibleIndex="6" FieldName="Type1" Settings-ShowFilterRowMenu="True" Width="100px">
+                     <dxe:GridViewDataTextColumn Caption="Instrument Type" VisibleIndex="6" FieldName="TYPE1" Settings-ShowFilterRowMenu="True" Width="100px">
                          <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <%--<dxe:GridViewDataTextColumn Caption="Account Name" VisibleIndex="7" FieldName="AccountCode">
                     </dxe:GridViewDataTextColumn>--%>
-                    <dxe:GridViewDataTextColumn Caption="Payment Amount" VisibleIndex="8" FieldName="cashbankdetail_paymentamount" HeaderStyle-HorizontalAlign="Right">
+                    <dxe:GridViewDataTextColumn Caption="Payment Amount" VisibleIndex="8" FieldName="CASHBANKDETAIL_PAYMENTAMOUNT" HeaderStyle-HorizontalAlign="Right">
                             <PropertiesTextEdit DisplayFormatString="{0:0.00}" Width="100%">
                                 <MaskSettings Mask="<0..999999999>.<0..99>" IncludeLiterals="DecimalSymbol" />
                                 </PropertiesTextEdit>
                         <CellStyle HorizontalAlign="Right"></CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn Caption="Receipt Amount" VisibleIndex="9" FieldName="cashbankdetail_receiptamount" HeaderStyle-HorizontalAlign="Right">
+                    <dxe:GridViewDataTextColumn Caption="Receipt Amount" VisibleIndex="9" FieldName="CASHBANKDETAIL_RECEIPTAMOUNT" HeaderStyle-HorizontalAlign="Right">
                             <PropertiesTextEdit DisplayFormatString="{0:0.00}" Width="100%">
                                                     <MaskSettings Mask="<0..999999999>.<0..99>" IncludeLiterals="DecimalSymbol" />
                                 </PropertiesTextEdit>
                         <CellStyle HorizontalAlign="Right"></CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                  <dxe:GridViewDataTextColumn Caption="Payee/Payer" VisibleIndex="10" width="250px" FieldName="PaidTo">
+                  <dxe:GridViewDataTextColumn Caption="Payee/Payer" VisibleIndex="10" width="250px" FieldName="PAIDTO">
                       <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                
@@ -699,7 +713,7 @@
                                     
                         </PropertiesDateEdit>
                     </dxe:GridViewDataDateColumn>--%>
-                    <dxe:GridViewDataDateColumn FieldName="cashbankdetail_bankvaluedate" Width="160px" VisibleIndex="11"
+                    <dxe:GridViewDataDateColumn FieldName="CASHBANKDETAIL_BANKVALUEDATE" Width="160px" VisibleIndex="11"
                         Caption="Recon. Date" >
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <Settings AllowAutoFilter="False" AllowGroup="False"  />
@@ -727,7 +741,7 @@
                         <div class='floatedBtnArea'>
                          <% if (rights.CanEdit)
                             { %>
-                         <a href="javascript:void(0);" onclick="OnCancelClick('<%#Eval("cashbank_vouchernumber")%>',<%# Container.VisibleIndex %>)" class="" title="">
+                         <a href="javascript:void(0);" onclick="OnCancelClick('<%#Eval("CASHBANK_VOUCHERNUMBER")%>',<%# Container.VisibleIndex %>)" class="" title="">
                             
                            
                             <span class='ico ColorFour'><i class='fa fa-money'></i></span><span class='hidden-xs'>BRS</span>
@@ -798,6 +812,17 @@
         <asp:HiddenField ID="hfBranchID" runat="server" />
     </div>
     </div>
+
+     <%--  REV 1.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
 </asp:Content>
 
 

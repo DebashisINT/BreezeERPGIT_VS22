@@ -1,6 +1,10 @@
-﻿<%--Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911--%>
-<%--<%@ Page Title="Journal Entry" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalEntry.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.JournalVoucherEntry" %>--%>
+﻿<%--=======================================================Revision History=========================================================================
+    1.0 Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911
+    2.0 Priti   V2.0.36  02-02-2023     0025253: listing view upgradation required of Journals of Accounts & Finance
+=========================================================End Revision History========================================================================--%>
+
 <%@ Page Title="Journal Entry" EnableEventValidation="false" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalEntry.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.JournalVoucherEntry" %>
+
 <%--Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911--%>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -51,13 +55,13 @@
         }
         <%--Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911--%>
         function OnCopy(visibleIndex, IStds, Visible, RET_VISIBLE, JvID) {
-            
+
             VisibleIndexE = visibleIndex;
             document.getElementById('hdnVal').value = 'Copy';
             document.getElementById('hdnId').value = JvID;
             var Type = 'Copy';
             Mode = 'Copy';
-            if (IStds== "True") {
+            if (IStds == "True") {
                 alert("This is a Journal with TDS. This will not be copied.");
                 return;
             }
@@ -86,9 +90,9 @@
             //cbtnSaveRecords.SetVisible(false);
             $("#tdSaveButton").hide();
             //cbtn_SaveRecords.SetVisible(false);
-        }        
+        }
         function SetNumberingSchemeDataSource(JvID, Type) {
-            
+
             $.ajax({
                 type: "POST",
                 url: 'JournalEntry.aspx/GetNumberingSchemeByType',
@@ -100,7 +104,7 @@
                     //if (returnObject.NumberingSchema) {
                     //    SetDataSourceOnComboBox(cCmbScheme, returnObject.NumberingSchema);
                     //}
-                    $("#CmbScheme").empty();                   
+                    $("#CmbScheme").empty();
                     var ddl = document.getElementById("<%=CmbScheme.ClientID %>");
                     /*for (i = 0; i < returnObject.length; i++) {
                         var option = document.createElement("OPTION");
@@ -1966,7 +1970,7 @@
         }
 
         function OnEdit(visibleIndex, IStds, Visible, RET_VISIBLE, JvID) {
-           // debugger;
+            // debugger;
             VisibleIndexE = visibleIndex;
             // var row = s.GetRow(e.visibleIndex);
             //rev for Nil Rated TDS checking for Edit Tanmoy
@@ -1975,9 +1979,9 @@
                 //End of rev for Nil Rated TDS checking for Edit Tanmoy
                 // Rev Sayantani
                 if (Visible == "1") {
-                   // jAlert('This is an Auto Journal created from the Sales(POS) module. Goto Sales(POS) module to Edit/Delete.', 'Alert');
+                    // jAlert('This is an Auto Journal created from the Sales(POS) module. Goto Sales(POS) module to Edit/Delete.', 'Alert');
                     jAlert('TDS Challan is already done against this Document. Click on View to View this Document.', 'Alert');
-                    
+
                     return;
                 }
 
@@ -1990,378 +1994,378 @@
                 // End of Rev Sayantani
                 if (IStds != "True") {
                     $('#<%= lblHeading.ClientID %>').text("Modify Journal Voucher");
-                $('#<%=hdnMode.ClientID %>').val('1');
+                    $('#<%=hdnMode.ClientID %>').val('1');
 
 
-                $("#tdSaveButton").hide();
+                    $("#tdSaveButton").hide();
 
 
-                document.getElementById('div_Edit').style.display = 'none';
-                document.getElementById('<%= txtBillNo.ClientID %>').disabled = true;
-                document.getElementById('tblBtnSavePanel').style.display = 'block';
-                document.getElementById('divAddNew').style.display = 'block';
-                btncross.style.display = "block";
-                TblSearch.style.display = "none";
-                //cGvJvSearch.GetRowValues(VisibleIndexE, "BranchID", MainAccountCallBack);
+                    document.getElementById('div_Edit').style.display = 'none';
+                    document.getElementById('<%= txtBillNo.ClientID %>').disabled = true;
+                    document.getElementById('tblBtnSavePanel').style.display = 'block';
+                    document.getElementById('divAddNew').style.display = 'block';
+                    btncross.style.display = "block";
+                    TblSearch.style.display = "none";
+                    //cGvJvSearch.GetRowValues(VisibleIndexE, "BranchID", MainAccountCallBack);
 
-                grid.PerformCallback('Edit~' + VisibleIndexE);
+                    grid.PerformCallback('Edit~' + VisibleIndexE);
+                }
+                else {
+                    $('#<%= lblHeading.ClientID %>').text("Modify TDS Journal Voucher");
+                    $('#<%=hdnMode.ClientID %>').val('1');
+
+
+                    $("#tdSaveButtonTDS").hide();
+
+
+                    document.getElementById('div_EditTDS').style.display = 'none';
+                    document.getElementById('<%= txtBillNoTDS.ClientID %>').disabled = true;
+                    document.getElementById('tblBtnSavePanelTDS').style.display = 'block';
+                    document.getElementById('divAddNewTDS').style.display = 'block';
+                    btncross.style.display = "block";
+                    TblSearch.style.display = "none";
+                    gridTDS.PerformCallback('Edit~' + VisibleIndexE);
+
+                }
             }
             else {
-                $('#<%= lblHeading.ClientID %>').text("Modify TDS Journal Voucher");
-                $('#<%=hdnMode.ClientID %>').val('1');
-
-
-                $("#tdSaveButtonTDS").hide();
-
-
-                document.getElementById('div_EditTDS').style.display = 'none';
-                document.getElementById('<%= txtBillNoTDS.ClientID %>').disabled = true;
-                document.getElementById('tblBtnSavePanelTDS').style.display = 'block';
-                document.getElementById('divAddNewTDS').style.display = 'block';
-                btncross.style.display = "block";
-                TblSearch.style.display = "none";
-                gridTDS.PerformCallback('Edit~' + VisibleIndexE);
-
+                jAlert('This Journal is NIL TDS. Can not modify.', 'Alert');
+                return;
             }
-        }
-        else {
-            jAlert('This Journal is NIL TDS. Can not modify.', 'Alert');
-            return;
-        }
             //clookupTDS_Project.SetEnabled(false);
             // clookup_Project.SetEnabled(false);
-        LoadingPanel.Show();
-    }
+            LoadingPanel.Show();
+        }
 
-    function OnGetRowValuesOnDelete(visibleIndex, IStds, RET_VISIBLE, JvID) {
-        VisibleIndexE = visibleIndex;
-        //var row = s.GetRow(e.visibleIndex);
-        //rev for Nil Rated TDS checking for Edit Tanmoy
-        IsNillTDSCheck(JvID);
-        if (NillTDS) {
-            //End of rev for Nil Rated TDS checking for Edit Tanmoy
-            if (IStds == "1") {
-                jAlert('This journal is Auto Created from POS.Can not delete.', 'Alert');
-                return;
-            }
-
-            if (RET_VISIBLE == "1") {
-                jAlert('This is an Auto Journal created from the retention module.Can not delete.', 'Alert');
-                return;
-            }
-
-            jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
-                if (r == true) {
-                    cGvJvSearch.PerformCallback('PCB_DeleteBtnOkE~' + VisibleIndexE);
+        function OnGetRowValuesOnDelete(visibleIndex, IStds, RET_VISIBLE, JvID) {
+            VisibleIndexE = visibleIndex;
+            //var row = s.GetRow(e.visibleIndex);
+            //rev for Nil Rated TDS checking for Edit Tanmoy
+            IsNillTDSCheck(JvID);
+            if (NillTDS) {
+                //End of rev for Nil Rated TDS checking for Edit Tanmoy
+                if (IStds == "1") {
+                    jAlert('This journal is Auto Created from POS.Can not delete.', 'Alert');
+                    return;
                 }
-            });
-        }
-        else {
-            jAlert('This Journal is NIL TDS. Can not delete.', 'Alert');
-            return;
-        }
-    }
 
+                if (RET_VISIBLE == "1") {
+                    jAlert('This is an Auto Journal created from the retention module.Can not delete.', 'Alert');
+                    return;
+                }
 
-    function onPrintJv(id) {
-
-        RecPayId = id;
-        cDocumentsPopup.Show();
-        cSelectPanel.cpSuccess = "";
-        cCmbDesignName.SetSelectedIndex(0);
-        cSelectPanel.PerformCallback('Bindalldesignes');
-        $('#btnOK').focus();
-    }
-
-    function PerformCallToGridBind() {
-        cSelectPanel.PerformCallback('Bindsingledesign');
-        cDocumentsPopup.Hide();
-        return false;
-    }
-    function cSelectPanelEndCall(s, e) {
-
-        if (cSelectPanel.cpSuccess != "") {
-            var TotDocument = cSelectPanel.cpSuccess.split(',');
-            var reportName = cCmbDesignName.GetValue();
-            var module = 'JOURNALVOUCHER';
-            window.open("../../Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + RecPayId, '_blank')
-        }
-        if (cSelectPanel.cpSuccess == "") {
-            cCmbDesignName.SetSelectedIndex(0);
-        }
-    }
-
-
-
-
-    //function onPrintJv(id) {
-    //    window.location.href = "../../reports/XtraReports/JournalVoucherReportViewer.aspx?id=" + id;
-    //}
-
-    function MainAccountCallBack(branch) {
-        // CountryID.PerformCallback(branch);
-    }
-
-    function GvJvSearch_EndCallBack() {
-        if (cGvJvSearch.cpJVDelete != undefined && cGvJvSearch.cpJVDelete != null) {
-            jAlert(cGvJvSearch.cpJVDelete);
-            cGvJvSearch.cpJVDelete = null;
-            updateGridByDate()
-            //cGvJvSearch.PerformCallback('PCB_BindAfterDelete');
-        }
-    }
-    function GridFullInfo_EndCallBack() {
-        if (cGvJvSearch.cpJVDelete != undefined && cGvJvSearch.cpJVDelete != null) {
-            jAlert(cGvJvSearch.cpJVDelete);
-            cGvJvSearch.cpJVDelete = null;
-            cGvJvSearch.PerformCallback('PCB_BindAfterDelete');
-        }
-    }
-
-
-    var currentEditableVisibleIndex;
-    var currentEditableVisibleIndexTDS;
-
-
-    var preventEndEditOnLostFocus = false;
-    var lastCountryID;
-    var setValueFlag;
-    var setValueFlagTDS;
-
-
-    var debitOldValue;
-    var debitNewValue;
-    var CreditOldValue;
-    var CreditNewValue;
-
-    function CountriesCombo_SelectedIndexChanged(s, e) {
-        var currentValue = grid.GetEditor('gvColMainAccount').GetValue();
-        var Narration = grid.GetEditor('Narration');
-        var currentValue = s.GetValue();
-        if (lastCountryID == currentValue) {
-            Narration.SetValue(NarrationText);
-            return;
-        }
-        lastCountryID = currentValue;
-        //CityID.PerformCallback(currentValue + '~' + "");
-    }
-    function IntializeGlobalVariables(grid) {
-        lastCountryID = grid.cplastCountryID;
-        currentEditableVisibleIndex = -1;
-        setValueFlag = -1;
-    }
-    function OnInit(s, e) {
-        IntializeGlobalVariables(s);
-
-    }
-    function OnInitTDS(s, e) {
-        IntializeGlobalVariablesTDS(s);
-
-    }
-    function IntializeGlobalVariablesTDS(gridTDS) {
-        lastCountryID = gridTDS.cplastCountryID;
-        currentEditableVisibleIndexTDS = -1;
-        setValueFlagTDS = -1;
-    }
-
-
-    function OnEndCallback(s, e) {
-        
-        //IntializeGlobalVariables(s);
-        LoadingPanel.Hide();
-
-        if (grid.cpEdit != null) {
-            //grid.ShowLoadingPanel();
-            //LoadingPanel.Show();
-
-            var VoucherNo = grid.cpEdit.split('~')[0];
-            var Narration = grid.cpEdit.split('~')[1];
-            var BranchID = grid.cpEdit.split('~')[2];
-            var Credit = grid.cpEdit.split('~')[3];
-            var Debit = grid.cpEdit.split('~')[4];
-            var trDate = grid.cpEdit.split('~')[5];
-            var PlaceOfSupply = grid.cpEdit.split('~')[6];
-            var TaxOption = grid.cpEdit.split('~')[7];
-            var IsPartyJournal = grid.cpEdit.split('~')[8];
-            var PartyCount = grid.cpEdit.split('~')[9];
-            var IsRCMD = grid.cpEdit.split('~')[10];
-            var projJId = grid.cpEdit.split('~')[11];
-            var Transaction_Date = grid.cpEdit.split('~')[12];
-            var GRN_IDs = grid.cpEdit.split('~')[13];
-            $("#hdnIsPartyLedger").val(PartyCount);
-            if (IsPartyJournal == 'True') {
-                $("#divIsPartyJournal").show();
-            }
-
-            if (IsRCMD == 'True') {
-                IsRcm.SetChecked(1);
+                jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+                    if (r == true) {
+                        cGvJvSearch.PerformCallback('PCB_DeleteBtnOkE~' + VisibleIndexE);
+                    }
+                });
             }
             else {
-                IsRcm.SetChecked(0);
+                jAlert('This Journal is NIL TDS. Can not delete.', 'Alert');
+                return;
             }
-            cPanellookup_GRNOverhead.PerformCallback('BindOverheadCostGridEdit' + '~' + Transaction_Date + '~' + BranchID + '~' + GRN_IDs);
-           
-            document.getElementById('txtBillNo').value = VoucherNo;
-            document.getElementById('txtNarration').value = Narration;
-            document.getElementById('ddlSupplyState').value = PlaceOfSupply;
-            document.getElementById('ddl_AmountAre').value = TaxOption;
+        }
+
+
+        function onPrintJv(id) {
+
+            RecPayId = id;
+            cDocumentsPopup.Show();
+            cSelectPanel.cpSuccess = "";
+            cCmbDesignName.SetSelectedIndex(0);
+            cSelectPanel.PerformCallback('Bindalldesignes');
+            $('#btnOK').focus();
+        }
+
+        function PerformCallToGridBind() {
+            cSelectPanel.PerformCallback('Bindsingledesign');
+            cDocumentsPopup.Hide();
+            return false;
+        }
+        function cSelectPanelEndCall(s, e) {
+
+            if (cSelectPanel.cpSuccess != "") {
+                var TotDocument = cSelectPanel.cpSuccess.split(',');
+                var reportName = cCmbDesignName.GetValue();
+                var module = 'JOURNALVOUCHER';
+                window.open("../../Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + RecPayId, '_blank')
+            }
+            if (cSelectPanel.cpSuccess == "") {
+                cCmbDesignName.SetSelectedIndex(0);
+            }
+        }
+
+
+
+
+        //function onPrintJv(id) {
+        //    window.location.href = "../../reports/XtraReports/JournalVoucherReportViewer.aspx?id=" + id;
+        //}
+
+        function MainAccountCallBack(branch) {
+            // CountryID.PerformCallback(branch);
+        }
+
+        function GvJvSearch_EndCallBack() {
+            if (cGvJvSearch.cpJVDelete != undefined && cGvJvSearch.cpJVDelete != null) {
+                jAlert(cGvJvSearch.cpJVDelete);
+                cGvJvSearch.cpJVDelete = null;
+                updateGridByDate()
+                //cGvJvSearch.PerformCallback('PCB_BindAfterDelete');
+            }
+        }
+        function GridFullInfo_EndCallBack() {
+            if (cGvJvSearch.cpJVDelete != undefined && cGvJvSearch.cpJVDelete != null) {
+                jAlert(cGvJvSearch.cpJVDelete);
+                cGvJvSearch.cpJVDelete = null;
+                cGvJvSearch.PerformCallback('PCB_BindAfterDelete');
+            }
+        }
+
+
+        var currentEditableVisibleIndex;
+        var currentEditableVisibleIndexTDS;
+
+
+        var preventEndEditOnLostFocus = false;
+        var lastCountryID;
+        var setValueFlag;
+        var setValueFlagTDS;
+
+
+        var debitOldValue;
+        var debitNewValue;
+        var CreditOldValue;
+        var CreditNewValue;
+
+        function CountriesCombo_SelectedIndexChanged(s, e) {
+            var currentValue = grid.GetEditor('gvColMainAccount').GetValue();
+            var Narration = grid.GetEditor('Narration');
+            var currentValue = s.GetValue();
+            if (lastCountryID == currentValue) {
+                Narration.SetValue(NarrationText);
+                return;
+            }
+            lastCountryID = currentValue;
+            //CityID.PerformCallback(currentValue + '~' + "");
+        }
+        function IntializeGlobalVariables(grid) {
+            lastCountryID = grid.cplastCountryID;
+            currentEditableVisibleIndex = -1;
+            setValueFlag = -1;
+        }
+        function OnInit(s, e) {
+            IntializeGlobalVariables(s);
+
+        }
+        function OnInitTDS(s, e) {
+            IntializeGlobalVariablesTDS(s);
+
+        }
+        function IntializeGlobalVariablesTDS(gridTDS) {
+            lastCountryID = gridTDS.cplastCountryID;
+            currentEditableVisibleIndexTDS = -1;
+            setValueFlagTDS = -1;
+        }
+
+
+        function OnEndCallback(s, e) {
+
+            //IntializeGlobalVariables(s);
+            LoadingPanel.Hide();
+
+            if (grid.cpEdit != null) {
+                //grid.ShowLoadingPanel();
+                //LoadingPanel.Show();
+
+                var VoucherNo = grid.cpEdit.split('~')[0];
+                var Narration = grid.cpEdit.split('~')[1];
+                var BranchID = grid.cpEdit.split('~')[2];
+                var Credit = grid.cpEdit.split('~')[3];
+                var Debit = grid.cpEdit.split('~')[4];
+                var trDate = grid.cpEdit.split('~')[5];
+                var PlaceOfSupply = grid.cpEdit.split('~')[6];
+                var TaxOption = grid.cpEdit.split('~')[7];
+                var IsPartyJournal = grid.cpEdit.split('~')[8];
+                var PartyCount = grid.cpEdit.split('~')[9];
+                var IsRCMD = grid.cpEdit.split('~')[10];
+                var projJId = grid.cpEdit.split('~')[11];
+                var Transaction_Date = grid.cpEdit.split('~')[12];
+                var GRN_IDs = grid.cpEdit.split('~')[13];
+                $("#hdnIsPartyLedger").val(PartyCount);
+                if (IsPartyJournal == 'True') {
+                    $("#divIsPartyJournal").show();
+                }
+
+                if (IsRCMD == 'True') {
+                    IsRcm.SetChecked(1);
+                }
+                else {
+                    IsRcm.SetChecked(0);
+                }
+                cPanellookup_GRNOverhead.PerformCallback('BindOverheadCostGridEdit' + '~' + Transaction_Date + '~' + BranchID + '~' + GRN_IDs);
+
+                document.getElementById('txtBillNo').value = VoucherNo;
+                document.getElementById('txtNarration').value = Narration;
+                document.getElementById('ddlSupplyState').value = PlaceOfSupply;
+                document.getElementById('ddl_AmountAre').value = TaxOption;
                 <%--var ddlBranch = document.getElementById("<%=ddlBranch.ClientID%>");
                 ddlBranch.options[BranchID].selected = true;--%>
                 <%--var ddlBranch = document.getElementById("<%=ddlBranch.ClientID%>");
                 ddlBranch.Items.FindByValue(BranchID).Selected = true;--%>
 
-                //var dropdownlistbox = document.getElementById("ddlBranch")
+            //var dropdownlistbox = document.getElementById("ddlBranch")
 
-                //for (var x = 0; x < dropdownlistbox.length - 1 ; x++) {
-                //    if (BranchID == dropdownlistbox.options[x].value) {
-                //        dropdownlistbox.selectedIndex = x;
-                //        break;
-                //    }
-                //}
+            //for (var x = 0; x < dropdownlistbox.length - 1 ; x++) {
+            //    if (BranchID == dropdownlistbox.options[x].value) {
+            //        dropdownlistbox.selectedIndex = x;
+            //        break;
+            //    }
+            //}
 
-                document.getElementById('ddlBranch').value = BranchID;
-                document.getElementById('<%= ddlBranch.ClientID %>').disabled = true;
-                var Transdt = new Date(trDate);
-                tDate.SetDate(Transdt);
+            document.getElementById('ddlBranch').value = BranchID;
+            document.getElementById('<%= ddlBranch.ClientID %>').disabled = true;
+            var Transdt = new Date(trDate);
+            tDate.SetDate(Transdt);
 
-                //Bind again the main account with respect to branch
-                // CountryID.PerformCallback(BranchID);
-                var strSchemaType = document.getElementById('hdnSchemaType').value;
-                var RefreshType = document.getElementById('hdnRefreshType').value;
+            //Bind again the main account with respect to branch
+            // CountryID.PerformCallback(BranchID);
+            var strSchemaType = document.getElementById('hdnSchemaType').value;
+            var RefreshType = document.getElementById('hdnRefreshType').value;
 
-                c_txt_Credit.SetValue(Credit);
-                c_txt_Debit.SetValue(Debit);
+            c_txt_Credit.SetValue(Credit);
+            c_txt_Debit.SetValue(Debit);
 
-                if (Debit == Credit) {
-                    cbtnSaveRecords.SetVisible(true);
-                    cbtn_SaveRecords.SetVisible(true);
-                    loadCurrencyMassage.style.display = "none";
+            if (Debit == Credit) {
+                cbtnSaveRecords.SetVisible(true);
+                cbtn_SaveRecords.SetVisible(true);
+                loadCurrencyMassage.style.display = "none";
+            }
+            else {
+                cbtnSaveRecords.SetVisible(false);
+                cbtn_SaveRecords.SetVisible(false);
+
+                var Amount = parseFloat(Debit) - parseFloat(Credit);
+                var div = document.getElementById('loadCurrencyMassage');
+                var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount : " + DecimalRoundoff(Amount, 2) + "</span></label>";
+                div.innerHTML = txt;
+
+                loadCurrencyMassage.style.display = "block";
+            }
+
+            if (grid.cpCheck == "-99") {
+                $("#cpTagged").val("-99");
+                $("#tdSaveButton").show();
+                $("#btnSaveRecords").hide()
+                $("#btn_SaveRecords").hide();
+                $('#<%=lbl_quotestatusmsg.ClientID %>').html("Tagged with another module. Cannot modify.");
+            }
+
+            if (IsRcm.GetChecked()) {
+                var Listddl_AmountAre = document.getElementById("ddl_AmountAre");
+                Listddl_AmountAre.value = "1";
+                Listddl_AmountAre.disabled = true;
+                var item = Listddl_AmountAre.item(0);
+                item.style.display = 'block';
+            }
+            else {
+                var Listddl_AmountAre = document.getElementById("ddl_AmountAre");
+                Listddl_AmountAre.disabled = false;
+                var item = Listddl_AmountAre.item(0);
+                item.style.display = 'none';
+
+            }
+
+            // if($("#hdnProjectSelectInEntryModule").val()=="1")
+            clookup_Project.gridView.SelectItemsByKey(projJId);
+
+            var projID = clookup_Project.GetValue();
+            $.ajax({
+                type: "POST",
+                url: 'JournalEntry.aspx/getHierarchyID',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({ ProjID: projID }),
+                success: function (msg) {
+                    var data = msg.d;
+                    $("#ddlHierarchy").val(data);
+                }
+            });
+
+            grid.cpEdit = null;
+        }
+
+        var value = document.getElementById('hdnRefreshType').value;
+
+        if (grid.cpSaveSuccessOrFail == "outrange") {
+            jAlert('Can Not Add More Journal Voucher as Journal Scheme Exausted.<br />Update The Scheme and Try Again');
+        }
+        else if (grid.cpSaveSuccessOrFail == "duplicate") {
+            jAlert('Can Not Save as Duplicate Journal Voucher No. Found');
+        }
+        else if (grid.cpSaveSuccessOrFail == "Subaccountmandatory") {
+            jAlert('Sub account set as mandatory. Please Select Sub Account to Proceed.');
+            return;
+        }
+        else if (grid.cpSaveSuccessOrFail == "errorInsert") {
+            jAlert('Try again later.');
+        }
+        else if (grid.cpSaveSuccessOrFail == "HasError") {
+            jAlert('Selected Ledgers are not mapped with RCM Ledger in Masters - Accounts - Tax Component Scheme. Cannot Proceed.');
+
+            for (var i = 0; i <= grid.GetVisibleRowsOnPage(); i++) {
+                grid.batchEditApi.StartEdit(i, 1);
+            }
+
+
+            grid.AddNewRow();
+        }
+        else if (grid.cpSaveSuccessOrFail == "successInsert") {
+
+            $("#divIsPartyJournal").hide();
+            var JV_Number = grid.cpVouvherNo;
+            var JV_Msg = "Journal Voucher No. " + JV_Number + " generated.";
+            var strSchemaType = document.getElementById('hdnSchemaType').value;
+            var AutoPrint = document.getElementById('hdnAutoPrint').value;
+
+            if (value == "E") {
+                var IsComplete = "0";
+
+                if (JV_Number != "") {
+                    if (AutoPrint == "Yes") {
+                        var reportName = 'JournalVoucher~D'
+                        var module = 'JOURNALVOUCHER'
+                        window.open("../../Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + JV_Number, '_blank')
+                    }
+                    jAlert(JV_Msg, 'Alert Dialog: [Journal Voucher]', function (r) {
+                        if (r == true) {
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    window.location.reload();
+                }
+            }
+            else if (value == "S") {
+                var IsComp = "0";
+
+                if (JV_Number != "") {
+                    if (AutoPrint == "Yes") {
+                        var reportName = 'JournalVoucher~D'
+                        var module = 'JOURNALVOUCHER'
+                        window.open("../../Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + JV_Number, '_blank')
+                    }
+                    jAlert(JV_Msg, 'Alert Dialog: [Journal Voucher]', function (r) {
+                        if (r == true) {
+                            IsComp = "1";
+                        }
+                    });
                 }
                 else {
-                    cbtnSaveRecords.SetVisible(false);
-                    cbtn_SaveRecords.SetVisible(false);
-
-                    var Amount = parseFloat(Debit) - parseFloat(Credit);
-                    var div = document.getElementById('loadCurrencyMassage');
-                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount : " + DecimalRoundoff(Amount, 2) + "</span></label>";
-                    div.innerHTML = txt;
-
-                    loadCurrencyMassage.style.display = "block";
+                    IsComp = "1";
                 }
 
-                if (grid.cpCheck == "-99") {
-                    $("#cpTagged").val("-99");
-                    $("#tdSaveButton").show();
-                    $("#btnSaveRecords").hide()
-                    $("#btn_SaveRecords").hide();
-                    $('#<%=lbl_quotestatusmsg.ClientID %>').html("Tagged with another module. Cannot modify.");
-                }
-
-                if (IsRcm.GetChecked()) {
-                    var Listddl_AmountAre = document.getElementById("ddl_AmountAre");
-                    Listddl_AmountAre.value = "1";
-                    Listddl_AmountAre.disabled = true;
-                    var item = Listddl_AmountAre.item(0);
-                    item.style.display = 'block';
-                }
-                else {
-                    var Listddl_AmountAre = document.getElementById("ddl_AmountAre");
-                    Listddl_AmountAre.disabled = false;
-                    var item = Listddl_AmountAre.item(0);
-                    item.style.display = 'none';
-
-                }
-
-                // if($("#hdnProjectSelectInEntryModule").val()=="1")
-                clookup_Project.gridView.SelectItemsByKey(projJId);
-
-                var projID = clookup_Project.GetValue();
-                $.ajax({
-                    type: "POST",
-                    url: 'JournalEntry.aspx/getHierarchyID',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify({ ProjID: projID }),
-                    success: function (msg) {
-                        var data = msg.d;
-                        $("#ddlHierarchy").val(data);
-                    }
-                });
-
-                grid.cpEdit = null;
-            }
-
-            var value = document.getElementById('hdnRefreshType').value;
-
-            if (grid.cpSaveSuccessOrFail == "outrange") {
-                jAlert('Can Not Add More Journal Voucher as Journal Scheme Exausted.<br />Update The Scheme and Try Again');
-            }
-            else if (grid.cpSaveSuccessOrFail == "duplicate") {
-                jAlert('Can Not Save as Duplicate Journal Voucher No. Found');
-            }
-            else if (grid.cpSaveSuccessOrFail == "Subaccountmandatory") {
-                jAlert('Sub account set as mandatory. Please Select Sub Account to Proceed.');
-                return;
-            }
-            else if (grid.cpSaveSuccessOrFail == "errorInsert") {
-                jAlert('Try again later.');
-            }
-            else if (grid.cpSaveSuccessOrFail == "HasError") {
-                jAlert('Selected Ledgers are not mapped with RCM Ledger in Masters - Accounts - Tax Component Scheme. Cannot Proceed.');
-
-                for (var i = 0; i <= grid.GetVisibleRowsOnPage() ; i++) {
-                    grid.batchEditApi.StartEdit(i, 1);
-                }
-
-
-                grid.AddNewRow();
-            }
-            else if (grid.cpSaveSuccessOrFail == "successInsert") {
-                
-                $("#divIsPartyJournal").hide();
-                var JV_Number = grid.cpVouvherNo;
-                var JV_Msg = "Journal Voucher No. " + JV_Number + " generated.";
-                var strSchemaType = document.getElementById('hdnSchemaType').value;
-                var AutoPrint = document.getElementById('hdnAutoPrint').value;
-
-                if (value == "E") {
-                    var IsComplete = "0";
-
-                    if (JV_Number != "") {
-                        if (AutoPrint == "Yes") {
-                            var reportName = 'JournalVoucher~D'
-                            var module = 'JOURNALVOUCHER'
-                            window.open("../../Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + JV_Number, '_blank')
-                        }
-                        jAlert(JV_Msg, 'Alert Dialog: [Journal Voucher]', function (r) {
-                            if (r == true) {
-                                window.location.reload();
-                            }
-                        });
-                    } else {
-                        window.location.reload();
-                    }
-                }
-                else if (value == "S") {
-                    var IsComp = "0";
-
-                    if (JV_Number != "") {
-                        if (AutoPrint == "Yes") {
-                            var reportName = 'JournalVoucher~D'
-                            var module = 'JOURNALVOUCHER'
-                            window.open("../../Reports/REPXReports/RepxReportViewer.aspx?Previewrpt=" + reportName + '&modulename=' + module + '&id=' + JV_Number, '_blank')
-                        }
-                        jAlert(JV_Msg, 'Alert Dialog: [Journal Voucher]', function (r) {
-                            if (r == true) {
-                                IsComp = "1";
-                            }
-                        });
-                    }
-                    else {
-                        IsComp = "1";
-                    }
-
-                    if (IsComp == "1") {
+                if (IsComp == "1") {
                 <%--$('#<%=hdnMode.ClientID %>').val('0');
                     document.getElementById('div_Edit').style.display = 'block';
                     cbtnSaveRecords.SetVisible(false);
@@ -2393,13 +2397,13 @@
                         c_txt_Credit.SetValue("0");
                         document.getElementById('<%= txtNarration.ClientID %>').value = "";
                         //cCmbScheme.Focus();
-                        
+
                         if (strSchemaType == "0") {
                             document.getElementById('<%= txtBillNo.ClientID %>').disabled = false;
                             document.getElementById('<%= txtBillNo.ClientID %>').value = "";
                             //document.getElementById("txtBillNo").focus();
                             //cCmbScheme.Focus();
-                            
+
                             document.getElementById("CmbScheme").focus();
                         }
                         else if (strSchemaType == "1") {
@@ -2415,7 +2419,7 @@
                         else {
                             //cCmbScheme.SetValue("0");
                             //cCmbScheme.Focus();
-                            
+
                             document.getElementById('<%= txtBillNo.ClientID %>').disabled = true;
                             document.getElementById('<%= txtBillNo.ClientID %>').value = "";
 
@@ -2423,117 +2427,117 @@
                             CmbScheme.options[0].selected = true;
                             document.getElementById("CmbScheme").focus();
                         }
+                    }
+                    else {
+                        grid.AddNewRow();
+                    }
+                }
             }
             else {
                 grid.AddNewRow();
             }
-        }
-}
-else {
-    grid.AddNewRow();
-}
 
-}
-
-
-
-function OnEndCallbackTDS(s, e) {
-    //IntializeGlobalVariables(s);
-    LoadingPanel.Hide();
-    gridTDS.cpNewRowIndex = undefined;
-    if (gridTDS.cpEdit != null) {
-        //gridTDS.ShowLoadingPanel();
-        //LoadingPanel.Show();
-
-        var VoucherNo = gridTDS.cpEdit.split('~')[0];
-        var Narration = gridTDS.cpEdit.split('~')[1];
-        var BranchID = gridTDS.cpEdit.split('~')[2];
-        var Credit = gridTDS.cpEdit.split('~')[3];
-        var Debit = gridTDS.cpEdit.split('~')[4];
-        var trDate = gridTDS.cpEdit.split('~')[5];
-        var PlaceOfSupply = gridTDS.cpEdit.split('~')[6];
-        var TaxOption = gridTDS.cpEdit.split('~')[7];
-        var IsPartyJournal = gridTDS.cpEdit.split('~')[8];
-        var PartyCount = gridTDS.cpEdit.split('~')[9];
-        var IsRCMD = gridTDS.cpEdit.split('~')[10];
-        var projJId = gridTDS.cpEdit.split('~')[11];
-        var IsSalary = gridTDS.cpEdit.split('~')[12];
-
-
-        var CONSIDERTDS = gridTDS.cpEdit.split('~')[13];
-        var TDS_CODE = gridTDS.cpEdit.split('~')[14];
-        var TDS_Amount = gridTDS.cpEdit.split('~')[15];
-
-        var Transaction_Date = gridTDS.cpEdit.split('~')[16];
-        var GRN_IDs = gridTDS.cpEdit.split('~')[17];
-        //Add section for Nil TDS Tanmoy
-        var NILRateTDS = gridTDS.cpEdit.split('~')[18];
-
-        cPanellookup_GRNOverheadTDS.PerformCallback('BindOverheadCostGridEditTDS' + '~' + Transaction_Date + '~' + BranchID + '~' + GRN_IDs);
-
-        ccmbtds.SetValue(TDS_CODE);
-        ccmbtds.SetEnabled(false);
-
-        //Add section for Nil TDS Tanmoy Start
-        if (NILRateTDS == 'True') {
-            //$("#chkNILRateTDS").prop("checked", true);
-            chkNILRateTDS.SetChecked(true);
-        }
-        else {
-            //$("#chkNILRateTDS").prop("checked", false);
-            chkNILRateTDS.SetChecked(false);
-        }
-
-        if (NILRateTDS == 'False') {
-            ctxtTDSAmount.SetValue(TDS_Amount);
-        }
-        //Add section for Nil TDS Tanmoy End
-        ctxtTDSAmount.SetEnabled(false);
-
-
-        if (IsSalary == "True") {
-            chkIsSalary.SetChecked(true);
-        }
-        else {
-            chkIsSalary.SetChecked(false);
-        }
-
-
-        if (CONSIDERTDS == "True") {
-            chkTDSJournal.SetChecked(true);
-        }
-        else {
-            chkTDSJournal.SetChecked(false);
         }
 
 
 
-        chkTDSJournal.SetEnabled(false);
+        function OnEndCallbackTDS(s, e) {
+            //IntializeGlobalVariables(s);
+            LoadingPanel.Hide();
+            gridTDS.cpNewRowIndex = undefined;
+            if (gridTDS.cpEdit != null) {
+                //gridTDS.ShowLoadingPanel();
+                //LoadingPanel.Show();
+
+                var VoucherNo = gridTDS.cpEdit.split('~')[0];
+                var Narration = gridTDS.cpEdit.split('~')[1];
+                var BranchID = gridTDS.cpEdit.split('~')[2];
+                var Credit = gridTDS.cpEdit.split('~')[3];
+                var Debit = gridTDS.cpEdit.split('~')[4];
+                var trDate = gridTDS.cpEdit.split('~')[5];
+                var PlaceOfSupply = gridTDS.cpEdit.split('~')[6];
+                var TaxOption = gridTDS.cpEdit.split('~')[7];
+                var IsPartyJournal = gridTDS.cpEdit.split('~')[8];
+                var PartyCount = gridTDS.cpEdit.split('~')[9];
+                var IsRCMD = gridTDS.cpEdit.split('~')[10];
+                var projJId = gridTDS.cpEdit.split('~')[11];
+                var IsSalary = gridTDS.cpEdit.split('~')[12];
 
 
-        $("#hdnIsPartyLedger").val(PartyCount);
-        if (IsPartyJournal == 'True') {
-            $("#divIsPartyJournal").show();
-        }
+                var CONSIDERTDS = gridTDS.cpEdit.split('~')[13];
+                var TDS_CODE = gridTDS.cpEdit.split('~')[14];
+                var TDS_Amount = gridTDS.cpEdit.split('~')[15];
 
-        if (IsRCMD == 'True') {
-            IsRcmTDS.SetChecked(1);
-        }
-        else {
-            IsRcmTDS.SetChecked(0);
-        }
+                var Transaction_Date = gridTDS.cpEdit.split('~')[16];
+                var GRN_IDs = gridTDS.cpEdit.split('~')[17];
+                //Add section for Nil TDS Tanmoy
+                var NILRateTDS = gridTDS.cpEdit.split('~')[18];
 
-        console.log(IsSalary);
+                cPanellookup_GRNOverheadTDS.PerformCallback('BindOverheadCostGridEditTDS' + '~' + Transaction_Date + '~' + BranchID + '~' + GRN_IDs);
 
-        document.getElementById('txtBillNoTDS').value = VoucherNo;
-        document.getElementById('txtNarrationTDS').value = Narration;
-        document.getElementById('ddlSupplyStateTDS').value = PlaceOfSupply;
-        document.getElementById('ddl_AmountAreTDS').value = TaxOption;
+                ccmbtds.SetValue(TDS_CODE);
+                ccmbtds.SetEnabled(false);
+
+                //Add section for Nil TDS Tanmoy Start
+                if (NILRateTDS == 'True') {
+                    //$("#chkNILRateTDS").prop("checked", true);
+                    chkNILRateTDS.SetChecked(true);
+                }
+                else {
+                    //$("#chkNILRateTDS").prop("checked", false);
+                    chkNILRateTDS.SetChecked(false);
+                }
+
+                if (NILRateTDS == 'False') {
+                    ctxtTDSAmount.SetValue(TDS_Amount);
+                }
+                //Add section for Nil TDS Tanmoy End
+                ctxtTDSAmount.SetEnabled(false);
+
+
+                if (IsSalary == "True") {
+                    chkIsSalary.SetChecked(true);
+                }
+                else {
+                    chkIsSalary.SetChecked(false);
+                }
+
+
+                if (CONSIDERTDS == "True") {
+                    chkTDSJournal.SetChecked(true);
+                }
+                else {
+                    chkTDSJournal.SetChecked(false);
+                }
 
 
 
-        document.getElementById('ddlBranchTDS').value = BranchID;
-        document.getElementById('<%= ddlBranchTDS.ClientID %>').disabled = true;
+                chkTDSJournal.SetEnabled(false);
+
+
+                $("#hdnIsPartyLedger").val(PartyCount);
+                if (IsPartyJournal == 'True') {
+                    $("#divIsPartyJournal").show();
+                }
+
+                if (IsRCMD == 'True') {
+                    IsRcmTDS.SetChecked(1);
+                }
+                else {
+                    IsRcmTDS.SetChecked(0);
+                }
+
+                console.log(IsSalary);
+
+                document.getElementById('txtBillNoTDS').value = VoucherNo;
+                document.getElementById('txtNarrationTDS').value = Narration;
+                document.getElementById('ddlSupplyStateTDS').value = PlaceOfSupply;
+                document.getElementById('ddl_AmountAreTDS').value = TaxOption;
+
+
+
+                document.getElementById('ddlBranchTDS').value = BranchID;
+                document.getElementById('<%= ddlBranchTDS.ClientID %>').disabled = true;
         var Transdt = new Date(trDate);
         tDateTDS.SetDate(Transdt);
 
@@ -2631,27 +2635,27 @@ function OnEndCallbackTDS(s, e) {
     else if (gridTDS.cpSaveSuccessOrFail == "HasError") {
         jAlert('Selected Ledgers are not mapped with RCM Ledger in Masters - Accounts - Tax Component Scheme. Cannot Proceed.');
 
-        for (var i = 0; i <= gridTDS.GetVisibleRowsOnPage() ; i++) {
+        for (var i = 0; i <= gridTDS.GetVisibleRowsOnPage(); i++) {
             gridTDS.batchEditApi.StartEdit(i, 1);
         }
 
 
         gridTDS.AddNewRow();
     }
-        //else if (grid.cpNilTDSCheckZeroAmt == "Faild") {
-        //    jConfirm('This is a NIL TDS Journal, value should be zero against ', 'Confirmation Dialog', function (r) {
-        //        if (r == true) {
+    //else if (grid.cpNilTDSCheckZeroAmt == "Faild") {
+    //    jConfirm('This is a NIL TDS Journal, value should be zero against ', 'Confirmation Dialog', function (r) {
+    //        if (r == true) {
 
-        //        }
-        //    });
-        //}
-        //else if (grid.cpNilTDSChecknotZeroAmt == "Faild") {
-        //    jConfirm('This is a TDS Journal, value should be non-zero against', 'Confirmation Dialog', function (r) {
-        //        if (r == true) {
+    //        }
+    //    });
+    //}
+    //else if (grid.cpNilTDSChecknotZeroAmt == "Faild") {
+    //    jConfirm('This is a TDS Journal, value should be non-zero against', 'Confirmation Dialog', function (r) {
+    //        if (r == true) {
 
-        //        }
-        //    });
-        //}
+    //        }
+    //    });
+    //}
     else if (gridTDS.cpSaveSuccessOrFail == "successInsert") {
         $("#divIsPartyJournal").hide();
         var JV_Number = gridTDS.cpVouvherNo;
@@ -2755,212 +2759,680 @@ function OnEndCallbackTDS(s, e) {
                     document.getElementById('<%= txtBillNoTDS.ClientID %>').value = "";
 
                     var CmbScheme = document.getElementById("<%=CmbSchemeTDS.ClientID%>");
-                    CmbScheme.options[0].selected = true;
-                    document.getElementById("CmbSchemeTDS").focus();
+                            CmbScheme.options[0].selected = true;
+                            document.getElementById("CmbSchemeTDS").focus();
+                        }
+                    }
+                    else {
+                        gridTDS.AddNewRow();
+                    }
                 }
-    }
-    else {
-        gridTDS.AddNewRow();
-    }
-}
-}
-else {
-    gridTDS.AddNewRow();
-}
+            }
+            else {
+                gridTDS.AddNewRow();
+            }
 
-}
+        }
 
 
 
-function UpdateTrColor() {
-    for (var i = 0; i < 1000; i++) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                gridTDS.batchEditApi.StartEdit(i, 2);
-                var row = gridTDS.GetRow(i);
+        function UpdateTrColor() {
+            for (var i = 0; i < 1000; i++) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        gridTDS.batchEditApi.StartEdit(i, 2);
+                        var row = gridTDS.GetRow(i);
 
-                //if (row.children[11].innerText.trim() != "" && row.children[11].innerText.trim() != null) {
-                //    $(row).addClass(" rowRed");
-                //}
-                if (gridTDS.batchEditApi.GetCellValue(i, "IsTDS").trim() != "" && gridTDS.batchEditApi.GetCellValue(i, "IsTDS").trim() != null) {
-                    $(row).addClass(" rowRed");
+                        //if (row.children[11].innerText.trim() != "" && row.children[11].innerText.trim() != null) {
+                        //    $(row).addClass(" rowRed");
+                        //}
+                        if (gridTDS.batchEditApi.GetCellValue(i, "IsTDS").trim() != "" && gridTDS.batchEditApi.GetCellValue(i, "IsTDS").trim() != null) {
+                            $(row).addClass(" rowRed");
+                        }
+
+                    }
+                }
+            }
+
+            for (i = -1; i > -1000; i--) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        gridTDS.batchEditApi.StartEdit(i, 2);
+                        var row = gridTDS.GetRow(i);
+
+                        if (row.children[11].innerText.trim() != "" && row.children[11].innerText.trim() != null) {
+                            $(row).addClass(" rowRed");
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+        var NarrationText;
+        function CitiesCombo_EndCallback(s, e) {
+            //if (setValueFlag == -1)
+            //    s.SetSelectedIndex(0);
+            //else if (setValueFlag > -1) {
+            //    CityID.SetSelectedItem(CityID.FindItemByValue(setValueFlag));
+            //    setValueFlag = -1;
+            //}
+
+            if (CityID.cpIsRCM != null) {
+                //grid.ShowLoadingPanel();
+                //LoadingPanel.Show();
+                var Narration = grid.GetEditor('Narration');
+                var IsRcm = CityID.cpIsRCM;
+                var TaxOption = document.getElementById('ddl_AmountAre').value;
+                if (TaxOption == 1) {
+                    if (IsRcm == 1) {
+                        Narration.SetValue('RCM');
+                        NarrationText = 'RCM';
+                    }
+                    else if (IsRcm == 0) {
+                        Narration.SetValue('');
+                        NarrationText = '';
+                    }
+                }
+            }
+
+            if (setValueFlag == null || setValueFlag == "0" || setValueFlag == "") {
+                s.SetSelectedIndex(-1);
+            }
+            else {
+                if (CityID.FindItemByValue(setValueFlag) != null) {
+                    CityID.SetValue(setValueFlag);
+                    setValueFlag = null;
+                }
+            }
+
+            LoadingPanel.Hide();
+            //LoadingPanel.Hide();
+            //grid.HideLoadingPanel();
+        }
+
+
+        function OnBatchEditStartEditingTDS(s, e) {
+            currentEditableVisibleIndexTDS = e.visibleIndex;
+            globalRowIndexTDS = e.visibleIndex;
+            var currentCountryID = gridTDS.batchEditApi.GetCellValue(currentEditableVisibleIndexTDS, "gvColMainAccountTDS");
+
+            //var IsTDSSource = gridTDS.batchEditApi.GetCellValue(currentEditableVisibleIndexTDS, "IsTDSSource");
+            //if (IsTDSSource == "1") {
+            //    if (e.focusedColumn.fieldName == "ReceiptTDS") {
+            //        gridTDS.batchEditApi.EndEdit();
+            //        e.cancel = true;
+            //        return;
+            //    }
+            //}
+
+
+
+
+
+
+            var ISTDS = gridTDS.batchEditApi.GetCellValue(currentEditableVisibleIndexTDS, "IsTDS");
+
+            if (chkIsSalary.GetChecked()) {
+                return;
+            }
+
+
+            if (ISTDS != "" && ISTDS != null) {
+
+                e.cancel = true;
+            }
+            var cityIDColumn = s.GetColumnByField("CityIDTDS");
+        }
+
+
+        function OnBatchEditStartEditing(s, e) {
+            currentEditableVisibleIndex = e.visibleIndex;
+            globalRowIndex = e.visibleIndex;
+            var currentCountryID = grid.batchEditApi.GetCellValue(currentEditableVisibleIndex, "gvColMainAccount");
+            var cityIDColumn = s.GetColumnByField("CityID");
+
+
+
+
+            //if (!e.rowValues.hasOwnProperty(cityIDColumn.index))
+            //    return;
+            //var cellInfo = e.rowValues[cityIDColumn.index];
+
+            //if (lastCountryID == currentCountryID) {
+            //    if (CityID.FindItemByValue(cellInfo.value) != null) {
+            //        CityID.SetValue(cellInfo.value);
+            //    }
+            //    else {
+            //        RefreshData(cellInfo, lastCountryID);
+            //        LoadingPanel.Show();
+            //    }
+            //}
+            //else {
+            //    if (currentCountryID == null) {
+            //        CityID.SetSelectedIndex(-1);
+            //        return;
+            //    }
+            //    lastCountryID = currentCountryID;
+            //    RefreshData(cellInfo, lastCountryID);
+            //    LoadingPanel.Show();
+            //}
+
+            //setValueFlag = cellInfo.value;
+            //CityID.PerformCallback(currentCountryID);
+            //LoadingPanel.Show();
+        }
+        function RefreshData(cellInfo, countryID) {
+            setValueFlag = cellInfo.value;
+            CityID.PerformCallback(countryID + '~' + setValueFlag);
+
+            //setTimeout(function () {
+            //    CityID.PerformCallback(countryID);
+            //}, 0);
+        }
+        //Debjyoti 
+
+        function uuid() {
+            function randomDigit() {
+                if (crypto && crypto.getRandomValues) {
+                    var rands = new Uint8Array(1);
+                    crypto.getRandomValues(rands);
+                    return (rands[0] % 16).toString(16);
+                } else {
+                    return ((Math.random() * 16) | 0).toString(16);
+                }
+            }
+            var crypto = window.crypto || window.msCrypto;
+            return 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g, randomDigit);
+        }
+
+
+
+        function OnCustomButtonClick(s, e) {
+            if (e.buttonID == 'CustomDelete') {
+                grid.batchEditApi.EndEdit();
+                var noofvisiblerows = grid.GetVisibleRowsOnPage();
+
+                if (noofvisiblerows != "1") {
+                    var debit = grid.batchEditApi.GetCellValue(e.visibleIndex, "WithDrawl");
+                    var credit = grid.batchEditApi.GetCellValue(e.visibleIndex, "Receipt");
+                    if (debit != 0)
+                        c_txt_Debit.SetValue(DecimalRoundoff(parseFloat(c_txt_Debit.GetValue()) - parseFloat(debit), 2));
+                    if (credit != 0)
+                        c_txt_Credit.SetValue(DecimalRoundoff(parseFloat(c_txt_Credit.GetValue()) - parseFloat(credit), 2));
+
+                    var Debit = parseFloat(c_txt_Debit.GetValue());
+                    var Credit = parseFloat(c_txt_Credit.GetValue());
+
+                    if (Debit == 0 && Credit == 0) {
+                        cbtnSaveRecords.SetVisible(false);
+                        cbtn_SaveRecords.SetVisible(false);
+
+                        var Amount = parseFloat(Debit) - parseFloat(Credit);
+                        var div = document.getElementById('loadCurrencyMassage');
+                        var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
+                        div.innerHTML = txt;
+
+                        loadCurrencyMassage.style.display = "block";
+                    }
+                    else if (Debit == Credit) {
+                        cbtnSaveRecords.SetVisible(true);
+                        cbtn_SaveRecords.SetVisible(true);
+                        loadCurrencyMassage.style.display = "none";
+                    }
+                    else {
+                        cbtnSaveRecords.SetVisible(false);
+                        cbtn_SaveRecords.SetVisible(false);
+
+                        var Amount = parseFloat(Debit) - parseFloat(Credit);
+                        var div = document.getElementById('loadCurrencyMassage');
+                        var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
+                        div.innerHTML = txt;
+                        loadCurrencyMassage.style.display = "block";
+                    }
+                    if ($("#cpTagged").val() == "-99") {
+                        cbtnSaveRecords.SetVisible(false);
+                        cbtn_SaveRecords.SetVisible(false);
+
+                    }
+
+                    var MainAccountID = grid.batchEditApi.GetCellValue(e.visibleIndex, "gvMainAcCode"); //grid.GetEditor("gvColMainAccount").GetValue();
+
+                    //	Customers //	Vendors
+                    if (MainAccountID == 'Customers' || MainAccountID == 'Vendors') {
+                        if ($("#hdnIsPartyLedger").val() == "") {
+                            $("#hdnIsPartyLedger").val('1');
+                        }
+                        else {
+                            $("#hdnIsPartyLedger").val(parseFloat($("#hdnIsPartyLedger").val()) - 1);
+                        }
+
+                    }
+
+
+
+                    grid.DeleteRow(e.visibleIndex);
+
+                    //if (parseFloat($("#hdnIsPartyLedger").val()) > 1 && grid.GetVisibleRowsOnPage()=="2") 
+                    if (checkIsPartyjornal()) {
+                        $("#divIsPartyJournal").show();
+                    }
+                    else {
+                        $("#divIsPartyJournal").hide();
+                    }
+
+                    var type = $('#<%=hdnMode.ClientID %>').val();
+                    if (type == '1') {
+                        var IsJournal = "";
+                        for (var i = 0; i < grid.GetVisibleRowsOnPage(); i++) {
+                            var frontProduct = (grid.batchEditApi.GetCellValue(i, 'gvColMainAccount') != null) ? (grid.batchEditApi.GetCellValue(i, 'gvColMainAccount')) : "";
+
+                            if (frontProduct == "") {
+                                IsJournal = "N";
+                                break;
+                            }
+                        }
+
+                        if (IsJournal == "") {
+                            grid.StartEditRow(0);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        function OnCustomButtonClickTDS(s, e) {
+            if (e.buttonID == 'CustomDeleteTDS') {
+
+
+
+                gridTDS.batchEditApi.EndEdit();
+
+
+                var ISTDS = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "IsTDS");
+
+                if (ISTDS != "" && ISTDS != null) {
+                    return;
                 }
 
-            }
-        }
-    }
+                var noofvisiblerows = gridTDS.GetVisibleRowsOnPage();
 
-    for (i = -1; i > -1000; i--) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                gridTDS.batchEditApi.StartEdit(i, 2);
-                var row = gridTDS.GetRow(i);
+                if (noofvisiblerows != "1") {
+                    var debit = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "WithDrawlTDS");
+                    var credit = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "ReceiptTDS");
+                    var UniqueKey = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "UniqueID");
 
-                if (row.children[11].innerText.trim() != "" && row.children[11].innerText.trim() != null) {
-                    $(row).addClass(" rowRed");
+                    if (debit != 0)
+                        c_txt_DebitTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_DebitTDS.GetValue()) - parseFloat(debit), 2));
+                    if (credit != 0)
+                        c_txt_CreditTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_CreditTDS.GetValue()) - parseFloat(credit), 2));
+
+
+                    var DebitCreditTDS = GetDebitCredit(UniqueKey);
+
+                    if (DebitCreditTDS != "" && DebitCreditTDS != undefined) {
+                        var dr = DebitCreditTDS.split('~')[0];
+                        var cr = DebitCreditTDS.split('~')[1];
+                        if (dr != undefined && dr != "" && dr != null) {
+                            if (parseFloat(dr) > 0) {
+                                c_txt_CreditTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_CreditTDS.GetValue()) - parseFloat(dr), 2));
+                            }
+                        }
+                        if (cr != undefined && cr != "" && cr != null) {
+                            if (parseFloat(cr) > 0) {
+                                c_txt_CreditTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_CreditTDS.GetValue()) - parseFloat(cr), 2));
+                            }
+                        }
+                    }
+
+
+                    var Debit = parseFloat(c_txt_DebitTDS.GetValue());
+                    var Credit = parseFloat(c_txt_CreditTDS.GetValue());
+
+                    if (Debit == 0 && Credit == 0) {
+                        cbtnSaveRecordsTDS.SetVisible(false);
+                        cbtn_SaveRecordsTDS.SetVisible(false);
+
+                        var Amount = parseFloat(Debit) - parseFloat(Credit);
+                        var div = document.getElementById('loadCurrencyMassage');
+                        var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
+                        div.innerHTML = txt;
+
+                        loadCurrencyMassage.style.display = "block";
+                    }
+                    else if (Debit == Credit) {
+                        cbtnSaveRecordsTDS.SetVisible(true);
+                        cbtn_SaveRecordsTDS.SetVisible(true);
+                        loadCurrencyMassage.style.display = "none";
+                    }
+                    else {
+                        cbtnSaveRecordsTDS.SetVisible(false);
+                        cbtn_SaveRecordsTDS.SetVisible(false);
+
+                        var Amount = parseFloat(Debit) - parseFloat(Credit);
+                        var div = document.getElementById('loadCurrencyMassage');
+                        var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
+                        div.innerHTML = txt;
+                        loadCurrencyMassage.style.display = "block";
+                    }
+                    if ($("#cpTaggedTDS").val() == "-99") {
+                        cbtnSaveRecordsTDS.SetVisible(false);
+                        cbtn_SaveRecordsTDS.SetVisible(false);
+
+                    }
+
+                    var UniqueID = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "UniqueID"); //gridTDS.GetEditor("gvColMainAccount").GetValue();
+
+
+                    if (UniqueID != "")
+                        DeleteTDSRows(UniqueID);
+                    else
+                        gridTDS.DeleteRow(e.visibleIndex);
+
+                    //if (parseFloat($("#hdnIsPartyLedger").val()) > 1 && gridTDS.GetVisibleRowsOnPage()=="2") 
+
+
+                    var type = $('#hdnMode').val();
+                    if (type == '1') {
+                        var IsJournal = "";
+                        for (var i = 0; i < gridTDS.GetVisibleRowsOnPage(); i++) {
+                            var frontProduct = (gridTDS.batchEditApi.GetCellValue(i, 'gvColMainAccountTDS') != null) ? (gridTDS.batchEditApi.GetCellValue(i, 'gvColMainAccountTDS')) : "";
+
+                            if (frontProduct == "") {
+                                IsJournal = "N";
+                                break;
+                            }
+                        }
+
+                        if (IsJournal == "") {
+                            gridTDS.StartEditRow(0);
+                        }
+                    }
                 }
-
             }
         }
-    }
-}
 
 
-
-
-
-
-var NarrationText;
-function CitiesCombo_EndCallback(s, e) {
-    //if (setValueFlag == -1)
-    //    s.SetSelectedIndex(0);
-    //else if (setValueFlag > -1) {
-    //    CityID.SetSelectedItem(CityID.FindItemByValue(setValueFlag));
-    //    setValueFlag = -1;
-    //}
-
-    if (CityID.cpIsRCM != null) {
-        //grid.ShowLoadingPanel();
-        //LoadingPanel.Show();
-        var Narration = grid.GetEditor('Narration');
-        var IsRcm = CityID.cpIsRCM;
-        var TaxOption = document.getElementById('ddl_AmountAre').value;
-        if (TaxOption == 1) {
-            if (IsRcm == 1) {
-                Narration.SetValue('RCM');
-                NarrationText = 'RCM';
+        function GetDebitCredit(UniqueKey) {
+            for (var i = 0; i < 1000; i++) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        if (gridTDS.batchEditApi.GetCellValue(i, "UniqueID") == UniqueKey && gridTDS.batchEditApi.GetCellValue(i, "IsTDS") != "" && gridTDS.batchEditApi.GetCellValue(i, "IsTDS") != null) {
+                            return gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS") + "~" + gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS");
+                        }
+                    }
+                }
             }
-            else if (IsRcm == 0) {
-                Narration.SetValue('');
-                NarrationText = '';
+
+            for (i = -1; i > -1000; i--) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        if (gridTDS.batchEditApi.GetCellValue(i, "UniqueID") == UniqueKey && gridTDS.batchEditApi.GetCellValue(i, "IsTDS") != "" && gridTDS.batchEditApi.GetCellValue(i, "IsTDS") != null) {
+                            return gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS") + "~" + gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS");
+                        }
+                    }
+                }
             }
         }
-    }
 
-    if (setValueFlag == null || setValueFlag == "0" || setValueFlag == "") {
-        s.SetSelectedIndex(-1);
-    }
-    else {
-        if (CityID.FindItemByValue(setValueFlag) != null) {
-            CityID.SetValue(setValueFlag);
-            setValueFlag = null;
+
+        function DeleteTDSRows(uniqueID) {
+            for (var i = 0; i < 1000; i++) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        gridTDS.batchEditApi.StartEdit(i, 2);
+                        if (gridTDS.GetEditor("UniqueID").GetText() == uniqueID) {
+                            gridTDS.DeleteRow(i);
+                        }
+                    }
+                }
+            }
+
+            for (i = -1; i > -1000; i--) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        gridTDS.batchEditApi.StartEdit(i, 2);
+                        if (gridTDS.GetEditor("UniqueID").GetText() == uniqueID) {
+                            gridTDS.DeleteRow(i);
+                        }
+                    }
+                }
+            }
+            if (gridTDS.GetVisibleItemsOnPage() == 0) gridTDS.AddNewRow();
         }
-    }
-
-    LoadingPanel.Hide();
-    //LoadingPanel.Hide();
-    //grid.HideLoadingPanel();
-}
-
-
-function OnBatchEditStartEditingTDS(s, e) {
-    currentEditableVisibleIndexTDS = e.visibleIndex;
-    globalRowIndexTDS = e.visibleIndex;
-    var currentCountryID = gridTDS.batchEditApi.GetCellValue(currentEditableVisibleIndexTDS, "gvColMainAccountTDS");
-
-    //var IsTDSSource = gridTDS.batchEditApi.GetCellValue(currentEditableVisibleIndexTDS, "IsTDSSource");
-    //if (IsTDSSource == "1") {
-    //    if (e.focusedColumn.fieldName == "ReceiptTDS") {
-    //        gridTDS.batchEditApi.EndEdit();
-    //        e.cancel = true;
-    //        return;
-    //    }
-    //}
 
 
 
 
-
-
-    var ISTDS = gridTDS.batchEditApi.GetCellValue(currentEditableVisibleIndexTDS, "IsTDS");
-
-    if (chkIsSalary.GetChecked()) {
-        return;
-    }
-
-
-    if (ISTDS != "" && ISTDS != null) {
-
-        e.cancel = true;
-    }
-    var cityIDColumn = s.GetColumnByField("CityIDTDS");
-}
-
-
-function OnBatchEditStartEditing(s, e) {
-    currentEditableVisibleIndex = e.visibleIndex;
-    globalRowIndex = e.visibleIndex;
-    var currentCountryID = grid.batchEditApi.GetCellValue(currentEditableVisibleIndex, "gvColMainAccount");
-    var cityIDColumn = s.GetColumnByField("CityID");
-
-
-
-
-    //if (!e.rowValues.hasOwnProperty(cityIDColumn.index))
-    //    return;
-    //var cellInfo = e.rowValues[cityIDColumn.index];
-
-    //if (lastCountryID == currentCountryID) {
-    //    if (CityID.FindItemByValue(cellInfo.value) != null) {
-    //        CityID.SetValue(cellInfo.value);
-    //    }
-    //    else {
-    //        RefreshData(cellInfo, lastCountryID);
-    //        LoadingPanel.Show();
-    //    }
-    //}
-    //else {
-    //    if (currentCountryID == null) {
-    //        CityID.SetSelectedIndex(-1);
-    //        return;
-    //    }
-    //    lastCountryID = currentCountryID;
-    //    RefreshData(cellInfo, lastCountryID);
-    //    LoadingPanel.Show();
-    //}
-
-    //setValueFlag = cellInfo.value;
-    //CityID.PerformCallback(currentCountryID);
-    //LoadingPanel.Show();
-}
-function RefreshData(cellInfo, countryID) {
-    setValueFlag = cellInfo.value;
-    CityID.PerformCallback(countryID + '~' + setValueFlag);
-
-    //setTimeout(function () {
-    //    CityID.PerformCallback(countryID);
-    //}, 0);
-}
-//Debjyoti 
-
-function uuid() {
-    function randomDigit() {
-        if (crypto && crypto.getRandomValues) {
-            var rands = new Uint8Array(1);
-            crypto.getRandomValues(rands);
-            return (rands[0] % 16).toString(16);
-        } else {
-            return ((Math.random() * 16) | 0).toString(16);
+        function CreditGotFocus(s, e) {
+            CreditOldValue = s.GetText();
+            var indx = CreditOldValue.indexOf(',');
+            if (indx != -1) {
+                CreditOldValue = CreditOldValue.replace(/,/g, '');
+            }
         }
-    }
-    var crypto = window.crypto || window.msCrypto;
-    return 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g, randomDigit);
-}
+
+        function CreditGotFocusTDS(s, e) {
+            CreditOldValue = s.GetText();
+            var indx = CreditOldValue.indexOf(',');
+            if (indx != -1) {
+                CreditOldValue = CreditOldValue.replace(/,/g, '');
+            }
+        }
 
 
 
-function OnCustomButtonClick(s, e) {
-    if (e.buttonID == 'CustomDelete') {
-        grid.batchEditApi.EndEdit();
-        var noofvisiblerows = grid.GetVisibleRowsOnPage();
+        function CreditLostFocus(s, e) {
+            CreditNewValue = s.GetText();
+            var indx = CreditNewValue.indexOf(',');
+            if (indx != -1) {
+                CreditNewValue = CreditNewValue.replace(/,/g, '');
+            }
 
-        if (noofvisiblerows != "1") {
-            var debit = grid.batchEditApi.GetCellValue(e.visibleIndex, "WithDrawl");
-            var credit = grid.batchEditApi.GetCellValue(e.visibleIndex, "Receipt");
-            if (debit != 0)
-                c_txt_Debit.SetValue(DecimalRoundoff(parseFloat(c_txt_Debit.GetValue()) - parseFloat(debit), 2));
-            if (credit != 0)
-                c_txt_Credit.SetValue(DecimalRoundoff(parseFloat(c_txt_Credit.GetValue()) - parseFloat(credit), 2));
+            if (CreditOldValue != CreditNewValue) {
+                changeCreditTotalSummary();
+            }
+        }
+        function changeCreditTotalSummary() {
+            var newDif = CreditOldValue - CreditNewValue;
+            var CurrentSum = c_txt_Credit.GetText();
+            var indx = CurrentSum.indexOf(',');
+            if (indx != -1) {
+                CurrentSum = CurrentSum.replace(/,/g, '');
+            }
+
+            c_txt_Credit.SetValue(parseFloat(DecimalRoundoff((CurrentSum - newDif), 2)));
+        }
+        function recalculateCredit(oldVal) {
+            if (oldVal != 0) {
+                CreditNewValue = 0;
+                CreditOldValue = oldVal;
+                changeCreditTotalSummary();
+            }
+        }
+
+
+
+        function changeCreditTotalSummaryTDS() {
+            var newDif = CreditOldValue - CreditNewValue;
+            var CurrentSum = c_txt_CreditTDS.GetText();
+            var indx = CurrentSum.indexOf(',');
+            if (indx != -1) {
+                CurrentSum = CurrentSum.replace(/,/g, '');
+            }
+
+            var DebitAmount = 0;
+            var CreditAmount = 0;
+
+            for (var i = 0; i < 1000; i++) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        gridTDS.batchEditApi.StartEdit(i, 2);
+                        DebitAmount = DecimalRoundoff(parseFloat(DebitAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS")), 2);
+                        CreditAmount = DecimalRoundoff(parseFloat(CreditAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS")), 2);
+                    }
+                }
+            }
+
+
+            for (i = -1; i > -1000; i--) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        gridTDS.batchEditApi.StartEdit(i, 2);
+                        DebitAmount = DecimalRoundoff(parseFloat(DebitAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS")), 2);
+                        CreditAmount = DecimalRoundoff(parseFloat(CreditAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS")), 2);
+                    }
+                }
+            }
+            //c_txt_DebitTDS.SetValue(parseFloat(DecimalRoundoff((CurrentSum - newDif), 2)));
+            c_txt_DebitTDS.SetValue(parseFloat(DecimalRoundoff(DebitAmount, 2)));
+            c_txt_CreditTDS.SetValue(parseFloat(DecimalRoundoff(CreditAmount, 2)));
+        }
+        function recalculateCreditTDS(oldVal) {
+            if (oldVal != 0) {
+                CreditNewValue = 0;
+                CreditOldValue = oldVal;
+                changeCreditTotalSummaryTDS();
+            }
+        }
+
+        function DebitGotFocus(s, e) {
+            debitOldValue = s.GetText();
+            var indx = debitOldValue.indexOf(',');
+            if (indx != -1) {
+                debitOldValue = debitOldValue.replace(/,/g, '');
+            }
+        }
+
+        function DebitGotFocusTDS(s, e) {
+            debitOldValue = s.GetText();
+            var indx = debitOldValue.indexOf(',');
+            if (indx != -1) {
+                debitOldValue = debitOldValue.replace(/,/g, '');
+            }
+        }
+
+
+
+        function DebitLostFocus(s, e) {
+            debitNewValue = s.GetText();
+            var indx = debitNewValue.indexOf(',');
+
+            if (indx != -1) {
+                debitNewValue = debitNewValue.replace(/,/g, '');
+            }
+            if (debitOldValue != debitNewValue) {
+                changeDebitTotalSummary();
+            }
+        }
+
+
+        function DebitLostFocusTDS(s, e) {
+            debitNewValue = s.GetText();
+            var indx = debitNewValue.indexOf(',');
+
+            if (indx != -1) {
+                debitNewValue = debitNewValue.replace(/,/g, '');
+            }
+            if (debitOldValue != debitNewValue) {
+                changeDebitTotalSummaryTDS();
+            }
+        }
+
+        function recalculateDebit(oldVal) {
+            if (oldVal != 0) {
+                debitNewValue = 0;
+                debitOldValue = oldVal;
+                changeDebitTotalSummary();
+            }
+        }
+
+        function recalculateDebitTDS(oldVal) {
+            if (oldVal != 0) {
+                debitNewValue = 0;
+                debitOldValue = oldVal;
+                changeDebitTotalSummaryTDS();
+            }
+        }
+
+        function changeDebitTotalSummary() {
+            var newDif = debitOldValue - debitNewValue;
+            var CurrentSum = c_txt_Debit.GetText();
+            var indx = CurrentSum.indexOf(',');
+            if (indx != -1) {
+                CurrentSum = CurrentSum.replace(/,/g, '');
+            }
+
+            c_txt_Debit.SetValue(parseFloat(DecimalRoundoff((CurrentSum - newDif), 2)));
+        }
+
+
+        function changeDebitTotalSummaryTDS() {
+
+
+
+
+
+
+
+
+            var newDif = debitOldValue - debitNewValue;
+            var CurrentSum = c_txt_DebitTDS.GetText();
+            var indx = CurrentSum.indexOf(',');
+            if (indx != -1) {
+                CurrentSum = CurrentSum.replace(/,/g, '');
+            }
+
+
+
+            gridTDS.batchEditApi.EndEdit();
+            var DebitAmount = 0;
+            var CreditAmount = 0;
+
+            for (var i = 0; i < 1000; i++) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        //gridTDS.batchEditApi.StartEdit(i, 2);
+                        DebitAmount = DecimalRoundoff(parseFloat(DebitAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS")), 2);
+                        CreditAmount = DecimalRoundoff(parseFloat(CreditAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS")), 2);
+                    }
+                }
+            }
+
+
+            for (i = -1; i > -1000; i--) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        //gridTDS.batchEditApi.StartEdit(i, 2);
+                        DebitAmount = DecimalRoundoff(parseFloat(DebitAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS")), 2);
+                        CreditAmount = DecimalRoundoff(parseFloat(CreditAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS")), 2);
+                    }
+                }
+            }
+            //c_txt_DebitTDS.SetValue(parseFloat(DecimalRoundoff((CurrentSum - newDif), 2)));
+
+
+            c_txt_DebitTDS.SetValue(parseFloat(DecimalRoundoff(DebitAmount, 2)));
+            c_txt_CreditTDS.SetValue(parseFloat(DecimalRoundoff(CreditAmount, 2)));
+        }
+
+        function CalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
+            //ctxtTDebit
+            var originalValue = grid.batchEditApi.GetCellValue(visibleIndex, "WithDrawl");
+            var newValue = rowValues[(grid.GetColumnByField("WithDrawl").index)].value;
+            var dif = isDeleting ? -newValue : newValue - originalValue;
+            c_txt_Debit.SetValue(DecimalRoundoff(parseFloat(c_txt_Debit.GetValue()) + dif), 2);
+            //ctxtTCredit
+            var CoriginalValue = grid.batchEditApi.GetCellValue(visibleIndex, "Receipt");
+            var CnewValue = rowValues[(grid.GetColumnByField("Receipt").index)].value;
+            var Cdif = isDeleting ? -CnewValue : CnewValue - CoriginalValue;
+            c_txt_Credit.SetValue(DecimalRoundoff(parseFloat(c_txt_Credit.GetValue()) + Cdif), 2);
 
             var Debit = parseFloat(c_txt_Debit.GetValue());
             var Credit = parseFloat(c_txt_Credit.GetValue());
@@ -2989,6 +3461,7 @@ function OnCustomButtonClick(s, e) {
                 var div = document.getElementById('loadCurrencyMassage');
                 var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
                 div.innerHTML = txt;
+
                 loadCurrencyMassage.style.display = "block";
             }
             if ($("#cpTagged").val() == "-99") {
@@ -2996,989 +3469,519 @@ function OnCustomButtonClick(s, e) {
                 cbtn_SaveRecords.SetVisible(false);
 
             }
+        }
+        //End here
 
-            var MainAccountID = grid.batchEditApi.GetCellValue(e.visibleIndex, "gvMainAcCode"); //grid.GetEditor("gvColMainAccount").GetValue();
+        function OnBatchEditEndEditing(s, e) {
+            //Debjyoti
+            //  CalculateSummary(s, e.rowValues, e.visibleIndex, false);
+            //End here
+            currentEditableVisibleIndex = -1;
+            var cityIDColumn = s.GetColumnByField("CityID");
+            //if (!e.rowValues.hasOwnProperty(cityIDColumn.index))
+            //    return;
+            // var cellInfo = e.rowValues[cityIDColumn.index];
+            //if (CityID.GetSelectedIndex() > -1 || cellInfo.text != CityID.GetText()) {
+            //    cellInfo.value = CityID.GetValue();
+            //    cellInfo.text = CityID.GetText();
+            //    CityID.SetValue(null);
+            //}
+        }
 
-            //	Customers //	Vendors
-            if (MainAccountID == 'Customers' || MainAccountID == 'Vendors') {
-                if ($("#hdnIsPartyLedger").val() == "") {
-                    $("#hdnIsPartyLedger").val('1');
+        function OnBatchEditEndEditingTDS(s, e) {
+            currentEditableVisibleIndexTDS = -1;
+            var cityIDColumn = s.GetColumnByField("CityIDTDS");
+
+        }
+
+
+        function OnBatchEditRowValidating(s, e) {
+            var cityIDColumn = s.GetColumnByField("CityID");
+            var cellValidationInfo = e.validationInfo[cityIDColumn.index];
+            if (!cellValidationInfo) return;
+            var value = cellValidationInfo.value;
+            if (!ASPxClientUtils.IsExists(value) || ASPxClientUtils.Trim(value) === "") {
+                cellValidationInfo.isValid = false;
+                cellValidationInfo.errorText = "City is required";
+            }
+        }
+        function CitiesCombo_KeyDown(s, e) {
+            var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
+            if (keyCode !== ASPxKey.Tab && keyCode !== ASPxKey.Enter) return;
+            var moveActionName = e.htmlEvent.shiftKey ? "MoveFocusBackward" : "MoveFocusForward";
+            if (grid.batchEditApi[moveActionName]()) {
+                ASPxClientUtils.PreventEventAndBubble(e.htmlEvent);
+                preventEndEditOnLostFocus = true;
+            }
+        }
+        function CitiesCombo_LostFocus(s, e) {
+            if (!preventEndEditOnLostFocus)
+                grid.batchEditApi.EndEdit();
+            preventEndEditOnLostFocus = false;
+        }
+        function AddBatchNew(s, e) {
+            console.log(e);
+            var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
+            var noofvisiblerows = grid.GetVisibleRowsOnPage();
+            // var row = grid.GetVisibleIndex();
+            if ((keyCode === 13)) {
+                var mainAccountValue = (grid.GetEditor('MainAccount').GetValue() != null) ? grid.GetEditor('MainAccount').GetValue() : "";
+                if (mainAccountValue != "") {
+                    grid.AddNewRow();
+                    //grid.SetFocusedRowIndex(globalRowIndex,1);
+                    //grid.GetEditor("MainAccount").Focus(); // grid.SetFocusedRowIndex();
+                    // return;
+
+                    setTimeout(function () { grid.batchEditApi.StartEdit(globalRowIndex, 1); }, 500);
+
+                }
+            }
+            else if (keyCode === 9) {
+                // setTimeout(function () { grid.batchEditApi.StartEdit(globalRowIndex, 1); }, 500);
+                document.getElementById("txtNarration").focus();
+            }
+        }
+
+
+        function AddBatchNewTDS(s, e) {
+            console.log(e);
+            var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
+            var noofvisiblerows = gridTDS.GetVisibleRowsOnPage();
+            // var row = grid.GetVisibleIndex();
+            if ((keyCode === 13)) {
+                var mainAccountValue = (gridTDS.GetEditor('MainAccountTDS').GetValue() != null) ? gridTDS.GetEditor('MainAccountTDS').GetValue() : "";
+                if (mainAccountValue != "") {
+                    gridTDS.AddNewRow();
+                    //grid.SetFocusedRowIndex(globalRowIndex,1);
+                    //grid.GetEditor("MainAccount").Focus(); // grid.SetFocusedRowIndex();
+                    // return;
+
+                    setTimeout(function () { gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 1); }, 500);
+
+                }
+            }
+            else if (keyCode === 9) {
+                // setTimeout(function () { grid.batchEditApi.StartEdit(globalRowIndex, 1); }, 500);
+                document.getElementById("txtNarrationTDS").focus();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+        function OnAddNewClick() {
+            //  $('#ddlBranch').attr('Disabled', false);
+            var gridcount = grid.GetVisibleRowsOnPage();
+            var mainAccountValue = grid.batchEditApi.GetCellValue(0, "CountryID");
+            if (gridcount == 0) {
+                grid.AddNewRow();
+            }
+            else if (gridcount > 0 && mainAccountValue != "") {
+                grid.AddNewRow();
+            }
+        }
+        function WithDrawlTextChange(s, e) {
+            var mainAccountValue = (grid.GetEditor('MainAccount').GetValue() != null) ? grid.GetEditor('MainAccount').GetValue() : "";
+
+            if (mainAccountValue != "") {
+                DebitLostFocus(s, e);
+                var withDrawlValue = (grid.GetEditor('WithDrawl').GetValue() != null) ? parseFloat(grid.GetEditor('WithDrawl').GetValue()) : "0";
+                var receiptValue = (grid.GetEditor('Receipt').GetValue() != null) ? grid.GetEditor('Receipt').GetValue() : "0";
+
+                if (withDrawlValue > 0) {
+                    recalculateCredit(grid.GetEditor('Receipt').GetValue());
+                    grid.GetEditor('Receipt').SetValue("0");
+                    //grid.GetEditor('Receipt').SetEnabled(false);
+                }
+
+                var Debit = parseFloat(c_txt_Debit.GetValue());
+                var Credit = parseFloat(c_txt_Credit.GetValue());
+
+                if (Debit == 0 && Credit == 0) {
+                    cbtnSaveRecords.SetVisible(false);
+                    cbtn_SaveRecords.SetVisible(false);
+                    var Amount = parseFloat(Debit) - parseFloat(Credit);
+                    var div = document.getElementById('loadCurrencyMassage');
+                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
+                    div.innerHTML = txt;
+                    loadCurrencyMassage.style.display = "block";
+                }
+                else if (Debit == Credit) {
+                    cbtnSaveRecords.SetVisible(true);
+                    cbtn_SaveRecords.SetVisible(true);
+                    loadCurrencyMassage.style.display = "none";
                 }
                 else {
-                    $("#hdnIsPartyLedger").val(parseFloat($("#hdnIsPartyLedger").val()) - 1);
+                    cbtnSaveRecords.SetVisible(false);
+                    cbtn_SaveRecords.SetVisible(false);
+
+                    var Amount = parseFloat(Debit) - parseFloat(Credit);
+                    var div = document.getElementById('loadCurrencyMassage');
+                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
+                    div.innerHTML = txt;
+
+                    loadCurrencyMassage.style.display = "block";
                 }
+                if ($("#cpTagged").val() == "-99") {
+                    cbtnSaveRecords.SetVisible(false);
+                    cbtn_SaveRecords.SetVisible(false);
 
-            }
-
-
-
-            grid.DeleteRow(e.visibleIndex);
-
-            //if (parseFloat($("#hdnIsPartyLedger").val()) > 1 && grid.GetVisibleRowsOnPage()=="2") 
-            if (checkIsPartyjornal()) {
-                $("#divIsPartyJournal").show();
+                }
             }
             else {
-                $("#divIsPartyJournal").hide();
-            }
-
-            var type = $('#<%=hdnMode.ClientID %>').val();
-            if (type == '1') {
-                var IsJournal = "";
-                for (var i = 0; i < grid.GetVisibleRowsOnPage() ; i++) {
-                    var frontProduct = (grid.batchEditApi.GetCellValue(i, 'gvColMainAccount') != null) ? (grid.batchEditApi.GetCellValue(i, 'gvColMainAccount')) : "";
-
-                    if (frontProduct == "") {
-                        IsJournal = "N";
-                        break;
-                    }
-                }
-
-                if (IsJournal == "") {
-                    grid.StartEditRow(0);
-                }
+                grid.GetEditor('WithDrawl').SetValue("0");
             }
         }
-    }
-}
 
-
-function OnCustomButtonClickTDS(s, e) {
-    if (e.buttonID == 'CustomDeleteTDS') {
-
-
-
-        gridTDS.batchEditApi.EndEdit();
-
-
-        var ISTDS = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "IsTDS");
-
-        if (ISTDS != "" && ISTDS != null) {
-            return;
+        function ProjectInlineLost_Focus(s, e) {
+            setTimeout(function () { gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 6); }, 500);
         }
 
-        var noofvisiblerows = gridTDS.GetVisibleRowsOnPage();
 
-        if (noofvisiblerows != "1") {
-            var debit = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "WithDrawlTDS");
-            var credit = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "ReceiptTDS");
-            var UniqueKey = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "UniqueID");
+        function WithDrawlTextChangeTDS(s, e) {
+            var mainAccountValue = (gridTDS.GetEditor('MainAccountTDS').GetValue() != null) ? gridTDS.GetEditor('MainAccountTDS').GetValue() : "";
+            var uniqueIndex = globalRowIndexTDS;
+            if (mainAccountValue != "") {
+                //DebitLostFocusTDS(s, e);
+                var withDrawlValue = (gridTDS.GetEditor('WithDrawlTDS').GetValue() != null) ? parseFloat(gridTDS.GetEditor('WithDrawlTDS').GetValue()) : "0";
+                var receiptValue = (gridTDS.GetEditor('ReceiptTDS').GetValue() != null) ? gridTDS.GetEditor('ReceiptTDS').GetValue() : "0";
 
-            if (debit != 0)
-                c_txt_DebitTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_DebitTDS.GetValue()) - parseFloat(debit), 2));
-            if (credit != 0)
-                c_txt_CreditTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_CreditTDS.GetValue()) - parseFloat(credit), 2));
-
-
-            var DebitCreditTDS = GetDebitCredit(UniqueKey);
-
-            if (DebitCreditTDS != "" && DebitCreditTDS != undefined) {
-                var dr = DebitCreditTDS.split('~')[0];
-                var cr = DebitCreditTDS.split('~')[1];
-                if (dr != undefined && dr != "" && dr != null) {
-                    if (parseFloat(dr) > 0) {
-                        c_txt_CreditTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_CreditTDS.GetValue()) - parseFloat(dr), 2));
-                    }
+                if (withDrawlValue > 0) {
+                    //  gridTDS.GetEditor('ReceiptTDS').SetValue("0");
                 }
-                if (cr != undefined && cr != "" && cr != null) {
-                    if (parseFloat(cr) > 0) {
-                        c_txt_CreditTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_CreditTDS.GetValue()) - parseFloat(cr), 2));
-                    }
+
+                var Amount = (gridTDS.GetEditor('WithDrawlTDS').GetValue() != null) ? parseFloat(gridTDS.GetEditor('WithDrawlTDS').GetValue()) : "0";
+                var UniqueID = gridTDS.GetEditor('UniqueID').GetText();// gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "UniqueID");
+                if (!chkIsSalary.GetChecked())
+                    UpdateTDSValue(UniqueID, Amount);
+
+                changeDebitTotalSummaryTDS();
+
+
+                gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
+
+                var Debit = parseFloat(c_txt_DebitTDS.GetValue());
+                var Credit = parseFloat(c_txt_CreditTDS.GetValue());
+
+                if (Debit == 0 && Credit == 0) {
+                    cbtnSaveRecordsTDS.SetVisible(false);
+                    cbtn_SaveRecordsTDS.SetVisible(false);
+                    var Amount = parseFloat(Debit) - parseFloat(Credit);
+                    var div = document.getElementById('loadCurrencyMassage');
+                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
+                    div.innerHTML = txt;
+                    loadCurrencyMassage.style.display = "block";
                 }
-            }
+                else if (Debit == Credit) {
+                    cbtnSaveRecordsTDS.SetVisible(true);
+                    cbtn_SaveRecordsTDS.SetVisible(true);
+                    loadCurrencyMassage.style.display = "none";
+                }
+                else {
+                    cbtnSaveRecordsTDS.SetVisible(false);
+                    cbtn_SaveRecordsTDS.SetVisible(false);
+
+                    var Amount = parseFloat(Debit) - parseFloat(Credit);
+                    var div = document.getElementById('loadCurrencyMassage');
+                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
+                    div.innerHTML = txt;
+
+                    loadCurrencyMassage.style.display = "block";
+                }
+                if ($("#cpTaggedTDS").val() == "-99") {
+                    cbtnSaveRecordsTDS.SetVisible(false);
+                    cbtn_SaveRecordsTDS.SetVisible(false);
+
+                }
 
 
-            var Debit = parseFloat(c_txt_DebitTDS.GetValue());
-            var Credit = parseFloat(c_txt_CreditTDS.GetValue());
 
-            if (Debit == 0 && Credit == 0) {
-                cbtnSaveRecordsTDS.SetVisible(false);
-                cbtn_SaveRecordsTDS.SetVisible(false);
 
-                var Amount = parseFloat(Debit) - parseFloat(Credit);
-                var div = document.getElementById('loadCurrencyMassage');
-                var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
-                div.innerHTML = txt;
-
-                loadCurrencyMassage.style.display = "block";
-            }
-            else if (Debit == Credit) {
-                cbtnSaveRecordsTDS.SetVisible(true);
-                cbtn_SaveRecordsTDS.SetVisible(true);
-                loadCurrencyMassage.style.display = "none";
             }
             else {
-                cbtnSaveRecordsTDS.SetVisible(false);
-                cbtn_SaveRecordsTDS.SetVisible(false);
-
-                var Amount = parseFloat(Debit) - parseFloat(Credit);
-                var div = document.getElementById('loadCurrencyMassage');
-                var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
-                div.innerHTML = txt;
-                loadCurrencyMassage.style.display = "block";
-            }
-            if ($("#cpTaggedTDS").val() == "-99") {
-                cbtnSaveRecordsTDS.SetVisible(false);
-                cbtn_SaveRecordsTDS.SetVisible(false);
-
+                // gridTDS.GetEditor('WithDrawlTDS').SetValue("0");
             }
 
-            var UniqueID = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "UniqueID"); //gridTDS.GetEditor("gvColMainAccount").GetValue();
+            setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 4); }, 500);
+
+        }
 
 
-            if (UniqueID != "")
-                DeleteTDSRows(UniqueID);
+        function round5(x) {
+            return x % 5 < 2.5 ? (x % 5 === 0 ? x : Math.floor(x / 5) * 5) : Math.ceil(x / 5) * 5
+        }
+
+        function round10(x) {
+            return x % 10 < 5 ? (x % 10 === 0 ? x : Math.floor(x / 10) * 10) : Math.ceil(x / 10) * 10
+        }
+
+        function round1(x) {
+            return x % 1 < .5 ? (x % 1 === 0 ? x : Math.floor(x / 1) * 1) : Math.ceil(x / 1) * 1
+        }
+
+
+        function UpdateTDSValue(UniqueID, Amount) {
+            gridTDS.batchEditApi.EndEdit();
+            for (var i = 0; i < 1000; i++) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        // gridTDS.batchEditApi.StartEdit(i, 2);
+                        var ISTDS = gridTDS.batchEditApi.GetCellValue(i, "IsTDS");
+                        if (gridTDS.batchEditApi.GetCellValue(i, "UniqueID") == UniqueID && ISTDS != "" && ISTDS != null) {
+                            var TDSPercentage = gridTDS.batchEditApi.GetCellValue(i, "TDSPercentage");
+                            var newamt = DecimalRoundoff(parseFloat(Amount), 2) * (parseFloat(TDSPercentage.split('~')[0]) / 100);
+
+                            //var newamt = DecimalRoundoff(parseFloat(Amount), 2) * (parseFloat(TDSPercentage) / 100);
+                            var ro = TDSPercentage.split('~')[1];
+
+                            if (ro == "1") {
+                                newamt = round1(newamt);
+                            }
+                            else if (ro == "2") {
+                                newamt = round5(newamt);
+                            }
+                            else if (ro == "3") {
+                                newamt = round10(newamt);
+                            }
+
+                            gridTDS.batchEditApi.SetCellValue(i, "ReceiptTDS", newamt);
+
+                        }
+                    }
+                }
+            }
+
+            for (i = -1; i > -1000; i--) {
+                if (gridTDS.GetRow(i)) {
+                    if (gridTDS.GetRow(i).style.display != "none") {
+                        //gridTDS.batchEditApi.StartEdit(i, 2);
+                        var ISTDS = gridTDS.batchEditApi.GetCellValue(i, "IsTDS");
+                        if (gridTDS.batchEditApi.GetCellValue(i, "UniqueID") == UniqueID && ISTDS != "" && ISTDS != null) {
+                            var TDSPercentage = gridTDS.batchEditApi.GetCellValue(i, "TDSPercentage");
+                            var newamt = DecimalRoundoff(parseFloat(Amount), 2) * (parseFloat(TDSPercentage.split('~')[0]) / 100);
+
+                            //var newamt = DecimalRoundoff(parseFloat(Amount), 2) * (parseFloat(TDSPercentage) / 100);
+                            var ro = TDSPercentage.split('~')[1];
+
+                            if (ro == "1") {
+                                newamt = round1(newamt);
+                            }
+                            else if (ro == "2") {
+                                newamt = round5(newamt);
+                            }
+                            else if (ro == "3") {
+                                newamt = round10(newamt);
+                            }
+
+                            gridTDS.batchEditApi.SetCellValue(i, "ReceiptTDS", newamt);
+                        }
+                    }
+                }
+            }
+
+            gridTDS.batchEditApi.StartEdit(i, 2);
+        }
+
+
+
+
+
+
+
+
+        function ReceiptTextChange(s, e) {
+            var mainAccountValue = (grid.GetEditor('MainAccount').GetValue() != null) ? grid.GetEditor('MainAccount').GetValue() : "";
+
+            if (mainAccountValue != "") {
+                CreditLostFocus(s, e);
+                var receiptValue = (grid.GetEditor('Receipt').GetValue() != null) ? grid.GetEditor('Receipt').GetValue() : "0";
+                var withDrawlValue = (grid.GetEditor('WithDrawl').GetValue() != null) ? parseFloat(grid.GetEditor('WithDrawl').GetValue()) : "0";
+
+                if (receiptValue > 0) {
+                    recalculateDebit(grid.GetEditor('WithDrawl').GetValue());
+                    grid.GetEditor('WithDrawl').SetValue("0");
+
+                    //grid.GetEditor('WithDrawl').SetEnabled(false);
+                }
+
+                var Debit = parseFloat(c_txt_Debit.GetValue());
+                var Credit = parseFloat(c_txt_Credit.GetValue());
+
+                if (Debit == 0 && Credit == 0) {
+                    cbtnSaveRecords.SetVisible(false);
+                    cbtn_SaveRecords.SetVisible(false);
+
+                    var Amount = parseFloat(Debit) - parseFloat(Credit);
+                    var div = document.getElementById('loadCurrencyMassage');
+                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
+                    div.innerHTML = txt;
+
+
+                    loadCurrencyMassage.style.display = "block";
+                }
+                else if (Debit == Credit) {
+                    cbtnSaveRecords.SetVisible(true);
+                    cbtn_SaveRecords.SetVisible(true);
+                    loadCurrencyMassage.style.display = "none";
+                }
+                else {
+                    cbtnSaveRecords.SetVisible(false);
+                    cbtn_SaveRecords.SetVisible(false);
+
+                    var Amount = parseFloat(Debit) - parseFloat(Credit);
+                    var div = document.getElementById('loadCurrencyMassage');
+                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
+                    div.innerHTML = txt;
+
+                    loadCurrencyMassage.style.display = "block";
+                }
+                if ($("#cpTagged").val() == "-99") {
+                    cbtnSaveRecords.SetVisible(false);
+                    cbtn_SaveRecords.SetVisible(false);
+
+                }
+            }
+            else {
+                grid.GetEditor('Receipt').SetValue("0");
+            }
+
+            //chinmoy added for narration focus
+            if ($("#hdnProjectSelectInEntryModule").val() == "0") {
+                setTimeout(function () { grid.batchEditApi.StartEdit(globalRowIndex, 6); }, 1000);
+
+            }
+            //End
+        }
+
+
+        function ReceiptTextChangeTDS(s, e) {
+
+
+            var IsTDSSource = gridTDS.batchEditApi.GetCellValue(globalRowIndexTDS, "IsTDSSource");
+            var uniqueIndex = globalRowIndexTDS;
+            if (IsTDSSource == "1") {
+
+                gridTDS.GetEditor('ReceiptTDS').SetValue("0");
+                if ($("#hdnProjectSelectInEntryModule").val() == "1") {
+                    setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 5); }, 200);
+                }
+                else {
+                    setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 6); }, 200);
+                }
+                return;
+            }
+            var receiptValue = (gridTDS.GetEditor('ReceiptTDS').GetValue() != null) ? gridTDS.GetEditor('ReceiptTDS').GetValue() : "0";
+            if (receiptValue > 0) {
+
+                gridTDS.GetEditor('WithDrawlTDS').SetValue("0");
+            }
+
+            var mainAccountValue = (gridTDS.GetEditor('MainAccountTDS').GetValue() != null) ? gridTDS.GetEditor('MainAccountTDS').GetValue() : "";
+
+            if (mainAccountValue != "") {
+                //CreditLostFocus(s, e);
+                //var receiptValue = (gridTDS.GetEditor('ReceiptTDS').GetValue() != null) ? gridTDS.GetEditor('ReceiptTDS').GetValue() : "0";
+                //var withDrawlValue = (gridTDS.GetEditor('WithDrawlTDS').GetValue() != null) ? parseFloat(gridTDS.GetEditor('WithDrawlTDS').GetValue()) : "0";
+
+                //if (receiptValue > 0) {
+                //    recalculateDebitTDS(gridTDS.GetEditor('WithDrawlTDS').GetValue());
+                //    gridTDS.GetEditor('WithDrawlTDS').SetValue("0");
+
+                //    //gridTDS.GetEditor('WithDrawl').SetEnabled(false);
+                //}
+
+
+                changeCreditTotalSummaryTDS();
+
+                var Debit = parseFloat(c_txt_DebitTDS.GetValue());
+                var Credit = parseFloat(c_txt_CreditTDS.GetValue());
+
+                if (Debit == 0 && Credit == 0) {
+                    cbtnSaveRecordsTDS.SetVisible(false);
+                    cbtn_SaveRecordsTDS.SetVisible(false);
+
+                    var Amount = parseFloat(Debit) - parseFloat(Credit);
+                    var div = document.getElementById('loadCurrencyMassage');
+                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
+                    div.innerHTML = txt;
+
+
+                    loadCurrencyMassage.style.display = "block";
+                }
+                else if (Debit == Credit) {
+                    cbtnSaveRecordsTDS.SetVisible(true);
+                    cbtn_SaveRecordsTDS.SetVisible(true);
+                    loadCurrencyMassage.style.display = "none";
+                }
+                else {
+                    cbtnSaveRecordsTDS.SetVisible(false);
+                    cbtn_SaveRecordsTDS.SetVisible(false);
+
+                    var Amount = parseFloat(Debit) - parseFloat(Credit);
+                    var div = document.getElementById('loadCurrencyMassage');
+                    var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
+                    div.innerHTML = txt;
+
+                    loadCurrencyMassage.style.display = "block";
+                }
+                if ($("#cpTagged").val() == "-99") {
+                    cbtnSaveRecordsTDS.SetVisible(false);
+                    cbtn_SaveRecordsTDS.SetVisible(false);
+
+                }
+            }
+            else {
+                gridTDS.GetEditor('ReceiptTDS').SetValue("0");
+            }
+            if ($("#hdnProjectSelectInEntryModule").val() == "1") {
+                setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 5); }, 200);
+            }
             else
-                gridTDS.DeleteRow(e.visibleIndex);
-
-            //if (parseFloat($("#hdnIsPartyLedger").val()) > 1 && gridTDS.GetVisibleRowsOnPage()=="2") 
-
-
-            var type = $('#hdnMode').val();
-            if (type == '1') {
-                var IsJournal = "";
-                for (var i = 0; i < gridTDS.GetVisibleRowsOnPage() ; i++) {
-                    var frontProduct = (gridTDS.batchEditApi.GetCellValue(i, 'gvColMainAccountTDS') != null) ? (gridTDS.batchEditApi.GetCellValue(i, 'gvColMainAccountTDS')) : "";
-
-                    if (frontProduct == "") {
-                        IsJournal = "N";
-                        break;
-                    }
-                }
-
-                if (IsJournal == "") {
-                    gridTDS.StartEditRow(0);
-                }
-            }
+                setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 6); }, 200);
         }
-    }
-}
 
 
-function GetDebitCredit(UniqueKey) {
-    for (var i = 0; i < 1000; i++) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                if (gridTDS.batchEditApi.GetCellValue(i, "UniqueID") == UniqueKey && gridTDS.batchEditApi.GetCellValue(i, "IsTDS") != "" && gridTDS.batchEditApi.GetCellValue(i, "IsTDS") != null) {
-                    return gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS") + "~" + gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS");
-                }
+
+
+
+
+
+        function deleteAllRows() {
+            var frontRow = 0;
+            var backRow = -1;
+            for (var i = 0; i <= grid.GetVisibleRowsOnPage() + 100; i++) {
+                grid.DeleteRow(frontRow);
+                grid.DeleteRow(backRow);
+                backRow--;
+                frontRow++;
             }
-        }
-    }
-
-    for (i = -1; i > -1000; i--) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                if (gridTDS.batchEditApi.GetCellValue(i, "UniqueID") == UniqueKey && gridTDS.batchEditApi.GetCellValue(i, "IsTDS") != "" && gridTDS.batchEditApi.GetCellValue(i, "IsTDS") != null) {
-                    return gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS") + "~" + gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS");
-                }
-            }
-        }
-    }
-}
-
-
-function DeleteTDSRows(uniqueID) {
-    for (var i = 0; i < 1000; i++) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                gridTDS.batchEditApi.StartEdit(i, 2);
-                if (gridTDS.GetEditor("UniqueID").GetText() == uniqueID) {
-                    gridTDS.DeleteRow(i);
-                }
-            }
-        }
-    }
-
-    for (i = -1; i > -1000; i--) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                gridTDS.batchEditApi.StartEdit(i, 2);
-                if (gridTDS.GetEditor("UniqueID").GetText() == uniqueID) {
-                    gridTDS.DeleteRow(i);
-                }
-            }
-        }
-    }
-    if (gridTDS.GetVisibleItemsOnPage() == 0) gridTDS.AddNewRow();
-}
-
-
-
-
-function CreditGotFocus(s, e) {
-    CreditOldValue = s.GetText();
-    var indx = CreditOldValue.indexOf(',');
-    if (indx != -1) {
-        CreditOldValue = CreditOldValue.replace(/,/g, '');
-    }
-}
-
-function CreditGotFocusTDS(s, e) {
-    CreditOldValue = s.GetText();
-    var indx = CreditOldValue.indexOf(',');
-    if (indx != -1) {
-        CreditOldValue = CreditOldValue.replace(/,/g, '');
-    }
-}
-
-
-
-function CreditLostFocus(s, e) {
-    CreditNewValue = s.GetText();
-    var indx = CreditNewValue.indexOf(',');
-    if (indx != -1) {
-        CreditNewValue = CreditNewValue.replace(/,/g, '');
-    }
-
-    if (CreditOldValue != CreditNewValue) {
-        changeCreditTotalSummary();
-    }
-}
-function changeCreditTotalSummary() {
-    var newDif = CreditOldValue - CreditNewValue;
-    var CurrentSum = c_txt_Credit.GetText();
-    var indx = CurrentSum.indexOf(',');
-    if (indx != -1) {
-        CurrentSum = CurrentSum.replace(/,/g, '');
-    }
-
-    c_txt_Credit.SetValue(parseFloat(DecimalRoundoff((CurrentSum - newDif), 2)));
-}
-function recalculateCredit(oldVal) {
-    if (oldVal != 0) {
-        CreditNewValue = 0;
-        CreditOldValue = oldVal;
-        changeCreditTotalSummary();
-    }
-}
-
-
-
-function changeCreditTotalSummaryTDS() {
-    var newDif = CreditOldValue - CreditNewValue;
-    var CurrentSum = c_txt_CreditTDS.GetText();
-    var indx = CurrentSum.indexOf(',');
-    if (indx != -1) {
-        CurrentSum = CurrentSum.replace(/,/g, '');
-    }
-
-    var DebitAmount = 0;
-    var CreditAmount = 0;
-
-    for (var i = 0; i < 1000; i++) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                gridTDS.batchEditApi.StartEdit(i, 2);
-                DebitAmount = DecimalRoundoff(parseFloat(DebitAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS")), 2);
-                CreditAmount = DecimalRoundoff(parseFloat(CreditAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS")), 2);
-            }
-        }
-    }
-
-
-    for (i = -1; i > -1000; i--) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                gridTDS.batchEditApi.StartEdit(i, 2);
-                DebitAmount = DecimalRoundoff(parseFloat(DebitAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS")), 2);
-                CreditAmount = DecimalRoundoff(parseFloat(CreditAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS")), 2);
-            }
-        }
-    }
-    //c_txt_DebitTDS.SetValue(parseFloat(DecimalRoundoff((CurrentSum - newDif), 2)));
-    c_txt_DebitTDS.SetValue(parseFloat(DecimalRoundoff(DebitAmount, 2)));
-    c_txt_CreditTDS.SetValue(parseFloat(DecimalRoundoff(CreditAmount, 2)));
-}
-function recalculateCreditTDS(oldVal) {
-    if (oldVal != 0) {
-        CreditNewValue = 0;
-        CreditOldValue = oldVal;
-        changeCreditTotalSummaryTDS();
-    }
-}
-
-function DebitGotFocus(s, e) {
-    debitOldValue = s.GetText();
-    var indx = debitOldValue.indexOf(',');
-    if (indx != -1) {
-        debitOldValue = debitOldValue.replace(/,/g, '');
-    }
-}
-
-function DebitGotFocusTDS(s, e) {
-    debitOldValue = s.GetText();
-    var indx = debitOldValue.indexOf(',');
-    if (indx != -1) {
-        debitOldValue = debitOldValue.replace(/,/g, '');
-    }
-}
-
-
-
-function DebitLostFocus(s, e) {
-    debitNewValue = s.GetText();
-    var indx = debitNewValue.indexOf(',');
-
-    if (indx != -1) {
-        debitNewValue = debitNewValue.replace(/,/g, '');
-    }
-    if (debitOldValue != debitNewValue) {
-        changeDebitTotalSummary();
-    }
-}
-
-
-function DebitLostFocusTDS(s, e) {
-    debitNewValue = s.GetText();
-    var indx = debitNewValue.indexOf(',');
-
-    if (indx != -1) {
-        debitNewValue = debitNewValue.replace(/,/g, '');
-    }
-    if (debitOldValue != debitNewValue) {
-        changeDebitTotalSummaryTDS();
-    }
-}
-
-function recalculateDebit(oldVal) {
-    if (oldVal != 0) {
-        debitNewValue = 0;
-        debitOldValue = oldVal;
-        changeDebitTotalSummary();
-    }
-}
-
-function recalculateDebitTDS(oldVal) {
-    if (oldVal != 0) {
-        debitNewValue = 0;
-        debitOldValue = oldVal;
-        changeDebitTotalSummaryTDS();
-    }
-}
-
-function changeDebitTotalSummary() {
-    var newDif = debitOldValue - debitNewValue;
-    var CurrentSum = c_txt_Debit.GetText();
-    var indx = CurrentSum.indexOf(',');
-    if (indx != -1) {
-        CurrentSum = CurrentSum.replace(/,/g, '');
-    }
-
-    c_txt_Debit.SetValue(parseFloat(DecimalRoundoff((CurrentSum - newDif), 2)));
-}
-
-
-function changeDebitTotalSummaryTDS() {
-
-
-
-
-
-
-
-
-    var newDif = debitOldValue - debitNewValue;
-    var CurrentSum = c_txt_DebitTDS.GetText();
-    var indx = CurrentSum.indexOf(',');
-    if (indx != -1) {
-        CurrentSum = CurrentSum.replace(/,/g, '');
-    }
-
-
-
-    gridTDS.batchEditApi.EndEdit();
-    var DebitAmount = 0;
-    var CreditAmount = 0;
-
-    for (var i = 0; i < 1000; i++) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                //gridTDS.batchEditApi.StartEdit(i, 2);
-                DebitAmount = DecimalRoundoff(parseFloat(DebitAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS")), 2);
-                CreditAmount = DecimalRoundoff(parseFloat(CreditAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS")), 2);
-            }
-        }
-    }
-
-
-    for (i = -1; i > -1000; i--) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                //gridTDS.batchEditApi.StartEdit(i, 2);
-                DebitAmount = DecimalRoundoff(parseFloat(DebitAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "WithDrawlTDS")), 2);
-                CreditAmount = DecimalRoundoff(parseFloat(CreditAmount), 2) + DecimalRoundoff(parseFloat(gridTDS.batchEditApi.GetCellValue(i, "ReceiptTDS")), 2);
-            }
-        }
-    }
-    //c_txt_DebitTDS.SetValue(parseFloat(DecimalRoundoff((CurrentSum - newDif), 2)));
-
-
-    c_txt_DebitTDS.SetValue(parseFloat(DecimalRoundoff(DebitAmount, 2)));
-    c_txt_CreditTDS.SetValue(parseFloat(DecimalRoundoff(CreditAmount, 2)));
-}
-
-function CalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
-    //ctxtTDebit
-    var originalValue = grid.batchEditApi.GetCellValue(visibleIndex, "WithDrawl");
-    var newValue = rowValues[(grid.GetColumnByField("WithDrawl").index)].value;
-    var dif = isDeleting ? -newValue : newValue - originalValue;
-    c_txt_Debit.SetValue(DecimalRoundoff(parseFloat(c_txt_Debit.GetValue()) + dif), 2);
-    //ctxtTCredit
-    var CoriginalValue = grid.batchEditApi.GetCellValue(visibleIndex, "Receipt");
-    var CnewValue = rowValues[(grid.GetColumnByField("Receipt").index)].value;
-    var Cdif = isDeleting ? -CnewValue : CnewValue - CoriginalValue;
-    c_txt_Credit.SetValue(DecimalRoundoff(parseFloat(c_txt_Credit.GetValue()) + Cdif), 2);
-
-    var Debit = parseFloat(c_txt_Debit.GetValue());
-    var Credit = parseFloat(c_txt_Credit.GetValue());
-
-    if (Debit == 0 && Credit == 0) {
-        cbtnSaveRecords.SetVisible(false);
-        cbtn_SaveRecords.SetVisible(false);
-
-        var Amount = parseFloat(Debit) - parseFloat(Credit);
-        var div = document.getElementById('loadCurrencyMassage');
-        var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
-        div.innerHTML = txt;
-
-        loadCurrencyMassage.style.display = "block";
-    }
-    else if (Debit == Credit) {
-        cbtnSaveRecords.SetVisible(true);
-        cbtn_SaveRecords.SetVisible(true);
-        loadCurrencyMassage.style.display = "none";
-    }
-    else {
-        cbtnSaveRecords.SetVisible(false);
-        cbtn_SaveRecords.SetVisible(false);
-
-        var Amount = parseFloat(Debit) - parseFloat(Credit);
-        var div = document.getElementById('loadCurrencyMassage');
-        var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
-        div.innerHTML = txt;
-
-        loadCurrencyMassage.style.display = "block";
-    }
-    if ($("#cpTagged").val() == "-99") {
-        cbtnSaveRecords.SetVisible(false);
-        cbtn_SaveRecords.SetVisible(false);
-
-    }
-}
-//End here
-
-function OnBatchEditEndEditing(s, e) {
-    //Debjyoti
-    //  CalculateSummary(s, e.rowValues, e.visibleIndex, false);
-    //End here
-    currentEditableVisibleIndex = -1;
-    var cityIDColumn = s.GetColumnByField("CityID");
-    //if (!e.rowValues.hasOwnProperty(cityIDColumn.index))
-    //    return;
-    // var cellInfo = e.rowValues[cityIDColumn.index];
-    //if (CityID.GetSelectedIndex() > -1 || cellInfo.text != CityID.GetText()) {
-    //    cellInfo.value = CityID.GetValue();
-    //    cellInfo.text = CityID.GetText();
-    //    CityID.SetValue(null);
-    //}
-}
-
-function OnBatchEditEndEditingTDS(s, e) {
-    currentEditableVisibleIndexTDS = -1;
-    var cityIDColumn = s.GetColumnByField("CityIDTDS");
-
-}
-
-
-function OnBatchEditRowValidating(s, e) {
-    var cityIDColumn = s.GetColumnByField("CityID");
-    var cellValidationInfo = e.validationInfo[cityIDColumn.index];
-    if (!cellValidationInfo) return;
-    var value = cellValidationInfo.value;
-    if (!ASPxClientUtils.IsExists(value) || ASPxClientUtils.Trim(value) === "") {
-        cellValidationInfo.isValid = false;
-        cellValidationInfo.errorText = "City is required";
-    }
-}
-function CitiesCombo_KeyDown(s, e) {
-    var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
-    if (keyCode !== ASPxKey.Tab && keyCode !== ASPxKey.Enter) return;
-    var moveActionName = e.htmlEvent.shiftKey ? "MoveFocusBackward" : "MoveFocusForward";
-    if (grid.batchEditApi[moveActionName]()) {
-        ASPxClientUtils.PreventEventAndBubble(e.htmlEvent);
-        preventEndEditOnLostFocus = true;
-    }
-}
-function CitiesCombo_LostFocus(s, e) {
-    if (!preventEndEditOnLostFocus)
-        grid.batchEditApi.EndEdit();
-    preventEndEditOnLostFocus = false;
-}
-function AddBatchNew(s, e) {
-    console.log(e);
-    var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
-    var noofvisiblerows = grid.GetVisibleRowsOnPage();
-    // var row = grid.GetVisibleIndex();
-    if ((keyCode === 13)) {
-        var mainAccountValue = (grid.GetEditor('MainAccount').GetValue() != null) ? grid.GetEditor('MainAccount').GetValue() : "";
-        if (mainAccountValue != "") {
             grid.AddNewRow();
-            //grid.SetFocusedRowIndex(globalRowIndex,1);
-            //grid.GetEditor("MainAccount").Focus(); // grid.SetFocusedRowIndex();
-            // return;
 
-            setTimeout(function () { grid.batchEditApi.StartEdit(globalRowIndex, 1); }, 500);
+            ctxtTotalPayment.SetValue(0);
+            c_txt_Debit.SetValue(0);
 
         }
-    }
-    else if (keyCode === 9) {
-        // setTimeout(function () { grid.batchEditApi.StartEdit(globalRowIndex, 1); }, 500);
-        document.getElementById("txtNarration").focus();
-    }
-}
 
-
-function AddBatchNewTDS(s, e) {
-    console.log(e);
-    var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
-    var noofvisiblerows = gridTDS.GetVisibleRowsOnPage();
-    // var row = grid.GetVisibleIndex();
-    if ((keyCode === 13)) {
-        var mainAccountValue = (gridTDS.GetEditor('MainAccountTDS').GetValue() != null) ? gridTDS.GetEditor('MainAccountTDS').GetValue() : "";
-        if (mainAccountValue != "") {
-            gridTDS.AddNewRow();
-            //grid.SetFocusedRowIndex(globalRowIndex,1);
-            //grid.GetEditor("MainAccount").Focus(); // grid.SetFocusedRowIndex();
-            // return;
-
-            setTimeout(function () { gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 1); }, 500);
-
-        }
-    }
-    else if (keyCode === 9) {
-        // setTimeout(function () { grid.batchEditApi.StartEdit(globalRowIndex, 1); }, 500);
-        document.getElementById("txtNarrationTDS").focus();
-    }
-}
-
-
-
-
-
-
-
-
-
-
-function OnAddNewClick() {
-    //  $('#ddlBranch').attr('Disabled', false);
-    var gridcount = grid.GetVisibleRowsOnPage();
-    var mainAccountValue = grid.batchEditApi.GetCellValue(0, "CountryID");
-    if (gridcount == 0) {
-        grid.AddNewRow();
-    }
-    else if (gridcount > 0 && mainAccountValue != "") {
-        grid.AddNewRow();
-    }
-}
-function WithDrawlTextChange(s, e) {
-    var mainAccountValue = (grid.GetEditor('MainAccount').GetValue() != null) ? grid.GetEditor('MainAccount').GetValue() : "";
-
-    if (mainAccountValue != "") {
-        DebitLostFocus(s, e);
-        var withDrawlValue = (grid.GetEditor('WithDrawl').GetValue() != null) ? parseFloat(grid.GetEditor('WithDrawl').GetValue()) : "0";
-        var receiptValue = (grid.GetEditor('Receipt').GetValue() != null) ? grid.GetEditor('Receipt').GetValue() : "0";
-
-        if (withDrawlValue > 0) {
-            recalculateCredit(grid.GetEditor('Receipt').GetValue());
-            grid.GetEditor('Receipt').SetValue("0");
-            //grid.GetEditor('Receipt').SetEnabled(false);
-        }
-
-        var Debit = parseFloat(c_txt_Debit.GetValue());
-        var Credit = parseFloat(c_txt_Credit.GetValue());
-
-        if (Debit == 0 && Credit == 0) {
-            cbtnSaveRecords.SetVisible(false);
-            cbtn_SaveRecords.SetVisible(false);
-            var Amount = parseFloat(Debit) - parseFloat(Credit);
-            var div = document.getElementById('loadCurrencyMassage');
-            var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
-            div.innerHTML = txt;
-            loadCurrencyMassage.style.display = "block";
-        }
-        else if (Debit == Credit) {
-            cbtnSaveRecords.SetVisible(true);
-            cbtn_SaveRecords.SetVisible(true);
-            loadCurrencyMassage.style.display = "none";
-        }
-        else {
-            cbtnSaveRecords.SetVisible(false);
-            cbtn_SaveRecords.SetVisible(false);
-
-            var Amount = parseFloat(Debit) - parseFloat(Credit);
-            var div = document.getElementById('loadCurrencyMassage');
-            var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
-            div.innerHTML = txt;
-
-            loadCurrencyMassage.style.display = "block";
-        }
-        if ($("#cpTagged").val() == "-99") {
-            cbtnSaveRecords.SetVisible(false);
-            cbtn_SaveRecords.SetVisible(false);
-
-        }
-    }
-    else {
-        grid.GetEditor('WithDrawl').SetValue("0");
-    }
-}
-
-function ProjectInlineLost_Focus(s, e) {
-    setTimeout(function () { gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 6); }, 500);
-}
-
-
-function WithDrawlTextChangeTDS(s, e) {
-    var mainAccountValue = (gridTDS.GetEditor('MainAccountTDS').GetValue() != null) ? gridTDS.GetEditor('MainAccountTDS').GetValue() : "";
-    var uniqueIndex = globalRowIndexTDS;
-    if (mainAccountValue != "") {
-        //DebitLostFocusTDS(s, e);
-        var withDrawlValue = (gridTDS.GetEditor('WithDrawlTDS').GetValue() != null) ? parseFloat(gridTDS.GetEditor('WithDrawlTDS').GetValue()) : "0";
-        var receiptValue = (gridTDS.GetEditor('ReceiptTDS').GetValue() != null) ? gridTDS.GetEditor('ReceiptTDS').GetValue() : "0";
-
-        if (withDrawlValue > 0) {
-            //  gridTDS.GetEditor('ReceiptTDS').SetValue("0");
-        }
-
-        var Amount = (gridTDS.GetEditor('WithDrawlTDS').GetValue() != null) ? parseFloat(gridTDS.GetEditor('WithDrawlTDS').GetValue()) : "0";
-        var UniqueID = gridTDS.GetEditor('UniqueID').GetText();// gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "UniqueID");
-        if (!chkIsSalary.GetChecked())
-            UpdateTDSValue(UniqueID, Amount);
-
-        changeDebitTotalSummaryTDS();
-
-
-        gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
-
-        var Debit = parseFloat(c_txt_DebitTDS.GetValue());
-        var Credit = parseFloat(c_txt_CreditTDS.GetValue());
-
-        if (Debit == 0 && Credit == 0) {
-            cbtnSaveRecordsTDS.SetVisible(false);
-            cbtn_SaveRecordsTDS.SetVisible(false);
-            var Amount = parseFloat(Debit) - parseFloat(Credit);
-            var div = document.getElementById('loadCurrencyMassage');
-            var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
-            div.innerHTML = txt;
-            loadCurrencyMassage.style.display = "block";
-        }
-        else if (Debit == Credit) {
-            cbtnSaveRecordsTDS.SetVisible(true);
-            cbtn_SaveRecordsTDS.SetVisible(true);
-            loadCurrencyMassage.style.display = "none";
-        }
-        else {
-            cbtnSaveRecordsTDS.SetVisible(false);
-            cbtn_SaveRecordsTDS.SetVisible(false);
-
-            var Amount = parseFloat(Debit) - parseFloat(Credit);
-            var div = document.getElementById('loadCurrencyMassage');
-            var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
-            div.innerHTML = txt;
-
-            loadCurrencyMassage.style.display = "block";
-        }
-        if ($("#cpTaggedTDS").val() == "-99") {
-            cbtnSaveRecordsTDS.SetVisible(false);
-            cbtn_SaveRecordsTDS.SetVisible(false);
-
+        function Look_up_Project() {
+            clookup_Project.gridView.Refresh();
         }
 
 
 
 
-    }
-    else {
-        // gridTDS.GetEditor('WithDrawlTDS').SetValue("0");
-    }
 
-    setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 4); }, 500);
-
-}
-
-
-function round5(x) {
-    return x % 5 < 2.5 ? (x % 5 === 0 ? x : Math.floor(x / 5) * 5) : Math.ceil(x / 5) * 5
-}
-
-function round10(x) {
-    return x % 10 < 5 ? (x % 10 === 0 ? x : Math.floor(x / 10) * 10) : Math.ceil(x / 10) * 10
-}
-
-function round1(x) {
-    return x % 1 < .5 ? (x % 1 === 0 ? x : Math.floor(x / 1) * 1) : Math.ceil(x / 1) * 1
-}
-
-
-function UpdateTDSValue(UniqueID, Amount) {
-    gridTDS.batchEditApi.EndEdit();
-    for (var i = 0; i < 1000; i++) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                // gridTDS.batchEditApi.StartEdit(i, 2);
-                var ISTDS = gridTDS.batchEditApi.GetCellValue(i, "IsTDS");
-                if (gridTDS.batchEditApi.GetCellValue(i, "UniqueID") == UniqueID && ISTDS != "" && ISTDS != null) {
-                    var TDSPercentage = gridTDS.batchEditApi.GetCellValue(i, "TDSPercentage");
-                    var newamt = DecimalRoundoff(parseFloat(Amount), 2) * (parseFloat(TDSPercentage.split('~')[0]) / 100);
-
-                    //var newamt = DecimalRoundoff(parseFloat(Amount), 2) * (parseFloat(TDSPercentage) / 100);
-                    var ro = TDSPercentage.split('~')[1];
-
-                    if (ro == "1") {
-                        newamt = round1(newamt);
-                    }
-                    else if (ro == "2") {
-                        newamt = round5(newamt);
-                    }
-                    else if (ro == "3") {
-                        newamt = round10(newamt);
-                    }
-
-                    gridTDS.batchEditApi.SetCellValue(i, "ReceiptTDS", newamt);
-
-                }
-            }
-        }
-    }
-
-    for (i = -1; i > -1000; i--) {
-        if (gridTDS.GetRow(i)) {
-            if (gridTDS.GetRow(i).style.display != "none") {
-                //gridTDS.batchEditApi.StartEdit(i, 2);
-                var ISTDS = gridTDS.batchEditApi.GetCellValue(i, "IsTDS");
-                if (gridTDS.batchEditApi.GetCellValue(i, "UniqueID") == UniqueID && ISTDS != "" && ISTDS != null) {
-                    var TDSPercentage = gridTDS.batchEditApi.GetCellValue(i, "TDSPercentage");
-                    var newamt = DecimalRoundoff(parseFloat(Amount), 2) * (parseFloat(TDSPercentage.split('~')[0]) / 100);
-
-                    //var newamt = DecimalRoundoff(parseFloat(Amount), 2) * (parseFloat(TDSPercentage) / 100);
-                    var ro = TDSPercentage.split('~')[1];
-
-                    if (ro == "1") {
-                        newamt = round1(newamt);
-                    }
-                    else if (ro == "2") {
-                        newamt = round5(newamt);
-                    }
-                    else if (ro == "3") {
-                        newamt = round10(newamt);
-                    }
-
-                    gridTDS.batchEditApi.SetCellValue(i, "ReceiptTDS", newamt);
-                }
-            }
-        }
-    }
-
-    gridTDS.batchEditApi.StartEdit(i, 2);
-}
-
-
-
-
-
-
-
-
-function ReceiptTextChange(s, e) {
-    var mainAccountValue = (grid.GetEditor('MainAccount').GetValue() != null) ? grid.GetEditor('MainAccount').GetValue() : "";
-
-    if (mainAccountValue != "") {
-        CreditLostFocus(s, e);
-        var receiptValue = (grid.GetEditor('Receipt').GetValue() != null) ? grid.GetEditor('Receipt').GetValue() : "0";
-        var withDrawlValue = (grid.GetEditor('WithDrawl').GetValue() != null) ? parseFloat(grid.GetEditor('WithDrawl').GetValue()) : "0";
-
-        if (receiptValue > 0) {
-            recalculateDebit(grid.GetEditor('WithDrawl').GetValue());
-            grid.GetEditor('WithDrawl').SetValue("0");
-
-            //grid.GetEditor('WithDrawl').SetEnabled(false);
-        }
-
-        var Debit = parseFloat(c_txt_Debit.GetValue());
-        var Credit = parseFloat(c_txt_Credit.GetValue());
-
-        if (Debit == 0 && Credit == 0) {
-            cbtnSaveRecords.SetVisible(false);
-            cbtn_SaveRecords.SetVisible(false);
-
-            var Amount = parseFloat(Debit) - parseFloat(Credit);
-            var div = document.getElementById('loadCurrencyMassage');
-            var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
-            div.innerHTML = txt;
-
-
-            loadCurrencyMassage.style.display = "block";
-        }
-        else if (Debit == Credit) {
-            cbtnSaveRecords.SetVisible(true);
-            cbtn_SaveRecords.SetVisible(true);
-            loadCurrencyMassage.style.display = "none";
-        }
-        else {
-            cbtnSaveRecords.SetVisible(false);
-            cbtn_SaveRecords.SetVisible(false);
-
-            var Amount = parseFloat(Debit) - parseFloat(Credit);
-            var div = document.getElementById('loadCurrencyMassage');
-            var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
-            div.innerHTML = txt;
-
-            loadCurrencyMassage.style.display = "block";
-        }
-        if ($("#cpTagged").val() == "-99") {
-            cbtnSaveRecords.SetVisible(false);
-            cbtn_SaveRecords.SetVisible(false);
-
-        }
-    }
-    else {
-        grid.GetEditor('Receipt').SetValue("0");
-    }
-
-    //chinmoy added for narration focus
-    if ($("#hdnProjectSelectInEntryModule").val() == "0") {
-        setTimeout(function () { grid.batchEditApi.StartEdit(globalRowIndex, 6); }, 1000);
-
-    }
-    //End
-}
-
-
-function ReceiptTextChangeTDS(s, e) {
-
-
-    var IsTDSSource = gridTDS.batchEditApi.GetCellValue(globalRowIndexTDS, "IsTDSSource");
-    var uniqueIndex = globalRowIndexTDS;
-    if (IsTDSSource == "1") {
-
-        gridTDS.GetEditor('ReceiptTDS').SetValue("0");
-        if ($("#hdnProjectSelectInEntryModule").val() == "1") {
-            setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 5); }, 200);
-        }
-        else {
-            setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 6); }, 200);
-        }
-        return;
-    }
-    var receiptValue = (gridTDS.GetEditor('ReceiptTDS').GetValue() != null) ? gridTDS.GetEditor('ReceiptTDS').GetValue() : "0";
-    if (receiptValue > 0) {
-
-        gridTDS.GetEditor('WithDrawlTDS').SetValue("0");
-    }
-
-    var mainAccountValue = (gridTDS.GetEditor('MainAccountTDS').GetValue() != null) ? gridTDS.GetEditor('MainAccountTDS').GetValue() : "";
-
-    if (mainAccountValue != "") {
-        //CreditLostFocus(s, e);
-        //var receiptValue = (gridTDS.GetEditor('ReceiptTDS').GetValue() != null) ? gridTDS.GetEditor('ReceiptTDS').GetValue() : "0";
-        //var withDrawlValue = (gridTDS.GetEditor('WithDrawlTDS').GetValue() != null) ? parseFloat(gridTDS.GetEditor('WithDrawlTDS').GetValue()) : "0";
-
-        //if (receiptValue > 0) {
-        //    recalculateDebitTDS(gridTDS.GetEditor('WithDrawlTDS').GetValue());
-        //    gridTDS.GetEditor('WithDrawlTDS').SetValue("0");
-
-        //    //gridTDS.GetEditor('WithDrawl').SetEnabled(false);
-        //}
-
-
-        changeCreditTotalSummaryTDS();
-
-        var Debit = parseFloat(c_txt_DebitTDS.GetValue());
-        var Credit = parseFloat(c_txt_CreditTDS.GetValue());
-
-        if (Debit == 0 && Credit == 0) {
-            cbtnSaveRecordsTDS.SetVisible(false);
-            cbtn_SaveRecordsTDS.SetVisible(false);
-
-            var Amount = parseFloat(Debit) - parseFloat(Credit);
-            var div = document.getElementById('loadCurrencyMassage');
-            var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected.</span></label>";
-            div.innerHTML = txt;
-
-
-            loadCurrencyMassage.style.display = "block";
-        }
-        else if (Debit == Credit) {
-            cbtnSaveRecordsTDS.SetVisible(true);
-            cbtn_SaveRecordsTDS.SetVisible(true);
-            loadCurrencyMassage.style.display = "none";
-        }
-        else {
-            cbtnSaveRecordsTDS.SetVisible(false);
-            cbtn_SaveRecordsTDS.SetVisible(false);
-
-            var Amount = parseFloat(Debit) - parseFloat(Credit);
-            var div = document.getElementById('loadCurrencyMassage');
-            var txt = "<label><span style='color: red; font-weight: bold; font-size: medium;'>**  Mismatch detected. Amount: " + DecimalRoundoff(Amount, 2) + "</span></label>";
-            div.innerHTML = txt;
-
-            loadCurrencyMassage.style.display = "block";
-        }
-        if ($("#cpTagged").val() == "-99") {
-            cbtnSaveRecordsTDS.SetVisible(false);
-            cbtn_SaveRecordsTDS.SetVisible(false);
-
-        }
-    }
-    else {
-        gridTDS.GetEditor('ReceiptTDS').SetValue("0");
-    }
-    if ($("#hdnProjectSelectInEntryModule").val() == "1") {
-        setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 5); }, 200);
-    }
-    else
-        setTimeout(function () { gridTDS.batchEditApi.StartEdit(uniqueIndex, 6); }, 200);
-}
-
-
-
-
-
-
-
-function deleteAllRows() {
-    var frontRow = 0;
-    var backRow = -1;
-    for (var i = 0; i <= grid.GetVisibleRowsOnPage() + 100 ; i++) {
-        grid.DeleteRow(frontRow);
-        grid.DeleteRow(backRow);
-        backRow--;
-        frontRow++;
-    }
-    grid.AddNewRow();
-
-    ctxtTotalPayment.SetValue(0);
-    c_txt_Debit.SetValue(0);
-
-}
-
-function Look_up_Project() {
-    clookup_Project.gridView.Refresh();
-}
-
-
-
-
-
-function CmbScheme_ValueChange() {
+        function CmbScheme_ValueChange() {
     //var val = cCmbScheme.GetValue();
     <%--Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911--%>
-   
+
     //deleteAllRows();
-    if(Mode != 'Copy')
-    {
+    if (Mode != 'Copy') {
         deleteAllRows();
     }
     <%--Rev Work close: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911--%>
@@ -4063,73 +4066,73 @@ function CmbScheme_ValueChange() {
                 var startDate = new Date();
                 startDate = tDate.GetDate().format('yyyy-MM-dd');
                 cPanellookup_GRNOverhead.PerformCallback('BindOverheadCostGrid' + '~' + startDate);
-               
+
                 //clookup_GRNOverhead.gridView.Refresh();
             }
         });
-}
-else {
-    document.getElementById('<%= txtBillNo.ClientID %>').disabled = true;
-        document.getElementById('<%= txtBillNo.ClientID %>').value = "";
     }
-    if ($("#hdnProjectSelectInEntryModule").val() == "1")
-        clookup_Project.gridView.Refresh();
-}
+    else {
+        document.getElementById('<%= txtBillNo.ClientID %>').disabled = true;
+        document.getElementById('<%= txtBillNo.ClientID %>').value = "";
+            }
+            if ($("#hdnProjectSelectInEntryModule").val() == "1")
+                clookup_Project.gridView.Refresh();
+        }
 
 
 
 
 
 
-function CmbSchemeTDS_ValueChange() {
-    //var val = cCmbScheme.GetValue();
-    deleteAllRows();
-    //InsgridBatch.AddNewRow();
-    var val = document.getElementById("CmbSchemeTDS").value;
-    $("#MandatoryBillNoTDS").hide();
+        function CmbSchemeTDS_ValueChange() {
+            //var val = cCmbScheme.GetValue();
+            deleteAllRows();
+            //InsgridBatch.AddNewRow();
+            var val = document.getElementById("CmbSchemeTDS").value;
+            $("#MandatoryBillNoTDS").hide();
 
-    if (val != "0") {
-        $.ajax({
-            type: "POST",
-            url: 'JournalEntry.aspx/getSchemeType',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: "{sel_scheme_id:\"" + val + "\"}",
-            success: function (type) {
-                console.log(type);
+            if (val != "0") {
+                $.ajax({
+                    type: "POST",
+                    url: 'JournalEntry.aspx/getSchemeType',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: "{sel_scheme_id:\"" + val + "\"}",
+                    success: function (type) {
+                        console.log(type);
 
-                var schemetypeValue = type.d;
-                var schemetype = schemetypeValue.toString().split('~')[0];
-                var schemelength = schemetypeValue.toString().split('~')[1];
-                $('#txtBillNoTDS').attr('maxLength', schemelength);
-                var branchID = schemetypeValue.toString().split('~')[2];
-                var branchStateID = schemetypeValue.toString().split('~')[3];
+                        var schemetypeValue = type.d;
+                        var schemetype = schemetypeValue.toString().split('~')[0];
+                        var schemelength = schemetypeValue.toString().split('~')[1];
+                        $('#txtBillNoTDS').attr('maxLength', schemelength);
+                        var branchID = schemetypeValue.toString().split('~')[2];
+                        var branchStateID = schemetypeValue.toString().split('~')[3];
 
-                var fromdate = schemetypeValue.toString().split('~')[4];
-                var todate = schemetypeValue.toString().split('~')[5];
+                        var fromdate = schemetypeValue.toString().split('~')[4];
+                        var todate = schemetypeValue.toString().split('~')[5];
 
-                var dt = new Date();
+                        var dt = new Date();
 
-                tDateTDS.SetDate(dt);
+                        tDateTDS.SetDate(dt);
 
-                if (dt < new Date(fromdate)) {
-                    tDateTDS.SetDate(new Date(fromdate));
-                }
+                        if (dt < new Date(fromdate)) {
+                            tDateTDS.SetDate(new Date(fromdate));
+                        }
 
-                if (dt > new Date(todate)) {
-                    tDateTDS.SetDate(new Date(todate));
-                }
-
-
-
-
-                tDateTDS.SetMinDate(new Date(fromdate));
-                tDateTDS.SetMaxDate(new Date(todate));
+                        if (dt > new Date(todate)) {
+                            tDateTDS.SetDate(new Date(todate));
+                        }
 
 
 
-                document.getElementById('ddlSupplyStateTDS').value = branchStateID;
-                $('#<%=hdnBranchId.ClientID %>').val(branchID);
+
+                        tDateTDS.SetMinDate(new Date(fromdate));
+                        tDateTDS.SetMaxDate(new Date(todate));
+
+
+
+                        document.getElementById('ddlSupplyStateTDS').value = branchStateID;
+                        $('#<%=hdnBranchId.ClientID %>').val(branchID);
                 $('#<%=hfIsFilter.ClientID %>').val(branchID);
                 if (schemetypeValue != "") {
                     document.getElementById('ddlBranchTDS').value = branchID;
@@ -4161,105 +4164,105 @@ function CmbSchemeTDS_ValueChange() {
                 //clookup_GRNOverheadTDS.gridView.Refresh();
             }
         });
-}
-else {
-    document.getElementById('<%= txtBillNoTDS.ClientID %>').disabled = true;
+    }
+    else {
+        document.getElementById('<%= txtBillNoTDS.ClientID %>').disabled = true;
         document.getElementById('<%= txtBillNoTDS.ClientID %>').value = "";
-    }
-    if ($("#hdnProjectSelectInEntryModule").val() == "1")
-        clookupTDS_Project.gridView.Refresh();
-}
+            }
+            if ($("#hdnProjectSelectInEntryModule").val() == "1")
+                clookupTDS_Project.gridView.Refresh();
+        }
 
 
 
 
 
 
-function GoToNextRow() {
-    var gridcount = grid.GetVisibleRowsOnPage();
-    grid.batchEditApi.StartEdit(gridcount - 2, 2);
-    grid.GetEditor('CountryID').Focus();
-}
+        function GoToNextRow() {
+            var gridcount = grid.GetVisibleRowsOnPage();
+            grid.batchEditApi.StartEdit(gridcount - 2, 2);
+            grid.GetEditor('CountryID').Focus();
+        }
 
-function deleteAllRows() {
-    var frontRow = 0;
-    var backRow = -1;
-    for (var i = 0; i <= grid.GetVisibleRowsOnPage() + 100 ; i++) {
-        grid.DeleteRow(frontRow);
-        grid.DeleteRow(backRow);
-        backRow--;
-        frontRow++;
-    }
-    grid.AddNewRow();
+        function deleteAllRows() {
+            var frontRow = 0;
+            var backRow = -1;
+            for (var i = 0; i <= grid.GetVisibleRowsOnPage() + 100; i++) {
+                grid.DeleteRow(frontRow);
+                grid.DeleteRow(backRow);
+                backRow--;
+                frontRow++;
+            }
+            grid.AddNewRow();
 
-    c_txt_Debit.SetValue(0);
-    c_txt_Credit.SetValue(0);
+            c_txt_Debit.SetValue(0);
+            c_txt_Credit.SetValue(0);
 
-}
+        }
 
-var oldBranchdata;
-function BranchGotFocus() {
-    oldBranchdata = document.getElementById('ddlBranch').value;
-}
+        var oldBranchdata;
+        function BranchGotFocus() {
+            oldBranchdata = document.getElementById('ddlBranch').value;
+        }
 
-function ddlBranch_ChangeIndex() {
-    if (oldBranchdata != document.getElementById('ddlBranch').value) {
+        function ddlBranch_ChangeIndex() {
+            if (oldBranchdata != document.getElementById('ddlBranch').value) {
 
-        //get the first row accounting value debjyoti 
-        grid.batchEditApi.StartEdit(-1, 1);
-        var accountingDataMin = grid.GetEditor('CountryID').GetValue();
-        grid.batchEditApi.EndEdit();
+                //get the first row accounting value debjyoti 
+                grid.batchEditApi.StartEdit(-1, 1);
+                var accountingDataMin = grid.GetEditor('CountryID').GetValue();
+                grid.batchEditApi.EndEdit();
 
-        grid.batchEditApi.StartEdit(0, 1);
-        var accountingDataplus = grid.GetEditor('CountryID').GetValue();
-        grid.batchEditApi.EndEdit();
+                grid.batchEditApi.StartEdit(0, 1);
+                var accountingDataplus = grid.GetEditor('CountryID').GetValue();
+                grid.batchEditApi.EndEdit();
 
 
 
-        if (accountingDataMin != null || accountingDataplus != null) {
-            jConfirm('You have changed Branch. All the entries of ledger in this voucher to be reset to blank. \n You have to select and re-enter. Continue?', 'Confirmation Dialog', function (r) {
+                if (accountingDataMin != null || accountingDataplus != null) {
+                    jConfirm('You have changed Branch. All the entries of ledger in this voucher to be reset to blank. \n You have to select and re-enter. Continue?', 'Confirmation Dialog', function (r) {
 
-                if (r == true) {
-                    deleteAllRows();
-                    CountryID.PerformCallback(document.getElementById('ddlBranch').value);
-                    if (grid.GetVisibleRowsOnPage() == 1) {
-                        grid.batchEditApi.StartEdit(-1, 1);
-                    }
-                } else {
-                    document.getElementById('ddlBranch').value = oldBranchdata;
+                        if (r == true) {
+                            deleteAllRows();
+                            CountryID.PerformCallback(document.getElementById('ddlBranch').value);
+                            if (grid.GetVisibleRowsOnPage() == 1) {
+                                grid.batchEditApi.StartEdit(-1, 1);
+                            }
+                        } else {
+                            document.getElementById('ddlBranch').value = oldBranchdata;
+                        }
+                    });
                 }
-            });
+                else {
+                    CountryID.PerformCallback(document.getElementById('ddlBranch').value);
+                }
+
+                //clookup_GRNOverhead.gridView.Refresh();
+                //clookup_GRNOverheadTDS.gridView.Refresh();
+            }
         }
-        else {
-            CountryID.PerformCallback(document.getElementById('ddlBranch').value);
-        }
-
-        //clookup_GRNOverhead.gridView.Refresh();
-        //clookup_GRNOverheadTDS.gridView.Refresh();
-    }
-}
 
 
 
 
-function SaveButtonClick() {
+        function SaveButtonClick() {
 
-    var ProjectCode = clookup_Project.GetText();
-    if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
-        jAlert("Please Select Project.");
-        return false;
-    }
+            var ProjectCode = clookup_Project.GetText();
+            if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
+                jAlert("Please Select Project.");
+                return false;
+            }
 
 
-    if (cbtnSaveRecords.IsVisible() == true) {
-        ValidGrid = true;
-        ValidateGrid();
+            if (cbtnSaveRecords.IsVisible() == true) {
+                ValidGrid = true;
+                ValidateGrid();
 
-        var val = document.getElementById("CmbScheme").value;
-        var Branchval = $("#ddlBranch").val();
-        $("#MandatoryBillNo").hide();
+                var val = document.getElementById("CmbScheme").value;
+                var Branchval = $("#ddlBranch").val();
+                $("#MandatoryBillNo").hide();
 
-        if (document.getElementById('<%= txtBillNo.ClientID %>').value == "") {
+                if (document.getElementById('<%= txtBillNo.ClientID %>').value == "") {
             //jAlert('Enter Journal No');
             $("#MandatoryBillNo").show();
             document.getElementById('<%= txtBillNo.ClientID %>').focus();
@@ -4277,7 +4280,7 @@ function SaveButtonClick() {
             var frontRow = 0;
             var backRow = -1;
             var IsJournal = "";
-            for (var i = 0; i <= grid.GetVisibleRowsOnPage() ; i++) {
+            for (var i = 0; i <= grid.GetVisibleRowsOnPage(); i++) {
                 var frontProduct = (grid.batchEditApi.GetCellValue(backRow, 'gvColMainAccount') != null) ? (grid.batchEditApi.GetCellValue(backRow, 'gvColMainAccount')) : "";
                 var backProduct = (grid.batchEditApi.GetCellValue(frontRow, 'gvColMainAccount') != null) ? (grid.batchEditApi.GetCellValue(frontRow, 'gvColMainAccount')) : "";
 
@@ -4296,45 +4299,45 @@ function SaveButtonClick() {
                 $("#hdnIsValidate").val(Count);
 
                 $('#<%=hdnRefreshType.ClientID %>').val('S');
-                grid.UpdateEdit();
-                $("#ddl_AmountAre").focus();
-                c_txt_Debit.SetValue("0");
-                c_txt_Credit.SetValue("0");
+                        grid.UpdateEdit();
+                        $("#ddl_AmountAre").focus();
+                        c_txt_Debit.SetValue("0");
+                        c_txt_Credit.SetValue("0");
 
-                // grid.batchEditApi.StartEdit(globalRowIndex, 1);
-            }
-            else {
-                jAlert('Please add atleast single record first');
+                        // grid.batchEditApi.StartEdit(globalRowIndex, 1);
+                    }
+                    else {
+                        jAlert('Please add atleast single record first');
+                    }
+                }
             }
         }
-}
-}
 
-function SaveButtonClickTDS() {
+        function SaveButtonClickTDS() {
 
-    var ProjectCode = clookupTDS_Project.GetText();
-    if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
-        jAlert("Please Select Project.");
-        return false;
-    }
+            var ProjectCode = clookupTDS_Project.GetText();
+            if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
+                jAlert("Please Select Project.");
+                return false;
+            }
 
 
 
-    if (cbtnSaveRecordsTDS.IsVisible() == true) {
-        ValidGrid = true;
-        isTDSSelected = 1;
-        ValidateGridTDS();
+            if (cbtnSaveRecordsTDS.IsVisible() == true) {
+                ValidGrid = true;
+                isTDSSelected = 1;
+                ValidateGridTDS();
 
 
 
 
-        var val = document.getElementById("CmbSchemeTDS").value;
-        var Branchval = $("#ddlBranchTDS").val();
-        $("#MandatoryBillNoTDS").hide();
-        if (isTDSSelected == 0 && !chkTDSJournal.GetChecked()) {
-            jAlert('You must select a TDS Main Account to proceed.');
-        }
-        else if (document.getElementById('<%= txtBillNoTDS.ClientID %>').value == "") {
+                var val = document.getElementById("CmbSchemeTDS").value;
+                var Branchval = $("#ddlBranchTDS").val();
+                $("#MandatoryBillNoTDS").hide();
+                if (isTDSSelected == 0 && !chkTDSJournal.GetChecked()) {
+                    jAlert('You must select a TDS Main Account to proceed.');
+                }
+                else if (document.getElementById('<%= txtBillNoTDS.ClientID %>').value == "") {
             //jAlert('Enter Journal No');
             $("#MandatoryBillNoTDS").show();
             document.getElementById('<%= txtBillNoTDS.ClientID %>').focus();
@@ -4358,7 +4361,7 @@ function SaveButtonClickTDS() {
             var frontRow = 0;
             var backRow = -1;
             var IsJournal = "";
-            for (var i = 0; i <= gridTDS.GetVisibleRowsOnPage() ; i++) {
+            for (var i = 0; i <= gridTDS.GetVisibleRowsOnPage(); i++) {
                 var frontProduct = (gridTDS.batchEditApi.GetCellValue(backRow, 'gvColMainAccountTDS') != null) ? (gridTDS.batchEditApi.GetCellValue(backRow, 'gvColMainAccountTDS')) : "";
                 var backProduct = (gridTDS.batchEditApi.GetCellValue(frontRow, 'gvColMainAccountTDS') != null) ? (gridTDS.batchEditApi.GetCellValue(frontRow, 'gvColMainAccountTDS')) : "";
 
@@ -4377,33 +4380,33 @@ function SaveButtonClickTDS() {
                 $("#hdnIsValidate").val(Count);
 
                 $('#<%=hdnRefreshType.ClientID %>').val('S');
-                gridTDS.UpdateEdit();
-                c_txt_DebitTDS.SetValue("0");
-                c_txt_CreditTDS.SetValue("0");
+                        gridTDS.UpdateEdit();
+                        c_txt_DebitTDS.SetValue("0");
+                        c_txt_CreditTDS.SetValue("0");
 
-            }
-            else {
-                jAlert('Please add atleast single record first');
+                    }
+                    else {
+                        jAlert('Please add atleast single record first');
+                    }
+                }
             }
         }
-}
-}
-function SaveExitButtonClick() {
-    grid.AddNewRow();
+        function SaveExitButtonClick() {
+            grid.AddNewRow();
 
-    var ProjectCode = clookup_Project.GetText();
-    if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
-        jAlert("Please Select Project.");
-        return false;
-    }
+            var ProjectCode = clookup_Project.GetText();
+            if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
+                jAlert("Please Select Project.");
+                return false;
+            }
 
-    if (cbtn_SaveRecords.IsVisible() == true) {
-        var val = document.getElementById("CmbScheme").value;
-        var Branchval = $("#ddlBranch").val();
-        $("#MandatoryBillNo").hide();
-        ValidGrid = true;
-        ValidateGrid();
-        if (document.getElementById('<%= txtBillNo.ClientID %>').value == "") {
+            if (cbtn_SaveRecords.IsVisible() == true) {
+                var val = document.getElementById("CmbScheme").value;
+                var Branchval = $("#ddlBranch").val();
+                $("#MandatoryBillNo").hide();
+                ValidGrid = true;
+                ValidateGrid();
+                if (document.getElementById('<%= txtBillNo.ClientID %>').value == "") {
             //jAlert('Enter Journal No');
             $("#MandatoryBillNo").show();
             document.getElementById('<%= txtBillNo.ClientID %>').focus();
@@ -4421,7 +4424,7 @@ function SaveExitButtonClick() {
             var frontRow = 0;
             var backRow = -1;
             var IsJournal = "";
-            for (var i = 0; i <= grid.GetVisibleRowsOnPage() ; i++) {
+            for (var i = 0; i <= grid.GetVisibleRowsOnPage(); i++) {
                 var frontProduct = (grid.batchEditApi.GetCellValue(backRow, 'MainAccount') != null) ? (grid.batchEditApi.GetCellValue(backRow, 'MainAccount')) : "";
                 var backProduct = (grid.batchEditApi.GetCellValue(frontRow, 'MainAccount') != null) ? (grid.batchEditApi.GetCellValue(frontRow, 'MainAccount')) : "";
 
@@ -4439,37 +4442,37 @@ function SaveExitButtonClick() {
                 var Count = grid.GetVisibleRowsOnPage();
                 $("#hdnIsValidate").val(Count);
                 $('#<%=hdnRefreshType.ClientID %>').val('E');
-                grid.UpdateEdit();
-            }
-            else {
-                jAlert('Please add atleast single record first');
+                        grid.UpdateEdit();
+                    }
+                    else {
+                        jAlert('Please add atleast single record first');
+                    }
+                }
             }
         }
-}
-}
 
 
 
-function SaveExitButtonClickTDS() {
-    gridTDS.AddNewRow();
+        function SaveExitButtonClickTDS() {
+            gridTDS.AddNewRow();
 
-    var ProjectCode = clookupTDS_Project.GetText();
-    if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
-        jAlert("Please Select Project.");
-        return false;
-    }
+            var ProjectCode = clookupTDS_Project.GetText();
+            if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
+                jAlert("Please Select Project.");
+                return false;
+            }
 
-    if (cbtn_SaveRecordsTDS.IsVisible() == true) {
-        var val = document.getElementById("CmbSchemeTDS").value;
-        var Branchval = $("#ddlBranchTDS").val();
-        $("#MandatoryBillNoTDS").hide();
-        isTDSSelected = 1;
-        ValidGrid = true;
-        ValidateGridTDS();
-        if (isTDSSelected == 0 && !chkTDSJournal.GetChecked()) {
-            jAlert('You must select a TDS Main Account to proceed.');
-        }
-        else if (document.getElementById('<%= txtBillNoTDS.ClientID %>').value == "") {
+            if (cbtn_SaveRecordsTDS.IsVisible() == true) {
+                var val = document.getElementById("CmbSchemeTDS").value;
+                var Branchval = $("#ddlBranchTDS").val();
+                $("#MandatoryBillNoTDS").hide();
+                isTDSSelected = 1;
+                ValidGrid = true;
+                ValidateGridTDS();
+                if (isTDSSelected == 0 && !chkTDSJournal.GetChecked()) {
+                    jAlert('You must select a TDS Main Account to proceed.');
+                }
+                else if (document.getElementById('<%= txtBillNoTDS.ClientID %>').value == "") {
             //jAlert('Enter Journal No');
             $("#MandatoryBillNoTDS").show();
             document.getElementById('<%= txtBillNoTDS.ClientID %>').focus();
@@ -4493,7 +4496,7 @@ function SaveExitButtonClickTDS() {
             var frontRow = 0;
             var backRow = -1;
             var IsJournal = "";
-            for (var i = 0; i <= gridTDS.GetVisibleRowsOnPage() ; i++) {
+            for (var i = 0; i <= gridTDS.GetVisibleRowsOnPage(); i++) {
                 var frontProduct = (gridTDS.batchEditApi.GetCellValue(backRow, 'MainAccountTDS') != null) ? (grid.batchEditApi.GetCellValue(backRow, 'MainAccountTDS')) : "";
                 var backProduct = (gridTDS.batchEditApi.GetCellValue(frontRow, 'MainAccountTDS') != null) ? (grid.batchEditApi.GetCellValue(frontRow, 'MainAccountTDS')) : "";
 
@@ -4511,35 +4514,35 @@ function SaveExitButtonClickTDS() {
                 var Count = gridTDS.GetVisibleRowsOnPage();
                 $("#hdnIsValidateTDS").val(Count);
                 $('#<%=hdnRefreshType.ClientID %>').val('E');
-                gridTDS.UpdateEdit();
-            }
-            else {
-                jAlert('Please add atleast single record first');
+                        gridTDS.UpdateEdit();
+                    }
+                    else {
+                        jAlert('Please add atleast single record first');
+                    }
+                }
             }
         }
-}
-}
 
 
 
 
 
-function OnKeyDown(s, e) {
-    if (e.htmlEvent.keyCode == 40 || e.htmlEvent.keyCode == 38)
-        return ASPxClientUtils.PreventEvent(e.htmlEvent);
-}
+        function OnKeyDown(s, e) {
+            if (e.htmlEvent.keyCode == 40 || e.htmlEvent.keyCode == 38)
+                return ASPxClientUtils.PreventEvent(e.htmlEvent);
+        }
 
-function OnKeyDownTDS(s, e) {
+        function OnKeyDownTDS(s, e) {
 
 
 
-    if (e.htmlEvent.keyCode == 40 || e.htmlEvent.keyCode == 38)
-        return ASPxClientUtils.PreventEvent(e.htmlEvent);
-}
+            if (e.htmlEvent.keyCode == 40 || e.htmlEvent.keyCode == 38)
+                return ASPxClientUtils.PreventEvent(e.htmlEvent);
+        }
 
-function txtBillNo_TextChanged() {
-    var VoucherNo = document.getElementById("txtBillNo").value;
-    var type = $('#<%=hdnMode.ClientID %>').val();
+        function txtBillNo_TextChanged() {
+            var VoucherNo = document.getElementById("txtBillNo").value;
+            var type = $('#<%=hdnMode.ClientID %>').val();
 
     if (VoucherNo != "") {
         $("#MandatoryBillNo").hide();
@@ -4564,411 +4567,424 @@ function txtBillNo_TextChanged() {
             }
         }
     });
-}
-
-$(document).ready(function () {
-    $("#divIsPartyJournal").hide();
-    $('#MainAccountModel').modal('hide');
-    IsRcm.SetChecked(0);
-    RcmCheckChange();
-    RcmCheckChangeTDS();
-    $('#ddlBranch').blur(function () {
-        if (grid.GetVisibleRowsOnPage() == 1) {
-            grid.batchEditApi.StartEdit(-1, 1);
-        }
-    })
-
-});
-
-function SignOff() {
-    window.parent.SignOff();
-}
-
-var isCtrl = false;
-document.onkeydown = function (e) {
-    if (event.keyCode == 83 && event.altKey == true) { //run code for Ctrl+S -- ie, Save & New  
-        StopDefaultAction(e);
-        var debit = parseFloat(c_txt_Debit.GetValue());
-        var credit = parseFloat(c_txt_Credit.GetValue());
-        if ((debit == credit) && (debit != 0) && (credit != 0)) {
-            //SaveButtonClick();
-            document.getElementById('btnSaveRecords').click();
-            return false;
-        }
-    }
-    else if (event.keyCode == 88 && event.altKey == true) { //run code for Ctrl+X -- ie, Save & Exit!   
-        console.log(event);
-        StopDefaultAction(e);
-        var debit = parseFloat(c_txt_Debit.GetValue());
-        var credit = parseFloat(c_txt_Credit.GetValue());
-        if ((debit == credit) && (debit != 0) && (credit != 0)) {
-            document.getElementById('btn_SaveRecords').click();
-            //SaveExitButtonClick();
-            return false;
-        }
-    }
-    else if (event.keyCode == 65 && event.altKey == true) {
-        StopDefaultAction(e);
-        if (document.getElementById('divAddNew').style.display != 'block') {
-            OnAddButtonClick();
-        }
-    }
-    else if (event.keyCode == 84 && event.altKey == true) {
-        StopDefaultAction(e);
-        if (document.getElementById('divAddNewTDS').style.display != 'block') {
-            OnAddButtonClickTDS();
-        }
-    }
-}
-
-function StopDefaultAction(e) {
-    if (e.preventDefault) { e.preventDefault() }
-    else { e.stop() };
-
-    e.returnValue = false;
-    e.stopPropagation();
-}
-
-function ReloadPage() {
-    window.location.reload();
-}
-
-var isFirstTime = true;
-function AllControlInitilize() {
-    //document.getElementById('AddButton').style.display = 'inline-block';
-    if (isFirstTime) {
-
-        if (localStorage.getItem('FromDateJournal')) {
-            var fromdatearray = localStorage.getItem('FromDateJournal').split('-');
-            var fromdate = new Date(fromdatearray[0], parseFloat(fromdatearray[1]) - 1, fromdatearray[2], 0, 0, 0, 0);
-            cFormDate.SetDate(fromdate);
         }
 
-        if (localStorage.getItem('ToDateJournal')) {
-            var todatearray = localStorage.getItem('ToDateJournal').split('-');
-            var todate = new Date(todatearray[0], parseFloat(todatearray[1]) - 1, todatearray[2], 0, 0, 0, 0);
-            ctoDate.SetDate(todate);
+        $(document).ready(function () {
+            $("#divIsPartyJournal").hide();
+            $('#MainAccountModel').modal('hide');
+            IsRcm.SetChecked(0);
+            RcmCheckChange();
+            RcmCheckChangeTDS();
+            $('#ddlBranch').blur(function () {
+                if (grid.GetVisibleRowsOnPage() == 1) {
+                    grid.batchEditApi.StartEdit(-1, 1);
+                }
+            })
+
+        });
+
+        function SignOff() {
+            window.parent.SignOff();
         }
-        if (localStorage.getItem('BranchJournal')) {
-            if (ccmbBranchfilter.FindItemByValue(localStorage.getItem('BranchJournal'))) {
-                ccmbBranchfilter.SetValue(localStorage.getItem('BranchJournal'));
+
+        var isCtrl = false;
+        document.onkeydown = function (e) {
+            if (event.keyCode == 83 && event.altKey == true) { //run code for Ctrl+S -- ie, Save & New  
+                StopDefaultAction(e);
+                var debit = parseFloat(c_txt_Debit.GetValue());
+                var credit = parseFloat(c_txt_Credit.GetValue());
+                if ((debit == credit) && (debit != 0) && (credit != 0)) {
+                    //SaveButtonClick();
+                    document.getElementById('btnSaveRecords').click();
+                    return false;
+                }
             }
-
+            else if (event.keyCode == 88 && event.altKey == true) { //run code for Ctrl+X -- ie, Save & Exit!   
+                console.log(event);
+                StopDefaultAction(e);
+                var debit = parseFloat(c_txt_Debit.GetValue());
+                var credit = parseFloat(c_txt_Credit.GetValue());
+                if ((debit == credit) && (debit != 0) && (credit != 0)) {
+                    document.getElementById('btn_SaveRecords').click();
+                    //SaveExitButtonClick();
+                    return false;
+                }
+            }
+            else if (event.keyCode == 65 && event.altKey == true) {
+                StopDefaultAction(e);
+                if (document.getElementById('divAddNew').style.display != 'block') {
+                    OnAddButtonClick();
+                }
+            }
+            else if (event.keyCode == 84 && event.altKey == true) {
+                StopDefaultAction(e);
+                if (document.getElementById('divAddNewTDS').style.display != 'block') {
+                    OnAddButtonClickTDS();
+                }
+            }
         }
-        TDScheckchange(null, null);
-        //updateGridByDate();
 
-        isFirstTime = false;
-    }
-}
+        function StopDefaultAction(e) {
+            if (e.preventDefault) { e.preventDefault() }
+            else { e.stop() };
 
-//Function for Date wise filteration
-function updateGridByDate() {
-    if (cFormDate.GetDate() == null) {
-        jAlert('Please select from date.', 'Alert', function () { cFormDate.Focus(); });
-    }
-    else if (ctoDate.GetDate() == null) {
-        jAlert('Please select to date.', 'Alert', function () { ctoDate.Focus(); });
-    }
-    else if (ccmbBranchfilter.GetValue() == null) {
-        jAlert('Please select Branch.', 'Alert', function () { ccmbBranchfilter.Focus(); });
-    }
-    else {
-        localStorage.setItem("FromDateJournal", cFormDate.GetDate().format('yyyy-MM-dd'));
-        localStorage.setItem("ToDateJournal", ctoDate.GetDate().format('yyyy-MM-dd'));
-        localStorage.setItem("BranchJournal", ccmbBranchfilter.GetValue());
-
-        $("#hfFromDate").val(cFormDate.GetDate().format('yyyy-MM-dd'));
-        $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
-        $("#hfBranchID").val(ccmbBranchfilter.GetValue());
-        $("#hfIsFilter").val("Y");
-
-        if (page.activeTabIndex == 0) {
-            cGvJvSearch.Refresh();
-            //cGvJvSearch.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue());
+            e.returnValue = false;
+            e.stopPropagation();
         }
-        else if (page.activeTabIndex == 1) {
-            cGvJvSearchFullInfo.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue());
+
+        function ReloadPage() {
+            window.location.reload();
         }
-    }
-}
 
-//// Pop Up /////
+        var isFirstTime = true;
+        function AllControlInitilize() {
+            //document.getElementById('AddButton').style.display = 'inline-block';
+            if (isFirstTime) {
 
-function MainAccountNewkeydown(e) {
-    var OtherDetails = {}
-    OtherDetails.SearchKey = $("#txtMainAccountSearch").val();
-    OtherDetails.branchId = $("#ddlBranch").val();
-    if (e.code == "Enter" || e.code == "NumpadEnter") {
-        if ($("#txtMainAccountSearch").val() == "")
-            return;
-        var HeaderCaption = [];
-        HeaderCaption.push("Main Account Name");
-        HeaderCaption.push("Short Name");
+                if (localStorage.getItem('FromDateJournal')) {
+                    var fromdatearray = localStorage.getItem('FromDateJournal').split('-');
+                    var fromdate = new Date(fromdatearray[0], parseFloat(fromdatearray[1]) - 1, fromdatearray[2], 0, 0, 0, 0);
+                    cFormDate.SetDate(fromdate);
+                }
 
-        HeaderCaption.push("Subledger Type");
+                if (localStorage.getItem('ToDateJournal')) {
+                    var todatearray = localStorage.getItem('ToDateJournal').split('-');
+                    var todate = new Date(todatearray[0], parseFloat(todatearray[1]) - 1, todatearray[2], 0, 0, 0, 0);
+                    ctoDate.SetDate(todate);
+                }
+                if (localStorage.getItem('BranchJournal')) {
+                    if (ccmbBranchfilter.FindItemByValue(localStorage.getItem('BranchJournal'))) {
+                        ccmbBranchfilter.SetValue(localStorage.getItem('BranchJournal'));
+                    }
 
-        callonServer("/OMS/Management/Activities/Services/Master.asmx/GetMainAccountJournal", OtherDetails, "MainAccountTable", HeaderCaption, "MainAccountIndex", "SetMainAccount");
-    }
-    else if (e.code == "ArrowDown") {
-        if ($("input[MainAccountIndex=0]"))
-            $("input[MainAccountIndex=0]").focus();
-    }
-    else if (e.code == "Escape") {
-        //  
-        $('#MainAccountModel').modal('hide');
-        grid.batchEditApi.StartEdit(globalRowIndex, 1);
-        var MainAccountID = grid.GetEditor("gvMainAcCode").GetValue();
-        if (MainAccountID == 'Customers' || MainAccountID == 'Vendors') {
-            if ($("#hdnIsPartyLedger").val() == "") {
-                $("#hdnIsPartyLedger").val('1');
+                }
+                TDScheckchange(null, null);
+                //updateGridByDate();
+
+                isFirstTime = false;
+            }
+        }
+
+        //Function for Date wise filteration
+        function updateGridByDate() {
+            if (cFormDate.GetDate() == null) {
+                jAlert('Please select from date.', 'Alert', function () { cFormDate.Focus(); });
+            }
+            else if (ctoDate.GetDate() == null) {
+                jAlert('Please select to date.', 'Alert', function () { ctoDate.Focus(); });
+            }
+            else if (ccmbBranchfilter.GetValue() == null) {
+                jAlert('Please select Branch.', 'Alert', function () { ccmbBranchfilter.Focus(); });
             }
             else {
-                $("#hdnIsPartyLedger").val(parseFloat($("#hdnIsPartyLedger").val()) + 1);
-            }
+                localStorage.setItem("FromDateJournal", cFormDate.GetDate().format('yyyy-MM-dd'));
+                localStorage.setItem("ToDateJournal", ctoDate.GetDate().format('yyyy-MM-dd'));
+                localStorage.setItem("BranchJournal", ccmbBranchfilter.GetValue());
 
+                $("#hfFromDate").val(cFormDate.GetDate().format('yyyy-MM-dd'));
+                $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
+                $("#hfBranchID").val(ccmbBranchfilter.GetValue());
+                $("#hfIsFilter").val("Y");
+
+                if (page.activeTabIndex == 0) {
+
+                    //rev 2.0
+                    // cGvJvSearch.Refresh();
+                    $("#hFilterType").val("All");
+                    cCallbackPanel.PerformCallback("");
+                    //end rev 2.0
+
+                    //cGvJvSearch.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue());
+                }
+                else if (page.activeTabIndex == 1) {
+                    cGvJvSearchFullInfo.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue());
+                }
+            }
         }
 
-    }
-}
 
-function MainAccountNewkeydownTDS(e) {
-    // $("#hdnTDSval").val("");
-    var OtherDetails = {}
-    OtherDetails.SearchKey = $("#txtMainAccountSearchTDS").val();
-    OtherDetails.branchId = $("#ddlBranchTDS").val();
-    OtherDetails.TDSCode = ccmbtds.GetValue();
-    OtherDetails.considerTDS = chkTDSJournal.GetChecked();
-    if (e.code == "Enter" || e.code == "NumpadEnter") {
-        if ($("#txtMainAccountSearchTDS").val() == "")
-            return;
-        var HeaderCaption = [];
-        HeaderCaption.push("Main Account Name");
-        HeaderCaption.push("Short Name");
+        //// Pop Up /////
 
-        HeaderCaption.push("Subledger Type");
-        HeaderCaption.push("TDS/TCS");
+        //rev 2.0
+        function CallbackPanelEndCall(s, e) {
+            cGvJvSearch.Refresh();
+        }
+        //end rev 2.0
 
-        callonServer("/OMS/Management/Activities/Services/Master.asmx/GetMainAccountJournalTDS", OtherDetails, "MainAccountTableTDS", HeaderCaption, "MainAccountIndexTDS", "SetMainAccountTDS");
-    }
-    else if (e.code == "ArrowDown") {
-        if ($("input[MainAccountIndexTDS=0]"))
-            $("input[MainAccountIndexTDS=0]").focus();
-    }
-    else if (e.code == "Escape") {
-        //  
-        $('#MainAccountModelTDS').modal('hide');
-        gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 1);
-        var MainAccountID = gridTDS.GetEditor("gvMainAcCodeTDS").GetValue();
+        function MainAccountNewkeydown(e) {
+            var OtherDetails = {}
+            OtherDetails.SearchKey = $("#txtMainAccountSearch").val();
+            OtherDetails.branchId = $("#ddlBranch").val();
+            if (e.code == "Enter" || e.code == "NumpadEnter") {
+                if ($("#txtMainAccountSearch").val() == "")
+                    return;
+                var HeaderCaption = [];
+                HeaderCaption.push("Main Account Name");
+                HeaderCaption.push("Short Name");
 
-    }
-}
+                HeaderCaption.push("Subledger Type");
 
-
-
-
-
-
-function SubAccountNewkeydown(e) {
-    grid.batchEditApi.StartEdit(e.visibleIndex);
-    var strMainAccountID = (grid.GetEditor('MainAccount').GetText() != null) ? grid.GetEditor('MainAccount').GetText() : "0";
-    var MainAccountID = (grid.GetEditor('gvColMainAccount').GetValue() != null) ? grid.GetEditor('gvColMainAccount').GetValue() : "0";
-
-    var OtherDetails = {}
-    OtherDetails.SearchKey = $("#txtSubAccountSearch").val();
-    OtherDetails.MainAccountCode = MainAccountID;
-    if (e.code == "Enter" || e.code == "NumpadEnter") {
-        if ($("#txtSubAccountSearch").val() == "")
-            return;
-        var HeaderCaption = [];
-        HeaderCaption.push("Sub Account Name [Unique Id]");
-        HeaderCaption.push("Subledger Type");
-
-        callonServer("/OMS/Management/Activities/Services/Master.asmx/GetSubAccountJournal", OtherDetails, "SubAccountTable", HeaderCaption, "SubAccountIndex", "SetSubAccount");
-    }
-    else if (e.code == "ArrowDown") {
-        if ($("input[SubAccountIndex=0]"))
-            $("input[SubAccountIndex=0]").focus();
-    }
-    else if (e.code == "Escape") {
-        $('#SubAccountModel').modal('hide');
-        grid.batchEditApi.StartEdit(globalRowIndex, 2);
-    }
-}
-
-function SubAccountNewkeydownTDS(e) {
-    gridTDS.batchEditApi.StartEdit(e.visibleIndex);
-    var strMainAccountID = (gridTDS.GetEditor('MainAccountTDS').GetText() != null) ? gridTDS.GetEditor('MainAccountTDS').GetText() : "0";
-    var MainAccountID = (gridTDS.GetEditor('gvColMainAccountTDS').GetValue() != null) ? gridTDS.GetEditor('gvColMainAccountTDS').GetValue() : "0";
-
-    var OtherDetails = {}
-    OtherDetails.SearchKey = $("#txtSubAccountSearchTDS").val();
-    OtherDetails.MainAccountCode = MainAccountID;
-    if (e.code == "Enter" || e.code == "NumpadEnter") {
-        if ($("#txtSubAccountSearchTDS").val() == "")
-            return;
-        var HeaderCaption = [];
-        HeaderCaption.push("Sub Account Name [Unique Id]");
-        HeaderCaption.push("Subledger Type");
-
-        callonServer("/OMS/Management/Activities/Services/Master.asmx/GetSubAccountJournal", OtherDetails, "SubAccountTableTDS", HeaderCaption, "SubAccountIndexTDS", "SetSubAccountTDS");
-    }
-    else if (e.code == "ArrowDown") {
-        if ($("input[SubAccountIndexTDS=0]"))
-            $("input[SubAccountIndexTDS=0]").focus();
-    }
-    else if (e.code == "Escape") {
-        $('#SubAccountModelTDS').modal('hide');
-        gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
-    }
-}
-
-
-function SetMainAccount(Id, name, e) {
-
-    $('#MainAccountModel').modal('hide');
-    var Code = e.parentElement.cells[2].innerText;
-    var IsSub = e.parentElement.cells[3].innerText;
-
-
-    GetMainAcountComboBox(Id, name, Code, IsSub);
-
-
-    grid.batchEditApi.StartEdit(globalRowIndex, 2);
-
-}
-
-function SetMainAccountTDS(Id, name, e) {
-
-    $('#MainAccountModelTDS').modal('hide');
-    var Code = e.parentElement.cells[2].innerText;
-    var IsSub = e.parentElement.cells[3].innerText;
-    var IsTDS = e.parentElement.cells[4].innerText;
-    $("#hdnTDSval").val(IsTDS);
-
-
-    GetMainAcountComboBoxTDS(Id, name, Code, IsSub, IsTDS);
-
-
-
-
-
-    gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
-
-}
-
-
-function SetSubAccount(Id, name) {
-    $('#SubAccountModel').modal('hide');
-    GetSubAcountComboBox(Id, name);
-    grid.batchEditApi.StartEdit(globalRowIndex, 3);
-}
-
-
-function SetSubAccountTDS(Id, name) {
-    $('#SubAccountModelTDS').modal('hide');
-    GetSubAcountComboBoxTDS(Id, name);
-    gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 3);
-}
-
-
-function ValueSelected(e, indexName) {
-    if (e.code == "Enter" || e.code == "NumpadEnter") {
-        var Id = e.target.parentElement.parentElement.cells[0].innerText;
-        var name = e.target.parentElement.parentElement.cells[1].children[0].value;
-        if (Id) {
-            if (indexName == "MainAccountIndex") {
+                callonServer("/OMS/Management/Activities/Services/Master.asmx/GetMainAccountJournal", OtherDetails, "MainAccountTable", HeaderCaption, "MainAccountIndex", "SetMainAccount");
+            }
+            else if (e.code == "ArrowDown") {
+                if ($("input[MainAccountIndex=0]"))
+                    $("input[MainAccountIndex=0]").focus();
+            }
+            else if (e.code == "Escape") {
+                //  
                 $('#MainAccountModel').modal('hide');
-                var Code = e.target.parentElement.parentElement.children[2].innerText;
-                var IsSub = e.target.parentElement.parentElement.children[3].innerText;
+                grid.batchEditApi.StartEdit(globalRowIndex, 1);
+                var MainAccountID = grid.GetEditor("gvMainAcCode").GetValue();
+                if (MainAccountID == 'Customers' || MainAccountID == 'Vendors') {
+                    if ($("#hdnIsPartyLedger").val() == "") {
+                        $("#hdnIsPartyLedger").val('1');
+                    }
+                    else {
+                        $("#hdnIsPartyLedger").val(parseFloat($("#hdnIsPartyLedger").val()) + 1);
+                    }
 
-                GetMainAcountComboBox(Id, name, Code, IsSub);
+                }
+
+            }
+        }
+
+        function MainAccountNewkeydownTDS(e) {
+            // $("#hdnTDSval").val("");
+            var OtherDetails = {}
+            OtherDetails.SearchKey = $("#txtMainAccountSearchTDS").val();
+            OtherDetails.branchId = $("#ddlBranchTDS").val();
+            OtherDetails.TDSCode = ccmbtds.GetValue();
+            OtherDetails.considerTDS = chkTDSJournal.GetChecked();
+            if (e.code == "Enter" || e.code == "NumpadEnter") {
+                if ($("#txtMainAccountSearchTDS").val() == "")
+                    return;
+                var HeaderCaption = [];
+                HeaderCaption.push("Main Account Name");
+                HeaderCaption.push("Short Name");
+
+                HeaderCaption.push("Subledger Type");
+                HeaderCaption.push("TDS/TCS");
+
+                callonServer("/OMS/Management/Activities/Services/Master.asmx/GetMainAccountJournalTDS", OtherDetails, "MainAccountTableTDS", HeaderCaption, "MainAccountIndexTDS", "SetMainAccountTDS");
+            }
+            else if (e.code == "ArrowDown") {
+                if ($("input[MainAccountIndexTDS=0]"))
+                    $("input[MainAccountIndexTDS=0]").focus();
+            }
+            else if (e.code == "Escape") {
+                //  
+                $('#MainAccountModelTDS').modal('hide');
+                gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 1);
+                var MainAccountID = gridTDS.GetEditor("gvMainAcCodeTDS").GetValue();
+
+            }
+        }
+
+
+
+
+
+
+        function SubAccountNewkeydown(e) {
+            grid.batchEditApi.StartEdit(e.visibleIndex);
+            var strMainAccountID = (grid.GetEditor('MainAccount').GetText() != null) ? grid.GetEditor('MainAccount').GetText() : "0";
+            var MainAccountID = (grid.GetEditor('gvColMainAccount').GetValue() != null) ? grid.GetEditor('gvColMainAccount').GetValue() : "0";
+
+            var OtherDetails = {}
+            OtherDetails.SearchKey = $("#txtSubAccountSearch").val();
+            OtherDetails.MainAccountCode = MainAccountID;
+            if (e.code == "Enter" || e.code == "NumpadEnter") {
+                if ($("#txtSubAccountSearch").val() == "")
+                    return;
+                var HeaderCaption = [];
+                HeaderCaption.push("Sub Account Name [Unique Id]");
+                HeaderCaption.push("Subledger Type");
+
+                callonServer("/OMS/Management/Activities/Services/Master.asmx/GetSubAccountJournal", OtherDetails, "SubAccountTable", HeaderCaption, "SubAccountIndex", "SetSubAccount");
+            }
+            else if (e.code == "ArrowDown") {
+                if ($("input[SubAccountIndex=0]"))
+                    $("input[SubAccountIndex=0]").focus();
+            }
+            else if (e.code == "Escape") {
+                $('#SubAccountModel').modal('hide');
                 grid.batchEditApi.StartEdit(globalRowIndex, 2);
             }
-            if (indexName == "MainAccountIndexTDS") {
-                $('#MainAccountModelTDS').modal('hide');
-                var Code = e.target.parentElement.parentElement.children[2].innerText;
-                var IsSub = e.target.parentElement.parentElement.children[3].innerText;
-                var IsTDS = e.target.parentElement.parentElement.children[4].innerText;
+        }
 
-                GetMainAcountComboBoxTDS(Id, name, Code, IsSub, IsTDS);
+        function SubAccountNewkeydownTDS(e) {
+            gridTDS.batchEditApi.StartEdit(e.visibleIndex);
+            var strMainAccountID = (gridTDS.GetEditor('MainAccountTDS').GetText() != null) ? gridTDS.GetEditor('MainAccountTDS').GetText() : "0";
+            var MainAccountID = (gridTDS.GetEditor('gvColMainAccountTDS').GetValue() != null) ? gridTDS.GetEditor('gvColMainAccountTDS').GetValue() : "0";
+
+            var OtherDetails = {}
+            OtherDetails.SearchKey = $("#txtSubAccountSearchTDS").val();
+            OtherDetails.MainAccountCode = MainAccountID;
+            if (e.code == "Enter" || e.code == "NumpadEnter") {
+                if ($("#txtSubAccountSearchTDS").val() == "")
+                    return;
+                var HeaderCaption = [];
+                HeaderCaption.push("Sub Account Name [Unique Id]");
+                HeaderCaption.push("Subledger Type");
+
+                callonServer("/OMS/Management/Activities/Services/Master.asmx/GetSubAccountJournal", OtherDetails, "SubAccountTableTDS", HeaderCaption, "SubAccountIndexTDS", "SetSubAccountTDS");
+            }
+            else if (e.code == "ArrowDown") {
+                if ($("input[SubAccountIndexTDS=0]"))
+                    $("input[SubAccountIndexTDS=0]").focus();
+            }
+            else if (e.code == "Escape") {
+                $('#SubAccountModelTDS').modal('hide');
                 gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
             }
-
-            else if (indexName == "SubAccountIndex") {
-                $('#SubAccountModel').modal('hide');
-                GetSubAcountComboBox(Id, name);
-                grid.batchEditApi.StartEdit(globalRowIndex, 3);
-            }
-            else if (indexName == "SubAccountIndexTDS") {
-                $('#SubAccountModelTDS').modal('hide');
-                GetSubAcountComboBoxTDS(Id, name);
-                gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 3);
-            }
         }
 
-    }
-    else if (e.code == "ArrowDown") {
-        thisindex = parseFloat(e.target.getAttribute(indexName));
-        thisindex++;
-        if (thisindex < 10)
-            $("input[" + indexName + "=" + thisindex + "]").focus();
-    }
-    else if (e.code == "ArrowUp") {
-        thisindex = parseFloat(e.target.getAttribute(indexName));
-        thisindex--;
-        if (thisindex > -1)
-            $("input[" + indexName + "=" + thisindex + "]").focus();
-        else {
-            if (indexName == "MainAccountIndex")
-                $('#txtMainAccountSearch').focus();
-            else if (indexName == "MainAccountIndex") {
-                $('#txtMainAccountSearchTDS').focus();
-            }
-            else if (indexName == "SubAccountIndex")
-                $('#txtSubAccountSearch').focus();
-            else if (indexName == "SubAccountIndexTDS")
-                $('#txtSubAccountSearchTDS').focus();
-        }
-    }
-    else if (e.code == "Escape") {
-        if (indexName == "MainAccountIndex") {
+
+        function SetMainAccount(Id, name, e) {
+
             $('#MainAccountModel').modal('hide');
-            grid.batchEditApi.StartEdit(globalRowIndex, 1);
-            var MainAccountID = grid.GetEditor("gvMainAcCode").GetValue();
-            if (MainAccountID == 'Customers' || MainAccountID == 'Vendors') {
-                if ($("#hdnIsPartyLedger").val() == "") {
-                    $("#hdnIsPartyLedger").val('1');
-                }
-                else {
-                    $("#hdnIsPartyLedger").val(parseFloat($("#hdnIsPartyLedger").val()) + 1);
+            var Code = e.parentElement.cells[2].innerText;
+            var IsSub = e.parentElement.cells[3].innerText;
+
+
+            GetMainAcountComboBox(Id, name, Code, IsSub);
+
+
+            grid.batchEditApi.StartEdit(globalRowIndex, 2);
+
+        }
+
+        function SetMainAccountTDS(Id, name, e) {
+
+            $('#MainAccountModelTDS').modal('hide');
+            var Code = e.parentElement.cells[2].innerText;
+            var IsSub = e.parentElement.cells[3].innerText;
+            var IsTDS = e.parentElement.cells[4].innerText;
+            $("#hdnTDSval").val(IsTDS);
+
+
+            GetMainAcountComboBoxTDS(Id, name, Code, IsSub, IsTDS);
+
+
+
+
+
+            gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
+
+        }
+
+
+        function SetSubAccount(Id, name) {
+            $('#SubAccountModel').modal('hide');
+            GetSubAcountComboBox(Id, name);
+            grid.batchEditApi.StartEdit(globalRowIndex, 3);
+        }
+
+
+        function SetSubAccountTDS(Id, name) {
+            $('#SubAccountModelTDS').modal('hide');
+            GetSubAcountComboBoxTDS(Id, name);
+            gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 3);
+        }
+
+
+        function ValueSelected(e, indexName) {
+            if (e.code == "Enter" || e.code == "NumpadEnter") {
+                var Id = e.target.parentElement.parentElement.cells[0].innerText;
+                var name = e.target.parentElement.parentElement.cells[1].children[0].value;
+                if (Id) {
+                    if (indexName == "MainAccountIndex") {
+                        $('#MainAccountModel').modal('hide');
+                        var Code = e.target.parentElement.parentElement.children[2].innerText;
+                        var IsSub = e.target.parentElement.parentElement.children[3].innerText;
+
+                        GetMainAcountComboBox(Id, name, Code, IsSub);
+                        grid.batchEditApi.StartEdit(globalRowIndex, 2);
+                    }
+                    if (indexName == "MainAccountIndexTDS") {
+                        $('#MainAccountModelTDS').modal('hide');
+                        var Code = e.target.parentElement.parentElement.children[2].innerText;
+                        var IsSub = e.target.parentElement.parentElement.children[3].innerText;
+                        var IsTDS = e.target.parentElement.parentElement.children[4].innerText;
+
+                        GetMainAcountComboBoxTDS(Id, name, Code, IsSub, IsTDS);
+                        gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
+                    }
+
+                    else if (indexName == "SubAccountIndex") {
+                        $('#SubAccountModel').modal('hide');
+                        GetSubAcountComboBox(Id, name);
+                        grid.batchEditApi.StartEdit(globalRowIndex, 3);
+                    }
+                    else if (indexName == "SubAccountIndexTDS") {
+                        $('#SubAccountModelTDS').modal('hide');
+                        GetSubAcountComboBoxTDS(Id, name);
+                        gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 3);
+                    }
                 }
 
             }
+            else if (e.code == "ArrowDown") {
+                thisindex = parseFloat(e.target.getAttribute(indexName));
+                thisindex++;
+                if (thisindex < 10)
+                    $("input[" + indexName + "=" + thisindex + "]").focus();
+            }
+            else if (e.code == "ArrowUp") {
+                thisindex = parseFloat(e.target.getAttribute(indexName));
+                thisindex--;
+                if (thisindex > -1)
+                    $("input[" + indexName + "=" + thisindex + "]").focus();
+                else {
+                    if (indexName == "MainAccountIndex")
+                        $('#txtMainAccountSearch').focus();
+                    else if (indexName == "MainAccountIndex") {
+                        $('#txtMainAccountSearchTDS').focus();
+                    }
+                    else if (indexName == "SubAccountIndex")
+                        $('#txtSubAccountSearch').focus();
+                    else if (indexName == "SubAccountIndexTDS")
+                        $('#txtSubAccountSearchTDS').focus();
+                }
+            }
+            else if (e.code == "Escape") {
+                if (indexName == "MainAccountIndex") {
+                    $('#MainAccountModel').modal('hide');
+                    grid.batchEditApi.StartEdit(globalRowIndex, 1);
+                    var MainAccountID = grid.GetEditor("gvMainAcCode").GetValue();
+                    if (MainAccountID == 'Customers' || MainAccountID == 'Vendors') {
+                        if ($("#hdnIsPartyLedger").val() == "") {
+                            $("#hdnIsPartyLedger").val('1');
+                        }
+                        else {
+                            $("#hdnIsPartyLedger").val(parseFloat($("#hdnIsPartyLedger").val()) + 1);
+                        }
+
+                    }
+
+                }
+                else if (indexName == "MainAccountIndexTDS") {
+                    $('#MainAccountModelTDS').modal('hide');
+                    gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 1);
+                    var MainAccountID = gridTDS.GetEditor("gvMainAcCodeTDS").GetValue();
+
+                }
+                else if (indexName == "SubAccountIndex") {
+                    $('#SubAccountModel').modal('hide');
+                    grid.batchEditApi.StartEdit(globalRowIndex, 2);
+                }
+                else if (indexName == "SubAccountIndexTDS") {
+                    $('#SubAccountModelTDS').modal('hide');
+                    gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
+                }
+            }
+
 
         }
-        else if (indexName == "MainAccountIndexTDS") {
-            $('#MainAccountModelTDS').modal('hide');
-            gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 1);
-            var MainAccountID = gridTDS.GetEditor("gvMainAcCodeTDS").GetValue();
-
-        }
-        else if (indexName == "SubAccountIndex") {
-            $('#SubAccountModel').modal('hide');
-            grid.batchEditApi.StartEdit(globalRowIndex, 2);
-        }
-        else if (indexName == "SubAccountIndexTDS") {
-            $('#SubAccountModelTDS').modal('hide');
-            gridTDS.batchEditApi.StartEdit(globalRowIndexTDS, 2);
-        }
-    }
-
-
-}
 
 
 
-function journalledger(keyid, docno) {
+        function journalledger(keyid, docno) {
 
       <%--      $('#<%= lblHeading.ClientID %>').text("VIew Journal Voucher");
             $('#<%=hdnMode.ClientID %>').val('1');
@@ -4990,68 +5006,68 @@ function journalledger(keyid, docno) {
     document.getElementById('div_Edit').style.display = 'none';
     document.getElementById('<%= txtBillNo.ClientID %>').disabled = true;
 
-    document.getElementById('divAddNew').style.display = 'block';
-    //  btncross.style.display = "block";
-    TblSearch.style.display = "none";
-    //cGvJvSearch.GetRowValues(VisibleIndexE, "BranchID", MainAccountCallBack);
-    grid.PerformCallback('View~' + keyid + '~' + docno);
-    //grid.PerformCallback('Edit~' + keyid);
-    
-    document.getElementById('tblBtnSavePanel').style.display = 'none';
-    LoadingPanel.Show();
+            document.getElementById('divAddNew').style.display = 'block';
+            //  btncross.style.display = "block";
+            TblSearch.style.display = "none";
+            //cGvJvSearch.GetRowValues(VisibleIndexE, "BranchID", MainAccountCallBack);
+            grid.PerformCallback('View~' + keyid + '~' + docno);
+            //grid.PerformCallback('Edit~' + keyid);
+
+            document.getElementById('tblBtnSavePanel').style.display = 'none';
+            LoadingPanel.Show();
 
 
-}
+        }
 
-function checkIsPartyjornal() {
-    var RepeatedRow = [];
-    var validgrid = true;
+        function checkIsPartyjornal() {
+            var RepeatedRow = [];
+            var validgrid = true;
 
 
-    for (var i = 0; i < 1000; i++) {
-        if (grid.GetRow(i)) {
-            if (grid.GetRow(i).style.display != "none") {
-                grid.batchEditApi.StartEdit(i, 2);
-                if ((grid.GetEditor("gvColMainAccount").GetText().trim() != "") && (grid.GetEditor("gvColSubAccount").GetText().trim() != "") && (grid.GetEditor("gvMainAcCode").GetText().trim() == "Customers" || grid.GetEditor("gvMainAcCode").GetText().trim() == "Vendors")) {
-                    var RepeatedRowCount = {};
-                    RepeatedRowCount.MainAccount = grid.GetEditor("gvColMainAccount").GetText().trim();
-                    RepeatedRowCount.SubAccount = grid.GetEditor("gvColSubAccount").GetText().trim();
-                    RepeatedRowCount.IsSubLedger = grid.GetEditor("IsSubledger").GetText().trim();
-                    RepeatedRow.push(RepeatedRowCount);
+            for (var i = 0; i < 1000; i++) {
+                if (grid.GetRow(i)) {
+                    if (grid.GetRow(i).style.display != "none") {
+                        grid.batchEditApi.StartEdit(i, 2);
+                        if ((grid.GetEditor("gvColMainAccount").GetText().trim() != "") && (grid.GetEditor("gvColSubAccount").GetText().trim() != "") && (grid.GetEditor("gvMainAcCode").GetText().trim() == "Customers" || grid.GetEditor("gvMainAcCode").GetText().trim() == "Vendors")) {
+                            var RepeatedRowCount = {};
+                            RepeatedRowCount.MainAccount = grid.GetEditor("gvColMainAccount").GetText().trim();
+                            RepeatedRowCount.SubAccount = grid.GetEditor("gvColSubAccount").GetText().trim();
+                            RepeatedRowCount.IsSubLedger = grid.GetEditor("IsSubledger").GetText().trim();
+                            RepeatedRow.push(RepeatedRowCount);
+                        }
+
+                    }
+                }
+            }
+
+            for (i = -1; i > -1000; i--) {
+                if (grid.GetRow(i)) {
+                    if (grid.GetRow(i).style.display != "none") {
+                        grid.batchEditApi.StartEdit(i, 2);
+                        if ((grid.GetEditor("gvColMainAccount").GetText().trim() != "") && (grid.GetEditor("gvColSubAccount").GetText().trim() != "") && (grid.GetEditor("gvMainAcCode").GetText().trim() == "Customers" || grid.GetEditor("gvMainAcCode").GetText().trim() == "Vendors")) {
+                            var RepeatedRowCount = {};
+                            RepeatedRowCount.MainAccount = grid.GetEditor("gvColMainAccount").GetText().trim();
+                            RepeatedRowCount.SubAccount = grid.GetEditor("gvColSubAccount").GetText().trim();
+                            RepeatedRowCount.IsSubLedger = grid.GetEditor("IsSubledger").GetText().trim();
+                            RepeatedRow.push(RepeatedRowCount);
+                        }
+                    }
+                }
+            }
+            if (parseInt(grid.GetVisibleRowsOnPage()) == "2") {
+                if (RepeatedRow.length == 2) {
+                    return true;
+                }
+                else {
+                    return false;
                 }
 
             }
-        }
-    }
-
-    for (i = -1; i > -1000; i--) {
-        if (grid.GetRow(i)) {
-            if (grid.GetRow(i).style.display != "none") {
-                grid.batchEditApi.StartEdit(i, 2);
-                if ((grid.GetEditor("gvColMainAccount").GetText().trim() != "") && (grid.GetEditor("gvColSubAccount").GetText().trim() != "") && (grid.GetEditor("gvMainAcCode").GetText().trim() == "Customers" || grid.GetEditor("gvMainAcCode").GetText().trim() == "Vendors")) {
-                    var RepeatedRowCount = {};
-                    RepeatedRowCount.MainAccount = grid.GetEditor("gvColMainAccount").GetText().trim();
-                    RepeatedRowCount.SubAccount = grid.GetEditor("gvColSubAccount").GetText().trim();
-                    RepeatedRowCount.IsSubLedger = grid.GetEditor("IsSubledger").GetText().trim();
-                    RepeatedRow.push(RepeatedRowCount);
-                }
+            else {
+                return false;
             }
-        }
-    }
-    if (parseInt(grid.GetVisibleRowsOnPage()) == "2") {
-        if (RepeatedRow.length == 2) {
-            return true;
-        }
-        else {
-            return false;
-        }
 
-    }
-    else {
-        return false;
-    }
-
-}
+        }
 
 
     </script>
@@ -5273,7 +5289,11 @@ function checkIsPartyjornal() {
         }
     </script>
     <link href="CSS/JournalEntry.css" rel="stylesheet" />
-    <style>.CUSTOM-CLASS .tooltip-inner {background:#268c7e}</style>
+    <style>
+        .CUSTOM-CLASS .tooltip-inner {
+            background: #268c7e
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="panel-heading">
@@ -5336,13 +5356,13 @@ function checkIsPartyjornal() {
             <div class="clearfix">
                 <div style="padding-right: 5px;">
                     <% if (rights.CanAdd)
-                       { %>
+                        { %>
                     <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Journal</span> </a>
                     <a href="javascript:void(0);" onclick="OnAddButtonClickTDS()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>T</u>DS Journal</span> </a>
                     <% } %>
 
                     <% if (rights.CanExport)
-                       { %>
+                        { %>
                     <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                         <asp:ListItem Value="0">Export to</asp:ListItem>
                         <asp:ListItem Value="1">PDF</asp:ListItem>
@@ -5418,10 +5438,10 @@ function checkIsPartyjornal() {
                                                     <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
                                                 </dxe:GridViewDataTextColumn>
                                                 <%-- --Rev Sayantani--%>
-                                               <%-- 0024170 uncomment <PropertiesTextEdit DisplayFormatString="dd/MM/yyyy"></PropertiesTextEdit>--%>
+                                                <%-- 0024170 uncomment <PropertiesTextEdit DisplayFormatString="dd/MM/yyyy"></PropertiesTextEdit>--%>
                                                 <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="JournalVoucher_TransactionDate" FixedStyle="Left" Caption="Posting Date" Width="10%">
                                                     <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                                                     <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
+                                                    <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
                                                 </dxe:GridViewDataTextColumn>
                                                 <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="BillNumber" FixedStyle="Left" Caption="Document No." Width="15%">
                                                     <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
@@ -5504,30 +5524,30 @@ function checkIsPartyjornal() {
                                                     <DataItemTemplate>
                                                         <div class='floatedBtnArea'>
                                                             <% if (rights.CanView)
-                                                               { %>
+                                                                { %>
                                                             <a href="javascript:void(0);" onclick="OnView('<%# Container.VisibleIndex %>')" class="">
                                                                 <span class='ico ColorThree'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>
                                                             <%} %>
                                                             <% if (rights.CanEdit)
-                                                               { %>
+                                                                { %>
                                                             <a href="javascript:void(0);" onclick="OnEdit('<%# Container.VisibleIndex %>','<%#Eval("IsTDS") %>','<%#Eval("visible") %>','<%#Eval("visible_RETENTION") %>','<%#Eval("JvID") %>')" class="">
                                                                 <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>
                                                             <%} %>
                                                             <%--Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911--%>
-                                                             <% if (rights.CanAdd)
-                                                               { %>
+                                                            <% if (rights.CanAdd)
+                                                                { %>
                                                             <a href="javascript:void(0);" onclick="OnCopy('<%# Container.VisibleIndex %>','<%#Eval("IsTDS") %>','<%#Eval("visible") %>','<%#Eval("visible_RETENTION") %>','<%#Eval("JvID") %>')" class="">
-                                                                <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Copy</span></a>                                                            
+                                                                <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Copy</span></a>
                                                             <%} %>
                                                             <%--Rev Work close: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911--%>
                                                             <% if (rights.CanDelete)
-                                                               { %>
+                                                                { %>
                                                             <a href="javascript:void(0);" onclick="OnGetRowValuesOnDelete('<%# Container.VisibleIndex %>','<%#Eval("IsTDS") %>','<%#Eval("visible_RETENTION") %>','<%#Eval("JvID") %>')"
                                                                 class="">
                                                                 <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>
                                                             <%} %>
                                                             <% if (rights.CanPrint)
-                                                               { %>
+                                                                { %>
                                                             <a href="javascript:void(0);" onclick="onPrint('<%# Container.VisibleIndex %>')" class="pad" title="">
                                                                 <span class='ico ColorFour'><i class='fa fa-print'></i></span><span class='hidden-xs'>Print</span>
                                                             </a><%} %>
@@ -5697,7 +5717,7 @@ function checkIsPartyjornal() {
                             <ClientSideEvents ValueChanged="function(s,e){CmbScheme_ValueChange()}"></ClientSideEvents>
                         </dxe:ASPxComboBox>--%>
                         <%--Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911--%>
-                      <%--  <asp:DropDownList ID="CmbScheme" runat="server" DataSourceID="SqlSchematype"
+                        <%--  <asp:DropDownList ID="CmbScheme" runat="server" DataSourceID="SqlSchematype"
                             DataTextField="SchemaName" DataValueField="ID" Width="100%"
                             onchange="CmbScheme_ValueChange()">
                         </asp:DropDownList>--%>
@@ -6923,4 +6943,15 @@ function checkIsPartyjornal() {
     <asp:HiddenField ID="hdnProjectMandatory" runat="server" />
 
     <asp:HiddenField ID="hdnIsLeadAvailableinTransactions" runat="server" />
+
+    <%--  REV 2.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 2.0--%>
 </asp:Content>

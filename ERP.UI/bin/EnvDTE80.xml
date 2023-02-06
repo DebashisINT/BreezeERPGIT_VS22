@@ -1233,7 +1233,7 @@
     </member>
     <member name="P:EnvDTE80.CodeEvent.Access">
       <summary>Gets or sets a value that determines how a code event element may be accessed by other code.</summary>
-      <returns>One of the values of the <see cref="T:EnvDTE.vsCMAccess" /> enumerator. NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same.</returns>
+      <returns>One of the values of the <see cref="T:EnvDTE.vsCMAccess" /> enumerator. NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. For more information, see the section Code Model Element Values Can Change in Discovering Code by Using the Code Model (Visual Basic).</returns>
     </member>
     <member name="M:EnvDTE80.CodeEvent.AddAttribute(System.String,System.String,System.Object)">
       <summary>Creates a new attribute code construct and inserts the code in the correct location.</summary>
@@ -1285,7 +1285,7 @@
     </member>
     <member name="P:EnvDTE80.CodeEvent.ExtenderNames">
       <summary>Gets a list of available Extenders for the object.</summary>
-      <returns>An object containing an automation-compliant array of strings.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same.</returns>
+      <returns>An object containing an automation-compliant array of strings.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. For more information, see the section Code Model Element Values Can Change in Discovering Code by Using the Code Model (Visual Basic).</returns>
     </member>
     <member name="P:EnvDTE80.CodeEvent.FullName">
       <summary>Gets a fully-qualified name of the specified <see cref="T:EnvDTE80.CodeEvent" /> object. </summary>
@@ -1311,7 +1311,7 @@
     </member>
     <member name="P:EnvDTE80.CodeEvent.IsPropertyStyleEvent">
       <summary>Gets a value indicating whether the event has separate methods for adding/ removing events and throwing exceptions.</summary>
-      <returns>true if the event has separate methods for adding/removing events and throwing exceptions; otherwise, false.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same</returns>
+      <returns>true if the event has separate methods for adding/removing events and throwing exceptions; otherwise, false.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. For more information, see the section Code Model Element Values Can Change in Discovering Code by Using the Code Model (Visual Basic).</returns>
     </member>
     <member name="P:EnvDTE80.CodeEvent.IsShared">
       <summary>Gets of sets the shared (static) status of the event.</summary>
@@ -1374,7 +1374,7 @@
       <returns>A <see cref="T:EnvDTE.CodeAttribute" /> object.</returns>
       <param name="Name">Required. The name of the new attribute.</param>
       <param name="Value">Required. The value of the attribute, which may be a comma-delimited list of parameters for a parameterized property.</param>
-      <param name="Position">Optional. Default = 0. The code element after which to add the new element. If the value is a <see cref="T:EnvDTE.CodeElement" />, then the new element is added immediately after it.If the value is an integer, then <see cref="M:EnvDTE80.CodeFunction2.AddAttribute(System.String,System.String,System.Object)" /> indicates the element after which to add the new element.Because collections begin their count at 1, passing 0 indicates that the new element should be placed at the beginning of the collection. A value of -1 means the element should be placed at the end. </param>
+      <param name="Position">Optional. Default = 0. The code element after which to add the new element. If the value is a <see cref="T:EnvDTE.CodeElement" />, then the new element is added immediately after it.If the value is a Long, then <see cref="M:EnvDTE80.CodeFunction2.AddAttribute(System.String,System.String,System.Object)" /> indicates the element after which to add the new element.Because collections begin their count at 1, passing 0 indicates that the new element should be placed at the beginning of the collection. A value of -1 means the element should be placed at the end. </param>
     </member>
     <member name="M:EnvDTE80.CodeFunction2.AddParameter(System.String,System.Object,System.Object)">
       <summary>Creates a new parameter code construct and inserts the code in the correct location.</summary>
@@ -1524,7 +1524,7 @@
     </member>
     <member name="P:EnvDTE80.CodeImport.Alias">
       <summary>Gets or sets a friendly name for the referenced namespace.</summary>
-      <returns>A name for the referenced namespace.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. </returns>
+      <returns>A name for the referenced namespace.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. For more information, see the section Code Model Element Values Can Change in Discovering Code by Using the Code Model (Visual Basic).</returns>
     </member>
     <member name="P:EnvDTE80.CodeImport.Children">
       <summary>Gets a collection of objects contained within this <see cref="T:EnvDTE80.CodeImport" />.</summary>
@@ -1532,7 +1532,7 @@
     </member>
     <member name="P:EnvDTE80.CodeImport.Collection">
       <summary>Gets the <see cref="T:EnvDTE.CodeElements" /> collection containing the CodeImport that supports this property.</summary>
-      <returns>A <see cref="T:EnvDTE.CodeElements" /> collection.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. </returns>
+      <returns>A <see cref="T:EnvDTE.CodeElements" /> collection.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. For more information, see the section Code Model Element Values Can Change in Discovering Code by Using the Code Model (Visual Basic).</returns>
     </member>
     <member name="P:EnvDTE80.CodeImport.DTE">
       <summary>Gets the top-level extensibility object.</summary>
@@ -1579,7 +1579,7 @@
     </member>
     <member name="P:EnvDTE80.CodeImport.Kind">
       <summary>Gets an enumeration that defines the type of object.</summary>
-      <returns>A <see cref="T:EnvDTE.vsCMElement" /> value.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. </returns>
+      <returns>A <see cref="T:EnvDTE.vsCMElement" /> value.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. For more information, see the section Code Model Element Values Can Change in Discovering Code by Using the Code Model (Visual Basic).</returns>
     </member>
     <member name="P:EnvDTE80.CodeImport.Language">
       <summary>Gets the programming language that is used to author the <see cref="T:EnvDTE80.CodeImport" />.</summary>
@@ -1587,7 +1587,7 @@
     </member>
     <member name="P:EnvDTE80.CodeImport.Name">
       <summary>Gets or sets the name of the <see cref="T:EnvDTE80.CodeImport" /> object.</summary>
-      <returns>The name of the <see cref="T:EnvDTE80.CodeImport" /> object.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same</returns>
+      <returns>The name of the <see cref="T:EnvDTE80.CodeImport" /> object.NoteThe values of code model elements such as classes, structs, functions, attributes, delegates, and so forth can be non-deterministic after making certain kinds of edits, meaning that their values cannot be relied upon to always remain the same. For more information, see the section Code Model Element Values Can Change in Discovering Code by Using the Code Model (Visual Basic).</returns>
     </member>
     <member name="P:EnvDTE80.CodeImport.Namespace">
       <summary>Gets or sets the name of the imported namespace.</summary>
@@ -1968,7 +1968,7 @@
       <summary>A constant specifying the language used to author the code.</summary>
     </member>
     <member name="F:EnvDTE80.CodeModelLanguageConstants2.vsCMLanguageJSharp">
-      <summary>Constant.</summary>
+      <summary>Visual J# constant.</summary>
     </member>
     <member name="T:EnvDTE80.CodeParameter2">
       <summary>An object defining a parameter to a function, property, and so on.</summary>
@@ -2662,30 +2662,28 @@
       <param name="Position">Optional. The index position, starting at one, in the command bar to place the new command bar.</param>
     </member>
     <member name="M:EnvDTE80.Commands2.AddNamedCommand(EnvDTE.AddIn,System.String,System.String,System.String,System.Boolean,System.Int32,System.Object[]@,System.Int32)">
-      <summary>Creates a named command that is saved by the environment and made available the next time the environment starts.</summary>
+      <summary>Creates a named command that is saved by the environment and made available the next time the environment starts, even if the Add-in is not loaded on environment startup.</summary>
       <returns>A <see cref="T:EnvDTE.Command" /> object.</returns>
-      <param name="AddInInstance">Required. The <see cref="T:EnvDTE.AddIn" /> object that is adding the new command.</param>
+      <param name="AddInInstance">Required. The <see cref="T:EnvDTE.AddIn" /> object is adding the new command.</param>
       <param name="Name">Required. The short form of the name for your new command. <see cref="M:EnvDTE80.Commands2.AddNamedCommand(EnvDTE.AddIn,System.String,System.String,System.String,System.Boolean,System.Int32,System.Object[]@,System.Int32)" /> prefaces this with "Addins.Progid." to create a unique name.</param>
       <param name="ButtonText">Required. The name to use if the command is bound to a button that is displayed by name rather than by icon.</param>
       <param name="Tooltip">Required. The text displayed when a user hovers the mouse pointer over any control bound to the new command.</param>
-      <param name="MSOButton">Required. Should always be false.</param>
+      <param name="MSOButton">Required. Indicates whether the named command's button picture is an Office picture. True = button. If <paramref name="MSOButton" /> is False, then <paramref name="Bitmap" /> is the ID of a 16x16 bitmap resource (but not an icon resource) in a Visual C++ resource DLL that must reside in a folder with the language's locale identifier (1033 for English). For information about how to get the bitmap ID values of MSO buttons, see Listing Button Faces in the Command Bar for the Microsoft Office System.</param>
       <param name="Bitmap">Optional. The ID of a bitmap to display on the button.</param>
-      <param name="ContextUIGUIDs">Optional. The GUIDs that determine which environment contexts (that is, debug mode, design mode, and so on) show the command</param>
-      <param name="vsCommandDisabledFlagsValue">Optional. Determines the state of the command when you supply a <paramref name="ContextUIGUIDs" /> and none of the specified contexts are currently active. This parameter should always include <see cref="F:EnvDTE.vsCommandStatus.vsCommandStatusSupported" />. If it also includes <see cref="F:EnvDTE.vsCommandStatus.vsCommandStatusEnabled" />, the command will be enabled.</param>
+      <param name="ContextUIGUIDs">Optional. A SafeArray of GUIDs that determines which environment contexts (that is, debug mode, design mode, and so on) show the command. See <see cref="T:EnvDTE.vsCommandDisabledFlags" />.</param>
     </member>
     <member name="M:EnvDTE80.Commands2.AddNamedCommand2(EnvDTE.AddIn,System.String,System.String,System.String,System.Boolean,System.Object,System.Object[]@,System.Int32,System.Int32,EnvDTE80.vsCommandControlType)">
-      <summary>Creates a named command that is saved by the environment and made available the next time the environment starts, even if the add-in is not loaded on environment startup.</summary>
+      <summary>Creates a named command that is saved by the environment and made available the next time the environment starts, even if the Add-in is not loaded on environment startup.</summary>
       <returns>The named command that was created.</returns>
-      <param name="AddInInstance">Required. The <see cref="T:EnvDTE.AddIn" /> that is adding the new command.</param>
+      <param name="AddInInstance">Required. The <see cref="T:EnvDTE.AddIn" /> Object is adding the new command.</param>
       <param name="Name">Required. The short form of the name for your new command. <see cref="M:EnvDTE80.Commands2.AddNamedCommand2(EnvDTE.AddIn,System.String,System.String,System.String,System.Boolean,System.Object,System.Object[]@,System.Int32,System.Int32,EnvDTE80.vsCommandControlType)" /> uses the preface Addins.Progid. to create a unique name.</param>
-      <param name="ButtonText">Required. The name to show in the UI for this command.</param>
+      <param name="ButtonText">Required. The name to use if the command is bound to a button that is displayed by name rather than by icon.</param>
       <param name="Tooltip">Required. The text displayed when a user hovers the mouse pointer over any control bound to the new command.</param>
-      <param name="MSOButton">Required. Must be false.</param>
-      <param name="Bitmap">Optional. The ID of a bitmap to display on the button.<paramref name="Bitmap" /> can be one of the following:  - A <see cref="T:System.Drawing.Bitmap" /> - An <see cref="T:System.Drawing.Icon" /> - An IPicture - The ID of a 16x16 bitmap resource (but not an icon resource) that is provided by the add-in. Visual Studio looks first in the add-in's satellite DLL. If the resource is not found there, the add-in DLL will be searched.</param>
-      <param name="ContextUIGUIDs">Optional. The GUIDs that determine which environment contexts (that is, debug mode, design mode, and so on) show the command. </param>
-      <param name="vsCommandStatusValue">Optional. Determines whether the disabled state of the command is invisible or disabled when you supply a <paramref name="ContextUIGUIDs" /> parameter and none are currently active. See <see cref="T:EnvDTE.vsCommandDisabledFlags" />.</param>
-      <param name="CommandStyleFlags">Optional. One of the <see cref="T:EnvDTE80.vsCommandStyle" /> flags, in particular <see cref="F:EnvDTE80.vsCommandStyle.vsCommandStylePict" />, <see cref="F:EnvDTE80.vsCommandStyle.vsCommandStylePictAndText" />, or <see cref="F:EnvDTE80.vsCommandStyle.vsCommandStyleText" />.</param>
-      <param name="ControlType">Optional. Defines the control type added when the UI is created.</param>
+      <param name="MSOButton">Required. Indicates how the Bitmap parameter is interpreted.If the value is true, <paramref name="Bitmap" /> is the ID of a Microsoft Office bitmap.If <paramref name="MSOButton" /> is false, then <paramref name="Bitmap" /> can be one of the following:  - A <see cref="T:System.Drawing.Bitmap" /> - An <see cref="T:System.Drawing.Icon" /> - An IPicture - The ID of a 16x16 bitmap resource (but not an icon resource) that is provided by the add-in. Visual Studio will first look in the add-in's satellite DLL. If the resource is not found there, the add-in DLL will be searched.</param>
+      <param name="Bitmap">Optional. The ID of a bitmap to display on the button. See <paramref name="MSOButton" />.</param>
+      <param name="ContextUIGUIDs">Optional. A SafeArray of GUIDs that determines which environment contexts (that is, debug mode, design mode, and so on) show the command. See <see cref="T:EnvDTE.vsCommandDisabledFlags" />.</param>
+      <param name="vsCommandStatusValue">Optional. Determines whether the disabled state of the command is invisible or grey when you supply a <paramref name="ContextUIGUIDs" /> and none are currently active.</param>
+      <param name="CommandStyleFlags">Optional. Determines the state of the command when you supply a <paramref name="ContextUIGUIDs" /> and none of the specified contexts are currently active. This parameter should always include <see cref="F:EnvDTE.vsCommandStatus.vsCommandStatusSupported" />. If it also includes <see cref="F:EnvDTE.vsCommandStatus.vsCommandStatusEnabled" />, the command will be enabled..</param>
     </member>
     <member name="M:EnvDTE80.Commands2.CommandInfo(System.Object,System.String@,System.Int32@)">
       <summary>Returns the command GUID and ID associated with the given <see cref="T:Microsoft.VisualStudio.CommandBars.CommandBar" /> control.</summary>
@@ -2719,8 +2717,8 @@
       <summary>Executes the specified command.</summary>
       <param name="Guid">Required. The command's GUID.</param>
       <param name="ID">Required. The command's ID.</param>
-      <param name="CustomIn">Required. The in parameters for OLECommandTarget.</param>
-      <param name="CustomOut">Required. The out parameters for OLECommandTarget.</param>
+      <param name="CustomIn">Required. Arguments in a SafeArray passed in from the OLECommandTarget.</param>
+      <param name="CustomOut">Required. Arguments in a SafeArray passed out to be returned by the OLECommandTarget.</param>
     </member>
     <member name="M:EnvDTE80.Commands2.RemoveCommandBar(System.Object)">
       <summary>Removes a command bar that was created with the <see cref="M:EnvDTE.Commands.AddCommandBar(System.String,EnvDTE.vsCommandBarType,System.Object,System.Int32)" /> method.</summary>
@@ -2836,7 +2834,7 @@
       <summary>Represents whether the View pane of the HTML Source editor is displayed.</summary>
     </member>
     <member name="F:EnvDTE80.ContextGuids.vsContextGuidKindStartPage">
-      <summary>Represents whether the NIB: Start Page is displayed.</summary>
+      <summary>Represents whether the Start Page is displayed.</summary>
     </member>
     <member name="F:EnvDTE80.ContextGuids.vsContextGuidLinkedWindowFrame">
       <summary>Represents whether the current window is a linked window.</summary>
@@ -2872,7 +2870,7 @@
       <summary>Represents whether the Schema view is displayed.</summary>
     </member>
     <member name="F:EnvDTE80.ContextGuids.vsContextGuidServerExplorer">
-      <summary>Represents whether Server Explorer is displayed.</summary>
+      <summary>Represents whether Server Explorer/Database Explorer is displayed.</summary>
     </member>
     <member name="F:EnvDTE80.ContextGuids.vsContextGuidSolutionBuilding">
       <summary>Represents whether the integrated development environment (IDE) is building a solution.</summary>
@@ -2896,7 +2894,7 @@
       <summary>Represents whether the current solution, or project in the solution, is being upgraded.</summary>
     </member>
     <member name="F:EnvDTE80.ContextGuids.vsContextGuidTaskList">
-      <summary>Represents whether the &lt;Pave Over&gt; Task List (Visual Studio) is displayed.</summary>
+      <summary>Represents whether the Task List (Visual Studio) is displayed.</summary>
     </member>
     <member name="F:EnvDTE80.ContextGuids.vsContextGuidTextEditor">
       <summary>Represents whether the Code and Text Editor is displayed.</summary>
@@ -2928,50 +2926,50 @@
     <member name="T:EnvDTE80.dbgEventReason2">
       <summary>Specifies the reason for most debugging events.</summary>
     </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2AttachProgram">
-      <summary>Program was attached.</summary>
-    </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2Breakpoint">
-      <summary>Breakpoint was hit.</summary>
-    </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2ContextSwitch">
-      <summary>User switched stackframes, threads, or processes.</summary>
-    </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2DetachProgram">
-      <summary>Program was detached.</summary>
-    </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2EndProgram">
-      <summary>Program ended.</summary>
-    </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2Evaluation">
-      <summary>An evaluation occurred.</summary>
-    </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2ExceptionNotHandled">
-      <summary>An exception was not handled.</summary>
-    </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2ExceptionThrown">
-      <summary>An exception was thrown.</summary>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2None">
+      <summary>Deprecated. Not in use.</summary>
     </member>
     <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2Go">
       <summary>Debugging continued.</summary>
     </member>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2AttachProgram">
+      <summary>Program was attached.</summary>
+    </member>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2DetachProgram">
+      <summary>Program was detached.</summary>
+    </member>
     <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2LaunchProgram">
       <summary>Program was launched.</summary>
     </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2None">
-      <summary>Deprecated. Not in use.</summary>
-    </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2Step">
-      <summary>Step into debugger occurred.</summary>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2EndProgram">
+      <summary>Program ended.</summary>
     </member>
     <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2StopDebugging">
       <summary>Process being debugged has been terminated or detached.</summary>
     </member>
-    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2UnwindFromException">
-      <summary>After an exception has occurred, the state has been reset to the state prior to when the exception was thrown.</summary>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2Step">
+      <summary>Step into debugger occurred.</summary>
+    </member>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2Breakpoint">
+      <summary>Breakpoint was hit.</summary>
+    </member>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2ExceptionThrown">
+      <summary>An exception was thrown.</summary>
+    </member>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2ExceptionNotHandled">
+      <summary>An exception was not handled.</summary>
     </member>
     <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2UserBreak">
       <summary>User hits break.</summary>
+    </member>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2ContextSwitch">
+      <summary>User switched stackframes, threads, or processes.</summary>
+    </member>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2Evaluation">
+      <summary>An evaluation occurred.</summary>
+    </member>
+    <member name="F:EnvDTE80.dbgEventReason2.dbgEventReason2UnwindFromException">
+      <summary>After an exception has occurred, the state has been reset to the state prior to when the exception was thrown.</summary>
     </member>
     <member name="T:EnvDTE80.dbgExpressionEvaluationState">
       <summary>Used whenever an expression is evaluated in the immediate window or the <see cref="M:EnvDTE80.Debugger2.GetExpression2(System.String,System.Boolean,System.Boolean,System.Int32)" /> object in the debugger.</summary>
@@ -2985,11 +2983,11 @@
     <member name="T:EnvDTE80.dbgMinidumpOption">
       <summary>Specifies whether heap information is written to the minidump.</summary>
     </member>
-    <member name="F:EnvDTE80.dbgMinidumpOption.dbgMinidumpFull">
-      <summary>Include heap information.</summary>
-    </member>
     <member name="F:EnvDTE80.dbgMinidumpOption.dbgMinidumpNormal">
       <summary>Does not include heap informaiton.</summary>
+    </member>
+    <member name="F:EnvDTE80.dbgMinidumpOption.dbgMinidumpFull">
+      <summary>Include heap information.</summary>
     </member>
     <member name="T:EnvDTE80.dbgProcessState">
       <summary>Used by <see cref="T:EnvDTE80.DebuggerProcessEvents" /> to specify the state of the debugger. </summary>
@@ -3194,7 +3192,7 @@
       <returns>A <see cref="T:EnvDTE.Window" /> object. Returns Nothing if no windows are open.</returns>
     </member>
     <member name="P:EnvDTE80.DTE2.AddIns">
-      <summary>Gets the <see cref="T:EnvDTE.AddIns" /> collection, which contains all currently available add-ins.</summary>
+      <summary>Gets the <see cref="T:EnvDTE.AddIns" /> collection, which contains all currently available Add-ins.</summary>
       <returns>A <see cref="T:EnvDTE.AddIns" /> collection.</returns>
     </member>
     <member name="P:EnvDTE80.DTE2.Application">
@@ -3267,7 +3265,7 @@
       <param name="Element">Standard color for UI.</param>
     </member>
     <member name="P:EnvDTE80.DTE2.Globals">
-      <summary>Gets the <see cref="T:EnvDTE.Globals" /> object that contains values that may be saved in the solution (.sln) file, the project file, or in the user's profile data.</summary>
+      <summary>Gets the <see cref="T:EnvDTE.Globals" /> object that contains Add-in values that may be saved in the solution (.sln) file, the project file, or in the user's profile data.</summary>
       <returns>A <see cref="T:EnvDTE.Globals" /> object.</returns>
     </member>
     <member name="P:EnvDTE80.DTE2.IsOpenFile(System.String,System.String)">
@@ -3294,7 +3292,7 @@
       <returns>A <see cref="T:EnvDTE.Macros" /> object.</returns>
     </member>
     <member name="P:EnvDTE80.DTE2.MacrosIDE">
-      <summary>Gets the root of the macro IDE automation model.</summary>
+      <summary>Gets the root of the Macros IDE's automation model.</summary>
       <returns>A <see cref="T:EnvDTE.DTE" /> object.</returns>
     </member>
     <member name="P:EnvDTE80.DTE2.MainWindow">
@@ -3332,10 +3330,10 @@
       <returns>The path to the root of the Visual Studio registry settings.</returns>
     </member>
     <member name="M:EnvDTE80.DTE2.SatelliteDllPath(System.String,System.String)">
-      <summary>Returns the computed path to the satellite DLL when given the installation directory for an application and the file name of the DLL containing localized resources.</summary>
+      <summary>Returns the computed path to the satellite DLL when given the installation directory for an Add-in or wizard and the file name of the DLL containing localized resources.</summary>
       <returns>A string representing the computed path to the satellite DLL.</returns>
-      <param name="Path">Required. Specifies the full path to the directory where the application is installed.</param>
-      <param name="Name">Required. The file name for the satellite DLL, such as "MyAppUI.DLL."</param>
+      <param name="Path">Required. Specifies the full path to the directory where the Add-in or wizard is installed.</param>
+      <param name="Name">Required. The file name for the satellite DLL, such as "MyAddinUI.DLL."</param>
     </member>
     <member name="P:EnvDTE80.DTE2.SelectedItems">
       <summary>Gets a collection containing the items currently selected in the environment.</summary>
@@ -4487,7 +4485,7 @@
       <param name="Exclusive">Optional. Indicates whether the project loads in the current solution or its own; true if the current solution is closed and the project is added to a new solution, false if the project is added to the existing, open solution.</param>
     </member>
     <member name="P:EnvDTE80.Solution2.AddIns">
-      <summary>Gets an <see cref="T:EnvDTE.AddIns" /> collection, which contains all currently available add-ins associated with the solution.</summary>
+      <summary>Gets an <see cref="T:EnvDTE.AddIns" /> collection, which contains all currently available Add-ins associated with the solution.</summary>
       <returns>An <see cref="T:EnvDTE.AddIns" /> collection.</returns>
     </member>
     <member name="M:EnvDTE80.Solution2.AddSolutionFolder(System.String)">
@@ -4548,7 +4546,7 @@
       <param name="Language">The language used to write the template.</param>
     </member>
     <member name="M:EnvDTE80.Solution2.GetProjectTemplate(System.String,System.String)">
-      <summary>Returns a path to the indicated project template.If a template has a RequiredFrameworkVersion element higher than 4.0, you should provide the version in the call so that the search for the template will find a match. For example, instead of calling GetProjectTemplate("Extensibility\\1033\\VSIXProject.zip", "CSharp"); call GetProjectTemplate("Extensibility\\1033\\VSIXProject.zip|FrameworkVersion=4.5", "CSharp");.</summary>
+      <summary>Returns a path to the indicated project template.</summary>
       <returns>The full name of the project template.</returns>
       <param name="TemplateName">The name of the template.</param>
       <param name="Language">The language used to write the template.</param>
@@ -5139,26 +5137,23 @@
     <member name="T:EnvDTE80.vsBuildErrorLevel">
       <summary>Defines the error level of an item listed in the Error List tool window.</summary>
     </member>
-    <member name="F:EnvDTE80.vsBuildErrorLevel.vsBuildErrorLevelHigh">
-      <summary>Error level is High</summary>
-    </member>
     <member name="F:EnvDTE80.vsBuildErrorLevel.vsBuildErrorLevelLow">
       <summary>Error level is Low.</summary>
     </member>
     <member name="F:EnvDTE80.vsBuildErrorLevel.vsBuildErrorLevelMedium">
       <summary>Error level is Medium.</summary>
     </member>
+    <member name="F:EnvDTE80.vsBuildErrorLevel.vsBuildErrorLevelHigh">
+      <summary>Error level is High</summary>
+    </member>
     <member name="T:EnvDTE80.vsCMChangeKind">
       <summary>Defines the types of change events that may be fired in the <see cref="T:EnvDTE80.CodeModelEvents" /> object.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindArgumentChange">
-      <summary>The arguments for an attribute have changed.</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindBaseChange">
-      <summary>The base types for the element have changed.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindRename">
       <summary>An element has been renamed.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindUnknown">
+      <summary>An unknown change has occurred.</summary>
     </member>
     <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindSignatureChange">
       <summary>The parameters to the object have changed.</summary>
@@ -5166,32 +5161,35 @@
     <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindTypeRefChange">
       <summary>The object’s type (or return type) has changed.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindUnknown">
-      <summary>An unknown change has occurred.</summary>
+    <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindBaseChange">
+      <summary>The base types for the element have changed.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMChangeKind.vsCMChangeKindArgumentChange">
+      <summary>The arguments for an attribute have changed.</summary>
     </member>
     <member name="T:EnvDTE80.vsCMClassKind">
       <summary>Represents a value defining the kind of class definition represented by the object.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMClassKind.vsCMClassKindBlueprint">
-      <summary>Object represents a class defined in a blueprint.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCMClassKind.vsCMClassKindMainClass">
       <summary>This object contains a primary class definition.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMClassKind.vsCMClassKindModule">
-      <summary>Object represents a module. (Only supported in Visual Basic.)</summary>
+    <member name="F:EnvDTE80.vsCMClassKind.vsCMClassKindBlueprint">
+      <summary>Object represents a class defined in a blueprint.</summary>
     </member>
     <member name="F:EnvDTE80.vsCMClassKind.vsCMClassKindPartialClass">
       <summary>Object represents a partial class definition.</summary>
     </member>
+    <member name="F:EnvDTE80.vsCMClassKind.vsCMClassKindModule">
+      <summary>Object represents a module. (Only supported in Visual Basic.)</summary>
+    </member>
     <member name="T:EnvDTE80.vsCMConstKind">
       <summary>Defines when the variable is eligible to be changed.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMConstKind.vsCMConstKindConst">
-      <summary>Object may only be changed in its declaration.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCMConstKind.vsCMConstKindNone">
       <summary>Variable can always be changed.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMConstKind.vsCMConstKindConst">
+      <summary>Object may only be changed in its declaration.</summary>
     </member>
     <member name="F:EnvDTE80.vsCMConstKind.vsCMConstKindReadOnly">
       <summary>Object may only be changed in the class constructor.</summary>
@@ -5199,26 +5197,26 @@
     <member name="T:EnvDTE80.vsCMDataTypeKind">
       <summary>Represents the kind of data type of the code element.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMDataTypeKind.vsCMDataTypeKindBlueprint">
-      <summary>A blueprint.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCMDataTypeKind.vsCMDataTypeKindMain">
       <summary>A Main() procedure.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMDataTypeKind.vsCMDataTypeKindModule">
-      <summary>A module.</summary>
+    <member name="F:EnvDTE80.vsCMDataTypeKind.vsCMDataTypeKindBlueprint">
+      <summary>A blueprint.</summary>
     </member>
     <member name="F:EnvDTE80.vsCMDataTypeKind.vsCMDataTypeKindPartial">
       <summary>A partial class.</summary>
     </member>
+    <member name="F:EnvDTE80.vsCMDataTypeKind.vsCMDataTypeKindModule">
+      <summary>A module.</summary>
+    </member>
     <member name="T:EnvDTE80.vsCMElement2">
       <summary>Indicates the type of code element.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMElement2.vsCMElementAttributeArgument">
-      <summary>An attribute argument element.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCMElement2.vsCMElementUnknown">
       <summary>An unknown element.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMElement2.vsCMElementAttributeArgument">
+      <summary>An attribute argument element.</summary>
     </member>
     <member name="T:EnvDTE80.vsCMFunction2">
       <summary>A constant indicating the type of function.</summary>
@@ -5226,86 +5224,86 @@
     <member name="F:EnvDTE80.vsCMFunction2.vsCMFunctionAddHandler">
       <summary>An add handler function.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMFunction2.vsCMFunctionRaiseEvent">
-      <summary>A raise event function.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCMFunction2.vsCMFunctionRemoveHandler">
       <summary>A remove handler function.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMFunction2.vsCMFunctionRaiseEvent">
+      <summary>A raise event function.</summary>
     </member>
     <member name="T:EnvDTE80.vsCMInheritanceKind">
       <summary>Represents the type of inheritance.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMInheritanceKind.vsCMInheritanceKindAbstract">
-      <summary>This type must be used to define another type. (This is equivalent to the MustOverride keyword in Visual Basic.)</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMInheritanceKind.vsCMInheritanceKindNew">
-      <summary>This type is not inherited from another function or property.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCMInheritanceKind.vsCMInheritanceKindNone">
       <summary>No inheritance.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMInheritanceKind.vsCMInheritanceKindAbstract">
+      <summary>This type must be used to define another type. (This is equivalent to the MustOverride keyword in Visual Basic.)</summary>
     </member>
     <member name="F:EnvDTE80.vsCMInheritanceKind.vsCMInheritanceKindSealed">
       <summary>This type may not be used as a base type.</summary>
     </member>
+    <member name="F:EnvDTE80.vsCMInheritanceKind.vsCMInheritanceKindNew">
+      <summary>This type is not inherited from another function or property.</summary>
+    </member>
     <member name="T:EnvDTE80.vsCMOverrideKind">
       <summary>Defines the modifier applied to a method to describe how the method may be overridden.</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindAbstract">
-      <summary>The parent class requires this method to be overridden. (This is equivalent to the MustOverride keyword in Visual Basic.)</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindNew">
-      <summary>This function replaces a function in the parent class. (This is equivalent with the Shadow keyword in Visual Basic.)</summary>
     </member>
     <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindNone">
       <summary>This function does not have a modifier.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindOverride">
-      <summary>This function overrides a virtual function.</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindSealed">
-      <summary>This function may not be overridden.</summary>
+    <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindAbstract">
+      <summary>The parent class requires this method to be overridden. (This is equivalent to the MustOverride keyword in Visual Basic.)</summary>
     </member>
     <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindVirtual">
       <summary>This function may be overridden in derived classes. (This is equivalent with the Overrideable keyword in Visual Basic.)</summary>
     </member>
+    <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindOverride">
+      <summary>This function overrides a virtual function.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindNew">
+      <summary>This function replaces a function in the parent class. (This is equivalent with the Shadow keyword in Visual Basic.)</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMOverrideKind.vsCMOverrideKindSealed">
+      <summary>This function may not be overridden.</summary>
+    </member>
     <member name="T:EnvDTE80.vsCMParameterKind">
       <summary>Specifies expected parameter behavior.</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindIn">
-      <summary>The parameter has been specified as an in parameter. (This is the equivalent of ByVal in Visual Basic.)</summary>
     </member>
     <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindNone">
       <summary>The parameter has no specified keywords.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindOptional">
-      <summary>An optional parameter.</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindOut">
-      <summary>An out parameter.</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindParamArray">
-      <summary>A parameter array.</summary>
+    <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindIn">
+      <summary>The parameter has been specified as an in parameter. (This is the equivalent of ByVal in Visual Basic.)</summary>
     </member>
     <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindRef">
       <summary>A ref parameter. (This is the equivalent of ByRef in Visual Basic.)</summary>
     </member>
+    <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindOut">
+      <summary>An out parameter.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindOptional">
+      <summary>An optional parameter.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMParameterKind.vsCMParameterKindParamArray">
+      <summary>A parameter array.</summary>
+    </member>
     <member name="T:EnvDTE80.vsCMParseStatus">
       <summary>Informs the code model whether the current parse has completed and if it had errors.</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMParseStatus.vsCMParseStatusComplete">
-      <summary>Parsing has completed with no errors.</summary>
     </member>
     <member name="F:EnvDTE80.vsCMParseStatus.vsCMParseStatusError">
       <summary>An error occurred while parsing this file.</summary>
     </member>
+    <member name="F:EnvDTE80.vsCMParseStatus.vsCMParseStatusComplete">
+      <summary>Parsing has completed with no errors.</summary>
+    </member>
     <member name="T:EnvDTE80.vsCMPropertyKind">
       <summary>Returns the Get/Set status for the specified property.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMPropertyKind.vsCMPropertyKindReadOnly">
-      <summary>Returned if the property has only a Get statement. </summary>
-    </member>
     <member name="F:EnvDTE80.vsCMPropertyKind.vsCMPropertyKindReadWrite">
       <summary>Returned if the property has both Get and Set statements.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMPropertyKind.vsCMPropertyKindReadOnly">
+      <summary>Returned if the property has only a Get statement. </summary>
     </member>
     <member name="F:EnvDTE80.vsCMPropertyKind.vsCMPropertyKindWriteOnly">
       <summary>Returned if the property has only a Set statement.</summary>
@@ -5313,17 +5311,11 @@
     <member name="T:EnvDTE80.vsCMTypeRef2">
       <summary>The data type that the function returns.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefMCBoxedReference">
-      <summary>Visual C++ Boxed Reference</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefReference">
-      <summary>Reference</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefSByte">
-      <summary>Signed byte</summary>
-    </member>
     <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefUnsignedChar">
       <summary>Unsigned Char</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefUnsignedShort">
+      <summary>Unsigned Short</summary>
     </member>
     <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefUnsignedInt">
       <summary>Unsigned Int</summary>
@@ -5331,8 +5323,14 @@
     <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefUnsignedLong">
       <summary>Unsigned Long</summary>
     </member>
-    <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefUnsignedShort">
-      <summary>Unsigned Short</summary>
+    <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefReference">
+      <summary>Reference</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefMCBoxedReference">
+      <summary>Visual C++ Boxed Reference</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCMTypeRef2.vsCMTypeRefSByte">
+      <summary>Signed byte</summary>
     </member>
     <member name="T:EnvDTE80.vsCommandControlType">
       <summary>Describes the kind of control that should be used for a command.</summary>
@@ -5343,29 +5341,29 @@
     <member name="F:EnvDTE80.vsCommandControlType.vsCommandControlTypeDropDownCombo">
       <summary>A Drop- down combo box control.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCommandControlType.vsCommandControlTypeMRUButton">
-      <summary>A Most Recently Used button control.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCommandControlType.vsCommandControlTypeMRUCombo">
       <summary>A Most Recently Used combo box control.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCommandControlType.vsCommandControlTypeMRUButton">
+      <summary>A Most Recently Used button control.</summary>
     </member>
     <member name="T:EnvDTE80.vsCommandStyle">
       <summary>Defines command style options.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCommandStyle.vsCommandStyleComboCaseSensitive">
-      <summary>This combo box is case-sensitive.</summary>
-    </member>
-    <member name="F:EnvDTE80.vsCommandStyle.vsCommandStyleComboNoAutoComplete">
-      <summary>This option specifies that combo boxes will not use AutoComplete.</summary>
-    </member>
     <member name="F:EnvDTE80.vsCommandStyle.vsCommandStylePict">
       <summary>This command displays an icon only when placed on a toolbar. It displays an icon and text on a menubar.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCommandStyle.vsCommandStyleText">
+      <summary>This command displays text on a toolbar. It displays both icon and text on a menubar.</summary>
     </member>
     <member name="F:EnvDTE80.vsCommandStyle.vsCommandStylePictAndText">
       <summary>This command displays both an icon and text on both toolbars and menubars.</summary>
     </member>
-    <member name="F:EnvDTE80.vsCommandStyle.vsCommandStyleText">
-      <summary>This command displays text on a toolbar. It displays both icon and text on a menubar.</summary>
+    <member name="F:EnvDTE80.vsCommandStyle.vsCommandStyleComboNoAutoComplete">
+      <summary>This option specifies that combo boxes will not use AutoComplete.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsCommandStyle.vsCommandStyleComboCaseSensitive">
+      <summary>This combo box is case-sensitive.</summary>
     </member>
     <member name="T:EnvDTE80.vsFindOptions2">
       <summary>Represents the behavior of the ReplacePattern method, such as how to search, where to begin the search, whether to search forward or backward, and whether to apply case sensitivity.</summary>
@@ -5376,9 +5374,6 @@
     <member name="T:EnvDTE80.vsIncrementalSearchResult">
       <summary>Describes the status of the search result.</summary>
     </member>
-    <member name="F:EnvDTE80.vsIncrementalSearchResult.vsIncrementalSearchResultFailed">
-      <summary>Did not successfully find the pattern. The selection was not changed.</summary>
-    </member>
     <member name="F:EnvDTE80.vsIncrementalSearchResult.vsIncrementalSearchResultFound">
       <summary>Found the pattern and moved the selection.</summary>
     </member>
@@ -5387,6 +5382,9 @@
     </member>
     <member name="F:EnvDTE80.vsIncrementalSearchResult.vsIncrementalSearchResultPassedStart">
       <summary>Found the pattern and moved the selection past the beginning of the buffer.</summary>
+    </member>
+    <member name="F:EnvDTE80.vsIncrementalSearchResult.vsIncrementalSearchResultFailed">
+      <summary>Did not successfully find the pattern. The selection was not changed.</summary>
     </member>
     <member name="T:EnvDTE80.vsPublishState">
       <summary>Indicates the publish state of a solution.</summary>
@@ -5715,11 +5713,11 @@
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerBackgroundGradientEnd">
       <summary>Project designer background gradient end</summary>
     </member>
-    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerBorderInside">
-      <summary>Project designer border inside</summary>
-    </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerBorderOutside">
       <summary>Project designer border outside</summary>
+    </member>
+    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerBorderInside">
+      <summary>Project designer border inside</summary>
     </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerContentsBackground">
       <summary>Project designer contents background</summary>
@@ -5730,8 +5728,8 @@
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabBackgroundGradientEnd">
       <summary>Project designer tab background gradient end</summary>
     </member>
-    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabSelectedBackground">
-      <summary>Project designer tab selected background</summary>
+    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabSelectedInsideborder">
+      <summary>Project designer tab selected inside border</summary>
     </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabSelectedBorder">
       <summary>Project designer tab selected border</summary>
@@ -5742,8 +5740,8 @@
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabSelectedHighlight2">
       <summary>Project designer tab selected highlight selected 2</summary>
     </member>
-    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabSelectedInsideborder">
-      <summary>Project designer tab selected inside border</summary>
+    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabSelectedBackground">
+      <summary>Project designer tab selected background</summary>
     </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabSepBottomGradientBegin">
       <summary>Project designer tab sep bottom gradient begin</summary>
@@ -5757,11 +5755,11 @@
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorProjectDesignerTabSepTopGradientEnd">
       <summary>Project designer tab sep top gradient end</summary>
     </member>
-    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorScreentipBackground">
-      <summary>Screen tip background</summary>
-    </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorScreentipBorder">
       <summary>Screen tip border</summary>
+    </member>
+    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorScreentipBackground">
+      <summary>Screen tip background</summary>
     </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorScreentipText">
       <summary>Screen tip text</summary>
@@ -5862,6 +5860,9 @@
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorToolWindowBorder">
       <summary>Tool window border</summary>
     </member>
+    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorToolWindowTabSelectedtab">
+      <summary>Tool window tab selected tab</summary>
+    </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorToolWindowTabBorder">
       <summary>Tool window tab border</summary>
     </member>
@@ -5871,14 +5872,11 @@
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorToolWindowTabGradientEnd">
       <summary>Tool window tab gradient end</summary>
     </member>
-    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorToolWindowTabSelectedtab">
-      <summary>Tool window tab selected tab</summary>
+    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorToolWindowTabText">
+      <summary>Tool window tab text</summary>
     </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorToolWindowTabSelectedtext">
       <summary>Tool window tab selected text</summary>
-    </member>
-    <member name="F:EnvDTE80.vsThemeColors.vsThemeColorToolWindowTabText">
-      <summary>Tool window tab text</summary>
     </member>
     <member name="F:EnvDTE80.vsThemeColors.vsThemeColorWizardOrientationPanelBackground">
       <summary>Wizard orientation panel background</summary>
@@ -6087,7 +6085,7 @@
     <member name="M:EnvDTE80.Windows2.CreateToolWindow2(EnvDTE.AddIn,System.String,System.String,System.String,System.String,System.Object@)">
       <summary>Creates a new tool window and hosts a user-defined, .NET control in it.</summary>
       <returns>A <see cref="T:EnvDTE.Window" /> object.</returns>
-      <param name="Addin">An instance of the add-in creating the tool window.</param>
+      <param name="Addin">An instance of the Add-in creating the tool window.</param>
       <param name="Assembly">The full name or file path of the assembly containing the User control.</param>
       <param name="Class">The full name of the class implementing the User control.</param>
       <param name="Caption">The caption to display in the new tool window.</param>
