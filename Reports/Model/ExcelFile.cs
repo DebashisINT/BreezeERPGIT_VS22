@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region======================================Revision History=========================================================================
+//1.0   V2.0.35     Debashis    06/02/2023      Enhancement required in Trial balance(Group wise) Report.
+//                                              Refer: 0025608
+#endregion===================================End of Revision History==================================================================
+using System;
 using System.Data;
 using System.Configuration;
 using System.Web;
@@ -394,6 +398,14 @@ namespace Reports.Model
                             {
                                 GridView1.Rows[i - 1].Cells[k].HorizontalAlign = HorizontalAlign.Left;
                                 GridView1.Rows[i - 1].Cells[k].Wrap = false;
+                                //Rev 1.0 Mantis: 0025608
+                                if (GridView1.Rows[i - 1].Cells[k].Text.ToString() == "LIABILITY" || GridView1.Rows[i - 1].Cells[k].Text.ToString() == "ASSET"
+                                    || GridView1.Rows[i - 1].Cells[k].Text.ToString() == "INCOME" || GridView1.Rows[i - 1].Cells[k].Text.ToString() == "EXPENSE")
+                                {
+                                    GridView1.Rows[i - 1].Cells[k].Font.Bold = true;
+                                    GridView1.Rows[i - 1].Cells[k].ForeColor = System.Drawing.Color.Red;
+                                }
+                                //End of Rev 1.0 Mantis: 0025608
                                 if (val == true)
                                 {
                                     GridView1.Rows[i - 1].Cells[k].Attributes.Add("style", "mso-number-format:\\#\\#\\#0\\");
@@ -1509,7 +1521,18 @@ namespace Reports.Model
                                     PdfPCell cell = new PdfPCell();
                                     cell.BorderWidth = 0.001f;
                                     cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                                    cell.Phrase = new Phrase(datatable.Rows[intJ - 1][intK].ToString(), FontFactory.GetFont("TIMES_ROMAN", BaseFont.WINANSI, 6));
+                                    //Rev 1.0 Mantis: 0025608
+                                    //cell.Phrase = new Phrase(datatable.Rows[intJ - 1][intK].ToString(), FontFactory.GetFont("TIMES_ROMAN", BaseFont.WINANSI, 6));
+                                    if (datatable.Rows[intJ - 1][intK].ToString()== "LIABILITY" || datatable.Rows[intJ - 1][intK].ToString() == "ASSET"
+                                        || datatable.Rows[intJ - 1][intK].ToString() == "INCOME" || datatable.Rows[intJ - 1][intK].ToString() == "EXPENSE")
+                                    {
+                                        cell.Phrase = new Phrase(datatable.Rows[intJ - 1][intK].ToString(), FontFactory.GetFont("TIMES_ROMAN", BaseFont.WINANSI, 8, Font.BOLD, CMYKColor.RED));
+                                    }
+                                    else
+                                    {
+                                        cell.Phrase = new Phrase(datatable.Rows[intJ - 1][intK].ToString(), FontFactory.GetFont("TIMES_ROMAN", BaseFont.WINANSI, 6));
+                                    }
+                                    //End of Rev 1.0 Mantis: 0025608
                                     ptData.AddCell(cell);
                                 }
                                 else

@@ -399,4 +399,3 @@ D:\Priti\BreezeERPGIT_VS22\Reports\bin\ru\DevExpress.Sparkline.v15.1.Core.resour
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CoreCompileInputs.cache
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CopyComplete
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\Microsoft.Web.Infrastructure.xml
