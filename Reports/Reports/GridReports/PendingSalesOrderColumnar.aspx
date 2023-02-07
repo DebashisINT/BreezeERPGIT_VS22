@@ -1,4 +1,9 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PendingSalesOrderColumnar.aspx.cs" Inherits="Reports.Reports.GridReports.PendingSalesOrderColumnar" %>
+﻿<%--======================================Revision History=========================================================================
+1.0   V2.0.35     Debashis    07/02/2023      Party Order No & Party Order Date columns required in Pending Sales Order Register - Columnar.
+                                              To be done in Pending Sales Order Register also.
+                                              Refer: 0025616
+===================================End of Revision History=====================================================================--%>
+<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PendingSalesOrderColumnar.aspx.cs" Inherits="Reports.Reports.GridReports.PendingSalesOrderColumnar" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
      Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -760,7 +765,7 @@
                                     <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                 <%--Rev Debashis Mantis: 0025616--%>
+                                 <%--Rev 1.0 Mantis: 0025616--%>
                                 <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="PARTYORDNO" Width="130px" Caption="Party Order No." HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Center"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
@@ -773,7 +778,7 @@
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                 </dxe:GridViewDataTextColumn>
-                                <%--End of Rev Debashis Mantis: 0025616--%>
+                                <%--End of Rev 1.0 Mantis: 0025616--%>
 
                                 <dxe:GridViewDataTextColumn Caption="Customer Name" FieldName="CUSTVENDNAME" Width="220px" VisibleIndex="6" HeaderStyle-CssClass="colDisable">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"> </CellStyle>
