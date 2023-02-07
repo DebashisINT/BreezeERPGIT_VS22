@@ -760,111 +760,126 @@
                                     <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Customer Name" FieldName="CUSTVENDNAME" Width="220px" VisibleIndex="4" HeaderStyle-CssClass="colDisable">
+                                 <%--Rev Debashis Mantis: 0025616--%>
+                                <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="PARTYORDNO" Width="130px" Caption="Party Order No." HeaderStyle-CssClass="colDisable">
+                                    <CellStyle HorizontalAlign="Center"></CellStyle>
+                                    <HeaderStyle HorizontalAlign="Center" />
+                                    <EditFormSettings Visible="False" />
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="PARTYORDDATE" Caption="Party Order Date" Width="100px" HeaderStyle-CssClass="colDisable">
+                                    <CellStyle HorizontalAlign="Left">
+                                    </CellStyle>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <EditFormSettings Visible="False" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev Debashis Mantis: 0025616--%>
+
+                                <dxe:GridViewDataTextColumn Caption="Customer Name" FieldName="CUSTVENDNAME" Width="220px" VisibleIndex="6" HeaderStyle-CssClass="colDisable">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"> </CellStyle>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="PROJ_NAME" Width="200px" Caption="Project Name" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn VisibleIndex="7" FieldName="PROJ_NAME" Width="200px" Caption="Project Name" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="6" FieldName="SALESMAN_NAME" Width="200px" Caption="Salesman Name" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn VisibleIndex="8" FieldName="SALESMAN_NAME" Width="200px" Caption="Salesman Name" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Product Code" FieldName="PRODCODE" Width="200px" VisibleIndex="7" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn Caption="Product Code" FieldName="PRODCODE" Width="200px" VisibleIndex="9" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Description" FieldName="PRODNAME" Width="220px" VisibleIndex="8" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn Caption="Description" FieldName="PRODNAME" Width="220px" VisibleIndex="10" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="STOCKUOM" Caption="UOM" Width="100px" VisibleIndex="9" HeaderStyle-CssClass="colDisable">                                        
+                                <dxe:GridViewDataTextColumn FieldName="STOCKUOM" Caption="UOM" Width="100px" VisibleIndex="11" HeaderStyle-CssClass="colDisable">                                        
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>                                    
 
-                                <dxe:GridViewDataTextColumn FieldName="RATE" Caption="Rate" Width="100px" VisibleIndex="10" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                <dxe:GridViewDataTextColumn FieldName="RATE" Caption="Rate" Width="100px" VisibleIndex="12" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewBandColumn Caption="Actual Quantity" VisibleIndex="11" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewBandColumn Caption="Actual Quantity" VisibleIndex="13" HeaderStyle-CssClass="colDisable">
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <Columns>
-                                        <dxe:GridViewDataTextColumn FieldName="ACTUALPCSMULTQTY" Caption="Pcs" Width="100px" VisibleIndex="12" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="ACTUALPCSMULTQTY" Caption="Pcs" Width="100px" VisibleIndex="14" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn FieldName="ACTUALMETERMULTQTY" Caption="Meter" Width="100px" VisibleIndex="13" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="ACTUALMETERMULTQTY" Caption="Meter" Width="100px" VisibleIndex="15" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn FieldName="ACTUALSTOCKQTY" Caption="Wt" Width="100px" VisibleIndex="14" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="ACTUALSTOCKQTY" Caption="Wt" Width="100px" VisibleIndex="16" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
                                     </Columns>
                                 </dxe:GridViewBandColumn>
 
-                                <dxe:GridViewBandColumn Caption="Mature Quantity" VisibleIndex="15" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewBandColumn Caption="Mature Quantity" VisibleIndex="17" HeaderStyle-CssClass="colDisable">
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <Columns>
-                                        <dxe:GridViewDataTextColumn FieldName="MATUREPCSQTY" Caption="Pcs" Width="100px" VisibleIndex="16" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="MATUREPCSQTY" Caption="Pcs" Width="100px" VisibleIndex="18" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn FieldName="MATUREMETERQTY" Caption="Meter" Width="100px" VisibleIndex="17" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="MATUREMETERQTY" Caption="Meter" Width="100px" VisibleIndex="19" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn FieldName="MATURESTOCKQTY" Caption="Wt" Width="100px" VisibleIndex="18" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="MATURESTOCKQTY" Caption="Wt" Width="100px" VisibleIndex="20" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
                                     </Columns>
                                 </dxe:GridViewBandColumn>
 
-                                <dxe:GridViewBandColumn Caption="Balance Quantity" VisibleIndex="19" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewBandColumn Caption="Balance Quantity" VisibleIndex="21" HeaderStyle-CssClass="colDisable">
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <Columns>
-                                        <dxe:GridViewDataTextColumn FieldName="BALPCSQTY" Caption="Pcs" Width="100px" VisibleIndex="20" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="BALPCSQTY" Caption="Pcs" Width="100px" VisibleIndex="22" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn FieldName="BALMETERQTY" Caption="Meter" Width="100px" VisibleIndex="21" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="BALMETERQTY" Caption="Meter" Width="100px" VisibleIndex="23" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn FieldName="BALSTOCKQTY" Caption="Wt" Width="100px" VisibleIndex="22" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
+                                        <dxe:GridViewDataTextColumn FieldName="BALSTOCKQTY" Caption="Wt" Width="100px" VisibleIndex="24" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">                                        
                                             <CellStyle HorizontalAlign="Right"></CellStyle>
                                             <HeaderStyle HorizontalAlign="Right" />
                                         </dxe:GridViewDataTextColumn>
                                     </Columns>
                                 </dxe:GridViewBandColumn>
                                  
-                                <dxe:GridViewDataTextColumn FieldName="ACTUAL_VALUES" Caption="Actual Values" Width="100px" VisibleIndex="23" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="ACTUAL_VALUES" Caption="Actual Values" Width="100px" VisibleIndex="25" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="MATURE_VALUES" Caption="Mature Values" Width="100px" VisibleIndex="24" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="MATURE_VALUES" Caption="Mature Values" Width="100px" VisibleIndex="26" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BALANCE_VALUES" Caption="Balance Values" Width="100px" VisibleIndex="25" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="BALANCE_VALUES" Caption="Balance Values" Width="100px" VisibleIndex="27" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>

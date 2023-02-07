@@ -777,72 +777,87 @@
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                 </dxe:GridViewDataTextColumn>
+
+                                <%--Rev Debashis Mantis: 0025616--%>
+                                <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="PARTYORDNO" Width="130px" Caption="Party Order No." >
+                                    <CellStyle HorizontalAlign="Center"></CellStyle>
+                                    <HeaderStyle HorizontalAlign="Center" />
+                                    <EditFormSettings Visible="False" />
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="PARTYORDDATE" Caption="Party Order Date" Width="100px">
+                                    <CellStyle HorizontalAlign="Left">
+                                    </CellStyle>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <EditFormSettings Visible="False" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev Debashis Mantis: 0025616--%>
                                
-                                <dxe:GridViewDataTextColumn Caption="Customer Name" FieldName="CUSTVEND_NAME" Width="310px" VisibleIndex="4" >
+                                <dxe:GridViewDataTextColumn Caption="Customer Name" FieldName="CUSTVEND_NAME" Width="310px" VisibleIndex="6" >
                                     <CellStyle HorizontalAlign="Left">
                                     </CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
                              
-                                <dxe:GridViewDataTextColumn Caption="Project Name" FieldName="PROJ_NAME" Width="170px" VisibleIndex="5">
+                                <dxe:GridViewDataTextColumn Caption="Project Name" FieldName="PROJ_NAME" Width="170px" VisibleIndex="7">
                                 </dxe:GridViewDataTextColumn>
                               
-                                <dxe:GridViewDataTextColumn Caption="Salesman Name" FieldName="SALESMAN_NAME" Width="170px" VisibleIndex="6" >
+                                <dxe:GridViewDataTextColumn Caption="Salesman Name" FieldName="SALESMAN_NAME" Width="170px" VisibleIndex="8" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Product Code" FieldName="SHORTNAME" Width="200px" VisibleIndex="7" >
+                                <dxe:GridViewDataTextColumn Caption="Product Code" FieldName="SHORTNAME" Width="200px" VisibleIndex="9" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true">
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
                                 
-                                <dxe:GridViewDataTextColumn Caption="Description" FieldName="SPRODUCTS_NAME" Width="200px" VisibleIndex="8" >
+                                <dxe:GridViewDataTextColumn Caption="Description" FieldName="SPRODUCTS_NAME" Width="200px" VisibleIndex="10" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true">
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM_NAME" Width="80px" VisibleIndex="9" >
+                                <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM_NAME" Width="80px" VisibleIndex="11" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn Caption="Rate" FieldName="SALEPRICE" Width="110px" VisibleIndex="10" >
+                                 <dxe:GridViewDataTextColumn Caption="Rate" FieldName="SALEPRICE" Width="110px" VisibleIndex="12" >
                                     <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00"></PropertiesTextEdit>
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                  </dxe:GridViewDataTextColumn>
 
-                               <dxe:GridViewDataTextColumn Caption="Actual Quantity" FieldName="ACTUAL_QUANTITY" Width="110px" VisibleIndex="11" >
+                               <dxe:GridViewDataTextColumn Caption="Actual Quantity" FieldName="ACTUAL_QUANTITY" Width="110px" VisibleIndex="13" >
                                    <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00"></PropertiesTextEdit>
                                    <CellStyle HorizontalAlign="Right"></CellStyle>
                                    <HeaderStyle HorizontalAlign="Right" />
                                </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn Caption="Mature Quantity" FieldName="MATURE_QUANTITY" Width="110px" VisibleIndex="12" >
+                            <dxe:GridViewDataTextColumn Caption="Mature Quantity" FieldName="MATURE_QUANTITY" Width="110px" VisibleIndex="14" >
                                 <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00"></PropertiesTextEdit>
                                 <CellStyle HorizontalAlign="Right"></CellStyle>
                                 <HeaderStyle HorizontalAlign="Right" />
                              </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn Caption="Balance Quantity" FieldName="BALANCE_QUANTITY" Width="110px" VisibleIndex="13" >
+                            <dxe:GridViewDataTextColumn Caption="Balance Quantity" FieldName="BALANCE_QUANTITY" Width="110px" VisibleIndex="15" >
                                 <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00"></PropertiesTextEdit>
                                 <CellStyle HorizontalAlign="Right"></CellStyle>
                                 <HeaderStyle HorizontalAlign="Right" />
                             </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn Caption="Actual Values" FieldName="ACTUAL_VALUES" Width="110px" VisibleIndex="14" >
+                            <dxe:GridViewDataTextColumn Caption="Actual Values" FieldName="ACTUAL_VALUES" Width="110px" VisibleIndex="16" >
                                 <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00"></PropertiesTextEdit>
                                 <CellStyle HorizontalAlign="Right"></CellStyle>
                                 <HeaderStyle HorizontalAlign="Right" />
                             </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn Caption="Mature Values" FieldName="MATURE_VALUES" Width="110px" VisibleIndex="15" >
+                            <dxe:GridViewDataTextColumn Caption="Mature Values" FieldName="MATURE_VALUES" Width="110px" VisibleIndex="17" >
                                 <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00"></PropertiesTextEdit>
                                 <CellStyle HorizontalAlign="Right"></CellStyle>
                                 <HeaderStyle HorizontalAlign="Right" />
                              </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn Caption="Balance Values" FieldName="BALANCE_VALUES" Width="110px" VisibleIndex="16" >
+                            <dxe:GridViewDataTextColumn Caption="Balance Values" FieldName="BALANCE_VALUES" Width="110px" VisibleIndex="18" >
                                 <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00"></PropertiesTextEdit>
                                 <CellStyle HorizontalAlign="Right"></CellStyle>
                                 <HeaderStyle HorizontalAlign="Right" />
