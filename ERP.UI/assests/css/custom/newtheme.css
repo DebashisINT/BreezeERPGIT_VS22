@@ -2,6 +2,12 @@
    Author's custom styles server copy 02.07.2019  
    ========================================================================== */
 /*checkboxes csss*/
+
+/*====================================================== Revision History ===========================================================
+Rev Number       DATE            VERSION        DEVELOPER            CHANGES
+1.0              08-02-2023      2.0.35         Pallab               inner page grid issue fix and design modification
+====================================================== Revision History ===========================================================*/
+
 *:focus {
     outline: none;
 }
@@ -2502,6 +2508,8 @@ a#notification {
     z-index:5;
 }
 #ShowFilter {
+    /*Rev 1.0 : padding add*/
+    padding-bottom: 10px !important;
 }
 
 .dxeButtonEditSys td.dxic {
@@ -4047,3 +4055,30 @@ button:focus
         background-color: #dd444d !important;
         border-color: #dd444d !important;
     }
+/*Rev 1.0*/
+.dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+    .dxgvHeader_PlasticBlue, .dxgvHeader_PlasticBlue table {
+        color: #fff !important;
+    }
+
+.form_main {
+    background: #ebebeb;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #11111154;
+}
+
+.panel-title h3 {
+    font-size: 26px !important;
+    font-weight: 500 !important;
+}
+
+input[type="text"], input[type="password"], textarea, .chosen-container-single .chosen-single {
+    height: 30px;
+    border-radius: 4px;
+}
+
+/*Rev end 1.0*/
