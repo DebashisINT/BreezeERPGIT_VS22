@@ -1164,12 +1164,12 @@
 
 #FinancialButton .nBoxes {
     background: rgb(138,80,130);
-    background: linear-gradient(326deg, rgb(120 21 107 / 90%) 0%, rgb(237 104 218 / 90%) 100%);
+    background: linear-gradient(326deg, rgb(64 21 120 / 90%) 0%, rgb(170 128 225 / 90%) 100%);
 }
 
 #CustRMButton .nBoxes {
     background: rgb(48,117,98);
-    background: linear-gradient(326deg, rgba(48 117 98 / 90%) 0%, rgba(92 200 170 / 90%) 100%);
+    background: linear-gradient(326deg, rgb(9 129 35 / 90%) 0%, rgb(81 227 113 / 90%) 100%);
 }
 
 #dvKPISummary .nBoxes {

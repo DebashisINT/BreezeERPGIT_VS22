@@ -2,6 +2,7 @@
 <%--====================================================== Revision History ===========================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                12-01-2023        2.0.35           Pallab              Change login url attached image(Image show when url share in social media)
+2.0                08-02-2023        2.0.35           Pallab              New team member names add
 ====================================================== Revision History ===========================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" Inherits="pLogin"
@@ -1431,6 +1432,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <div class="mnHeader">Team Behind <span id="clCr"><i class="fa fa-close"></i></span></div>
                 <div class="scrCnter" id="rc_app_156655">
                     <ul class="tc_s5621f_fg">
+                        <%--Rev 2.0 : Avijit Bonu and Pallab Mukherjee name added--%>
+                        <li><span class="nameCR">Avijit Bonu</span></li>
                          <li><span class="nameCR">Ankan Das</span></li>
                         <li><span class="nameCR">Arindam Ghosal</span></li>
                          <li><span class="nameCR">Arunabha Saha</span></li>
@@ -1448,6 +1451,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                          <li><span class="nameCR">Jitendra Jha</span></li>
                          <li><span class="nameCR">Kaushik Gupta</span></li>
                          <li><span class="nameCR">Maynak Nandi</span></li>
+                        <li><span class="nameCR">Pallab Mukherjee</span></li>
                          <li class="tc_s5221f_fg"><span class="nameCR">Priti Ghosh</span></li>
                          <li><span class="nameCR">Pijush Kumar Bhattacharya</span></li>
                          <li><span class="nameCR">Pratik Ghosh</span></li>
@@ -1469,6 +1473,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <li><span class="nameCR">Shantanu Saha</span></li>
                         <li><span class="nameCR">Swatilekha Mukherjee</span></li>   
                         <li><span class="nameCR">Tanmoy Ghosh</span></li>
+                        
+                        
                     </ul>
                 </div>
             </div>
