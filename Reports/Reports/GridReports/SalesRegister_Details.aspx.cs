@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region======================================Revision History=========================================================================
+//1.0   V2.0.36     Debashis    09/02/2023      Customer Code column is required in the Sales Invoice Register detail report.
+//                                              Refer: 0025617
+#endregion===================================End of Revision History==================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -81,7 +85,7 @@ namespace Reports.Reports.GridReports
                 //ASPxFromDate.Text = dtFrom.ToString("dd-MM-yyyy");
                 //ASPxToDate.Text = dtTo.ToString("dd-MM-yyyy");
                 /// Date_finyearwise(Convert.ToString(Session["LastFinYear"]));
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[5].Visible = false;
                 //ShowGrid.Columns[6].Visible = false;
                 //ShowGrid.Columns[10].Visible = false;
@@ -90,7 +94,7 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[18].Visible = false;
                 //ShowGrid.Columns[19].Visible = false;
                 //ShowGrid.Columns[37].Visible = false;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
 
                 ASPxFromDate.Value = DateTime.Now;
                 ASPxToDate.Value = DateTime.Now;
@@ -382,43 +386,43 @@ namespace Reports.Reports.GridReports
             string strareachk = (chkArea.Checked) ? "1" : "0";
             if (Convert.ToString(strareachk) == "0")
             {
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[5].Visible = false;
                 //ShowGrid.Columns[6].Visible = false;
                 ShowGrid.Columns[6].Visible = false;
                 ShowGrid.Columns[7].Visible = false;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
             }
             else
             {
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[5].Visible = true;
                 //ShowGrid.Columns[6].Visible = true;
                 ShowGrid.Columns[6].Visible = true;
                 ShowGrid.Columns[7].Visible = true;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
             }
 
             string strcrdays = (chkCrDays.Checked) ? "1" : "0";
             if (Convert.ToString(strcrdays) == "0")
             {
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[10].Visible = false;
                 ShowGrid.Columns[11].Visible = false;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
             }
             else
             {
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[10].Visible = true;
                 ShowGrid.Columns[11].Visible = true;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
             }
 
             string strtransporter = (chkTransporter.Checked) ? "1" : "0";
             if (Convert.ToString(strtransporter) == "0")
             {
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[16].Visible = false;
                 //ShowGrid.Columns[17].Visible = false;
                 //ShowGrid.Columns[18].Visible = false;
@@ -427,11 +431,11 @@ namespace Reports.Reports.GridReports
                 ShowGrid.Columns[18].Visible = false;
                 ShowGrid.Columns[19].Visible = false;
                 ShowGrid.Columns[20].Visible = false;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
             }
             else
             {
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[16].Visible = true;
                 //ShowGrid.Columns[17].Visible = true;
                 //ShowGrid.Columns[18].Visible = true;
@@ -440,22 +444,22 @@ namespace Reports.Reports.GridReports
                 ShowGrid.Columns[18].Visible = true;
                 ShowGrid.Columns[19].Visible = true;
                 ShowGrid.Columns[20].Visible = true;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
             }
 
             if (chkCreateBy.Checked==false)
             {
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[37].Visible = false;
                 ShowGrid.Columns[38].Visible = false;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
             }
             else
             {
-                //Rev Debashis Mantis: 0025617
+                //Rev 1.0 Mantis: 0025617
                 //ShowGrid.Columns[37].Visible = true;
                 ShowGrid.Columns[38].Visible = true;
-                //End of Rev Debashis Mantis: 0025617
+                //End of Rev 1.0 Mantis: 0025617
             }
         }
 

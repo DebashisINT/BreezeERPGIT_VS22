@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.SalesRegister_Details" %>
+﻿<%--======================================Revision History=========================================================================
+1.0   V2.0.36     Debashis    09/02/2023      Customer Code column is required in the Sales Invoice Register detail report.
+                                              Refer: 0025617
+===================================End of Revision History=====================================================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.SalesRegister_Details" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -575,7 +579,7 @@
 
                 </dxe:ASPxDateEdit>
             </div>
-            <%--Rev Debashis Mantis: 0025617--%>
+            <%--Rev 1.0 Mantis: 0025617--%>
             <%--<div class="col-md-2" style="padding:0;padding-top: 25px;">
                 <asp:CheckBox runat="server" ID="chkoldunit" Checked="false" Text="Show Old Unit" />
             </div>--%>
@@ -584,7 +588,7 @@
                     <asp:CheckBox ID="chkoldunit" runat="server" Checked="false" Text="Show Old Unit"/>
                 </div>
             </div>
-            <%--End of Rev Debashis Mantis: 0025617--%>
+            <%--End of Rev 1.0 Mantis: 0025617--%>
             <div class="clear"></div>
             <div class="col-md-2">
                 <div style="color: #b5285f;" class="clsTo">
@@ -788,13 +792,13 @@
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
-                                <%--Rev Debashis Mantis: 0025617--%>
+                                <%--Rev 1.0 Mantis: 0025617--%>
                                 <dxe:GridViewDataTextColumn Caption="Customer Code" Width="200px" FieldName="UCC"
                                     VisibleIndex="2" FixedStyle="Left">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
-                                <%--End of Rev Debashis Mantis: 0025617--%>
+                                <%--End of Rev 1.0 Mantis: 0025617--%>
                                 <dxe:GridViewDataTextColumn Caption="Customer Name" Width="250px" FieldName="CUSTOMER_NAME"
                                     VisibleIndex="3" FixedStyle="Left">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
