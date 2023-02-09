@@ -674,12 +674,6 @@
         <elementListCompartment Id="0fd3a02a-cf2a-4b33-84d7-3420f0404f4d" absoluteBounds="2.7649999999999997, 13.46, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="31c3cbfe-0d62-4527-b94d-861d57ac2d1e" isExpanded="false" absoluteBounds="11.625, 6.125, 2, 0.45">
-      <DataClassMoniker Name="/ReportSourceDataContext/SALESREGISTERPRODUCTDETAILS_REPORT" />
-      <nestedChildShapes>
-        <elementListCompartment Id="13d4a22f-7da9-4afe-811b-475ac3e8dafd" absoluteBounds="11.64, 6.585, 1.9700000000000002, 9.4798583984375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="4bba39ed-b70a-4b76-943a-be5aa885bdba" isExpanded="false" absoluteBounds="7.25, 3.625, 2, 0.45">
       <DataClassMoniker Name="/ReportSourceDataContext/PARTYOUTSTANDING_REPORT" />
       <nestedChildShapes>
@@ -876,6 +870,12 @@
       <DataClassMoniker Name="/ReportSourceDataContext/PENDINGSALEPURCHASEORDERCOLUMNAR_REPORT" />
       <nestedChildShapes>
         <elementListCompartment Id="39836869-9e08-4491-85d5-dc6954f82f1f" absoluteBounds="9.515, 15.335, 1.9700000000000002, 6.979939778645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f4d1a0b6-dc88-45fd-9c2d-f230abaa97c9" isExpanded="false" absoluteBounds="11.625, 6.125, 2, 0.45">
+      <DataClassMoniker Name="/ReportSourceDataContext/SALESREGISTERPRODUCTDETAILS_REPORT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="28a174bb-b787-4bc9-bbaa-8d48e5af28a0" absoluteBounds="11.64, 6.585, 1.9700000000000002, 9.8644612630208321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
