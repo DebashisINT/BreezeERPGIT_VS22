@@ -3833,3 +3833,42 @@ button.close:hover
 {
     padding: 12px 5px 12px;
 }
+
+/*Rev 1.0*/
+.dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+
+    .dxgvHeader_PlasticBlue, .dxgvHeader_PlasticBlue table {
+        color: #fff !important;
+    }
+
+/*.form_main {
+    
+    overflow: hidden;
+}*/
+
+.panel-title h3 {
+    font-size: 26px !important;
+    font-weight: 500 !important;
+}
+
+input[type="text"], input[type="password"], textarea, .chosen-container-single .chosen-single {
+    height: 30px;
+    border-radius: 4px;
+}
+
+.rightSide {
+    background: #ededed !important;
+    margin-top: 70px !important;
+}
+
+/*.outer-div-main {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #11111154;
+}*/
+
+/*Rev end 1.0*/

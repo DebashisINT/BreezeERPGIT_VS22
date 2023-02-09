@@ -4065,10 +4065,11 @@ button:focus
     }
 
 .form_main {
-    background: #ebebeb;
+    /*background: #ffffff;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 1px 1px 10px #11111154;
+    box-shadow: 1px 1px 10px #11111154;*/
+    overflow: hidden;
 }
 
 .panel-title h3 {
@@ -4079,6 +4080,11 @@ button:focus
 input[type="text"], input[type="password"], textarea, .chosen-container-single .chosen-single {
     height: 30px;
     border-radius: 4px;
+}
+
+.rightSide {
+    background: #ededed !important;
+    margin-top: 70px !important;
 }
 
 /*Rev end 1.0*/
