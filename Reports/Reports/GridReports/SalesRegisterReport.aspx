@@ -739,45 +739,56 @@
 
                                 <dxe:GridViewDataTextColumn Caption="Serial" FieldName="SEQ" VisibleIndex="0" Width="0" FixedStyle="Left">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                                 <dxe:GridViewDataTextColumn Caption="Unit" FieldName="BRANCH" Width="180px" VisibleIndex="1" FixedStyle="Left">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Customer Name" Width="160px" FieldName="CUSTOMER_NAME" VisibleIndex="2" FixedStyle="Left">
+                                <%--Rev 1.0 Mantis: 0025618--%>
+                                <dxe:GridViewDataTextColumn Caption="Customer Code" Width="200px" FieldName="UCC" VisibleIndex="2" FixedStyle="Left">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
-
-                                <dxe:GridViewDataTextColumn Caption="City" Width="120px" FieldName="CITY_NAME" VisibleIndex="3" >
-                                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                                    </CellStyle>
-                                </dxe:GridViewDataTextColumn>
-
-                                <dxe:GridViewDataTextColumn Caption="State" Width="120px" FieldName="STATE" VisibleIndex="4" >
-                                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                                    </CellStyle>
-                                </dxe:GridViewDataTextColumn>
-
-                                <dxe:GridViewDataTextColumn Caption="Country" Width="100px" FieldName="COU_COUNTRY" VisibleIndex="5" >
-                                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                                    </CellStyle>
-                                </dxe:GridViewDataTextColumn>
-
-                                <dxe:GridViewDataTextColumn Caption="Ship to Party Name" Width="250px" FieldName="SHIP_TO_PARTY" VisibleIndex="6" >
-                                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                                    </CellStyle>
-                                </dxe:GridViewDataTextColumn>
-
-                                <dxe:GridViewDataTextColumn Caption="Address" Width="300px" FieldName="CUST_ADDRESS" VisibleIndex="7" >
+                                <%--End of Rev 1.0 Mantis: 0025618--%>
+                                <dxe:GridViewDataTextColumn Caption="Customer Name" Width="160px" FieldName="CUSTOMER_NAME" VisibleIndex="3" FixedStyle="Left">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Salesman Name" Width="160px" FieldName="SALESMAN_NAME" VisibleIndex="8">
+                                <dxe:GridViewDataTextColumn Caption="City" Width="120px" FieldName="CITY_NAME" VisibleIndex="4" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="9" FieldName="BILL_NO" Width="120px" Caption="Invoice No" >
-                                    <CellStyle HorizontalAlign="Left">
+                                <dxe:GridViewDataTextColumn Caption="State" Width="120px" FieldName="STATE" VisibleIndex="5" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true">
                                     </CellStyle>
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn Caption="Country" Width="100px" FieldName="COU_COUNTRY" VisibleIndex="6" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn Caption="Ship to Party Name" Width="250px" FieldName="SHIP_TO_PARTY" VisibleIndex="7" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn Caption="Address" Width="300px" FieldName="CUST_ADDRESS" VisibleIndex="8" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn Caption="Salesman Name" Width="160px" FieldName="SALESMAN_NAME" VisibleIndex="9">
+                                    <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn VisibleIndex="10" FieldName="BILL_NO" Width="120px" Caption="Invoice No" >
+                                    <CellStyle HorizontalAlign="Left"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
                                         <a href="javascript:void(0)" onclick="OpenPOSDetails('<%#Eval("INVOICE_ID") %>','<%#Eval("MODULE_TYPE") %>')">
@@ -787,51 +798,50 @@
                                     <EditFormSettings Visible="False" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Inventory Type" Width="150px" FieldName="INVENTORYTYPE" VisibleIndex="10" >
+                                <dxe:GridViewDataTextColumn Caption="Inventory Type" Width="150px" FieldName="INVENTORYTYPE" VisibleIndex="11" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Invoice Date" Width="100px" FieldName="INVOICE_DATE" VisibleIndex="11">
+                                <dxe:GridViewDataTextColumn Caption="Invoice Date" Width="100px" FieldName="INVOICE_DATE" VisibleIndex="12">
                                     <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
+                                    <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Sale Value" FieldName="SALE_VALUE" Width="100px" VisibleIndex="12">
+                                <dxe:GridViewDataTextColumn Caption="Sale Value" FieldName="SALE_VALUE" Width="100px" VisibleIndex="13">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="CGST_AMT" Caption="CGST Amount" Width="100px" VisibleIndex="13">
+                                <dxe:GridViewDataTextColumn FieldName="CGST_AMT" Caption="CGST Amount" Width="100px" VisibleIndex="14">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="SGST_AMT" Caption="SGST Amount" Width="100px" VisibleIndex="14">
+                                <dxe:GridViewDataTextColumn FieldName="SGST_AMT" Caption="SGST Amount" Width="100px" VisibleIndex="15">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="IGST_AMT" Caption="IGST Amount" Width="100px" VisibleIndex="15">
+                                <dxe:GridViewDataTextColumn FieldName="IGST_AMT" Caption="IGST Amount" Width="100px" VisibleIndex="16">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="UTGST_AMT" Caption="UTGST Amount" Width="100px" VisibleIndex="16">
+                                <dxe:GridViewDataTextColumn FieldName="UTGST_AMT" Caption="UTGST Amount" Width="100px" VisibleIndex="17">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
                                 <%-- <dxe:GridViewDataTextColumn FieldName="Total Value" Caption="Total Value" Width="12%" VisibleIndex="9" />--%>
 
-                                <dxe:GridViewDataTextColumn Caption="Others Charges" FieldName="OTHERS_CHARGES" Width="100px" VisibleIndex="17">
+                                <dxe:GridViewDataTextColumn Caption="Others Charges" FieldName="OTHERS_CHARGES" Width="100px" VisibleIndex="18">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Tax Misc." FieldName="TAX_MISC" Width="100px" VisibleIndex="18">
+                                <dxe:GridViewDataTextColumn Caption="Tax Misc." FieldName="TAX_MISC" Width="100px" VisibleIndex="19">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Old Unit" FieldName="OLD_UNIT" Width="100px" VisibleIndex="19">
+                                <dxe:GridViewDataTextColumn Caption="Old Unit" FieldName="OLD_UNIT" Width="100px" VisibleIndex="20">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Bill Amount" FieldName="TOTAL_VALUE" Width="100px" VisibleIndex="20">
+                                <dxe:GridViewDataTextColumn Caption="Bill Amount" FieldName="TOTAL_VALUE" Width="100px" VisibleIndex="21">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
-
                             </Columns>
-
-
                             <SettingsBehavior AllowFocusedRow="true" ColumnResizeMode="Control" />
                             <%--     <SettingsPager NumericButtonCount="20" PageSize="10" ShowSeparators="True">
                                     <FirstPageButton Visible="True">
