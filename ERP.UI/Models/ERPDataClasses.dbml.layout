@@ -1220,10 +1220,16 @@
         <elementListCompartment Id="67e51605-b83a-4e62-a69d-7b07f70da6ec" absoluteBounds="30.14, 4.71, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="f3071bc7-c3a8-460f-88f7-405e8c3c9203" absoluteBounds="30.25, 5.125, 2, 8.5014469401041666">
+    <classShape Id="f3071bc7-c3a8-460f-88f7-405e8c3c9203" isExpanded="false" absoluteBounds="30.25, 5.125, 2, 0.45">
       <DataClassMoniker Name="/ERPDataClassesDataContext/CASHBANKLIST" />
       <nestedChildShapes>
         <elementListCompartment Id="b96707ae-5feb-46c5-b25f-16139927e38b" absoluteBounds="30.265, 5.585, 1.9700000000000002, 7.941446940104167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b5e9a380-c616-4634-923e-3cb20933e517" absoluteBounds="30.25, 6, 2, 5.6169254557291657">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/TDSNILLCHALLANLIST" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e994da02-5057-490b-9f6c-7f41896b5e7a" absoluteBounds="30.265, 6.46, 1.9700000000000002, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="TDSNilChallanList.aspx.cs" Inherits="ERP.OMS.Management.Activities.TDSNilChallanList" %>
+﻿<%--========================================================== Revision History ============================================================================================
+  1.0	V2.0.36	 PRITI  09-02-2023		0025266: Listing view upgradation required of TDS Nil Challan of Accounts & Finance
+========================================== End Revision History =======================================================================================================
+--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="TDSNilChallanList.aspx.cs" Inherits="ERP.OMS.Management.Activities.TDSNilChallanList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -75,9 +80,20 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                // $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-                cgridAdvanceAdj.Refresh();
+
+
+                //rev 1.0
+                // cgridAdvanceAdj.Refresh();
+                $("#hFilterType").val("All");
+                cCallbackPanel.PerformCallback("");
+                //end rev 1.0
             }
         }
+        //rev 1.0
+        function CallbackPanelEndCall(s, e) {
+            cgridAdvanceAdj.Refresh();
+        }
+        //end rev 1.0
         function OnAddClick() {
             window.location.href = 'TDSNilChallan.aspx?Key=Add';
         }
@@ -391,5 +407,14 @@
  
  <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
-
+    <%--  REV 1.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
 </asp:Content>
