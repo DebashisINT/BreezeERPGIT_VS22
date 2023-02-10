@@ -1,4 +1,9 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CashBankBookRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.CashBankBookRegister_Details" %>
+﻿<%--====================================================== Revision History ==========================================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                10-02-2023        2.0.36           Pallab              25575 : Report pages modification
+====================================================== Revision History ==========================================================--%>
+
+<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CashBankBookRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.CashBankBookRegister_Details" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:content id="Content1" contentplaceholderid="head" runat="server">
@@ -303,6 +308,7 @@
         .plhead a.collapsed .fa-minus-circle{
             display:none;
         }
+
         /*Rev 1.0*/
         .outer-div-main {
             background: #ffffff;
@@ -423,6 +429,16 @@
             margin-bottom: 20px;
             margin-top: 10px;
         }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
         /*Rev end 1.0*/
     </style>
     <script type="text/javascript">
@@ -509,8 +525,10 @@
         <asp:HiddenField runat="server" ID="hdndaily" />
         <asp:HiddenField runat="server" ID="hdtid" />
         <div class="row">
+            <%--Rev 1.0--%>
             <%--<div class="col-md-2">--%>
             <div class="col-md-2 simple-select">
+                <%--Rev end 1.0--%>
                 <label style="color: #b5285f; font-weight: bold;" class="clsTo">Head Branch</label>
                 <div>
                     <asp:DropDownList ID="ddlbranchHO" runat="server" Width="100%"></asp:DropDownList>
