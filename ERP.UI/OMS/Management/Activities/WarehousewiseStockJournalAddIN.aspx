@@ -12,7 +12,7 @@
     <%-- <script src="JS/SearchPopup.js?v=0.04"></script>--%>
     <script src="JS/SearchPopupDatatable.js"></script>
     <script src="JS/ProductStockIN.js?v00000.007"></script>
-    <script src="JS/WarehousewiseStockJournalINJS.js?v=10.1"></script>
+    <script src="JS/WarehousewiseStockJournalINJS.js?v=11.0"></script>
      <link href="CSS/PurchaseChallan.css" rel="stylesheet" />
     <style type="text/css">
         /*#grid_DXMainTable > tbody > tr > td:last-child, #productLookUp_DDD_gv_DXMainTable > tbody > tr > td:nth-child(2) {
@@ -692,7 +692,6 @@
                                     PropertiesTextEdit-FocusedStyle-CssClass="hide" PropertiesTextEdit-Style-CssClass="hide" PropertiesTextEdit-Height="15px">
                                     <CellStyle Wrap="True" CssClass="hide"></CellStyle>
                                 </dxe:GridViewDataTextColumn>
-
                                 <dxe:GridViewDataTextColumn FieldName="AvlStkDestWH" Caption="Avl. Stock" VisibleIndex="5" Width="80px" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
                                     <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00">
                                         <%--<MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" AllowMouseWheel="false" />  --%>
@@ -703,12 +702,9 @@
                                 <dxe:GridViewDataTextColumn FieldName="DestQuantity" Caption="Quantity" VisibleIndex="6" Width="80px" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
                                     <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.0000">
                                         <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" AllowMouseWheel="false" />
-                                        <ClientSideEvents LostFocus="DestQuantityTextChange" GotFocus="DestQuantityTextChangeGotFocus" />
-                                       
+                                        <ClientSideEvents LostFocus="DestQuantityTextChange" GotFocus="DestQuantityTextChangeGotFocus" />                                       
                                     </PropertiesTextEdit>
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
-
-
                                 </dxe:GridViewDataTextColumn>
 
                                 <dxe:GridViewDataTextColumn FieldName="DestUOM" Caption="UOM" VisibleIndex="7" Width="80px" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
@@ -716,17 +712,13 @@
                                     </PropertiesTextEdit>
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                 </dxe:GridViewDataTextColumn>
-
-
                                 <%--  Manis 24428--%>
-
                                 <dxe:GridViewCommandColumn VisibleIndex="8" Caption="Multi UOM" Width="80px">
                                     <CustomButtons>
                                         <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomMultiUOM" Image-Url="/assests/images/MultiUomIcon.png" Image-ToolTip="Multi UOM">
                                         </dxe:GridViewCommandColumnCustomButton>
                                     </CustomButtons>
                                 </dxe:GridViewCommandColumn>
-
                                 <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="9" Width="80px" ReadOnly="true">
                                     <PropertiesTextEdit DisplayFormatString="0.0000" Style-HorizontalAlign="Right">
                                         <%--  <ClientSideEvents GotFocus="QuantityGotFocus" LostFocus="QuantityTextChange" />--%>
@@ -737,23 +729,11 @@
                                     <CellStyle HorizontalAlign="Right">
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
-
                                 <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="Order_AltUOM" ReadOnly="true" VisibleIndex="10" Width="80px">
                                     <PropertiesTextEdit>
                                     </PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
-
-
-
                                 <%--  Manis End 24428--%>
-
-
-
-
-
-
-
-
                                 <dxe:GridViewCommandColumn Width="70px" VisibleIndex="11" Caption="Stk Details">
                                     <CustomButtons>
                                         <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomWarehouseDest" Image-Url="/assests/images/warehouse.png">
@@ -780,8 +760,6 @@
                                     </PropertiesTextEdit>
                                     <CellStyle></CellStyle>
                                 </dxe:GridViewDataTextColumn>
-
-
                                 <dxe:GridViewDataButtonEditColumn FieldName="EntityCode" Caption="Entity Code" Width="160px" ReadOnly="True" VisibleIndex="15">
                                     <PropertiesButtonEdit>
                                         <ClientSideEvents ButtonClick="EntityButnClick" KeyDown="EntityKeyDown" />
@@ -801,14 +779,12 @@
                                 </dxe:GridViewDataTextColumn>
                                 <dxe:GridViewDataTextColumn FieldName="ActualDestSL" Width="0" VisibleIndex="19">
                                 </dxe:GridViewDataTextColumn>
-
                                 <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="60px" VisibleIndex="18" Caption="Add New">
                                     <CustomButtons>
                                         <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomAddNewRowDest" Image-Url="/assests/images/add.png">
                                         </dxe:GridViewCommandColumnCustomButton>
                                     </CustomButtons>
                                 </dxe:GridViewCommandColumn>
-
                                 <dxe:GridViewDataTextColumn FieldName="DestPackingQty" Caption="hidden DestPackingQty" VisibleIndex="20" ReadOnly="True" Width="0"
                                     EditCellStyle-CssClass="hide" PropertiesTextEdit-FocusedStyle-CssClass="hide" PropertiesTextEdit-Style-CssClass="hide" PropertiesTextEdit-Height="15px">
                                     <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.000">
@@ -821,9 +797,7 @@
                                     PropertiesTextEdit-Height="15px">
                                     <CellStyle Wrap="True" CssClass="hide"></CellStyle>
                                 </dxe:GridViewDataTextColumn>
-
                             </Columns>
-
                             <ClientSideEvents RowClick="GetVisibleIndexDest" BatchEditStartEditing="GetVisibleIndexDest" CustomButtonClick="gridDEstinationCustomButtonClick"
                                 EndCallback="GridEndCallBackgridDEstination" />
                             <SettingsDataSecurity AllowEdit="true" />

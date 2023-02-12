@@ -1,4 +1,8 @@
-﻿
+﻿//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.36  10-02-2023   0025665:Product Scheme rate was not captured automatically while making Sales Order
+
+//====================================================End Revision History=====================================================================
+
 $(function () {
     $('#UOMModal').on('hide.bs.modal', function () {
         grid.batchEditApi.StartEdit(globalRowIndex, 8);
@@ -7259,8 +7263,9 @@ function SetProduct(Id, Name,e) {
     }
 
     tbDescription.SetValue(strDescription);
-    tbUOM.SetValue(strUOM);
-    tbSalePrice.SetValue(strSalePrice);
+    tbUOM.SetValue(strUOM);  
+    tbSalePrice.SetValue(strSalePrice); 
+
     divPacking.style.display = "none";
     grid.GetEditor("Quantity").SetValue("0.00");
     grid.GetEditor("Discount").SetValue("0.00");
@@ -7355,12 +7360,13 @@ function SetProduct(Id, Name,e) {
         tbTotalAmount.SetValue(Amount + (TotaAmountRes * 1));
 
         //DiscountTextChange(s, e);
-        
-        setTimeout(function () {
+
+
+       // setTimeout(function () {//Rev 1.0
             if ($("#ProductMinPrice").val() != "") {
                 grid.GetEditor("SalePrice").SetValue($("#ProductMinPrice").val());
             }
-        }, 200);
+       // }, 200);//Rev 1.0
         
     }
     else {
@@ -7488,6 +7494,7 @@ function GetSalesRateSchemePrice(CustomerID, ProductID, SalesPrice) {
         data: JSON.stringify(OtherDetails),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        async: false,//Rev 1.0
         success: function (msg) {
             var returnObject = msg.d;
             // Mantis Issue 24397
