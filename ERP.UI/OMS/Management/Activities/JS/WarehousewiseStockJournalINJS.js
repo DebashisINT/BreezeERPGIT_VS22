@@ -1,4 +1,8 @@
-﻿
+﻿//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.36  10-02-2023   0025652:Alternate qty is not calculating while making Warehouse wise Stock In entry
+
+//====================================================End Revision History=====================================================================
+
 var globalRowIndex;
 var globalRowIndexDestination;
 var saveNewOrExit = '';
@@ -1743,6 +1747,11 @@ function gridDEstinationCustomButtonClick(s, e) {
             var Ptype = SpliteDetails[3];
             var Purchase_UOM = strUOM;
             var serviceURL = "Services/Master.asmx/CheckDuplicateSerial";
+            var ALTUOMID = SpliteDetails[8];
+
+            ccmbAltUOM.SetValue(ALTUOMID);
+            
+
             //$('#hdfProductTypeDest').val(Ptype);
             //document.getElementById("lblProductNameDest").innerHTML = strProductName;
             //document.getElementById("txt_SalesAmountDest").innerHTML = QuantityValue;
@@ -1839,6 +1848,7 @@ function gridDEstinationCustomButtonClick(s, e) {
 
                 CreateStock();
                 cPopupWarehouse.Show();
+
             }
             else if (Ptype == "WS") {
                 //div_WarehouseDest.style.display = 'block';

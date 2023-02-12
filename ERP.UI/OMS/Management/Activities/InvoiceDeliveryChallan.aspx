@@ -1,5 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti   V2.0.36     0025577:Alt UOM is enabled false if we want to modify the stock details after saving the document.cmbSecondUOM remove ClientEnabled="false"
+   2.0   Priti   V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -1812,6 +1813,7 @@
                                                 <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" Enabled="false">
                                                     <asp:ListItem Selected="True" Text="Select" Value="0"></asp:ListItem>
                                                     <asp:ListItem Text="B2B" Value="B2B" />
+                                                    <asp:ListItem Text="B2C" Value="B2C" /><%--Rev 2.0--%>
                                                     <asp:ListItem Text="SEZWP" Value="SEZWP" />
                                                     <asp:ListItem Text="SEZWOP" Value="SEZWOP" />
                                                     <asp:ListItem Text="EXPWP" Value="EXPWP" />

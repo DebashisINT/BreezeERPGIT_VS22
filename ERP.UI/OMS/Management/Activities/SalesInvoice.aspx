@@ -1,4 +1,8 @@
-﻿<%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoice" %>
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti   V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
+========================================== End Revision History =======================================================================================================--%>
+
+<%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoice" %>
 
 <%--<%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>--%>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/Sales_BillingShipping.ascx" TagPrefix="ucBS" TagName="Sales_BillingShipping" %>
@@ -1427,9 +1431,10 @@ $(document).ready(function () {
                                             <div class="col-md-2">
                                                 <dxe:ASPxLabel ID="ASPxLabel13" runat="server" Text="Transaction Category">
                                                 </dxe:ASPxLabel>
-                                                <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" Enabled="false">
+                                                <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" >
                                                     <asp:ListItem Selected="True" Text="Select" Value="0"></asp:ListItem>
                                                     <asp:ListItem Text="B2B" Value="B2B" />
+                                                    <asp:ListItem Text="B2C" Value="B2C" /><%--Rev 1.0--%>
                                                     <asp:ListItem Text="SEZWP" Value="SEZWP" />
                                                     <asp:ListItem Text="SEZWOP" Value="SEZWOP" />
                                                     <asp:ListItem Text="EXPWP" Value="EXPWP" />

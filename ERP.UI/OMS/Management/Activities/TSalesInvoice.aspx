@@ -1,13 +1,11 @@
-﻿
-
-
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti   V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
+========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Transit Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
     EnableEventValidation="false" CodeBehind="TSalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.TSalesInvoice" %>
-
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <%--<%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>--%>
-
 <%@ Register Src="~/OMS/Management/Activities/UserControls/Sales_BillingShipping.ascx" TagPrefix="ucBS" TagName="Sales_BillingShipping" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/TermsConditionsControl.ascx" TagPrefix="uc2" TagName="TermsConditionsControl" %>
@@ -6284,6 +6282,7 @@ function fn_Edit(keyValue) {
                                                 <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" Enabled="false">
                                                     <asp:ListItem Selected="True" Text="Select" Value="0"></asp:ListItem>
                                                     <asp:ListItem Text="B2B" Value="B2B" />
+                                                    <asp:ListItem Text="B2C" Value="B2C" /><%--Rev 1.0--%>
                                                     <asp:ListItem Text="SEZWP" Value="SEZWP" />
                                                     <asp:ListItem Text="SEZWOP" Value="SEZWOP" />
                                                     <asp:ListItem Text="EXPWP" Value="EXPWP" />
