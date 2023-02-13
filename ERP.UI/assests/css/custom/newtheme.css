@@ -3241,9 +3241,12 @@ hr.tfour {
     /*border-radius: 3px;*/
 }
 .dxeCalendarHeader_PlasticBlue {
-    background: #54749D !important;
+    /*background: #54749D !important;
     border-bottom: 1px solid #3e597b;
-    padding: 4px 12px 3px;
+    padding: 4px 12px 3px;*/
+    background: #094e8c !important;
+    border-bottom: 1px solid #094e8c;
+    padding: 6px 12px 6px;
 }
 .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxtcLite_PlasticBlue.dxtc-noSpacing > .dxtc-stripContainer .dxtc-activeTab.dxtc-lead, .dxtcLite_PlasticBlue.dxtc-noSpacing > .dxtc-stripContainer .dxtc-activeTab.dxtc-n {
     border-top: 1px solid #3e597b;
@@ -3262,7 +3265,8 @@ hr.tfour {
 }
 .dxeCalendarSelected_PlasticBlue, .dxgvFooter_PlasticBlue {
     color: White;
-    background-color: #54749d;
+    /*background-color: #54749d;*/
+    background-color: #094e8c;
 }
 
 .inline-block {

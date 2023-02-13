@@ -273,6 +273,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
             margin-right: 5px;
         }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
         /*Rev end 1.0*/
     </style>
 

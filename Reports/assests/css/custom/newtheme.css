@@ -321,16 +321,26 @@ input[type="radio"] {
         color: #fff;
     }
 
-.btn-success {
+/*.btn-success {
     background-color: #34a634 !important;
     border-color: #4cae4c !important;
     color: #fff !important;
+}*/
+.btn-success {
+    background-color: #f8666f !important;
+    border-color: #f8666f !important;
+    color: #fff !important;
+    background-image: none !important;
 }
 
 
-    .btn-success:hover {
+    /*.btn-success:hover {
         background-color: #419641 !important;
         border-color: #2e9738 !important;
+    }*/
+    .btn-success:hover {
+        background-color: #dd444d !important;
+        border-color: #dd444d !important;
     }
     
     select.btn-radius {
@@ -3148,24 +3158,37 @@ hr.tfour {
     text-align: left;
 }
 .btn-primary {
-    background-image: -webkit-linear-gradient(top,#688bb7 0,#324763 100%);
+    /*background-image: -webkit-linear-gradient(top,#688bb7 0,#324763 100%);
     background-image: -o-linear-gradient(top,#337ab7 0,#265a88 100%);
     background-image: -webkit-gradient(linear,left top,left bottom,from(#688bb7),to(#324763 ));
     background-image: linear-gradient(to bottom,#688bb7 0,#324763 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff265a88', GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    background-repeat: repeat-x;
-    border-color: #446998;
+    background-repeat: repeat-x;*/
+    border-color: #446998 !important;
+    background: #195ca0 !important;
 }
+
+.btn-primary {
+    background-color: #195ca0 !important;
+}
+
+    .btn-primary:hover {
+        background-color: #05488d !important;
+        border-color: #05488d !important;
+    }
 .dxeButtonEditButton_PlasticBlue {
     padding: 0 2px;
     background:  #54749D !important;
     border: 1px Solid #3e597b;
 }
 .dxeCalendarHeader_PlasticBlue {
-    background: #54749D !important;
+    /*background: #54749D !important;
     border-bottom: 1px solid #3e597b;
-    padding: 4px 12px 3px;
+    padding: 4px 12px 3px;*/
+    background: #094e8c !important;
+    border-bottom: 1px solid #094e8c;
+    padding: 6px 12px 6px;
 }
 .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxtcLite_PlasticBlue.dxtc-noSpacing > .dxtc-stripContainer .dxtc-activeTab.dxtc-lead, .dxtcLite_PlasticBlue.dxtc-noSpacing > .dxtc-stripContainer .dxtc-activeTab.dxtc-n {
     border-top: 1px solid #3e597b;
@@ -3184,7 +3207,8 @@ hr.tfour {
 }
 .dxeCalendarSelected_PlasticBlue, .dxgvFooter_PlasticBlue {
     color: White;
-    background-color: #54749d;
+    /*background-color: #54749d;*/
+    background-color: #094e8c;
 }
 
 .inline-block {
