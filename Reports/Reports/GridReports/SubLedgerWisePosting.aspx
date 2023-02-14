@@ -610,7 +610,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .calendar-icon {
             position: absolute;
             bottom: 6px;
-            right: 20px;
+            right: 26px;
             z-index: 0;
             cursor: pointer;
         }
@@ -798,7 +798,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         table
         {
-                max-width: 99%  !important;
+                max-width: 97%  !important;
         }
         /*Rev end 1.0*/
     </style>
