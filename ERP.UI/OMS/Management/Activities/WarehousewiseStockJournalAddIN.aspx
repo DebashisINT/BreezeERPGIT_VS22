@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockJournalAddIN.aspx.cs" 
+﻿<%--====================================================Revision History=========================================================================
+1.0  Priti   V2.0.36  14-02-2023   0025652:Alternate qty is not calculating while making Warehouse wise Stock In entry
+
+====================================================End Revision History=====================================================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockJournalAddIN.aspx.cs" 
     Inherits="ERP.OMS.Management.Activities.WarehousewiseStockJournalAddIN" EnableEventValidation="false" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc1" TagName="UOMConversionControl" %>
@@ -11,7 +15,10 @@
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
     <%-- <script src="JS/SearchPopup.js?v=0.04"></script>--%>
     <script src="JS/SearchPopupDatatable.js"></script>
-    <script src="JS/ProductStockIN.js?v00000.007"></script>
+    <%--Rev 1.0--%>
+   <%-- <script src="JS/ProductStockIN.js?v00000.007"></script>--%>
+     <script src="JS/WarehouseProductStockIN.js?v1.0"></script>
+   <%-- Rev 1.0 End--%>
     <script src="JS/WarehousewiseStockJournalINJS.js?v=11.0"></script>
      <link href="CSS/PurchaseChallan.css" rel="stylesheet" />
     <style type="text/css">
@@ -1564,7 +1571,7 @@
 
     <!--Product Stock Modal -->
     <dxe:ASPxPopupControl ID="PopupWarehouse" runat="server" ClientInstanceName="cPopupWarehouse"
-        Width="850px" HeaderText="Stock Details" PopupHorizontalAlign="WindowCenter"
+        Width="1000px" HeaderText="Stock Details" PopupHorizontalAlign="WindowCenter"
         BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
         Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
         ContentStyle-CssClass="pad">
