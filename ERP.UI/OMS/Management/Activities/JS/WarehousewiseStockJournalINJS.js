@@ -1747,10 +1747,11 @@ function gridDEstinationCustomButtonClick(s, e) {
             var Ptype = SpliteDetails[3];
             var Purchase_UOM = strUOM;
             var serviceURL = "Services/Master.asmx/CheckDuplicateSerial";
-            var ALTUOMID = SpliteDetails[8];
 
+            //Rev 1.0
+            var ALTUOMID = SpliteDetails[8];
             ccmbAltUOM.SetValue(ALTUOMID);
-            
+            //Rev 1.0 End
 
             //$('#hdfProductTypeDest').val(Ptype);
             //document.getElementById("lblProductNameDest").innerHTML = strProductName;

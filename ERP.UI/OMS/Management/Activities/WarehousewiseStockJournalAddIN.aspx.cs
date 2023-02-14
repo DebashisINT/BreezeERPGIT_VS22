@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region//==================================================== Revision History =========================================================================
+//1.0  Priti V2.0.36  14-02-2023   0025652:Alternate qty is not calculating while making Warehouse wise Stock In entry
+
+#endregion//====================================================End Revision History=====================================================================
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -7054,10 +7058,10 @@ namespace ERP.OMS.Management.Activities
         public object GetStock(DataTable dt)
         {
 
-            List<ProductStockDetailsPC> ProductList = new List<ProductStockDetailsPC>();
+            List<ProductStockDetailsIN> ProductList = new List<ProductStockDetailsIN>();
 
             ProductList = (from DataRow dr in dt.Rows
-                           select new ProductStockDetailsPC()
+                           select new ProductStockDetailsIN()
                            {
                                Product_SrlNo = Convert.ToString(dr["Product_SrlNo"]),
                                SrlNo = Convert.ToString(dr["SrlNo"]),
@@ -7078,11 +7082,14 @@ namespace ERP.OMS.Management.Activities
                                LoopID = Convert.ToString(dr["LoopID"]),
                                Status = Convert.ToString(dr["Status"]),
                                AltQty = Convert.ToString(dr["AltQty"]),
-                               AltUOM = Convert.ToString(dr["AltUOM"])
+                               AltUOM = Convert.ToString(dr["AltUOM"]),
+                               AltQtyUOM = Convert.ToString(dr["AltQtyUOM"])
                            }).ToList();
 
             return ProductList;
         }
+
+
         public void BindWarehouse()
         {
             DataTable dt = GetWarehouseData();
@@ -7274,4 +7281,33 @@ namespace ERP.OMS.Management.Activities
 
 
     }
+    //Rev 1.0
+    public class ProductStockDetailsIN
+    {
+        public string Product_SrlNo { get; set; }
+        public string SrlNo { get; set; }
+        public string WarehouseID { get; set; }
+        public string WarehouseName { get; set; }
+        public string Quantity { get; set; }
+        public string SalesQuantity { get; set; }
+        public string Batch { get; set; }
+        public string MfgDate { get; set; }
+        public string ExpiryDate { get; set; }
+        public string Rate { get; set; }
+        public string SerialNo { get; set; }
+        public string Barcode { get; set; }
+        public string ViewBatch { get; set; }
+        public string ViewMfgDate { get; set; }
+        public string ViewExpiryDate { get; set; }
+        public string ViewRate { get; set; }
+        public string IsOutStatus { get; set; }
+        public string IsOutStatusMsg { get; set; }
+        public string LoopID { get; set; }
+        public string Status { get; set; }
+        public string AltQty { get; set; }
+        public string AltUOM { get; set; }
+        public string AltQtyUOM { get; set; }
+        
+    }
+    //Rev 1.0 End
 }
