@@ -312,7 +312,7 @@
             display:none;
         }
 
-        /*Rev 1.0*/
+        /*Rev 2.0*/
         .outer-div-main {
             background: #ffffff;
             padding: 10px;
@@ -554,7 +554,7 @@
         {
             max-width: 100% !important;
         }*/
-        /*Rev end 1.0*/
+        /*Rev end 2.0*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -626,7 +626,7 @@
           </div>
         </div>
     </div>
-    <%--Rev 1.0: "outer-div-main" class add: --%>
+    <%--Rev 2.0: "outer-div-main" class add: --%>
     <div class="outer-div-main">
         <div class="form_main">
         <asp:HiddenField runat="server" ID="hdndaily" />
@@ -658,9 +658,9 @@
                     <buttonstyle width="13px">
                         </buttonstyle>
                 </dxe:ASPxDateEdit>
-                <%--Rev 1.0--%>
+                <%--Rev 2.0--%>
                 <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
             </div>
             <div class="col-md-2" id="dvtodate">
                 <label style="color: #b5285f;" class="clsTo">
@@ -672,15 +672,15 @@
                     <buttonstyle width="13px">
                     </buttonstyle>
                 </dxe:ASPxDateEdit>
-                <%--Rev 1.0--%>
+                <%--Rev 2.0--%>
                 <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
             </div>
 
-            <%--Rev 1.0--%>
+            <%--Rev 2.0--%>
             <%--<div class="col-md-1">--%>
             <div class="col-md-2 simple-select">
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
                 <div style="color: #b5285f;" class="clsTo">
                     <label style="color: #b5285f;" class="clsTo">
                         <asp:Label ID="Label2" runat="Server" Text="Head Branch : " CssClass="mylabel1"
@@ -802,10 +802,10 @@
                 <span id="MandatorClass" style="display: none" class="validclass" />
             </div>
             <div class="clear"></div>
-            <%--Rev 1.0--%>
+            <%--Rev 2.0--%>
             <%--<div class="col-md-2" style="padding-top: 15px;color: #b5285f;">--%>
             <div class="col-md-2" style="padding-top: 20px;color: #141414;">
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
                 <div style="padding-right: 10px; vertical-align: middle; padding-top: 6px">
                     <asp:CheckBox ID="chkZero" runat="server" Checked="false"/>
                     Show Zero Value Account
@@ -818,10 +818,10 @@
                     Consider Closing Stock
                 </div>
             </div>--%>            
-            <%--Rev 1.0--%>
+            <%--Rev 2.0--%>
             <%--<div class="col-md-2" style="margin-top:15px;color: #b5285f; font-weight: bold;">--%>
             <div class="col-md-2" style="margin-top:20px;color: #141414; font-weight: bold;">
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
              <dxe:ASPxCheckBox runat="server" ID="chkPL" Checked="false" Text="Consider Closing Stock" >
                  <ClientSideEvents CheckedChanged="CheckConsPL" />
              </dxe:ASPxCheckBox>
@@ -838,10 +838,10 @@
                     </asp:DropDownList>
                 </div>
             </div>
-            <%--Rev 1.0--%>
+            <%--Rev 2.0--%>
             <%--<div class="col-md-3" style="margin-top:15px;color: #b5285f; font-weight: bold;">--%>
             <div class="col-md-3" style="margin-top:24px;color: #b5285f; font-weight: bold;">
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
                 <dxe:ASPxCheckBox runat="server" ID="chkOWMSTVT" Checked="false" ClientEnabled="false" Text="Override Product Valuation Technique in Master" ClientInstanceName="CchkOWMSTVT">
                 </dxe:ASPxCheckBox>
             </div> 
@@ -850,35 +850,35 @@
              <dxe:ASPxCheckBox runat="server" ID="chkSLOPBal" Checked="false" Text="Consider Subledger wise Opening" >
              </dxe:ASPxCheckBox>
             </div>--%>
-            <%--Rev 1.0--%>
+            <%--Rev 2.0--%>
             <%--<div class="col-md-3" style="margin-top:15px;color: #b5285f; font-weight: bold;">--%>
             <div class="col-md-3" style="margin-top:24px;color: #b5285f; font-weight: bold;">
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
             <dxe:ASPxCheckBox runat="server" ID="chkConsLandCost" Checked="false" ClientEnabled="false" Text="Consider Landed Cost" ClientInstanceName="CchkConsLandCost">
                 </dxe:ASPxCheckBox>
             </div> 
             <div class="clear"></div>
-            <%--Rev 1.0--%>
+            <%--Rev 2.0--%>
             <%--<div class="col-md-2" style="margin-top:8px;color: #b5285f; font-weight: bold;">--%>
             <div class="col-md-2" style="margin-top:18px;color: #b5285f; font-weight: bold;">
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
                 <dxe:ASPxCheckBox runat="server" ID="chkConsOverHeadCost" Checked="false" ClientEnabled="false" Text="Consider Overhead Cost" ClientInstanceName="CchkConsOverHeadCost">
                 </dxe:ASPxCheckBox>
             </div>
-            <%--Rev 1.0--%>
+            <%--Rev 2.0--%>
             <%--<div class="col-md-3" style="padding-top: 1px;color: #b5285f;">--%>
             <div class="col-md-3" style="padding-top: 10px;color: #b5285f;">
-                <%--Rev end 1.0--%>
+                <%--Rev end 2.0--%>
                 <div style="padding-right: 10px; vertical-align: middle; padding-top: 6px">
                     <%--<asp:CheckBox ID="chkSLOPBal" runat="server" Checked="false" Text="Consider Subledger wise Opening"/>--%>
                     <dxe:ASPxCheckBox runat="server" ID="chkSLOPBal" Checked="false" Text="Consider Subledger wise Opening">
                     </dxe:ASPxCheckBox>
                 </div>
             </div>
-            <%--Rev 1.0--%>
+            <%--Rev 2.0--%>
            <%--<div class="col-md-2" style="padding-top: 1px">--%>
            <div class="col-md-2" style="padding-top: 10px">
-               <%--Rev end 1.0--%>
+               <%--Rev end 2.0--%>
                 <button id="btnShow" class="btn btn-success" type="button" onclick="btn_ShowRecordsClick(this);">Show</button>
                 <% if (rights.CanExport)
                     { %> 
@@ -915,9 +915,11 @@
             <tr>
                 <td colspan="2">
                     <div onkeypress="OnWaitingGridKeyPress(event)">
+                        <%--Rev 2.0: Add grid height--%>
                         <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False" KeyboardSupport="true" KeyFieldName="SEQ"
                              DataSourceID="GenerateEntityServerModeDataSource"  OnDataBinding="ShowGrid_DataBinding" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" OnHtmlDataCellPrepared="ShowGrid_HtmlDataCellPrepared"
-                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Visible" OnHtmlFooterCellPrepared="ShowGrid_HtmlFooterCellPrepared">
+                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Visible" OnHtmlFooterCellPrepared="ShowGrid_HtmlFooterCellPrepared"
+                            Settings-VerticalScrollableHeight="200" Settings-VerticalScrollBarMode="Auto">
                             <%--OnDataBound="ShowGrid_DataBound" --%>
                             <columns>
                                 <dxe:GridViewDataTextColumn FieldName="BOLD_GRP" Caption="BOLD_GRP" Width="0%" VisibleIndex="1" HeaderStyle-CssClass="colDisable"/>                                 
