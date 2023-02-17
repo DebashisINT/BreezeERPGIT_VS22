@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../Activities/CSS/SearchPopup.css" rel="stylesheet" />
     <%--Code Added By Sandip For Approval Detail Section Start--%>
-    <script src="JS/PurchaseOrderList.js?V=2.1"></script>
+    <script src="JS/PurchaseOrderList.js?V=2.2"></script>
     <link href="CSS/PurchaseOrderList.css" rel="stylesheet" />
     <script>
         // Mantis Issue 25394

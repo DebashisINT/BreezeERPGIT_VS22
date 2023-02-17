@@ -1,6 +1,6 @@
 ﻿//====================================================Revision History=========================================================================
-// 1.0  Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table
-
+// 1.0   Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table
+// 2.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
 //====================================================End Revision History=====================================================================
 function OnProductWiseClosedClick(keyValue, visibleIndex, PurchaseOrder) {
     $("#hddnKeyValue").val(keyValue);
@@ -596,7 +596,9 @@ function grid_EndCallBack() {
         jAlert(cGrdOrder.cpDelete);
         cGrdOrder.cpDelete = null;
         //cGrdOrder.Refresh();
+       /* Rev 2.0*/
         updateGridByDate();
+        /* Rev 2.0 End*/
     }
 }
 function SavePrpformaStatus() {

@@ -1,5 +1,7 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
-   1.0   Priti   V2.0.36     0025324: Views to be converted to Procedures in the Listing Page of Transaction / Transit Sales/Purchase / Sales Invoice
+   1.0   Priti   V2.0.36     10-01-2023     0025324: Views to be converted to Procedures in the Listing Page of Transaction / Transit Sales/Purchase / Sales Invoice
+   2.0   Priti   V2.0.36     17-02-2023     After Listing view upgradation delete data show in listing issue solved.
+
 ========================================== End Revision History =======================================================================================================--%>
 
 

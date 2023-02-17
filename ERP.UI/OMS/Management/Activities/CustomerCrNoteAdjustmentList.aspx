@@ -1,5 +1,7 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti   V2.0.36   16-01-2023     	0025319:Views to be converted to Procedures in the Listing Page of Transaction / Adjustment of Documents - Cu / Credit Note With Invoice
+   2.0   Priti   V2.0.36   17-02-2023         After Listing view upgradation delete data show in listing issue solved.
+
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -56,7 +58,13 @@
         }
         function GridEndCallBack() {
             if (cgridAdvanceAdj.cpReturnMesg) {
-                jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () { cgridAdvanceAdj.Refresh(); });
+                jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () {
+                   
+                    /* Rev 2.0*/
+                    //   cgridAdvanceAdj.Refresh();
+                    updateGridByDate();
+                    /* Rev 2.0 End*/
+                });
                 cgridAdvanceAdj.cpReturnMesg = null;
             }
         }

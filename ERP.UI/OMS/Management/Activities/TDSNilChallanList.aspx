@@ -1,4 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="TDSNilChallanList.aspx.cs" Inherits="ERP.OMS.Management.Activities.TDSNilChallanList" %>
+﻿<%--=======================================================Revision History========================================================================= 
+    1.0     Priti   V2.0.36   17-02-2023     	0025266: Listing view upgradation required of TDS Nil Challan of Accounts & Finance
+=========================================================End Revision History========================================================================--%>
+
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="TDSNilChallanList.aspx.cs" Inherits="ERP.OMS.Management.Activities.TDSNilChallanList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -41,8 +47,7 @@
         }
         function OnClickDelete(id) {
             jConfirm("Confirm Delete?", "Alert", function (ret) {
-                if (ret)
-                { cgridAdvanceAdj.PerformCallback("Del~" + id); }
+                if (ret) { cgridAdvanceAdj.PerformCallback("Del~" + id); }
             });
         }
         function OnViewClick(keyValue) {
@@ -51,7 +56,13 @@
         }
         function GridEndCallBack() {
             if (cgridAdvanceAdj.cpReturnMesg) {
-                jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () { cgridAdvanceAdj.Refresh(); });
+                jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () {
+                    //rev 1.0
+                    //cgridAdvanceAdj.Refresh();
+                    updateGridByDate();
+                     //end rev 1.0
+
+                });
                 cgridAdvanceAdj.cpReturnMesg = null;
             }
         }
@@ -73,11 +84,23 @@
 
                 $("#hfFromDate").val(cFormDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
-               // $("#hfBranchID").val(ccmbBranchfilter.GetValue());
+                // $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-                cgridAdvanceAdj.Refresh();
+
+                //rev 1.0
+                // cgridAdvanceAdj.Refresh();
+                $("#hFilterType").val("All");
+                cCallbackPanel.PerformCallback("");
+                //end rev 1.0
+
+
             }
         }
+        //rev 1.0
+        function CallbackPanelEndCall(s, e) {
+            cGvCBSearch.Refresh();
+        }
+        //end rev 1.0
         function OnAddClick() {
             window.location.href = 'TDSNilChallan.aspx?Key=Add';
         }
@@ -183,12 +206,12 @@
 
     <div class="form_main">
         <% if (rights.CanAdd)
-           { %>
+            { %>
         <a href="javascript:void(0);" onclick="OnAddClick()" id="AddId" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>A</u>dd TDS</span> </a>
         <%} %>
 
         <% if (rights.CanExport)
-           { %>
+            { %>
         <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
             <asp:ListItem Value="0">Export to</asp:ListItem>
             <asp:ListItem Value="1">PDF</asp:ListItem>
@@ -198,8 +221,8 @@
         </asp:DropDownList>
         <% } %>
 
-         <div id="spnEditLock" runat="server" style="display:none; color:red;text-align:center"></div>
-     <div id="spnDeleteLock" runat="server" style="display:none; color:red;text-align:center"></div>
+        <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
+        <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
 
 
         <div class="GridViewArea relative">
@@ -244,7 +267,7 @@
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataDateColumn>
-                    
+
 
                     <dxe:GridViewDataTextColumn Caption="Financial Year" FieldName="FinYear" Width="200"
                         VisibleIndex="0">
@@ -271,7 +294,7 @@
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
-                     <dxe:GridViewDataTextColumn Caption="Education Cess" FieldName="eduCess" Width="200" HeaderStyle-HorizontalAlign="Right"
+                    <dxe:GridViewDataTextColumn Caption="Education Cess" FieldName="eduCess" Width="200" HeaderStyle-HorizontalAlign="Right"
                         VisibleIndex="0">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                         <CellStyle CssClass="gridcellleft" Wrap="true" HorizontalAlign="Right">
@@ -280,7 +303,7 @@
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
-                     <dxe:GridViewDataTextColumn Caption="Total" FieldName="Total" Width="200" HeaderStyle-HorizontalAlign="Right"
+                    <dxe:GridViewDataTextColumn Caption="Total" FieldName="Total" Width="200" HeaderStyle-HorizontalAlign="Right"
                         VisibleIndex="0">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                         <CellStyle CssClass="gridcellleft" Wrap="true" HorizontalAlign="Right">
@@ -288,7 +311,7 @@
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
-                     <dxe:GridViewDataTextColumn Caption="Tax" FieldName="Tax" Width="200" HeaderStyle-HorizontalAlign="Right"
+                    <dxe:GridViewDataTextColumn Caption="Tax" FieldName="Tax" Width="200" HeaderStyle-HorizontalAlign="Right"
                         VisibleIndex="0">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                         <CellStyle CssClass="gridcellleft" Wrap="true" HorizontalAlign="Right">
@@ -296,8 +319,8 @@
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
-                    
-                     
+
+
 
                     <dxe:GridViewDataTextColumn Caption="Created By" FieldName="CreatedBy" Width="200"
                         VisibleIndex="0">
@@ -331,20 +354,20 @@
                         <DataItemTemplate>
                             <div class='floatedBtnArea'>
                                 <% if (rights.CanView)
-                                   { %>
+                                    { %>
                                 <a href="javascript:void(0);" onclick="OnViewClick('<%# Container.KeyValue %>')" class="" title="">
                                     <span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>
                                 <% } %>
                                 <% if (rights.CanEdit)
-                                   { %>
-                                <a href="javascript:void(0);" class="" title="" onclick="onEditClick('<%# Container.KeyValue %>')" >
+                                    { %>
+                                <a href="javascript:void(0);" class="" title="" onclick="onEditClick('<%# Container.KeyValue %>')">
                                     <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>
                                 </a>
                                   <%} %>
 
                                 <% if (rights.CanDelete)
-                                   { %>
-                                <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" title="" id="a_delete" >
+                                    { %>
+                                <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" title="" id="a_delete">
                                     <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>
                                 <%} %>
                             </div>
@@ -362,7 +385,7 @@
 
                 </Columns>
                 <SettingsContextMenu Enabled="true"></SettingsContextMenu>
-               <%-- <TotalSummary>
+                <%-- <TotalSummary>
                     <dxe:ASPxSummaryItem FieldName="Adjusted_Amount" SummaryType="Sum" />
                 </TotalSummary>--%>
 
@@ -385,11 +408,20 @@
         </div>
     </div>
 
-    
-<asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
-<asp:HiddenField ID="hdnLockToDateedit" runat="server" />
- 
- <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
-    <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
 
+    <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
+
+    <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+    <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+    <%--  REV 1.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <asp:HiddenField ID="hFilterType" runat="server" />
+    <%--END REV 1.0--%>
 </asp:Content>

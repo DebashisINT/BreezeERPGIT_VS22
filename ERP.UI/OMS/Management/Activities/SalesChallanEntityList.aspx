@@ -1,9 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
-    Inherits="ERP.OMS.Management.Activities.SalesChallanEntityList" %>
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+========================================== End Revision History =======================================================================================================--%>
 
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
+    Inherits="ERP.OMS.Management.Activities.SalesChallanEntityList" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Code Added By Sandip For Approval Detail Section Start--%>
     <script>
@@ -361,7 +363,7 @@
             cGrdOrder.PerformCallback('Edit~' + keyValue);
         }
         function grid_EndCallBack() {
-            debugger;
+           // debugger;
             if (cGrdOrder.cpEdit != null) {
                 GetObjectID('hiddenedit').value = cGrdOrder.cpEdit.split('~')[0];
                 cProforma.SetText(cGrdOrder.cpEdit.split('~')[1]);
@@ -378,7 +380,11 @@
             }
             if (cGrdOrder.cpDelete != null) {
                 jAlert(cGrdOrder.cpDelete);
-                cGrdOrder.Refresh();
+              
+                /* Rev 1.0*/
+                // cGrdOrder.Refresh();
+                updateGridByDate();
+                /* Rev 1.0 End*/
                 cGrdOrder.cpDelete = null;
             }
         }

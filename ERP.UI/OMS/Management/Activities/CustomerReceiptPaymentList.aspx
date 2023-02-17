@@ -23,7 +23,7 @@
             padding: 5px;
         }
     </style>
-    <script src="JS/CustomerReceiptPaymentList.js"></script>
+    <script src="JS/CustomerReceiptPaymentList.js?v1.0"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="panel-heading clearfix">

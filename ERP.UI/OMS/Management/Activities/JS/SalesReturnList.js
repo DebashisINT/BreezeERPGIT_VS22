@@ -1,4 +1,8 @@
-﻿
+﻿//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36     17-02-2023     Afer Listing view upgradation delete data show in list issue solved.
+//========================================== End Revision History =======================================================================================================
+
+
 var ReturnId = 0;
 var JVid = "";
 var Action = "Add";
@@ -711,9 +715,11 @@ function OnEndCallback(s, e) {
 
     if (cGrdSalesReturn.cpDelete != null) {
         jAlert(cGrdSalesReturn.cpDelete);
-
         cGrdSalesReturn.cpDelete = null;
-        cGrdSalesReturn.Refresh();
+        /* Rev 1.0*/
+        //cGrdSalesReturn.Refresh();
+        updateGridByDate();
+        /* Rev 1.0 End*/
         // window.location.href = "SalesReturnList.aspx";
     }
 }

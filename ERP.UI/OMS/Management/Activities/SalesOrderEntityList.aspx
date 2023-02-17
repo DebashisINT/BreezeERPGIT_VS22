@@ -1,6 +1,5 @@
 ﻿<%--====================================================Revision History=========================================================================
  1.0  Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table 
-
 ====================================================End Revision History=====================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"

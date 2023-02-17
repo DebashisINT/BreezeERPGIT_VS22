@@ -1,14 +1,12 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti   V2.0.36   16-01-2023     	0025321: Views to be converted to Procedures in the Listing Page of Transaction / Adjustment of Documents - Cu / Advance With Invoice
+   2.0   Priti   V2.0.36   17-02-2023       After Listing view upgradation delete data show in listing issue solved.
+
 ========================================== End Revision History =======================================================================================================--%>
 
-
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerReceiptAdjustmentList.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerReceiptAdjustmentList" %>
-
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
         var isFirstTime = true;
@@ -63,7 +61,12 @@
 
         function GridEndCallBack() {
             if (cgridAdvanceAdj.cpReturnMesg) {
-                jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () { cgridAdvanceAdj.Refresh(); });
+                jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () {                    
+                    /* Rev 2.0*/
+                    //   cgridAdvanceAdj.Refresh();
+                    updateGridByDate();
+                    /* Rev 2.0 End*/
+                });
                 cgridAdvanceAdj.cpReturnMesg = null;
             }
         }

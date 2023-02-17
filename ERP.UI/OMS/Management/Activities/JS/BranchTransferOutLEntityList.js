@@ -1,5 +1,7 @@
 ﻿//==========================================================Revision History ============================================================================================
-//    1.0   Priti   V2.0.36     0025372: Listing view upgradation required of Branch Transfer Out of Inventory
+//    1.0   Priti   V2.0.36   10-01-2023     0025372: Listing view upgradation required of Branch Transfer Out of Inventory
+//    2.0   Priti   V2.0.36   17-02-2023     After Listing view upgradation delete data show in listing issue solved.
+
 //========================================== End Revision History =======================================================================================================--%>
 
 
@@ -178,7 +180,7 @@ function OnClickStatus(keyValue) {
     cGrdOrder.PerformCallback('Edit~' + keyValue);
 }
 function grid_EndCallBack() {
-    debugger;
+    //debugger;
 
     if (cGrdOrder.cpEdit != null) {
         GetObjectID('hiddenedit').value = cGrdOrder.cpEdit.split('~')[0];
@@ -197,7 +199,11 @@ function grid_EndCallBack() {
     if (cGrdOrder.cpDelete != null) {
         jAlert(cGrdOrder.cpDelete);
         cGrdOrder.cpDelete = null;
-        cGrdOrder.Refresh();
+       
+        /* Rev 2.0*/
+        // cGrdOrder.Refresh();
+        updateGridByDate();
+            //end rev 2.0
     }
     if (cGrdOrder.cpCancelUpdate == 'Reason saved successfully') {
         cGrdOrder.cpCancelUpdate = null;

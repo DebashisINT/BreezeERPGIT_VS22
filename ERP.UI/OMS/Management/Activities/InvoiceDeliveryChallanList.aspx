@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InvoiceDeliveryChallanList.aspx.cs" Inherits="ERP.OMS.Management.Activities.InvoiceDeliveryChallanList" 
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+========================================== End Revision History =======================================================================================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InvoiceDeliveryChallanList.aspx.cs" Inherits="ERP.OMS.Management.Activities.InvoiceDeliveryChallanList" 
     EnableEventValidation="false" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
@@ -890,7 +894,12 @@
                 cGrdQuotation.cpDelete = null;
 
                 jAlert(message);
-                cGrdQuotation.Refresh();
+
+                /* Rev 1.0*/
+                // cGrdQuotation.Refresh();
+                updateGridByDate();
+                /* Rev 1.0 End*/
+                
             }
         }
         function gridRowclick(s, e) {

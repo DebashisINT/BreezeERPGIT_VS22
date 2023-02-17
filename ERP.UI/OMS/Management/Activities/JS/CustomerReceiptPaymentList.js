@@ -1,4 +1,7 @@
-﻿
+﻿//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36     17-02-2023     Afer Listing view upgradation delete data show in list issue solved.
+//========================================== End Revision History =======================================================================================================
+
 
 
         document.onkeydown = function (e) {
@@ -187,8 +190,11 @@ function ShowMsgLastCall() {
 
         jAlert(CgvCustomerReceiptPayment.cpDelete)
         CgvCustomerReceiptPayment.PerformCallback();
-        CgvCustomerReceiptPayment.cpDelete = null
-        CgvCustomerReceiptPayment.Refresh();
+        CgvCustomerReceiptPayment.cpDelete = null;
+        /* Rev 1.0*/
+        //CgvCustomerReceiptPayment.Refresh();
+        updateGridByDate();
+        /* Rev 1.0 End*/
     }
 }
 

@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Purchase Indent/Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseIndent.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseIndent" %>
+﻿
+<%@ Page Title="Purchase Indent/Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseIndent.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseIndent" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -12,7 +13,7 @@
      <script src="JS/SearchPopupDatatable.js"></script>
     <%--Use for set focus on UOM after press ok on UOM--%>
 
-    <script src="JS/PurchaseIndent.js?v=5.1"></script>
+    <script src="JS/PurchaseIndent.js?v=5.2"></script>
     <script>
         function PageLoad() {
             FinYearCheckOnPageLoad();
