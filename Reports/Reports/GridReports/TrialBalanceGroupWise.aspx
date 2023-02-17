@@ -320,9 +320,9 @@
             box-shadow: 1px 1px 10px #11111154;
         }
 
-        .form_main {
+        /*.form_main {
             overflow: hidden;
-        }
+        }*/
 
         label , .mylabel1, .clsTo
         {
@@ -547,7 +547,7 @@
 
         table
         {
-            max-width: 99%  !important;
+            max-width: 98%  !important;
         }
 
         /*#lookup_project
@@ -915,11 +915,10 @@
             <tr>
                 <td colspan="2">
                     <div onkeypress="OnWaitingGridKeyPress(event)">
-                        <%--Rev 2.0: Add grid height--%>
+                        
                         <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False" KeyboardSupport="true" KeyFieldName="SEQ"
                              DataSourceID="GenerateEntityServerModeDataSource"  OnDataBinding="ShowGrid_DataBinding" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" OnHtmlDataCellPrepared="ShowGrid_HtmlDataCellPrepared"
-                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Visible" OnHtmlFooterCellPrepared="ShowGrid_HtmlFooterCellPrepared"
-                            Settings-VerticalScrollableHeight="200" Settings-VerticalScrollBarMode="Auto">
+                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Visible" OnHtmlFooterCellPrepared="ShowGrid_HtmlFooterCellPrepared">
                             <%--OnDataBound="ShowGrid_DataBound" --%>
                             <columns>
                                 <dxe:GridViewDataTextColumn FieldName="BOLD_GRP" Caption="BOLD_GRP" Width="0%" VisibleIndex="1" HeaderStyle-CssClass="colDisable"/>                                 
