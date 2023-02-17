@@ -1,6 +1,9 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
  1.0   Priti   V2.0.36   19-01-2023    0025320: Views to be converted to Procedures in the Listing Page of Transaction / Adjustment of Documents - Cu / Advance With Debit Note
+ 2.0   Priti   V2.0.36   17-02-2023    After Listing view upgradation delete data show in listing issue solved.
+
 ========================================== End Revision History =======================================================================================================--%>
+
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustReceiptAdvanceAdstDrNoteList.aspx.cs"
     Inherits="ERP.OMS.Management.Activities.CustReceiptAdvanceAdstDrNoteList" %>
@@ -72,7 +75,13 @@
 
         function GridEndCallBack() {
             if (cgridAdvanceAdj.cpReturnMesg) {
-                jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () { cgridAdvanceAdj.Refresh(); });
+                jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () {
+                   
+                    /* Rev 2.0*/
+                    //   cgridAdvanceAdj.Refresh();
+                    updateGridByDate();
+                    /* Rev 2.0 End*/
+                });
                 cgridAdvanceAdj.cpReturnMesg = null;
             }
         }

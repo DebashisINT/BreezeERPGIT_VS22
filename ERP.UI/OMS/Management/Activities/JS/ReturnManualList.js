@@ -1,5 +1,7 @@
 ﻿//<% --==========================================================Revision History ============================================================================================
-//    1.0   Priti   V2.0.36   19 - 01 - 2023    	0025313: Views to be converted to Procedures in the Listing Page of Transaction / Return - Sales / Sale Return - Manual
+//    1.0   Priti   V2.0.36   19- 01 - 2023    	0025313: Views to be converted to Procedures in the Listing Page of Transaction / Return - Sales / Sale Return - Manual
+//    2.0   Priti   V2.0.36   17-02-2023     Afer Listing view upgradation delete data show in list issue solved.
+
 //========================================== End Revision History =======================================================================================================--%>
 var ReturnId = 0;
 function onPrintJv(id) {
@@ -254,7 +256,10 @@ function OnEndCallback(s, e) {
         jAlert(cGrdSalesReturn.cpDelete);
 
         cGrdSalesReturn.cpDelete = null;
-        cGrdSalesReturn.Refresh();
+        /* Rev 2.0*/
+        //cGrdSalesReturn.Refresh();
+        updateGridByDate();
+        /* Rev 2.0 End*/
         // window.location.href = "ReturnManualList.aspx";
     }
 }

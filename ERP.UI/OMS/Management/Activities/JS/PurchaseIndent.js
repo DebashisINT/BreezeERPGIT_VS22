@@ -1,4 +1,6 @@
-﻿
+﻿//=======================================================Revision History =========================================================================
+//1.0     Priti   V2.0.36   17 - 02 - 2023     After Listing view upgradation delete data show in listing issue solved.
+//=========================================================End Revision History========================================================================
     $(function () {
             $('#UOMModal').on('hide.bs.modal', function () {
                 InsgridBatch.batchEditApi.StartEdit(globalRowIndex, 6);
@@ -949,7 +951,10 @@ function ShowMsgLastCall() {
     if (CgvPurchaseIndent.cpDelete != null) {
         jAlert(CgvPurchaseIndent.cpDelete)
         //CgvPurchaseIndent.PerformCallback();
-        CgvPurchaseIndent.Refresh();
+        //Rev 1.0
+        //CgvPurchaseIndent.Refresh();
+        updateGridByDate();
+        //Rev 1.0 End
         CgvPurchaseIndent.cpDelete = null
     }
 }

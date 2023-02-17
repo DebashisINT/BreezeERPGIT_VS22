@@ -86,7 +86,7 @@
         }
     </style>
     <%--Batch Product Popup Start--%>
-    <script src="JS/BranchRequisition.js?v=2.0"></script>
+    <script src="JS/BranchRequisition.js?v=2.1"></script>
     <script>
         function FinYearCheckOnPageLoad() {
             var SelectedDate = new Date(ctDate.GetDate());

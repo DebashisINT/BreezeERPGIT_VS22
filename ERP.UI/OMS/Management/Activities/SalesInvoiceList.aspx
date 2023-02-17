@@ -1,4 +1,8 @@
-﻿<%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoiceList" 
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+========================================== End Revision History =======================================================================================================--%>
+
+<%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoiceList" 
     EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -905,7 +909,10 @@
                 cGrdQuotation.cpDelete = null;
 
                 jAlert(message);
-                cGrdQuotation.Refresh();
+                //cGrdQuotation.Refresh();
+                /*Rev 1.0*/
+                updateGridByDate();
+                /*Rev 1.0 End*/
             }
         }
         function gridRowclick(s, e) {

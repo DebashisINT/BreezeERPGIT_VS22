@@ -281,7 +281,10 @@ function grid_EndCallBack() {
     if (cGrdQuotation.cpDelete != null) {
         jAlert(cGrdQuotation.cpDelete);
         cGrdQuotation.cpDelete = null;
-        cGrdQuotation.Refresh();
+        /* Rev 1.0*/
+       // cGrdQuotation.Refresh();
+        updateGridByDate();
+        /* Rev 1.0 End*/
     }
 
     if (cGrdQuotation.cpUpdateOpen != null) {

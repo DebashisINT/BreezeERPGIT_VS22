@@ -1,5 +1,7 @@
 ﻿//==========================================================Revision History ============================================================================================
 //    1.0   Priti   V2.0.36   19 - 01 - 2023    0025371: Listing view upgradation required of Branch Requisition of Inventory
+//    2.0   Priti   V2.0.36   17 - 02 - 2023     After Listing view upgradation delete data show in listing issue solved.
+
 //========================================== End Revision History =======================================================================================================
 
 function OnClosedClick(keyValue, visibleIndex) {
@@ -416,7 +418,10 @@ function acbpCrpUdfEndCall(s, e) {
             jAlert(CgvPurchaseIndent.cpDelete)
             //CgvPurchaseIndent.PerformCallback();
             CgvPurchaseIndent.cpDelete = null;
-            CgvPurchaseIndent.Refresh();
+            /* Rev 2.0*/
+            //CgvPurchaseIndent.Refresh();
+            updateGridByDate();
+            //end rev 2.0
         }
         if (CgvPurchaseIndent.cpCancel != null) {
 

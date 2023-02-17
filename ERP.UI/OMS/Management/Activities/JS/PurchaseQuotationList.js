@@ -1,5 +1,9 @@
-﻿
-        function timerTick() {
+﻿//=======================================================Revision History =========================================================================
+//1.0     Priti   V2.0.36   17 - 02 - 2023     After Listing view upgradation delete data show in listing issue solved.
+//=========================================================End Revision History========================================================================
+
+
+function timerTick() {
             //   cwatingInvoicegrid.Refresh();
 
 
@@ -334,7 +338,12 @@ function grid_EndCallBack() {
     if (cGrdQuotation.cpDelete != null) {
         jAlert(cGrdQuotation.cpDelete);
         cGrdQuotation.cpDelete = null;
-        cGrdQuotation.Refresh();
+        
+        //Rev 1.0
+        //cGrdQuotation.Refresh();
+        updateGridByDate();
+        //Rev 1.0 End
+
     }
 
 

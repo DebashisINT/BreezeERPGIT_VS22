@@ -266,7 +266,10 @@ function grid_EndCallBack() {
     if (cGrdOrder.cpDelete != null) {
         jAlert(cGrdOrder.cpDelete);
         cGrdOrder.cpDelete = null;
-        cGrdOrder.Refresh();
+        /* Rev 1.0*/
+       // cGrdOrder.Refresh();
+        updateGridByDate();
+        /* Rev 1.0 End*/
     }
 }
 function SavePrpformaStatus() {

@@ -1,4 +1,7 @@
-﻿
+﻿//=======================================================Revision History =========================================================================
+//1.0     Priti   V2.0.36   17-02-2023     After Listing view upgradation delete data show in listing issue solved.
+//=========================================================End Revision History========================================================================
+
 function OnAddEditDateClick(e, obj) {
     var data = obj.split('~');
     cInvoiceDatepopup.Show();
@@ -210,7 +213,14 @@ function ShowMsgLastCall() {
 
         jAlert(CgvPurchaseOrder.cpDelete)
         //CgvPurchaseOrder.PerformCallback();
-        CgvPurchaseOrder.Refresh();
+
+        //Rev 1.0
+        //CgvPurchaseOrder.Refresh();
+        updatePOGridByDate();
+        //Rev 1.0 End
+
+
+
         CgvPurchaseOrder.cpDelete = null
     }
 

@@ -4,7 +4,7 @@
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="JS/PurchaseQuotationList.js?v=1.0.099"></script>
+    <script src="JS/PurchaseQuotationList.js?v=2.0"></script>
     <style>
         strong label {
             font-weight: bold !important;

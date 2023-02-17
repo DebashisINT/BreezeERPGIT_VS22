@@ -1431,7 +1431,7 @@ $(document).ready(function () {
                                             <div class="col-md-2">
                                                 <dxe:ASPxLabel ID="ASPxLabel13" runat="server" Text="Transaction Category">
                                                 </dxe:ASPxLabel>
-                                                <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" >
+                                                <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" Enabled="false">
                                                     <asp:ListItem Selected="True" Text="Select" Value="0"></asp:ListItem>
                                                     <asp:ListItem Text="B2B" Value="B2B" />
                                                     <asp:ListItem Text="B2C" Value="B2C" /><%--Rev 1.0--%>

@@ -267,7 +267,8 @@
                             jAlert("Saved successfully.");
                             cPopup_Feedback.Hide();
                             TotalTabValue();
-                            cgrdmanualBRS.Refresh();
+                            //cgrdmanualBRS.Refresh();
+                            updateGridByDate();
                         }
                         else if (status == "-10") {
                             jAlert("Data not saved.");
@@ -401,7 +402,9 @@
             $('.navbar-minimalize').click(function () {
                 console.log('clicked');
                 TotalTabValue();
-                cgrdmanualBRS.Refresh();
+                //cgrdmanualBRS.Refresh();
+
+                updateGridByDate();
             });
         });
         
@@ -452,7 +455,8 @@
                     jAlert('Unreconciled Successfully.', 'Alert', function () {
 
                         s.cpUpdate = null;
-                        cgrdmanualBRS.Refresh();
+                        //cgrdmanualBRS.Refresh();
+                        updateGridByDate();
                     })
                 }
                 else if (s.cpUpdate == "SucsessRec") {
@@ -460,7 +464,8 @@
                     jAlert('Reconciled Successfully.', 'Alert', function () {
 
                         s.cpUpdate = null;
-                        cgrdmanualBRS.Refresh();
+                        //cgrdmanualBRS.Refresh();
+                        updateGridByDate();
                     })
                 }
 

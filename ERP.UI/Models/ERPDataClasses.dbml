@@ -5206,4 +5206,33 @@
       <Column Name="Deletelock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.TDSNILLCHALLANLIST" Member="TDSNILLCHALLANLISTs">
+    <Type Name="TDSNILLCHALLANLIST">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TDSNillChallan_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Section" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="DeductionON" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Payment_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PaymentDate" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Quater" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Surcharge" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="eduCess" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Interest" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="LateFees" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Tax" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Others" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="BankName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="BankBrach" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="BRS" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ChallanNo" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="TDSIDS" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Section_Code" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="FinYear" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedOn" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

@@ -6,7 +6,7 @@
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.css">--%>
     <link href="../../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />
     <%--Code Added By Sandip For Approval Detail Section Start--%>
-    <script src="JS/InvoiceCumChallanSO.js?v=3.0"></script>
+    <script src="JS/InvoiceCumChallanSO.js?v=3.1"></script>
     <link href="CSS/SalesOrderEntityList.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {

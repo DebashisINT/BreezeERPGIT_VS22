@@ -67,7 +67,7 @@
         }
     </script>
     <link href="CSS/SalesReturnList.css" rel="stylesheet" />
-    <script src="JS/SalesReturnList.js?v=2.1"></script>
+    <script src="JS/SalesReturnList.js?v=2.2"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="panel-heading clearfix">

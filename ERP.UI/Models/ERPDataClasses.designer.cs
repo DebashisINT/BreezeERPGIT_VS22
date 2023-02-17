@@ -1688,6 +1688,14 @@ namespace ERP.Models
 				return this.GetTable<CASHBANKLIST>();
 			}
 		}
+		
+		public System.Data.Linq.Table<TDSNILLCHALLANLIST> TDSNILLCHALLANLISTs
+		{
+			get
+			{
+				return this.GetTable<TDSNILLCHALLANLIST>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_FinanceReconciliationList")]
@@ -82871,6 +82879,465 @@ namespace ERP.Models
 				if ((this._Deletelock != value))
 				{
 					this._Deletelock = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TDSNILLCHALLANLIST")]
+	public partial class TDSNILLCHALLANLIST
+	{
+		
+		private System.Nullable<int> _SEQ;
+		
+		private System.Nullable<long> _USERID;
+		
+		private System.Nullable<long> _TDSNillChallan_ID;
+		
+		private string _Section;
+		
+		private string _DeductionON;
+		
+		private System.Nullable<System.DateTime> _Payment_Date;
+		
+		private string _PaymentDate;
+		
+		private string _Quater;
+		
+		private System.Nullable<decimal> _Surcharge;
+		
+		private System.Nullable<decimal> _eduCess;
+		
+		private System.Nullable<decimal> _Interest;
+		
+		private System.Nullable<decimal> _LateFees;
+		
+		private System.Nullable<decimal> _Total;
+		
+		private System.Nullable<decimal> _Tax;
+		
+		private System.Nullable<decimal> _Others;
+		
+		private string _BankName;
+		
+		private string _BankBrach;
+		
+		private string _BRS;
+		
+		private string _ChallanNo;
+		
+		private string _TDSIDS;
+		
+		private string _Section_Code;
+		
+		private string _FinYear;
+		
+		private string _CreatedBy;
+		
+		private string _LastUpdatedBy;
+		
+		private string _UpdatedOn;
+		
+		public TDSNILLCHALLANLIST()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
+		public System.Nullable<int> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="BigInt")]
+		public System.Nullable<long> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TDSNillChallan_ID", DbType="BigInt")]
+		public System.Nullable<long> TDSNillChallan_ID
+		{
+			get
+			{
+				return this._TDSNillChallan_ID;
+			}
+			set
+			{
+				if ((this._TDSNillChallan_ID != value))
+				{
+					this._TDSNillChallan_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Section", DbType="NVarChar(500)")]
+		public string Section
+		{
+			get
+			{
+				return this._Section;
+			}
+			set
+			{
+				if ((this._Section != value))
+				{
+					this._Section = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeductionON", DbType="NVarChar(500)")]
+		public string DeductionON
+		{
+			get
+			{
+				return this._DeductionON;
+			}
+			set
+			{
+				if ((this._DeductionON != value))
+				{
+					this._DeductionON = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Payment_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Payment_Date
+		{
+			get
+			{
+				return this._Payment_Date;
+			}
+			set
+			{
+				if ((this._Payment_Date != value))
+				{
+					this._Payment_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="NVarChar(10)")]
+		public string PaymentDate
+		{
+			get
+			{
+				return this._PaymentDate;
+			}
+			set
+			{
+				if ((this._PaymentDate != value))
+				{
+					this._PaymentDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quater", DbType="NVarChar(10)")]
+		public string Quater
+		{
+			get
+			{
+				return this._Quater;
+			}
+			set
+			{
+				if ((this._Quater != value))
+				{
+					this._Quater = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Surcharge", DbType="Decimal(18,5)")]
+		public System.Nullable<decimal> Surcharge
+		{
+			get
+			{
+				return this._Surcharge;
+			}
+			set
+			{
+				if ((this._Surcharge != value))
+				{
+					this._Surcharge = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_eduCess", DbType="Decimal(18,5)")]
+		public System.Nullable<decimal> eduCess
+		{
+			get
+			{
+				return this._eduCess;
+			}
+			set
+			{
+				if ((this._eduCess != value))
+				{
+					this._eduCess = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Interest", DbType="Decimal(18,5)")]
+		public System.Nullable<decimal> Interest
+		{
+			get
+			{
+				return this._Interest;
+			}
+			set
+			{
+				if ((this._Interest != value))
+				{
+					this._Interest = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LateFees", DbType="Decimal(18,5)")]
+		public System.Nullable<decimal> LateFees
+		{
+			get
+			{
+				return this._LateFees;
+			}
+			set
+			{
+				if ((this._LateFees != value))
+				{
+					this._LateFees = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(18,5)")]
+		public System.Nullable<decimal> Total
+		{
+			get
+			{
+				return this._Total;
+			}
+			set
+			{
+				if ((this._Total != value))
+				{
+					this._Total = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tax", DbType="Decimal(18,5)")]
+		public System.Nullable<decimal> Tax
+		{
+			get
+			{
+				return this._Tax;
+			}
+			set
+			{
+				if ((this._Tax != value))
+				{
+					this._Tax = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Others", DbType="Decimal(18,5)")]
+		public System.Nullable<decimal> Others
+		{
+			get
+			{
+				return this._Others;
+			}
+			set
+			{
+				if ((this._Others != value))
+				{
+					this._Others = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankName", DbType="NVarChar(500)")]
+		public string BankName
+		{
+			get
+			{
+				return this._BankName;
+			}
+			set
+			{
+				if ((this._BankName != value))
+				{
+					this._BankName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankBrach", DbType="NVarChar(500)")]
+		public string BankBrach
+		{
+			get
+			{
+				return this._BankBrach;
+			}
+			set
+			{
+				if ((this._BankBrach != value))
+				{
+					this._BankBrach = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRS", DbType="NVarChar(500)")]
+		public string BRS
+		{
+			get
+			{
+				return this._BRS;
+			}
+			set
+			{
+				if ((this._BRS != value))
+				{
+					this._BRS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChallanNo", DbType="NVarChar(500)")]
+		public string ChallanNo
+		{
+			get
+			{
+				return this._ChallanNo;
+			}
+			set
+			{
+				if ((this._ChallanNo != value))
+				{
+					this._ChallanNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TDSIDS", DbType="NVarChar(500)")]
+		public string TDSIDS
+		{
+			get
+			{
+				return this._TDSIDS;
+			}
+			set
+			{
+				if ((this._TDSIDS != value))
+				{
+					this._TDSIDS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Section_Code", DbType="NVarChar(20)")]
+		public string Section_Code
+		{
+			get
+			{
+				return this._Section_Code;
+			}
+			set
+			{
+				if ((this._Section_Code != value))
+				{
+					this._Section_Code = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FinYear", DbType="NVarChar(20)")]
+		public string FinYear
+		{
+			get
+			{
+				return this._FinYear;
+			}
+			set
+			{
+				if ((this._FinYear != value))
+				{
+					this._FinYear = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(50)")]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdatedBy", DbType="NVarChar(50)")]
+		public string LastUpdatedBy
+		{
+			get
+			{
+				return this._LastUpdatedBy;
+			}
+			set
+			{
+				if ((this._LastUpdatedBy != value))
+				{
+					this._LastUpdatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedOn", DbType="NVarChar(50)")]
+		public string UpdatedOn
+		{
+			get
+			{
+				return this._UpdatedOn;
+			}
+			set
+			{
+				if ((this._UpdatedOn != value))
+				{
+					this._UpdatedOn = value;
 				}
 			}
 		}

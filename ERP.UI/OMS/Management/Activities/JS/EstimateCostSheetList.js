@@ -1,4 +1,8 @@
-﻿function timerTick() {
+﻿//==========================================================Revision History ============================================================================================
+//    1.0   Priti   V2.0.36     16 - 02 - 2023     Afer Listing view upgradation delete data show in list issue solved.
+//========================================== End Revision History =======================================================================================================
+
+function timerTick() {
     $.ajax({
         type: "POST",
         url: "SalesEstimateCostList.aspx/GetTotalWatingQuotationCount",
@@ -243,7 +247,10 @@ function grid_EndCallBack() {
             cQuotationStatus.Hide();
         }
         jAlert(cGrdEstimateCost.cpUpdate);
-        cGrdEstimateCost.Refresh();
+        /* Rev 1.0*/
+        //cGrdEstimateCost.Refresh();
+        updateGridByDate();
+        /* Rev 1.0 End*/
     }
     if (cGrdEstimateCost.cpDelete != null) {
         jAlert(cGrdEstimateCost.cpDelete);

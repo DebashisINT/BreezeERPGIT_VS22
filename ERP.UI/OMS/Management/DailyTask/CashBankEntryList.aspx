@@ -1,5 +1,7 @@
 ﻿<%--=======================================================Revision History=========================================================================    
-    1.0 Priti   V2.0.36  02-02-2023     0025263: Listing view upgradation required of Cash/Bank Voucher of Accounts & Finance
+    1.0     Priti   V2.0.36   02-02-2023     0025263: Listing view upgradation required of Cash/Bank Voucher of Accounts & Finance
+    2.0     Priti   V2.0.36   17-02-2023     After Listing view upgradation delete data show in listing issue solved.
+
 =========================================================End Revision History========================================================================--%>
 
 
@@ -165,7 +167,10 @@
                 // cGvCBSearch.PerformCallback();
                 jAlert(cGvCBSearch.cpDelete);
                 cGvCBSearch.cpDelete = null;
-                cGvCBSearch.Refresh();
+               // Rev 2.0
+               // cGvCBSearch.Refresh();
+                updateGridByDate();
+                // Rev 2.0 End
             }
         }
         function OnClickDelete(keyValue, ValueDate) {
