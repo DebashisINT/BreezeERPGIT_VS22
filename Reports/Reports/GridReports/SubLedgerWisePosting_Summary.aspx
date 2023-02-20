@@ -565,9 +565,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             box-shadow: 1px 1px 10px #11111154;
         }
 
-        .form_main {
+        /*.form_main {
             overflow: hidden;
-        }
+        }*/
 
         label , .mylabel1, .clsTo
         {
@@ -603,7 +603,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .calendar-icon {
             position: absolute;
             bottom: 6px;
-            right: 26px;
+            right: 20px;
             z-index: 0;
             cursor: pointer;
         }
@@ -789,9 +789,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #094e8c !important;
         }
 
-        table
+        .TableMain100 #ShowGrid
         {
-                max-width: 97%  !important;
+                max-width: 98%  !important;
         }
         /*Rev end 1.0*/
     </style>
@@ -1068,10 +1068,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <td colspan="2">
                     <div onkeypress="OnWaitingGridKeyPress(event)">
                         <%-- <div  id="divRowview">--%>
-                        <%--Rev 1.0: Add grid height--%>
                         <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False" KeyboardSupport="true" KeyFieldName="SEQ"
-                            DataSourceID="GenerateEntityServerModeDataSource" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" Settings-HorizontalScrollBarMode="Visible"
-                            Settings-VerticalScrollableHeight="200" Settings-VerticalScrollBarMode="Auto">
+                            DataSourceID="GenerateEntityServerModeDataSource" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" Settings-HorizontalScrollBarMode="Visible">
                             <Columns>
                                 <dxe:GridViewDataTextColumn FieldName="BRANCH_DESC" Caption="Unit" Width="250px" VisibleIndex="1" />
                                 <dxe:GridViewDataTextColumn FieldName="LEDG_DESC" Caption="Ledger Description" VisibleIndex="2" Width="250px"/>

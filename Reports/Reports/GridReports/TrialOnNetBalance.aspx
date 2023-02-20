@@ -783,9 +783,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             box-shadow: 1px 1px 10px #11111154;
         }
 
-        .form_main {
+        /*.form_main {
             overflow: hidden;
-        }
+        }*/
 
         label , .mylabel1, .clsTo
         {
@@ -822,7 +822,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .calendar-icon {
             position: absolute;
             bottom: 6px;
-            right: 22px;
+            right: 20px;
             z-index: 0;
             cursor: pointer;
         }
@@ -1008,7 +1008,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #094e8c !important;
         }
 
-        table
+        .TableMain100 #ShowGrid
         {
             max-width: 99% !important;
         }

@@ -856,7 +856,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .calendar-icon {
             position: absolute;
             bottom: 6px;
-            right: 22px;
+            right: 20px;
             z-index: 0;
             cursor: pointer;
         }
@@ -1042,7 +1042,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #094e8c !important;
         }
 
-        table
+        .TableMain100 #ShowGrid
         {
             max-width: 98%  !important;
         }

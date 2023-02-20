@@ -652,9 +652,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             box-shadow: 1px 1px 10px #11111154;
         }
 
-        .form_main {
+        /*.form_main {
             overflow: hidden;
-        }
+        }*/
 
         label , .mylabel1, .clsTo
         {
@@ -876,7 +876,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #094e8c !important;
         }
 
-        table
+        .TableMain100 #ShowGrid
         {
                 max-width: 99%  !important;
         }
@@ -1238,12 +1238,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <tr>
                 <td colspan="2">
                     <div onkeypress="OnWaitingGridKeyPress(event)">
-                        <%--Rev 1.0: Add grid height--%>
                         <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False" KeyboardSupport="true" KeyFieldName="SEQ"
                             ClientSideEvents-BeginCallback="Callback2_EndCallback" OnHtmlFooterCellPrepared="ShowGrid_HtmlFooterCellPrepared" 
                             DataSourceID="GenerateEntityServerModeDataSource" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" 
-                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Auto"  
-                            Settings-VerticalScrollableHeight="200" Settings-VerticalScrollBarMode="Auto">
+                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Auto">
                             <Columns>
                                 <dxe:GridViewDataTextColumn FieldName="BRANCH_DESC" Caption="Unit" Width="150px" VisibleIndex="1" HeaderStyle-CssClass="colDisable">
                                     <Settings AutoFilterCondition="Contains" />

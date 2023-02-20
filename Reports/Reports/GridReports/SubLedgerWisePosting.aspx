@@ -572,9 +572,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             box-shadow: 1px 1px 10px #11111154;
         }
 
-        .form_main {
+        /*.form_main {
             overflow: hidden;
-        }
+        }*/
 
         label , .mylabel1, .clsTo
         {
@@ -1075,10 +1075,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <td colspan="2">
                     <div onkeypress="OnWaitingGridKeyPress(event)">
                         <%-- <div  id="divRowview">--%>
-                        <%--Rev 1.0: Add grid height--%>
                         <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False" KeyboardSupport="true" KeyFieldName="SEQ"
-                            DataSourceID="GenerateEntityServerModeDataSource" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" Settings-HorizontalScrollBarMode="Visible"
-                            Settings-VerticalScrollableHeight="200" Settings-VerticalScrollBarMode="Auto">
+                            DataSourceID="GenerateEntityServerModeDataSource" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" Settings-HorizontalScrollBarMode="Visible">
                             <Columns>
                                 <dxe:GridViewDataTextColumn FieldName="BRANCH_DESC" Caption="Unit" Width="150px" VisibleIndex="1" />
                                 <dxe:GridViewDataTextColumn FieldName="TRAN_DATE" Caption="Date" Width="90px" VisibleIndex="2" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy" />

@@ -313,6 +313,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
             max-width: 100% !important;
         }*/
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
         /*Rev end 1.0*/
 
         #ddlValTech

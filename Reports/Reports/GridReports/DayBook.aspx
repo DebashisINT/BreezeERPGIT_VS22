@@ -373,9 +373,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             box-shadow: 1px 1px 10px #11111154;
         }
 
-        .form_main {
+        /*.form_main {
             overflow: hidden;
-        }
+        }*/
 
         label , .mylabel1, .clsTo
         {
@@ -595,6 +595,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
             padding: 4px 4px 4px 10px;
             background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid
+        {
+            max-width: 98%  !important;
         }
 
         /*table
@@ -832,12 +837,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <tr>
                 <td colspan="2">
                     <div onkeypress="OnWaitingGridKeyPress(event)">
-                        <%--Rev 1.0: Add grid height--%>
                         <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False" KeyboardSupport="true" KeyFieldName="SEQ"
                             DataSourceID="GenerateEntityServerModeDataSource" OnHtmlDataCellPrepared="ShowGrid_HtmlDataCellPrepared" ClientSideEvents-BeginCallback="Callback2_EndCallback"
                             OnSummaryDisplayText="ShowGrid_SummaryDisplayText" 
-                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Visible"
-                            Settings-VerticalScrollableHeight="200" Settings-VerticalScrollBarMode="Auto">
+                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Visible">
                             <Columns>
                                <%-- <dxe:GridViewDataTextColumn FieldName="CASHBANKNAME" Caption="Cash Bank" VisibleIndex="1" Width="200px" />
                                 <dxe:GridViewDataTextColumn FieldName="GROUP_NAME" Caption="Group Name" VisibleIndex="2" Width="100px"/>

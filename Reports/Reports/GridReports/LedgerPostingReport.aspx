@@ -970,9 +970,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             box-shadow: 1px 1px 10px #11111154;
         }
 
-        .form_main {
+        /*.form_main {
             overflow: hidden;
-        }
+        }*/
 
         label , .mylabel1, .clsTo
         {
@@ -1192,6 +1192,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
             padding: 4px 4px 4px 10px;
             background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid
+        {
+                max-width: 99%  !important;
         }
         /*Rev end 1.0*/
     </style>
@@ -1640,11 +1645,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <td colspan="2">
                     <div onkeypress="OnWaitingGridKeyPress(event)">
                         <%-- <div  id="divRowview">--%>
-                        <%--Rev 1.0: Add grid height--%>
                         <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False" KeyboardSupport="true" KeyFieldName="SLNO"
                              ClientSideEvents-BeginCallback="Callback2_EndCallback"
                             DataSourceID="GenerateEntityServerModeDataSource" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" 
-                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Visible" Settings-VerticalScrollableHeight="200" Settings-VerticalScrollBarMode="Auto">
+                            SettingsBehavior-AllowFocusedRow="true" SettingsBehavior-AllowSelectSingleRowOnly="true" Settings-HorizontalScrollBarMode="Visible">
                             <Columns>
 
 

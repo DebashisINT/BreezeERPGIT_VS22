@@ -117,9 +117,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             box-shadow: 1px 1px 10px #11111154;
         }
 
-        .form_main {
+        /*.form_main {
             overflow: hidden;
-        }
+        }*/
 
         label , .mylabel1, .clsTo
         {
@@ -515,10 +515,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </div>
         </div>
         <div class="clearfix">
-            <%--Rev 1.0: Add grid height--%>
             <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="cShowGrid" Width="100%" EnableRowsCache="False" AutoGenerateColumns="False" KeyFieldName="SLNO"
-                DataSourceID="GenerateEntityServerModeDataSource" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" Settings-HorizontalScrollBarMode="Visible"
-                Settings-VerticalScrollableHeight="200" Settings-VerticalScrollBarMode="Auto">
+                DataSourceID="GenerateEntityServerModeDataSource" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" Settings-HorizontalScrollBarMode="Visible">
                 <Columns>
                     <dxe:GridViewDataTextColumn FieldName="BANKNAME" Caption="Bank Name" Width="150" VisibleIndex="0" GroupIndex="0">
                     </dxe:GridViewDataTextColumn>
