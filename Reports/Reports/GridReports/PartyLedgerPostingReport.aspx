@@ -734,7 +734,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         #GrpSelLbl .dxeBase_PlasticBlue
         {
-
+                line-height: 20px !important;
         }
 
         select
@@ -954,9 +954,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #094e8c !important;
         }
 
-        table
+        .TableMain100 #ShowGrid
         {
-            max-width: 99% !important;
+            max-width: 98% !important;
         }
 
         .btn-info
@@ -995,6 +995,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .dxtlHeader_PlasticBlue
         {
             background: #094e8c !important;
+        }
+
+        #ckpar , #ckHNarration
+        {
+            padding-top: 9px;
         }
 
         /*#lookup_project
