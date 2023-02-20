@@ -4,9 +4,7 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="JS/SearchPopup.js"></script>
     <link href="CSS/CustomerReceiptAdjustment.css" rel="stylesheet" />
-    <script>
-
-       
+    <script>      
 
     </script>
 </asp:Content>

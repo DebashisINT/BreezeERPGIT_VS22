@@ -44,7 +44,7 @@
 
             // CountryID.PerformCallback(document.getElementById('ddlBranch').value);
 
-            grid.AddNewRow();
+            //grid.AddNewRow();
             grid.batchEditApi.EndEdit();
             document.getElementById("<%=CmbScheme.ClientID%>").focus();
 

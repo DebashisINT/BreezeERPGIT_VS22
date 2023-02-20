@@ -9969,7 +9969,7 @@ namespace ERP.OMS.Management
                 objCancelEwayBill.cancelRsnCode = Convert.ToInt32(e.Parameters.Split('~')[2]);
                 objCancelEwayBill.cancelRmrk = Convert.ToString(e.Parameters.Split('~')[3]);
                 DBEngine objDB = new DBEngine();
-                string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_TRANSITSALESINVOICE WHERE where EWayBillNumber='" + objCancelEwayBill.ewbNo + "'").Rows[0][0]);
+                string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_TRANSITSALESINVOICE WHERE  EWayBillNumber='" + objCancelEwayBill.ewbNo + "'").Rows[0][0]);
 
                 DBEngine objDBEngineCredential = new DBEngine();
                 string Branch_id = Convert.ToString(objDBEngineCredential.GetDataTable("SELECT INVOICE_BranchId FROM TBL_TRANS_TRANSITSALESINVOICE WHERE EWayBillNumber='" + objCancelEwayBill.ewbNo.ToString() + "'").Rows[0][0]);
@@ -10037,10 +10037,14 @@ namespace ERP.OMS.Management
                         var stringContent = new StringContent(json);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
                         //var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
                         var response = client.PostAsync(IrnEwaybilCancellUrl, stringContent).Result;
@@ -10050,21 +10054,28 @@ namespace ERP.OMS.Management
                             var jsonString = response.Content.ReadAsStringAsync().Result;
                             objIRN = response.Content.ReadAsAsync<IRN>().Result;
 
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
-                            {
+                          //  using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                           // {
                                 // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelEwayBillOutput));
-                                CancelEwayBillOutput objIRNDetails = (CancelEwayBillOutput)deserializer.ReadObject(ms);
+                                //DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelEwayBillOutput));
+                                //CancelEwayBillOutput objIRNDetails = (CancelEwayBillOutput)deserializer.ReadObject(ms);
+                                //DBEngine objDb = new DBEngine();
+                                //objDb.GetDataTable("INSERT INTO EWAYBILL_CANCELHOSTORY(DOC_ID,DOC_TYPE,EWAYBILL_NO,CANCEL_DATE) VALUES ('" + ID + "','TSI','" + objIRNDetails.ewayBillNo + "','" + objIRNDetails.cancelDate + "')");
+                                //objDb.GetDataTable("update TBL_TRANS_SALESINVOICE EWayBillNumber=NULL,ISEWAYBILLCANCEL=1 SET  where EWayBillNumber='" + objCancelEwayBill.ewbNo + "'");
 
-                                DBEngine objDb = new DBEngine();
+                                int i = 0;
+                                ProcedureExecute proc = new ProcedureExecute("PRC_UpdatePin");
+                                proc.AddVarcharPara("@Action", 500, "UpdateCancelEWayBill");
+                                proc.AddVarcharPara("@EWayBillNumber", 100, Convert.ToString(objCancelEwayBill.ewbNo));
+                                proc.AddVarcharPara("@DOC_TYPE", 100, Convert.ToString("TSI"));
+                                proc.AddVarcharPara("@DOC_ID", 100, Convert.ToString(id));
+                                proc.AddVarcharPara("@ReturnValue", 50, "0", QueryParameterDirection.Output);
+                                i = proc.RunActionQuery();
 
-
-                                objDb.GetDataTable("INSERT INTO EWAYBILL_CANCELHOSTORY(DOC_ID,DOC_TYPE,EWAYBILL_NO,CANCEL_DATE) VALUES ('" + ID + "','TSI','" + objIRNDetails.ewayBillNo + "','" + objIRNDetails.cancelDate + "')");
-
-                                objDb.GetDataTable("update TBL_TRANS_SALESINVOICE EWayBillNumber=NULL,ISEWAYBILLCANCEL=1 SET  where EWayBillNumber='" + objCancelEwayBill.ewbNo + "'");
-                                //grid.JSProperties["cpSucessIRN"] = "Yes";
                                 success = success + "," + objCancelEwayBill.ewbNo;
-                            }
+                                //grid.JSProperties["cpSucessIRN"] = "Yes";
+                                //success = success + "," + objCancelEwayBill.ewbNo;
+                           //}
                         }
                         else
                         {
@@ -10679,7 +10690,7 @@ namespace ERP.OMS.Management
                 objCancelEwayBill.cancelRsnCode = Convert.ToInt32(e.Parameters.Split('~')[2]);
                 objCancelEwayBill.cancelRmrk = Convert.ToString(e.Parameters.Split('~')[3]);
                 DBEngine objDB = new DBEngine();
-                string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_SALESRETURN WHERE where EWayBillNumber='" + objCancelEwayBill.ewbNo + "'").Rows[0][0]);
+                string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_SALESRETURN WHERE  EWayBillNumber='" + objCancelEwayBill.ewbNo + "'").Rows[0][0]);
 
                 DBEngine objDBEngineCredential = new DBEngine();
                 string Branch_id = Convert.ToString(objDBEngineCredential.GetDataTable("SELECT Return_BranchId FROM TBL_TRANS_TRANSITSALESReturn WHERE Return_id='" + id.ToString() + "'").Rows[0][0]);
@@ -10754,10 +10765,14 @@ namespace ERP.OMS.Management
                         var stringContent = new StringContent(json);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
                         //var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
                         var response = client.PostAsync(IrnEwaybilCancellUrl, stringContent).Result;
@@ -10767,21 +10782,34 @@ namespace ERP.OMS.Management
                             var jsonString = response.Content.ReadAsStringAsync().Result;
                             objIRN = response.Content.ReadAsAsync<IRN>().Result;
 
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
-                            {
-                                // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelEwayBillOutput));
-                                CancelEwayBillOutput objIRNDetails = (CancelEwayBillOutput)deserializer.ReadObject(ms);
-
-                                DBEngine objDb = new DBEngine();
 
 
-                                objDb.GetDataTable("INSERT INTO EWAYBILL_CANCELHOSTORY(DOC_ID,DOC_TYPE,EWAYBILL_NO,CANCEL_DATE) VALUES ('" + ID + "','SR','" + objIRNDetails.ewayBillNo + "','" + objIRNDetails.cancelDate + "')");
+                            int i = 0;
+                            ProcedureExecute proc = new ProcedureExecute("PRC_UpdatePin");
+                            proc.AddVarcharPara("@Action", 500, "UpdateCancelEWayBill");
+                            proc.AddVarcharPara("@EWayBillNumber", 100, Convert.ToString(objCancelEwayBill.ewbNo));
+                            proc.AddVarcharPara("@DOC_TYPE", 100, Convert.ToString("SR"));
+                            proc.AddVarcharPara("@DOC_ID", 100, Convert.ToString(id));
+                            proc.AddVarcharPara("@ReturnValue", 50, "0", QueryParameterDirection.Output);
+                            i = proc.RunActionQuery();
 
-                                objDb.GetDataTable("update TBL_TRANS_SALESRETURN EWayBillNumber=NULL,ISEWAYBILLCANCEL=1 SET  where EWayBillNumber='" + objCancelEwayBill.ewbNo + "'");
-                                //grid.JSProperties["cpSucessIRN"] = "Yes";
-                                success = success + "," + objCancelEwayBill.ewbNo;
-                            }
+                            success = success + "," + objCancelEwayBill.ewbNo;
+
+                            //using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //{
+                            //    // Deserialization from JSON  
+                            //    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelEwayBillOutput));
+                            //    CancelEwayBillOutput objIRNDetails = (CancelEwayBillOutput)deserializer.ReadObject(ms);
+                            //    DBEngine objDb = new DBEngine();
+                            //    objDb.GetDataTable("INSERT INTO EWAYBILL_CANCELHOSTORY(DOC_ID,DOC_TYPE,EWAYBILL_NO,CANCEL_DATE) VALUES ('" + ID + "','SR','" + objIRNDetails.ewayBillNo + "','" + objIRNDetails.cancelDate + "')");
+                            //    objDb.GetDataTable("update TBL_TRANS_SALESRETURN EWayBillNumber=NULL,ISEWAYBILLCANCEL=1 SET  where EWayBillNumber='" + objCancelEwayBill.ewbNo + "'");
+
+
+
+
+                            //    //grid.JSProperties["cpSucessIRN"] = "Yes";
+                            //    success = success + "," + objCancelEwayBill.ewbNo;
+                            //}
                         }
                         else
                         {
