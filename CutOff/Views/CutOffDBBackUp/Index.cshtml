@@ -73,12 +73,18 @@
     function OnNextButtonClickTwo() {
         debugger;
         var obj = {};
+        // Rev Sanchita
+        //obj.backupPath = $("#txtPath").val()
+        // End of Rev Sanchita
         $.ajax({
             type: "POST",
             url: "@Url.Action("CutOffBackUp", "CutOffDBBackUp")",
             async: true,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
+            // Rev Sanchita
+            //data: JSON.stringify(obj),
+            // End of Rev Sanchita
             /*Rev 1.0*/
             beforeSend: function () {
                 $('#loader-img-1').show();
@@ -191,9 +197,10 @@
                 <tr>
                     @*Rev 1.0*@
                     @*<td>
-                            <label></label>
-                        </td>*@
+            <label></label>
+        </td>*@
                     @*Rev end 1.0*@
+                   
                     <td>
                         @Html.DevExpress().Button(
 

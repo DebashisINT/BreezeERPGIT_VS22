@@ -26,6 +26,10 @@ using System.Xml.Linq;
 using System.Data.SqlClient;
 using CutOff.Models;
 using System.Text;
+// Rev Sanchita
+using System.Windows.Forms;
+// End of Rev Sanchita
+
 namespace CutOff.Controllers.CutOff
 {
     public class CutOffDBBackUpController : Controller
@@ -73,44 +77,105 @@ namespace CutOff.Controllers.CutOff
                 #endregion
             }
         }
-        
+
         [HttpPost]
         //public ActionResult CutOffBackUp()
         public JsonResult CutOffBackUp()
-        { 
+        {
             DataBaseClass dbc = new DataBaseClass();
             _conn = dbc.openconn();
 
-            string path = "C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup";            
+            // Rev Sanchita
+            //string path = "C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup";
+
+            //string path = "C:\\Program Files";
+            //string path = Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) ;
+
+            //string baseUrl = System.Configuration.ConfigurationSettings.AppSettings["baseUrl"];
+            //string path = baseUrl + "/CommonFolder";
+            string path = Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) ;
+            // End of Rev Sanchita
             //string _dbname = "YEAREND_TEST";
 
             string _dbname = _conn.Database;
-            //string _dbname = "YEAREND_TEST_3_6_2022";
-            string fileName = _dbname + DateTime.Now.Year.ToString() + "-" +
-                DateTime.Now.Month.ToString() + "-" +
-                DateTime.Now.Day.ToString() + "-" +
-                DateTime.Now.Millisecond.ToString() + ".bak";
-            string _sql;
+                //string _dbname = "YEAREND_TEST_3_6_2022";
+                string fileName = _dbname + DateTime.Now.Year.ToString() + "-" +
+                    DateTime.Now.Month.ToString() + "-" +
+                    DateTime.Now.Day.ToString() + "-" +
+                    DateTime.Now.Millisecond.ToString() + ".bak";
+                string _sql;
 
-            //if (!System.IO.Directory.Exists(path))
-            //{
-            //    System.IO.Directory.CreateDirectory(path);
-            //}
-            try
+                //if (!System.IO.Directory.Exists(path))
+                //{
+                //    System.IO.Directory.CreateDirectory(path);
+                //}
+                try
             {
                 //Rev work start 02.06.2022
                 //cmd = new SqlCommand("backup database YEAREND_TEST to disk='" + path + "\\" + DateTime.Now.ToString("ddMMyyyy_HHmmss") + ".Bak'", _conn);
-                cmd = new SqlCommand("BACKUP DATABASE YEAREND_TEST TO DISK='" + path + "\\" + _dbname + ".bak'", _conn);
-                //Rev work close 02.06.2022
-                cmd.ExecuteNonQuery();
+                // Rev Sanchita
+                //cmd = new SqlCommand("BACKUP DATABASE YEAREND_TEST TO DISK='" + path + "\\" + _dbname + ".bak'", _conn);
+                cmd = new SqlCommand("BACKUP DATABASE " + _dbname + " TO DISK='" + path + "\\" + _dbname + ".bak'", _conn);
+                    // End of Rev Sanchita
+                    //Rev work close 02.06.2022
+                    cmd.ExecuteNonQuery();
+
+                // Rev sanchita
+                // Download the data backup in Client PC from Server
+                //////string strFileName = _dbname + ".bak'";
+
+                //////string strPath = path + "//" + strFileName;
+
+                //////Response.ContentType = "application/bak";
+                //////Response.AppendHeader("Content-Disposition", "attachment; filename=" + strFileName);
+                //////Response.TransmitFile(strPath);
+                //////Response.End();
+
+
+                string strFileName = "BreezeERP_Product_Import.xlsx";
+                string strPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + strFileName);
+
+                Response.ContentType = "application/xlsx";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=BreezeERP_Product_Import.xlsx");
+                Response.TransmitFile(strPath);
+                Response.End();
+
+
+                //string strFileName = _dbname + ".bak'";
+                //byte[] bytes = System.IO.File.ReadAllBytes(Path.Combine(path, strFileName));
+
+                //// Delete .bak file from server folder.
+                ////if (Directory.Exists(backupDestination))
+                ////{
+                ////    Directory.Delete(backupDestination, true);
+                ////}
+                //Response.Clear();
+                //Response.Buffer = true;
+                //Response.Charset = "";
+                //Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                //Response.ContentType = "application/octet-stream";
+                //Response.AppendHeader("Content-Disposition", "attachment; filename=" + strFileName);
+                //Response.BinaryWrite(bytes);
+                //Response.Flush();
+                //Response.End();
+
+                // End of Rev Sanchita
+
                 response_msg = "Backup of Database " + _dbname + ".bak Created Successfully in " + path;
-            }
-            catch (Exception ex)
-            {
-                //throw;
-                response_msg = "Error Occured During DB backup process !<br>" + ex.ToString();
-            }
-            //response_msg = "Backup of Database " + _dbname + ".bak Created Successfully in " + path;
+                }
+                catch (Exception ex)
+                {
+                    //throw;
+                    response_msg = "Error Occured During DB backup process !<br>" + ex.ToString();
+                }
+                //response_msg = "Backup of Database " + _dbname + ".bak Created Successfully in " + path;
+                // Rev Sanchita
+            //}
+            //else
+            //{
+            //    response_msg = "Invalid patch for data backup.";
+            //}
+            // End of Rev Sanchita
             return Json(response_msg, JsonRequestBehavior.AllowGet);
         }     
         [HttpGet]
@@ -323,13 +388,24 @@ namespace CutOff.Controllers.CutOff
                 LOG = dt.Rows[0]["LOGICALNAME_LOG"].ToString();
             }
 
-            string path = "C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + fileNameWithoutExtFrom + ".bak";
+            // Rev Sanchita
+            //string path = "C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + fileNameWithoutExtFrom + ".bak";
+            string path = Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + fileNameWithoutExtFrom + ".bak";
+            // End of Rev Sanchita
 
             con.Open();
+            // Rev Sanchita
+            //string sqlQuery = "RESTORE DATABASE " + _BackupName + " FROM DISK = '" + path + "' " +
+            //                          "WITH REPLACE, RECOVERY, " +
+            //                          "MOVE N'" + ROWS + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + _BackupName + ".mdf', " +
+            //                          "MOVE N'" + LOG + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + _BackupName + ".ldf';  ";
             string sqlQuery = "RESTORE DATABASE " + _BackupName + " FROM DISK = '" + path + "' " +
                                       "WITH REPLACE, RECOVERY, " +
-                                      "MOVE N'" + ROWS + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + _BackupName + ".mdf', " +
-                                      "MOVE N'" + LOG + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + _BackupName + ".ldf';  ";
+                                      "MOVE N'" + ROWS + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Data\\" + _BackupName + ".mdf', " +
+                                      "MOVE N'" + LOG + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Data\\" + _BackupName + ".ldf';  ";
+            
+            System.IO.File.Delete(path);
+            // End of Rev Sanchita
             SqlCommand sqlCommand = new SqlCommand(sqlQuery, con);
             sqlCommand.CommandType = CommandType.Text;
             int iRows = sqlCommand.ExecuteNonQuery();
