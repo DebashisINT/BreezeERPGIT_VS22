@@ -517,7 +517,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet
         {
-            max-width: 99% !important;
+            max-width: 98% !important;
         }
 
         .btn-info
