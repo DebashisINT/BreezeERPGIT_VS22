@@ -11,7 +11,6 @@ namespace CutOff.Views.CutOff.dbml
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class v_YearEnding_Journal
     {
@@ -21,7 +20,6 @@ namespace CutOff.Views.CutOff.dbml
         public Nullable<System.DateTime> JournalVoucher_TransactionDate { get; set; }
         public string JournalVoucher_Narration { get; set; }
         public string branch_description { get; set; }
-
         public Nullable<decimal> Amount { get; set; }
     }
 }
