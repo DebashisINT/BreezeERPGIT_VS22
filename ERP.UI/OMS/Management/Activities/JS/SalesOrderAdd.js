@@ -1,6 +1,6 @@
 ﻿//====================================================Revision History=========================================================================
 // 1.0  Priti   V2.0.36  10-02-2023   0025665:Product Scheme rate was not captured automatically while making Sales Order
-
+// 2.0  Priti   V2.0.37  27-02-2023   0025693:Add&New button becomes active in Sales Order in the View Mode
 //====================================================End Revision History=====================================================================
 
 $(function () {
@@ -1497,11 +1497,15 @@ function SalesPriceGotFocus(s, e) {
     {
         if($("#hddnCustIdFromCRM").val() == "0")
         {
-            cbtn_SaveNewRecords.SetVisible(false);
+
+            if (getUrlVars().req != "V") {//Rev 2.0
+                cbtn_SaveNewRecords.SetVisible(false);
+            }
         }
     }
-  
-    cbtn_SaveExitRecords.SetVisible(false);
+    if (getUrlVars().req != "V") {//Rev 2.0
+        cbtn_SaveExitRecords.SetVisible(false);
+    }
 
     var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
     Pre_TotalAmt = _Amount;
@@ -1834,12 +1838,14 @@ function SalePriceTextChange(s, e) {
                 {
                     if($("#hddnCustIdFromCRM").val() == "0")
                     {
-                        cbtn_SaveNewRecords.SetVisible(true);
+                        if (getUrlVars().req != "V") {//Rev 2.0
+                            cbtn_SaveNewRecords.SetVisible(true);
+                        }
                     }
                 }
-               
-                cbtn_SaveExitRecords.SetVisible(true);
-
+                if (getUrlVars().req != "V") {//Rev 2.0
+                    cbtn_SaveExitRecords.SetVisible(true);
+                }
             }
         });
     }
@@ -1854,10 +1860,14 @@ function SalePriceTextChange(s, e) {
         {
             if($("#hddnCustIdFromCRM").val() == "0")
             {
-                cbtn_SaveNewRecords.SetVisible(true);
+                if (getUrlVars().req != "V") {//Rev 2.0
+                    cbtn_SaveNewRecords.SetVisible(true);
+                }
             }
         }
-        cbtn_SaveExitRecords.SetVisible(true);
+        if (getUrlVars().req != "V") {//Rev 2.0
+            cbtn_SaveExitRecords.SetVisible(true);
+        }
     }
     
     
@@ -2073,11 +2083,15 @@ function DiscountTextChange(s, e) {
                     {
                         if($("#hddnCustIdFromCRM").val() == "0")
                         {
-                            cbtn_SaveNewRecords.SetVisible(true);
+                            if (getUrlVars().req != "V") {//Rev 2.0
+                                cbtn_SaveNewRecords.SetVisible(true);
+                            }
                         }
                     }
                     //cbtn_SaveNewRecords.SetVisible(true);
-                    cbtn_SaveExitRecords.SetVisible(true);
+                    if (getUrlVars().req != "V") {//Rev 2.0
+                        cbtn_SaveExitRecords.SetVisible(true);
+                    }
 
                 }
             });
@@ -2092,11 +2106,15 @@ function DiscountTextChange(s, e) {
             {
                 if($("#hddnCustIdFromCRM").val() == "0")
                 {
-                    cbtn_SaveNewRecords.SetVisible(true);
+                    if (getUrlVars().req != "V") {//Rev 2.0
+                        cbtn_SaveNewRecords.SetVisible(true);
+                    }
                 }
             }
            // cbtn_SaveNewRecords.SetVisible(true);
-            cbtn_SaveExitRecords.SetVisible(true);
+            if (getUrlVars().req != "V") {//Rev 2.0
+                cbtn_SaveExitRecords.SetVisible(true);
+            }
 
         }
               

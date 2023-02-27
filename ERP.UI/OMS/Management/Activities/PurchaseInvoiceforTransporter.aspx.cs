@@ -1,4 +1,8 @@
-﻿using System;
+﻿//========================================================== Revision History ============================================================================================
+// Rev   1.0   Priti V2.0.37     27-02-2023     0025702:An error occurred while trying to make Transporter bill entry.
+//========================================== End Revision History =======================================================================================================
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -1919,10 +1923,26 @@ namespace ERP.OMS.Management.Activities
         //public DataTable PopulatePurchaseBillByTransporterID(string InternalId,string billtype)
         public DataTable PopulatePurchaseBillByTransporterID(string InternalId, string schemabranchid)
         {
-            DataTable dtPB = objPurchaseInvoice.PopulatePurchaseBillByTransporterID(InternalId, schemabranchid);
+            //Rev 1.0
+            //DataTable dtPB = objPurchaseInvoice.PopulatePurchaseBillByTransporterID(InternalId, schemabranchid);
+            //Rev 1.0 End
+            DataTable dtPB = PurchaseBillByTransporterID(InternalId, schemabranchid);
             return dtPB;     
 
         }
+
+        //Rev 1.0
+        public DataTable PurchaseBillByTransporterID(string InternalId, string schemabranchid)
+        {
+            DataTable ds = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("prc_PurchaseInvoiceDetail");
+            proc.AddVarcharPara("@Action", 100, "PopulatePurchaseBillByTransporterID");
+            proc.AddVarcharPara("@InternalId", 100, InternalId);
+            proc.AddBigIntegerPara("@branchId",Convert.ToInt32(schemabranchid));            
+            ds = proc.GetTable();
+            return ds;
+        }
+        //Rev 1.0 End
         public DataTable PopulateSalePurchaseBillByTransporterID(string InternalId)
         {
 

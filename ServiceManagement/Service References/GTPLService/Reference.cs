@@ -39,12 +39,12 @@ namespace ServiceManagement.GTPLService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface KolWebsiteSoapChannel : GTPLService.KolWebsiteSoap, System.ServiceModel.IClientChannel {
+    public interface KolWebsiteSoapChannel : ServiceManagement.GTPLService.KolWebsiteSoap, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class KolWebsiteSoapClient : System.ServiceModel.ClientBase<GTPLService.KolWebsiteSoap>, GTPLService.KolWebsiteSoap {
+    public partial class KolWebsiteSoapClient : System.ServiceModel.ClientBase<ServiceManagement.GTPLService.KolWebsiteSoap>, ServiceManagement.GTPLService.KolWebsiteSoap {
         
         public KolWebsiteSoapClient() {
         }
