@@ -6,6 +6,8 @@
 /*====================================================== Revision History ===========================================================
 Rev Number       DATE            VERSION        DEVELOPER            CHANGES
 1.0              08-02-2023      2.0.35         Pallab               inner page grid issue fix and design modification
+2.0              01-03-2023      2.0.36         Pallab               The Profile Image in the Welcome Panel in ERP has become so large that other functions in ERP could not be used.
+                                                                     Refer: 25708
 ====================================================== Revision History ===========================================================*/
 
 *:focus {
@@ -83,8 +85,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .avtarHolder {
-    /*width: 46px;*/
-    /*height: 42px;*/
+    /*Rev 2.0 : width & height change*/
+    width: 30px !important;
+    height: 26px !important;
+    /*Rev end 2.0*/
     border-radius: 50%;
     overflow: hidden;
     float: left;
@@ -95,7 +99,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
     .avtarHolder > img {
-        /*max-width: 100%;*/
+        /*Rev 2.0 : !important add*/
+        max-width: 100% !important;
         max-height: 100%;
         max-width: none !important;
     }
