@@ -21,6 +21,31 @@
 
     <%--Use for set focus on UOM after press ok on UOM--%>
     <script>
+        function ChangePackingByQuantityinjs() {
+
+            if ($("#hdnShowUOMConversionInEntry").val() == "1") {
+                var Quantity = ctxtQuantity.GetValue();
+                var packing = ctxtAltQuantity.GetValue();
+                if (packing == null || packing == '') {
+                    ctxtAltQuantity.SetText(parseFloat(0).toFixed(4));
+                    packing = ctxtAltQuantity.GetValue();
+                }
+                if (Quantity == null || Quantity == '') {
+                    $(e).val(parseFloat(0).toFixed(4));
+                    Quantity = ctxtQuantity.GetValue();
+                }
+                var packingqty = parseFloat($('#hdnpackingqty').val()).toFixed(4);                
+                var uomfac_Qty_to_stock = $('#hdnuomFactor').val();               
+                var calcQuantity = parseFloat(Quantity * uomfac_Qty_to_stock).toFixed(4);             
+                ctxtAltQuantity.SetText(calcQuantity);
+                ChkDataDigitCount(Quantity);
+            }
+        }
+        function ChkDataDigitCount(e) {
+            var data = $(e).val();
+            $(e).val(parseFloat(data).toFixed(4));
+        }
+
         var Salesmanvalold;
 
         //alt
@@ -2715,6 +2740,7 @@ display: none !important;
                                                 <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
                                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
                                                     <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />
+                                                  <%--  <ClientSideEvents TextChanged="function(s,e) { ChangePackingByQuantityinjs();}" />--%>
                                                 </dxe:ASPxTextBox>
                                                 <span id="spntxtQuantity" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                             </div>

@@ -1,4 +1,9 @@
-﻿using System;
+﻿#region//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.37    02-03-2023    0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
+#endregion//====================================================End Revision History=====================================================================
+
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -1421,6 +1426,10 @@ namespace ERP.OMS.Management.Activities
                     tempWarehousedt.Columns.Add("SerialID", typeof(string));
                     tempWarehousedt.Columns.Add("AltQty", typeof(string));
                     tempWarehousedt.Columns.Add("AltUOM", typeof(string));
+                    //Rev 1.0
+                    tempWarehousedt.Columns.Add("MfgDate", typeof(string));
+                    tempWarehousedt.Columns.Add("ExpiryDate", typeof(string));
+                    //Rev 1.0 end
                     for (int i = 0; i < Warehousedt.Rows.Count; i++)
                     {
                         tempWarehousedt.Rows.Add(Warehousedt.Rows[i]["Product_SrlNo"],
@@ -1429,9 +1438,12 @@ namespace ERP.OMS.Management.Activities
                     Convert.ToString(Warehousedt.Rows[i]["TotalQuantity"]),
                     Convert.ToString(Warehousedt.Rows[i]["BatchID"]),
                     Convert.ToString(Warehousedt.Rows[i]["SerialID"]),
-                     Convert.ToString(Warehousedt.Rows[i]["AltQty"]),
-                    Convert.ToString(Warehousedt.Rows[i]["AltUOM"])
-
+                    Convert.ToString(Warehousedt.Rows[i]["AltQty"]),
+                    Convert.ToString(Warehousedt.Rows[i]["AltUOM"]),
+                    //Rev 1.0
+                    Convert.ToString(Warehousedt.Rows[i]["MfgDate"]),
+                    Convert.ToString(Warehousedt.Rows[i]["ExpiryDate"])
+                    //Rev 1.0 end
                     );
                     }
 
@@ -1446,11 +1458,43 @@ namespace ERP.OMS.Management.Activities
                     tempWarehousedt.Columns.Add("SerialID", typeof(string));
                     tempWarehousedt.Columns.Add("AltQty", typeof(string));
                     tempWarehousedt.Columns.Add("AltUOM", typeof(string));
+                    tempWarehousedt.Columns.Add("MfgDate", typeof(string));
+                    tempWarehousedt.Columns.Add("ExpiryDate", typeof(string));
                 }
 
                 // End
+                //Rev 1.0 
+                if (tempWarehousedt != null && tempWarehousedt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < tempWarehousedt.Rows.Count; i++)
+                    {
+                        DataRow dr = tempWarehousedt.Rows[i];
+                        string strMfgDate = Convert.ToString(dr["MfgDate"]);
+                        string strExpiryDate = Convert.ToString(dr["ExpiryDate"]);
+                        if (strMfgDate != "")
+                        {
+                            string DD = strMfgDate.Substring(0, 2);
+                            string MM = strMfgDate.Substring(3, 2);
+                            string YYYY = strMfgDate.Substring(6, 4);
+                            string Date = YYYY + '-' + MM + '-' + DD;
 
+                            dr["MfgDate"] = Date;
+                        }
 
+                        if (strExpiryDate != "")
+                        {
+                            string DD = strExpiryDate.Substring(0, 2);
+                            string MM = strExpiryDate.Substring(3, 2);
+                            string YYYY = strExpiryDate.Substring(6, 4);
+                            string Date = YYYY + '-' + MM + '-' + DD;
+
+                            dr["ExpiryDate"] = Date;
+                        }
+
+                    }
+                    tempWarehousedt.AcceptChanges();
+                }
+                //Rev 1.0 end
                 //datatable for MultiUOm start chinmoy 14-01-2020
                 DataTable MultiUOMDetails = new DataTable();
 

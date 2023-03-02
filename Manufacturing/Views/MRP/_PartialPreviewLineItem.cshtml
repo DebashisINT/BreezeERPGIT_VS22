@@ -1,4 +1,8 @@
-﻿@Html.DevExpress().GridView(settings =>
+﻿@*====================================================Revision History=========================================================================
+  1.0  Priti   V2.0.37    28-02-2023  0025703:Avl Stk, Phy Stk, Indent Qty & Pur Qty to be implemented in Preview Line Items in MRP
+====================================================End Revision History=====================================================================*@
+
+@Html.DevExpress().GridView(settings =>
 {
     settings.Name = "LineProductionDetailsList";
 
@@ -169,10 +173,27 @@
         //x.Settings.AllowSort = false;
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
     });
-
+    //Rev 1.0
     settings.Columns.Add(x =>
     {
         x.FieldName = "AvlStk";
+        x.Caption = "Phy.Stock";
+        //x.VisibleIndex = 7;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        //x.Settings.AllowSort = false;
+        x.ReadOnly = true;
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "NewAvlStk";
         x.Caption = "Avl.Stock";
         //x.VisibleIndex = 7;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
@@ -187,7 +208,7 @@
         //x.Settings.AllowSort = false;
         x.ReadOnly = true;
     });
-
+    //Rev 1.0 End
     settings.Columns.Add(x =>
     {
         x.FieldName = "IndentQty";
