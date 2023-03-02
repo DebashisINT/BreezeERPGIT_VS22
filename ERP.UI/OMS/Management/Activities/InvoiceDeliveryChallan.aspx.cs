@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.37    02-03-2023    25711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
+#endregion//====================================================End Revision History=====================================================================
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -3897,6 +3901,12 @@ namespace ERP.OMS.Management.Activities
                         grid.JSProperties["cpSaveSuccessOrFail"] = "AddLock";
                         grid.JSProperties["cpAddLockStatus"] = (Convert.ToString(dts.Rows[0]["Lock_Fromdate"]) + " to " + Convert.ToString(dts.Rows[0]["Lock_Todate"]));
                     }
+                    //Rev 1.0
+                    else if (strIsComplete == -70)
+                    {
+                        grid.JSProperties["cpSaveSuccessOrFail"] = "duplicateSO";
+                    }
+                    //Rev 1.0 End
                     else if (strIsComplete == -50)
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = "duplicate";
