@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="GST_RCMStatement.aspx.cs" Inherits="Reports.Reports.GridReports.GST_RCMStatement" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                03-03-2023        2.0.36           Pallab              25575 : Report pages design modification
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="GST_RCMStatement.aspx.cs" Inherits="Reports.Reports.GridReports.GST_RCMStatement" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
      Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -162,6 +167,351 @@
             right: 55%;
         }
         /*rev end Pallab*/
+
+        /*Rev 1.0*/
+        .outer-div-main {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #11111154;
+        }
+
+        /*.form_main {
+            overflow: hidden;
+        }*/
+
+        label , .mylabel1, .clsTo, .dxeBase_PlasticBlue
+        {
+            color: #141414 !important;
+            font-size: 14px !important;
+                font-weight: 500 !important;
+                margin-bottom: 0 !important;
+                    line-height: 20px;
+        }
+
+        #GrpSelLbl .dxeBase_PlasticBlue
+        {
+                line-height: 20px !important;
+        }
+
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 19px;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        .simple-select::after {
+            /*content: '<';*/
+            content: url(../../../assests/images/left-arw.png);
+            position: absolute;
+            top: 26px;
+            right: 13px;
+            font-size: 16px;
+            transform: rotate(269deg);
+            font-weight: 500;
+            background: #094e8c;
+            color: #fff;
+            height: 18px;
+            display: block;
+            width: 26px;
+            /* padding: 10px 0; */
+            border-radius: 4px;
+            text-align: center;
+            line-height: 19px;
+            z-index: 0;
+        }
+        .simple-select {
+            position: relative;
+        }
+        .simple-select:disabled::after
+        {
+            background: #1111113b;
+        }
+        select.btn
+        {
+            padding-right: 10px !important;
+        }
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: 1;
+    }
+
+        .styled-checkbox + label {
+            position: relative;
+            /*cursor: pointer;*/
+            padding: 0;
+            margin-bottom: 0 !important;
+        }
+
+            .styled-checkbox + label:before {
+                content: "";
+                margin-right: 6px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                /*background: #d7d7d7;*/
+                margin-top: 2px;
+                border-radius: 2px;
+                border: 1px solid #c5c5c5;
+            }
+
+        .styled-checkbox:hover + label:before {
+            background: #094e8c;
+        }
+
+
+        .styled-checkbox:checked + label:before {
+            background: #094e8c;
+        }
+
+        .styled-checkbox:disabled + label {
+            color: #b8b8b8;
+            cursor: auto;
+        }
+
+            .styled-checkbox:disabled + label:before {
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        .styled-checkbox:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            background: white;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+            transform: rotate(45deg);
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin-right: 5px;
+        }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
+
+        .modal-dialog
+        {
+            width: 50%;
+        }
+
+        .modal-header
+        {
+            padding: 8px 4px 8px 10px;
+            background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut , #RcmGrid
+        {
+            max-width: 97% !important;
+            /*width: 99% !important;*/
+        }
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 3px;
+        }
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
+
+        .dxeBase_PlasticBlue .dxichCellSys
+        {
+            padding-top: 2px !important;
+        }
+
+        .pBackDiv
+        {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #1111112e;
+        }
+        .HeaderStyle th
+        {
+            padding: 5px;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .pt-2
+        {
+            padding-top: 5px;
+        }
+        .pt-10
+        {
+            padding-top: 10px;
+        }
+
+        .pt-15
+        {
+            padding-top: 15px;
+        }
+
+        .pTop10 {
+    padding-top: 20px;
+}
+
+
+        /*#lookup_project
+        {
+            max-width: 100% !important;
+        }*/
+        /*Rev end 1.0*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -234,13 +584,16 @@
           </div>
         </div>
     </div>
-    <div class="form_main">
+
+    <%--Rev 1.0: "outer-div-main" class add: --%>
+    <div class="outer-div-main">
+        <div class="form_main">
 
         <%--<div class="SearchArea">--%>
         <div class="clear"></div>
         <div class="clearfix row">
-
-            <div class="col-md-2">
+            <%--Rev 1.0 : "simple-select" class add--%>
+            <div class="col-md-2 simple-select">
                 <%--<label>GSTIN: </label>--%>
                 <%-- <div style="color: #b5285f; font-weight: bold;" class="clsTo">
                         <asp:Label ID="Label6" runat="Server" Text="GSTIN : " CssClass="mylabel1"
@@ -260,7 +613,7 @@
                     </div>
                 </td>
                 <td>
-                    <asp:DropDownList ID="ddlgstn" runat="server" Width="150px"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlgstn" runat="server" Width="100%"></asp:DropDownList>
                 </td>
             </div>
 
@@ -334,7 +687,7 @@
 
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 simple-select">
                 <label style="color: #b5285f; font-weight: bold;" class="clsTo">
                     <asp:Label ID="Label2" runat="Server" Text="Document Type: " CssClass="mylabel1"></asp:Label>
                 </label>
@@ -346,7 +699,7 @@
 
                 </asp:DropDownList>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 simple-select">
                 <label style="color: #b5285f; font-weight: bold;" class="clsTo">
                     <asp:Label ID="Label3" runat="Server" Text="RCM Type: " CssClass="mylabel1"></asp:Label>
                 </label>
@@ -356,7 +709,7 @@
                     <asp:ListItem Text="No" Value="No"></asp:ListItem>
                 </asp:DropDownList>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 simple-select">
                 <label style="color: #b5285f; font-weight: bold;" class="clsTo">
                     <asp:Label ID="Label4" runat="Server" Text="ITC Type: " CssClass="mylabel1"></asp:Label>
                 </label>
@@ -370,15 +723,16 @@
             <div class="clear"></div>
             <table class="padtbl">
                 <tr>
-                    <td>
+                    <td class="pt-15">
                         <asp:CheckBox ID="chkdet" runat="server" Checked="true"></asp:CheckBox>
                         <asp:Label ID="Label1" runat="Server" Text="Show Details " CssClass="mylabel1"></asp:Label></td>
 
-                    <td>
+                    <td class="pt-15">
                         <asp:CheckBox ID="chkPartyInvDt" runat="server" Checked="true"></asp:CheckBox>
                         <asp:Label ID="Label7" runat="Server" Text="Search by Party Invoice Date " CssClass="mylabel1"></asp:Label></td>
 
-                    <td>
+                    <%--Rev 1.0 : "for-cust-icon" class add--%>
+                    <td class="for-cust-icon">
                         <label style="color: #b5285f; font-weight: bold;" class="clsFrom">
                             <asp:Label ID="lblFromDate" runat="Server" Text="From Date : " CssClass="mylabel1"></asp:Label>
                         </label>
@@ -387,9 +741,13 @@
                             <ButtonStyle Width="13px">
                             </ButtonStyle>
                         </dxe:ASPxDateEdit>
+                        <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                     </td>
 
-                    <td>
+                    <%--Rev 1.0 : "for-cust-icon" class add--%>
+                    <td class="for-cust-icon">
                         <label style="color: #b5285f; font-weight: bold;" class="clsTo">
                             <asp:Label ID="lblToDate" runat="Server" Text="To Date : " CssClass="mylabel1"
                                 Width="92px"></asp:Label>
@@ -400,10 +758,13 @@
                             </ButtonStyle>
 
                         </dxe:ASPxDateEdit>
+                        <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                     </td>
 
-                    <td style="width: 200px; padding-top: 18px;">
-                        <input type="button" style="margin-top: 2px;" value="Show" class="btn btn-primary" onclick="updateGridByDate()" />
+                    <td style="width: 200px; padding-top: 22px;">
+                        <input type="button" style="margin-top: 2px;" value="Show" class="btn btn-success" onclick="updateGridByDate()" />
                         <asp:DropDownList ID="drdExport" runat="server" Style="margin-top: 2px;" CssClass="btn btn-sm btn-primary" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                             <asp:ListItem Value="0">Export to</asp:ListItem>
                             <asp:ListItem Value="1">PDF</asp:ListItem>
@@ -678,6 +1039,7 @@
 
             </TabPages>
         </dxe:ASPxPageControl>
+    </div>
     </div>
 
     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">

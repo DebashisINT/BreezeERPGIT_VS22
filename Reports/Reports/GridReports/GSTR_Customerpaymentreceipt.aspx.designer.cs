@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Reports.Reports.GridReports {
-    
-    
-    public partial class GSTR_Customerpaymentreceipt {
-        
+namespace Reports.Reports.GridReports
+{
+
+
+    public partial class GSTR_Customerpaymentreceipt
+    {
+
         /// <summary>
         /// RptHeading control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label RptHeading;
-        
+
         /// <summary>
         /// CompName control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CompName;
-        
+
         /// <summary>
         /// CompBranch control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CompBranch;
-        
+
         /// <summary>
         /// CompAdd control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CompAdd;
-        
+
         /// <summary>
         /// CompOth control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CompOth;
-        
+
         /// <summary>
         /// CompPh control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CompPh;
-        
+
         /// <summary>
         /// CompAccPrd control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CompAccPrd;
-        
+
         /// <summary>
         /// DateRange control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label DateRange;
-        
+
         /// <summary>
         /// hdndaily control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdndaily;
-        
+
         /// <summary>
         /// hdtid control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdtid;
-        
+
         /// <summary>
         /// hdnSelectedBranches control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnSelectedBranches;
-        
+
         /// <summary>
         /// lblFromDate control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFromDate;
-        
+
         /// <summary>
         /// ddlgstn control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlgstn;
-        
+
         /// <summary>
         /// Label2 control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
-        
+
         /// <summary>
         /// HiddenField1 control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
-        
+
         /// <summary>
         /// HiddenField2 control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HiddenField2;
-        
+
         /// <summary>
         /// HiddenField3 control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HiddenField3;
-        
+
         /// <summary>
         /// ASPxCallbackPanel1 control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel ASPxCallbackPanel1;
-        
+
         /// <summary>
         /// lookup_branch control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridLookup lookup_branch;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// ASPxFromDate control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit ASPxFromDate;
-        
+
         /// <summary>
         /// lblToDate control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToDate;
-        
+
         /// <summary>
         /// ASPxToDate control.
         /// </summary>
@@ -218,16 +220,16 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit ASPxToDate;
-        
+
         /// <summary>
-        /// drdExport control.
+        /// DropDownList1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drdExport;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+
         /// <summary>
         /// ShowGrid control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView ShowGrid;
-        
+
         /// <summary>
         /// GenerateEntityServerModeDataSource control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Data.Linq.LinqServerModeDataSource GenerateEntityServerModeDataSource;
-        
+
         /// <summary>
         /// exporter control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridViewExporter exporter;
-        
+
         /// <summary>
         /// CallbackPanel control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel CallbackPanel;
-        
+
         /// <summary>
         /// hfIsGSTRCustRecPayRegFilter control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIsGSTRCustRecPayRegFilter;
-        
+
         /// <summary>
         /// hdnBranchSelection control.
         /// </summary>
