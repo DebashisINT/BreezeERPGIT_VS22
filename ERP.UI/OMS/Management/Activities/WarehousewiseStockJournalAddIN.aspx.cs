@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region//====================================================Revision History=========================================================================
+// 1.0   v4.0.37	Priti	04-03-2023	0025652:Alternate qty is not calculating while making Warehouse wise Stock In entry
+#endregion//====================================================End Revision History=====================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -7078,7 +7082,10 @@ namespace ERP.OMS.Management.Activities
                                LoopID = Convert.ToString(dr["LoopID"]),
                                Status = Convert.ToString(dr["Status"]),
                                AltQty = Convert.ToString(dr["AltQty"]),
-                               AltUOM = Convert.ToString(dr["AltUOM"])
+                               AltUOM = Convert.ToString(dr["AltUOM"]),
+                               //Rev 1.0
+                               AltUOMName = Convert.ToString(dr["AltUOMName"])
+                               //Rev 1.0 End
                            }).ToList();
 
             return ProductList;

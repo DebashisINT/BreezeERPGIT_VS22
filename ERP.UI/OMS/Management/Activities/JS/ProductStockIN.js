@@ -1,4 +1,9 @@
-﻿var StockOfProduct = [];
+﻿//====================================================Revision History=========================================================================
+// 1.0   v4.0.37	Priti	04-03-2023	0025690:Alt Qty is not updating as per the main qty while entering Purchase GRN  and
+//                                      0025652:Alternate qty is not calculating while making Warehouse wise Stock In entry
+//====================================================End Revision History=====================================================================
+
+var StockOfProduct = [];
 var warehouserateList=[];
 
 var countSecondUom = 1;
@@ -856,7 +861,10 @@ function SaveStockPC() {
     var Serial = $("#txtSerial").val().trim();
     var Rate =ctxtRate.GetValue();  
     var AltQty=ctxtAltQty.GetValue();
-    var AltUOM=ccmbAltUOM.GetValue();
+    var AltUOM = ccmbAltUOM.GetValue();
+    //Rev 1.0
+    var AltUOMName = ccmbAltUOM.GetText();
+    //Rev 1.0 End
     ctxtAltQty.SetValue(0);
 
 
@@ -927,7 +935,7 @@ function SaveStockPC() {
                             serialfilteredJson = flexFilter(StockOfProduct, serialCriteria);
 
                             if(serialfilteredJson.length == 0){
-                                saveStockDataPC(StockType,ProductSrlNo,ProductID,UOM,WarehouseID,WarehouseName,Batch,Qty,MfgDate,ExprieyDate,Serial,Rate,AltQty,AltUOM);
+                                saveStockDataPC(StockType, ProductSrlNo, ProductID, UOM, WarehouseID, WarehouseName, Batch, Qty, MfgDate, ExprieyDate, Serial, Rate, AltQty, AltUOM, AltUOMName);
                             }
                         }
                         else{
@@ -942,7 +950,7 @@ function SaveStockPC() {
         }
     }
     else if (StockType == "W" ||StockType == "WC" || StockType == "WB" || StockType == "B"){
-        saveStockDataPC(StockType,ProductSrlNo,ProductID,UOM,WarehouseID,WarehouseName,Batch,Qty,MfgDate,ExprieyDate,Serial,Rate,AltQty,AltUOM);
+        saveStockDataPC(StockType, ProductSrlNo, ProductID, UOM, WarehouseID, WarehouseName, Batch, Qty, MfgDate, ExprieyDate, Serial, Rate, AltQty, AltUOM, AltUOMName);
     }
 }
 
@@ -1167,7 +1175,7 @@ function SetUOMConversionArray(WarehouseID) {
 }
 //Common file so method declare here
 
-function saveStockDataPC(StockType,ProductSrlNo,ProductID,UOM,WarehouseID,WarehouseName,Batch,Qty,MfgDate,ExprieyDate,Serial,Rate,AltQty,AltUOM){
+function saveStockDataPC(StockType, ProductSrlNo, ProductID, UOM, WarehouseID, WarehouseName, Batch, Qty, MfgDate, ExprieyDate, Serial, Rate, AltQty, AltUOM, AltUOMName){
     var criteria = [
                     { Field: "Product_SrlNo", Values: ProductSrlNo },
                     { Field: "WarehouseID", Values: WarehouseID },
@@ -1191,7 +1199,7 @@ function saveStockDataPC(StockType,ProductSrlNo,ProductID,UOM,WarehouseID,Wareho
         var ProductStock = { Product_SrlNo: ProductSrlNo, SrlNo: _SrlNo, WarehouseID: WarehouseID, WarehouseName: WarehouseName,
             Quantity: _Quantity, SalesQuantity: _Quantity + " " + UOM, Batch: Batch, MfgDate: MfgDate, ExpiryDate: ExprieyDate,Rate:Rate,
             SerialNo: Serial, Barcode: "", ViewBatch: Batch, ViewMfgDate: MfgDate, ViewExpiryDate: ExprieyDate,ViewRate:Rate,
-            IsOutStatus: "1", IsOutStatusMsg: "", LoopID: _LoopID, Status: "D",AltQty:AltQty,AltUOM:AltUOM
+            IsOutStatus: "1", IsOutStatusMsg: "", LoopID: _LoopID, Status: "D", AltQty: AltQty, AltUOM: AltUOM, AltUOMName: AltUOMName
         }
         StockOfProduct.push(ProductStock);
     }
@@ -1210,7 +1218,7 @@ function saveStockDataPC(StockType,ProductSrlNo,ProductID,UOM,WarehouseID,Wareho
             var ProductStock = { Product_SrlNo: ProductSrlNo, SrlNo: _SrlNo, WarehouseID: WarehouseID, WarehouseName: "",
                 Quantity: _Quantity, SalesQuantity: "", Batch: Batch, MfgDate: MfgDate, ExpiryDate: ExprieyDate,Rate:Rate,
                 SerialNo: Serial, Barcode: "", ViewBatch: "", ViewMfgDate: "", ViewExpiryDate: "",ViewRate:"",
-                IsOutStatus: "1", IsOutStatusMsg: "", LoopID: _LoopID, Status: "D",AltQty:_AltQty,AltUOM:AltUOM
+                IsOutStatus: "1", IsOutStatusMsg: "", LoopID: _LoopID, Status: "D", AltQty: _AltQty, AltUOM: AltUOM, AltUOMName: AltUOMName
             }
             StockOfProduct.push(ProductStock);
 
@@ -1464,33 +1472,68 @@ function StockDeatils() {
     var ProductSrlNo = GetObjectID('hdfProductSrlNo').value;
     var StockDetails = $.grep(StockOfProduct, function (element, index) { return element.Product_SrlNo == ProductSrlNo });
     var StockHearder = [];
+    //Rev 1.0
+    var setting = document.getElementById("hdnShowUOMConversionInEntry").value;
+    if (setting == 1) {
+        if (StockType == "W") {
+            StockHearder = ["WarehouseName", "SalesQuantity", "AltQty","AltUOMName"];
+        }
+        else if (StockType == "WC") {
+            StockHearder = ["WarehouseName", "SerialNo", "Barcode", "SalesQuantity", "AltQty", "AltUOMName"];
+        }
+        else if (StockType == "B") {
+            StockHearder = ["ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SalesQuantity", "AltQty", "AltUOMName"];
+        }
+        else if (StockType == "S") {
+            StockHearder = ["SalesQuantity", "SerialNo", "AltQty", "AltUOMName"];
+        }
+        else if (StockType == "WB") {
+            StockHearder = ["WarehouseName", "ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SalesQuantity", "AltQty", "AltUOMName"];
+        }
+        else if (StockType == "WS") {
+            StockHearder = ["WarehouseName", "SerialNo", "SalesQuantity", "AltQty", "AltUOMName"];
+        }
+        else if (StockType == "WBS") {
+            StockHearder = ["WarehouseName", "ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SerialNo", "SalesQuantity", "AltQty", "AltUOMName"];
+        }
+        else if (StockType == "WSC") {
+            StockHearder = ["WarehouseName", "SerialNo", "Barcode", "SalesQuantity", "AltQty", "AltUOMName"];
+        }
+        else if (StockType == "BS") {
+            StockHearder = ["ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SerialNo", "SalesQuantity", "AltQty", "AltUOMName"];
+        }
+    }
+    //Rev 1.0 End
+    else {
 
-    if (StockType == "W") {
-        StockHearder = ["WarehouseName", "SalesQuantity"];
-    }
-    else if (StockType == "WC") {
-        StockHearder = ["WarehouseName","SerialNo", "Barcode", "SalesQuantity"];
-    }
-    else if (StockType == "B") {
-        StockHearder = ["ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SalesQuantity"];
-    }
-    else if (StockType == "S") {
-        StockHearder = ["SalesQuantity","SerialNo"];
-    }
-    else if (StockType == "WB") {
-        StockHearder = ["WarehouseName", "ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SalesQuantity" ];
-    }
-    else if (StockType == "WS") {
-        StockHearder = ["WarehouseName","SerialNo", "SalesQuantity"];
-    }
-    else if (StockType == "WBS") {
-        StockHearder = ["WarehouseName", "ViewBatch", "ViewMfgDate", "ViewExpiryDate","SerialNo", "SalesQuantity"];
-    }
-    else if (StockType == "WSC") {
-        StockHearder = ["WarehouseName","SerialNo", "Barcode", "SalesQuantity"];
-    }
-    else if (StockType == "BS") {
-        StockHearder = ["ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SerialNo", "SalesQuantity"];
+
+        if (StockType == "W") {
+            StockHearder = ["WarehouseName", "SalesQuantity"];
+        }
+        else if (StockType == "WC") {
+            StockHearder = ["WarehouseName", "SerialNo", "Barcode", "SalesQuantity"];
+        }
+        else if (StockType == "B") {
+            StockHearder = ["ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SalesQuantity"];
+        }
+        else if (StockType == "S") {
+            StockHearder = ["SalesQuantity", "SerialNo"];
+        }
+        else if (StockType == "WB") {
+            StockHearder = ["WarehouseName", "ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SalesQuantity"];
+        }
+        else if (StockType == "WS") {
+            StockHearder = ["WarehouseName", "SerialNo", "SalesQuantity"];
+        }
+        else if (StockType == "WBS") {
+            StockHearder = ["WarehouseName", "ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SerialNo", "SalesQuantity"];
+        }
+        else if (StockType == "WSC") {
+            StockHearder = ["WarehouseName", "SerialNo", "Barcode", "SalesQuantity"];
+        }
+        else if (StockType == "BS") {
+            StockHearder = ["ViewBatch", "ViewMfgDate", "ViewExpiryDate", "SerialNo", "SalesQuantity"];
+        }
     }
     
     var IsRateExists = GetObjectID('hdfIsRateExists').value;    
@@ -1552,14 +1595,20 @@ function StockDeatils() {
         th.width=td_width;
         
         if(col[i]=="SalesQuantity") th.style.textAlign="right";
-        else if(col[i]=="Rate") th.style.textAlign="right";
-
+        else if (col[i] == "Rate") th.style.textAlign = "right";
+        //Rev 1.0 
+        else if (col[i] == "AltQty") th.style.textAlign = "right";
+         //Rev 1.0 End
         if(col[i]=="WarehouseName") th.innerHTML ="Warehouse"; 
         else if(col[i]=="SalesQuantity") th.innerHTML ="Quantity";
         else if(col[i]=="ViewBatch") th.innerHTML ="Batch/Lot Number";
         else if(col[i]=="ViewMfgDate") th.innerHTML ="Mfg Date";
         else if(col[i]=="ViewExpiryDate") th.innerHTML ="Expiry Date";
-        else if(col[i]=="SerialNo") th.innerHTML ="Serial Number";
+        else if (col[i] == "SerialNo") th.innerHTML = "Serial Number";
+        //Rev 1.0
+        else if (col[i] == "AltQty") th.innerHTML = "Alt. Quantity";
+        else if (col[i] == "AltUOMName") th.innerHTML = "Alt. UOM";
+        //Rev 1.0 End
         else th.innerHTML = col[i];
 
         row.appendChild(th);
@@ -1592,25 +1641,16 @@ function StockDeatils() {
                             var element = document.createElement("img");
                             element.setAttribute("src", "/assests/images/crs.png");
                             anchor.appendChild(element);
-
-
-
-
-
-
-
-
-
-
-
                             tabCell.appendChild(anchor);
                         }
                     }
                 }
                 else {
                     if (col[j] == "SalesQuantity") tabCell.style.textAlign="right";
-                    else if (col[j] == "Rate") tabCell.style.textAlign="right";
-
+                    else if (col[j] == "Rate") tabCell.style.textAlign = "right";
+                    //Rev 1.0 
+                    else if (col[j] == "AltQty") tabCell.style.textAlign = "right";
+                     //Rev 1.0 End
                     tabCell.innerHTML = StockDetails[i][col[j]];
                 }
             }

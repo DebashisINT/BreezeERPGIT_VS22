@@ -1,4 +1,9 @@
-﻿﻿using BusinessLogicLayer;
+﻿#region//====================================================Revision History=========================================================================
+// 1.0   v4.0.37	Priti	04-03-2023	0025690:Alt Qty is not updating as per the main qty while entering Purchase GRN
+#endregion//====================================================End Revision History=====================================================================
+
+
+using BusinessLogicLayer;
 using BusinessLogicLayer.EmailDetails;
 using DataAccessLayer;
 using DevExpress.Web;
@@ -1119,6 +1124,9 @@ namespace ERP.OMS.Management.Activities
                     tempdt.Columns.Add("ViewExpiryDate", typeof(string));
                     tempdt.Columns.Add("IsOutStatus", typeof(string));
                     tempdt.Columns.Add("IsOutStatusMsg", typeof(string));
+
+                    tempdt.Columns.Add("AltQty", typeof(string));
+                    tempdt.Columns.Add("AltUOM", typeof(string));
 
                     Session["PC_LoopWarehouse"] = "1";
                 }
@@ -6623,7 +6631,10 @@ namespace ERP.OMS.Management.Activities
                                LoopID = Convert.ToString(dr["LoopID"]),
                                Status = Convert.ToString(dr["Status"]),
                                AltQty = Convert.ToString(dr["AltQty"]),
-                               AltUOM = Convert.ToString(dr["AltUOM"])
+                               AltUOM = Convert.ToString(dr["AltUOM"]),
+                               //rev 1.0
+                               AltUOMName= Convert.ToString(dr["AltUOMName"])
+                               //rev 1.0 end
                            }).ToList();
 
             return ProductList;
@@ -6874,6 +6885,10 @@ namespace ERP.OMS.Management.Activities
         public string Status { get; set; }
         public string AltQty { get; set; }
         public string AltUOM { get; set; }
+
+        //Rev 1.0
+        public string AltUOMName { get; set; }
+        //Rev 1.0 End
     }
 
     public class ProductStockDetails
