@@ -1,4 +1,7 @@
-﻿
+﻿//====================================================Revision History =========================================================================
+//1.0  Priti   V2.0.37    05 - 03 - 2023    0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
+//====================================================End Revision History=====================================================================
+
 var strProAlt = '';
 
         function deleteTax(Action, srl, productid) {
@@ -36,8 +39,126 @@ var strProAlt = '';
 
             
 
-        }
+}
 
+function QuantityGotFocusWHPopup(s, e) {
+    var QuantityValue = (grid.GetEditor('Quantity').GetValue() != null) ? grid.GetEditor('Quantity').GetValue() : "0";
+    ProductGetQuantity = QuantityValue;
+    globalNetAmount = parseFloat(grid.GetEditor("TotalAmount").GetValue());
+    var ProductID = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
+    var strProductName = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
+    var QuantityValue = (grid.GetEditor('Quantity').GetValue() != null) ? grid.GetEditor('Quantity').GetValue() : "0";
+    var SpliteDetails = ProductID.split("||@||");
+    var strProductID = SpliteDetails[0];
+    var strDescription = SpliteDetails[1];
+    var strUOM = SpliteDetails[2];
+    var strStkUOM = SpliteDetails[4];
+    var strSalePrice = SpliteDetails[6];
+    var IsPackingActive = SpliteDetails[10];
+    var Packing_Factor = SpliteDetails[11];
+    var Packing_UOM = SpliteDetails[12];
+    var strProductShortCode = SpliteDetails[14];
+    var PackingValue = (Packing_Factor * QuantityValue) + " " + Packing_UOM;
+
+    strProductName = strDescription;
+
+    var isOverideConvertion = SpliteDetails[24];
+    var packing_saleUOM = SpliteDetails[23];
+    var sProduct_SaleUom = SpliteDetails[22];
+    var sProduct_quantity = SpliteDetails[20];
+    var packing_quantity = SpliteDetails[18];
+
+    //rev 1.0
+    var uomfactor = 0
+    var prodquantity = sProduct_quantity;
+    var packingqty = packing_quantity;
+    $('#hdnpackingqty').val(packingqty);
+    if (prodquantity != 0 && packingqty != 0) {
+        uomfactor = parseFloat(packingqty / prodquantity).toFixed(4);
+        $('#hdnuomFactor').val(parseFloat(packingqty / prodquantity));
+    }
+    else {
+        $('#hdnuomFactor').val(0);
+    }
+    //rev 1.0 End
+
+    var slno = (grid.GetEditor('SrlNo').GetText() != null) ? grid.GetEditor('SrlNo').GetText() : "0";
+    var ConvertionOverideVisible = $('#hdnConvertionOverideVisible').val();
+    var ShowUOMConversionInEntry = $('#hdnShowUOMConversionInEntry').val();
+    var type = 'add';
+    var gridprodqty = parseFloat(grid.GetEditor('Quantity').GetText()).toFixed(4);
+    var gridPackingQty = '';  
+    if (SpliteDetails.length > 26) {
+        if (SpliteDetails[26] == "1") {
+            IsInventory = 'Yes';
+
+            type = 'edit';
+
+            if (SpliteDetails[28] != '') {
+                if (parseFloat(SpliteDetails[28]) > 0) {
+                    gridPackingQty = SpliteDetails[28];
+                }
+            }
+        }
+    }
+    else {
+        if (SpliteDetails.length == 26) {
+            var isOverideConvertion = SpliteDetails[23];
+            var packing_saleUOM = SpliteDetails[22];
+            var sProduct_SaleUom = SpliteDetails[21];
+            var sProduct_quantity = SpliteDetails[19];
+            var packing_quantity = SpliteDetails[17];
+
+            if (SpliteDetails[16] != '') {
+                if (parseFloat(SpliteDetails[16]) > 0) {
+                    gridPackingQty = SpliteDetails[16];
+                }
+            }
+            if (SpliteDetails[24] == "1") {
+                IsInventory = 'Yes';
+            }
+            //Rev 1.0
+            var uomfactor = 0
+            var prodquantity = sProduct_quantity;
+            var packingqty = packing_quantity;
+            $('#hdnpackingqty').val(packingqty);
+            if (prodquantity != 0 && packingqty != 0) {
+                uomfactor = parseFloat(packingqty / prodquantity).toFixed(4);
+                $('#hdnuomFactor').val(parseFloat(packingqty / prodquantity));
+            }
+            else {
+                $('#hdnuomFactor').val(0);
+            }
+            //Rev 1.0 End
+        }
+    }
+}
+//Rev 1.0
+function ChangePackingQtyByQuantity() {
+
+    if ($("#hdnShowUOMConversionInEntry").val() == "1") {
+        var Quantity = ctxtQuantity.GetValue();
+        var packing = ctxtAltQuantity.GetValue();
+        if (packing == null || packing == '') {
+            ctxtAltQuantity.SetText(parseFloat(0).toFixed(4));
+            packing = ctxtAltQuantity.GetValue();
+        }
+        if (Quantity == null || Quantity == '') {
+            $(e).val(parseFloat(0).toFixed(4));
+            Quantity = ctxtQuantity.GetValue();
+        }
+        var packingqty = parseFloat($('#hdnpackingqty').val()).toFixed(4);
+        var uomfac_Qty_to_stock = $('#hdnuomFactor').val();
+        var calcQuantity = parseFloat(Quantity * uomfac_Qty_to_stock).toFixed(4);
+        ctxtAltQuantity.SetText(calcQuantity);
+        ChkDataDigitCount(Quantity);
+    }
+}
+function ChkDataDigitCount(e) {
+    var data = $(e).val();
+    $(e).val(parseFloat(data).toFixed(4));
+}
+//Rev 1.0 End
 
 $(function () {
     $('#UOMModal').on('hide.bs.modal', function () {
@@ -2640,6 +2761,20 @@ function QuantityGotFocus(s, e) {
     var sProduct_quantity = SpliteDetails[20];
     var packing_quantity = SpliteDetails[18];
 
+    //rev 1.0
+    var uomfactor = 0
+    var prodquantity = sProduct_quantity;
+    var packingqty = packing_quantity;
+    $('#hdnpackingqty').val(packingqty);
+    if (prodquantity != 0 && packingqty != 0) {
+        uomfactor = parseFloat(packingqty / prodquantity).toFixed(4);
+        $('#hdnuomFactor').val(parseFloat(packingqty / prodquantity));
+    }
+    else {
+        $('#hdnuomFactor').val(0);
+    }
+     //rev 1.0 End
+
     var slno = (grid.GetEditor('SrlNo').GetText() != null) ? grid.GetEditor('SrlNo').GetText() : "0";
 
     var ConvertionOverideVisible = $('#hdnConvertionOverideVisible').val();
@@ -2677,8 +2812,29 @@ function QuantityGotFocus(s, e) {
             if (SpliteDetails[24] == "1") {
                 IsInventory = 'Yes';
             }
+            //Rev 1.0
+            var uomfactor = 0
+            var prodquantity = sProduct_quantity;
+            var packingqty = packing_quantity;
+            $('#hdnpackingqty').val(packingqty);
+            if (prodquantity != 0 && packingqty != 0) {
+                uomfactor = parseFloat(packingqty / prodquantity).toFixed(4);
+                $('#hdnuomFactor').val(parseFloat(packingqty / prodquantity));
+            }
+            else {
+                $('#hdnuomFactor').val(0);
+            }
+             //Rev 1.0 End
         }
 
+    }
+
+    if (prodquantity != 0 && packingqty != 0) {
+        uomfactor = parseFloat(packingqty / prodquantity).toFixed(4);
+        $('#hdnuomFactor').val(parseFloat(packingqty / prodquantity));
+    }
+    else {
+        $('#hdnuomFactor').val(0);
     }
 
     var ComponentID = (grid.GetEditor('ComponentID').GetText() != null) ? grid.GetEditor('ComponentID').GetText() : "";
@@ -4376,10 +4532,12 @@ function SaveWarehouse() {
     var SerialName = "";
     var Qty = ctxtQuantity.GetValue();
     var altQty="0";
-    var altUOM="0";
+    var altUOM = "0";
+    var AltUOMName = "";
     if ($("#hdnShowUOMConversionInEntry").val() == "1") {
         altQty = (ctxtAltQuantity.GetValue() != null) ? ctxtAltQuantity.GetValue() : "0";
         altUOM = (ccmbSecondUOMWH.GetValue() != null) ? ccmbSecondUOMWH.GetValue() : "0";
+        AltUOMName = (ccmbSecondUOMWH.GetText() != null) ? ccmbSecondUOMWH.GetText() : "0";
     }
 
     var items = checkListBox.GetSelectedItems();
@@ -4432,6 +4590,9 @@ function SaveWarehouse() {
                 cCmbBatch.PerformCallback('BindBatch~' + "");
                 checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
                 ctxtQuantity.SetValue("0");
+                //Rev 1.0
+                ctxtAltQuantity.SetValue("0");
+                //Rev 1.0 End
             }
             else {
                 IsPostBack = "N";
@@ -4444,9 +4605,12 @@ function SaveWarehouse() {
             cCmbBatch.PerformCallback('BindBatch~' + "");
             checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
             ctxtQuantity.SetValue("0");
+            //Rev 1.0
+            ctxtQuantity.SetValue("0");
+            //Rev 1.0 End
         }
         UpdateText();
-        cGrdWarehouse.PerformCallback('SaveDisplay~' + WarehouseID + '~' + WarehouseName + '~' + BatchID + '~' + BatchName + '~' + SerialID + '~' + SerialName + '~' + Qty + '~' + SelectedWarehouseID + '~' + altQty + '~' + altUOM);
+        cGrdWarehouse.PerformCallback('SaveDisplay~' + WarehouseID + '~' + WarehouseName + '~' + BatchID + '~' + BatchName + '~' + SerialID + '~' + SerialName + '~' + Qty + '~' + SelectedWarehouseID + '~' + altQty + '~' + altUOM + '~' + AltUOMName);
         SelectedWarehouseID = "0";
     }
 }
@@ -4505,7 +4669,7 @@ function listBoxEndCall(s, e) {
 function FinalWarehouse() {
     cGrdWarehouse.PerformCallback('WarehouseFinal');
     //Rev Subhra 15-05-2019
-    grid.batchEditApi.StartEdit(globalRowIndex, 9);
+    grid.batchEditApi.StartEdit(globalRowIndex,10);
     //End of Rev Subhra 15-05-2019
 }
 

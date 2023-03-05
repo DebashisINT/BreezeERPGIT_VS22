@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" EnableViewStateMac="false" AutoEventWireup="true" CodeBehind="SalesReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesReturn" %>
+﻿<%--====================================================Revision History=========================================================================
+ 1.0  Priti   V2.0.37    05-03-2023    0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
+====================================================End Revision History=====================================================================
+--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" EnableViewStateMac="false" AutoEventWireup="true" CodeBehind="SalesReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesReturn" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -16,36 +21,12 @@
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevel.js?var=1.2" type="text/javascript"></script>
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
-    <script src="JS/SalesReturn.js?v=2.0"></script>
+    <script src="JS/SalesReturn.js?v=2.1"></script>
     <link href="CSS/SalesReturn.css" rel="stylesheet" />
 
     <%--Use for set focus on UOM after press ok on UOM--%>
     <script>
-        function ChangePackingByQuantityinjs() {
-
-            if ($("#hdnShowUOMConversionInEntry").val() == "1") {
-                var Quantity = ctxtQuantity.GetValue();
-                var packing = ctxtAltQuantity.GetValue();
-                if (packing == null || packing == '') {
-                    ctxtAltQuantity.SetText(parseFloat(0).toFixed(4));
-                    packing = ctxtAltQuantity.GetValue();
-                }
-                if (Quantity == null || Quantity == '') {
-                    $(e).val(parseFloat(0).toFixed(4));
-                    Quantity = ctxtQuantity.GetValue();
-                }
-                var packingqty = parseFloat($('#hdnpackingqty').val()).toFixed(4);                
-                var uomfac_Qty_to_stock = $('#hdnuomFactor').val();               
-                var calcQuantity = parseFloat(Quantity * uomfac_Qty_to_stock).toFixed(4);             
-                ctxtAltQuantity.SetText(calcQuantity);
-                ChkDataDigitCount(Quantity);
-            }
-        }
-        function ChkDataDigitCount(e) {
-            var data = $(e).val();
-            $(e).val(parseFloat(data).toFixed(4));
-        }
-
+       
         var Salesmanvalold;
 
         //alt
@@ -2737,10 +2718,12 @@ display: none !important;
                                                 Quantity
                                             </div>
                                             <div class="Left_Content" style="">
-                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
+                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px" ClientSideEvents-GotFocus="QuantityGotFocusWHPopup">
                                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
-                                                    <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />
-                                                  <%--  <ClientSideEvents TextChanged="function(s,e) { ChangePackingByQuantityinjs();}" />--%>
+                                                    <%-- Rev 1.0--%>
+                                                    <%--  <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />--%>
+                                                    <ClientSideEvents TextChanged="function(s,e) { ChangePackingQtyByQuantity();}" />
+                                                    <%-- Rev 1.0 End--%>
                                                 </dxe:ASPxTextBox>
                                                 <span id="spntxtQuantity" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                             </div>
@@ -2815,7 +2798,9 @@ display: none !important;
                                             <dxe:GridViewDataTextColumn Caption="Alt Quantity" FieldName="AltQty"
                                                 VisibleIndex="10">
                                             </dxe:GridViewDataTextColumn>
-
+                                             <dxe:GridViewDataTextColumn Caption="Alt. UOM" FieldName="AltUOMName"
+                                                VisibleIndex="10">
+                                            </dxe:GridViewDataTextColumn>
                                             <dxe:GridViewDataTextColumn VisibleIndex="11" Width="80px">
                                                 <DataItemTemplate>
                                                     <a href="javascript:void(0);" onclick="fn_Edit('<%# Container.KeyValue %>')" title="Edit">
@@ -4184,9 +4169,13 @@ display: none !important;
     <asp:HiddenField ID="hdnLockToDate" runat="server" />
     <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
     <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
-     <asp:HiddenField ID="hdnRDECId" runat="server" />
+    <asp:HiddenField ID="hdnRDECId" runat="server" />
      <asp:HiddenField ID="HdnBackDatedEntryPurchaseGRN" runat="server" />
-       <%--Rev Bapi--%>
-            <asp:HiddenField ID="hdProductID" runat="server" />
-              <%--End Rev Bapi--%>
+    <%--Rev Bapi--%>
+    <asp:HiddenField ID="hdProductID" runat="server" />
+    <%--End Rev Bapi--%>
+  <%--  Rev 1.0--%>
+    <asp:HiddenField runat="server" ID="hdnpackingqty" />
+    <asp:HiddenField runat="server" ID="hdnuomFactor" />
+  <%--  Rev 1.0 End--%>
 </asp:Content>
