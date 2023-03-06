@@ -22,7 +22,7 @@ namespace Reports.Model
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="PK02122020")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Tekfoods_25112022")]
 	public partial class ReportSourceDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -33,7 +33,7 @@ namespace Reports.Model
     #endregion
 		
 		public ReportSourceDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ERP_ConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["Tekfoods_25112022ConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -1227,6 +1227,14 @@ namespace Reports.Model
 			get
 			{
 				return this.GetTable<SALESREGISTERDETAILS_REPORT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<BATCEXPIRYALERT_REPORT> BATCEXPIRYALERT_REPORTs
+		{
+			get
+			{
+				return this.GetTable<BATCEXPIRYALERT_REPORT>();
 			}
 		}
 		
@@ -69254,6 +69262,447 @@ namespace Reports.Model
 				if ((this._SHIP_TO_PARTY != value))
 				{
 					this._SHIP_TO_PARTY = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BATCEXPIRYALERT_REPORT")]
+	public partial class BATCEXPIRYALERT_REPORT
+	{
+		
+		private System.Nullable<int> _USERID;
+		
+		private System.Nullable<long> _SEQ;
+		
+		private System.Nullable<int> _TOPPRODSEQ;
+		
+		private System.Nullable<long> _BRANCH_ID;
+		
+		private string _BRANCH_DESC;
+		
+		private System.Nullable<bool> _IS_BATCH;
+		
+		private System.Nullable<long> _BATCH_ID;
+		
+		private string _BATCH_DESC;
+		
+		private string _BATCH_MFGDT;
+		
+		private string _BATCH_EXPDT;
+		
+		private string _BATCHMFGDT;
+		
+		private string _BATCHEXPDT;
+		
+		private System.Nullable<int> _EXPWITHIN;
+		
+		private System.Nullable<bool> _IS_WAREHOUSE;
+		
+		private System.Nullable<long> _WAREHOUSE_ID;
+		
+		private string _WAREHOUSE_DESC;
+		
+		private System.Nullable<long> _PRODID;
+		
+		private string _PRODCODE;
+		
+		private string _PRODNAME;
+		
+		private string _PRODCLASS;
+		
+		private string _STOCKUOM;
+		
+		private System.Nullable<decimal> _IN_QTY;
+		
+		private System.Nullable<decimal> _OUT_QTY;
+		
+		private System.Nullable<decimal> _BAL_QTY;
+		
+		public BATCEXPIRYALERT_REPORT()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="Int")]
+		public System.Nullable<int> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="BigInt")]
+		public System.Nullable<long> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TOPPRODSEQ", DbType="Int")]
+		public System.Nullable<int> TOPPRODSEQ
+		{
+			get
+			{
+				return this._TOPPRODSEQ;
+			}
+			set
+			{
+				if ((this._TOPPRODSEQ != value))
+				{
+					this._TOPPRODSEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRANCH_ID", DbType="BigInt")]
+		public System.Nullable<long> BRANCH_ID
+		{
+			get
+			{
+				return this._BRANCH_ID;
+			}
+			set
+			{
+				if ((this._BRANCH_ID != value))
+				{
+					this._BRANCH_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRANCH_DESC", DbType="NVarChar(300)")]
+		public string BRANCH_DESC
+		{
+			get
+			{
+				return this._BRANCH_DESC;
+			}
+			set
+			{
+				if ((this._BRANCH_DESC != value))
+				{
+					this._BRANCH_DESC = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IS_BATCH", DbType="Bit")]
+		public System.Nullable<bool> IS_BATCH
+		{
+			get
+			{
+				return this._IS_BATCH;
+			}
+			set
+			{
+				if ((this._IS_BATCH != value))
+				{
+					this._IS_BATCH = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BATCH_ID", DbType="BigInt")]
+		public System.Nullable<long> BATCH_ID
+		{
+			get
+			{
+				return this._BATCH_ID;
+			}
+			set
+			{
+				if ((this._BATCH_ID != value))
+				{
+					this._BATCH_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BATCH_DESC", DbType="NVarChar(300)")]
+		public string BATCH_DESC
+		{
+			get
+			{
+				return this._BATCH_DESC;
+			}
+			set
+			{
+				if ((this._BATCH_DESC != value))
+				{
+					this._BATCH_DESC = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BATCH_MFGDT", DbType="NVarChar(10)")]
+		public string BATCH_MFGDT
+		{
+			get
+			{
+				return this._BATCH_MFGDT;
+			}
+			set
+			{
+				if ((this._BATCH_MFGDT != value))
+				{
+					this._BATCH_MFGDT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BATCH_EXPDT", DbType="NVarChar(10)")]
+		public string BATCH_EXPDT
+		{
+			get
+			{
+				return this._BATCH_EXPDT;
+			}
+			set
+			{
+				if ((this._BATCH_EXPDT != value))
+				{
+					this._BATCH_EXPDT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BATCHMFGDT", DbType="NVarChar(10)")]
+		public string BATCHMFGDT
+		{
+			get
+			{
+				return this._BATCHMFGDT;
+			}
+			set
+			{
+				if ((this._BATCHMFGDT != value))
+				{
+					this._BATCHMFGDT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BATCHEXPDT", DbType="NVarChar(10)")]
+		public string BATCHEXPDT
+		{
+			get
+			{
+				return this._BATCHEXPDT;
+			}
+			set
+			{
+				if ((this._BATCHEXPDT != value))
+				{
+					this._BATCHEXPDT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EXPWITHIN", DbType="Int")]
+		public System.Nullable<int> EXPWITHIN
+		{
+			get
+			{
+				return this._EXPWITHIN;
+			}
+			set
+			{
+				if ((this._EXPWITHIN != value))
+				{
+					this._EXPWITHIN = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IS_WAREHOUSE", DbType="Bit")]
+		public System.Nullable<bool> IS_WAREHOUSE
+		{
+			get
+			{
+				return this._IS_WAREHOUSE;
+			}
+			set
+			{
+				if ((this._IS_WAREHOUSE != value))
+				{
+					this._IS_WAREHOUSE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WAREHOUSE_ID", DbType="BigInt")]
+		public System.Nullable<long> WAREHOUSE_ID
+		{
+			get
+			{
+				return this._WAREHOUSE_ID;
+			}
+			set
+			{
+				if ((this._WAREHOUSE_ID != value))
+				{
+					this._WAREHOUSE_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WAREHOUSE_DESC", DbType="NVarChar(300)")]
+		public string WAREHOUSE_DESC
+		{
+			get
+			{
+				return this._WAREHOUSE_DESC;
+			}
+			set
+			{
+				if ((this._WAREHOUSE_DESC != value))
+				{
+					this._WAREHOUSE_DESC = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRODID", DbType="BigInt")]
+		public System.Nullable<long> PRODID
+		{
+			get
+			{
+				return this._PRODID;
+			}
+			set
+			{
+				if ((this._PRODID != value))
+				{
+					this._PRODID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRODCODE", DbType="NVarChar(300)")]
+		public string PRODCODE
+		{
+			get
+			{
+				return this._PRODCODE;
+			}
+			set
+			{
+				if ((this._PRODCODE != value))
+				{
+					this._PRODCODE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRODNAME", DbType="NVarChar(300)")]
+		public string PRODNAME
+		{
+			get
+			{
+				return this._PRODNAME;
+			}
+			set
+			{
+				if ((this._PRODNAME != value))
+				{
+					this._PRODNAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRODCLASS", DbType="NVarChar(300)")]
+		public string PRODCLASS
+		{
+			get
+			{
+				return this._PRODCLASS;
+			}
+			set
+			{
+				if ((this._PRODCLASS != value))
+				{
+					this._PRODCLASS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_STOCKUOM", DbType="NVarChar(50)")]
+		public string STOCKUOM
+		{
+			get
+			{
+				return this._STOCKUOM;
+			}
+			set
+			{
+				if ((this._STOCKUOM != value))
+				{
+					this._STOCKUOM = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_QTY", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> IN_QTY
+		{
+			get
+			{
+				return this._IN_QTY;
+			}
+			set
+			{
+				if ((this._IN_QTY != value))
+				{
+					this._IN_QTY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OUT_QTY", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> OUT_QTY
+		{
+			get
+			{
+				return this._OUT_QTY;
+			}
+			set
+			{
+				if ((this._OUT_QTY != value))
+				{
+					this._OUT_QTY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BAL_QTY", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> BAL_QTY
+		{
+			get
+			{
+				return this._BAL_QTY;
+			}
+			set
+			{
+				if ((this._BAL_QTY != value))
+				{
+					this._BAL_QTY = value;
 				}
 			}
 		}

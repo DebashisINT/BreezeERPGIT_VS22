@@ -878,5 +878,11 @@
         <elementListCompartment Id="fa4ca562-96ef-4077-977f-8bff317d6d57" absoluteBounds="5.015, 6.585, 1.9700000000000002, 5.4415283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="244b3480-29b6-49c5-baf8-c122450bb51a" isExpanded="false" absoluteBounds="5, 15.5, 2, 0.45">
+      <DataClassMoniker Name="/ReportSourceDataContext/BATCEXPIRYALERT_REPORT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ef3468a9-726d-4e63-acad-5098826ffd32" absoluteBounds="5.015, 15.96, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
