@@ -222,13 +222,13 @@ namespace Reports.Reports.GridReports
         protected global::DevExpress.Web.ASPxDateEdit ASPxToDate;
 
         /// <summary>
-        /// DropDownList1 control.
+        /// drdExport control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.DropDownList drdExport;
 
         /// <summary>
         /// ShowGrid control.

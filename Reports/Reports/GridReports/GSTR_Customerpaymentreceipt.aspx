@@ -1043,7 +1043,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <td style="padding-left: 10px; padding-top: 0px">
                                 <%-- <% if (rights.CanExport)
                                { %>--%>
-                            <asp:DropDownList ID="DropDownList1" runat="server" CssClass="btn btn-sm btn-primary"
+                            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-sm btn-primary"
                                 OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                                 <asp:ListItem Value="0">Export to</asp:ListItem>
                                 <asp:ListItem Value="1">PDF</asp:ListItem>
