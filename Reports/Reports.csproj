@@ -210,6 +210,7 @@
     <Content Include="Reports\GridReports\AssignedSalesmanDetails.aspx" />
     <Content Include="Reports\GridReports\AuditTrial_Report.aspx" />
     <Content Include="Reports\GridReports\BankReconciliationStatement.aspx" />
+    <Content Include="Reports\GridReports\BatchExpiryAlert.aspx" />
     <Content Include="Reports\GridReports\BatchwiseBalance_Detail.aspx" />
     <Content Include="Reports\GridReports\BatchwiseBalance_Summary.aspx" />
     <Content Include="Reports\GridReports\BOMRegisterDetails.aspx" />
@@ -838,6 +839,13 @@
     </Compile>
     <Compile Include="Reports\GridReports\BankReconciliationStatement.aspx.designer.cs">
       <DependentUpon>BankReconciliationStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GridReports\BatchExpiryAlert.aspx.cs">
+      <DependentUpon>BatchExpiryAlert.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GridReports\BatchExpiryAlert.aspx.designer.cs">
+      <DependentUpon>BatchExpiryAlert.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\GridReports\BatchwiseBalance_Detail.aspx.cs">
       <DependentUpon>BatchwiseBalance_Detail.aspx</DependentUpon>

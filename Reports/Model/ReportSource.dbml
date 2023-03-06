@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK02122020" Class="ReportSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=PK02122020;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ERP_ConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Tekfoods_25112022" Class="ReportSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=Tekfoods_25112022;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Tekfoods_25112022ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.v_ReportCustomer" Member="v_ReportCustomers">
     <Type Name="v_ReportCustomer">
       <Column Name="Nid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
@@ -4287,6 +4287,34 @@
       <Column Name="STATE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="COU_COUNTRY" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="SHIP_TO_PARTY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BATCEXPIRYALERT_REPORT" Member="BATCEXPIRYALERT_REPORTs">
+    <Type Name="BATCEXPIRYALERT_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TOPPRODSEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BRANCH_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCH_DESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="IS_BATCH" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="BATCH_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BATCH_DESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="BATCH_MFGDT" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="BATCH_EXPDT" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="BATCHMFGDT" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="BATCHEXPDT" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="EXPWITHIN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IS_WAREHOUSE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="WAREHOUSE_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="WAREHOUSE_DESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PRODID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PRODCODE" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PRODNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PRODCLASS" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="STOCKUOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IN_QTY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OUT_QTY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="BAL_QTY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.PRC_PARTYWISEAGEINSUMGDET_REPORT" Method="PRC_PARTYWISEAGEINSUMGDET_REPORT" IsComposable="true">
