@@ -476,19 +476,22 @@ namespace CutOff.Controllers.CutOff
        [HttpGet]
        public ActionResult DropTableSchema()
         {
-            Boolean Success = false;
+            String strSuccessMsg = "False";
             DataSet dt = new DataSet();
+            String response_msg = "";
+
             try
             {
                 dt = obj.DropTBLSchema();
                 if (dt != null && dt.Tables[0].Rows.Count > 0)
                 {
-                    foreach (DataRow row in dt.Tables[0].Rows)
-                    {
-                        Success = Convert.ToBoolean(row["Success"]);
-                    }
+                    strSuccessMsg = Convert.ToString(dt.Tables[0].Rows[0]["Success"]);
+                    //foreach (DataRow row in dt.Tables[0].Rows)
+                    //{
+                    //    Success = Convert.ToBoolean(row["Success"]);
+                    //}
                 }
-                if (Success == true)
+                if (strSuccessMsg == "True")
                 {
                     response_msg = "CutOff Process completed Successfully";
                 }
