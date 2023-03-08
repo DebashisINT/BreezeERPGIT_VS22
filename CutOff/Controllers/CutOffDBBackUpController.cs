@@ -26,9 +26,7 @@ using System.Xml.Linq;
 using System.Data.SqlClient;
 using CutOff.Models;
 using System.Text;
-// Rev Sanchita
 using System.Windows.Forms;
-// End of Rev Sanchita
 
 namespace CutOff.Controllers.CutOff
 {
