@@ -1039,7 +1039,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <td style="padding-left: 20px; padding-top: 0px">
                                 <button id="btnShow" class="btn btn-success" type="button" onclick="btn_ShowRecordsClick(this);">Show</button>
                             </td>
-
+                            <%--Rev 1.0: "Export to" part added in this table --%>
                             <td style="padding-left: 10px; padding-top: 0px">
                                 <%-- <% if (rights.CanExport)
                                { %>--%>
