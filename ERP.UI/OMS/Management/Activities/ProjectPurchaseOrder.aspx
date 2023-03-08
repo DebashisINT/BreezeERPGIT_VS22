@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPurchaseOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseOrder" %>
+﻿<%-- ***********************************************************************************************************************************
+    Rev 1.0     Sanchita    08/03/2023      V2.0.37     The Qty in the Grid becomes zero once the Addl Desc is added or edited in 
+                                                        Project Purchase Order. refer: 25713
+****************************************************************************************************************************************** --%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPurchaseOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseOrder" %>
 
 
 
@@ -1672,57 +1677,48 @@
                     //grid.batchEditApi.StartEdit(globalRowIndex);
                     //var Bal_Qty=grid.GetEditor('BalQty').GetValue();      
                     var Bal_Qty = (grid.GetEditor('BalQty').GetValue() != null) ? grid.GetEditor('BalQty').GetValue() : "0";
-                   
-                    if(parseFloat(QuantityValue)<parseFloat(Bal_Qty))
-                    {
+
+                    if (parseFloat(QuantityValue) < parseFloat(Bal_Qty)) {
                         //Rev qty checking only edit 24216
-                        if($("#Keyval_internalId").val()!="Add")
-                        {
-                            if(parseFloat(Bal_Qty)==0)
-                            {
+                        if ($("#Keyval_internalId").val() != "Add") {
+                            if (parseFloat(Bal_Qty) == 0) {
                                 //End Of Rev qty checking only edit 24216
-                                jAlert('Quantity can not be less than tagged quantity.','Alert',function(){
-                           
+                                jAlert('Quantity can not be less than tagged quantity.', 'Alert', function () {
+
                                     grid.batchEditApi.StartEdit(globalRowIndex, 6);
                                     grid.GetEditor('gvColQuantity').SetValue(Bal_Qty);
                                     // return
                                 });
 
-                                QuantityValue=Bal_Qty;
+                                QuantityValue = Bal_Qty;
                             }
                         }
                     }
                     else {
-                        if($("#Keyval_internalId").val()=="Add")
-                        {
+                        if ($("#Keyval_internalId").val() == "Add") {
                             //Rev qty checking only edit 24216
                             var Indent_Num = (grid.GetEditor('Indent_Num').GetText() != null) ? grid.GetEditor('Indent_Num').GetText() : "0";
-                            if(Indent_Num!="")
-                            {
+                            if (Indent_Num != "") {
                                 grid.GetEditor('gvColQuantity').SetValue(Bal_Qty);
                                 grid.batchEditApi.StartEdit(globalRowIndex, 8);
                             }
-                            else{
+                            else {
                                 //End of Rev qty checking only edit 24216
                                 grid.GetEditor('gvColQuantity').SetValue(QuantityValue);
                                 grid.batchEditApi.StartEdit(globalRowIndex, 8);
                             }
                         }
-                        else
-                        {
+                        else {
                             // Rev 24322  [ The below block is for Purchase Order made by tagging Indent ]
                             var Indent_Num = (grid.GetEditor('Indent_Num').GetText() != null) ? grid.GetEditor('Indent_Num').GetText() : "0";
-                            if(Indent_Num!="")
-                            {
+                            if (Indent_Num != "") {
                                 // End of Rev 24322
-                                if(parseFloat(Bal_Qty)==0)
-                                {
+                                if (parseFloat(Bal_Qty) == 0) {
                                     //End of Rev qty checking only edit 24216
                                     grid.GetEditor('gvColQuantity').SetValue(QuantityValue);
                                     grid.batchEditApi.StartEdit(globalRowIndex, 8);
                                 }
-                                else
-                                {
+                                else {
                                     grid.GetEditor('gvColQuantity').SetValue(Bal_Qty);
                                     grid.batchEditApi.StartEdit(globalRowIndex, 8);
                                 }
@@ -1731,13 +1727,15 @@
                             // End of Rev 24322
                         }
                     }
-                }
-                var Amount = (QuantityValue * strFactor * (strSalePrice / strRate)).toFixed(2);
-                var tbAmount = grid.GetEditor("gvColAmount");
-                tbAmount.SetValue(Amount);
-                var tbTotalAmount = grid.GetEditor("gvColTotalAmountINR");
-                tbTotalAmount.SetValue(Amount);
-                $('#<%= lblbranchName.ClientID %>').text(strBranch);
+                    // Rev 1.0
+                    //}
+                    // End of Rev 1.0
+                    var Amount = (QuantityValue * strFactor * (strSalePrice / strRate)).toFixed(2);
+                    var tbAmount = grid.GetEditor("gvColAmount");
+                    tbAmount.SetValue(Amount);
+                    var tbTotalAmount = grid.GetEditor("gvColTotalAmountINR");
+                    tbTotalAmount.SetValue(Amount);
+                    $('#<%= lblbranchName.ClientID %>').text(strBranch);
                     var IsLinkedProduct = (grid.GetEditor('IsLinkedProduct').GetText() != null) ? grid.GetEditor('IsLinkedProduct').GetText() : "";
                     if (IsLinkedProduct != "Y") {
                         var tbAmount = grid.GetEditor("gvColAmount");
@@ -1755,7 +1753,10 @@
                     grid.GetEditor('gvColQuantity').SetValue('0');
                     grid.GetEditor('gvColProduct').Focus();
                 }
+            // Rev 1.0
             }
+            // End of Rev 1.0
+        }
         // Mantis Issue 24310    
         //}
         // End of Mantis Issue 24310
