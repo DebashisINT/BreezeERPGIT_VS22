@@ -1,5 +1,5 @@
 ﻿<%-- ***********************************************************************************************************************************
-    Rev 1.0     Sanchita    08/03/2023      V2.0.37     The Qty in the Grid becomes zero once the Addl Desc is added or edited in 
+    Rev 1.0     Sanchita     08/03/2023      V2.0.37     The Qty in the Grid becomes zero once the Addl Desc is added or edited in 
                                                         Project Purchase Order. refer: 25713
 ****************************************************************************************************************************************** --%>
 
