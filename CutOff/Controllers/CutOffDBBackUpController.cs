@@ -26,7 +26,9 @@ using System.Xml.Linq;
 using System.Data.SqlClient;
 using CutOff.Models;
 using System.Text;
+// Rev Sanchita
 using System.Windows.Forms;
+// End of Rev Sanchita
 
 namespace CutOff.Controllers.CutOff
 {
@@ -86,28 +88,19 @@ namespace CutOff.Controllers.CutOff
             // Rev Sanchita
             //string path = "C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup";
 
-            //string path = "C:\\Program Files";
             //string path = Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) ;
-
-            //string baseUrl = System.Configuration.ConfigurationSettings.AppSettings["baseUrl"];
-            //string path = baseUrl + "/CommonFolder";
-            string path = Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) ;
+            string path = Server.MapPath("~/CommonFolder/");
             // End of Rev Sanchita
-            //string _dbname = "YEAREND_TEST";
 
             string _dbname = _conn.Database;
-                //string _dbname = "YEAREND_TEST_3_6_2022";
-                string fileName = _dbname + DateTime.Now.Year.ToString() + "-" +
-                    DateTime.Now.Month.ToString() + "-" +
-                    DateTime.Now.Day.ToString() + "-" +
-                    DateTime.Now.Millisecond.ToString() + ".bak";
-                string _sql;
+            
+            string fileName = _dbname + DateTime.Now.Year.ToString() + "-" +
+                DateTime.Now.Month.ToString() + "-" +
+                DateTime.Now.Day.ToString() + "-" +
+                DateTime.Now.Millisecond.ToString() + ".bak";
+            string _sql;
 
-                //if (!System.IO.Directory.Exists(path))
-                //{
-                //    System.IO.Directory.CreateDirectory(path);
-                //}
-                try
+            try
             {
                 //Rev work start 02.06.2022
                 //cmd = new SqlCommand("backup database YEAREND_TEST to disk='" + path + "\\" + DateTime.Now.ToString("ddMMyyyy_HHmmss") + ".Bak'", _conn);
@@ -119,63 +112,44 @@ namespace CutOff.Controllers.CutOff
                     cmd.ExecuteNonQuery();
 
                 // Rev sanchita
-                // Download the data backup in Client PC from Server
-                //////string strFileName = _dbname + ".bak'";
-
-                //////string strPath = path + "//" + strFileName;
-
-                //////Response.ContentType = "application/bak";
-                //////Response.AppendHeader("Content-Disposition", "attachment; filename=" + strFileName);
-                //////Response.TransmitFile(strPath);
-                //////Response.End();
-
-
-                string strFileName = "BreezeERP_Product_Import.xlsx";
-                string strPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + strFileName);
-
-                Response.ContentType = "application/xlsx";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=BreezeERP_Product_Import.xlsx");
-                Response.TransmitFile(strPath);
-                Response.End();
-
-
-                //string strFileName = _dbname + ".bak'";
-                //byte[] bytes = System.IO.File.ReadAllBytes(Path.Combine(path, strFileName));
-
-                //// Delete .bak file from server folder.
-                ////if (Directory.Exists(backupDestination))
-                ////{
-                ////    Directory.Delete(backupDestination, true);
-                ////}
-                //Response.Clear();
-                //Response.Buffer = true;
-                //Response.Charset = "";
-                //Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                //Response.ContentType = "application/octet-stream";
-                //Response.AppendHeader("Content-Disposition", "attachment; filename=" + strFileName);
-                //Response.BinaryWrite(bytes);
-                //Response.Flush();
-                //Response.End();
-
-                // End of Rev Sanchita
-
-                response_msg = "Backup of Database " + _dbname + ".bak Created Successfully in " + path;
-                }
-                catch (Exception ex)
-                {
-                    //throw;
-                    response_msg = "Error Occured During DB backup process !<br>" + ex.ToString();
-                }
                 //response_msg = "Backup of Database " + _dbname + ".bak Created Successfully in " + path;
-                // Rev Sanchita
-            //}
-            //else
-            //{
-            //    response_msg = "Invalid patch for data backup.";
-            //}
-            // End of Rev Sanchita
+                response_msg = "Backup of Database " + _dbname + ".bak Created Successfully.";
+                // End of Rev Sanchita
+            }
+            catch (Exception ex)
+            {
+                //throw;
+                response_msg = "Error Occured During DB backup process !<br>" + ex.ToString();
+            }
+            //response_msg = "Backup of Database " + _dbname + ".bak Created Successfully in " + path;
+                
             return Json(response_msg, JsonRequestBehavior.AllowGet);
-        }     
+        }
+
+        // Rev Sanchita
+        public ActionResult DownloadDatabackup()
+        {
+            DataBaseClass dbc = new DataBaseClass();
+            _conn = dbc.openconn();
+            string FileName = _conn.Database + ".bak";
+            string path = Server.MapPath("~/CommonFolder/" + FileName);
+
+            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+            response.ClearContent();
+            response.Clear();
+            response.ContentType = "image/jpeg";
+            response.AddHeader("Content-Disposition", "attachment; filename=" + FileName + ";");
+            response.TransmitFile(path);
+            response.Flush();
+            response.End();
+
+            //System.IO.File.Delete(path);
+
+            return null;
+        }
+
+        // End of Rev Sanchita
+
         [HttpGet]
         public ActionResult NewDBCreate()
         {
@@ -269,7 +243,10 @@ namespace CutOff.Controllers.CutOff
             try
             {
                 con.Open();
-                string sqlquery = "CREATE DATABASE " + _NewDBName;
+                // Rev Sanchita
+                //string sqlquery = "CREATE DATABASE " + _NewDBName;
+                string sqlquery = "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '" + _NewDBName + "') BEGIN CREATE DATABASE " + _NewDBName+" END";
+                // End of Rev Sanchita
                 SqlCommand cmd = new SqlCommand(sqlquery, con);
                 cmd.CommandType = CommandType.Text;
                 int iRows = cmd.ExecuteNonQuery();
@@ -388,7 +365,8 @@ namespace CutOff.Controllers.CutOff
 
             // Rev Sanchita
             //string path = "C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + fileNameWithoutExtFrom + ".bak";
-            string path = Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + fileNameWithoutExtFrom + ".bak";
+
+            string path = Server.MapPath("~/CommonFolder/") + fileNameWithoutExtFrom + ".bak";
             // End of Rev Sanchita
 
             con.Open();
@@ -402,7 +380,6 @@ namespace CutOff.Controllers.CutOff
                                       "MOVE N'" + ROWS + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Data\\" + _BackupName + ".mdf', " +
                                       "MOVE N'" + LOG + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Data\\" + _BackupName + ".ldf';  ";
             
-            System.IO.File.Delete(path);
             // End of Rev Sanchita
             SqlCommand sqlCommand = new SqlCommand(sqlQuery, con);
             sqlCommand.CommandType = CommandType.Text;
@@ -413,10 +390,16 @@ namespace CutOff.Controllers.CutOff
             DataSet dt1 = new DataSet();
             dt1 = obj.InsertCompany(_NewDBName);
 
+            // Rev Sanchita
+            string FileName = dbname + ".bak";
+            System.IO.File.Delete(Server.MapPath("~/CommonFolder/" + FileName));
+            // End of Rev Sanchita
+
             return RedirectToAction("DropTableSchema", "CutOffDBBackUp");
+            
             //return RedirectToAction("Action2", "ControllerName");
             /*New addition*/
-           
+
             /* con.Open();
              string sqlQuery = "RESTORE DATABASE " + _BackupName + " FROM DISK = '" + filepathFrom + "' " +
                                        "WITH REPLACE, RECOVERY, " +
@@ -516,8 +499,10 @@ namespace CutOff.Controllers.CutOff
             }               
             catch { }
             TempData["msg"] = response_msg;
-           // return Json(response_msg, JsonRequestBehavior.AllowGet);
+            // return Json(response_msg, JsonRequestBehavior.AllowGet);
+
             return RedirectToAction("SuccessReturn", "CutOffDBBackUp");
+           
         }
         [HttpGet]
         public ActionResult SuccessReturn()

@@ -70,22 +70,25 @@
     /*Rev end 1.0*/
 </style>
 <script>
+    /*Rev Sanchita*/
+    function DownloadDatabackup() {
+        document.getElementById("btnStep3").style.display = "inline-block";
+        document.getElementById("btnDownloadBackup").style.display = "none";
+
+        var url = '@Url.Action("DownloadDatabackup", "CutOffDBBackUp")'
+        window.location.href = url;
+    }
+    /*End of Rev Sanchita*/
+
     function OnNextButtonClickTwo() {
-        debugger;
         var obj = {};
-        // Rev Sanchita
-        //obj.backupPath = $("#txtPath").val()
-        // End of Rev Sanchita
-        $.ajax({
+         $.ajax({
             type: "POST",
             url: "@Url.Action("CutOffBackUp", "CutOffDBBackUp")",
             async: true,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            // Rev Sanchita
-            //data: JSON.stringify(obj),
-            // End of Rev Sanchita
-            /*Rev 1.0*/
+           /*Rev 1.0*/
             beforeSend: function () {
                 $('#loader-img-1').show();
                 document.getElementById("btnNext").style.display = "none";
@@ -97,7 +100,10 @@
             success: function (response) {
                 //console.log(response);
                 //jAlert(response);
-                document.getElementById("btnStep3").style.display = "inline-block";
+                // Rev Sanchita
+                //document.getElementById("btnStep3").style.display = "inline-block";
+                document.getElementById("btnDownloadBackup").style.display = "inline-block";
+                // End of Rev Sanchita
                 document.getElementById("btnNext").style.display = "none";
                 document.getElementById("dvBack").style.display = "inline-block";
                 $('.ptext').hide();
@@ -121,7 +127,9 @@
         @*window.location.href = '@Url.Action("CutOffDBBac", "Home")';*@
     }
     function NextProcess() {
-        debugger;
+        // Rev Sanchita
+        document.getElementById("btnStep3").style.display = "none";
+        // End of Rev Sanchita
         var StrData = {};
         var data = {
             "StrData": $("#ddlDataBase option:selected").val()
@@ -172,71 +180,78 @@
             This Cut-Off process will enable you to Create a new Database with Masters and configurations being carried forward to the Next Period, so that you may start recording the Opening and the Transactions for the Current Period, while keeping a Backup of Transactions for the Previous period for your future references.
         </p>
         @*Rev end 1.0*@
-        <div class="bordered">
-            <div id="loader-img-1" style="display:none;"><img src="~/assests/images/loader.gif" /></div>
-            <table width="80%">
-                @*<tr>
-                        <td>
-                            <label>Cut Off Date</label>
-                        </td>
-                        <td>
-                            @Html.DevExpress().DateEdit(
-                         settings =>
-                         {
-                             settings.Name = "CutOffDate_dt";
-                             settings.Properties.DisplayFormatString = "dd-MM-yyyy";
-                             settings.Properties.EditFormatString = "dd-MM-yyyy";
-                             settings.Width = Unit.Percentage(100);
-                             //settings.Date = Convert.ToDateTime(@Model.OrderDate);
-                             settings.Properties.UseMaskBehavior = true;
+    <div class="bordered">
+        <div id="loader-img-1" style="display:none;"><img src="~/assests/images/loader.gif" /></div>
+        <table width="80%">
+            @*<tr>
+                <td>
+                    <label>Cut Off Date</label>
+                </td>
+                <td>
+                    @Html.DevExpress().DateEdit(
+                 settings =>
+                 {
+                     settings.Name = "CutOffDate_dt";
+                     settings.Properties.DisplayFormatString = "dd-MM-yyyy";
+                     settings.Properties.EditFormatString = "dd-MM-yyyy";
+                     settings.Width = Unit.Percentage(100);
+                     //settings.Date = Convert.ToDateTime(@Model.OrderDate);
+                     settings.Properties.UseMaskBehavior = true;
 
-                         }
-                         ).GetHtml()
-                        </td>
-                    </tr>*@
-                <tr>
-                    @*Rev 1.0*@
-                    @*<td>
-            <label></label>
-        </td>*@
-                    @*Rev end 1.0*@
-                   
-                    <td>
-                        @Html.DevExpress().Button(
+                 }
+                 ).GetHtml()
+                </td>
+            </tr>*@
+            <tr>
+                @*Rev 1.0*@
+                @*<td>
+                    <label></label>
+                </td>*@
+                @*Rev end 1.0*@
+                <td>
+                    @Html.DevExpress().Button(
 
-                                            settings =>
-                                            {
-                                                settings.Name = "btnNext";
-                                                settings.ClientSideEvents.Click = "OnNextButtonClickTwo";
-                                                settings.Text = "Start CutOFF";
-                                                settings.RenderMode = ButtonRenderMode.Button;
-                                                settings.ControlStyle.CssClass = "btn start-btn";
-                                                settings.UseSubmitBehavior = false;
-                                            }).GetHtml()
-                    </td>
-                </tr>
-                <tr>
-                    @*Rev 1.0*@
-                    @*<td>
-                            <label></label>
-                        </td>*@
-                    @*Rev end 1.0*@
-                    <td>
-                        <div id="dvBack" style="display:none;"></div>
-                    </td>
-                </tr>
-            </table>
-            @*Rev 1.0*@
-            @*<hr />*@
+                                        settings =>
+                                        {
+                                            settings.Name = "btnNext";
+                                            settings.ClientSideEvents.Click = "OnNextButtonClickTwo";
+                                            settings.Text = "Start CutOFF";
+                                            settings.RenderMode = ButtonRenderMode.Button;
+                                            settings.ControlStyle.CssClass = "btn start-btn";
+                                            settings.UseSubmitBehavior = false;
+                                        }).GetHtml()
+                </td>
 
-            <div id="loader-img" style="display:none;"><img src="~/assests/images/loader.gif" /></div>
-            @*Rev end 1.0*@
-            <div class="text-right mtop-2">
-                @*<button style="display:none;" id="btnStep3" class="btn btn-primary" onclick="RedirectToStepthree();">OK</button>*@
-                <button style="display:none;" id="btnStep3" class="btn btn-primary" onclick="NextProcess();">OK</button>
-                @*<button class="btn btn-danger" onclick="btnCancelClick();">Cancel</button>*@
-            </div>
+            </tr>
+            <tr>
+                @*Rev 1.0*@
+                @*<td>
+                    <label></label>
+                </td>*@
+                @*Rev end 1.0*@
+                <td>
+                    <div id="dvBack" style="display:none;"></div>
+                </td>
+            </tr>
+        </table>
+        @*Rev 1.0*@
+        @*<hr />*@
+
+        
+        <div id="loader-img" style="display:none;"><img src="~/assests/images/loader.gif" /></div>
+        @*Rev end 1.0*@
+        <div class="text-right mtop-2">
+            @*Rev Sanchita*@
+            <button type="button" style="display:none;" id="btnDownloadBackup" class="btn btn-info mr-1" onclick="DownloadDatabackup();">
+                Download Data Backup
+            </button>
+            @*End of Rev Sanchita*@
+
+            @*<button style="display:none;" id="btnStep3" class="btn btn-primary" onclick="RedirectToStepthree();">OK</button>*@
+            <button style="display:none;" id="btnStep3" class="btn btn-primary" onclick="NextProcess();">Proceed</button>
+            @*<button class="btn btn-danger" onclick="btnCancelClick();">Cancel</button>*@
         </div>
+    </div>
 
     </div>
     @*<input type="hidden" id="hdnCutoffDate" value="@ViewData["cutoffDate"]" />

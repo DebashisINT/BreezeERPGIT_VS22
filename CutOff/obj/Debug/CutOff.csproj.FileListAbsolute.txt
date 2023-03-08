@@ -363,6 +363,4 @@ D:\GIT\GitHub\BreezeERPGIT_VS22\CutOff\bin\BusinessLogicLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\CutOff\bin\DataAccessLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\CutOff\bin\EntityLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\CutOff\bin\UtilityLayer.pdb
-D:\GIT\GitHub\BreezeERPGIT_VS22\CutOff\bin\System.Web.Mvc.xml
-D:\GIT\GitHub\BreezeERPGIT_VS22\CutOff\bin\System.Web.WebPages.xml
 D:\GIT\GitHub\BreezeERPGIT_VS22\CutOff\obj\Debug\CutOff.csproj.CopyComplete
