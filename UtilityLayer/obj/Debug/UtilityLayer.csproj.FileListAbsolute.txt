@@ -68,3 +68,17 @@ E:\GIT22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CoreCompil
 E:\GIT22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CopyComplete
 E:\GIT22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.dll
 E:\GIT22\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.pdb
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\UtilityLayer.pdb
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\BusinessLogicLayer.dll
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\EntityLayer.dll
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\DataAccessLayer.dll
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\Aspose.Pdf.Kit.dll
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\Ionic.Zip.dll
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\BusinessLogicLayer.pdb
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\EntityLayer.pdb
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\bin\Debug\DataAccessLayer.pdb
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.AssemblyReference.cache
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CoreCompileInputs.cache
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.csproj.CopyComplete
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.dll
+D:\GIT\GitHub\BreezeERPGIT_VS22\UtilityLayer\obj\Debug\UtilityLayer.pdb
