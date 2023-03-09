@@ -28,6 +28,7 @@ using CutOff.Models;
 using System.Text;
 // Rev Sanchita
 using System.Windows.Forms;
+using System.Drawing;
 // End of Rev Sanchita
 
 namespace CutOff.Controllers.CutOff
@@ -480,9 +481,14 @@ namespace CutOff.Controllers.CutOff
             DataSet dt = new DataSet();
             String response_msg = "";
 
+            string CS = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
+            SqlConnection con = new SqlConnection(CS);
+            string dbname = con.Database;
+            string _NewDBName = dbname + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Year.ToString();
+
             try
             {
-                dt = obj.DropTBLSchema();
+                dt = obj.DropTBLSchema(Convert.ToString(Session["userid"]), _NewDBName);
                 if (dt != null && dt.Tables[0].Rows.Count > 0)
                 {
                     strSuccessMsg = Convert.ToString(dt.Tables[0].Rows[0]["Success"]);
