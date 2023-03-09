@@ -22,10 +22,12 @@ namespace CutOff.Models
             ds = proc.GetDataSet();
             return ds;
         }
-        public DataSet DropTBLSchema()
+        public DataSet DropTBLSchema(string user_id, String _NewDBName)
         {
             DataSet ds = new DataSet();
             ProcedureExecute proc = new ProcedureExecute("PRC_DROPDBTABLE");
+            proc.AddVarcharPara("@user_id", 150, user_id);
+            proc.AddVarcharPara("@NewDBName", 150, _NewDBName);
             ds = proc.GetDataSet();
             return ds;
         }
