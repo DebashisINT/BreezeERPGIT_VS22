@@ -625,9 +625,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #094e8c !important;
         }
 
-        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut , #RcmGrid
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut , #OPTREGGrid
         {
-            max-width: 97% !important;
+            max-width: 98% !important;
             /*width: 99% !important;*/
         }
 
