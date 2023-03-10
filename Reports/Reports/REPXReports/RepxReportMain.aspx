@@ -653,14 +653,16 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div class="panel-heading">
-    <div class="panel-title">
-        <%--<h3>Report Parameter</h3>--%>
-        <asp:Label ID="lblReportTitle" runat="server" Text=""></asp:Label>
-    </div>
-</div>
+
     <%--Rev 1.0: "outer-div-main" class add --%>
     <div class="outer-div-main">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <%--<h3>Report Parameter</h3>--%>
+            <asp:Label ID="lblReportTitle" runat="server" Text=""></asp:Label>
+        </div>
+    </div>
+    
         <div class="form_main clearfix">
     <dxe:aspxpopupcontrol ID="popUp_newReport" runat="server" ClientInstanceName="cpopUp_newReport"
         Width="400px" HeaderText="New Report" PopupHorizontalAlign="WindowCenter"
@@ -813,7 +815,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                  <ClientSideEvents Click="CopyNew"></ClientSideEvents>
                                 </dxe:aspxbutton>     
                                 <dxe:aspxbutton ID="btnLoadDesign" runat="server" ToolTip="Click on Open the design" AutoPostBack="false" Text="Open" OnClick="btnLoadDesign_Click" ClientInstanceName="cbtnLoadDesign" CssClass="btn btn-primary"  /></dxe:ASPxButton>
-                                <dxe:aspxbutton ID="btnPreview" runat="server" ToolTip="Click on Preview the report" AutoPostBack="true" Text="Preview" OnClick="btnPreview_Click" CssClass="btn btn-primary" >
+                                <dxe:aspxbutton ID="btnPreview" runat="server" ToolTip="Click on Preview the report" AutoPostBack="true" Text="Preview" OnClick="btnPreview_Click" CssClass="btn btn-success" >
                                    <ClientSideEvents Click=" cbtnPreviewClick"></ClientSideEvents>
                                 </dxe:ASPxButton>
                             </td>

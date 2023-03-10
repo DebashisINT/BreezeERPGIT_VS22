@@ -1,4 +1,9 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ABCAnalysis.aspx.cs" Inherits="Reports.Reports.GridReports.ABCAnalysis" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                10-03-2023        2.0.36           Pallab              25575 : Report pages design modification
+====================================================== Revision History =============================================--%>
+
+<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ABCAnalysis.aspx.cs" Inherits="Reports.Reports.GridReports.ABCAnalysis" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -427,6 +432,454 @@
         .auto-style1 {
             height: 145px;
         }
+
+        /*Rev 1.0*/
+        .outer-div-main {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #11111154;
+        }
+
+        /*.form_main {
+            overflow: hidden;
+        }*/
+
+        label , .mylabel1, .clsTo, .dxeBase_PlasticBlue
+        {
+            color: #141414 !important;
+            font-size: 14px !important;
+                font-weight: 500 !important;
+                margin-bottom: 0 !important;
+                    line-height: 20px;
+        }
+
+        #GrpSelLbl .dxeBase_PlasticBlue
+        {
+                line-height: 20px !important;
+        }
+
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            bottom: 6px;
+            right: 20px;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .dxeDisabled_PlasticBlue
+        {
+            z-index: 0 !important;
+        }
+
+        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        .simple-select::after {
+            /*content: '<';*/
+            content: url(../../../assests/images/left-arw.png);
+            position: absolute;
+            top: 26px;
+            right: 13px;
+            font-size: 16px;
+            transform: rotate(269deg);
+            font-weight: 500;
+            background: #094e8c;
+            color: #fff;
+            height: 18px;
+            display: block;
+            width: 26px;
+            /* padding: 10px 0; */
+            border-radius: 4px;
+            text-align: center;
+            line-height: 19px;
+            z-index: 0;
+        }
+        .simple-select {
+            position: relative;
+        }
+        .simple-select:disabled::after
+        {
+            background: #1111113b;
+        }
+        select.btn
+        {
+            padding-right: 10px !important;
+        }
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: 1;
+    }
+
+        .styled-checkbox + label {
+            position: relative;
+            /*cursor: pointer;*/
+            padding: 0;
+            margin-bottom: 0 !important;
+        }
+
+            .styled-checkbox + label:before {
+                content: "";
+                margin-right: 6px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                /*background: #d7d7d7;*/
+                margin-top: 2px;
+                border-radius: 2px;
+                border: 1px solid #c5c5c5;
+            }
+
+        .styled-checkbox:hover + label:before {
+            background: #094e8c;
+        }
+
+
+        .styled-checkbox:checked + label:before {
+            background: #094e8c;
+        }
+
+        .styled-checkbox:disabled + label {
+            color: #b8b8b8;
+            cursor: auto;
+        }
+
+            .styled-checkbox:disabled + label:before {
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        .styled-checkbox:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            background: white;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+            transform: rotate(45deg);
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin-right: 5px;
+        }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
+
+        .modal-dialog
+        {
+            width: 50%;
+        }
+
+        .modal-header
+        {
+            padding: 8px 4px 8px 10px;
+            background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut  
+        /*#B2B , 
+        #grid_B2BUR , 
+        #grid_IMPS , 
+        #grid_IMPG ,
+        #grid_CDNR ,
+        #grid_CDNUR ,
+        #grid_EXEMP ,
+        #grid_ITCR ,
+        #grid_HSNSUM*/
+        {
+            max-width: 98% !important;
+        }
+
+        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
+        {
+            width: 95% !important;
+        }*/
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 3px;
+        }
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
+
+        .dxeBase_PlasticBlue .dxichCellSys
+        {
+            padding-top: 2px !important;
+        }
+
+        .pBackDiv
+        {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #1111112e;
+        }
+        .HeaderStyle th
+        {
+            padding: 5px;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .pt-2
+        {
+            padding-top: 5px;
+        }
+        .pt-10
+        {
+            padding-top: 10px;
+        }
+
+        .pt-15
+        {
+            padding-top: 15px;
+        }
+
+        .pb-10
+        {
+            padding-bottom: 10px;
+        }
+
+        .pTop10 {
+    padding-top: 20px;
+}
+        .custom-padd
+        {
+            padding-top: 4px;
+    padding-bottom: 10px;
+        }
+
+        input + label
+        {
+                margin-right: 10px;
+        }
+
+        .btn
+        {
+            margin-bottom: 0;
+        }
+
+        .pl-10
+        {
+            padding-left: 10px;
+        }
+
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+
+        .devCheck
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-5
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-10
+        {
+            margin-top: 10px;
+        }
+
+        select.btn
+        {
+           position: relative;
+           z-index: 0;
+        }
+
+        select
+        {
+            margin-bottom: 0;
+        }
+
+        .form-control
+        {
+            background-color: transparent;
+        }
+
+        select.btn-radius {
+    padding: 4px 8px 6px 11px !important;
+}
+        .btn .badge
+        {
+            line-height: 11px;
+        }
+
+        .badge
+        {
+            border-radius: 23px;
+        }
+
+        .btn-badge-color1 , .btn-badge-color2 , .btn-badge-color3 , .btn-badge-color6
+        {
+            padding: 6px 10px 4px;
+        }
+
+        .pdt-36
+        {
+            padding-top: 36px;
+        }
+        /*.padTopbutton {
+    padding-top: 27px;
+}*/
+        /*#lookup_project
+        {
+            max-width: 100% !important;
+        }*/
+        /*Rev end 1.0*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -499,7 +952,10 @@
           </div>
         </div>
     </div>
-    <div class="form_main">
+
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="form_main">
         <div class="row">
             <div class="col-md-2 lblmTop8">
                 <div style="color: #b5285f; font-weight: bold;" class="clsFrom">
@@ -510,6 +966,9 @@
                     <ButtonStyle Width="13px">
                     </ButtonStyle>
                 </dxe:ASPxDateEdit>
+                <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
             </div>
             <div class="col-md-2 lblmTop8">
                 <div style="color: #b5285f; font-weight: bold;" class="clsTo">
@@ -522,6 +981,9 @@
                     </ButtonStyle>
 
                 </dxe:ASPxDateEdit>
+                <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
             </div>
             <div class="col-md-2">
                 <div style="color: #b5285f; font-weight: bold;" class="clsTo">
@@ -549,8 +1011,8 @@
                     <ClientSideEvents ButtonClick="function(s,e){BrandButnClick();}" KeyDown="function(s,e){Brand_KeyDown(s,e);}" />
                 </dxe:ASPxButtonEdit>
             </div>
-            
-            <div class="col-md-2">
+            <%--Rev 1.0: "simple-select" class add --%>
+            <div class="col-md-2 simple-select">
                 <div style="color: #b5285f; font-weight: bold;" class="clsTo">
                     <asp:Label ID="Label2" runat="Server" Text="On:  " CssClass="mylabel1"></asp:Label>
                 </div>
@@ -559,7 +1021,8 @@
                     <asp:ListItem Text="Cost" Value="C"></asp:ListItem>
                 </asp:DropDownList>
             </div>
-            <div class="col-md-2">
+            <%--Rev 1.0: "simple-select" class add --%>
+            <div class="col-md-2 simple-select">
                 <div style="color: #b5285f; font-weight: bold;" class="clsTo">
                     <asp:Label ID="Label1" runat="Server" Text="Valuation Technique:  " CssClass="mylabel1"></asp:Label>
                 </div>
@@ -569,7 +1032,7 @@
                 </asp:DropDownList>
             </div>
             <div class="clear"></div>
-            <div class="col-md-4">
+            <div class="col-md-4 pt-10">
             <div style="color: #b5285f; font-weight: bold;" class="clsTo">
                 <label>Indicator :<span class="cPoint" data-container="body" data-toggle="popover" data-placement="right" data-content="When it comes to stock or inventory management, ABC analysis typically segregates inventory into three categories based on its revenue and control measures required: A is 20% of items with 80% of total revenue and hence asks for tight control; B is 30% items with 15% revenue; whereas ‘C’ is 50% of the things with least 5% revenue and hence treated as most liberal.
 Understanding your sales over a certain period will help you evaluate and segregate which product belongs in which category i.e., A, B, or C. This will also assist the purchase Department in analyzing what to buy, and in what quantity."><i class="fa fa-question-circle" aria-hidden="true"></i></span></label>
@@ -605,9 +1068,9 @@ Understanding your sales over a certain period will help you evaluate and segreg
             </div>
             
             
-             <div class="col-md-8 pb-5">
+             <div class="col-md-8 pb-5 pdt-36">
                 
-                <label style="margin-bottom: 0;margin-top: 5px;">&nbsp</label>
+                <%--<label style="margin-bottom: 0;margin-top: 5px;">&nbsp</label>--%>
                 <div class="">
                      <button id="btntotalproduct" class="btn btn-badge-color6 nocursor" type="button">Total :<span class="badge" id="spntotalproduct">0.00</span></button>
                      <button id="btntotalvalueA" class="btn btn-badge-color2 nocursor" type="button">A :<span id="spncurrencyA"></span><span class="badge" id="spntotalvalueA">0.00</span></button>
@@ -700,6 +1163,7 @@ Understanding your sales over a certain period will help you evaluate and segreg
              <dx:LinqServerModeDataSource ID="GenerateEntityServerModeDataSource" runat="server" OnSelecting="GenerateEntityServerModeDataSource_Selecting"
                         ContextTypeName="ReportSourceDataContext" TableName="ABCANALYSIS_REPORT"></dx:LinqServerModeDataSource>
         </div>
+    </div>
     </div>
 
     <dxe:ASPxGridViewExporter ID="exporter" runat="server" Landscape="true" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
