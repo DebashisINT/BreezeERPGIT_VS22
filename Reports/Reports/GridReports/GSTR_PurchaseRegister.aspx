@@ -571,7 +571,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #094e8c !important;
         }
 
-        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut , #RcmGrid
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut , #ShowGrid2 , #grid_debitNote
         {
             max-width: 97% !important;
             /*width: 99% !important;*/
@@ -678,6 +678,15 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         input + label
         {
                 margin-right: 10px;
+        }
+
+        .col-md-3>label, .col-md-3>span
+        {
+                margin-top: 0 !important;
+        }
+
+        .mt-24{
+            margin-top: 24px;
         }
 
         /*#lookup_project
@@ -847,10 +856,15 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 </asp:DropDownList>
             </div>
 
-
-            <div class="col-md-3">
-                <%--<label>&nbsp</label>--%><br />
+            <%--Rev 1.0 : "mt-24" class add--%>
+            <div class="col-md-2 mt-24">
+                <%--<label>&nbsp</label><br />--%>
                 <asp:CheckBox runat="server" ID="chkgrndate" Text="Search by GRN Date" />
+            </div>
+            <%--Rev 1.0 : "Search by Party Invoice Date" checkbox add in top row--%>
+            <div class="col-md-3 mt-24">
+                <%--<label>&nbsp</label><br />--%>
+                <asp:CheckBox runat="server" ID="chkparty" Checked="true" Text="Search by Party Invoice Date" />
             </div>
 
 
@@ -858,10 +872,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <div class="clear"></div>
             <table class="tablpad">
                 <tr>
-                    <td>
+                    <%--<td>
                         <label>&nbsp</label><br />
                         <asp:CheckBox runat="server" ID="chkparty" Checked="true" Text="Search by Party Invoice Date" />
-                    </td>
+                    </td>--%>
                     <td class="for-cust-icon">
                         <asp:Label ID="Label1" runat="Server" Text="From Date : " CssClass="mylabel1"></asp:Label>
                         <dxe:ASPxDateEdit ID="ASPxFromDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
