@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CombineStockTrial.aspx.cs" Inherits="Reports.Reports.GridReports.CombineStockTrial" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                10-03-2023        2.0.36           Pallab              25575 : Report pages design modification
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CombineStockTrial.aspx.cs" Inherits="Reports.Reports.GridReports.CombineStockTrial" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
      Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -605,6 +610,423 @@
         .plhead a.collapsed .fa-minus-circle{
             display:none;
         }
+
+        /*Rev 1.0*/
+        .outer-div-main {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #11111154;
+        }
+
+        /*.form_main {
+            overflow: hidden;
+        }*/
+
+        label , .mylabel1, .clsTo, .dxeBase_PlasticBlue
+        {
+            color: #141414 !important;
+            font-size: 14px !important;
+                font-weight: 500 !important;
+                margin-bottom: 0 !important;
+                    line-height: 20px;
+        }
+
+        #GrpSelLbl .dxeBase_PlasticBlue
+        {
+                line-height: 20px !important;
+        }
+
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            bottom: 7px;
+            right: 4px;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .dxeDisabled_PlasticBlue
+        {
+            z-index: 0 !important;
+        }
+
+        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        .simple-select::after {
+            /*content: '<';*/
+            content: url(../../../assests/images/left-arw.png);
+            position: absolute;
+            top: 6px;
+            right: -2px;
+            font-size: 16px;
+            transform: rotate(269deg);
+            font-weight: 500;
+            background: #094e8c;
+            color: #fff;
+            height: 18px;
+            display: block;
+            width: 26px;
+            /* padding: 10px 0; */
+            border-radius: 4px;
+            text-align: center;
+            line-height: 19px;
+            z-index: 0;
+        }
+        .simple-select {
+            position: relative;
+        }
+        .simple-select:disabled::after
+        {
+            background: #1111113b;
+        }
+        select.btn
+        {
+            padding-right: 10px !important;
+        }
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: 1;
+    }
+
+        .styled-checkbox + label {
+            position: relative;
+            /*cursor: pointer;*/
+            padding: 0;
+            margin-bottom: 0 !important;
+        }
+
+            .styled-checkbox + label:before {
+                content: "";
+                margin-right: 6px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                /*background: #d7d7d7;*/
+                margin-top: 2px;
+                border-radius: 2px;
+                border: 1px solid #c5c5c5;
+            }
+
+        .styled-checkbox:hover + label:before {
+            background: #094e8c;
+        }
+
+
+        .styled-checkbox:checked + label:before {
+            background: #094e8c;
+        }
+
+        .styled-checkbox:disabled + label {
+            color: #b8b8b8;
+            cursor: auto;
+        }
+
+            .styled-checkbox:disabled + label:before {
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        .styled-checkbox:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            background: white;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+            transform: rotate(45deg);
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin-right: 5px;
+        }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
+
+        .modal-dialog
+        {
+            width: 50%;
+        }
+
+        .modal-header
+        {
+            padding: 8px 4px 8px 10px;
+            background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut  
+        /*#B2B , 
+        #grid_B2BUR , 
+        #grid_IMPS , 
+        #grid_IMPG ,
+        #grid_CDNR ,
+        #grid_CDNUR ,
+        #grid_EXEMP ,
+        #grid_ITCR ,
+        #grid_HSNSUM*/
+        {
+            max-width: 98% !important;
+        }
+
+        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
+        {
+            width: 95% !important;
+        }*/
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 3px;
+        }
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
+
+        .dxeBase_PlasticBlue .dxichCellSys
+        {
+            padding-top: 2px !important;
+        }
+
+        .pBackDiv
+        {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #1111112e;
+        }
+        .HeaderStyle th
+        {
+            padding: 5px;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .pt-2
+        {
+            padding-top: 5px;
+        }
+        .pt-10
+        {
+            padding-top: 10px;
+        }
+
+        .pt-15
+        {
+            padding-top: 15px;
+        }
+
+        .pb-10
+        {
+            padding-bottom: 10px;
+        }
+
+        .pTop10 {
+    padding-top: 20px;
+}
+        .custom-padd
+        {
+            padding-top: 4px;
+    padding-bottom: 10px;
+        }
+
+        input + label
+        {
+                margin-right: 10px;
+        }
+
+        .btn
+        {
+            margin-bottom: 0;
+        }
+
+        .pl-10
+        {
+            padding-left: 10px;
+        }
+
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+
+        .devCheck
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-5
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-10
+        {
+            margin-top: 10px;
+        }
+
+        select.btn
+        {
+           position: relative;
+           z-index: 0;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px;
+        }
+        /*#lookup_project
+        {
+            max-width: 100% !important;
+        }*/
+        /*Rev end 1.0*/
     </style>
 
 </asp:Content>
@@ -649,242 +1071,251 @@
           </div>
         </div>
     </div>
-    <td class="form_main">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="form_main">
 
-        <table class="pull-left">
-            <tr>
-                <%--<td style="">
-                    <div style="color: #b5285f; font-weight: bold;" class="clsTo">
-                        <asp:Label ID="Label1" runat="Server" Text="Class : " CssClass="mylabel1"
-                            Width="92px"></asp:Label>
-                    </div>
-                </td>
-                <td style="width: 205px">
-                    <asp:HiddenField ID="hflookupClassAllFlag" runat="server" Value="" />
-                    <dxe:ASPxGridLookup ID="lookupClass" ClientInstanceName="clookupClass" SelectionMode="Multiple" runat="server"
-                        OnDataBinding="lookupClass_DataBinding" KeyFieldName="ProductClass_ID" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
-                        <Columns>
-                            <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
-                            <dxe:GridViewDataColumn FieldName="ProductClass_Name" Visible="true" VisibleIndex="1" Caption="Class Name" Settings-AutoFilterCondition="Contains">
-                                <Settings AutoFilterCondition="Contains" />
-                            </dxe:GridViewDataColumn>
-                            <dxe:GridViewDataColumn FieldName="ProductClass_ID" Visible="true" VisibleIndex="2" Caption="Class ID" Settings-AutoFilterCondition="Contains" Width="0">
-                                <Settings AutoFilterCondition="Contains" />
-                            </dxe:GridViewDataColumn>
-                        </Columns>
-                        <GridViewProperties Settings-VerticalScrollBarMode="Auto" SettingsPager-Mode="ShowAllRecords">
-                            <Templates>
-                                <StatusBar>
-                                    <table class="OptionsTable" style="float: right">
-                                        <tr>
-                                            <td>
-                                                <div class="hide">
-                                                    <dxe:ASPxButton ID="ASPxButton2" runat="server" AutoPostBack="false" Text="Select All" ClientSideEvents-Click="_selectAll_Class" UseSubmitBehavior="False"/>
-                                                </div>
-                                                <dxe:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="false" Text="Deselect All" ClientSideEvents-Click="_unselectAll_Class" UseSubmitBehavior="False"/>                                                
-                                                <dxe:ASPxButton ID="Close" runat="server" AutoPostBack="false" Text="Close" ClientSideEvents-Click="_CloseLookup_Class" UseSubmitBehavior="False" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </StatusBar>
-                            </Templates>
-                            <SettingsBehavior AllowFocusedRow="True" AllowSelectByRowClick="True" />
-                            <SettingsPager Mode="ShowPager">
-                            </SettingsPager>
-                            <SettingsPager PageSize="20">
-                                <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,20,50,100,150,200" />
-                            </SettingsPager>
-                            <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
-                        </GridViewProperties>
-                    </dxe:ASPxGridLookup>
-                </td>--%>
+            <table class="pull-left">
+                <tr>
+                    <%--<td style="">
+                        <div style="color: #b5285f; font-weight: bold;" class="clsTo">
+                            <asp:Label ID="Label1" runat="Server" Text="Class : " CssClass="mylabel1"
+                                Width="92px"></asp:Label>
+                        </div>
+                    </td>
+                    <td style="width: 205px">
+                        <asp:HiddenField ID="hflookupClassAllFlag" runat="server" Value="" />
+                        <dxe:ASPxGridLookup ID="lookupClass" ClientInstanceName="clookupClass" SelectionMode="Multiple" runat="server"
+                            OnDataBinding="lookupClass_DataBinding" KeyFieldName="ProductClass_ID" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
+                            <Columns>
+                                <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
+                                <dxe:GridViewDataColumn FieldName="ProductClass_Name" Visible="true" VisibleIndex="1" Caption="Class Name" Settings-AutoFilterCondition="Contains">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataColumn>
+                                <dxe:GridViewDataColumn FieldName="ProductClass_ID" Visible="true" VisibleIndex="2" Caption="Class ID" Settings-AutoFilterCondition="Contains" Width="0">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataColumn>
+                            </Columns>
+                            <GridViewProperties Settings-VerticalScrollBarMode="Auto" SettingsPager-Mode="ShowAllRecords">
+                                <Templates>
+                                    <StatusBar>
+                                        <table class="OptionsTable" style="float: right">
+                                            <tr>
+                                                <td>
+                                                    <div class="hide">
+                                                        <dxe:ASPxButton ID="ASPxButton2" runat="server" AutoPostBack="false" Text="Select All" ClientSideEvents-Click="_selectAll_Class" UseSubmitBehavior="False"/>
+                                                    </div>
+                                                    <dxe:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="false" Text="Deselect All" ClientSideEvents-Click="_unselectAll_Class" UseSubmitBehavior="False"/>                                                
+                                                    <dxe:ASPxButton ID="Close" runat="server" AutoPostBack="false" Text="Close" ClientSideEvents-Click="_CloseLookup_Class" UseSubmitBehavior="False" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </StatusBar>
+                                </Templates>
+                                <SettingsBehavior AllowFocusedRow="True" AllowSelectByRowClick="True" />
+                                <SettingsPager Mode="ShowPager">
+                                </SettingsPager>
+                                <SettingsPager PageSize="20">
+                                    <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,20,50,100,150,200" />
+                                </SettingsPager>
+                                <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
+                            </GridViewProperties>
+                        </dxe:ASPxGridLookup>
+                    </td>--%>
 
 
-                <%--<td style="padding-left: 15px">
-                    <div style="color: #b5285f; font-weight: bold;" class="clsTo">
-                        <asp:Label ID="Label2" runat="Server" Text="Brand : " CssClass="mylabel1"
-                            Width="110px"></asp:Label>
-                    </div>
-                </td>
-                <td style="width: 205px">
-                    <asp:HiddenField ID="hflookupBrandAllFlag" runat="server" Value="" />
-                    <dxe:ASPxGridLookup ID="lookupBrand" ClientInstanceName="clookupBrand" SelectionMode="Multiple" runat="server"
-                        OnDataBinding="lookupBrand_DataBinding" KeyFieldName="Brand_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
-                        <Columns>
-                            <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
-                            <dxe:GridViewDataColumn FieldName="Brand_Name" Visible="true" VisibleIndex="1" Caption="Brand Name" Settings-AutoFilterCondition="Contains">
-                                <Settings AutoFilterCondition="Contains" />
-                            </dxe:GridViewDataColumn>
-                            <dxe:GridViewDataColumn FieldName="Brand_Id" Visible="true" VisibleIndex="1" Caption="Brand ID" Settings-AutoFilterCondition="Contains" Width="0">
-                                <Settings AutoFilterCondition="Contains" />
-                            </dxe:GridViewDataColumn>
-                        </Columns>
-                        <GridViewProperties Settings-VerticalScrollBarMode="Auto" SettingsPager-Mode="ShowAllRecords">
-                            <Templates>
-                                <StatusBar>
-                                    <table class="OptionsTable" style="float: right">
-                                        <tr>
-                                            <td>
-                                                <div class="hide">
-                                                    <dxe:ASPxButton ID="ASPxButton4" runat="server" AutoPostBack="false" Text="Select All" ClientSideEvents-Click="_selectAll_Brand" UseSubmitBehavior="False"/>
-                                                </div>
-                                                <dxe:ASPxButton ID="ASPxButton5" runat="server" AutoPostBack="false" Text="Deselect All" ClientSideEvents-Click="_unselectAll_Brand" UseSubmitBehavior="False"/>                                                
-                                                <dxe:ASPxButton ID="ASPxButton6" runat="server" AutoPostBack="false" Text="Close" ClientSideEvents-Click="_CloseLookup_Brand" UseSubmitBehavior="False" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </StatusBar>
-                            </Templates>
-                            <SettingsBehavior AllowFocusedRow="True" AllowSelectByRowClick="True" />
-                            <SettingsPager Mode="ShowPager">
-                            </SettingsPager>
-                            <SettingsPager PageSize="20">
-                                <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,20,50,100,150,200" />
-                            </SettingsPager>
-                            <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
-                        </GridViewProperties>
-                    </dxe:ASPxGridLookup>
-                </td>--%>
+                    <%--<td style="padding-left: 15px">
+                        <div style="color: #b5285f; font-weight: bold;" class="clsTo">
+                            <asp:Label ID="Label2" runat="Server" Text="Brand : " CssClass="mylabel1"
+                                Width="110px"></asp:Label>
+                        </div>
+                    </td>
+                    <td style="width: 205px">
+                        <asp:HiddenField ID="hflookupBrandAllFlag" runat="server" Value="" />
+                        <dxe:ASPxGridLookup ID="lookupBrand" ClientInstanceName="clookupBrand" SelectionMode="Multiple" runat="server"
+                            OnDataBinding="lookupBrand_DataBinding" KeyFieldName="Brand_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
+                            <Columns>
+                                <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
+                                <dxe:GridViewDataColumn FieldName="Brand_Name" Visible="true" VisibleIndex="1" Caption="Brand Name" Settings-AutoFilterCondition="Contains">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataColumn>
+                                <dxe:GridViewDataColumn FieldName="Brand_Id" Visible="true" VisibleIndex="1" Caption="Brand ID" Settings-AutoFilterCondition="Contains" Width="0">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataColumn>
+                            </Columns>
+                            <GridViewProperties Settings-VerticalScrollBarMode="Auto" SettingsPager-Mode="ShowAllRecords">
+                                <Templates>
+                                    <StatusBar>
+                                        <table class="OptionsTable" style="float: right">
+                                            <tr>
+                                                <td>
+                                                    <div class="hide">
+                                                        <dxe:ASPxButton ID="ASPxButton4" runat="server" AutoPostBack="false" Text="Select All" ClientSideEvents-Click="_selectAll_Brand" UseSubmitBehavior="False"/>
+                                                    </div>
+                                                    <dxe:ASPxButton ID="ASPxButton5" runat="server" AutoPostBack="false" Text="Deselect All" ClientSideEvents-Click="_unselectAll_Brand" UseSubmitBehavior="False"/>                                                
+                                                    <dxe:ASPxButton ID="ASPxButton6" runat="server" AutoPostBack="false" Text="Close" ClientSideEvents-Click="_CloseLookup_Brand" UseSubmitBehavior="False" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </StatusBar>
+                                </Templates>
+                                <SettingsBehavior AllowFocusedRow="True" AllowSelectByRowClick="True" />
+                                <SettingsPager Mode="ShowPager">
+                                </SettingsPager>
+                                <SettingsPager PageSize="20">
+                                    <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,20,50,100,150,200" />
+                                </SettingsPager>
+                                <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
+                            </GridViewProperties>
+                        </dxe:ASPxGridLookup>
+                    </td>--%>
 
-                 <td style="padding-left: 1px; width: 100px">
-                    <div style="color: #b5285f; font-weight: bold;" class="clsFrom">
-                        <asp:Label ID="Label1" runat="Server" Text="Class : " CssClass="mylabel1"></asp:Label>
-                    </div>
-                </td>
-                <td>
+                     <td style="padding-left: 1px; width: 100px">
+                        <div style="color: #b5285f; font-weight: bold;" class="clsFrom">
+                            <asp:Label ID="Label1" runat="Server" Text="Class : " CssClass="mylabel1"></asp:Label>
+                        </div>
+                    </td>
+                    <td>
                         
-                <dxe:ASPxButtonEdit ID="txtClass" runat="server" ReadOnly="true" ClientInstanceName="ctxtClass" Width="100%" TabIndex="5">
-                    <Buttons>
-                        <dxe:EditButton>
-                        </dxe:EditButton>
-                    </Buttons>
-                    <ClientSideEvents ButtonClick="function(s,e){ClassButnClick();}" KeyDown="function(s,e){Class_KeyDown(s,e);}" />
-                </dxe:ASPxButtonEdit>
+                    <dxe:ASPxButtonEdit ID="txtClass" runat="server" ReadOnly="true" ClientInstanceName="ctxtClass" Width="100%" TabIndex="5">
+                        <Buttons>
+                            <dxe:EditButton>
+                            </dxe:EditButton>
+                        </Buttons>
+                        <ClientSideEvents ButtonClick="function(s,e){ClassButnClick();}" KeyDown="function(s,e){Class_KeyDown(s,e);}" />
+                    </dxe:ASPxButtonEdit>
                 
-                </td>
+                    </td>
 
-                 <td style="padding-left: 15px; width: 100px">
-                    <div style="color: #b5285f; font-weight: bold;" class="clsFrom">
-                        <asp:Label ID="Label2" runat="Server" Text="Brand : " CssClass="mylabel1"></asp:Label>
-                    </div>
-                </td>
-                <td>
-                   <dxe:ASPxButtonEdit ID="txtBrandName" runat="server" ReadOnly="true" ClientInstanceName="ctxtBrandName" Width="100%" TabIndex="5">
-                    <Buttons>
-                        <dxe:EditButton>
-                        </dxe:EditButton>
-                    </Buttons>
-                    <ClientSideEvents ButtonClick="function(s,e){BrandButnClick();}" KeyDown="function(s,e){Brand_KeyDown(s,e);}" />
-                </dxe:ASPxButtonEdit>
-                </td>
+                     <td style="padding-left: 15px; width: 100px">
+                        <div style="color: #b5285f; font-weight: bold;" class="clsFrom">
+                            <asp:Label ID="Label2" runat="Server" Text="Brand : " CssClass="mylabel1"></asp:Label>
+                        </div>
+                    </td>
+                    <td>
+                       <dxe:ASPxButtonEdit ID="txtBrandName" runat="server" ReadOnly="true" ClientInstanceName="ctxtBrandName" Width="100%" TabIndex="5">
+                        <Buttons>
+                            <dxe:EditButton>
+                            </dxe:EditButton>
+                        </Buttons>
+                        <ClientSideEvents ButtonClick="function(s,e){BrandButnClick();}" KeyDown="function(s,e){Brand_KeyDown(s,e);}" />
+                    </dxe:ASPxButtonEdit>
+                    </td>
 
-                <td style="padding-left: 15px">
+                    <td style="padding-left: 15px">
 
 
-                    <div style="color: #b5285f; font-weight: bold;" class="clsTo">
-                        <asp:Label ID="Label8" runat="Server" Text="Transaction Type: " CssClass="mylabel1" Width="110px"></asp:Label>
-                    </div>
+                        <div style="color: #b5285f; font-weight: bold;" class="clsTo">
+                            <asp:Label ID="Label8" runat="Server" Text="Transaction Type: " CssClass="mylabel1" Width="150px"></asp:Label>
+                        </div>
 
-                </td>
+                    </td>
 
-                <td style="width: 114px">
-                    <asp:DropDownList ID="ddlisdocument" runat="server" Width="100%">
-                        <asp:ListItem Text="All" Value="All"></asp:ListItem>
-                        <asp:ListItem Text="Sales" Value="Sales"></asp:ListItem>
-                        <asp:ListItem Text="Purchases" Value="Purchases"></asp:ListItem>
-                    </asp:DropDownList>
-                </td>
+                    <td style="width: 114px" class="simple-select">
+                        <asp:DropDownList ID="ddlisdocument" runat="server" Width="100%">
+                            <asp:ListItem Text="All" Value="All"></asp:ListItem>
+                            <asp:ListItem Text="Sales" Value="Sales"></asp:ListItem>
+                            <asp:ListItem Text="Purchases" Value="Purchases"></asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
 
-            </tr>
+                </tr>
 
-            <tr>
-                <td style="">
-                    <div style="color: #b5285f; font-weight: bold;" class="clsTo">
-                        <asp:Label ID="lblToDate" runat="Server" Text="From Date : " CssClass="mylabel1"
-                            Width="92px"></asp:Label>
-                    </div>
-                </td>
-                <td>
-                    <dxe:ASPxDateEdit ID="ASPxFromDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
-                        UseMaskBehavior="True" Width="205px" ClientInstanceName="cxdeFromDate">
-                        <ButtonStyle Width="13px"></ButtonStyle>
-                    </dxe:ASPxDateEdit>
-                </td>
-                <td style="padding-left: 15px">
-                    <div style="color: #b5285f; font-weight: bold;" class="clsTo">
-                        <asp:Label ID="Label4" runat="Server" Text="To Date : " CssClass="mylabel1"
-                            Width="92px"></asp:Label>
-                    </div>
-                </td>
-                <td>
-                    <dxe:ASPxDateEdit ID="ASPxToDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
-                        UseMaskBehavior="True" Width="205px" ClientInstanceName="cxdeToDate">
-                        <ButtonStyle Width="13px"></ButtonStyle>
-                    </dxe:ASPxDateEdit>
-                </td>
-                <td style="padding-left: 15px" colspan="3">
-                    <button id="btnShow" class="btn btn-success" type="button" onclick="btn_ShowRecordsClick(this);">Show</button>
+                <tr>
+                    <td style="padding-top: 15px;">
+                        <div style="color: #b5285f; font-weight: bold;" class="clsTo">
+                            <asp:Label ID="lblToDate" runat="Server" Text="From Date : " CssClass="mylabel1"
+                                Width="92px"></asp:Label>
+                        </div>
+                    </td>
+                    <td class="for-cust-icon" style="padding-top: 15px;">
+                        <dxe:ASPxDateEdit ID="ASPxFromDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
+                            UseMaskBehavior="True" Width="205px" ClientInstanceName="cxdeFromDate">
+                            <ButtonStyle Width="13px"></ButtonStyle>
+                        </dxe:ASPxDateEdit>
+                        <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
+                    </td>
+                    <td style="padding-left: 15px; padding-top: 15px;">
+                        <div style="color: #b5285f; font-weight: bold;" class="clsTo">
+                            <asp:Label ID="Label4" runat="Server" Text="To Date : " CssClass="mylabel1"
+                                Width="92px"></asp:Label>
+                        </div>
+                    </td>
+                    <td class="for-cust-icon" style="padding-top: 15px;">
+                        <dxe:ASPxDateEdit ID="ASPxToDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
+                            UseMaskBehavior="True" Width="205px" ClientInstanceName="cxdeToDate">
+                            <ButtonStyle Width="13px"></ButtonStyle>
+                        </dxe:ASPxDateEdit>
+                        <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
+                    </td>
+                    <td style="padding-left: 15px; padding-top: 15px;" colspan="3">
+                        <button id="btnShow" class="btn btn-success" type="button" onclick="btn_ShowRecordsClick(this);">Show</button>
 
-                    <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-sm btn-primary"
-                        OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
-                        <asp:ListItem Value="0">Export to</asp:ListItem>
-                        <asp:ListItem Value="1">PDF</asp:ListItem>
-                        <asp:ListItem Value="2">XLSX</asp:ListItem>
-                        <asp:ListItem Value="3">RTF</asp:ListItem>
-                        <asp:ListItem Value="4">CSV</asp:ListItem>
+                        <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-sm btn-primary"
+                            OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+                            <asp:ListItem Value="0">Export to</asp:ListItem>
+                            <asp:ListItem Value="1">PDF</asp:ListItem>
+                            <asp:ListItem Value="2">XLSX</asp:ListItem>
+                            <asp:ListItem Value="3">RTF</asp:ListItem>
+                            <asp:ListItem Value="4">CSV</asp:ListItem>
 
-                    </asp:DropDownList>
-                </td>
-            </tr>
-        </table>
-        <div class="pull-right">
-        </div>
-        <table class="TableMain100">
-            <tr>
-                <td>
-                    <div onkeypress="OnWaitingGridKeyPress(event)">
-                        <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="true" KeyboardSupport="true"
-                            OnDataBound="Showgrid_DataBound" KeyFieldName="SLNO" DataSourceID="GenerateEntityServerModeDataSourceLevel1">
-                            <%--OnCustomCallback="Grid_CustomCallback" OnDataBinding="grid2_DataBinding" KeyFieldName="sProducts_ID" --%>
-                            <%--<columns>
-                                <dxe:GridViewDataTextColumn FieldName="SL" Caption="Sl No" Width="10%" VisibleIndex="2" />
-                                <dxe:GridViewDataTextColumn FieldName="Brand_Name" Caption="Category" Width="50%" VisibleIndex="3" />
-                                <dxe:GridViewDataTextColumn FieldName="ProductClass_Description" Caption="Class" Width="50%" VisibleIndex="2" />
-                                <dxe:GridViewDataTextColumn FieldName="sProducts_Description" Caption="Particulars" Width="50%" VisibleIndex="3" />
-                                <dxe:GridViewDataTextColumn FieldName="IN_QTY_OP" Caption="Opening" Width="25%" VisibleIndex="4" PropertiesTextEdit-DisplayFormatString="0.00" />
-                                <dxe:GridViewDataTextColumn FieldName="IN_QTY" Caption="Received" Width="20%" VisibleIndex="5" PropertiesTextEdit-DisplayFormatString="0.00" />
-                                <dxe:GridViewDataTextColumn FieldName="OUT_QTY" Caption="Issue" Width="25%" VisibleIndex="6" PropertiesTextEdit-DisplayFormatString="0.00" />
-                                <dxe:GridViewDataTextColumn FieldName="CLOSE_QTY" Caption="Closing" Width="25%" VisibleIndex="7" PropertiesTextEdit-DisplayFormatString="0.00" />
-                                <dxe:GridViewDataTextColumn FieldName="UNIT" Caption="Units" Width="25%" VisibleIndex="8" />
-                                <dxe:GridViewDataTextColumn FieldName="sProducts_ID" Caption="Product ID" Width="0%" visible="false">
-                                </dxe:GridViewDataTextColumn>
-                            </columns>--%>
-                            <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
-                            <Settings ShowFooter="true" ShowGroupPanel="true" ShowGroupFooter="VisibleIfExpanded" />
-                            <SettingsEditing Mode="EditForm" />
-                            <SettingsContextMenu Enabled="true" />
-                            <SettingsBehavior AutoExpandAllGroups="true" ColumnResizeMode="Control" />
-                            <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" />
-                            <SettingsSearchPanel Visible="false" />
-                            <SettingsPager PageSize="10">
-                                <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,50,100" />
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+            </table>
+            <div class="pull-right">
+            </div>
+            <table class="TableMain100">
+                <tr>
+                    <td>
+                        <div onkeypress="OnWaitingGridKeyPress(event)">
+                            <dxe:ASPxGridView runat="server" ID="ShowGrid" ClientInstanceName="Grid" Width="100%" EnableRowsCache="false" AutoGenerateColumns="true" KeyboardSupport="true"
+                                OnDataBound="Showgrid_DataBound" KeyFieldName="SLNO" DataSourceID="GenerateEntityServerModeDataSourceLevel1">
+                                <%--OnCustomCallback="Grid_CustomCallback" OnDataBinding="grid2_DataBinding" KeyFieldName="sProducts_ID" --%>
+                                <%--<columns>
+                                    <dxe:GridViewDataTextColumn FieldName="SL" Caption="Sl No" Width="10%" VisibleIndex="2" />
+                                    <dxe:GridViewDataTextColumn FieldName="Brand_Name" Caption="Category" Width="50%" VisibleIndex="3" />
+                                    <dxe:GridViewDataTextColumn FieldName="ProductClass_Description" Caption="Class" Width="50%" VisibleIndex="2" />
+                                    <dxe:GridViewDataTextColumn FieldName="sProducts_Description" Caption="Particulars" Width="50%" VisibleIndex="3" />
+                                    <dxe:GridViewDataTextColumn FieldName="IN_QTY_OP" Caption="Opening" Width="25%" VisibleIndex="4" PropertiesTextEdit-DisplayFormatString="0.00" />
+                                    <dxe:GridViewDataTextColumn FieldName="IN_QTY" Caption="Received" Width="20%" VisibleIndex="5" PropertiesTextEdit-DisplayFormatString="0.00" />
+                                    <dxe:GridViewDataTextColumn FieldName="OUT_QTY" Caption="Issue" Width="25%" VisibleIndex="6" PropertiesTextEdit-DisplayFormatString="0.00" />
+                                    <dxe:GridViewDataTextColumn FieldName="CLOSE_QTY" Caption="Closing" Width="25%" VisibleIndex="7" PropertiesTextEdit-DisplayFormatString="0.00" />
+                                    <dxe:GridViewDataTextColumn FieldName="UNIT" Caption="Units" Width="25%" VisibleIndex="8" />
+                                    <dxe:GridViewDataTextColumn FieldName="sProducts_ID" Caption="Product ID" Width="0%" visible="false">
+                                    </dxe:GridViewDataTextColumn>
+                                </columns>--%>
+                                <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
+                                <Settings ShowFooter="true" ShowGroupPanel="true" ShowGroupFooter="VisibleIfExpanded" />
+                                <SettingsEditing Mode="EditForm" />
+                                <SettingsContextMenu Enabled="true" />
+                                <SettingsBehavior AutoExpandAllGroups="true" ColumnResizeMode="Control" />
+                                <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" />
+                                <SettingsSearchPanel Visible="false" />
+                                <SettingsPager PageSize="10">
+                                    <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,50,100" />
 
-                            </SettingsPager>
-                            <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" ShowFilterRowMenu="true" />
-                            <TotalSummary>
-                                <%--<dxe:ASPxSummaryItem FieldName="Over 120 Days" SummaryType="Sum" />
-                                <dxe:ASPxSummaryItem FieldName="Within 120 Days" SummaryType="Sum" />
-                                <dxe:ASPxSummaryItem FieldName="Total" SummaryType="Sum" />--%>
-                            </TotalSummary>
-                            <ClientSideEvents EndCallback="Callback2_EndCallback" />
-                        </dxe:ASPxGridView>
-                        <dx:LinqServerModeDataSource ID="GenerateEntityServerModeDataSourceLevel1" runat="server" OnSelecting="GenerateEntityServerModeDataSourceLevel1_Selecting"
-                        ContextTypeName="ReportSourceDataContext" TableName="COMBINDSTOCKTRIALLEVEL1_REPORT" ></dx:LinqServerModeDataSource>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        </div>
+                                </SettingsPager>
+                                <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" ShowFilterRowMenu="true" />
+                                <TotalSummary>
+                                    <%--<dxe:ASPxSummaryItem FieldName="Over 120 Days" SummaryType="Sum" />
+                                    <dxe:ASPxSummaryItem FieldName="Within 120 Days" SummaryType="Sum" />
+                                    <dxe:ASPxSummaryItem FieldName="Total" SummaryType="Sum" />--%>
+                                </TotalSummary>
+                                <ClientSideEvents EndCallback="Callback2_EndCallback" />
+                            </dxe:ASPxGridView>
+                            <dx:LinqServerModeDataSource ID="GenerateEntityServerModeDataSourceLevel1" runat="server" OnSelecting="GenerateEntityServerModeDataSourceLevel1_Selecting"
+                            ContextTypeName="ReportSourceDataContext" TableName="COMBINDSTOCKTRIALLEVEL1_REPORT" ></dx:LinqServerModeDataSource>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+         </div>
+     </div>
 
     <dxe:ASPxPopupControl ID="popup" runat="server" ClientInstanceName="cpopup2ndLevel"
         Width="1200px" Height="600px" ScrollBars="Vertical" HeaderText="Combined Stock Trial 2nd Level" PopupHorizontalAlign="WindowCenter" HeaderStyle-CssClass="wht"
