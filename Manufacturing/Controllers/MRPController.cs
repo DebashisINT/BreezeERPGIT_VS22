@@ -1514,6 +1514,7 @@ namespace Manufacturing.Controllers
         {
             if (MPSID > 0)
             {
+                TempData["MRP_ID"] = null;
                 TempData["MPSID"] = MPSID;               
                 TempData["FGQTY"] = FGQTY;
                 TempData.Keep();
@@ -1549,8 +1550,8 @@ namespace Manufacturing.Controllers
                 modelMPS = APIHelperMethods.ToModelList<MPSNOList>(dtMPS);
                 ViewBag.MPS_ID = MPS_ID;
 
-
-                return PartialView("~/Views/BOM/BOMEntry/_PartialMPSNO.cshtml", modelMPS);
+                return PartialView("~/Views/MRP/_PartialMPSNO.cshtml", modelMPS);
+                //return PartialView("~/Views/BOM/BOMEntry/_PartialMPSNO.cshtml", modelMPS);
             }
             catch
             {
