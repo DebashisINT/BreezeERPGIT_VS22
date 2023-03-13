@@ -860,8 +860,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #094e8c !important;
         }
 
-        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut  
-        /*#B2B , 
+        /*.TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridCustOut  
+        #B2B , 
         #grid_B2BUR , 
         #grid_IMPS , 
         #grid_IMPG ,
@@ -869,10 +869,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         #grid_CDNUR ,
         #grid_EXEMP ,
         #grid_ITCR ,
-        #grid_HSNSUM*/
+        #grid_HSNSUM
         {
             max-width: 98% !important;
-        }
+        }*/
 
         /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
         {
