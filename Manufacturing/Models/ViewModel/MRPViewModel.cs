@@ -1,7 +1,7 @@
 ﻿//==================================================== Revision History =========================================================================
 // 1.0  Priti V2.0.36    23-01-2023  0025610:MRP Close Feature required
 // 2.0  Priti V2.0.36    01-02-2023  0025634:Available Stock to be calculated in MRP product Wise
-
+// 3.0  Priti V2.0.37    13-03-2023  save Avl Stk in table
 //====================================================End Revision History=====================================================================
 
 
@@ -180,9 +180,12 @@ namespace Manufacturing.Models.ViewModel
             public String SlNo { get; set; }
             public Decimal OLDQty { get; set; }
             public Decimal OldAltQty { get; set; }
-        }
+            //Rev 3.0
+            public Decimal NewAvlStk { get; set; }
+            //Rev 3.0 End
+    }
 
-        public class udtMRPProducts
+    public class udtMRPProducts
         {
             public Int64 ProductID { get; set; }
             public String ProductDescription { get; set; }
@@ -201,6 +204,8 @@ namespace Manufacturing.Models.ViewModel
 
             public Decimal OLDQty { get; set; }
             public Decimal OldAltQty { get; set; }
-           
-        }
+            //Rev 3.0
+            public Decimal NewAvlStk { get; set; }
+            //Rev 3.0 End
+    }
 }

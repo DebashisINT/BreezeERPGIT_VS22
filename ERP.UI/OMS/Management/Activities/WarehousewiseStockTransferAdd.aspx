@@ -16,7 +16,7 @@
      <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
-   <script src="JS/WarehousewiseStockTransferJS.js?v=20.3"></script>
+   <script src="JS/WarehousewiseStockTransferJS.js?v=20.4"></script>
      <%--<script src="https://cdn3.devexpress.com/jslib/20.2.3/js/dx.all.js"></script>
     <link href="https://cdn3.devexpress.com/jslib/20.2.3/css/dx.common.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/20.2.3/css/dx.light.css" />--%>
