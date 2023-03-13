@@ -1,5 +1,6 @@
 ﻿//==========================================================Revision History ============================================================================================
-//    1.0   Priti   V2.0.36   23 - 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+//    1.0   Priti   V2.0.36   23-01-2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+//    2.0   Priti   V2.0.37   13-03-2023    0025602: Stock with multiple batches are not allowing to enter in Warehouse wise Stock Transfer
 //========================================== End Revision History =======================================================================================================
 
 
@@ -1903,8 +1904,12 @@ function SaveWarehouse() {
     else {
         if (document.getElementById("myCheck").checked == true && SelectedWarehouseID == "0") {
             if (Ptype == "W" || Ptype == "WB" || Ptype == "B") {
+               
                 cCmbWarehouse.PerformCallback('BindWarehouse~' + WarehouseID);
-                cCmbBatch.PerformCallback('BindBatch~' + "");
+                 // Rev 2.0
+                /* cCmbBatch.PerformCallback('BindBatch~' + "");*/
+                cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+                 // Rev 2.0 End
                 checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
                 ctxtQuantity.SetValue("0");
             }
@@ -1916,7 +1921,10 @@ function SaveWarehouse() {
         }
         else {
             cCmbWarehouse.PerformCallback('BindWarehouse~' + WarehouseID);
-            cCmbBatch.PerformCallback('BindBatch~' + "");
+             // Rev 2.0 
+            /* cCmbBatch.PerformCallback('BindBatch~' + "");*/
+            cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+             // Rev 2.0 End
             checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
             ctxtQuantity.SetValue("0");
         }
