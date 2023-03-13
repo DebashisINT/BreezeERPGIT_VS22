@@ -1,10 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="eInvoice.aspx.cs" Inherits="ERP.OMS.Management.eInvoice" %>
+﻿<%--====================================================Revision History=========================================================================
+ 1.0   v2.0.37	Priti	13-03-2023	0025686:Eway Bill Cancel not working for Transit Sales Invoice & Credit Note
+====================================================End Revision History=====================================================================--%>
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="eInvoice.aspx.cs" Inherits="ERP.OMS.Management.eInvoice" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta name="csrf-token" content="XYZ123" />
-    <script src="Activities/JS/eInvoice.js?v5.1"></script>    
+    <script src="Activities/JS/eInvoice.js?v5.2"></script>    
     <link href="CSS/einvoiceStyle.css" rel="stylesheet" />
     <style type="text/css">
         .new-box{
@@ -4041,12 +4046,13 @@
                                                         <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="25" Width="0">
                                                             <DataItemTemplate>
                                                                 <div class='floatedBtnArea'>
-
+                                                                  <%--  Rev 1.0--%>
                                                                      <% if (rights.CanEWayBill)
                                                                        { %>
-                                                                  <a href="javascript:void(0);" onclick="CancelEwayBillSI('<%# Eval("EWayBillNumber") %>')" id="a_CancelEwaybillSI" class="" title="">
+                                                                  <a href="javascript:void(0);" onclick="CancelEwayBillSR('<%# Eval("EWayBillNumber") %>')" id="a_CancelEwaybillSI" class="" title="">
                                                                             <span class='ico deleteColor'><i class='fa fa-ban' aria-hidden='true'></i></span><span class='hidden-xs'>Cancel E-Way Bill</span></a>
                                                                     <% } %>
+                                                                     <%--  Rev 1.0 End--%>
                                                                      <% if (rights.CanEWayBill)
                                                                        { %>
                                         <a href="javascript:void(0);" onclick="UpdateEwayBillSI('<%# Eval("EWayBillNumber") %>')" id="a_UpdateEwaybillSI" class="" title="">

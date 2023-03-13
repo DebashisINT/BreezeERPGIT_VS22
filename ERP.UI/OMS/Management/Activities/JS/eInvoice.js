@@ -1,4 +1,9 @@
-﻿function updateGridByDate() {
+﻿//====================================================Revision History =========================================================================
+//1.0   v2.0.37	Priti	13-03-2023	0025686:Eway Bill Cancel not working for Transit Sales Invoice & Credit Note
+//====================================================End Revision History=====================================================================
+
+
+function updateGridByDate() {
     if (cFormDate.GetDate() == null) {
         jAlert('Please select from date.', 'Alert', function () { cFormDate.Focus(); });
     }
@@ -1347,6 +1352,7 @@ function CancelEwayBillSI(ewaybill) {
 
     $("#EwayBillcancelModal").modal('show')
 }
+//Rev 1.0
 function CancelEwayBillTSI(ewaybill) {
 
     $("#hdnEwayBillType").val("TSI");
@@ -1354,6 +1360,14 @@ function CancelEwayBillTSI(ewaybill) {
 
     $("#EwayBillcancelModal").modal('show')
 }
+function CancelEwayBillSR(ewaybill) {
+
+    $("#hdnEwayBillType").val("SR");
+    $("#hdnEwayBillNo").val(ewaybill);
+
+    $("#EwayBillcancelModal").modal('show')
+}
+//Rev 1.0 End
 function UpdateEwayBillSI(ewaybill) {
 
     $("#hdnEwayBillType").val("UPDATESI");
