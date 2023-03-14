@@ -1,6 +1,8 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti   V2.0.36     0025577:Alt UOM is enabled false if we want to modify the stock details after saving the document.cmbSecondUOM remove ClientEnabled="false"
    2.0   Priti   V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
+   3.0   Priti    V2.0.37    14-03-2023     0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
+
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -818,6 +820,14 @@
                 jAlert('Can Not Save as Duplicate Invoice Numbe No. Found');
                 grid.cpSaveSuccessOrFail = '';
             }
+            //Rev 3.0
+            else if (grid.cpSaveSuccessOrFail == "duplicateSO") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                jAlert('Can Not Save as Duplicate Invoice with Duplicate Sales Order ');
+                grid.cpSaveSuccessOrFail = '';
+            }
+            //Rev 3.0 End
             else if (grid.cpSaveSuccessOrFail == "checkAcurateTaxAmount") {
                 OnAddNewClick();
                 grid.cpSaveSuccessOrFail = null;
