@@ -1756,7 +1756,7 @@ namespace Manufacturing.Controllers
                     || datacolumn.ColumnName == "PkgQty" || datacolumn.ColumnName == "PurchaseQty" || datacolumn.ColumnName == "AltQty"
                     || datacolumn.ColumnName == "AltUOM" || datacolumn.ColumnName == "Vendor_Name" || datacolumn.ColumnName == "AVLSTK"
                     //rev 3.0
-                    || datacolumn.ColumnName == "NewAvlStk"
+                    || datacolumn.ColumnName == "NewAvlStock"
                     //rev 3.0 end
                     )
                 {
@@ -1809,13 +1809,13 @@ namespace Manufacturing.Controllers
                             column.VisibleIndex = 8;
                         }
                         //rev 3.0
-                        else if (datacolumn.ColumnName == "AvlStk")
+                        else if (datacolumn.ColumnName == "AVLSTK")
                         {
                             column.Caption = "Phy Stk";
                             column.VisibleIndex = 9;
 
                         }
-                        else if (datacolumn.ColumnName == "NewAvlStk")
+                        else if (datacolumn.ColumnName == "NewAvlStock")
                         {
                             column.Caption = "Avl Stk";
                             column.VisibleIndex = 10;

@@ -3902,7 +3902,7 @@ namespace ERP.OMS.Management.Activities
                         grid.JSProperties["cpAddLockStatus"] = (Convert.ToString(dts.Rows[0]["Lock_Fromdate"]) + " to " + Convert.ToString(dts.Rows[0]["Lock_Todate"]));
                     }
                     //Rev 1.0
-                    else if (strIsComplete == -70)
+                    else if (strIsComplete == -80)
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = "duplicateSO";
                     }
