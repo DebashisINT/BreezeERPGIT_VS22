@@ -499,7 +499,7 @@ p.copyright {
     /*z-index: 100;*/
     position: relative !important;
     margin-left: 175px;
-    padding: 5px 15px;
+    padding: 15px 15px;
     margin-top:75px;
 }
 .tpLbl {
@@ -3265,7 +3265,7 @@ hr.tfour {
 /*calender */
 .dxpLite_PlasticBlue .dxp-dropDownButton {
     padding: 0px 3px 3px;
-    background: #54749d;
+    background: #1b5ea4;
     border: 1px Solid #3b5679;
 }
 .dxeCalendarSelected_PlasticBlue, .dxgvFooter_PlasticBlue {
