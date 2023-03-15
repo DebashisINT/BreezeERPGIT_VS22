@@ -310,7 +310,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
         select.btn
         {
-            padding-right: 10px !important;
+            padding-right: 11px !important;
         }
 
         .panel-group .panel
@@ -506,13 +506,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             padding: 5px;
         }
 
-
-        /*#lookup_project
-        {
-            max-width: 100% !important;
-        }*/
-        /*Rev end 1.0*/
     </style>
+
     <script type="text/javascript">
         $(document).ready(function () {
             if ($('body').hasClass('mini-navbar')) {
@@ -710,6 +705,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
                 <%--Rev end 1.0--%>
             </div>
+
              <div class="col-md-2">
                 <label style="margin-bottom: 0">&nbsp</label>
                 <div class="">
