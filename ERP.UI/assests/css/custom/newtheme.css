@@ -4097,3 +4097,166 @@ input[type="text"], input[type="password"], textarea, .chosen-container-single .
 }
 
 /*Rev end 1.0*/
+
+
+.outer-div-main {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #11111154;
+}
+
+/*.form_main {
+            overflow: hidden;
+        }*/
+
+label, .mylabel1, .clsTo, .dxeBase_PlasticBlue {
+    color: #141414 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    margin-bottom: 0 !important;
+    line-height: 20px;
+}
+
+#GrpSelLbl .dxeBase_PlasticBlue {
+    line-height: 20px !important;
+}
+
+.calendar-icon {
+    position: absolute;
+    bottom: 6px;
+    right: 5px;
+    z-index: 0;
+    cursor: pointer;
+}
+
+.simple-select::after {
+    /*content: '<';*/
+    content: url(../../../assests/images/left-arw.png);
+    position: absolute;
+    top: 6px;
+    right: -2px;
+    font-size: 16px;
+    transform: rotate(269deg);
+    font-weight: 500;
+    background: #094e8c;
+    color: #fff;
+    height: 18px;
+    display: block;
+    width: 26px;
+    /* padding: 10px 0; */
+    border-radius: 4px;
+    text-align: center;
+    line-height: 19px;
+    z-index: 0;
+}
+
+.simple-select {
+    position: relative;
+}
+
+    .simple-select:disabled::after {
+        background: #1111113b;
+    }
+
+.styled-checkbox {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+}
+
+    .styled-checkbox + label {
+        position: relative;
+        /*cursor: pointer;*/
+        padding: 0;
+        margin-bottom: 0 !important;
+    }
+
+        .styled-checkbox + label:before {
+            content: "";
+            margin-right: 6px;
+            display: inline-block;
+            vertical-align: text-top;
+            width: 16px;
+            height: 16px;
+            /*background: #d7d7d7;*/
+            margin-top: 2px;
+            border-radius: 2px;
+            border: 1px solid #c5c5c5;
+        }
+
+    .styled-checkbox:hover + label:before {
+        background: #094e8c;
+    }
+
+
+    .styled-checkbox:checked + label:before {
+        background: #094e8c;
+    }
+
+    .styled-checkbox:disabled + label {
+        color: #b8b8b8;
+        cursor: auto;
+    }
+
+        .styled-checkbox:disabled + label:before {
+            box-shadow: none;
+            background: #ddd;
+        }
+
+    .styled-checkbox:checked + label:after {
+        content: "";
+        position: absolute;
+        left: 3px;
+        top: 9px;
+        background: white;
+        width: 2px;
+        height: 2px;
+        box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+        transform: rotate(45deg);
+    }
+
+.for-cust-icon {
+    position: relative;
+    z-index: 1;
+}
+
+.chosen-container-single .chosen-single span {
+    min-height: 30px;
+    line-height: 30px;
+}
+
+.chosen-container-single .chosen-single div {
+    background: #094e8c;
+    color: #fff;
+    border-radius: 4px;
+    height: 26px;
+    top: 1px;
+    right: 1px;
+    /*position:relative;*/
+}
+
+    .chosen-container-single .chosen-single div b {
+        display: none;
+    }
+
+    .chosen-container-single .chosen-single div::after {
+        /*content: '<';*/
+        content: url(../../../assests/images/left-arw.png);
+        position: absolute;
+        top: 2px;
+        right: 5px;
+        font-size: 18px;
+        transform: rotate(269deg);
+        font-weight: 500;
+    }
+
+.chosen-container-active.chosen-with-drop .chosen-single div {
+    background: #094e8c;
+    color: #fff;
+}
+
+    .chosen-container-active.chosen-with-drop .chosen-single div::after {
+        transform: rotate(90deg);
+        right: 5px;
+    }
