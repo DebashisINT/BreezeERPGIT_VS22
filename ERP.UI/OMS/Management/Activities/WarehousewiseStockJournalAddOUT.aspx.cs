@@ -1,4 +1,7 @@
-﻿using System;
+﻿#region//========================================================== Revision History ============================================================================================
+// 1.0   Priti V2.0.37   21-03-2023    	0025689: Alt Qty column & data is not showing while making Warehouse wise Stock out
+#endregion//========================================== End Revision History =======================================================================================================-
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -135,7 +138,17 @@ namespace ERP.OMS.Management.Activities
                     lblHierarchy.Visible = false;
                     lookup_Project.Columns[3].Visible = false;
                 }
-            }    
+            }
+
+            string UOMConversionInEntry = ComBL.GetSystemSettingsResult("ShowUOMConversionInEntry");
+            if (!String.IsNullOrEmpty(UOMConversionInEntry))
+            {
+                if (UOMConversionInEntry.Trim() == "0")
+                {
+                    GrdWarehouse.Columns[3].Width = 0;
+                }               
+            }
+
             if (!IsPostBack)
             {
                 string EmployeeStockTransfer = ComBL.GetSystemSettingsResult("EmployeeWarehouseStockOUTIN");
@@ -660,23 +673,23 @@ namespace ERP.OMS.Management.Activities
                 proc.AddVarcharPara("@Multiwarehouse", 500, Convert.ToString(multiwarehouse));
                 dt = proc.GetTable();
 
-                string strNewVal = "", strOldVal = "";
+                 string strNewVal = "", strOldVal = "";
                 DataTable tempdt = dt.Copy();
                 foreach (DataRow drr in tempdt.Rows)
                 {
                     strNewVal = Convert.ToString(drr["WHSTWarehouse_Id"]);
 
-                    if (strNewVal == strOldVal)
-                    {
-                        drr["WarehouseName"] = "";
-                        drr["Quantity"] = "";
-                        drr["BatchNo"] = "";
-                        drr["SalesUOMName"] = "";
-                        drr["SalesQuantity"] = "";
-                        drr["StkUOMName"] = "";
-                        drr["MfgDate"] = "";
-                        drr["ExpiryDate"] = "";
-                    }
+                    //if (strNewVal == strOldVal)
+                    //{
+                    //    drr["WarehouseName"] = "";
+                    //    drr["Quantity"] = "";
+                    //    drr["BatchNo"] = "";
+                    //    drr["SalesUOMName"] = "";
+                    //    drr["SalesQuantity"] = "";
+                    //    drr["StkUOMName"] = "";
+                    //    drr["MfgDate"] = "";
+                    //    drr["ExpiryDate"] = "";
+                    //}
 
                     strOldVal = strNewVal;
                 }
@@ -977,7 +990,7 @@ namespace ERP.OMS.Management.Activities
                     MultiUOMData.Columns.Add("Quantity", typeof(Decimal));
                     MultiUOMData.Columns.Add("UOM", typeof(string));
                     MultiUOMData.Columns.Add("AltUOM", typeof(string));
-                    MultiUOMData.Columns.Add("AltQuantity", typeof(Decimal));
+                    MultiUOMData.Columns.Add("AltQty", typeof(Decimal));
                     MultiUOMData.Columns.Add("UomId", typeof(Int64));
                     MultiUOMData.Columns.Add("AltUomId", typeof(Int64));
                     MultiUOMData.Columns.Add("ProductId", typeof(Int64));
@@ -1018,7 +1031,7 @@ namespace ERP.OMS.Management.Activities
                 string Quantity = Convert.ToString(e.Parameters.Split('~')[2]);
                 string UOM = Convert.ToString(e.Parameters.Split('~')[3]);
                 string AltUOM = Convert.ToString(e.Parameters.Split('~')[4]);
-                string AltQuantity = Convert.ToString(e.Parameters.Split('~')[5]);
+                string AltQty = Convert.ToString(e.Parameters.Split('~')[5]);
                 string UomId = Convert.ToString(e.Parameters.Split('~')[6]);
                 string AltUomId = Convert.ToString(e.Parameters.Split('~')[7]);
                 string ProductId = Convert.ToString(e.Parameters.Split('~')[8]);
@@ -1044,7 +1057,7 @@ namespace ERP.OMS.Management.Activities
                     {
                         if ((AltUomId == item["AltUomId"].ToString()) || (UomId == item["AltUomId"].ToString()))
                         {
-                            if (AltQuantity == item["AltQuantity"].ToString())
+                            if (AltQty == item["AltQty"].ToString())
                             {
                                 Validcheck = "DuplicateUOM";
                                 grid_MultiUOM.JSProperties["cpDuplicateAltUOM"] = "DuplicateAltUOM";
@@ -1073,7 +1086,7 @@ namespace ERP.OMS.Management.Activities
                         MultiUOMSaveData.Columns.Add("Quantity", typeof(Decimal));
                         MultiUOMSaveData.Columns.Add("UOM", typeof(string));
                         MultiUOMSaveData.Columns.Add("AltUOM", typeof(string));
-                        MultiUOMSaveData.Columns.Add("AltQuantity", typeof(Decimal));
+                        MultiUOMSaveData.Columns.Add("AltQty", typeof(Decimal));
                         MultiUOMSaveData.Columns.Add("UomId", typeof(Int64));
                         MultiUOMSaveData.Columns.Add("AltUomId", typeof(Int64));
                         MultiUOMSaveData.Columns.Add("ProductId", typeof(Int64));
@@ -1098,29 +1111,29 @@ namespace ERP.OMS.Management.Activities
                         MultiUOMSR = Convert.ToInt32(MultiUOMSaveData.Compute("max([MultiUOMSR])", string.Empty)) + 1;
                         // End of Rev Sanchita
 
-                       // MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, BaseRate, AltRate, UpdateRow, (Convert.ToInt16(thisRow["MultiUOMSR"]) + 1));
+                       // MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId, BaseRate, AltRate, UpdateRow, (Convert.ToInt16(thisRow["MultiUOMSR"]) + 1));
                         // Rev Sanchita 
-                        MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, BaseRate, AltRate, UpdateRow, MultiUOMSR);
+                        MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId, BaseRate, AltRate, UpdateRow, MultiUOMSR);
                         // End of Rev Sanchita
                     }
                     else
                     {
-                        MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, BaseRate, AltRate, UpdateRow, MultiUOMSR);
+                        MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId, BaseRate, AltRate, UpdateRow, MultiUOMSR);
                     }
 
                     // Mantis Issue 24428
                     //if (DetailsId != "" && DetailsId != null && DetailsId != "null")
                     //{
                     //    // Mantis Issue 24428
-                    //   // MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId);
-                    //    MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow);
+                    //   // MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId, DetailsId);
+                    //    MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow);
                     //    // End of Mantis Issue 24428
                     //}
                     //else
                     //{
                     //    // Mantis Issue 24428
-                    //   // MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId);
-                    //    MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow);
+                    //   // MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId, DetailsId);
+                    //    MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow);
                     //    // End of Mantis Issue 24428
 
                     //}
@@ -1138,7 +1151,7 @@ namespace ERP.OMS.Management.Activities
                     }
                     else
                     {
-                        //MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId);
+                        //MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId);
                         //Session["MultiUOMData"] = MultiUOMSaveData;
                         grid_MultiUOM.DataSource = MultiUOMSaveData.DefaultView;
                         grid_MultiUOM.DataBind();
@@ -1163,7 +1176,7 @@ namespace ERP.OMS.Management.Activities
                         if (AltUOMKeyValue.ToString() == item["AltUomId"].ToString())
                         {
                             //dt.Rows.Remove(item);
-                            if (AltUOMKeyqnty.ToString() == item["AltQuantity"].ToString())
+                            if (AltUOMKeyqnty.ToString() == item["AltQty"].ToString())
                             {
                                 item.Table.Rows.Remove(item);
                                 break;
@@ -1228,7 +1241,7 @@ namespace ERP.OMS.Management.Activities
                     Decimal BaseQty = Convert.ToDecimal(MultiUoMresult[0]["Quantity"]);
                     Decimal BaseRate = Convert.ToDecimal(MultiUoMresult[0]["BaseRate"]);
 
-                    Decimal AltQty = Convert.ToDecimal(MultiUoMresult[0]["AltQuantity"]);
+                    Decimal AltQty = Convert.ToDecimal(MultiUoMresult[0]["AltQty"]);
                     Decimal AltRate = Convert.ToDecimal(MultiUoMresult[0]["AltRate"]);
                     Decimal AltUom = Convert.ToDecimal(MultiUoMresult[0]["AltUomId"]);
                     bool UpdateRow = Convert.ToBoolean(MultiUoMresult[0]["UpdateRow"]);
@@ -1288,7 +1301,7 @@ namespace ERP.OMS.Management.Activities
                 string Quantity = Convert.ToString(e.Parameters.Split('~')[2]);
                 string UOM = Convert.ToString(e.Parameters.Split('~')[3]);
                 string AltUOM = Convert.ToString(e.Parameters.Split('~')[4]);
-                string AltQuantity = Convert.ToString(e.Parameters.Split('~')[5]);
+                string AltQty = Convert.ToString(e.Parameters.Split('~')[5]);
                 string UomId = Convert.ToString(e.Parameters.Split('~')[6]);
                 string AltUomId = Convert.ToString(e.Parameters.Split('~')[7]);
                 string ProductId = Convert.ToString(e.Parameters.Split('~')[8]);
@@ -1305,7 +1318,7 @@ namespace ERP.OMS.Management.Activities
                 {
                     if ((AltUomId == item["AltUomId"].ToString()) || (UomId == item["AltUomId"].ToString()))
                     {
-                        if (AltQuantity == item["AltQuantity"].ToString())
+                        if (AltQty == item["AltQty"].ToString())
                         {
                             Validcheck = "DuplicateUOM";
                             grid_MultiUOM.JSProperties["cpDuplicateAltUOM"] = "DuplicateAltUOM";
@@ -1334,7 +1347,7 @@ namespace ERP.OMS.Management.Activities
 
                         }
                     }
-                    dt.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, BaseRate, AltRate, UpdateRow, muid);
+                    dt.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId, BaseRate, AltRate, UpdateRow, muid);
                 }
                 // End of Mantis Issue 24428
                 //Rev End Sanchita
@@ -1370,7 +1383,7 @@ namespace ERP.OMS.Management.Activities
                 //}
                 //else
                 //{
-                //    //MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId);
+                //    //MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQty, UomId, AltUomId, ProductId);
                 //    //Session["MultiUOMData"] = MultiUOMSaveData;
                 //    grid_MultiUOM.DataSource = dt.DefaultView;
                 //    grid_MultiUOM.DataBind();
@@ -1405,7 +1418,7 @@ namespace ERP.OMS.Management.Activities
                     Decimal BaseQty = Convert.ToDecimal(MultiUoMresult[0]["Quantity"]);
                     Decimal BaseRate = Convert.ToDecimal(MultiUoMresult[0]["BaseRate"]);
 
-                    Decimal AltQty = Convert.ToDecimal(MultiUoMresult[0]["AltQuantity"]);
+                    Decimal AltQty = Convert.ToDecimal(MultiUoMresult[0]["AltQty"]);
                     string AltUom = Convert.ToString(MultiUoMresult[0]["AltUOM"]);
 
                     grid_MultiUOM.JSProperties["cpSetBaseQtyRateInGrid"] = "1";
@@ -1678,7 +1691,7 @@ namespace ERP.OMS.Management.Activities
             if (Session["WHSJSour_WarehouseData"] != null)
             {
                 DataTable Warehousedt = (DataTable)Session["WHSJSour_WarehouseData"];
-                tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID");
+                tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID", "AltQty", "AltUOM", "MfgDate", "ExpiryDate");
             }
             else
             {
@@ -1688,6 +1701,13 @@ namespace ERP.OMS.Management.Activities
                 tempWarehousedt.Columns.Add("TotalQuantity", typeof(string));
                 tempWarehousedt.Columns.Add("BatchID", typeof(string));
                 tempWarehousedt.Columns.Add("SerialID", typeof(string));
+
+                //REV 1.0
+                tempWarehousedt.Columns.Add("AltQty", typeof(string));
+                tempWarehousedt.Columns.Add("AltUOM", typeof(string));              
+                tempWarehousedt.Columns.Add("MfgDate", typeof(string));
+                tempWarehousedt.Columns.Add("ExpiryDate", typeof(string));
+                //REV 1.0 END
             }
             //datatable for MultiUOm start chinmoy 14-01-2020
             // Mantis Issue 24428
@@ -1696,8 +1716,8 @@ namespace ERP.OMS.Management.Activities
             {
                 DataTable MultiUOM = (DataTable)Session["MultiUOMData"];
                 // Mantis Issue 24428
-                // MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "DetailsId");
-                MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
+                // MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQty", "UomId", "AltUomId", "ProductId", "DetailsId");
+                MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQty", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
                 // End of Mantis Issue 24428
             }
             else
@@ -1706,7 +1726,7 @@ namespace ERP.OMS.Management.Activities
                 MultiUOMDetails.Columns.Add("Quantity", typeof(Decimal));
                 MultiUOMDetails.Columns.Add("UOM", typeof(string));
                 MultiUOMDetails.Columns.Add("AltUOM", typeof(string));
-                MultiUOMDetails.Columns.Add("AltQuantity", typeof(Decimal));
+                MultiUOMDetails.Columns.Add("AltQty", typeof(Decimal));
                 MultiUOMDetails.Columns.Add("UomId", typeof(Int64));
                 MultiUOMDetails.Columns.Add("AltUomId", typeof(Int64));
                 MultiUOMDetails.Columns.Add("ProductId", typeof(Int64));
@@ -2154,16 +2174,26 @@ namespace ERP.OMS.Management.Activities
             if (Session["WHSJDest_WarehouseData"] != null)
             {
                 DataTable Warehousedt = (DataTable)Session["WHSJDest_WarehouseData"];
-                tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID","MfgDate","ExpiryDate");
+                //Rev 1.0
+                //tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID","MfgDate","ExpiryDate");
+                tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID", "AltQty", "AltUOM", "MfgDate", "ExpiryDate");
+                //Rev 1.0 End
             }
             else
             {
                 tempWarehousedt.Columns.Add("Product_SrlNo", typeof(string));
                 tempWarehousedt.Columns.Add("SrlNo", typeof(string));
                 tempWarehousedt.Columns.Add("WarehouseID", typeof(string));
-                tempWarehousedt.Columns.Add("TotalQuantity", typeof(string));
+                tempWarehousedt.Columns.Add("Quantity", typeof(string));
                 tempWarehousedt.Columns.Add("BatchID", typeof(string));
                 tempWarehousedt.Columns.Add("SerialID", typeof(string));
+               
+              
+                //Rev 1.0
+                tempWarehousedt.Columns.Add("AltQty", typeof(string));
+                tempWarehousedt.Columns.Add("AltUOM", typeof(string));
+                //Rev 1.0 End
+
                 //Revision Rajdip MfgDate, ExpiryDate
                 tempWarehousedt.Columns.Add("MfgDate", typeof(string));
                 tempWarehousedt.Columns.Add("ExpiryDate", typeof(string));
@@ -2175,8 +2205,8 @@ namespace ERP.OMS.Management.Activities
             {
                 DataTable MultiUOM = (DataTable)Session["MultiUOMData"];
                 // Mantis Issue 24428
-                // MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "DetailsId");
-                MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
+                // MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQty", "UomId", "AltUomId", "ProductId", "DetailsId");
+                MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQty", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
                 // End of Mantis Issue 24428
             }
             else
@@ -2185,7 +2215,7 @@ namespace ERP.OMS.Management.Activities
                 MultiUOMDetails.Columns.Add("Quantity", typeof(Decimal));
                 MultiUOMDetails.Columns.Add("UOM", typeof(string));
                 MultiUOMDetails.Columns.Add("AltUOM", typeof(string));
-                MultiUOMDetails.Columns.Add("AltQuantity", typeof(Decimal));
+                MultiUOMDetails.Columns.Add("AltQty", typeof(Decimal));
                 MultiUOMDetails.Columns.Add("UomId", typeof(Int64));
                 MultiUOMDetails.Columns.Add("AltUomId", typeof(Int64));
                 MultiUOMDetails.Columns.Add("ProductId", typeof(Int64));
@@ -2312,7 +2342,36 @@ namespace ERP.OMS.Management.Activities
                 tempSourceWarehousedt = (DataTable)Session["TempSourceWarehousedt"];
                 HttpContext.Current.Session["TempSourceWarehousedt"] = null;
 
-             
+                if (tempSourceWarehousedt != null && tempSourceWarehousedt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < tempSourceWarehousedt.Rows.Count; i++)
+                    {
+                        DataRow dr = tempSourceWarehousedt.Rows[i];
+                        string strMfgDate = Convert.ToString(dr["MfgDate"]);
+                        string strExpiryDate = Convert.ToString(dr["ExpiryDate"]);
+                        if (strMfgDate != "")
+                        {
+                            string DD = strMfgDate.Substring(0, 2);
+                            string MM = strMfgDate.Substring(3, 2);
+                            string YYYY = strMfgDate.Substring(6, 4);
+                            string Date = YYYY + '-' + MM + '-' + DD;
+
+                            dr["MfgDate"] = Date;
+                        }
+
+                        if (strExpiryDate != "")
+                        {
+                            string DD = strExpiryDate.Substring(0, 2);
+                            string MM = strExpiryDate.Substring(3, 2);
+                            string YYYY = strExpiryDate.Substring(6, 4);
+                            string Date = YYYY + '-' + MM + '-' + DD;
+
+                            dr["ExpiryDate"] = Date;
+                        }
+
+                    }
+                    tempSourceWarehousedt.AcceptChanges();
+                }
 
                 Int64 Proj_id = 0;
                 if (lookup_Project.Text != "")
@@ -2976,6 +3035,12 @@ namespace ERP.OMS.Management.Activities
                     Warehousedt.Columns.Add("LoopID", typeof(string));
                     Warehousedt.Columns.Add("TotalQuantity", typeof(string));
                     Warehousedt.Columns.Add("Status", typeof(string));
+
+                    //Rev 1.0
+                    Warehousedt.Columns.Add("AltQty", typeof(string));
+                    Warehousedt.Columns.Add("AltUOM", typeof(string));
+                    Warehousedt.Columns.Add("TotalAltQty", typeof(string));
+                    //Rev 1.0 End
                 }
 
                 if (Warehousedt != null && Warehousedt.Rows.Count > 0)
@@ -3008,6 +3073,11 @@ namespace ERP.OMS.Management.Activities
                 string Qty = Convert.ToString(e.Parameters.Split('~')[7]);
                 string editWarehouseID = Convert.ToString(e.Parameters.Split('~')[8]);
 
+                //Rev 1.0
+                string AltQty = Convert.ToString(e.Parameters.Split('~')[9]);
+                string AltUOM = Convert.ToString(e.Parameters.Split('~')[10]);
+                string AltUOMNAME = Convert.ToString(e.Parameters.Split('~')[11]);
+                //Rev 1.0 End
                 string Sales_UOM_Name = "", Sales_UOM_Code = "", Stk_UOM_Name = "", Stk_UOM_Code = "", Conversion_Multiplier = "", Trans_Stock = "0", MfgDate = "", ExpiryDate = "";
                 GetProductType(ref Type);
 
@@ -3041,6 +3111,11 @@ namespace ERP.OMS.Management.Activities
                     Warehousedt.Columns.Add("LoopID", typeof(string));
                     Warehousedt.Columns.Add("TotalQuantity", typeof(string));
                     Warehousedt.Columns.Add("Status", typeof(string));
+                    //Rev 1.0
+                    Warehousedt.Columns.Add("AltQty", typeof(string));
+                    Warehousedt.Columns.Add("AltUOM", typeof(string));
+                    Warehousedt.Columns.Add("TotalAltQty", typeof(string));
+                    //Rev 1.0 End
                 }
 
                 bool IsDelete = false;
@@ -3172,7 +3247,10 @@ namespace ERP.OMS.Management.Activities
 
                         if (updaterows.Length == 0)
                         {
-                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                            //Rev 1.0
+                            //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                            //Rev 1.0 End
                         }
                         else
                         {
@@ -3182,6 +3260,12 @@ namespace ERP.OMS.Management.Activities
                                 row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
+
+                                //Rev 1.0
+                                decimal _AltQty = Convert.ToDecimal(row["AltQty"]);
+                                row["AltQty"] = (_AltQty + Convert.ToDecimal(AltQty));
+                                row["TotalAltQty"] = (_AltQty + Convert.ToDecimal(AltQty)) + " " + AltUOMNAME;
+                                //Rev 1.0 End
                             }
                         }
                     }
@@ -3203,8 +3287,11 @@ namespace ERP.OMS.Management.Activities
                             if (updaterows.Length == 0)
                             {
                                 IsDelete = true;
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
-
+                                //Rev 1.0
+                                //Rev 1.0
+                                //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                                //Rev 1.0 End
                             }
                             else if (editWarehouseID == whID)
                             {
@@ -3216,6 +3303,11 @@ namespace ERP.OMS.Management.Activities
                                     row["Quantity"] = Qty;
                                     row["TotalQuantity"] = Qty;
                                     row["SalesQuantity"] = Qty + " " + Sales_UOM_Name;
+
+                                    //Rev 1.0                                    
+                                    row["AltQty"] = Convert.ToDecimal(AltQty);
+                                    row["TotalAltQty"] = Convert.ToDecimal(AltQty) + " " + AltUOMNAME;
+                                    //Rev 1.0 End
                                 }
                             }
                             else if (editWarehouseID != whID)
@@ -3229,6 +3321,12 @@ namespace ERP.OMS.Management.Activities
                                     row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                     row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                     row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
+
+                                    //Rev 1.0
+                                    decimal _AltQty = Convert.ToDecimal(row["AltQty"]);
+                                    row["AltQty"] = (_AltQty + Convert.ToDecimal(AltQty));
+                                    row["TotalAltQty"] = (_AltQty + Convert.ToDecimal(AltQty)) + " " + AltUOMNAME;
+                                    //Rev 1.0 End
                                 }
                             }
                         }
@@ -3251,7 +3349,10 @@ namespace ERP.OMS.Management.Activities
 
                         if (updaterows.Length == 0)
                         {
-                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                            //Rev 1.0
+                            //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D",AltQty, AltUOM,Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                            //Rev 1.0 End
                         }
                         else
                         {
@@ -3261,6 +3362,12 @@ namespace ERP.OMS.Management.Activities
                                 row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
+
+                                //Rev 1.0
+                                decimal _AltQty = Convert.ToDecimal(row["AltQty"]);
+                                row["AltQty"] = (_AltQty + Convert.ToDecimal(AltQty));
+                                row["TotalAltQty"] = (_AltQty + Convert.ToDecimal(AltQty)) + " " + AltUOMNAME;
+                                //Rev 1.0 End
                             }
                         }
                     }
@@ -3281,7 +3388,11 @@ namespace ERP.OMS.Management.Activities
                             if (updaterows.Length == 0)
                             {
                                 IsDelete = true;
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                                //Rev 1.0
+                                //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                                //Rev 1.0 End
+
                             }
                             else if (editWarehouseID == whID)
                             {
@@ -3289,10 +3400,14 @@ namespace ERP.OMS.Management.Activities
                                 {
                                     whID = Convert.ToString(row["SrlNo"]);
                                     decimal oldQuantity = Convert.ToDecimal(row["Quantity"]);
-
                                     row["Quantity"] = Qty;
                                     row["TotalQuantity"] = Qty;
                                     row["SalesQuantity"] = Qty + " " + Sales_UOM_Name;
+
+                                    //Rev 1.0
+                                    row["AltQty"] = AltQty;                                   
+                                    row["TotalAltQty"] = AltQty + " " + AltUOMNAME;
+                                    //Rev 1.0 End
                                 }
                             }
                             else if (editWarehouseID != whID)
@@ -3306,6 +3421,12 @@ namespace ERP.OMS.Management.Activities
                                     row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                     row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                     row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
+
+                                    //Rev 1.0
+                                    decimal _AltQty = Convert.ToDecimal(row["AltQty"]);
+                                    row["AltQty"] = (_AltQty + Convert.ToDecimal(AltQty));
+                                    row["TotalAltQty"] = (_AltQty + Convert.ToDecimal(AltQty)) + " " + AltUOMNAME;
+                                    //Rev 1.0 End
                                 }
                             }
                         }
@@ -3329,7 +3450,10 @@ namespace ERP.OMS.Management.Activities
 
                         if (updaterows.Length == 0)
                         {
-                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                            //Rev 1.0
+                            //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                            //Rev 1.0 End
                         }
                         else
                         {
@@ -3339,6 +3463,12 @@ namespace ERP.OMS.Management.Activities
                                 row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
+
+                                //Rev 1.0
+                                decimal _AltQty = Convert.ToDecimal(row["AltQty"]);
+                                row["AltQty"] = (_AltQty + Convert.ToDecimal(AltQty));
+                                row["TotalAltQty"] = (_AltQty + Convert.ToDecimal(AltQty)) + " " + AltUOMNAME;
+                                //Rev 1.0 End
                             }
                         }
                     }
@@ -3359,7 +3489,10 @@ namespace ERP.OMS.Management.Activities
                             if (updaterows.Length == 0)
                             {
                                 IsDelete = true;
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                                //Rev 1.0
+                                //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D");
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                                //Rev 1.0 End
                             }
                             else if (editWarehouseID == whID)
                             {
@@ -3371,6 +3504,11 @@ namespace ERP.OMS.Management.Activities
                                     row["Quantity"] = Qty;
                                     row["TotalQuantity"] = Qty;
                                     row["SalesQuantity"] = Qty + " " + Sales_UOM_Name;
+
+                                    //Rev 1.0
+                                    row["AltQty"] = Convert.ToDecimal(AltQty);
+                                    row["TotalAltQty"] = Convert.ToDecimal(AltQty) + " " + AltUOMNAME;
+                                    //Rev 1.0 End
                                 }
                             }
                             else if (editWarehouseID != whID)
@@ -3380,10 +3518,15 @@ namespace ERP.OMS.Management.Activities
                                 {
                                     ID = Convert.ToString(row["SrlNo"]);
                                     decimal oldQuantity = Convert.ToDecimal(row["Quantity"]);
-
                                     row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                     row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                     row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
+
+                                    //Rev 1.0
+                                    decimal _AltQty = Convert.ToDecimal(row["AltQty"]);
+                                    row["AltQty"] = (_AltQty + Convert.ToDecimal(AltQty));
+                                    row["TotalAltQty"] = (_AltQty + Convert.ToDecimal(AltQty)) + " " + AltUOMNAME;
+                                    //Rev 1.0 End
                                 }
                             }
                         }
@@ -3469,11 +3612,17 @@ namespace ERP.OMS.Management.Activities
                                     }
                                 }
 
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, (oldQuantity + Convert.ToDecimal(1)), BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "", Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, whID, (oldQuantity + Convert.ToDecimal(1)), "D");
+                                //Rev 1.0
+                                //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, (oldQuantity + Convert.ToDecimal(1)), BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "", Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, whID, (oldQuantity + Convert.ToDecimal(1)), "D");
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, (oldQuantity + Convert.ToDecimal(1)), BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "", Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, whID, (oldQuantity + Convert.ToDecimal(1)), "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                                //Rev 1.0 End
                             }
                             else
                             {
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, "1", BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "1" + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, "1", "D");
+                                //Rev 1.0
+                                //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, "1", BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "1" + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, "1", "D");
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, "1", BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "1" + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, "1", "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                                //Rev 1.0 End
                             }
                         }
                         else
@@ -3504,12 +3653,17 @@ namespace ERP.OMS.Management.Activities
                                             row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(1)) + " " + Sales_UOM_Name;
                                         }
                                     }
-
-                                    Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, (oldQuantity + Convert.ToDecimal(1)), BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "", Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, whID, (oldQuantity + Convert.ToDecimal(1)), "D");
+                                    //Rev 1.0
+                                    //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, (oldQuantity + Convert.ToDecimal(1)), BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "", Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, whID, (oldQuantity + Convert.ToDecimal(1)), "D");
+                                    Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, (oldQuantity + Convert.ToDecimal(1)), BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "", Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, whID, (oldQuantity + Convert.ToDecimal(1)), "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                                    //Rev 1.0 End
                                 }
                                 else
                                 {
-                                    Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, "1", BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "1" + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, "1", "D");
+                                    //Rev 1.0
+                                    //Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, "1", BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "1" + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, "1", "D");
+                                    Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, "1", BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, "1" + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, "1", "D", AltQty, AltUOM, Convert.ToDecimal(AltQty) + " " + AltUOMNAME);
+                                    //Rev 1.0 End
                                 }
                             }
                         }
@@ -5572,7 +5726,7 @@ namespace ERP.OMS.Management.Activities
         {
             DataTable ds = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("Prc_WarehousewiseStockJournal_details");
-            proc.AddVarcharPara("@Action", 500, "MultiUOMWHTransferINDetails");
+            proc.AddVarcharPara("@Action", 500, "MultiUOMWHTransferOUTDetails");
             proc.AddVarcharPara("@AdjId", 500, Convert.ToString(AdjId));
             ds = proc.GetTable();
             return ds;

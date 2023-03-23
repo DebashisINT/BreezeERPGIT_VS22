@@ -4606,7 +4606,7 @@ function SaveWarehouse() {
             checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
             ctxtQuantity.SetValue("0");
             //Rev 1.0
-            ctxtQuantity.SetValue("0");
+            ctxtAltQuantity.SetValue("0");
             //Rev 1.0 End
         }
         UpdateText();
