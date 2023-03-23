@@ -1,4 +1,9 @@
-﻿var globalRowIndex;
+﻿//==========================================================Revision History ============================================================================================
+//   1.0   Priti 1.0  V2.0.37   15-03-2023    0025689: Alt Qty column & data is not showing while making Warehouse wise Stock out
+//========================================== End Revision History =======================================================================================================--%>
+
+
+var globalRowIndex;
 var globalRowIndexDestination;
 var saveNewOrExit = '';
 var canCallBack = true;
@@ -47,6 +52,12 @@ $(document).ready(function () {
     $('#TechnicianModel').on('shown.bs.modal', function () {
         $('#txtTechnicianSearch').focus();
     })
+    //Rev 1.0
+    if ($("#hdnShowUOMConversionInEntry").val() != "1") {
+        div_AltQuantity.style.display = 'none';
+        _div_Uom.style.display = 'none';
+    }
+    //Rev 1.0 End
 });
 
 function AddEntityClick() {
@@ -253,6 +264,7 @@ function SetTechnician(Id, Name) {
         GetObjectID('hdnTechnicianId').value = Id;
     }
 }
+
 function ShowUOMPOpup(WHType) {
 
     if ($('#hdnShowUOMConversionInEntry').val() == 0) {
@@ -1324,6 +1336,27 @@ function gridCustomButtonClick(s, e) {
             $('#hdfProductSerialID').val(SrlNo);
             $('#hdnProductQuantity').val(QuantityValue);
 
+            //Rev 1.0
+            var objectToPass = {}
+            var product = $("#hdfProductID").val();
+            objectToPass.ProductID = hdfProductID.value;
+            $.ajax({
+                type: "POST",
+                url: "../Activities/Services/Master.asmx/GetUom",
+                data: JSON.stringify(objectToPass),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var returnObject = msg.d;
+                    var UOMId = returnObject.uom_id;
+                    var UOMName = returnObject.UOM_Name;
+                    if (returnObject) {
+                        SetDataSourceOnComboBoxandSetVal(ccmbPackingUom1, returnObject.uom, UOMId);                       
+                        ccmbPackingUom1.SetEnabled(false);                        
+                    }
+                }
+            });
+              //Rev 1.0 End
             if (Ptype == "W") {
                 div_Warehouse.style.display = 'block';
                 div_Batch.style.display = 'none';
@@ -1416,6 +1449,110 @@ function gridCustomButtonClick(s, e) {
     }
 
 }
+//Rev 1.0
+function ChangePackingByQuantityinjs() {
+
+    if ($("#hdnShowUOMConversionInEntry").val() == "1") {
+        var Quantity = ctxtQuantity.GetValue();
+        var packing = $('#txtPacking').val();
+        if (packing == null || packing == '') {
+            $('#txtPacking').val(parseFloat(0).toFixed(4));
+            packing = $('#txtPacking').val();
+        }
+        if (Quantity == null || Quantity == '') {
+            $(e).val(parseFloat(0).toFixed(4));
+            Quantity = ctxtQuantity.GetValue();
+        }
+        var packingqty = parseFloat($('#hdnpackingqty').val()).toFixed(4);        
+        var uomfac_Qty_to_stock = $('#hdnuomFactor').val();       
+        var calcQuantity = parseFloat(Quantity * uomfac_Qty_to_stock).toFixed(4);    
+        CtxtPacking.SetText(calcQuantity);
+        ChkDataDigitCount(Quantity);
+    }
+}
+function ChkDataDigitCount(e) {
+    var data = $(e).val();
+    $(e).val(parseFloat(data).toFixed(4));
+}
+function ChangeQuantityByPacking1() {
+    var isOverideConvertion = $('#hdnisOverideConvertion').val();
+    if (isOverideConvertion == '1') {
+        var packing = CtxtPacking.GetValue();
+        var Quantity = ctxtQuantity.GetValue();
+        if (packing == null || packing == '') {
+            $(e).val(parseFloat(0).toFixed(4));
+            packing = CtxtPacking.GetValue();
+        }
+        if (Quantity == null || Quantity == '') {
+            ctxtQuantity.SetValue(parseFloat(0).toFixed(4));
+            Quantity = ctxtQuantity.GetValue();
+        }
+        var packingqty = parseFloat($('#hdnpackingqty').val()).toFixed(4);       
+        var uomfac_stock_to_qty = $('#hdnuomFactor').val();        
+        var calcQuantity = 0;
+        if (parseFloat(uomfac_stock_to_qty) != 0) {
+            calcQuantity = parseFloat(packing / uomfac_stock_to_qty).toFixed(4);
+        }        
+        ctxtQuantity.SetValue(calcQuantity);
+    }
+    ChkDataDigitCount(Quantity);
+}
+function QuantityGotFocus(s, e) {
+    var ProductID = $('#hdfProductID').val();
+    var Branch = $('#ddlBranch').val();
+    var WarehouseID = cCmbWarehouse.GetValue();
+    var ConvertionOverideVisible = $('#hdnConvertionOverideVisible').val();
+    var ShowUOMConversionInEntry = $('#hdnShowUOMConversionInEntry').val();
+    var type = 'add';
+    var actionQry = 'WarehouseOpeningBalanceProduct';
+    var GetserviceURL = "../Activities/Services/Master.asmx/GetMultiUOMDetails";
+    $.ajax({
+        type: "POST",
+        url: GetserviceURL,
+        data: JSON.stringify({ orderid: ProductID, action: actionQry, module: 'OpeningBalances', strKey: "" }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            var SpliteDetails = msg.d.split("||@||");
+            var IsInventory = '';
+            if (SpliteDetails[5] == "1") {
+                IsInventory = 'Yes';
+            }
+            var gridprodqty = parseFloat(ctxtQuantity.GetText()).toFixed(4);
+            var gridPackingQty = '';
+            var slno = WarehouseID;
+            var strProductID = ProductID;
+            var isOverideConvertion = SpliteDetails[4];
+            var packing_saleUOM = SpliteDetails[2];
+            var sProduct_SaleUom = SpliteDetails[3];
+            var sProduct_quantity = SpliteDetails[0];
+            var packing_quantity = SpliteDetails[1];
+            var uomfactor = 0
+            var prodquantity = sProduct_quantity;
+            var packingqty = packing_quantity;
+            $('#hdnpackingqty').val(packingqty);
+            if (prodquantity != 0 && packingqty != 0) {
+                uomfactor = parseFloat(packingqty / prodquantity).toFixed(4);
+                $('#hdnuomFactor').val(parseFloat(packingqty / prodquantity));
+            }
+            else {
+                $('#hdnuomFactor').val(0);
+            }
+            $('#hdnisOverideConvertion').val(isOverideConvertion);
+        }
+    });
+
+}
+function SetDataSourceOnComboBoxandSetVal(ControlObject, Source, id) {
+    ControlObject.ClearItems();
+    for (var count = 0; count < Source.length; count++) {
+        ControlObject.AddItem(Source[count].UOM_Name, Source[count].UOM_Id);
+    }
+    ControlObject.SetValue(id);
+    // ControlObject.SetSelectedIndex(0);
+}
+
+//Rev 1.0 End
 function SetUOMDataInArray(WHType, srlno, prodid) {
     var productid = prodid.split("||@||")[0];
     if (WHType == 'CustomDelete') {
@@ -2017,6 +2154,22 @@ function SaveWarehouse() {
     var SerialID = "";
     var SerialName = "";
     var Qty = ctxtQuantity.GetValue();
+    var AltQty=0;
+    var AltUom = 0;
+    var AltUomName = "";
+    var IsUomActivate = $("#hdnShowUOMConversionInEntry.ClientID").val();
+    if (IsUomActivate == 0) {
+        AltQty = 0;
+        AltUom = 0;
+        AltUomName = "";
+    }
+    else {
+        AltQty = (CtxtPacking.GetText() != null) ? CtxtPacking.GetText() : "0";
+        AltUom = (ccmbPackingUom1.GetValue() != null) ? ccmbPackingUom1.GetValue() : "0";
+        AltUomName = (ccmbPackingUom1.GetText() != null) ? ccmbPackingUom1.GetText() : "";
+    }
+    CtxtPacking.SetText("");
+
 
     var items = checkListBox.GetSelectedItems();
     var vals = [];
@@ -2066,7 +2219,7 @@ function SaveWarehouse() {
         if (document.getElementById("myCheck").checked == true && SelectedWarehouseID == "0") {
             if (Ptype == "W" || Ptype == "WB" || Ptype == "B") {
                 cCmbWarehouse.PerformCallback('BindWarehouse~' + WarehouseID);
-                cCmbBatch.PerformCallback('BindBatch~' + "");
+                cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
                 checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
                 ctxtQuantity.SetValue("0");
             }
@@ -2078,12 +2231,12 @@ function SaveWarehouse() {
         }
         else {
             cCmbWarehouse.PerformCallback('BindWarehouse~' + WarehouseID);
-            cCmbBatch.PerformCallback('BindBatch~' + "");
+            cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
             checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
             ctxtQuantity.SetValue("0");
         }
         UpdateText();
-        cGrdWarehouse.PerformCallback('SaveDisplay~' + WarehouseID + '~' + WarehouseName + '~' + BatchID + '~' + BatchName + '~' + SerialID + '~' + SerialName + '~' + Qty + '~' + SelectedWarehouseID);
+        cGrdWarehouse.PerformCallback('SaveDisplay~' + WarehouseID + '~' + WarehouseName + '~' + BatchID + '~' + BatchName + '~' + SerialID + '~' + SerialName + '~' + Qty + '~' + SelectedWarehouseID + '~' + AltQty + '~' + AltUom + '~' + AltUomName);
         SelectedWarehouseID = "0";
     }
 }

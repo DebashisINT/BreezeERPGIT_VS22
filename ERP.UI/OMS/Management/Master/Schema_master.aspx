@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="Schema_master.aspx.cs" Inherits="ERP.OMS.Management.Master.Schema_master" %>
+﻿<%--==========================================================Revision History ============================================================================================
+1.0   Priti   V2.0.37   20-03-2023    This page is not Refreshing after any change or open in Edit mode
+========================================== End Revision History =======================================================================================================--%>
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="Schema_master.aspx.cs" Inherits="ERP.OMS.Management.Master.Schema_master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
@@ -44,11 +49,13 @@
             Status = obj;
             //alert(obj);
             var frm = 'Schemapopup.aspx?Schemaid=' + obj;
-            window.location.href = frm;
+            //Rev 1.0
+          //  window.location.href = frm;
+               //Rev 1.0 End
             //editwin = dhtmlmodal.open("Editbox", "iframe", frm, "Edit Schema", "width=950px,height=500px,center=1,resize=1,scrolling=2,top=500", "recal");
 
-            //cPopup_Schema.SetContentUrl(frm);
-            //cPopup_Schema.Show();
+            cPopup_Schema.SetContentUrl(frm);
+            cPopup_Schema.Show();
         }
         function OnAdd() {
             Action = 'Add';

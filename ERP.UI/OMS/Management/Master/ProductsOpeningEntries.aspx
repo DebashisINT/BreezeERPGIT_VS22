@@ -1009,7 +1009,7 @@
                             </SettingsPager>
                             <TotalSummary>
                                 <dxe:ASPxSummaryItem FieldName="OpeningStock" SummaryType="Sum" DisplayFormat="{0:n4}" />
-                                <dxe:ASPxSummaryItem FieldName="OpeningValue" SummaryType="Sum" />
+                                <dxe:ASPxSummaryItem FieldName="OpeningValue" SummaryType="Sum" DisplayFormat="{0:n4}"/>
                                 <dxe:ASPxSummaryItem FieldName="ProductCode" SummaryType="Count" DisplayFormat="Product Count : #######" />
                             </TotalSummary>
                         </dxe:ASPxGridView>

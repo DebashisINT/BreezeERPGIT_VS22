@@ -240,6 +240,8 @@ namespace BusinessLogicLayer
             AdjustedId = Convert.ToInt32(cmd.Parameters["@ReturnId"].Value);
             ReturnNumber = Convert.ToString(cmd.Parameters["@ReturnValue"].Value);
             ErrorCode = Convert.ToInt32(cmd.Parameters["@ErrorCode"].Value);
+            cmd.Dispose();
+            con.Dispose();
         }
 
 

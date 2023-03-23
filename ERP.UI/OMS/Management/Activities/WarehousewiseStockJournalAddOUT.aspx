@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockJournalAddOUT.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockJournalAddOUT" %>
-
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc1" TagName="UOMConversionControl" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 
@@ -10,7 +9,7 @@
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
     <%-- <script src="JS/SearchPopup.js?v=0.03"></script>--%>
     <script src="JS/SearchPopupDatatable.js"></script>
-    <script src="JS/WarehousewiseStockJournalOUTJS.js?v=7.7"></script>
+    <script src="JS/WarehousewiseStockJournalOUTJS.js?v=7.8"></script>
 
     <style type="text/css">
         /*#grid_DXMainTable > tbody > tr > td:last-child, #productLookUp_DDD_gv_DXMainTable > tbody > tr > td:nth-child(2) {
@@ -179,20 +178,21 @@
         #pageheaderContent {
             margin-right: 50px;
         }
-           /*Mantis Issue 24428*/
-             .mlableWh{
+        /*Mantis Issue 24428*/
+        .mlableWh {
             padding-top: 22px;
-            display:inline-block
+            display: inline-block
         }
-        .mlableWh>input +span {
-            white-space: nowrap;
-        }
-         .eqTble > tbody>tr>td {
-            padding:0 7px;
-            vertical-align:top;
+
+            .mlableWh > input + span {
+                white-space: nowrap;
+            }
+
+        .eqTble > tbody > tr > td {
+            padding: 0 7px;
+            vertical-align: top;
         }
         /*End of Mantis Issue 24428*/
-
     </style>
     <script>
 
@@ -557,7 +557,8 @@
                         </div>
                     </div>
                     <div class="col-md-2" id="DivEntity" runat="server">
-                        <label class="darkLabel mTop5">Entity
+                        <label class="darkLabel mTop5">
+                            Entity
                              <a href="#" onclick="AddEntityClick()" style="left: -12px; top: 20px;"><i id="openlink" runat="server" class="fa fa-plus-circle" aria-hidden="true"></i></a>
                         </label>
                         <div>
@@ -929,34 +930,34 @@
                                     <CellStyle Wrap="True"></CellStyle>
                                 </dxe:GridViewDataTextColumn>
 
-                                   <%--  Manis 24428--%> 
+                                <%--  Manis 24428--%>
 
-                             <dxe:GridViewCommandColumn VisibleIndex="8" Caption="Multi UOM" Width="80px">
+                                <dxe:GridViewCommandColumn VisibleIndex="8" Caption="Multi UOM" Width="80px">
                                     <CustomButtons>
-                                           <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomMultiUOM" Image-Url="/assests/images/MultiUomIcon.png" Image-ToolTip="Multi UOM">
-                                            </dxe:GridViewCommandColumnCustomButton>
-                                             </CustomButtons>
-                                       </dxe:GridViewCommandColumn>
+                                        <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomMultiUOM" Image-Url="/assests/images/MultiUomIcon.png" Image-ToolTip="Multi UOM">
+                                        </dxe:GridViewCommandColumnCustomButton>
+                                    </CustomButtons>
+                                </dxe:GridViewCommandColumn>
 
-                                    <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="9" Width="80px" ReadOnly="true">
-                                                        <PropertiesTextEdit DisplayFormatString="0.0000" Style-HorizontalAlign="Right">
-                                                          <%--  <ClientSideEvents GotFocus="QuantityGotFocus" LostFocus="QuantityTextChange" />--%>
-                                                            <MaskSettings AllowMouseWheel="False" Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" />
-                                                            <Style HorizontalAlign="Right">
+                                <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="9" Width="80px" ReadOnly="true">
+                                    <PropertiesTextEdit DisplayFormatString="0.0000" Style-HorizontalAlign="Right">
+                                        <%--  <ClientSideEvents GotFocus="QuantityGotFocus" LostFocus="QuantityTextChange" />--%>
+                                        <MaskSettings AllowMouseWheel="False" Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" />
+                                        <Style HorizontalAlign="Right">
                                                             </Style>
-                                                        </PropertiesTextEdit>
-                                                        <CellStyle HorizontalAlign="Right">
-                                                        </CellStyle>
-                                                    </dxe:GridViewDataTextColumn>
-                                                     
-                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="Order_AltUOM" ReadOnly="true" VisibleIndex="10" Width="80px" >
-                                                        <PropertiesTextEdit>
-                                                        </PropertiesTextEdit>
-                                                    </dxe:GridViewDataTextColumn>
+                                    </PropertiesTextEdit>
+                                    <CellStyle HorizontalAlign="Right">
+                                    </CellStyle>
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="Order_AltUOM" ReadOnly="true" VisibleIndex="10" Width="80px">
+                                    <PropertiesTextEdit>
+                                    </PropertiesTextEdit>
+                                </dxe:GridViewDataTextColumn>
 
 
 
-                               <%--  Manis End 24428--%> 
+                                <%--  Manis End 24428--%>
                                 <dxe:GridViewCommandColumn Width="80px" Caption="Stk Details" VisibleIndex="11">
                                     <CustomButtons>
                                         <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomWarehouse" Image-Url="/assests/images/warehouse.png">
@@ -1055,239 +1056,238 @@
                     </div>
                 </div>
             </div>
-             <%--  Manis 24428--%> 
-                      <dxe:ASPxPopupControl ID="Popup_MultiUOM" runat="server" ClientInstanceName="cPopup_MultiUOM"
-        Width="900px" HeaderText="Multi UOM Details" PopupHorizontalAlign="WindowCenter"
-        BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
-        Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
-        ContentStyle-CssClass="pad">
-        <ClientSideEvents Closing="function(s, e) {
+            <%--  Manis 24428--%>
+            <dxe:ASPxPopupControl ID="Popup_MultiUOM" runat="server" ClientInstanceName="cPopup_MultiUOM"
+                Width="900px" HeaderText="Multi UOM Details" PopupHorizontalAlign="WindowCenter"
+                BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+                Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
+                ContentStyle-CssClass="pad">
+                <ClientSideEvents Closing="function(s, e) {
 	closeMultiUOM(s, e);}" />
-        <ContentStyle VerticalAlign="Top" CssClass="pad">
-        </ContentStyle>
-        <ContentCollection>
-            <dxe:PopupControlContentControl runat="server">
-                <div class="Top clearfix">
+                <ContentStyle VerticalAlign="Top" CssClass="pad">
+                </ContentStyle>
+                <ContentCollection>
+                    <dxe:PopupControlContentControl runat="server">
+                        <div class="Top clearfix">
 
 
 
-                    <div class="clearfix col-md-12" style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;">
+                            <div class="clearfix col-md-12" style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;">
 
-                        <table class="eqTble">
-                            <tr>
-                                <td>
-                                    <div>
-                                        <div style="margin-bottom: 5px;">
+                                <table class="eqTble">
+                                    <tr>
+                                        <td>
                                             <div>
-                                                <label>Base Quantity</label>
+                                                <div style="margin-bottom: 5px;">
+                                                    <div>
+                                                        <label>Base Quantity</label>
+                                                    </div>
+                                                    <div>
+                                                        <%--Rev Sanchita--%>
+                                                        <%--  <input type="text" id="UOMQuantity" style=text-align: right;" maxlength="18" class="allownumericwithdecimal" />--%>
+                                                        <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
+                                                        <%--End of Rev Sanchita--%>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <div class="Left_Content" style="">
+                                                <div>
+                                                    <label style="text-align: right;">Base UOM</label>
+                                                </div>
+                                                <div>
+                                                    <dxe:ASPxComboBox ID="cmbUOM" ClientInstanceName="ccmbUOM" runat="server" SelectedIndex="0" DataSourceID="UomSelect"
+                                                        ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" ValueField="UOM_ID" TextField="UOM_Name">
+                                                    </dxe:ASPxComboBox>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <%--Mantis Issue 24428--%>
+                                        <td>
+                                            <div style="margin-bottom: 5px;">
+                                                <div>
+                                                    <label>Base Rate </label>
+                                                </div>
+                                                <div>
+                                                    <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true"></dxe:ASPxTextBox>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <%--End of Mantis Issue 24428--%>
+                                        <td>
+                                            <span style="font-size: 22px; padding-top: 15px; display: inline-block;">=</span>
+                                        </td>
+                                        <td>
                                             <div>
-                                                 <%--Rev Sanchita--%>
-                                              <%--  <input type="text" id="UOMQuantity" style=text-align: right;" maxlength="18" class="allownumericwithdecimal" />--%>
-                                                  <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
-                                                 <%--End of Rev Sanchita--%>
+                                                <div>
+                                                    <label style="text-align: right;">Alt. UOM</label>
+                                                </div>
+                                                <div class="Left_Content" style="">
+                                                    <dxe:ASPxComboBox ID="cmbSecondUOM" ClientInstanceName="ccmbSecondUOM" runat="server" SelectedIndex="0" DataSourceID="AltUomSelect"
+                                                        ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" ValueField="UOM_ID" TextField="UOM_Name">
+                                                        <ClientSideEvents TextChanged="function(s,e) { PopulateMultiUomAltQuantity();}" />
+                                                    </dxe:ASPxComboBox>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="Left_Content" style="">
-                                        <div>
-                                            <label style="text-align: right;">Base UOM</label>
-                                        </div>
-                                        <div>
-                                            <dxe:ASPxComboBox ID="cmbUOM" ClientInstanceName="ccmbUOM" runat="server" SelectedIndex="0" DataSourceID="UomSelect"
-                                                ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" ValueField="UOM_ID" TextField="UOM_Name">
-                                            </dxe:ASPxComboBox>
-                                        </div>
-                                    </div>
-                                </td>
-                                  <%--Mantis Issue 24428--%>
-                                 <td>
-                                    <div style="margin-bottom: 5px;">
-                                        <div>
-                                            <label>Base Rate </label>
-                                        </div>
-                                        <div>
-                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>
-                                        </div>
-                                    </div>
-                                </td>
-                                <%--End of Mantis Issue 24428--%>
-                                <td>
-                                    <span style="font-size: 22px; padding-top: 15px; display: inline-block;">=</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <div>
-                                            <label style="text-align: right;">Alt. UOM</label>
-                                        </div>
-                                        <div class="Left_Content" style="">
-                                            <dxe:ASPxComboBox ID="cmbSecondUOM" ClientInstanceName="ccmbSecondUOM" runat="server" SelectedIndex="0" DataSourceID="AltUomSelect"
-                                                ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" ValueField="UOM_ID" TextField="UOM_Name">
-                                                <ClientSideEvents TextChanged="function(s,e) { PopulateMultiUomAltQuantity();}" />
-                                            </dxe:ASPxComboBox>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="margin-bottom: 5px;">
-                                        <div>
-                                            <label>Alt. Quantity </label>
-                                        </div>
-                                        <div>
-                                            <%-- <input type="text" id="AltUOMQuantity" style="text-align:right;"  maxlength="18" class="allownumericwithdecimal"/>--%>
-                                            <dxe:ASPxTextBox ID="AltUOMQuantity" runat="server" ClientInstanceName="cAltUOMQuantity" DisplayFormatString="0.0000" MaskSettings-Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
-                                                <%--Mantis Issue 24428--%>
-                                                <ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />
-                                                <%--End of Mantis Issue 24428--%>
-                                            </dxe:ASPxTextBox>
-                                        </div>
-                                    </div>
-                                </td>
-                                  <%--Mantis Issue 24428--%>
-                                 <td>
-                                    <div style="margin-bottom: 5px;">
-                                        <div>
-                                            <label>Alt Rate </label>
-                                        </div>
-                                        <div>
-                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
-                                                <ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />
-                                            </dxe:ASPxTextBox>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="margin-bottom: 5px;">
-                                        <div>
-                                            
-                                        </div>
-                                        <div>
-                                             <%--Rev Sanchita--%>
-                                         <%--   <label class="checkbox-inline mlableWh">
+                                        </td>
+                                        <td>
+                                            <div style="margin-bottom: 5px;">
+                                                <div>
+                                                    <label>Alt. Quantity </label>
+                                                </div>
+                                                <div>
+                                                    <%-- <input type="text" id="AltUOMQuantity" style="text-align:right;"  maxlength="18" class="allownumericwithdecimal"/>--%>
+                                                    <dxe:ASPxTextBox ID="AltUOMQuantity" runat="server" ClientInstanceName="cAltUOMQuantity" DisplayFormatString="0.0000" MaskSettings-Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
+                                                        <%--Mantis Issue 24428--%>
+                                                        <ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />
+                                                        <%--End of Mantis Issue 24428--%>
+                                                    </dxe:ASPxTextBox>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <%--Mantis Issue 24428--%>
+                                        <td>
+                                            <div style="margin-bottom: 5px;">
+                                                <div>
+                                                    <label>Alt Rate </label>
+                                                </div>
+                                                <div>
+                                                    <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
+                                                        <ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />
+                                                    </dxe:ASPxTextBox>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="margin-bottom: 5px;">
+                                                <div>
+                                                </div>
+                                                <div>
+                                                    <%--Rev Sanchita--%>
+                                                    <%--   <label class="checkbox-inline mlableWh">
                                                 <input type="checkbox" id="chkUpdateRow"  />
                                             </label>--%>
-                                             <label class="checkbox-inline mlableWh">
-                                                <input type="checkbox" id="chkUpdateRow"  />
-                                                <span style="margin: 0px 0; display: block">
-                                                    <dxe:ASPxLabel ID="ASPxLabel18" runat="server" Text="Update Row">
-                                                    </dxe:ASPxLabel>
-                                                </span>
-                                            </label>
+                                                    <label class="checkbox-inline mlableWh">
+                                                        <input type="checkbox" id="chkUpdateRow" />
+                                                        <span style="margin: 0px 0; display: block">
+                                                            <dxe:ASPxLabel ID="ASPxLabel18" runat="server" Text="Update Row">
+                                                            </dxe:ASPxLabel>
+                                                        </span>
+                                                    </label>
 
-                                             <%--End of Rev Sanchita--%>
-                                        </div>
-                                    </div>
+                                                    <%--End of Rev Sanchita--%>
+                                                </div>
+                                            </div>
 
-                                    
-                                </td>
-                                <%--End of Mantis Issue 24428--%>
-                                <td style="padding-top: 14px;">
-                                    <dxe:ASPxButton ID="btnMUltiUOM" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary" UseSubmitBehavior="false">
-                                        <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
+
+                                        </td>
+                                        <%--End of Mantis Issue 24428--%>
+                                        <td style="padding-top: 14px;">
+                                            <dxe:ASPxButton ID="btnMUltiUOM" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary" UseSubmitBehavior="false">
+                                                <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
+                                            </dxe:ASPxButton>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <div class="clearfix">
+                                <dxe:ASPxGridView ID="grid_MultiUOM" runat="server" KeyFieldName="AltUomId;AltQuantity" AutoGenerateColumns="False"
+                                    Width="100%" ClientInstanceName="cgrid_MultiUOM" OnCustomCallback="MultiUOM_CustomCallback" OnDataBinding="MultiUOM_DataBinding"
+                                    SettingsPager-Mode="ShowAllRecords" Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="200" SettingsBehavior-AllowSort="false">
+                                    <Columns>
+                                        <%--Mantis Issue 24428--%>
+                                        <dxe:GridViewDataTextColumn Caption="MultiUOMSR No"
+                                            VisibleIndex="0" HeaderStyle-HorizontalAlign="left" Width="0px">
+                                        </dxe:GridViewDataTextColumn>
+                                        <%--End of Mantis Issue 24428--%>
+                                        <dxe:GridViewDataTextColumn Caption="Quantity" FieldName="Quantity"
+                                            VisibleIndex="0" HeaderStyle-HorizontalAlign="Right">
+                                            <PropertiesTextEdit Style-HorizontalAlign="Right"></PropertiesTextEdit>
+                                        </dxe:GridViewDataTextColumn>
+                                        <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM"
+                                            VisibleIndex="1">
+                                        </dxe:GridViewDataTextColumn>
+
+
+                                        <%--Mantis Issue 24428 --%>
+                                        <dxe:GridViewDataTextColumn Caption="Rate" FieldName="BaseRate"
+                                            VisibleIndex="2" HeaderStyle-HorizontalAlign="Right">
+                                            <PropertiesTextEdit Style-HorizontalAlign="Right"></PropertiesTextEdit>
+                                        </dxe:GridViewDataTextColumn>
+                                        <%--End of Mantis Issue 24428 --%>
+
+
+
+                                        <dxe:GridViewDataTextColumn Caption="Alt. UOM" FieldName="AltUOM"
+                                            VisibleIndex="2">
+                                        </dxe:GridViewDataTextColumn>
+
+                                        <dxe:GridViewDataTextColumn Caption="Alt. Quantity" FieldName="AltQuantity"
+                                            VisibleIndex="3" HeaderStyle-HorizontalAlign="Right">
+                                        </dxe:GridViewDataTextColumn>
+
+
+                                        <dxe:GridViewDataTextColumn Caption="" FieldName="UomId" Width="0px"
+                                            VisibleIndex="3">
+                                        </dxe:GridViewDataTextColumn>
+
+                                        <dxe:GridViewDataTextColumn Caption="" FieldName="AltUomId" Width="0px"
+                                            VisibleIndex="5">
+                                        </dxe:GridViewDataTextColumn>
+
+                                        <%--Mantis Issue 24428--%>
+                                        <dxe:GridViewDataTextColumn Caption="Rate" FieldName="AltRate"
+                                            VisibleIndex="7" HeaderStyle-HorizontalAlign="Right">
+                                            <PropertiesTextEdit Style-HorizontalAlign="Right"></PropertiesTextEdit>
+                                        </dxe:GridViewDataTextColumn>
+
+                                        <dxe:GridViewDataTextColumn Caption="Update Row" FieldName="UpdateRow"
+                                            VisibleIndex="7" HeaderStyle-HorizontalAlign="Right">
+                                            <PropertiesTextEdit Style-HorizontalAlign="Right"></PropertiesTextEdit>
+                                        </dxe:GridViewDataTextColumn>
+                                        <%--End of Mantis Issue 24428 --%>
+
+                                        <dxe:GridViewDataTextColumn VisibleIndex="10" Width="80px" Caption="Action">
+                                            <DataItemTemplate>
+                                                <a href="javascript:void(0);" onclick="Delete_MultiUom('<%# Container.KeyValue %>','<%#Eval("SrlNo") %>')" title="Delete">
+                                                    <img src="/assests/images/crs.png" /></a>
+                                                <%--Mantis Issue 24428 --%>
+
+                                                <a href="javascript:void(0);" onclick="Edit_MultiUom('<%# Container.KeyValue %>','<%#Eval("MultiUOMSR") %>')" title="Edit">
+                                                    <img src="/assests/images/Edit.png" /></a>
+                                                <%--End of Mantis Issue 24428 --%>
+                                            </DataItemTemplate>
+                                        </dxe:GridViewDataTextColumn>
+                                    </Columns>
+                                    <ClientSideEvents EndCallback="OnMultiUOMEndCallback" />
+                                    <SettingsPager Visible="false"></SettingsPager>
+                                    <SettingsLoadingPanel Text="Please Wait..." />
+                                </dxe:ASPxGridView>
+                            </div>
+                            <div class="clearfix">
+                                <br />
+                                <div style="align-content: center">
+                                    <dxe:ASPxButton ID="ASPxButton7" ClientInstanceName="cbtnfinalUomSave" Width="50px" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary" UseSubmitBehavior="false">
+                                        <ClientSideEvents Click="function(s, e) {FinalMultiUOM();}" />
                                     </dxe:ASPxButton>
-                                </td>
-                            </tr>
-                        </table>
-
-                    </div>
-                    <div class="clearfix">
-                        <dxe:ASPxGridView ID="grid_MultiUOM" runat="server" KeyFieldName="AltUomId;AltQuantity" AutoGenerateColumns="False"
-                            Width="100%" ClientInstanceName="cgrid_MultiUOM" OnCustomCallback="MultiUOM_CustomCallback" OnDataBinding="MultiUOM_DataBinding"
-                            SettingsPager-Mode="ShowAllRecords" Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="200" SettingsBehavior-AllowSort="false">
-                            <Columns>
-                                 <%--Mantis Issue 24428--%>
-                                  <dxe:GridViewDataTextColumn Caption="MultiUOMSR No" 
-                                    VisibleIndex="0" HeaderStyle-HorizontalAlign="left" Width="0px">
-                                </dxe:GridViewDataTextColumn>
-                                     <%--End of Mantis Issue 24428--%>
-                                <dxe:GridViewDataTextColumn Caption="Quantity" FieldName="Quantity"
-                                    VisibleIndex="0" HeaderStyle-HorizontalAlign="Right">
-                                    <PropertiesTextEdit Style-HorizontalAlign="Right"></PropertiesTextEdit>
-                                </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM"
-                                    VisibleIndex="1">
-                                </dxe:GridViewDataTextColumn>
-
-
-                                     <%--Mantis Issue 24428 --%>
-                                <dxe:GridViewDataTextColumn Caption="Rate" FieldName="BaseRate"
-                                    VisibleIndex="2" HeaderStyle-HorizontalAlign="Right">
-                                    <PropertiesTextEdit Style-HorizontalAlign="Right"></PropertiesTextEdit>
-                                </dxe:GridViewDataTextColumn>
-                                <%--End of Mantis Issue 24428 --%>
-
-
-
-                                <dxe:GridViewDataTextColumn Caption="Alt. UOM" FieldName="AltUOM"
-                                    VisibleIndex="2">
-                                </dxe:GridViewDataTextColumn>
-
-                                <dxe:GridViewDataTextColumn Caption="Alt. Quantity" FieldName="AltQuantity"
-                                    VisibleIndex="3" HeaderStyle-HorizontalAlign="Right">
-                                </dxe:GridViewDataTextColumn>
-
-
-                                <dxe:GridViewDataTextColumn Caption="" FieldName="UomId" Width="0px"
-                                    VisibleIndex="3">
-                                </dxe:GridViewDataTextColumn>
-
-                                <dxe:GridViewDataTextColumn Caption="" FieldName="AltUomId" Width="0px"
-                                    VisibleIndex="5">
-                                </dxe:GridViewDataTextColumn>
-
-                                   <%--Mantis Issue 24428--%>
-                                <dxe:GridViewDataTextColumn Caption="Rate" FieldName="AltRate"
-                                    VisibleIndex="7" HeaderStyle-HorizontalAlign="Right">
-                                    <PropertiesTextEdit Style-HorizontalAlign="Right"></PropertiesTextEdit>
-                                </dxe:GridViewDataTextColumn>
-
-                                <dxe:GridViewDataTextColumn Caption="Update Row" FieldName="UpdateRow"
-                                    VisibleIndex="7" HeaderStyle-HorizontalAlign="Right">
-                                    <PropertiesTextEdit Style-HorizontalAlign="Right"></PropertiesTextEdit>
-                                </dxe:GridViewDataTextColumn>
-                                <%--End of Mantis Issue 24428 --%>
-
-                                <dxe:GridViewDataTextColumn VisibleIndex="10" Width="80px" Caption="Action">
-                                    <DataItemTemplate>
-                                        <a href="javascript:void(0);" onclick="Delete_MultiUom('<%# Container.KeyValue %>','<%#Eval("SrlNo") %>')" title="Delete">
-                                            <img src="/assests/images/crs.png" /></a>
-                                          <%--Mantis Issue 24428 --%>
-
-                                           <a href="javascript:void(0);" onclick="Edit_MultiUom('<%# Container.KeyValue %>','<%#Eval("MultiUOMSR") %>')" title="Edit">
-                                            <img src="/assests/images/Edit.png" /></a>
-                                          <%--End of Mantis Issue 24428 --%>
-                                    </DataItemTemplate>
-                                </dxe:GridViewDataTextColumn>
-                            </Columns>
-                            <ClientSideEvents EndCallback="OnMultiUOMEndCallback" />
-                            <SettingsPager Visible="false"></SettingsPager>
-                            <SettingsLoadingPanel Text="Please Wait..." />
-                        </dxe:ASPxGridView>
-                    </div>
-                    <div class="clearfix">
-                        <br />
-                        <div style="align-content: center">
-                            <dxe:ASPxButton ID="ASPxButton7" ClientInstanceName="cbtnfinalUomSave" Width="50px" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary" UseSubmitBehavior="false">
-                                <ClientSideEvents Click="function(s, e) {FinalMultiUOM();}" />
-                            </dxe:ASPxButton>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </dxe:PopupControlContentControl>
-        </ContentCollection>
-        <HeaderStyle BackColor="LightGray" ForeColor="Black" />
-    </dxe:ASPxPopupControl>
+                    </dxe:PopupControlContentControl>
+                </ContentCollection>
+                <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+            </dxe:ASPxPopupControl>
 
 
-       <asp:SqlDataSource ID="UomSelect" runat="server"
-        SelectCommand="select UOM_ID,UOM_Name from Master_UOM "></asp:SqlDataSource>
+            <asp:SqlDataSource ID="UomSelect" runat="server"
+                SelectCommand="select UOM_ID,UOM_Name from Master_UOM "></asp:SqlDataSource>
 
-    <asp:SqlDataSource ID="AltUomSelect" runat="server"
-        SelectCommand="select UOM_ID,UOM_Name from Master_UOM "></asp:SqlDataSource>
+            <asp:SqlDataSource ID="AltUomSelect" runat="server"
+                SelectCommand="select UOM_ID,UOM_Name from Master_UOM "></asp:SqlDataSource>
 
-                         <%--End of Mantis Issue 24428--%>
+            <%--End of Mantis Issue 24428--%>
             <div class="clear"></div>
             <div class="content reverse horizontal-images clearfix" style="width: 100%; margin-right: 0; padding: 8px 0; height: auto; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; border-radius: 0;">
                 <ul>
@@ -1414,9 +1414,9 @@
 
     <asp:HiddenField ID="hdnAutoReceiptWWSI" runat="server" />
     <%-- Rev  Mantis Issue 24428--%>
-     <asp:HiddenField ID="hddnMultiUOMSelection" runat="server" />
-      <asp:HiddenField ID="hdProductID" runat="server" />
-     <%--  End of Rev  Mantis Issue 24428--%>
+    <asp:HiddenField ID="hddnMultiUOMSelection" runat="server" />
+    <asp:HiddenField ID="hdProductID" runat="server" />
+    <%--  End of Rev  Mantis Issue 24428--%>
 
     <!--Product Modal -->
     <div class="modal fade" id="ProductModel" role="dialog">
@@ -1536,7 +1536,7 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="lblHolder" id="divpopupAvailableStock" style="display: none;">
+                                <div class="lblHolder" id="divAvailableStock" style="display: none;">
                                     <table>
                                         <tbody>
                                             <tr>
@@ -1546,12 +1546,27 @@
                                                 <td>
                                                     <asp:Label ID="lblAvailableStock" runat="server"></asp:Label>
                                                     <asp:Label ID="lblAvailableStockUOM" runat="server"></asp:Label>
-
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                            </li>
+                            <li>
+                              <%--  <div class="lblHolder" id="divuom">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><span><b>UOM Conversion: </b></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <asp:Label ID="lbluomfactor1" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>--%>
                             </li>
                             <li style="display: none;">
                                 <div class="lblHolder">
@@ -1651,13 +1666,38 @@
                                     Quantity
                                 </div>
                                 <div class="Left_Content" style="">
-                                    <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
+                                    <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" ClientSideEvents-GotFocus="QuantityGotFocus" Font-Size="12px" Width="100%" Height="15px">
                                         <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
-                                        <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />
+                                        <ClientSideEvents TextChanged="function(s,e) { ChangePackingByQuantityinjs();}" />
                                     </dxe:ASPxTextBox>
                                     <span id="spntxtQuantity" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                 </div>
                             </div>
+                            <div style="clear: both;"></div>
+                            <%-- Rev 1.0--%>
+                            <div class="col-md-3" id="div_AltQuantity">
+                                <div style="margin-bottom: 5px;">
+                                    Alt. Qty
+                                </div>
+                                <div class="Left_Content" style="">
+                                    <dxe:ASPxTextBox ID="txtPacking" runat="server" ClientInstanceName="CtxtPacking" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
+                                        <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
+                                        <ValidationSettings Display="None"></ValidationSettings>
+                                        <ClientSideEvents TextChanged="function(s,e) { ChangeQuantityByPacking1();}" />
+                                    </dxe:ASPxTextBox>
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="_div_Uom">
+                                <div style="margin-bottom: 5px;">
+                                    Alt. UOM
+                                </div>
+                                <div class="Left_Content" style="">
+                                    <dxe:ASPxComboBox ID="cmbPackingUom1" ClientInstanceName="ccmbPackingUom1" runat="server" SelectedIndex="0"
+                                        ValueType="System.String" Width="100%" EnableSynchronization="True">
+                                    </dxe:ASPxComboBox>
+                                </div>
+                            </div>
+                            <%-- Rev 1.0 End--%>
                             <div class="col-md-3">
                                 <div>
                                 </div>
@@ -1683,28 +1723,31 @@
                                 <dxe:GridViewDataTextColumn Caption="Quantity" FieldName="SalesQuantity"
                                     VisibleIndex="2">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Conversion Foctor" FieldName="ConversionMultiplier" Visible="false"
+                                <dxe:GridViewDataTextColumn Caption="Alt. Qty" FieldName="TotalAltQty"
                                     VisibleIndex="3">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Stock Quantity" FieldName="StkQuantity" Visible="false"
+                                <dxe:GridViewDataTextColumn Caption="Conversion Foctor" FieldName="ConversionMultiplier" Visible="false"
                                     VisibleIndex="4">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Balance Stock" FieldName="BalancrStk" Visible="false"
+                                <dxe:GridViewDataTextColumn Caption="Stock Quantity" FieldName="StkQuantity" Visible="false"
                                     VisibleIndex="5">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Batch Number" FieldName="BatchNo"
+                                <dxe:GridViewDataTextColumn Caption="Balance Stock" FieldName="BalancrStk" Visible="false"
                                     VisibleIndex="6">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Mfg Date" FieldName="MfgDate"
+                                <dxe:GridViewDataTextColumn Caption="Batch Number" FieldName="BatchNo"
                                     VisibleIndex="7">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Expiry Date" FieldName="ExpiryDate"
+                                <dxe:GridViewDataTextColumn Caption="Mfg Date" FieldName="MfgDate"
                                     VisibleIndex="8">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Serial Number" FieldName="SerialNo"
+                                <dxe:GridViewDataTextColumn Caption="Expiry Date" FieldName="ExpiryDate"
                                     VisibleIndex="9">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn VisibleIndex="10" Width="80px">
+                                <dxe:GridViewDataTextColumn Caption="Serial Number" FieldName="SerialNo"
+                                    VisibleIndex="10">
+                                </dxe:GridViewDataTextColumn>
+                                <dxe:GridViewDataTextColumn VisibleIndex="11" Width="80px">
                                     <DataItemTemplate>
                                         <a href="javascript:void(0);" onclick="fn_Edit('<%# Container.KeyValue %>')" title="Delete">
                                             <img src="../../../assests/images/Edit.png" /></a>
@@ -2212,5 +2255,9 @@
     <asp:HiddenField ID="hdnLockToDate" runat="server" />
     <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
     <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
-
+    <%--  Rev 1.0--%>
+    <asp:HiddenField runat="server" ID="hdnpackingqty" />
+    <asp:HiddenField runat="server" ID="hdnuomFactor" />
+    <asp:HiddenField runat="server" ID="hdnisOverideConvertion" />
+    <%--  Rev 1.0 End--%>
 </asp:Content>
