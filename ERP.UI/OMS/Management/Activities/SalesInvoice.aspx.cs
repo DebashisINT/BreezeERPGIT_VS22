@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*********************************************************************************************************
+ * Rev 1.0      Sanchita      V2.0.39       Tolerance feature required in Sales Order Module 
+ *                                          Refer: 25223
+ **********************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -1071,7 +1075,57 @@ namespace ERP.OMS.Management.Activities
             return RateLists;
         }
 
+        // Rev 1.0
+        [WebMethod]
+        public static decimal CheckSOQty(String SODoc_ID, String SODocDetailsID, int SLNo)
+        {
+            int qtyCheck = 1;
 
+            decimal SOQty = 0;
+            decimal SOAltQty = 0;
+            decimal BalanceQuantity = 0;
+            decimal ToleranceQty = 0;
+            decimal ToleranceAltQty = 0;
+            decimal QuantityValue = 0;
+            decimal CurrQty = 0;
+
+            ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesInvoice_Details");
+            proc.AddVarcharPara("@Action", 500, "FetchSOToleranceQty");
+            proc.AddVarcharPara("@Doc_ID", 100, SODoc_ID);
+            proc.AddVarcharPara("@DocDetailsID", 100, SODocDetailsID);
+            DataTable dt = proc.GetTable();
+            
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                SOQty = Convert.ToDecimal(dt.Rows[0]["SOQty"]);
+                SOAltQty = Convert.ToDecimal(dt.Rows[0]["SOAltQty"]);
+                BalanceQuantity = Convert.ToDecimal(dt.Rows[0]["BalanceQuantity"]);
+                ToleranceQty = Convert.ToDecimal(dt.Rows[0]["ToleranceQty"]);
+                ToleranceAltQty = Convert.ToDecimal(dt.Rows[0]["ToleranceAltQty"]);
+
+            }
+
+            if (HttpContext.Current.Session["MultiUOMData"] != null)
+            {
+                DataRow[] MultiUoMresult;
+                dt = (DataTable)HttpContext.Current.Session["MultiUOMData"];
+                MultiUoMresult = dt.Select("SrlNo ='" + SLNo + "' and UpdateRow ='True'");
+
+                if(MultiUoMresult.Length>0)
+                {
+                    QuantityValue = Convert.ToDecimal( MultiUoMresult[0]["Quantity"]);
+                }
+
+            }
+
+            if(QuantityValue > (BalanceQuantity + ToleranceQty))
+            {
+                qtyCheck = 0;
+            }
+
+            return qtyCheck;
+        }
+        // End of Rev 1.0
 
         protected void grid_CustomUnboundColumnData(object sender, ASPxGridViewColumnDataEventArgs e)
         {

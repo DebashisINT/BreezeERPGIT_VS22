@@ -211,6 +211,7 @@ function Edit_MultiUom(keyValue, SrlNo) {
 // End of Mantis Issue 24425, 24428
 
 function FinalMultiUOM() {
+    
     UomLenthCalculation();
     if (Uomlength == 0 || Uomlength < 0) {
 
@@ -221,15 +222,49 @@ function FinalMultiUOM() {
         return;
     }
     else {
-        cPopup_MultiUOM.Hide();
-        // Mantis Issue 24425, 24428
+        // Rev Sanchita
+        var SOQtyCheck = 1;
+        var SODoc_ID = grid.GetEditor('ComponentID').GetValue();
+        var SODocDetailsID = grid.GetEditor('DetailsId').GetValue();
         var SLNo = grid.GetEditor('SrlNo').GetValue();
-        cgrid_MultiUOM.PerformCallback('SetBaseQtyRateInGrid~' + SLNo);
-        // End of Mantis Issue 24425, 24428
-        setTimeout(function () {
-            grid.batchEditApi.StartEdit(globalRowIndex, 11);
-        }, 200)
+
+        $.ajax({
+            type: "POST",
+            url: "SalesInvoice.aspx/CheckSOQty",
+            data: JSON.stringify({ SODoc_ID: SODoc_ID, SODocDetailsID: SODocDetailsID, SLNo: SLNo }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+
+                SOQtyCheck = msg.d;
+
+            }
+        });
+
+        if (SOQtyCheck == 1) {
+        // End of Rev Sanchita
+            cPopup_MultiUOM.Hide();
+            // Mantis Issue 24425, 24428
+            var SLNo = grid.GetEditor('SrlNo').GetValue();
+            cgrid_MultiUOM.PerformCallback('SetBaseQtyRateInGrid~' + SLNo);
+            // End of Mantis Issue 24425, 24428
+            setTimeout(function () {
+                grid.batchEditApi.StartEdit(globalRowIndex, 11);
+            }, 200)
+        // Rev Sanchita
+        }
+        else {
+            var OrdeMsg = 'Balance Quantity of selected Product from tagged document. <br/>Cannot enter quantity more than balance quantity.';
+            jAlert(OrdeMsg, 'Alert Dialog: [Balace Quantity ]', function (r) {
+                grid.batchEditApi.StartEdit(globalRowIndex, 7);
+            });
+            return;
+        }
+        // End of Rev Sanchita
+       
     }
+
 }
 
 // Mantis Issue 24425, 24428
@@ -2991,9 +3026,10 @@ function OnMultiUOMEndCallback(s, e) {
         grid.GetEditor("Amount").SetValue(BaseQty * BaseRate);
         grid.GetEditor("InvoiceDetails_AltQuantity").SetValue(AltQuantity);
         grid.GetEditor("InvoiceDetails_AltUOM").SetValue(AltUOM);
-        // Rev Sanchita
-        SalePriceTextChange(null,null);
-        // End of Rev Sanchita
+
+        SalePriceTextChange(null, null);
+        
+        
     }
 
     if (cgrid_MultiUOM.cpAllDetails == "EditData") {
@@ -3183,7 +3219,27 @@ function QuantityTextChange(s, e) {
                 CurrQty = BalanceQty - (QuantityValue - TotalQty);
             }
 
-            if (CurrQty < 0) {
+            // Rev Sanchita
+            //  if (CurrQty < 0) {
+
+            var SOToleranceQty = 0;
+
+            $.ajax({
+                type: "POST",
+                url: "SalesInvoice.aspx/GetSOToleranceQty",
+                data: JSON.stringify({ SODoc_ID: SODoc_ID, SODocDetailsID: SODocDetailsID }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+
+                    SOToleranceQty = msg.d;
+
+                }
+            });
+            
+            if ((CurrQty + SOToleranceQty) < 0) {
+            // End of Rev Sanchita
                 grid.GetEditor("TotalQty").SetValue(TotalQty);
                 grid.GetEditor("Quantity").SetValue(TotalQty);
                 var OrdeMsg = 'Balance Quantity of selected Product from tagged document. <br/>Cannot enter quantity more than balance quantity.';
