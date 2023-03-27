@@ -1,5 +1,5 @@
 ﻿<%--/*********************************************************************************************************
- * Rev 1.0      Sanchita      V2.0.39       Tolerance feature required in Sales Order Module 
+ * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module 
  *                                          Refer: 25223
  **********************************************************************************************************/--%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderAdd.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
