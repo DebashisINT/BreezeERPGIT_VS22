@@ -1,4 +1,9 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VehicleAddEdit.aspx.cs"
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                24-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+====================================================== Revision History =============================================--%>
+
+<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VehicleAddEdit.aspx.cs"
     Inherits="ERP.OMS.Management.Master.VehicleAddEdit" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -447,6 +452,395 @@
         .divControlClass > span.controlClass {
             margin-top: 8px;
         }
+
+        /*Rev 1.0*/
+
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        #txtInsValidUpto , #ASPxDateEditPolluValidUpto , #ASPxDateAuthLttrValidUpto , #ASPxDateCFValidUpto , #ASPxDateEditTaxValidUpto
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .dxeDisabled_PlasticBlue
+        {
+            z-index: 0 !important;
+        }
+
+        #txtInsValidUpto_B-1 , #ASPxDateEditPolluValidUpto_B-1 , #ASPxDateAuthLttrValidUpto_B-1 , #ASPxDateCFValidUpto_B-1 , #ASPxDateEditTaxValidUpto_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #txtInsValidUpto_B-1 #txtInsValidUpto_B-1Img , #ASPxDateEditPolluValidUpto_B-1 #ASPxDateEditPolluValidUpto_B-1Img,
+        #ASPxDateAuthLttrValidUpto_B-1 #ASPxDateAuthLttrValidUpto_B-1Img , #ASPxDateCFValidUpto_B-1 #ASPxDateCFValidUpto_B-1Img , 
+        #ASPxDateEditTaxValidUpto_B-1 #ASPxDateEditTaxValidUpto_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        /*select.btn
+        {
+            padding-right: 10px !important;
+        }*/
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin-right: 5px;
+        }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
+
+        .modal-dialog
+        {
+            width: 50%;
+        }
+
+        .modal-header
+        {
+            padding: 8px 4px 8px 10px;
+            background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #EmployeeGrid , .TableMain100 #GrdEmployee,
+        .TableMain100 #GrdHolidays , #cityGrid
+        {
+            max-width: 98% !important;
+        }
+
+        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
+        {
+            width: 95% !important;
+        }*/
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 7px;
+        }
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
+
+        .dxeBase_PlasticBlue .dxichCellSys
+        {
+            padding-top: 2px !important;
+        }
+
+        .pBackDiv
+        {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #1111112e;
+        }
+        .HeaderStyle th
+        {
+            padding: 5px;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .pt-2
+        {
+            padding-top: 5px;
+        }
+        .pt-10
+        {
+            padding-top: 10px;
+        }
+
+        .pt-15
+        {
+            padding-top: 15px;
+        }
+
+        .pb-10
+        {
+            padding-bottom: 10px;
+        }
+
+        .pTop10 {
+    padding-top: 20px;
+}
+        .custom-padd
+        {
+            padding-top: 4px;
+    padding-bottom: 10px;
+        }
+
+        input + label
+        {
+                margin-right: 10px;
+        }
+
+        .btn
+        {
+            margin-bottom: 0;
+        }
+
+        .pl-10
+        {
+            padding-left: 10px;
+        }
+
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+
+        .devCheck
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-5
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-10
+        {
+            margin-top: 10px;
+        }
+
+        /*select.btn
+        {
+           position: relative;
+           z-index: 0;
+        }*/
+
+        select
+        {
+            margin-bottom: 0;
+        }
+
+        .form-control
+        {
+            background-color: transparent;
+        }
+
+        select.btn-radius {
+    padding: 4px 8px 6px 11px !important;
+}
+        .mt-30{
+            margin-top: 30px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .btn-radius
+        {
+            padding: 4px 11px !important;
+            border-radius: 4px !important;
+        }
+
+        .crossBtn
+        {
+             right: 30px;
+             top: 25px;
+        }
+
+        .mb-10
+        {
+            margin-bottom: 10px;
+        }
+
+        .btn-cust
+        {
+            background-color: #108b47 !important;
+            color: #fff;
+        }
+
+        .btn-cust:hover
+        {
+            background-color: #097439 !important;
+            color: #fff;
+        }
+
+        .gHesder
+        {
+            background: #1b5ca0 !important;
+            color: #ffffff !important;
+            padding: 6px 0 6px !important;
+        }
+
+        .close
+        {
+             color: #fff;
+             opacity: .5;
+             font-weight: 400;
+        }
+
+        .mt-27
+        {
+            margin-top: 27px !important;
+        }
+
+        .col-md-3
+        {
+            margin-top: 8px;
+        }
+
+        #upldBigLogo , #upldSmallLogo
+        {
+            width: 100%;
+        }
+
+        #DivSetAsDefault
+        {
+            margin-top: 25px;
+        }
+
+        .btn.btn-xs
+        {
+                font-size: 14px !important;
+        }
+
+        /*#ShowFilter
+        {
+            padding-bottom: 3px !important;
+        }*/
+
+        /*.dxeDisabled_PlasticBlue, .aspNetDisabled {
+            opacity: 0.4 !important;
+            color: #ffffff !important;
+        }*/
+                /*.padTopbutton {
+            padding-top: 27px;
+        }*/
+        /*#lookup_project
+        {
+            max-width: 100% !important;
+        }*/
+        /*Rev end 1.0*/
     </style>
 
     <!-- Validations for Vehicle Page-->
@@ -503,8 +897,9 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>
                 <asp:Label ID="lblAddEdit" runat="server"></asp:Label>
@@ -514,7 +909,7 @@
 
     </div>
 
-    <div class="form_main">
+        <div class="form_main">
 
         <%--debjyoti 21-03-2016--%>
         <dxe:ASPxPopupControl ID="ASPXPopupControl" runat="server"
@@ -593,7 +988,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Vehicle Type</label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlVehicleType" runat="server" Width="100%" TabIndex="4">
                                                         <asp:ListItem Value="0">Select</asp:ListItem>
                                                         <asp:ListItem Value="1">HCV</asp:ListItem>
@@ -636,7 +1032,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Ownership</label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlOwnershipType" runat="server" Width="100%" TabIndex="8">
                                                         <asp:ListItem Value="0">Select</asp:ListItem>
                                                         <asp:ListItem Value="1">Owned</asp:ListItem>
@@ -658,7 +1055,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Log Book Status</label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlLogBookStatus" runat="server" Width="100%" TabIndex="10">
                                                         <asp:ListItem Value="0">Yes</asp:ListItem>
                                                         <asp:ListItem Value="1">No</asp:ListItem>
@@ -667,7 +1065,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label>GPS Device Enabled ? </label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlGPSInstallationStatus" runat="server" Width="100%" TabIndex="11">
                                                         <asp:ListItem Value="0">Yes</asp:ListItem>
                                                         <asp:ListItem Value="1">No</asp:ListItem>
@@ -709,7 +1108,8 @@
 
                                             <div class="col-md-3">
                                                 <label>Fleet Card Applied?</label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlFleetCardApplied" runat="server" Width="100%" TabIndex="13">
                                                         <asp:ListItem Value="0">Yes</asp:ListItem>
                                                         <asp:ListItem Value="1" Selected="True">No</asp:ListItem>
@@ -748,18 +1148,22 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <%--Insurance Valid upto--%>
-                                                <div class="labelt">
+                                                <div class="">
                                                     <dxe:ASPxLabel ID="ASPxLabelInsValidUpto" runat="server" Text="Valid upto" TabIndex="18">
                                                     </dxe:ASPxLabel>
 
                                                 </div>
                                                 <%--Insurance Valid upto--%>
-                                                <div>
+                                                <%--Rev 1.0: "for-cust-icon" class add --%>
+                                                <div class="for-cust-icon">
                                                     <dxe:ASPxDateEdit ID="txtInsValidUpto" runat="server" Width="100%" EditFormat="Custom" EditFormatString="dd-MM-yyyy"
                                                         UseMaskBehavior="True" TabIndex="19">
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
                                                     </dxe:ASPxDateEdit>
+                                                    <%--Rev 1.0--%>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <%--Rev end 1.0--%>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -780,17 +1184,21 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <%--Tax Token Valid upto--%>
-                                                <div class="labelt">
+                                                <div class="">
                                                     <dxe:ASPxLabel ID="ASPxLabel1" runat="server" Text="Tax Token Valid upto" TabIndex="22">
                                                     </dxe:ASPxLabel>
                                                 </div>
                                                 <%--Tax Token  Valid upto--%>
-                                                <div>
+                                                <%--Rev 1.0: "for-cust-icon" class add --%>
+                                                <div class="for-cust-icon">
                                                     <dxe:ASPxDateEdit ID="ASPxDateEditTaxValidUpto" runat="server" Width="100%" EditFormat="Custom" EditFormatString="dd-MM-yyyy"
                                                         UseMaskBehavior="True" TabIndex="23">
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
                                                     </dxe:ASPxDateEdit>
+                                                    <%--Rev 1.0--%>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <%--Rev end 1.0--%>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -802,18 +1210,22 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <%--Pollution Valid upto--%>
-                                                <div class="labelt">
+                                                <div class="">
                                                     <dxe:ASPxLabel ID="ASPxLblPollutionValidUpto" runat="server" Text="Pollution Valid upto" TabIndex="25">
                                                     </dxe:ASPxLabel>
 
                                                 </div>
                                                 <%--Pollution Valid upto--%>
-                                                <div>
+                                                <%--Rev 1.0: "for-cust-icon" class add --%>
+                                                <div class="for-cust-icon">
                                                     <dxe:ASPxDateEdit ID="ASPxDateEditPolluValidUpto" runat="server" Width="100%" EditFormat="Custom" EditFormatString="dd-MM-yyyy"
                                                         UseMaskBehavior="True" TabIndex="26">
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
                                                     </dxe:ASPxDateEdit>
+                                                    <%--Rev 1.0--%>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <%--Rev end 1.0--%>
                                                 </div>
                                             </div>
                                             <div class="clear"></div>
@@ -827,7 +1239,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Authorised Letter </label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlAuthLettr" runat="server" Width="100%" TabIndex="28">
                                                         <asp:ListItem Value="0">YES</asp:ListItem>
                                                         <asp:ListItem Value="1">NO</asp:ListItem>
@@ -836,23 +1249,28 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <%--Authorised Letter Valid upto--%>
-                                                <div class="labelt">
+                                                <div class="">
                                                     <dxe:ASPxLabel ID="ASPxLabelAuthLttrValidUpto" runat="server" Text="Authorised Letter Valid upto">
                                                     </dxe:ASPxLabel>
 
                                                 </div>
                                                 <%--Authorised Letter Valid upto--%>
-                                                <div>
+                                                <%--Rev 1.0: "for-cust-icon" class add --%>
+                                                <div class="for-cust-icon">
                                                     <dxe:ASPxDateEdit ID="ASPxDateAuthLttrValidUpto" runat="server" Width="100%" EditFormat="Custom" EditFormatString="dd-MM-yyyy"
                                                         UseMaskBehavior="True" TabIndex="29">
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
                                                     </dxe:ASPxDateEdit>
+                                                    <%--Rev 1.0--%>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <%--Rev end 1.0--%>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Blue Book </label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlBlueBook" runat="server" Width="100%" TabIndex="30">
                                                         <asp:ListItem Value="0">YES</asp:ListItem>
                                                         <asp:ListItem Value="1">NO</asp:ListItem>
@@ -870,23 +1288,28 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <%--CF Valid upto--%>
-                                                <div class="labelt">
+                                                <div class="">
                                                     <dxe:ASPxLabel ID="ASPxLabel4" runat="server" Text="CF Paper Valid upto">
                                                     </dxe:ASPxLabel>
 
                                                 </div>
                                                 <%--CF Valid upto--%>
-                                                <div>
+                                                <%--Rev 1.0: "for-cust-icon" class add --%>
+                                                <div class="for-cust-icon">
                                                     <dxe:ASPxDateEdit ID="ASPxDateCFValidUpto" runat="server" Width="100%" EditFormat="Custom" EditFormatString="dd-MM-yyyy"
                                                         UseMaskBehavior="True" TabIndex="31">
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
                                                     </dxe:ASPxDateEdit>
+                                                    <%--Rev 1.0--%>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <%--Rev end 1.0--%>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Fuel Type</label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlFuelType" runat="server" Width="100%" TabIndex="32">
                                                         <asp:ListItem Value="0">Select</asp:ListItem>
                                                         <asp:ListItem Value="1">Petrol</asp:ListItem>
@@ -906,7 +1329,8 @@
                                             </div>--%>
                                             <div class="col-md-3">
                                                 <label>Is Active?</label>
-                                                <div class="relative">
+                                                <%--Rev 1.0: "simple-select" class add --%>
+                                                <div class="relative simple-select">
                                                     <asp:DropDownList ID="ddlIsActive" runat="server" Width="100%" TabIndex="33">
                                                         <asp:ListItem Value="0">YES</asp:ListItem>
                                                         <asp:ListItem Value="1">NO</asp:ListItem>
@@ -996,7 +1420,7 @@
 
         <asp:HiddenField ID="hdnBranchAllSelected" runat="server" />
     </div>
-
+    </div>
 
     <dxe:ASPxPopupControl ID="BranchSelectPopup" runat="server" Width="700"
         CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="cBranchSelectPopup"
