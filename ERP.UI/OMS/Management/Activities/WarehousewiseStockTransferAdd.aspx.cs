@@ -781,25 +781,27 @@ namespace ERP.OMS.Management.Activities
 
                 string strNewVal = "", strOldVal = "";
                 DataTable tempdt = dt.Copy();
-                foreach (DataRow drr in tempdt.Rows)
-                {
-                    strNewVal = Convert.ToString(drr["WHSTWarehouse_Id"]);
 
-                    if (strNewVal == strOldVal)
-                    {
-                        drr["WarehouseName"] = "";
-                        drr["Quantity"] = "";
-                        drr["BatchNo"] = "";
-                        drr["SalesUOMName"] = "";
-                        drr["SalesQuantity"] = "";
-                        drr["StkUOMName"] = "";
-                        drr["MfgDate"] = "";
-                        drr["ExpiryDate"] = "";
-                    }
+                //Rev 1.0
+                //foreach (DataRow drr in tempdt.Rows)
+                //{
+                //    strNewVal = Convert.ToString(drr["WHSTWarehouse_Id"]);
 
-                    strOldVal = strNewVal;
-                }
+                //    if (strNewVal == strOldVal)
+                //    {
+                //        drr["WarehouseName"] = "";
+                //        drr["Quantity"] = "";
+                //        drr["BatchNo"] = "";
+                //        drr["SalesUOMName"] = "";
+                //        drr["SalesQuantity"] = "";
+                //        drr["StkUOMName"] = "";
+                //        drr["MfgDate"] = "";
+                //        drr["ExpiryDate"] = "";
+                //    }
 
+                //    strOldVal = strNewVal;
+                //}
+                //Rev 1.0 End
                 Session["LoopSalesOrderWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
                 tempdt.Columns.Remove("WHSTWarehouse_Id");
                 return tempdt;

@@ -1113,6 +1113,14 @@ namespace Manufacturing.Controllers
                         obj.Message = Convert.ToString(item["Message"]);
                     }
                 }
+                else
+                {
+                    foreach (DataRow item in datasetobj.Tables[0].Rows)
+                    {
+                        obj.Success = Convert.ToBoolean(item["Success"]);
+                        obj.Message = Convert.ToString(item["Message"]);
+                    }
+                }
             }
             catch { }
             return Json(obj);

@@ -1,4 +1,10 @@
-﻿﻿using BusinessLogicLayer;
+﻿#region//====================================================Revision History=========================================================================
+// 1.0   v2.0.37	Priti	27-03-2023	0025690:Alt Qty is not updating as per the main qty while entering Purchase GRN
+// 2.0   v2.0.37	Priti	27-03-2023	0025723:There is multiple rows inserted in warehouse tables while making stock batch wise in same warehouse in Purchase GRN
+
+#endregion//====================================================End Revision History=====================================================================
+
+using BusinessLogicLayer;
 using BusinessLogicLayer.EmailDetails;
 using DataAccessLayer;
 using DevExpress.Web;
@@ -1056,25 +1062,26 @@ namespace ERP.OMS.Management.Activities
 
                     string strNewVal = "", strOldVal = "", strProductType = "";
                     tempdt = dt.Copy();
-                    foreach (DataRow drr in tempdt.Rows)
-                    {
-                        strNewVal = Convert.ToString(drr["QuoteWarehouse_Id"]);
-                        strProductType = Convert.ToString(drr["ProductType"]);
+                    //Rev 2.0
+                    //foreach (DataRow drr in tempdt.Rows)
+                    //{
+                    //    strNewVal = Convert.ToString(drr["QuoteWarehouse_Id"]);
+                    //    strProductType = Convert.ToString(drr["ProductType"]);
 
-                        if (strNewVal == strOldVal)
-                        {
-                            drr["WarehouseName"] = "";
-                            drr["TotalQuantity"] = "0";
-                            //drr["BatchNo"] = "";
-                            drr["ViewBatch"] = "";
-                            drr["SalesQuantity"] = "";
-                            drr["ViewMfgDate"] = "";
-                            drr["ViewExpiryDate"] = "";
-                        }
+                    //    if (strNewVal == strOldVal)
+                    //    {
+                    //        drr["WarehouseName"] = "";
+                    //        drr["TotalQuantity"] = "0";
+                    //        //drr["BatchNo"] = "";
+                    //        drr["ViewBatch"] = "";
+                    //        drr["SalesQuantity"] = "";
+                    //        drr["ViewMfgDate"] = "";
+                    //        drr["ViewExpiryDate"] = "";
+                    //    }
 
-                        strOldVal = strNewVal;
-                    }
-
+                    //    strOldVal = strNewVal;
+                    //}
+                    //Rev 2.0 End
                     tempdt.Columns.Remove("QuoteWarehouse_Id");
                     tempdt.Columns.Remove("ProductType");
 
@@ -6544,7 +6551,10 @@ namespace ERP.OMS.Management.Activities
                                LoopID = Convert.ToString(dr["LoopID"]),
                                Status = Convert.ToString(dr["Status"]),
                                AltQty = Convert.ToString(dr["AltQty"]),
-                               AltUOM = Convert.ToString(dr["AltUOM"])
+                               AltUOM = Convert.ToString(dr["AltUOM"]),
+                               //rev 1.0
+                               AltUOMName = Convert.ToString(dr["AltUOMName"])
+                               //rev 1.0 end
                            }).ToList();
 
             return ProductList;
@@ -6795,6 +6805,10 @@ namespace ERP.OMS.Management.Activities
         public string Status { get; set; }
         public string AltQty { get; set; }
         public string AltUOM { get; set; }
+
+        //Rev 1.0
+        public string AltUOMName { get; set; }
+        //Rev 1.0 End
     }
 
     public class ProductStockDetailsEdit
