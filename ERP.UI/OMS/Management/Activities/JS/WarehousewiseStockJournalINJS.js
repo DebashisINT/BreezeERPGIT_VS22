@@ -1,6 +1,6 @@
 ﻿//====================================================Revision History=========================================================================
 // 1.0  Priti   V2.0.36  10-02-2023   0025652:Alternate qty is not calculating while making Warehouse wise Stock In entry
-
+// 2.0  Priti   V2.0.37  23-03-2023   0025743:Error while saving Warehouse wise Stock IN
 //====================================================End Revision History=====================================================================
 
 var globalRowIndex;
@@ -3476,20 +3476,25 @@ function SaveButtonClick() {
 
             }
             else {
-                if (aarrSWH.length > 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: "WarehousewiseStockTransferAdd.aspx/SetSessionPacking",
-                        data: "{'list':'" + JSON.stringify(aarrSWH) + "'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        async: false,
-                        success: function (msg) {
-                            //grid.UpdateEdit();
-                        }
-                    });
 
-                }
+                //Rev 2.0
+                if ($("#hddnMultiUOMSelection").val() == "1") {
+                //Rev 2.0 End
+                    if (aarrSWH.length > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "WarehousewiseStockTransferAdd.aspx/SetSessionPacking",
+                            data: "{'list':'" + JSON.stringify(aarrSWH) + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (msg) {
+                                //grid.UpdateEdit();
+                            }
+                        });
+
+                    }
+               
                 if (aarrDWH.length > 0) {
                     $.ajax({
                         type: "POST",
@@ -3502,7 +3507,10 @@ function SaveButtonClick() {
                             // grid.UpdateEdit();
                         }
                     });
+                    }
+                //Rev 2.0 
                 }
+                //Rev 2.0 End
                 var JsonProductStock = JSON.stringify(StockOfProduct);
                 GetObjectID('hdnJsonProductStock').value = JsonProductStock;
                 gridDEstination.UpdateEdit();
@@ -3535,34 +3543,40 @@ function SaveExitButtonClick() {
     if (ValidateEntry()) {
         if (!gridDEstination.InCallback()) {
             if (issavePacking == 1) {
-                if (aarrSWH.length > 0) {
+                //Rev 2.0
+                if ($("#hddnMultiUOMSelection").val() == "1") {
+                //Rev 2.0 End
+                    if (aarrSWH.length > 0) {
 
-                    $.ajax({
-                        type: "POST",
-                        url: "WarehousewiseStockJournalAdd.aspx/SetSessionPacking",
-                        data: "{'list':'" + JSON.stringify(aarrSWH) + "'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (msg) {
-                            // grid.UpdateEdit();
-                        }
-                    });
+                        $.ajax({
+                            type: "POST",
+                            url: "WarehousewiseStockJournalAdd.aspx/SetSessionPacking",
+                            data: "{'list':'" + JSON.stringify(aarrSWH) + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                // grid.UpdateEdit();
+                            }
+                        });
 
+                    }
+                    if (aarrDWH.length > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "WarehousewiseStockJournalAdd.aspx/SetSessionPackingDWH",
+                            data: "{'list':'" + JSON.stringify(aarrDWH) + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (msg) {
+                                // grid.UpdateEdit();
+                            }
+                        });
+
+                    }
+                 //Rev 2.0 
                 }
-                if (aarrDWH.length > 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: "WarehousewiseStockJournalAdd.aspx/SetSessionPackingDWH",
-                        data: "{'list':'" + JSON.stringify(aarrDWH) + "'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        async: false,
-                        success: function (msg) {
-                            // grid.UpdateEdit();
-                        }
-                    });
-
-                }
+                 //Rev 2.0 End
                 var JsonProductStock = JSON.stringify(StockOfProduct);
                 GetObjectID('hdnJsonProductStock').value = JsonProductStock;
                 gridDEstination.batchEditApi.StartEdit(0, 2)
@@ -3571,34 +3585,40 @@ function SaveExitButtonClick() {
 
             }
             else {
-                if (aarr.length > 0) {
+                //Rev 2.0 
+                if ($("#hddnMultiUOMSelection").val() == "1") {
+                //Rev 2.0 End
+                    if (aarr.length > 0) {
 
-                    $.ajax({
-                        type: "POST",
-                        url: "WarehousewiseStockJournalAdd.aspx/SetSessionPacking",
-                        data: "{'list':'" + JSON.stringify(aarr) + "'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (msg) {
-                            // grid.UpdateEdit();
-                        }
-                    });
+                        $.ajax({
+                            type: "POST",
+                            url: "WarehousewiseStockJournalAdd.aspx/SetSessionPacking",
+                            data: "{'list':'" + JSON.stringify(aarr) + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                // grid.UpdateEdit();
+                            }
+                        });
 
+                    }
+                    if (aarrDWH.length > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "WarehousewiseStockJournalAdd.aspx/SetSessionPackingDWH",
+                            data: "{'list':'" + JSON.stringify(aarrDWH) + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (msg) {
+                                // grid.UpdateEdit();
+                            }
+                        });
+
+                    }
+                //Rev 2.0 
                 }
-                if (aarrDWH.length > 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: "WarehousewiseStockJournalAdd.aspx/SetSessionPackingDWH",
-                        data: "{'list':'" + JSON.stringify(aarrDWH) + "'}",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        async: false,
-                        success: function (msg) {
-                            // grid.UpdateEdit();
-                        }
-                    });
-
-                }
+                //Rev 2.0 End
                 var JsonProductStock = JSON.stringify(StockOfProduct);
                 GetObjectID('hdnJsonProductStock').value = JsonProductStock;
                 gridDEstination.batchEditApi.StartEdit(0, 2)

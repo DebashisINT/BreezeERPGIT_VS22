@@ -707,25 +707,26 @@ namespace ERP.OMS.Management.Activities
 
                     string strNewVal = "", strOldVal = "", strProductType = "";
                     tempdt = dt.Copy();
-                    foreach (DataRow drr in tempdt.Rows)
-                    {
-                        strNewVal = Convert.ToString(drr["QuoteWarehouse_Id"]);
-                        strProductType = Convert.ToString(drr["ProductType"]);
+                    //rev 1.0
+                    //foreach (DataRow drr in tempdt.Rows)
+                    //{
+                    //    strNewVal = Convert.ToString(drr["QuoteWarehouse_Id"]);
+                    //    strProductType = Convert.ToString(drr["ProductType"]);
 
-                        if (strNewVal == strOldVal)
-                        {
-                            drr["WarehouseName"] = "";
-                            drr["TotalQuantity"] = "0";
-                            //drr["BatchNo"] = "";
-                            drr["ViewBatch"] = "";
-                            drr["SalesQuantity"] = "";
-                            drr["ViewMfgDate"] = "";
-                            drr["ViewExpiryDate"] = "";
-                        }
+                    //    if (strNewVal == strOldVal)
+                    //    {
+                    //        drr["WarehouseName"] = "";
+                    //        drr["TotalQuantity"] = "0";
+                    //        //drr["BatchNo"] = "";
+                    //        drr["ViewBatch"] = "";
+                    //        drr["SalesQuantity"] = "";
+                    //        drr["ViewMfgDate"] = "";
+                    //        drr["ViewExpiryDate"] = "";
+                    //    }
 
-                        strOldVal = strNewVal;
-                    }
-
+                    //    strOldVal = strNewVal;
+                    //}
+                    //rev 1.0 end
                     tempdt.Columns.Remove("QuoteWarehouse_Id");
                     tempdt.Columns.Remove("ProductType");
 
@@ -2314,7 +2315,7 @@ namespace ERP.OMS.Management.Activities
                 DataTable MultiUOM = (DataTable)Session["MultiUOMData"];
                 // Mantis Issue 24428
                 // MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "DetailsId");
-                MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
+                MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQty", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
                 // End of Mantis Issue 24428
             }
             else
@@ -7171,7 +7172,7 @@ namespace ERP.OMS.Management.Activities
         {
             DataTable ds = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("Prc_WarehousewiseStockJournal_details");
-            proc.AddVarcharPara("@Action", 500, "MultiUOMWHTransferOUTDetails");
+            proc.AddVarcharPara("@Action", 500, "MultiUOMWHTransferINDetails");
             proc.AddVarcharPara("@AdjId", 500, Convert.ToString(AdjId));
             ds = proc.GetTable();
             return ds;
