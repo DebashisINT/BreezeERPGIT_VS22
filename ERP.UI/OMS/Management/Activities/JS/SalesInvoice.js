@@ -1,6 +1,7 @@
-﻿
-
-
+﻿/*********************************************************************************************************
+ * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module 
+ *                                          Refer: 25223
+ **********************************************************************************************************/
 
 $(document).ready(function () {
     var mode = $('#hdAddOrEdit').val();
@@ -222,7 +223,7 @@ function FinalMultiUOM() {
         return;
     }
     else {
-        // Rev Sanchita
+        // Rev 1.0
         var SOQtyCheck = 1;
         var SODoc_ID = grid.GetEditor('ComponentID').GetValue();
         var SODocDetailsID = grid.GetEditor('DetailsId').GetValue();
@@ -243,7 +244,7 @@ function FinalMultiUOM() {
         });
 
         if (SOQtyCheck == 1) {
-        // End of Rev Sanchita
+        // End of Rev 1.0
             cPopup_MultiUOM.Hide();
             // Mantis Issue 24425, 24428
             var SLNo = grid.GetEditor('SrlNo').GetValue();
@@ -252,7 +253,7 @@ function FinalMultiUOM() {
             setTimeout(function () {
                 grid.batchEditApi.StartEdit(globalRowIndex, 11);
             }, 200)
-        // Rev Sanchita
+        // Rev 1.0
         }
         else {
             var OrdeMsg = 'Balance Quantity of selected Product from tagged document. <br/>Cannot enter quantity more than balance quantity.';
@@ -261,7 +262,7 @@ function FinalMultiUOM() {
             });
             return;
         }
-        // End of Rev Sanchita
+        // End of Rev 1.0
        
     }
 
@@ -3219,7 +3220,7 @@ function QuantityTextChange(s, e) {
                 CurrQty = BalanceQty - (QuantityValue - TotalQty);
             }
 
-            // Rev Sanchita
+            // Rev 1.0
             //  if (CurrQty < 0) {
 
             var SOToleranceQty = 0;
@@ -3239,7 +3240,7 @@ function QuantityTextChange(s, e) {
             });
             
             if ((CurrQty + SOToleranceQty) < 0) {
-            // End of Rev Sanchita
+            // End of Rev 1.0
                 grid.GetEditor("TotalQty").SetValue(TotalQty);
                 grid.GetEditor("Quantity").SetValue(TotalQty);
                 var OrdeMsg = 'Balance Quantity of selected Product from tagged document. <br/>Cannot enter quantity more than balance quantity.';
