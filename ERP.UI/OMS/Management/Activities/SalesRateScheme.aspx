@@ -331,6 +331,7 @@
         .form-control
         {
             background-color: transparent;
+            border-radius: 4px;
         }
 
         select.btn-radius {
@@ -422,6 +423,17 @@
         .btn.btn-xs
         {
                 font-size: 14px !important;
+        }
+
+        .dxeTextBoxSys, .dxeButtonEditSys
+        {
+                width: 100%;
+        }
+
+        .simple-select::after
+        {
+            top: 34px;
+            right: 13px;
         }
 
         /*#ShowFilter
@@ -1290,12 +1302,12 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <%--Rev 1.0: "outer-div-main" class add --%>
+    <%--Rev 2.0: "outer-div-main" class add --%>
     <div class="outer-div-main">
         <div class="panel-heading">
         <div class="panel-title clearfix">
-            <h3 class="pull-left">
-                <label id="lblheading">Sales Rate Scheme</label>
+            <h3 class="pull-left">Sales Rate Scheme
+                <%--<label id="lblheading">Sales Rate Scheme</label>--%>
             </h3>
         </div>
         <div id="div1" runat="server" class="crossBtn" style="display: none; margin-left: 50px;"><a href="#" onclick="cancel()"><i class="fa fa-times"></i></a></div>
@@ -1313,21 +1325,21 @@
         </div>
         <div class="clear"></div>
         <div id="entry">
-            <div class="col-md-2 lblmTop8">
+            <div class="col-md-2 lblmTop8 mb-10">
                 <label>Scheme Code <span class="red">*</span></label>
                 <dxe:ASPxTextBox ID="txtSchemeCode" ClientInstanceName="ctxtSchemeCode" runat="server" TabIndex="1" MaxLength="50">
                 </dxe:ASPxTextBox>
                 <span id="MandatorysSchemeCode" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
                     title="Mandatory"></span>
             </div>
-            <div class="col-md-2 lblmTop8">
+            <div class="col-md-2 lblmTop8 mb-10">
                 <label>Scheme Name <span class="red">*</span></label>
                 <dxe:ASPxTextBox ID="txtScheme" ClientInstanceName="ctxtScheme" runat="server" TabIndex="2" MaxLength="250">
                 </dxe:ASPxTextBox>
                 <span id="MandatorysScheme" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
                     title="Mandatory"></span>
             </div>
-            <div class="col-md-2 lblmTop8">
+            <div class="col-md-2 lblmTop8 mb-10 simple-select">
                 <label>Basis <span class="red">*</span></label>
                 <asp:DropDownList ID="ddlType" runat="server" CssClass="form-control" TabIndex="3" OnChange="ddlType_Change();">
                     <asp:ListItem Value="0">Select</asp:ListItem>
@@ -1336,8 +1348,8 @@
                     <asp:ListItem Value="3">Dynamic Rate</asp:ListItem>
                 </asp:DropDownList>
             </div>
-
-            <div class="col-md-2 lblmTop8">
+            <%--Rev 2.0: "simple-select" class add --%>
+            <div class="col-md-2 lblmTop8 simple-select">
                 <label>Method </label>
                 <asp:DropDownList ID="ddlBasis" runat="server" CssClass="form-control" TabIndex="3" OnChange="ddlBasis_Change();">
                     <asp:ListItem Value="0">Select</asp:ListItem>
@@ -1554,7 +1566,7 @@
             <%--</div>--%>
             <%--<div class="clearfix"></div>--%>
             <div style="padding: 15px 10px 10px 0px;">
-                <dxe:ASPxButton ID="btnSaveRecords" TabIndex="10" ClientInstanceName="cbtnSaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave" CssClass="btn btn-primary" UseSubmitBehavior="False">
+                <dxe:ASPxButton ID="btnSaveRecords" TabIndex="10" ClientInstanceName="cbtnSaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave" CssClass="btn btn-success" UseSubmitBehavior="False">
                     <ClientSideEvents Click="function(s, e) {SaveButtonClick('Insert');}" />
                 </dxe:ASPxButton>
                 <dxe:ASPxButton ID="btncancel" TabIndex="8" ClientInstanceName="cbtncancel" runat="server" AutoPostBack="False" Text="C&#818;ancel" CssClass="btn btn-primary" UseSubmitBehavior="False">
