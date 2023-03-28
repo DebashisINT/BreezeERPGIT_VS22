@@ -3,6 +3,7 @@
 // 2.0  Priti   V2.0.36    01-02-2023  0025634:Available Stock to be calculated in MRP product Wise
 // 3.0  Priti   V2.0.37    28-02-2023  0025703:Avl Stk, Phy Stk, Indent Qty & Pur Qty to be implemented in Preview Line Items in MRP
 // 4.0  Priti   V2.0.37    13-03-2023  save Avl Stk in table
+// 5.0  Priti   V2.0.37    28-03-2023  Hide save button in Edit mode
 //====================================================End Revision History=====================================================================
 
 using BusinessLogicLayer;
@@ -98,7 +99,10 @@ namespace Manufacturing.Controllers
                     }
                     else if (ActionType == "EDIT")
                     {
-                            TempData["Edit"] = ActionType;
+                        //Rev 5.0
+                        TempData["IsView"] = 1;
+                        //Rev 5.0 End
+                        TempData["Edit"] = ActionType;
                             ViewBag.View = Convert.ToString(TempData["Edit"]);
                      }                  
 
@@ -1112,15 +1116,7 @@ namespace Manufacturing.Controllers
                         obj.Success = Convert.ToBoolean(item["Success"]);
                         obj.Message = Convert.ToString(item["Message"]);
                     }
-                }
-                else
-                {
-                    foreach (DataRow item in datasetobj.Tables[0].Rows)
-                    {
-                        obj.Success = Convert.ToBoolean(item["Success"]);
-                        obj.Message = Convert.ToString(item["Message"]);
-                    }
-                }
+                }                
             }
             catch { }
             return Json(obj);

@@ -802,7 +802,7 @@ namespace ERP.OMS.Management.Activities
                 //    strOldVal = strNewVal;
                 //}
                 //Rev 1.0 End
-                Session["LoopSalesOrderWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
+               // Session["LoopSalesOrderWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
                 tempdt.Columns.Remove("WHSTWarehouse_Id");
                 return tempdt;
             }
