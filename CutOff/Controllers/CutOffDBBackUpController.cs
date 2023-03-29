@@ -108,9 +108,10 @@ namespace CutOff.Controllers.CutOff
                 // Rev Sanchita
                 //cmd = new SqlCommand("BACKUP DATABASE YEAREND_TEST TO DISK='" + path + "\\" + _dbname + ".bak'", _conn);
                 cmd = new SqlCommand("BACKUP DATABASE " + _dbname + " TO DISK='" + path + "\\" + _dbname + ".bak'", _conn);
-                    // End of Rev Sanchita
-                    //Rev work close 02.06.2022
-                    cmd.ExecuteNonQuery();
+                cmd.CommandTimeout = 9000000;
+                // End of Rev Sanchita
+                //Rev work close 02.06.2022
+                cmd.ExecuteNonQuery();
 
                 // Rev sanchita
                 //response_msg = "Backup of Database " + _dbname + ".bak Created Successfully in " + path;
@@ -250,6 +251,7 @@ namespace CutOff.Controllers.CutOff
                 // End of Rev Sanchita
                 SqlCommand cmd = new SqlCommand(sqlquery, con);
                 cmd.CommandType = CommandType.Text;
+                cmd.CommandTimeout = 9000000;
                 int iRows = cmd.ExecuteNonQuery();
                 con.Close();
                 response_msg = "1";
@@ -367,6 +369,13 @@ namespace CutOff.Controllers.CutOff
             // Rev Sanchita
             //string path = "C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + fileNameWithoutExtFrom + ".bak";
 
+            string SQLServerDataLocation = "";
+            DataTable dtLoc = obj.GetSQLDataLocation();
+            if (dtLoc.Rows.Count > 0)
+            {
+                SQLServerDataLocation = dtLoc.Rows[0]["LOC"].ToString();
+            }
+
             string path = Server.MapPath("~/CommonFolder/") + fileNameWithoutExtFrom + ".bak";
             // End of Rev Sanchita
 
@@ -376,14 +385,18 @@ namespace CutOff.Controllers.CutOff
             //                          "WITH REPLACE, RECOVERY, " +
             //                          "MOVE N'" + ROWS + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + _BackupName + ".mdf', " +
             //                          "MOVE N'" + LOG + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Backup\\" + _BackupName + ".ldf';  ";
+            //string sqlQuery = "RESTORE DATABASE " + _BackupName + " FROM DISK = '" + path + "' " +
+            //                          "WITH REPLACE, RECOVERY, " +
+            //                          "MOVE N'" + ROWS + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Data\\" + _BackupName + ".mdf', " +
+            //                          "MOVE N'" + LOG + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Data\\" + _BackupName + ".ldf';  ";
             string sqlQuery = "RESTORE DATABASE " + _BackupName + " FROM DISK = '" + path + "' " +
                                       "WITH REPLACE, RECOVERY, " +
-                                      "MOVE N'" + ROWS + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Data\\" + _BackupName + ".mdf', " +
-                                      "MOVE N'" + LOG + "' TO 'C:\\Program Files\\Microsoft SQL Server\\MSSQL14.SQLEXPRESS\\MSSQL\\Data\\" + _BackupName + ".ldf';  ";
-            
+                                      "MOVE N'" + ROWS + "' TO '"+ SQLServerDataLocation + _BackupName + ".mdf', " +
+                                      "MOVE N'" + LOG + "' TO '"+ SQLServerDataLocation + _BackupName + ".ldf';  ";
             // End of Rev Sanchita
             SqlCommand sqlCommand = new SqlCommand(sqlQuery, con);
             sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.CommandTimeout = 9000000;
             int iRows = sqlCommand.ExecuteNonQuery();
             con.Close();
             

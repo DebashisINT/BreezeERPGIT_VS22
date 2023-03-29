@@ -1,4 +1,7 @@
-﻿using System;
+﻿/**************************************************************************************************************************
+ *  1.0     29/03/2023      V2.0.37     Sanchita        Indiamart API upgradation for Peekay. Refer: 25758
+ * ***********************************************************************************************************************/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +40,9 @@ namespace CRM.Controllers
             string mobileno = "";
             string Action = "";
             long userid = Convert.ToInt64(Session["userid"]);
+            // Rev 1.0
+            int TotalCount = 0;
+            // End of Rev 1.0
 
             List<IndiamartModelErrorClass> idnMart = new List<IndiamartModelErrorClass>();
 
@@ -116,83 +122,147 @@ namespace CRM.Controllers
 
                                 JavaScriptSerializer ser = new JavaScriptSerializer();
 
-                                List<IndiamartModelClass> indiamartlist = ser.Deserialize<List<IndiamartModelClass>>(json);
-                                if (indiamartlist.Count > 0)
-                                {
-                                    Action = "Success";
-                                    objErr.jsonError = "Success";
-                                    objErr.ErrorMessage = Action;
-                                    omodel = new List<IndiamartModelClass>();
-                                    foreach (var s2 in indiamartlist)
+                                    // Rev 1.0
+                                    //List<IndiamartModelClass> indiamartlist = ser.Deserialize<List<IndiamartModelClass>>(json);
+                                    //if (indiamartlist.Count > 0)
+                                    //{
+                                    //    Action = "Success";
+                                    //    objErr.jsonError = "Success";
+                                    //    objErr.ErrorMessage = Action;
+                                    //    omodel = new List<IndiamartModelClass>();
+                                    //    foreach (var s2 in indiamartlist)
+                                    //    {
+                                    //        string rand = GenerateRandomNo();
+                                    //        omodel.Add(new IndiamartModelClass()
+                                    //        {
+                                    //            Indiamart_Id = "Indiamart" + "_" + DateTime.Now.Ticks.ToString() + "_" + rand + "_" + Guid.NewGuid(),
+                                    //            Rn = s2.Rn,
+                                    //            QUERY_ID = s2.QUERY_ID,
+                                    //            QTYPE = s2.QTYPE,
+                                    //            SENDERNAME = s2.SENDERNAME,
+                                    //            SENDEREMAIL = s2.SENDEREMAIL,
+                                    //            SUBJECT = s2.SUBJECT,
+                                    //            DATE_RE = s2.DATE_RE,
+                                    //            DATE_R = s2.DATE_R,
+                                    //            DATE_TIME_RE = s2.DATE_TIME_RE,
+                                    //            GLUSR_USR_COMPANYNAME = s2.GLUSR_USR_COMPANYNAME,
+                                    //            READ_STATUS = s2.READ_STATUS,
+                                    //            SENDER_GLUSR_USR_ID = s2.SENDER_GLUSR_USR_ID,
+                                    //            MOB = s2.MOB,
+                                    //            COUNTRY_FLAG = s2.COUNTRY_FLAG,
+                                    //            QUERY_MODID = s2.QUERY_MODID,
+                                    //            LOG_TIME = s2.LOG_TIME,
+                                    //            QUERY_MODREFID = s2.QUERY_MODREFID,
+                                    //            DIR_QUERY_MODREF_TYPE = s2.DIR_QUERY_MODREF_TYPE,
+                                    //            ORG_SENDER_GLUSR_ID = s2.ORG_SENDER_GLUSR_ID,
+                                    //            ENQ_MESSAGE = s2.ENQ_MESSAGE,
+                                    //            ENQ_ADDRESS = s2.ENQ_ADDRESS,
+                                    //            ENQ_CALL_DURATION = s2.ENQ_CALL_DURATION,
+                                    //            ENQ_RECEIVER_MOB = s2.ENQ_RECEIVER_MOB,
+                                    //            ENQ_CITY = s2.ENQ_CITY,
+                                    //            ENQ_STATE = s2.ENQ_STATE,
+                                    //            PRODUCT_NAME = s2.PRODUCT_NAME,
+                                    //            COUNTRY_ISO = s2.COUNTRY_ISO,
+                                    //            EMAIL_ALT = s2.EMAIL_ALT,
+                                    //            MOBILE_ALT = s2.MOBILE_ALT,
+                                    //            PHONE = s2.PHONE,
+                                    //            PHONE_ALT = s2.PHONE_ALT,
+                                    //            IM_MEMBER_SINCE = s2.IM_MEMBER_SINCE,
+                                    //            TOTAL_COUNT = s2.TOTAL_COUNT
+
+
+                                    //        });
+
+                                    //    }
+                                    //    objErr.Indiamart = omodel;
+
+                                    //}
+                                    //else
+                                    //{
+                                    //    Action = "Error";
+                                    //    strerrormessage = json.ToString();
+                                    //    objErr.ErrorMessage = Action;
+                                    //    objErr.jsonError = strerrormessage;
+                                    //    error tracking
+                                    //    SqlCommand sqlcmderror = new SqlCommand("Proc_Import_Error_Log", sqlcon);
+                                    //    DataTable dtError = new DataTable();
+                                    //    sqlcmderror.Parameters.Add("@Type", data);
+                                    //    sqlcmderror.Parameters.Add("@Name", data);
+                                    //    sqlcmderror.Parameters.Add("@Message", "Data Not Found");
+                                    //    sqlcmderror.Parameters.Add("@DateToSearch", startdate);
+                                    //    sqlcmderror.Parameters.Add("@CreatedBy", userid);
+                                    //    sqlcmderror.Parameters.Add("@CreatedDate", DateTime.Now);
+                                    //    sqlcmderror.CommandType = CommandType.StoredProcedure;
+                                    //    SqlDataAdapter daerror = new SqlDataAdapter(sqlcmderror);
+                                    //    daerror.Fill(dtError);
+                                    //    end error tracking
+                                    //    return Json("Data Not Found", JsonRequestBehavior.AllowGet);
+
+                                    //}
+                                    IndiamartModelClassKey indiamartListKey = ser.Deserialize<IndiamartModelClassKey>(json);
+
+                                    TotalCount = indiamartListKey.RESPONSE.Count;
+
+                                    if (indiamartListKey.STATUS == "SUCCESS" && TotalCount > 1)
                                     {
-                                        string rand = GenerateRandomNo();
-                                        omodel.Add(new IndiamartModelClass()
+                                        Action = "Success";
+                                        objErr.jsonError = "Success";
+                                        objErr.ErrorMessage = Action;
+                                        omodel = new List<IndiamartModelClass>();
+                                        foreach (var s2 in indiamartListKey.RESPONSE)
                                         {
-                                            Indiamart_Id = "Indiamart" + "_" + DateTime.Now.Ticks.ToString() + "_" + rand + "_" + Guid.NewGuid(),
-                                            Rn = s2.Rn,
-                                            QUERY_ID = s2.QUERY_ID,
-                                            QTYPE = s2.QTYPE,
-                                            SENDERNAME = s2.SENDERNAME,
-                                            SENDEREMAIL = s2.SENDEREMAIL,
-                                            SUBJECT = s2.SUBJECT,
-                                            DATE_RE = s2.DATE_RE,
-                                            DATE_R = s2.DATE_R,
-                                            DATE_TIME_RE = s2.DATE_TIME_RE,
-                                            GLUSR_USR_COMPANYNAME = s2.GLUSR_USR_COMPANYNAME,
-                                            READ_STATUS = s2.READ_STATUS,
-                                            SENDER_GLUSR_USR_ID = s2.SENDER_GLUSR_USR_ID,
-                                            MOB = s2.MOB,
-                                            COUNTRY_FLAG = s2.COUNTRY_FLAG,
-                                            QUERY_MODID = s2.QUERY_MODID,
-                                            LOG_TIME = s2.LOG_TIME,
-                                            QUERY_MODREFID = s2.QUERY_MODREFID,
-                                            DIR_QUERY_MODREF_TYPE = s2.DIR_QUERY_MODREF_TYPE,
-                                            ORG_SENDER_GLUSR_ID = s2.ORG_SENDER_GLUSR_ID,
-                                            ENQ_MESSAGE = s2.ENQ_MESSAGE,
-                                            ENQ_ADDRESS = s2.ENQ_ADDRESS,
-                                            ENQ_CALL_DURATION = s2.ENQ_CALL_DURATION,
-                                            ENQ_RECEIVER_MOB = s2.ENQ_RECEIVER_MOB,
-                                            ENQ_CITY = s2.ENQ_CITY,
-                                            ENQ_STATE = s2.ENQ_STATE,
-                                            PRODUCT_NAME = s2.PRODUCT_NAME,
-                                            COUNTRY_ISO = s2.COUNTRY_ISO,
-                                            EMAIL_ALT = s2.EMAIL_ALT,
-                                            MOBILE_ALT = s2.MOBILE_ALT,
-                                            PHONE = s2.PHONE,
-                                            PHONE_ALT = s2.PHONE_ALT,
-                                            IM_MEMBER_SINCE = s2.IM_MEMBER_SINCE,
-                                            TOTAL_COUNT = s2.TOTAL_COUNT
+                                            string rand = GenerateRandomNo();
+                                            omodel.Add(new IndiamartModelClass()
+                                            {
+                                                Indiamart_Id = "Indiamart" + "_" + DateTime.Now.Ticks.ToString() + "_" + rand + "_" + Guid.NewGuid(),
+                                                UNIQUE_QUERY_ID = s2.UNIQUE_QUERY_ID,
+                                                QUERY_TYPE = s2.QUERY_TYPE,
+                                                QUERY_TIME = s2.QUERY_TIME,
+                                                SENDER_NAME = s2.SENDER_NAME,
+                                                SENDER_MOBILE = s2.SENDER_MOBILE,
+                                                SENDER_EMAIL = s2.SENDER_EMAIL,
+                                                SENDER_COMPANY = s2.SENDER_COMPANY,
+                                                SENDER_ADDRESS = s2.SENDER_ADDRESS,
+                                                SENDER_CITY = s2.SENDER_CITY,
+                                                SENDER_STATE = s2.SENDER_STATE,
+                                                SENDER_COUNTRY_ISO = s2.SENDER_COUNTRY_ISO,
+                                                SENDER_MOBILE_ALT = s2.SENDER_MOBILE_ALT,
+                                                SENDER_EMAIL_ALT = s2.SENDER_EMAIL_ALT,
+                                                QUERY_PRODUCT_NAME = s2.QUERY_PRODUCT_NAME,
+                                                QUERY_MESSAGE = s2.QUERY_MESSAGE,
+                                                CALL_DURATION = s2.CALL_DURATION,
+                                                RECEIVER_MOBILE = s2.RECEIVER_MOBILE
+                                            });
 
-
-                                        });
+                                        }
+                                        objErr.Indiamart = omodel;
 
                                     }
-                                    objErr.Indiamart = omodel;
+                                    else
+                                    {
+                                        Action = "Error";
+                                        strerrormessage = json.ToString();
+                                        objErr.ErrorMessage = Action;
+                                        objErr.jsonError = strerrormessage;
 
-                                }
-                                else
-                                {
-                                    //Action = "Error";
-                                    //strerrormessage = json.ToString();
-                                    //objErr.ErrorMessage = Action;
-                                    //objErr.jsonError = strerrormessage;
-                                    //error tracking
-                                    SqlCommand sqlcmderror = new SqlCommand("Proc_Import_Error_Log", sqlcon);
-                                    DataTable dtError = new DataTable();
-                                    sqlcmderror.Parameters.Add("@Type", data);
-                                    sqlcmderror.Parameters.Add("@Name", data);
-                                    sqlcmderror.Parameters.Add("@Message", "Data Not Found");
-                                    sqlcmderror.Parameters.Add("@DateToSearch", startdate);
-                                    sqlcmderror.Parameters.Add("@CreatedBy", userid);
-                                    sqlcmderror.Parameters.Add("@CreatedDate", DateTime.Now);
-                                    sqlcmderror.CommandType = CommandType.StoredProcedure;
-                                    SqlDataAdapter daerror = new SqlDataAdapter(sqlcmderror);
-                                    daerror.Fill(dtError);
-                                    //end error tracking
-                                    return Json("Data Not Found", JsonRequestBehavior.AllowGet);
+                                        //error tracking
+                                        SqlCommand sqlcmderror = new SqlCommand("Proc_Import_Error_Log", sqlcon);
+                                        DataTable dtError = new DataTable();
+                                        sqlcmderror.Parameters.Add("@Type", data);
+                                        sqlcmderror.Parameters.Add("@Name", data);
+                                        sqlcmderror.Parameters.Add("@Message", "Data Not Found");
+                                        sqlcmderror.Parameters.Add("@DateToSearch", startdate);
+                                        sqlcmderror.Parameters.Add("@CreatedBy", userid);
+                                        sqlcmderror.Parameters.Add("@CreatedDate", DateTime.Now);
+                                        sqlcmderror.CommandType = CommandType.StoredProcedure;
+                                        SqlDataAdapter daerror = new SqlDataAdapter(sqlcmderror);
+                                        daerror.Fill(dtError);
+                                        //end error tracking
+                                        return Json("Data Not Found", JsonRequestBehavior.AllowGet);
 
+                                    }
+                                    // End of Rev 1.0
                                 }
-                            }
                                 catch(Exception ex)
                                   {
                                      
@@ -236,12 +306,18 @@ namespace CRM.Controllers
                         //SqlConnection sqlcon = new SqlConnection(con);
                         sqlcon.Open();
 
-
-                        sqlcmd = new SqlCommand("Proc_Import_IndiaMart", sqlcon);
+                        // Rev 1.0
+                        //sqlcmd = new SqlCommand("Proc_Import_IndiaMart", sqlcon);
+                        sqlcmd = new SqlCommand("ERP_Proc_Import_IndiaMart", sqlcon);
+                        // End of Rev 1.0
                         sqlcmd.Parameters.Add("@JsonXML", JsonXML);
                         sqlcmd.Parameters.Add("@MobileNo", omodel.MobileNo);
                         sqlcmd.Parameters.Add("@Action", Action);
                         sqlcmd.Parameters.Add("@Errortext", omodel.jsonError);
+                        // Rev 1.0
+                        sqlcmd.Parameters.Add("@TotalCount", TotalCount);
+                        sqlcmd.Parameters.Add("@Vendor_Name", "IndiaMart");
+                        // End of Rev 1.0
                         sqlcmd.Parameters.Add("@ReturnValue", SqlDbType.Char, 50);
                         sqlcmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;
 

@@ -613,12 +613,9 @@ D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\BusinessLogicLayer.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\DataAccessLayer.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EntityLayer.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\UtilityLayer.dll
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.VisualStudio.TemplateWizardInterface.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE.dll
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\VSLangProj.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\VsWebSite.Interop.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE80.dll
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\stdole.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EntityLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\UtilityLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\BusinessLogicLayer.pdb
@@ -626,9 +623,7 @@ D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\DataAccessLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\DocumentFormat.OpenXml.xml
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\System.Web.Http.xml
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.Web.Infrastructure.xml
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.VisualStudio.TemplateWizardInterface.xml
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE.xml
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\VSLangProj.xml
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE80.xml
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.AssemblyReference.cache
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.OMS.Reports.XtraReports.CustomerCRDRNoteXtraReport.resources
