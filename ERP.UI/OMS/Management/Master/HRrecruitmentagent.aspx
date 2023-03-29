@@ -61,7 +61,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 line-height: 20px !important;
         }
 
-        select
+        /*select
         {
             height: 30px !important;
             border-radius: 4px;
@@ -71,7 +71,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background-color: transparent;
             padding-left: 10px !important;
             padding-right: 22px !important;
-        }
+        }*/
 
         .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
         {
@@ -553,11 +553,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <%--Rev 1.0: "outer-div-main" class add --%>
     <div class="outer-div-main">
         <div class="panel-heading">
-        <div class="panel-title">
-            <h3>Vendors/Service Providers</h3>
-        </div>
+            <div class="panel-title">
+                <h3>Vendors/Service Providers</h3>
+            </div>
 
-    </div>
+        </div>
         <div class="form_main">
 
         <table class="TableMain100">
