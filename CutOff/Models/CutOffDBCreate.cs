@@ -53,5 +53,15 @@ namespace CutOff.Models
             ds = proc.GetDataSet();
             return ds;
         }
+        // Rev Sanchita
+        public DataTable GetSQLDataLocation()
+        {
+            DataTable dt = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("Usp_SelectDbType");
+            proc.AddVarcharPara("@Action", 150, "GetSQLDataLocation");
+            dt = proc.GetTable();
+            return dt;
+        }
+        // End of Rev Sanchita
     }
 }
