@@ -1,6 +1,7 @@
 ﻿@*====================================================Revision History=========================================================================
-         1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
-    ====================================================End Revision History=====================================================================*@
+           1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+           2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
+ ====================================================End Revision History=====================================================================*@
 
 
 @using System.Web.UI.WebControls
@@ -127,29 +128,41 @@
 <script>
 
     function SelectionChanged(s, e) {
-        s.GetSelectedFieldValues("DetailsID", GetSelectedFieldValuesCallback);
+        //REV 2.0
+        //s.GetSelectedFieldValues("DetailsID", GetSelectedFieldValuesCallback);
+       
+        var DetailsID = POProductGridLookup.GetSelectedKeysOnPage();
+        var _ProductIds = 0;
+        var hdnProductIDS = [];
+        hdnProductIDS = DetailsID;
+        for (var i = 0; i < hdnProductIDS.length; i++) {
+            if (_ProductIds == 0) {
+                _ProductIds = hdnProductIDS[i];
+            }
+            else {
+                _ProductIds = hdnProductIDS[i] + ',' + _ProductIds;
+            }
+            $("#hdnProductIDS").val(_ProductIds);
+        }
+        //REV 2.0 END
+
     }
-    function GetSelectedFieldValuesCallback(values) {
-        // SelectedRows.BeginUpdate();
+    function GetSelectedFieldValuesCallback(values) {        
         try {
-            //   SelectedRows.ClearItems();
+           
             var _ProductIds = 0;
-            for (var i = 0; i < values.length; i++) {
-                // SelectedRows.AddItem(values[i]);
+            for (var i = 0; i < values.length; i++) {               
                 if (_ProductIds == 0) {
                     _ProductIds = values[i];
                 }
                 else {
                     _ProductIds = values[i] + ',' + _ProductIds;
                 }
-
                 $("#hdnProductIDS").val(_ProductIds);
-
             }
         } finally {
-            // SelectedRows.EndUpdate();
-        }
-        //$("#count").html(gvRowSelection.GetSelectedRowCount());
+            
+        }     
 
     }
     function BindGridForProductSelection() {
@@ -361,7 +374,11 @@
                         }
                         else
                         {
-                            POProductGridLookup.Refresh();
+                            //REV 2.0
+                            setTimeout(function () {
+                                POProductGridLookup.Refresh();
+                            }, 400)
+                            //REV 2.0 END
                             $('#POProductModel').modal('show');
                         }
 
@@ -768,7 +785,11 @@
                         }
                         else
                         {
-                            POProductGridLookup.Refresh();
+                            //Rev 2.0
+                            setTimeout(function () {
+                                POProductGridLookup.Refresh();
+                            }, 400)
+                            //Rev 2.0 End
                             $('#POProductModel').modal('show');
                         }
 
