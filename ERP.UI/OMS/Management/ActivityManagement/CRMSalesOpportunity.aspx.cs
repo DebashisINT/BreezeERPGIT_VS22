@@ -90,7 +90,9 @@ namespace ERP.OMS.Management.Activities
                     ASPxFromDate.Value = DateTime.Now;
                     ASPxToDate.Value = DateTime.Now;
                 }
-                Date_finyearwise(Convert.ToString(Session["LastFinYear"]));
+                // Rev Sanchita
+                //Date_finyearwise(Convert.ToString(Session["LastFinYear"]));
+                // End of Rev Sanchita
                 
 
             }

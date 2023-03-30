@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DataAccessLayer;
 using System.Data;
+using System.Configuration;
 
 namespace CutOff.Models
 {
@@ -16,9 +17,11 @@ namespace CutOff.Models
         }
         public DataSet InsertCompany(string dbnm)
         {
+            string MasterDbname = ConfigurationSettings.AppSettings["MasterDBName"];
             DataSet ds = new DataSet();
             ProcedureExecute proc = new ProcedureExecute("USP_CREATECOMPANY");
             proc.AddVarcharPara("@DBNAME", 150, dbnm);
+            proc.AddVarcharPara("@MASTER_DBNAME", 150, MasterDbname);
             ds = proc.GetDataSet();
             return ds;
         }
