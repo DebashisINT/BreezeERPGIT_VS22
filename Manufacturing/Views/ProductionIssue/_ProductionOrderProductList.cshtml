@@ -1,46 +1,18 @@
 ﻿@Html.DevExpress().GridView(settings =>
 {
     settings.Name = "POProductGridLookup";
-
     settings.CallbackRouteValues = new { Action = "GetPOProductList", Controller = "ProductionIssue" };
-
-    settings.KeyFieldName = "SlNO";
-    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-   // settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "ProductionIssue", Action = "BatchEditingProductionIssue" };
-    //settings.ClientSideEvents.Init = "OnInit";
+    settings.KeyFieldName = "DetailsID";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);   
     settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
     settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
     settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
-   // settings.ClientSideEvents.EndCallback = "WOBOMProductEndCallBack";
-
-
-    settings.SettingsBehavior.AllowSort = false;
-    //settings.Settings.AllowSort = false;
-    //settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
-    //settings.Settings.SortOrder = DevExpress.Data.ColumnSortOrder.None;
-
-   // settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
-    settings.CommandColumn.Visible = false;
-   // settings.SettingsEditing.BatchEditSettings.EditMode = DevExpress.Web.GridViewBatchEditMode.Cell;
-    //settings.SettingsEditing.BatchEditSettings.StartEditAction = DevExpress.Web.GridViewBatchStartEditAction.Click;
-
-    // settings.OptionsColumn.AllowSort = false;
-    //settings.Settings.ShowFooter = true;
-    //settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
-
-
-    //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
-    //settings.SettingsPager.PageSizeItemSettings.Visible = false;
-    //settings.SettingsPager.PageSize = 10;
-    //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
-    //settings.Settings.ShowFilterRowMenu = false;
+    settings.SettingsBehavior.AllowSort = false;    
+    settings.CommandColumn.Visible = false;   
     settings.CommandColumn.Visible = true;
     settings.CommandColumn.ShowSelectCheckbox = true;
     
-   // settings.Properties.TextFormatString = "{1}";
-    //settings.Properties.MultiTextSeparator = ", ";
-   // settings.SettingsEditing.NewItemRowPosition = DevExpress.Web.GridViewNewItemRowPosition.Bottom;
-    // settings.ClientSideEvents.RowClick = "gridclick";
+  
     settings.ClientSideEvents.SelectionChanged = "SelectionChanged";
     settings.Columns.Add(x =>
     {
@@ -50,8 +22,7 @@
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
-        x.ReadOnly = true;
-        //x.Settings.AllowSort = false;
+        x.ReadOnly = true;        
 
     });
     settings.Columns.Add(x =>
