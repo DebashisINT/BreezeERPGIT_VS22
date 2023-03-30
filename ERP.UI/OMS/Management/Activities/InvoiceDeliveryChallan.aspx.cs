@@ -1,5 +1,6 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0  Priti   V2.0.37    02-03-2023    25711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
+// 2.0  Priti   V2.0.37    30-03-2023    0025764: The Bill from/Dispatch From Button to be made available in the Edit Mode of Sales - Invoice Cum Challan
 #endregion//====================================================End Revision History=====================================================================
 
 using System;
@@ -720,7 +721,7 @@ namespace ERP.OMS.Management.Activities
                     //End Rev Rajdip
                     if (Convert.ToString(Request.QueryString["key"]) != "ADD")
                     {
-                        spnBillDespatch.Style.Add("display", "none;");
+                       // spnBillDespatch.Style.Add("display", "none;");
                         chkSendMail.Visible = false;
                         chkSendMail.Checked = false;
                         lblHeadTitle.Text = "Modify Sales Invoice Cum Challan";
@@ -882,7 +883,7 @@ namespace ERP.OMS.Management.Activities
 
                         //int IsInvoiceUsed = objSalesInvoiceBL.CheckInvoiceDelvChallan(strQuotationId);
                         string Number = "";
-                        int IsInvoiceCumChallanUsed = objSalesInvoiceBL.CheckInvoiceDelvChallan(strQuotationId, ref  Number);
+                        int IsInvoiceCumChallanUsed = objSalesInvoiceBL.CheckInvoiceDelvChallan(strQuotationId, ref Number);
                         if (IsInvoiceCumChallanUsed == -99)
                         {
                             if (Number != "" && Number != "12")
@@ -1268,7 +1269,7 @@ namespace ERP.OMS.Management.Activities
                 if (val == "1")
                 {
                     // Mantis Issue 24425, 24428
-                   // MultiUoMresult = dt.Select("DetailsId ='" + SLNo + "'");
+                    // MultiUoMresult = dt.Select("DetailsId ='" + SLNo + "'");
                     MultiUoMresult = dt.Select("DetailsId ='" + SLNo + "' and UpdateRow ='True'");
                     // End of Mantis Issue 24425, 24428
                 }
@@ -1292,7 +1293,7 @@ namespace ERP.OMS.Management.Activities
         [WebMethod]
         public static object GetPackingQuantity(Int32 UomId, Int32 AltUomId, Int64 ProductID)
         {
-                        List<MultiUOMPacking> RateLists = new List<MultiUOMPacking>();
+            List<MultiUOMPacking> RateLists = new List<MultiUOMPacking>();
 
             decimal packing_quantity = 0;
             decimal sProduct_quantity = 0;
@@ -1309,7 +1310,7 @@ namespace ERP.OMS.Management.Activities
                 sProduct_quantity = Convert.ToDecimal(dt.Rows[0]["sProduct_quantity"]);
             }
             //return packing_quantity + '~' + sProduct_quantity;
-                return RateLists;
+            return RateLists;
         }
 
         [WebMethod]
@@ -1460,6 +1461,9 @@ namespace ERP.OMS.Management.Activities
             //Chinmoy added Below Line
             DataSet dsQuotationEditdt = objSalesInvoiceBL.GetDetailsOfInvoiceDeliveryChallandata(strInvoiceId);
             DataTable QuotationEditdt = dsQuotationEditdt.Tables[0];
+            //Rev 2.0
+            DataTable BillDEspatchTbl = dsQuotationEditdt.Tables[4];
+            //Rev 2.0 End
             if (QuotationEditdt != null && QuotationEditdt.Rows.Count > 0)
             {
                 string Branch_Id = Convert.ToString(QuotationEditdt.Rows[0]["Invoice_BranchId"]);
@@ -1497,7 +1501,13 @@ namespace ERP.OMS.Management.Activities
                 string IsInventory = Convert.ToString(QuotationEditdt.Rows[0]["IsInventory"]);
                 string Remarks = Convert.ToString(QuotationEditdt.Rows[0]["Remarks"]);
                 Session["InlineRemarks"] = dsQuotationEditdt.Tables[3];
-
+                //Rev 2.0
+                if (hdnBillDepatchsetting.Value == "1")
+                {
+                   
+                    LoadBilldespatchAddressEditMode(BillDEspatchTbl);
+                }
+                //Rev 2.0 End
                 ddl_PosGst.DataSource = dsQuotationEditdt.Tables[2];
                 ddl_PosGst.ValueField = "ID";
                 ddl_PosGst.TextField = "Name";
@@ -1674,7 +1684,44 @@ namespace ERP.OMS.Management.Activities
                 dt_PLQuote.ClientEnabled = false;
             }
         }
+        public void LoadBilldespatchAddressEditMode(DataTable addtable)
+        {
 
+            if (addtable != null && addtable.Rows.Count > 0)
+            {
+
+
+                BtxtAddress1.Text = Convert.ToString(addtable.Rows[0]["Bill_Address1"]);
+                BtxtAddress2.Text = Convert.ToString(addtable.Rows[0]["Bill_Address2"]);
+                BtxtAddress3.Text = Convert.ToString(addtable.Rows[0]["Bill_Address3"]);
+                Btxtlandmark.Text = Convert.ToString(addtable.Rows[0]["Bill_Landmark"]);
+                BtxtbillingPin.Text = Convert.ToString(addtable.Rows[0]["Bill_Pincode"]);
+                BhdBillingPin.Value = Convert.ToString(addtable.Rows[0]["Bill_PinId"]);
+                BtxtbillingCountry.Text = Convert.ToString(addtable.Rows[0]["BillCountry"]);
+                BtxtbillingState.Text = Convert.ToString(addtable.Rows[0]["BillState"]);
+                BtxtbillingCity.Text = Convert.ToString(addtable.Rows[0]["BillCity"]);
+                BhdCountryIdBilling.Value = Convert.ToString(addtable.Rows[0]["Bill_CountryId"]);
+                BhdStateIdBilling.Value = Convert.ToString(addtable.Rows[0]["Bill_Stateid"]);
+                BhdCityIdBilling.Value = Convert.ToString(addtable.Rows[0]["Bill_CityId"]);
+
+
+
+                DtxtsAddress1.Text = Convert.ToString(addtable.Rows[0]["Desp_Address1"]);
+                DtxtsAddress2.Text = Convert.ToString(addtable.Rows[0]["Desp_Address2"]);
+                DtxtsAddress3.Text = Convert.ToString(addtable.Rows[0]["Desp_Address3"]);
+                Dtxtslandmark.Text = Convert.ToString(addtable.Rows[0]["Desp_Landmark"]);
+                DtxtShippingPin.Text = Convert.ToString(addtable.Rows[0]["Desp_Pincode"]);
+                DhdShippingPin.Value = Convert.ToString(addtable.Rows[0]["Desp_PinId"]);
+                DtxtshippingCountry.Text = Convert.ToString(addtable.Rows[0]["DespCountry"]);
+                DtxtshippingState.Text = Convert.ToString(addtable.Rows[0]["DespState"]);
+                DtxtshippingCity.Text = Convert.ToString(addtable.Rows[0]["DespCity"]);
+                DhdCountryIdShipping.Value = Convert.ToString(addtable.Rows[0]["Desp_CountryId"]);
+                DhdStateIdShipping.Value = Convert.ToString(addtable.Rows[0]["Desp_Stateid"]);
+                DhdCityIdShipping.Value = Convert.ToString(addtable.Rows[0]["Desp_CityId"]);
+
+
+            }
+        }
 
         protected void challanNoScheme_Callback(object sender, CallbackEventArgsBase e)
         {
@@ -2001,7 +2048,7 @@ namespace ERP.OMS.Management.Activities
 
                     Quotations.DeliverySchedule = Convert.ToString(Quotationdt.Rows[i]["DeliverySchedule"]);
                     Quotations.DeliveryScheduleID = Convert.ToString(Quotationdt.Rows[i]["DeliveryScheduleID"]);
-                    Quotations.DeliveryScheduleDetailsID = Convert.ToString(Quotationdt.Rows[i]["DeliveryScheduleDetailsID"]); 
+                    Quotations.DeliveryScheduleDetailsID = Convert.ToString(Quotationdt.Rows[i]["DeliveryScheduleDetailsID"]);
 
 
                     QuotationList.Add(Quotations);
@@ -2516,7 +2563,7 @@ namespace ERP.OMS.Management.Activities
                             string Products_Name = Convert.ToString(drr["Products_Name"]);
                             string StkQty = Convert.ToString(Convert.ToDecimal(Quantity) * Convert.ToDecimal(Conversion_Multiplier));
                             // Rev  Manis 24428
-                           // Quotationdt.Rows.Add(Convert.ToString(Convert.ToInt32(SrlNo) + 1), "0", sProductsID, Products_Description, Quantity, Sales_UOM_Name, "", StkQty, Stk_UOM_Name, Product_SalePrice, "0.0", "0.0", "0.0", "0.0", "I", Products_Name, ComponentID, ComponentName, "0.0", "0.0", "", "Y", DetailsId, DocDetailsID, Remarks, WarehouseID);
+                            // Quotationdt.Rows.Add(Convert.ToString(Convert.ToInt32(SrlNo) + 1), "0", sProductsID, Products_Description, Quantity, Sales_UOM_Name, "", StkQty, Stk_UOM_Name, Product_SalePrice, "0.0", "0.0", "0.0", "0.0", "I", Products_Name, ComponentID, ComponentName, "0.0", "0.0", "", "Y", DetailsId, DocDetailsID, Remarks, WarehouseID);
                             Quotationdt.Rows.Add(Convert.ToString(Convert.ToInt32(SrlNo) + 1), "0", sProductsID, Products_Description, Quantity, Sales_UOM_Name, "", StkQty, Stk_UOM_Name, Product_SalePrice, "0.0", "0.0", "0.0", "0.0", "I", Products_Name, ComponentID, ComponentName, "0.0", "0.0", "", "Y", DetailsId, DocDetailsID, Remarks, WarehouseID, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
 
                             // End Manis 24428
@@ -2585,7 +2632,7 @@ namespace ERP.OMS.Management.Activities
                         string DeliveryScheduleDetailsID = (Convert.ToString(args.NewValues["DeliveryScheduleDetailsID"]) != "") ? Convert.ToString(args.NewValues["DeliveryScheduleDetailsID"]) : "0";
 
 
-                        
+
                         bool Isexists = false;
                         foreach (DataRow drr in Quotationdt.Rows)
                         {
@@ -2634,7 +2681,7 @@ namespace ERP.OMS.Management.Activities
                         if (Isexists == false)
                         {
                             // Rev  Manis 24428
-                           // Quotationdt.Rows.Add(SrlNo, QuotationID, ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, SalePrice, Discount, Amount, TaxAmount, TotalAmount, "U", ProductName, ComponentID, ComponentName, TotalQty, BalanceQty, IsComponentProduct, IsLinkedProduct, DetailsId, DocDetailsID, Remarks, WarehouseID);
+                            // Quotationdt.Rows.Add(SrlNo, QuotationID, ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, SalePrice, Discount, Amount, TaxAmount, TotalAmount, "U", ProductName, ComponentID, ComponentName, TotalQty, BalanceQty, IsComponentProduct, IsLinkedProduct, DetailsId, DocDetailsID, Remarks, WarehouseID);
                             Quotationdt.Rows.Add(SrlNo, QuotationID, ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, SalePrice, Discount, Amount, TaxAmount, TotalAmount, "U", ProductName, ComponentID, ComponentName, TotalQty, BalanceQty, IsComponentProduct, IsLinkedProduct, DetailsId, DocDetailsID, Remarks, WarehouseID, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM, DeliverySchedule, DeliveryScheduleID, DeliveryScheduleDetailsID);
 
                             // End  Manis 24428
@@ -2924,7 +2971,7 @@ namespace ERP.OMS.Management.Activities
                             string Date = YYYY + '-' + MM + '-' + DD;
 
                             dr["ExpiryDate"] = Date;
-                        }                       
+                        }
 
                     }
                     tempWarehousedt.AcceptChanges();
@@ -3000,8 +3047,8 @@ namespace ERP.OMS.Management.Activities
                     {
                         BillDespatchDtls["BillPinId"] = Convert.ToInt64(0);
                     }
-                    if (BtxtbillingPin.Text!="")
-                    BillDespatchDtls["BillPinCode"] = (Convert.ToInt64(BtxtbillingPin.Text));
+                    if (BtxtbillingPin.Text != "")
+                        BillDespatchDtls["BillPinCode"] = (Convert.ToInt64(BtxtbillingPin.Text));
 
                     if (!string.IsNullOrEmpty(BhdCountryIdBilling.Value))
                     {
@@ -3046,13 +3093,13 @@ namespace ERP.OMS.Management.Activities
                         BillDespatchDtls["DespPinId"] = Convert.ToInt64(0);
                     }
 
-                    if (DtxtShippingPin.Text!="")
+                    if (DtxtShippingPin.Text != "")
                     {
                         BillDespatchDtls["DespPinCode"] = (Convert.ToInt64(DtxtShippingPin.Text));
                     }
-                    
 
-                    if (!string.IsNullOrEmpty(BhdCountryIdBilling.Value))
+
+                    if (!string.IsNullOrEmpty(DhdCountryIdShipping.Value))
                     {
                         BillDespatchDtls["DespCountryId"] = (Convert.ToInt64(DhdCountryIdShipping.Value));
                     }
@@ -3060,7 +3107,7 @@ namespace ERP.OMS.Management.Activities
                     {
                         BillDespatchDtls["DespCountryId"] = Convert.ToInt64(0);
                     }
-                    if (!string.IsNullOrEmpty(BhdStateIdBilling.Value))
+                    if (!string.IsNullOrEmpty(DhdStateIdShipping.Value))
                     {
                         BillDespatchDtls["DespStateId"] = (Convert.ToInt64(DhdStateIdShipping.Value));
                     }
@@ -3068,7 +3115,7 @@ namespace ERP.OMS.Management.Activities
                     {
                         BillDespatchDtls["DespStateId"] = Convert.ToInt64(0);
                     }
-                    if (!string.IsNullOrEmpty(BhdCityIdBilling.Value))
+                    if (!string.IsNullOrEmpty(DhdCityIdShipping.Value))
                     {
                         BillDespatchDtls["DespCityId"] = (Convert.ToInt64(DhdCityIdShipping.Value));
                     }
@@ -3082,7 +3129,7 @@ namespace ERP.OMS.Management.Activities
                 }
 
                 //datatable for MultiUOm start chinmoy 14-01-2020
-              //  DataTable MultiUOMDetails = new DataTable();
+                //  DataTable MultiUOMDetails = new DataTable();
 
                 //if (Session["MultiUOMData"] != null)
                 //{
@@ -3339,18 +3386,18 @@ namespace ERP.OMS.Management.Activities
                 if (DT != null && DT.Rows.Count > 0)
                 {
                     string IsMandatory = Convert.ToString(DT.Rows[0]["Variable_Value"]).Trim();
-               // string IsMandatorytrans = "Yes";
-                if (Convert.ToString(Session["TransporterVisibilty"]).Trim() == "Yes")
-                {
-                    if (IsMandatory == "Yes")
+                    // string IsMandatorytrans = "Yes";
+                    if (Convert.ToString(Session["TransporterVisibilty"]).Trim() == "Yes")
                     {
-                        //if (VehicleDetailsControl.GetControlValue("cmbTransporter") == "")
-                        if (hfControlData.Value.Trim() == "")
+                        if (IsMandatory == "Yes")
                         {
-                            validate = "transporteMandatory";
+                            //if (VehicleDetailsControl.GetControlValue("cmbTransporter") == "")
+                            if (hfControlData.Value.Trim() == "")
+                            {
+                                validate = "transporteMandatory";
+                            }
                         }
                     }
-                }
                 }
 
 
@@ -4187,7 +4234,7 @@ namespace ERP.OMS.Management.Activities
                     DataRow thisRow;
                     if (DetailsId != "" && DetailsId != null && DetailsId != "null")
                     {
-                        
+
                         if (MultiUOMSaveData.Rows.Count > 0)
                         {
                             MultiUOMSR = Convert.ToInt32(MultiUOMSaveData.Compute("max([MultiUOMSR])", string.Empty)) + 1;
@@ -5786,7 +5833,7 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@invoicefor", "CL");
                 cmd.Parameters.AddWithValue("@Project_Id", ProjId);
                 cmd.Parameters.AddWithValue("@QuotationPackingDetails", QuotationPackingDetailsdt);
-               // cmd.Parameters.AddWithValue("@MultiUOMDetails", MultiUOMDetails);
+                // cmd.Parameters.AddWithValue("@MultiUOMDetails", MultiUOMDetails);
                 cmd.Parameters.AddWithValue("@TransacCategory", TransacCategory);
                 cmd.Parameters.AddWithValue("@ReverseCharge", _ReverseCharge);
                 //cmd.Parameters.AddWithValue("@VehicleNo", VehicleNo);
@@ -12258,7 +12305,7 @@ namespace ERP.OMS.Management.Activities
                 proc.AddIntegerPara("@BranchId", Convert.ToInt32(Id));
                 proc.AddVarcharPara("@CustomerID", 200, CustId);
                 dtEInvoice = proc.GetTable();
-                if (dtEInvoice != null && dtEInvoice.Rows.Count>0)
+                if (dtEInvoice != null && dtEInvoice.Rows.Count > 0)
                 {
                     Detail = (from DataRow dr in dtEInvoice.Rows
                               select new EInvoiceDetails()
@@ -12352,8 +12399,6 @@ namespace ERP.OMS.Management.Activities
         [WebMethod(EnableSession = true)]
         public static object getTDSDetails(string CustomerId, string invoice_id, string date, string totalAmount, string taxableAmount, string branch_id, string tds_code)
         {
-
-
             string Mode = Convert.ToString(HttpContext.Current.Session["key_QutId"]);
             DataTable dt = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("prc_TDSDetailsSI_Calc");
@@ -12408,7 +12453,7 @@ namespace ERP.OMS.Management.Activities
 
 
         [WebMethod]
-        public static object GetWarehouseWisePRoductStock(string WarehouseID, string productid,string BranchID)
+        public static object GetWarehouseWisePRoductStock(string WarehouseID, string productid, string BranchID)
         {
             string availablestock = "0";
             DataTable dtMainAccount = new DataTable();
@@ -12447,9 +12492,152 @@ namespace ERP.OMS.Management.Activities
 
             return availablestock;
         }
+
+        //Rev 2.0
+        [WebMethod(EnableSession = true)]
+        public static object UpdateBillDespatch(
+            string BctxtAddress1, string BctxtAddress2, string BctxtAddress3, string Bctxtlandmark
+        , string BctxtbillingPinCode, string BillPinId
+        , string BctxtbillingCountry, string BillCountryId, string BctxtbillingState
+        , string BillStateId, string BctxtbillingCity
+        , string BillCityId
+        , string DtxtsAddress1
+        , string DtxtsAddress2, string DtxtsAddress3
+        , string Dtxtslandmark, string DespPinCode
+        , string DespPinId, string DespCountryId, string DespStateId, string DespCityId, string SalesInvoice_Id
+        )
+        {
+
+            DataTable dtBill = new DataTable();
+            DataTable BillDespatch = new DataTable();
+            BillDespatch.Columns.Add("BillAddress1", typeof(System.String));
+            BillDespatch.Columns.Add("BillAddress2", typeof(System.String));
+            BillDespatch.Columns.Add("BillAddress3", typeof(System.String));
+            BillDespatch.Columns.Add("BillLandmark", typeof(System.String));
+            BillDespatch.Columns.Add("BillPinId", typeof(System.Int64));
+            BillDespatch.Columns.Add("BillPinCode", typeof(System.Int64));
+            BillDespatch.Columns.Add("BillCountryId", typeof(System.Int64));
+            BillDespatch.Columns.Add("BillStateId", typeof(System.Int64));
+            BillDespatch.Columns.Add("BillCityId", typeof(System.Int64));
+
+            BillDespatch.Columns.Add("DespAddress1", typeof(System.String));
+            BillDespatch.Columns.Add("DespAddress2", typeof(System.String));
+            BillDespatch.Columns.Add("DespAddress3", typeof(System.String));
+            BillDespatch.Columns.Add("DespLandmark", typeof(System.String));
+            BillDespatch.Columns.Add("DespPinId", typeof(System.Int64));
+            BillDespatch.Columns.Add("DespPinCode", typeof(System.Int64));
+            BillDespatch.Columns.Add("DespCountryId", typeof(System.Int64));
+            BillDespatch.Columns.Add("DespStateId", typeof(System.Int64));
+            BillDespatch.Columns.Add("DespCityId", typeof(System.Int64));
+
+            DataRow BillDespatchDtls = BillDespatch.NewRow();
+
+            BillDespatchDtls["BillAddress1"] = BctxtAddress1;
+            BillDespatchDtls["BillAddress2"] = BctxtAddress2;
+            BillDespatchDtls["BillAddress3"] = BctxtAddress3;
+            BillDespatchDtls["BillLandmark"] = Bctxtlandmark;
+            if (!string.IsNullOrEmpty(BillPinId))
+            {
+                BillDespatchDtls["BillPinId"] = (Convert.ToInt64(BillPinId));
+            }
+            else
+            {
+                BillDespatchDtls["BillPinId"] = Convert.ToInt64(0);
+            }
+
+            if (BctxtbillingPinCode != "")
+                BillDespatchDtls["BillPinCode"] = (Convert.ToInt64(BctxtbillingPinCode));
+
+            if (!string.IsNullOrEmpty(BillCountryId))
+            {
+                BillDespatchDtls["BillCountryId"] = (Convert.ToInt64(BillCountryId));
+            }
+            else
+            {
+                BillDespatchDtls["BillCountryId"] = Convert.ToInt64(0);
+            }
+            if (!string.IsNullOrEmpty(BillStateId))
+            {
+                BillDespatchDtls["BillStateId"] = (Convert.ToInt64(BillStateId));
+            }
+            else
+            {
+                BillDespatchDtls["BillStateId"] = Convert.ToInt64(0);
+            }
+            if (!string.IsNullOrEmpty(BillCityId))
+            {
+                BillDespatchDtls["BillCityId"] = (Convert.ToInt64(BillCityId));
+            }
+            else
+            {
+                BillDespatchDtls["BillCityId"] = Convert.ToInt64(0);
+            }
+
+            BillDespatchDtls["DespAddress1"] = DtxtsAddress1;
+            BillDespatchDtls["DespAddress2"] = DtxtsAddress2;
+            BillDespatchDtls["DespAddress3"] = DtxtsAddress3;
+            BillDespatchDtls["DespLandmark"] = Dtxtslandmark;
+            if (!string.IsNullOrEmpty(DespPinId))
+            {
+                BillDespatchDtls["DespPinId"] = (Convert.ToInt64(DespPinId));
+            }
+            else
+            {
+                BillDespatchDtls["DespPinId"] = Convert.ToInt64(0);
+            }
+            if (DespPinCode != "")
+            {
+                BillDespatchDtls["DespPinCode"] = (Convert.ToInt64(DespPinCode));
+            }
+            if (!string.IsNullOrEmpty(DespCountryId))
+            {
+                BillDespatchDtls["DespCountryId"] = (Convert.ToInt64(DespCountryId));
+            }
+            else
+            {
+                BillDespatchDtls["DespCountryId"] = Convert.ToInt64(0);
+            }
+            if (!string.IsNullOrEmpty(DespStateId))
+            {
+                BillDespatchDtls["DespStateId"] = (Convert.ToInt64(DespStateId));
+            }
+            else
+            {
+                BillDespatchDtls["DespStateId"] = Convert.ToInt64(0);
+            }
+            if (!string.IsNullOrEmpty(DespCityId))
+            {
+                BillDespatchDtls["DespCityId"] = (Convert.ToInt64(DespCityId));
+            }
+            else
+            {
+                BillDespatchDtls["DespCityId"] = Convert.ToInt64(0);
+            }
+
+            BillDespatch.Rows.Add(BillDespatchDtls);
+            dtBill = BillDespatch;
+
+            DataSet dsInst = new DataSet();           
+            SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+            SqlCommand cmd = new SqlCommand("prc_InvoiceDeliveryChallan_AddEditNew", con);            
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "updateBillDespatch");            
+            cmd.Parameters.AddWithValue("@BillDespatchDetails", BillDespatch);
+            cmd.Parameters.AddWithValue("@SalesInvoice_Id", SalesInvoice_Id);
+            cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);      
+            cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;         
+            cmd.CommandTimeout = 0;
+            SqlDataAdapter Adap = new SqlDataAdapter();
+            Adap.SelectCommand = cmd;
+            Adap.Fill(dsInst);
+            string ReturnValue = cmd.Parameters["@ReturnValue"].Value.ToString();
+
+            cmd.Dispose();
+            con.Dispose();
+            return ReturnValue;
+        }
+        //Rev 2.0 End
     }
-
-
     public class InvDelvProductUOmDetails
     {
         public string productid { get; set; }
