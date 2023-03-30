@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                29-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+1.0                30-03-2023        2.0.36           Pallab              25768: CRM pages design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Sales Activity" Language="C#" AutoEventWireup="true" EnableEventValidation="false"  CodeBehind="Sales_Activity.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.ActivityManagement.Sales_Activity" %>
@@ -2088,7 +2088,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /*content: '<';*/
             content: url(../../../assests/images/left-arw.png);
             position: absolute;
-            top: 26px;
+            top: 41px;
             right: 13px;
             font-size: 16px;
             transform: rotate(269deg);
@@ -2102,7 +2102,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             border-radius: 4px;
             text-align: center;
             line-height: 19px;
-            z-index: 0;
+            z-index: 1;
         }
         .simple-select {
             position: relative;
@@ -2552,7 +2552,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     </div>
                                 </div>
                                 <div class="clear"></div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 simple-select">
                                     <label style="padding-bottom:5px;padding-top:10px">Task</label> 
                                     <div>
                                         <asp:DropDownList ID="taskList" runat="server" Width="100%"   onchange="OnTitleChange()">
