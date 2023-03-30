@@ -924,24 +924,6 @@ namespace ERP.OMS.Management.Activities
         protected global::System.Web.UI.WebControls.DropDownList ddlHierarchy;
 
         /// <summary>
-        /// lblTolerance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxLabel lblTolerance;
-
-        /// <summary>
-        /// txtQtyTolerance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtQtyTolerance;
-
-        /// <summary>
         /// grid control.
         /// </summary>
         /// <remarks>
