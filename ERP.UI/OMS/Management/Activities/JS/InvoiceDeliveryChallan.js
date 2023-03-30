@@ -1,14 +1,11 @@
 ﻿//==========================================================Revision History ============================================================================================
-//    1.0   Priti   V2.0.36     0025577:In the Stock selection window, alternate quantity is not calculating automatically if the main qty has been changed.
+// 1.0  Priti   V2.0.36    13-01-2023    0025577:In the Stock selection window, alternate quantity is not calculating automatically if the main qty has been changed.
+// 2.0  Priti   V2.0.37    30-03-2023    0025764: The Bill from/Dispatch From Button to be made available in the Edit Mode of Sales - Invoice Cum Challan
 //========================================== End Revision History =======================================================================================================--%>
 function closeWarehouse(s, e) {
     e.cancel = false;
     cGrdWarehouse.PerformCallback('WarehouseDelete');
 }
-
-
-
-
 
 function CmbWarehouseEndCallback(s, e) {
     if (SelectWarehouse != "0") {
@@ -164,10 +161,13 @@ $(document).ready(function () {
         }
 
         var type = ($("[id$='rdl_SaleInvoice']").find(":checked").val() != null) ? $("[id$='rdl_SaleInvoice']").find(":checked").val() : "";
-        if(type=="BOM")
-        {
+        if (type == "BOM") {
             $('#divComponentQuotation').hide();
             $('#divComponentBOM').show();
+        }
+        else {
+            $('#divComponentQuotation').show();
+            $('#divComponentBOM').hide();
         }
     }
 
@@ -7091,7 +7091,54 @@ function Validationbilldespatch()
         return false;
     }
     else {
-        cpopupBillDsep.Hide();
+        //Rev 2.0
+        var mode = $('#hdAddOrEdit').val();
+        if (mode == "Edit") {
+            var obj = {};
+            obj.BctxtAddress1 = BctxtAddress1.GetText();
+            obj.BctxtAddress2 = BctxtAddress2.GetText();
+            obj.BctxtAddress3 = BctxtAddress3.GetText();
+            obj.Bctxtlandmark = Bctxtlandmark.GetText();
+            obj.BctxtbillingPinCode = BctxtbillingPin.GetText();
+            obj.BillPinId = $("#BhdBillingPin").val();
+            obj.BctxtbillingCountry = BctxtbillingCountry.GetText();
+            obj.BillCountryId = $("#BhdCountryIdBilling").val(); 
+            obj.BctxtbillingState = BctxtbillingState.GetText();
+            obj.BillStateId = $("#BhdStateIdBilling").val(); 
+            obj.BctxtbillingCity = BctxtbillingCity.GetText();           
+            obj.BillCityId = $("#BhdCityIdBilling").val();
+
+            obj.DtxtsAddress1 = DctxtsAddress1.GetText();
+            obj.DtxtsAddress2 = DctxtsAddress2.GetText();
+            obj.DtxtsAddress3 = DctxtsAddress3.GetText();
+            obj.Dtxtslandmark = Dctxtslandmark.GetText();
+            obj.DespPinCode = DctxtShippingPin.GetText();
+            obj.DespPinId = $("#DhdShippingPin").val();           
+            obj.DespCountryId = $("#DhdCountryIdShipping").val();           
+            obj.DespStateId = $("#DhdStateIdShipping").val();           
+            obj.DespCityId = $("#DhdCityIdShipping").val();
+            obj.SalesInvoice_Id = $("#hdnPageEditId").val();
+            $.ajax({
+                type: "POST",
+                url: "InvoiceDeliveryChallan.aspx/UpdateBillDespatch",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    var response = msg.d;
+                    if (response == "1") {
+                        jAlert("Bill from/Despatch from Update Successfully.");
+                        cpopupBillDsep.Hide();
+                    }
+                }
+            });
+        }
+        //Rev 2.0 End
+        else {
+            cpopupBillDsep.Hide();
+        }
+        
     }
 }
 function ValidationbilldespatchCancel()
