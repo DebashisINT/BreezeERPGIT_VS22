@@ -1,5 +1,7 @@
 ﻿<%--=======================================================Revision History=========================================================================
- 1.0 Priti   V2.0.36  02-02-2023    0025262: Listing view upgradation required of Manual BRS of Accounts & Finance
+ 1.0   Priti   V2.0.36  02-02-2023    0025262: Listing view upgradation required of Manual BRS of Accounts & Finance
+ 2.0   Priti   V2.0.38  03-04-2023   0025773: Manual BRS not working
+
 =========================================================End Revision History========================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frm_ManualBRSEntityListFetch.aspx.cs" 
@@ -655,7 +657,10 @@
     <div class="clear"></div>
 
     <div class="GridViewArea relative">
-        <dxe:ASPxGridView ID="grdmanualBRS" runat="server" AutoGenerateColumns="False" KeyFieldName="SlNo"
+       <%-- REV 2.0--%>
+       <%-- KeyFieldName="SlNo"--%>
+        <%-- REV 2.0 END--%> 
+        <dxe:ASPxGridView ID="grdmanualBRS" runat="server" AutoGenerateColumns="False" KeyFieldName="SLNO"
             Width="100%" ClientInstanceName="cgrdmanualBRS" OnCustomCallback="grdmanualBRS_CustomCallback" 
             DataSourceID="EntityServerModeDataSource"  SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false" 
              HorizontalScrollBarMode="Auto" Settings-VerticalScrollBarMode="auto"
