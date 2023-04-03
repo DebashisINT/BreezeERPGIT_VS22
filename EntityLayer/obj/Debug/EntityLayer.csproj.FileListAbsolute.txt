@@ -34,3 +34,9 @@ D:\GIT\GitHub\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.Assembl
 D:\GIT\GitHub\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache
 D:\GIT\GitHub\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.pdb
+C:\Projects\BreezeERPGIT_VS22\EntityLayer\bin\Debug\EntityLayer.dll
+C:\Projects\BreezeERPGIT_VS22\EntityLayer\bin\Debug\EntityLayer.pdb
+C:\Projects\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.AssemblyReference.cache
+C:\Projects\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.csproj.CoreCompileInputs.cache
+C:\Projects\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.dll
+C:\Projects\BreezeERPGIT_VS22\EntityLayer\obj\Debug\EntityLayer.pdb
