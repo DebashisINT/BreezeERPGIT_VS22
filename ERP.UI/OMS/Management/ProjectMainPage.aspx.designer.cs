@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP.OMS.Management {
-    
-    
-    public partial class management_ProjectMainPage {
-        
+namespace ERP.OMS.Management
+{
+
+
+    public partial class management_ProjectMainPage
+    {
+
         /// <summary>
         /// divPopHead control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPopHead;
-        
+
         /// <summary>
         /// h1heading control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl h1heading;
-        
+
         /// <summary>
         /// pParagraph control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pParagraph;
-        
+
         /// <summary>
         /// divSwitchtoServiceManagement control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSwitchtoServiceManagement;
-        
+
         /// <summary>
         /// divSwitchtoSTBManagement control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSwitchtoSTBManagement;
-        
+
         /// <summary>
         /// SalesDbButton control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl SalesDbButton;
-        
+
         /// <summary>
         /// PurchaseDbButton control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl PurchaseDbButton;
-        
+
         /// <summary>
         /// CRMButton control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl CRMButton;
-        
+
         /// <summary>
         /// Attbtn control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Attbtn;
-        
+
         /// <summary>
         /// followupBtn control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl followupBtn;
-        
+
         /// <summary>
         /// AccountsBtn control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl AccountsBtn;
-        
+
         /// <summary>
         /// tasklistbtn control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tasklistbtn;
-        
+
         /// <summary>
         /// PMSButton control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl PMSButton;
-        
+
         /// <summary>
         /// FinancialButton control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl FinancialButton;
-        
+
         /// <summary>
         /// CustRMButton control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl CustRMButton;
-        
+
         /// <summary>
         /// dvKPISummary control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvKPISummary;
-        
+
         /// <summary>
         /// dvInveDashboard control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvInveDashboard;
-        
+
         /// <summary>
         /// dvManagementNotification control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvManagementNotification;
-        
+
         /// <summary>
         /// ManagementNot control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField ManagementNot;
-        
+
         /// <summary>
         /// dvApprovalWaiting control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvApprovalWaiting;
-        
+
         /// <summary>
         /// Div1 control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
-        
+
         /// <summary>
         /// CUSTButton control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl CUSTButton;
-        
+
         /// <summary>
         /// hdnDefaultDashboardService control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnDefaultDashboardService;
-        
+
         /// <summary>
         /// hdnDefaultDashboardSTB control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnDefaultDashboardSTB;
-        
+
         /// <summary>
         /// dhnDashBoardSession control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace ERP.OMS.Management {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField dhnDashBoardSession;
-        
+
         /// <summary>
         /// hdnShowNewsFeed control.
         /// </summary>

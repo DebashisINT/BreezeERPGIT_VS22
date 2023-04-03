@@ -1,3 +1,6 @@
+<%--*************************************************************************************************************************************
+Rev 1.0     Sanchita        V2.0.38     Message will be fired from first tab when logged out from the 2nd tab.
+*************************************************************************************************************************************--%>
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.management_ProjectMainPage" CodeBehind="ProjectMainPage.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -77,6 +80,35 @@
             
             getAllApprovalWaitingData();
         });
+
+        // Rev 1.0
+        document.addEventListener("visibilitychange", () => {
+            // it could be either hidden or visible
+            if (document.visibilityState === 'visible') {
+                checkSessionLogout();
+            }
+        });
+
+        function checkSessionLogout() {
+            $.ajax({
+                type: "POST",
+                url: "ProjectMainPage.aspx/checkSessionLogout",
+                //data: JSON.stringify(dt),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (data.d == 1) {
+                        alert("Session expired !!!");
+                        window.parent.location.href = '../login.aspx';
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+        // End of Rev 1.0
         
         function getAllData() {
             var dt = {};
