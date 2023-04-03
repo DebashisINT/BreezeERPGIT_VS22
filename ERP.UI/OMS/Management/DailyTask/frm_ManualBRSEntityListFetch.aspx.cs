@@ -1,5 +1,7 @@
 ﻿//========================================================== Revision History ============================================================================================
 //   1.0   Priti V2.0.36    02-02-2023   0025262: Listing view upgradation required of Manual BRS of Accounts & Finance
+//   2.0   Priti V2.0.38    03-04-2023   0025773: Manual BRS not working
+
 //========================================== End Revision History =======================================================================================================
 
 
@@ -287,6 +289,7 @@ namespace ERP.OMS.Management.DailyTask
                 string sPath = HttpContext.Current.Request.Url.ToString();
                 oDBEngine.Call_CheckPageaccessebility(sPath);
             }
+            
         }
 
 
@@ -578,9 +581,11 @@ namespace ERP.OMS.Management.DailyTask
 
                 if (RdUnCleared.Checked)
                 {
-                    var docs = grdmanualBRS.GetSelectedFieldValues("cashbank_vouchernumber", "Type", "cashbankdetail_instrumentnumber", "cashbankdetail_instrumentdate", "cashbank_transactionDate");
+                    //REV 2.0
+                    //var docs = grdmanualBRS.GetSelectedFieldValues("cashbank_vouchernumber", "Type", "cashbankdetail_instrumentnumber", "cashbankdetail_instrumentdate", "cashbank_transactionDate");
 
-
+                    var docs = grdmanualBRS.GetSelectedFieldValues("CASHBANK_VOUCHERNUMBER", "TYPE", "CASHBANKDETAIL_INSTRUMENTNUMBER", "CASHBANKDETAIL_INSTRUMENTDATE", "CASHBANK_TRANSACTIONDATE");
+                    //REV 2.0 END
                     bool valid = true;
 
                     for (int i = 0; i < docs.Count; i++)
