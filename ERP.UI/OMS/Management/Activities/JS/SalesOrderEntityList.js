@@ -1,6 +1,7 @@
 ﻿//====================================================Revision History=========================================================================
 // 1.0   Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table
-// 2.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+// 2.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved.
+// 3.0   PRITI   V2.0.38     03/04/2023	    0025288: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Order
 //====================================================End Revision History=====================================================================
 function OnProductWiseClosedClick(keyValue, visibleIndex, PurchaseOrder) {
     $("#hddnKeyValue").val(keyValue);
@@ -427,16 +428,19 @@ function updateGridByDate() {
         $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
+       //Rev  3.0
       //  cGrdOrder.Refresh();
         $("#hFilterType").val("All");       
         cCallbackPanel.PerformCallback("");
-
+        //Rev  3.0 End
     }
 }
 //End
+ //Rev  3.0 
 function CallbackPanelEndCall(s, e) {
     cGrdOrder.Refresh();
 }
+//Rev  3.0 End
 function cSelectPanelEndCall(s, e) {
     //debugger;
     if (cSelectPanel.cpSuccess != null) {
@@ -595,9 +599,9 @@ function grid_EndCallBack() {
     if (cGrdOrder.cpDelete != null) {
         jAlert(cGrdOrder.cpDelete);
         cGrdOrder.cpDelete = null;
-        //cGrdOrder.Refresh();
+        cGrdOrder.Refresh();
        /* Rev 2.0*/
-        updateGridByDate();
+        //updateGridByDate();
         /* Rev 2.0 End*/
     }
 }

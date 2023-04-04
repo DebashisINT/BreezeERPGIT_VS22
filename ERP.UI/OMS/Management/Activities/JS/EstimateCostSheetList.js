@@ -1,5 +1,5 @@
 ﻿//==========================================================Revision History ============================================================================================
-//    1.0   Priti   V2.0.36     16 - 02 - 2023     Afer Listing view upgradation delete data show in list issue solved.
+// 1.0	PRITI  V2.0.38 	03/04/2023	0025287: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Estimate / Cost Sheet
 //========================================== End Revision History =======================================================================================================
 
 function timerTick() {
@@ -247,10 +247,10 @@ function grid_EndCallBack() {
             cQuotationStatus.Hide();
         }
         jAlert(cGrdEstimateCost.cpUpdate);
-        /* Rev 1.0*/
-        //cGrdEstimateCost.Refresh();
-        updateGridByDate();
-        /* Rev 1.0 End*/
+       
+        cGrdEstimateCost.Refresh();
+       
+        
     }
     if (cGrdEstimateCost.cpDelete != null) {
         jAlert(cGrdEstimateCost.cpDelete);
@@ -462,18 +462,21 @@ function updateGridByDate() {
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
 
+        //REV 1.0
         //cGrdEstimateCost.Refresh();
 
         $("#hFilterType").val("All");
         cCallbackPanel.PerformCallback("");
-
+        //REV 1.0 END
 
         //cGrdEstimateCost.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
     }
 }
+ //REV 1.0 
 function CallbackPanelEndCall(s, e) {
     cGrdEstimateCost.Refresh();
 }
+ //REV 1.0 END
 $(document).ready(function () {
     //Toggle fullscreen expandEntryGrid
     $("#expandcGrdEstimateCost").click(function (e) {

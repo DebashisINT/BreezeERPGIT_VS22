@@ -1,5 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+   2.0   Priti   V2.0.38     03-04-2023     0025257: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Inquiry
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInquiry.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInquiry" %>
@@ -354,8 +355,10 @@
                 jAlert(cGrdQuotation.cpDelete);
                 cGrdQuotation.cpDelete = null;
                 /* Rev 1.0*/
-                //cGrdQuotation.Refresh();
-                updateGridByDate();
+                cGrdQuotation.Refresh();
+                /* Rev 2.0*/
+                //updateGridByDate();
+                /* Rev 2.0 End*/
                 /* Rev 1.0 End*/
             }
 
