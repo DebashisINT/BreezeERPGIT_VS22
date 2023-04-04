@@ -1,5 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+   2.0	 PRITI   V2.0.38	 03/04/2023	 0025291: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Invoice
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoiceList" 
@@ -894,24 +895,28 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
+                //REV 2.0
                 $("#hFilterType").val("All");
                 cCallbackPanel.PerformCallback("");
                 //cGrdQuotation.Refresh();
+                //REV 2.0 END
                 //cGrdQuotation.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
             }
         }
+        //REV 2.0 
         function CallbackPanelEndCall(s, e) {
             cGrdQuotation.Refresh();
         }
+        //REV 2.0 END
         function grid_EndCallBack(s, e) {
             if (cGrdQuotation.cpDelete) {
                 var message = cGrdQuotation.cpDelete;
                 cGrdQuotation.cpDelete = null;
 
                 jAlert(message);
-                //cGrdQuotation.Refresh();
+                cGrdQuotation.Refresh();
                 /*Rev 1.0*/
-                updateGridByDate();
+                //updateGridByDate();
                 /*Rev 1.0 End*/
             }
         }
@@ -2052,7 +2057,7 @@
             </dxe:PopupControlContentControl>
         </ContentCollection>
     </dxe:ASPxPopupControl>
-
+  <%--  REV 2.0--%>
      <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
         <PanelCollection>
             <dxe:PanelContent runat="server">           
@@ -2060,11 +2065,12 @@
         </PanelCollection>
         <ClientSideEvents EndCallback="CallbackPanelEndCall" />
     </dxe:ASPxCallbackPanel>
-
+     <asp:HiddenField ID="hFilterType" runat="server" />
+     <%-- REV 2.0 END--%>
     <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
     <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
     <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
     <asp:HiddenField runat="server" ID="hdnActiveEInvoice" />
-    <asp:HiddenField ID="hFilterType" runat="server" />
+   
 </asp:Content>

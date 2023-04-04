@@ -2110,8 +2110,11 @@
             if (cGvJvSearch.cpJVDelete != undefined && cGvJvSearch.cpJVDelete != null) {
                 jAlert(cGvJvSearch.cpJVDelete);
                 cGvJvSearch.cpJVDelete = null;
-                updateGridByDate()
+                //rev 2.0
+               // updateGridByDate()
                 //cGvJvSearch.PerformCallback('PCB_BindAfterDelete');
+                cGvJvSearch.Refresh();
+                //rev 2.0 END
             }
         }
         function GridFullInfo_EndCallBack() {

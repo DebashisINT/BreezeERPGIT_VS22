@@ -457,8 +457,8 @@
                     jAlert('Unreconciled Successfully.', 'Alert', function () {
 
                         s.cpUpdate = null;
-                        //cgrdmanualBRS.Refresh();
-                        updateGridByDate();
+                        cgrdmanualBRS.Refresh();
+                       // updateGridByDate();
                     })
                 }
                 else if (s.cpUpdate == "SucsessRec") {
@@ -466,8 +466,8 @@
                     jAlert('Reconciled Successfully.', 'Alert', function () {
 
                         s.cpUpdate = null;
-                        //cgrdmanualBRS.Refresh();
-                        updateGridByDate();
+                        cgrdmanualBRS.Refresh();
+                        //updateGridByDate();
                     })
                 }
 

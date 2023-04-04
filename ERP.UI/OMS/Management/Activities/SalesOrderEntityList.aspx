@@ -26,7 +26,7 @@
 
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.css">--%>
     <link href="../../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />    
-    <script src="JS/SalesOrderEntityList.js?v=2.0"></script>
+    <script src="JS/SalesOrderEntityList.js?v=2.1"></script>
 
      <%--REV 1.0 ADD DATATABLE STYLE--%>
     <style>

@@ -191,9 +191,9 @@ function ShowMsgLastCall() {
         jAlert(CgvCustomerReceiptPayment.cpDelete)
         CgvCustomerReceiptPayment.PerformCallback();
         CgvCustomerReceiptPayment.cpDelete = null;
-        /* Rev 1.0*/
-        //CgvCustomerReceiptPayment.Refresh();
-        updateGridByDate();
+        CgvCustomerReceiptPayment.Refresh();
+        /* Rev 1.0*/        
+        //updateGridByDate();
         /* Rev 1.0 End*/
     }
 }
