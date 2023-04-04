@@ -1,5 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+   2.0	 PRITI   V2.0.38	 03/04/2023	    0025289: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Challan
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -306,14 +307,18 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
+                //REV 2.0
                 //cGrdOrder.Refresh();
                 $("#hFilterType").val("All");
                 cCallbackPanel.PerformCallback("");
+                 //REV 2.0 END
             }
         }
+        //REV 2.0
         function CallbackPanelEndCall(s, e) {
             cGrdOrder.Refresh();
         }
+         //REV 2.0 END
         function cSelectPanelEndCall(s, e) {
             if (cSelectPanel.cpSuccess != "") {
                 var TotDocument = cSelectPanel.cpSuccess.split(',');
@@ -380,10 +385,9 @@
             }
             if (cGrdOrder.cpDelete != null) {
                 jAlert(cGrdOrder.cpDelete);
-              
-                /* Rev 1.0*/
-                // cGrdOrder.Refresh();
-                updateGridByDate();
+               cGrdOrder.Refresh();
+                /* Rev 1.0*/                
+                //updateGridByDate();
                 /* Rev 1.0 End*/
                 cGrdOrder.cpDelete = null;
             }
@@ -1281,7 +1285,7 @@
 
 
     </dxe:ASPxPopupControl>
-
+   <%-- REV 2.0--%>
      <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
         <PanelCollection>
             <dxe:PanelContent runat="server">           
@@ -1290,6 +1294,7 @@
         <ClientSideEvents EndCallback="CallbackPanelEndCall" />
     </dxe:ASPxCallbackPanel>
     <asp:HiddenField ID="hFilterType" runat="server" />
+   <%--  REV 2.0 END--%>
 </asp:Content>
 
 

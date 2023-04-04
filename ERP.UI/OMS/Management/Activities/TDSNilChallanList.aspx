@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History========================================================================= 
     1.0     Priti   V2.0.36   17-02-2023     	0025266: Listing view upgradation required of TDS Nil Challan of Accounts & Finance
+    2.0     Priti   V2.0.38   03-04-2023        REv 2.0 Revert work from Page to procedure 
 =========================================================End Revision History========================================================================--%>
 
 
@@ -58,8 +59,10 @@
             if (cgridAdvanceAdj.cpReturnMesg) {
                 jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () {
                     //rev 1.0
-                    //cgridAdvanceAdj.Refresh();
-                    updateGridByDate();
+                    cgridAdvanceAdj.Refresh();
+                     //rev 2.0
+                    //updateGridByDate();
+                     //rev 2.0 END
                      //end rev 1.0
 
                 });
