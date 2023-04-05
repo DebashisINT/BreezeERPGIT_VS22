@@ -20,6 +20,14 @@ using System.IO;
 using ERP.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Sheets.v4;
+using Google.Apis.Util.Store;
+using System.Threading;
+using Google.Apis.Sheets.v4.Data;
+using Newtonsoft.Json;
+using Aspose.Cells;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -34,7 +42,7 @@ namespace ERP.OMS.Management.Activities
         CRMSalesOrderDtlBL objCRMSalesOrderDtlBL = new CRMSalesOrderDtlBL();
         ERPDocPendingApprovalBL objERPDocPendingApproval = new ERPDocPendingApprovalBL();
         int KeyValue = 0;
-
+        SheetsService sheetService = ConnectToGoogle();
         protected void Page_Load(object sender, EventArgs e)
         {
             rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/management/Activities/SalesInvoiceList.aspx");
@@ -221,6 +229,8 @@ namespace ERP.OMS.Management.Activities
                     break;
                 case 2:
                     exporter.WriteXlsToResponse();
+
+                   // ExportDataFromExcelToGoogleSheet(sheetService, "Sales Invoice.xls");
                     break;
                 case 3:
                     exporter.WriteRtfToResponse();
@@ -1013,6 +1023,153 @@ namespace ERP.OMS.Management.Activities
 
             }
         }
+
+
+        public static SheetsService ConnectToGoogle()
+        {
+            // If modifying these scopes, delete your previously saved credentials
+            // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
+            string[] Scopes = { SheetsService.Scope.Spreadsheets };
+            string ApplicationName = "Excel to Google Sheet";
+
+            UserCredential credential;
+
+            using (var stream =
+                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            {
+                // The file token.json stores the user's access and refresh tokens, and is created
+                // automatically when the authorization flow completes for the first time.
+                string credPath = "token.json";
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.FromStream(stream).Secrets,
+                    Scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " + credPath);
+            }
+
+            // Create Google Sheets API service
+            var service = new SheetsService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
+
+            return service;
+        }
+
+        //public static void ExportDataFromExcelToGoogleSheet(SheetsService _sheetService, string _excelFileName)
+        //{
+        //    // Load an Excel workbook
+        //    Workbook wb = new Workbook(_excelFileName);
+
+        //    // Get name of the first worksheet
+        //    string defaultWorksheetName = wb.Worksheets[0].Name;
+
+        //    // Create a new Google spreadsheet with default worksheet
+        //    Spreadsheet spreadhsheet = CreateSpreadsheet(_sheetService, wb.FileName, defaultWorksheetName);
+
+        //    Console.WriteLine("Spreadsheet URL: " + spreadhsheet.SpreadsheetUrl);
+        //    Console.WriteLine("ID: " + spreadhsheet.SpreadsheetId);
+
+        //    // Define range
+        //    String range;
+
+        //    // Loop through worksheets
+        //    foreach (var sheet in wb.Worksheets)
+        //    {
+        //        if (sheet.Index == 0)
+        //        {
+        //            // First sheet is created by default, so only set range
+        //            range = $"{defaultWorksheetName}!A:Y";
+        //        }
+        //        else
+        //        {
+        //            // Add a new sheet
+        //            AddSheet(_sheetService, spreadhsheet.SpreadsheetId, sheet.Name);
+        //            range = $"{sheet.Name}!A:Y";
+        //        }
+
+        //        // Get number of rows and columns
+        //        int rows = sheet.Cells.MaxDataRow;
+        //        int cols = sheet.Cells.MaxDataColumn;
+
+        //        IList<IList<Object>> list = new List<IList<Object>>() { };
+
+        //        // Loop through rows
+        //        for (int i = 0; i < rows; i++)
+        //        {
+        //            List<object> lists = new List<object>();
+
+        //            // Loop through each column in selected row
+        //            for (int j = 0; j < cols; j++)
+        //            {
+        //                lists.Add(sheet.Cells[i, j].Value);
+        //            }
+        //            list.Add(lists);
+        //        }
+
+        //        // Define range
+        //        ValueRange VRange = new ValueRange();
+        //        VRange.Range = range;
+
+        //        // Set values
+        //        VRange.Values = list;
+
+        //        // Create request
+        //        SpreadsheetsResource.ValuesResource.UpdateRequest upd = _sheetService.Spreadsheets.Values.Update(VRange, spreadhsheet.SpreadsheetId, range);
+        //        upd.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.USERENTERED;
+
+        //        // Execute request
+        //        UpdateValuesResponse response = upd.Execute();
+
+        //        // Get response
+        //        string responseString = JsonConvert.SerializeObject(response);
+        //    }
+
+        //}
+
+        public static Spreadsheet CreateSpreadsheet(SheetsService _sheetsService, string _spreadsheetName, string _defaultSheetName)
+        {
+            // Create a new spreadsheet
+            var newSpreadSheet = new Google.Apis.Sheets.v4.Data.Spreadsheet();
+            newSpreadSheet.Properties = new SpreadsheetProperties();
+            newSpreadSheet.Properties.Title = _spreadsheetName;
+
+            // Create a new sheet
+            var sheet = new Sheet();
+            sheet.Properties = new SheetProperties();
+            sheet.Properties.Title = _defaultSheetName;
+            newSpreadSheet.Sheets = new List<Sheet>() { sheet };
+
+            // Execute request
+            var newSheet = _sheetsService.Spreadsheets.Create(newSpreadSheet).Execute();
+
+            return newSheet;
+
+        }
+        public static void AddSheet(SheetsService _sheetsService, string _spreadSheetID, string _sheetName)
+        {
+            // Add new Sheet
+            var addSheetRequest = new AddSheetRequest();
+            addSheetRequest.Properties = new SheetProperties();
+            addSheetRequest.Properties.Title = _sheetName;
+            BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
+            batchUpdateSpreadsheetRequest.Requests = new List<Request>();
+            batchUpdateSpreadsheetRequest.Requests.Add(new Request
+            {
+                AddSheet = addSheetRequest
+            });
+
+            // Create request
+            var batchUpdateRequest =
+                _sheetsService.Spreadsheets.BatchUpdate(batchUpdateSpreadsheetRequest, _spreadSheetID);
+
+            // Execute request
+            var response = batchUpdateRequest.Execute();
+        }
+
     }
 
 

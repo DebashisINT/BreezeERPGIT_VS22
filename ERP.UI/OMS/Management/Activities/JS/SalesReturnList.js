@@ -717,8 +717,8 @@ function OnEndCallback(s, e) {
         jAlert(cGrdSalesReturn.cpDelete);
         cGrdSalesReturn.cpDelete = null;
         /* Rev 1.0*/
-        //cGrdSalesReturn.Refresh();
-        updateGridByDate();
+        cGrdSalesReturn.Refresh();
+        //updateGridByDate();
         /* Rev 1.0 End*/
         // window.location.href = "SalesReturnList.aspx";
     }

@@ -24,7 +24,7 @@
             padding: 0px !important;
         }
     </style>
-    <script src="JS/ReturnManualList.js?2.1"></script>
+    <script src="JS/ReturnManualList.js?2.2"></script>
     <%--Subhra--%>
     <script>
         function OnMoreInfoClick(keyValue) {

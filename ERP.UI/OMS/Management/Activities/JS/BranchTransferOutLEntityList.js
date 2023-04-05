@@ -201,8 +201,8 @@ function grid_EndCallBack() {
         cGrdOrder.cpDelete = null;
        
         /* Rev 2.0*/
-        // cGrdOrder.Refresh();
-        updateGridByDate();
+         cGrdOrder.Refresh();
+        //updateGridByDate();
             //end rev 2.0
     }
     if (cGrdOrder.cpCancelUpdate == 'Reason saved successfully') {

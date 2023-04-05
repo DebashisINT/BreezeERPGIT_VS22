@@ -77,9 +77,9 @@ updateGridAfterDelete = function () {
         $("#hfIsFilter").val("Y");
 
         //rev 2.0
-        //cgrid.Refresh();
-        $("#hFilterType").val("All");
-        cCallbackPanel.PerformCallback("");
+        cgrid.Refresh();
+        //$("#hFilterType").val("All");
+        //cCallbackPanel.PerformCallback("");
         //end rev 2.0
 
         $("#drdExport").val(0);

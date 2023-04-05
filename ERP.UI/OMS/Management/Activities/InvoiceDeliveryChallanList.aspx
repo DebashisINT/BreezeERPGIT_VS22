@@ -896,8 +896,8 @@
                 jAlert(message);
 
                 /* Rev 1.0*/
-                // cGrdQuotation.Refresh();
-                updateGridByDate();
+                 cGrdQuotation.Refresh();
+                //updateGridByDate();
                 /* Rev 1.0 End*/
                 
             }
