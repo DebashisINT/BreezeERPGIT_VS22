@@ -95,8 +95,8 @@ function OnEndCallback(s, e) {
         cGrdSalesReturn.cpDelete = null;
        
         /* Rev 2.0*/
-        // cGrdSalesReturn.Refresh();
-        updateGridByDate();
+         cGrdSalesReturn.Refresh();
+        //updateGridByDate();
         /* Rev 2.0 End*/
     }
 }

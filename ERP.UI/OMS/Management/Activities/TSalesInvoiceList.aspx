@@ -12,7 +12,7 @@
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Filteration Section Start By Sam--%>
-    <script src="JS/TransitSalesInvoice.js?v1.0"></script>
+    <script src="JS/TransitSalesInvoice.js?v1.1"></script>
     <script type="text/javascript" src="../../CentralData/JSScript/GenericJScript.js"></script>
     <%-- Filteration Section Start By Sam--%>
     <%--Code Added By Sandip For Approval Detail Section Start--%>
