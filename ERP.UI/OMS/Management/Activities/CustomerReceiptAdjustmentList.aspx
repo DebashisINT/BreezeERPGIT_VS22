@@ -63,8 +63,8 @@
             if (cgridAdvanceAdj.cpReturnMesg) {
                 jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () {                    
                     /* Rev 2.0*/
-                    //   cgridAdvanceAdj.Refresh();
-                    updateGridByDate();
+                       cgridAdvanceAdj.Refresh();
+                    //updateGridByDate();
                     /* Rev 2.0 End*/
                 });
                 cgridAdvanceAdj.cpReturnMesg = null;

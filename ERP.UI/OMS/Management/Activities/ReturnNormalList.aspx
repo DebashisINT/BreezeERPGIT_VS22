@@ -40,7 +40,7 @@
             }
         }
     </script>
-    <script src="JS/ReturnNormalList.js?v1.0.001"></script>
+    <script src="JS/ReturnNormalList.js?v2.0"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="panel-heading clearfix">

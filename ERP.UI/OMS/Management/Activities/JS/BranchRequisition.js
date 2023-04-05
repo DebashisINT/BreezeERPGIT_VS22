@@ -419,8 +419,8 @@ function acbpCrpUdfEndCall(s, e) {
             //CgvPurchaseIndent.PerformCallback();
             CgvPurchaseIndent.cpDelete = null;
             /* Rev 2.0*/
-            //CgvPurchaseIndent.Refresh();
-            updateGridByDate();
+            CgvPurchaseIndent.Refresh();
+            //updateGridByDate();
             //end rev 2.0
         }
         if (CgvPurchaseIndent.cpCancel != null) {
