@@ -1,0 +1,17 @@
+Page :    http://localhost:7670/OMS/management/dailytask/CashBankEntryList.aspx
+Error Message : Exception of type 'System.Web.HttpUnhandledException' was thrown.
+Inner Message : System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at System.Data.SqlClient.SqlConnection.PermissionDemand()
+   at System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DataAccessLayer.ProcedureExecute.Open(String ConnectionString) in C:\Projects\BreezeERPGIT_VS22\DataAccessLayer\ProcedureExecute.cs:line 827
+   at DataAccessLayer.ProcedureExecute.InitQuery(SqlCommand oCmd) in C:\Projects\BreezeERPGIT_VS22\DataAccessLayer\ProcedureExecute.cs:line 395
+   at DataAccessLayer.ProcedureExecute.GetTable() in C:\Projects\BreezeERPGIT_VS22\DataAccessLayer\ProcedureExecute.cs:line 52
+   at BusinessLogicLayer.CommonBL.GetSystemSettingsResult(String VariableName) in C:\Projects\BreezeERPGIT_VS22\BusinessLogicLayer\CommonBL.cs:line 60
+   at ERP.OMS.Management.DailyTask.CashBankEntryList.Page_Load(Object sender, EventArgs e) in C:\Projects\BreezeERPGIT_VS22\ERP.UI\OMS\Management\DailyTask\CashBankEntryList.aspx.cs:line 37
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

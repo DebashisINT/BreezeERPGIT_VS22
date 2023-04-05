@@ -1,0 +1,12 @@
+Page :    http://localhost:7670/OMS/management/dailytask/ContraVoucher.aspx
+Error Message : Exception of type 'System.Web.HttpUnhandledException' was thrown.
+Inner Message : System.ApplicationException: Response.Redirect cannot be called in a Page callback.
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at BusinessLogicLayer.DBEngine.GetConnection() in C:\Projects\BreezeERPGIT_VS22\BusinessLogicLayer\DBEngine.cs:line 90
+   at BusinessLogicLayer.DBEngine.GetDataTable(String query) in C:\Projects\BreezeERPGIT_VS22\BusinessLogicLayer\DBEngine.cs:line 890
+   at ERP.OMS.Management.DailyTask.ContraVoucher.GetMainAccount() in C:\Projects\BreezeERPGIT_VS22\ERP.UI\OMS\Management\DailyTask\ContraVoucher.aspx.cs:line 1524
+   at ERP.OMS.Management.DailyTask.ContraVoucher.Page_Init(Object sender, EventArgs e) in C:\Projects\BreezeERPGIT_VS22\ERP.UI\OMS\Management\DailyTask\ContraVoucher.aspx.cs:line 1650
+   at System.Web.UI.Control.OnInit(EventArgs e)
+   at System.Web.UI.Page.OnInit(EventArgs e)
+   at System.Web.UI.Control.InitRecursive(Control namingContainer)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

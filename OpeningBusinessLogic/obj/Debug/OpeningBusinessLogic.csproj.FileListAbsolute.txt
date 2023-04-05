@@ -7,3 +7,12 @@ E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogi
 E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.csproj.CopyComplete
 E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.dll
 E:\PROJECTS\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.pdb
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\bin\Debug\OpeningBusinessLogic.dll
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\bin\Debug\OpeningBusinessLogic.pdb
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\bin\Debug\DataAccessLayer.dll
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\bin\Debug\DataAccessLayer.pdb
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.csproj.AssemblyReference.cache
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.csproj.CoreCompileInputs.cache
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.csproj.CopyComplete
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.dll
+C:\Projects\BreezeERPGIT_VS22\OpeningBusinessLogic\obj\Debug\OpeningBusinessLogic.pdb
