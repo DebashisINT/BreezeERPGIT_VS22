@@ -2964,7 +2964,7 @@ body {
     width:100%;
 }
 .lblHolder table td {
-    padding: 1px 11px !important;
+    padding: 4px 11px !important;
     vertical-align:top;
 }
 .lblHolder table tr:first-child td {

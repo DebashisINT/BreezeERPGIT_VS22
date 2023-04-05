@@ -2440,30 +2440,30 @@ function gridRowclick(s, e) {
                     <td>
                         <label>From Date</label></td>
                     <td>&nbsp;</td>
-                    <%--Rev 4.0: "for-cust-icon" class add --%>
+                    <%--Rev 2.0: "for-cust-icon" class add --%>
                     <td class="for-cust-icon">
                         <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                             <ButtonStyle Width="13px">
                             </ButtonStyle>
                         </dxe:ASPxDateEdit>
-                        <%--Rev 4.0--%>
+                        <%--Rev 2.0--%>
                         <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                        <%--Rev end 4.0--%>
+                        <%--Rev end 2.0--%>
                     </td>
                     <td>&nbsp;</td>
                     <td>
                         <label>To Date</label>
                     </td>
                     <td>&nbsp;</td>
-                    <%--Rev 4.0: "for-cust-icon" class add --%>
+                    <%--Rev 2.0: "for-cust-icon" class add --%>
                     <td class="for-cust-icon">
                         <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                             <ButtonStyle Width="13px">
                             </ButtonStyle>
                         </dxe:ASPxDateEdit>
-                        <%--Rev 4.0--%>
+                        <%--Rev 2.0--%>
                         <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                        <%--Rev end 4.0--%>
+                        <%--Rev end 2.0--%>
                     </td>
                     <td>&nbsp;</td>
                     <td>Unit</td>

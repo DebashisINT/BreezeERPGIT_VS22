@@ -1,6 +1,7 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
-   1.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
-   2.0   Priti   V2.0.38     03-04-2023     0025257: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Inquiry
+   1.0   Priti    V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+   2.0   Priti    V2.0.38     03-04-2023     0025257: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Inquiry
+   3.0   Pallab   V2.0.38     05-04-2023     Transactions pages design modification
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInquiry.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInquiry" %>
@@ -835,12 +836,431 @@
         });
     </script>
 
+    <style>
+        /*Rev 3.0*/
+
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px !important;
+            /*-webkit-appearance: none;
+            position: relative;
+            z-index: 1;*/
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            bottom: 6px;
+            right: 20px;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        #FormDate , #toDate , #dtTDate , #InstDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .dxeDisabled_PlasticBlue
+        {
+            z-index: 0 !important;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #InstDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #InstDate_B-1 #InstDate_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        .simple-select::after {
+            /*content: '<';*/
+            content: url(../../../assests/images/left-arw.png);
+            position: absolute;
+            top: 6px;
+            right: -2px;
+            font-size: 16px;
+            transform: rotate(269deg);
+            font-weight: 500;
+            background: #094e8c;
+            color: #fff;
+            height: 18px;
+            display: block;
+            width: 26px;
+            /* padding: 10px 0; */
+            border-radius: 4px;
+            text-align: center;
+            line-height: 18px;
+            z-index: 0;
+        }
+        .simple-select {
+            position: relative;
+                z-index: 0;
+        }
+        .simple-select:disabled::after
+        {
+            background: #1111113b;
+        }
+        select.btn
+        {
+            padding-right: 10px !important;
+        }
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: 1;
+    }
+
+        .styled-checkbox + label {
+            position: relative;
+            /*cursor: pointer;*/
+            padding: 0;
+            margin-bottom: 0 !important;
+        }
+
+            .styled-checkbox + label:before {
+                content: "";
+                margin-right: 6px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                /*background: #d7d7d7;*/
+                margin-top: 2px;
+                border-radius: 2px;
+                border: 1px solid #c5c5c5;
+            }
+
+        .styled-checkbox:hover + label:before {
+            background: #094e8c;
+        }
+
+
+        .styled-checkbox:checked + label:before {
+            background: #094e8c;
+        }
+
+        .styled-checkbox:disabled + label {
+            color: #b8b8b8;
+            cursor: auto;
+        }
+
+            .styled-checkbox:disabled + label:before {
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        .styled-checkbox:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            background: white;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+            transform: rotate(45deg);
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin-right: 5px;
+        }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
+
+        .modal-dialog
+        {
+            width: 50%;
+        }
+
+        .modal-header
+        {
+            padding: 8px 4px 8px 10px;
+            background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridLocationwiseStockStatus 
+        
+        {
+            max-width: 98% !important;
+        }
+
+        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
+        {
+            width: 95% !important;
+        }*/
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 3px;
+        }
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
+
+        .dxeBase_PlasticBlue .dxichCellSys
+        {
+            padding-top: 2px !important;
+        }
+
+        .pBackDiv
+        {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #1111112e;
+        }
+        .HeaderStyle th
+        {
+            padding: 5px;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .pt-2
+        {
+            padding-top: 5px;
+        }
+        .pt-10
+        {
+            padding-top: 10px;
+        }
+
+        .pt-15
+        {
+            padding-top: 15px;
+        }
+
+        .pb-10
+        {
+            padding-bottom: 10px;
+        }
+
+        .pTop10 {
+    padding-top: 20px;
+}
+        .custom-padd
+        {
+            padding-top: 4px;
+    padding-bottom: 10px;
+        }
+
+        input + label
+        {
+                margin-right: 10px;
+        }
+
+        .btn
+        {
+            margin-bottom: 0;
+        }
+
+        .pl-10
+        {
+            padding-left: 10px;
+        }
+
+        /*.col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }*/
+
+        .devCheck
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-5
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-10
+        {
+            margin-top: 10px;
+        }
+
+        select.btn
+        {
+           position: relative;
+           z-index: 0;
+        }
+
+        select
+        {
+            margin-bottom: 0;
+        }
+
+        .form-control
+        {
+            background-color: transparent;
+        }
+
+        #massrecdt
+        {
+            width: 100%;
+        }
+
+        .col-sm-3{
+            margin-bottom: 10px;
+        }
+
+        .crossBtn
+        {
+            top: 25px;
+                right: 25px;
+        }
+
+        input[type="text"], input[type="password"], textarea
+        {
+                margin-bottom: 0;
+        }
+
+        .makeFullscreen >table
+        {
+            z-index: 0;
+        }
+        .makeFullscreen .makeFullscreen-icon.half
+        {
+                z-index: 0;
+        }
+        /*Rev end 3.0*/
+        </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%--<dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
            <ClientSideEvents ControlsInitialized="AllControlInitilize" />
         </dxe:ASPxGlobalEvents>--%>
-    <div class="panel-heading clearfix">
+    <%--Rev 3.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading clearfix">
         <div class="panel-title pull-left">
             <h3>Sales Inquiry</h3>
         </div>
@@ -849,20 +1269,28 @@
                 <td>
                     <label>From </label>
                 </td>
-                <td style="width: 150px">
+                <%--Rev 3.0: "for-cust-icon" class add --%>
+                <td style="width: 150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%" UseMaskBehavior="True">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 3.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 3.0--%>
                 </td>
                 <td>
                     <label>To </label>
                 </td>
-                <td style="width: 150px">
+                <%--Rev 3.0: "for-cust-icon" class add --%>
+                <td style="width: 150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%" UseMaskBehavior="True">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 3.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 3.0--%>
                 </td>
                 <td>Unit</td>
                 <td>
@@ -875,11 +1303,11 @@
             </tr>
         </table>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix">
             <% if (rights.CanAdd)
                { %>
-            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span>New</span> </a><%} %>
+            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span>New</span> </a><%} %>
 
             <%--<dxe:ASPxButton ID="btn_Approval" runat="server" class="btn btn-primary" Text="Pending Approval" ClientInstanceName="cbtn_Approval">
                 <ClientSideEvents Click="function (s, e) {OpenPopUPApprovalStatus();}" />
@@ -915,7 +1343,7 @@
             </span>
         </div>
     </div>
-    <div class="GridViewArea relative">
+        <div class="GridViewArea relative">
         <div class="makeFullscreen ">
              <span class="fullScreenTitle">Sales Inquiry</span>
              <span class="makeFullscreen-icon half hovered " data-instance="cGrdQuotation" title="Maximize Grid" id="expandcGrdQuotation">
@@ -1175,11 +1603,12 @@
             ContextTypeName="ERPDataClassesDataContext" TableName="v_SalesInquiryList" />
         <asp:HiddenField ID="hiddenedit" runat="server" />
     </div></div>
-    <div style="display: none">
+    </div>
+        <div style="display: none">
         <dxe:ASPxGridViewExporter ID="exporter" GridViewID="GrdQuotation" runat="server" Landscape="false" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
         </dxe:ASPxGridViewExporter>
     </div>
-    <div class="PopUpArea">
+        <div class="PopUpArea">
         <%--Client Wise Quotation Status Section Start--%>
 
         <dxe:ASPxPopupControl ID="Popup_QuotationStatus" runat="server" ClientInstanceName="cQuotationStatus"
@@ -1430,7 +1859,7 @@
 
         <%-- Sandip Approval Dtl Section End--%>
     </div>
-    <div class="PopUpArea">
+        <div class="PopUpArea">
 
 <dxe:ASPxPopupControl ID="popup_QuoteWait" runat="server" Width="1200"
         CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="Cpopup_QuoteWait"
