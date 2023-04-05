@@ -153,12 +153,12 @@
                 z-index: -1;
             }
 
-        .horizontallblHolder {
-            height: auto;
-            border: 1px solid #12a79b;
-            border-radius: 3px;
-            overflow: hidden;
-        }
+            .horizontallblHolder {
+                height: auto;
+                border: 1px solid #1da256;
+                border-radius: 3px;
+                overflow: hidden;
+            }
 
             .horizontallblHolder > table > tbody > tr > td {
                 padding: 8px 10px;
@@ -170,15 +170,19 @@
             }
 
                 .horizontallblHolder > table > tbody > tr > td:first-child {
-                    background: #12a79b;
+                    background: #1da256;
                     color: #fff;
                 }
 
-                .horizontallblHolder > table > tbody > tr > td:last-child {
-                    font-weight: 500;
-                    text-transform: uppercase;
-                    color: #121212;
-                }
+                    .horizontallblHolder > table > tbody > tr > td:first-child span {
+                        color: #fff !important;
+                    }
+
+                    .horizontallblHolder > table > tbody > tr > td:last-child {
+                        font-weight: 500;
+                        text-transform: uppercase;
+                        color: #121212;
+                    }
 
 
                  .dxgvControl_PlasticBlue td.dxgvBatchEditModifiedCell_PlasticBlue {
