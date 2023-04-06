@@ -1,4 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockJournalAddOUT.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockJournalAddOUT" %>
+﻿<%--**************************************************************************************************************************************
+1.0     Priti           V2.0.37   15-03-2023    0025689: Alt Qty column & data is not showing while making Warehouse wise Stock out
+2.0     Sanchita        V2.0.38   06-04-2023    Error in Multiple UOM window while Add. Error message showing 
+                                                "A field or property with name 'AltQuantity' was not found in the selected data source."
+                                                Refer: 
+**************************************************************************************************************************************--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockJournalAddOUT.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockJournalAddOUT" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc1" TagName="UOMConversionControl" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 
@@ -1193,7 +1199,8 @@
 
                             </div>
                             <div class="clearfix">
-                                <dxe:ASPxGridView ID="grid_MultiUOM" runat="server" KeyFieldName="AltUomId;AltQuantity" AutoGenerateColumns="False"
+                                <%--Rev 2.0 [KeyFieldName has been changed FROM "AltUomId;AltQty" to "AltUomId;AltQty" ] --%>
+                                <dxe:ASPxGridView ID="grid_MultiUOM" runat="server" KeyFieldName="AltUomId;AltQty" AutoGenerateColumns="False"
                                     Width="100%" ClientInstanceName="cgrid_MultiUOM" OnCustomCallback="MultiUOM_CustomCallback" OnDataBinding="MultiUOM_DataBinding"
                                     SettingsPager-Mode="ShowAllRecords" Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="200" SettingsBehavior-AllowSort="false">
                                     <Columns>
@@ -1224,7 +1231,8 @@
                                             VisibleIndex="2">
                                         </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn Caption="Alt. Quantity" FieldName="AltQuantity"
+                                        <%--Rev 2.0 [FieldName has been changed FROM "AltUomId" TO "AltQty" ] --%>
+                                        <dxe:GridViewDataTextColumn Caption="Alt. Quantity" FieldName="AltQty"
                                             VisibleIndex="3" HeaderStyle-HorizontalAlign="Right">
                                         </dxe:GridViewDataTextColumn>
 
