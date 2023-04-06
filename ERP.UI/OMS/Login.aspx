@@ -1455,13 +1455,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                          <li class="tc_s5221f_fg"><span class="nameCR">Priti Ghosh</span></li>
                          <li><span class="nameCR">Pijush Kumar Bhattacharya</span></li>
                          <li><span class="nameCR">Pratik Ghosh</span></li>
+                        <li><span class="nameCR">Priyanka</span></li>
                          <li><span class="nameCR">Rajdip Mukherjee</span></li>
                          <li><span class="nameCR">Susanta Kundu</span></li>
                          <li><span class="nameCR">Sanchita Saha</span></li>
                          <li><span class="nameCR">Saheli Bhattacharya</span></li>
                          <li><span class="nameCR">Suman Bachar</span></li>
-                         <li><span class="nameCR">Suman Roy</span></li>
-                         <li><span class="nameCR">Shantanu Saha</span></li>                   
+                         <li><span class="nameCR">Suman Roy</span></li>                  
                          <li><span class="nameCR">Saikat Das</span></li>      
                          <li><span class="nameCR">Sanjoy Ganguly</span></li>
                          <li><span class="nameCR">Sayantani Mandal</span></li>
@@ -1470,6 +1470,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                          <li><span class="nameCR">Sudip Kumar Pal</span></li>
                          <li><span class="nameCR">Surojit Chatterjee</span></li>
                          <li><span class="nameCR">Suvankar Dey</span></li>
+                        <li><span class="nameCR">Sourav Goswami</span></li>
+                        <li><span class="nameCR">Sneha das</span></li>
                         <li><span class="nameCR">Shantanu Saha</span></li>
                         <li><span class="nameCR">Swatilekha Mukherjee</span></li>   
                         <li><span class="nameCR">Tanmoy Ghosh</span></li>
