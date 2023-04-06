@@ -1246,8 +1246,8 @@ table, .dataTables_wrapper {
 }
 
 .dataTables_wrapper input[type="search"] {
-    height: 35px;
-    padding: 10px 15px;
+    height: 30px;
+    padding: 0px 15px;
     font-size: 12px;
     line-height: 1.42857143;
     color: #2c3e50;
@@ -1259,6 +1259,7 @@ table, .dataTables_wrapper {
     -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    margin-bottom: 5px;
 }
 
     .dataTables_wrapper input[type="search"]:focus {
@@ -4081,7 +4082,7 @@ button:focus
     overflow: hidden;*/
 }
 
-.panel-title h3 {
+.panel-title h3, .panel-title h3 label {
     font-size: 26px !important;
     font-weight: 500 !important;
 }
@@ -4111,7 +4112,7 @@ input[type="text"], input[type="password"], textarea, .chosen-container-single .
         }*/
 
 label, .mylabel1, .clsTo, .dxeBase_PlasticBlue {
-    color: #141414 !important;
+    /*color: #141414 !important;*/
     font-size: 14px !important;
     font-weight: 500 !important;
     margin-bottom: 0 !important;

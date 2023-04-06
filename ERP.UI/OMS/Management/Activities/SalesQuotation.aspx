@@ -845,7 +845,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             width: 100%;
         }
 
-        .col-sm-3 , .col-md-3{
+        .col-sm-3 , .col-md-3 , .col-md-2{
             margin-bottom: 10px;
         }
 
@@ -1281,7 +1281,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                         </div>
                                          <div style="clear: both;"></div>
                                         <div class="col-md-2">
-                                            <asp:RadioButtonList ID="rdl_Salesquotation" runat="server" RepeatDirection="Horizontal" onchange="return selectValue();" Width="120px">
+                                            <asp:RadioButtonList ID="rdl_Salesquotation" runat="server" RepeatDirection="Horizontal" onchange="return selectValue();" Width="150px">
                                                 <asp:ListItem Text="Inquiry Number" Value="SINQ"></asp:ListItem>
                                             </asp:RadioButtonList>
                                             <dxe:ASPxCallbackPanel runat="server" ID="ComponentQuotationPanel" ClientInstanceName="cQuotationComponentPanel" OnCallback="ComponentQuotation_Callback">
