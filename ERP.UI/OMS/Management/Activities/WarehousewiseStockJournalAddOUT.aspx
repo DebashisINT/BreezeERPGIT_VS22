@@ -2,7 +2,7 @@
 1.0     Priti           V2.0.37   15-03-2023    0025689: Alt Qty column & data is not showing while making Warehouse wise Stock out
 2.0     Sanchita        V2.0.38   06-04-2023    Error in Multiple UOM window while Add. Error message showing 
                                                 "A field or property with name 'AltQuantity' was not found in the selected data source."
-                                                Refer: 
+                                                Refer: 25789
 **************************************************************************************************************************************--%>
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockJournalAddOUT.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockJournalAddOUT" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc1" TagName="UOMConversionControl" %>

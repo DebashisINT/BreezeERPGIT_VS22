@@ -1,5 +1,10 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0   v4.0.37	Priti	04-03-2023	0025652:Alternate qty is not calculating while making Warehouse wise Stock In entry
+// 2.0   V2.0.38    Sanchita    07-04-2023      Error while trying to save Transactions / Inventory / Warehouse Wise Stock - IN
+//                                              Error will come where the document we try to save the document after giving
+//                                              Multiple UOM Details are given.
+//                                              Error message: "Column 'AltQty' does not belong to underlying table ''.
+//                                              Refer: 25792
 #endregion//====================================================End Revision History=====================================================================
 
 using System;
@@ -2315,8 +2320,10 @@ namespace ERP.OMS.Management.Activities
                 DataTable MultiUOM = (DataTable)Session["MultiUOMData"];
                 // Mantis Issue 24428
                 // MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "DetailsId");
-                MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQty", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
-                // End of Mantis Issue 24428
+                // Rev 2.0 [ "AltQty" has been replaced by "AltQuantity" ]
+                //MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQty", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
+                MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "BaseRate", "AltRate", "UpdateRow");
+                // End of Rev 2.0
             }
             else
             {
