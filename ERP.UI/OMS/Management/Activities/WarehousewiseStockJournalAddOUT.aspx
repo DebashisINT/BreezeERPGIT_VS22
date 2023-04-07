@@ -1199,7 +1199,7 @@
 
                             </div>
                             <div class="clearfix">
-                                <%--Rev 2.0 [KeyFieldName has been changed FROM "AltUomId;AltQty" to "AltUomId;AltQty" ] --%>
+                                <%--Rev 2.0 [KeyFieldName has been changed FROM "AltUomId;AltQuantity" to "AltUomId;AltQty" ] --%>
                                 <dxe:ASPxGridView ID="grid_MultiUOM" runat="server" KeyFieldName="AltUomId;AltQty" AutoGenerateColumns="False"
                                     Width="100%" ClientInstanceName="cgrid_MultiUOM" OnCustomCallback="MultiUOM_CustomCallback" OnDataBinding="MultiUOM_DataBinding"
                                     SettingsPager-Mode="ShowAllRecords" Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="200" SettingsBehavior-AllowSort="false">
@@ -1231,7 +1231,7 @@
                                             VisibleIndex="2">
                                         </dxe:GridViewDataTextColumn>
 
-                                        <%--Rev 2.0 [FieldName has been changed FROM "AltUomId" TO "AltQty" ] --%>
+                                        <%--Rev 2.0 [FieldName has been changed FROM "AltQuantity" TO "AltQty" ] --%>
                                         <dxe:GridViewDataTextColumn Caption="Alt. Quantity" FieldName="AltQty"
                                             VisibleIndex="3" HeaderStyle-HorizontalAlign="Right">
                                         </dxe:GridViewDataTextColumn>
