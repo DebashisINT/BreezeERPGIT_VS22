@@ -64,6 +64,10 @@ namespace ERP.OMS.Management.Activities
         string PartyTotalBalAmt = "";
         string PartyTotalBalDesc = "";
         DataTable Remarks = null;
+        // Rev 1.0
+        public string IsToleranceInSalesOrder = null;
+        // End of Rev 1.0
+
         protected void Page_PreInit(object sender, EventArgs e) // lead add
         {
             #region Sandip Section For Approval Section Start
@@ -285,6 +289,21 @@ namespace ERP.OMS.Management.Activities
                     lookup_Project.Columns[3].Visible = false;
                 }
             }
+
+            // Rev Sanchita
+            IsToleranceInSalesOrder = ComBL.GetSystemSettingsResult("IsToleranceInSalesOrder");
+            if (!String.IsNullOrEmpty(IsToleranceInSalesOrder))
+            {
+                if (IsToleranceInSalesOrder.ToUpper().Trim() == "YES")
+                {
+                    divQtyTolerance.Visible = true;
+                }
+                else if (IsToleranceInSalesOrder.ToUpper().Trim() == "NO")
+                {
+                    divQtyTolerance.Visible = false;
+                }
+            }
+            // End of Rev Sanchita
 
             if (!IsPostBack)
             {
@@ -5007,7 +5026,14 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@SegmentID4", Segment4);
                 cmd.Parameters.AddWithValue("@SegmentID5", Segment5);
                 // Rev 1.0
-                cmd.Parameters.AddWithValue("@QtyTolerance", Convert.ToDecimal(strQtyTolerance));
+                if(IsToleranceInSalesOrder.ToUpper().Trim() == "NO")
+                {
+                    cmd.Parameters.AddWithValue("@QtyTolerance", 0.00);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@QtyTolerance", Convert.ToDecimal(strQtyTolerance));
+                }
                 // End of Rev 1.0
 
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);

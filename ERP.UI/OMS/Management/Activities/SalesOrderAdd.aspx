@@ -2094,7 +2094,7 @@ function PerformCallToGridBind() {
                                             </asp:DropDownList>
                                         </div>
                                         <%--Rev 1.0--%>
-                                        <div class="col-md-2 lblmTop8">
+                                        <div id="divQtyTolerance" runat="server" class="col-md-2 lblmTop8">
                                             <dxe:ASPxLabel ID="lblTolerance" runat="server" Text="Quantity Tolerance %">
                                             </dxe:ASPxLabel>
                                            <dxe:ASPxTextBox runat="server" ID="txtQtyTolerance" ClientInstanceName="ctxtQtyTolerance" Width="100%" CssClass="pull-left">
