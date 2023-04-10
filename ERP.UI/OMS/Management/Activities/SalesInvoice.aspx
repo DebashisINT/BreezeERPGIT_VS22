@@ -1,5 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
-   1.0   Priti   V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
+   1.0   Priti      V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
+   2.0   Sanchita   V2.0.38     10-04-2023     Tolerance feature required in Sales Order Module. Refer: 25223     
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoice" %>
@@ -4397,8 +4398,9 @@ $(document).ready(function () {
     <%--Rev work start 24.06.2022 mantise no:0024987--%>
     <asp:HiddenField runat="server" ID="hdnCoordinate" />
     <%--Rev work start 24.06.2022 mantise no:0024987--%>
-
-
+    <%--Rev 2.0--%>
+    <asp:HiddenField runat="server" ID="hdnIsToleranceInSalesOrder" />
+    <%--End of Rev 2.0--%>
 
      <!--Schedule Modal -->
     <div class="modal fade" id="ScheduleModel" role="dialog">

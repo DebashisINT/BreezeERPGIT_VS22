@@ -66,6 +66,10 @@ namespace ERP.OMS.Management.Activities
         public string pageAccess = "";
         string userbranch = "";
         string QuotationIds = string.Empty;
+        // Rev 1.0
+        public string IsToleranceInSalesOrder = null;
+        // End of Rev 1.0
+
         PosSalesInvoiceBl posSale = new PosSalesInvoiceBl();
 
         public EntityLayer.CommonELS.UserRightsForPage rightsProd = new UserRightsForPage();
@@ -290,6 +294,21 @@ namespace ERP.OMS.Management.Activities
                     hdnBillDepatchsetting.Value = "0";
                 }
             }
+
+            // Rev 1.0
+            IsToleranceInSalesOrder = ComBL.GetSystemSettingsResult("IsToleranceInSalesOrder");
+            if (!String.IsNullOrEmpty(IsToleranceInSalesOrder))
+            {
+                if (IsToleranceInSalesOrder.ToUpper().Trim() == "YES")
+                {
+                    hdnIsToleranceInSalesOrder.Value = "1" ;
+                }
+                else if (IsToleranceInSalesOrder.ToUpper().Trim() == "NO")
+                {
+                    hdnIsToleranceInSalesOrder.Value = "0"; 
+                }
+            }
+            // End of Rev 1.0
 
             if (!IsPostBack)
             {
@@ -1077,10 +1096,9 @@ namespace ERP.OMS.Management.Activities
 
         // Rev 1.0
         [WebMethod]
-        public static decimal CheckSOQty(String SODoc_ID, String SODocDetailsID, int SLNo)
+        public static decimal CheckSOQty(String SODoc_ID, String SODocDetailsID, int SLNo, string IsToleranceInSalesOrder)
         {
             int qtyCheck = 1;
-
             decimal SOQty = 0;
             decimal SOAltQty = 0;
             decimal BalanceQuantity = 0;
@@ -1089,24 +1107,9 @@ namespace ERP.OMS.Management.Activities
             decimal QuantityValue = 0;
             decimal CurrQty = 0;
 
-            ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesInvoice_Details");
-            proc.AddVarcharPara("@Action", 500, "FetchSOToleranceQty");
-            proc.AddVarcharPara("@Doc_ID", 100, SODoc_ID);
-            proc.AddVarcharPara("@DocDetailsID", 100, SODocDetailsID);
-            DataTable dt = proc.GetTable();
-
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                SOQty = Convert.ToDecimal(dt.Rows[0]["SOQty"]);
-                SOAltQty = Convert.ToDecimal(dt.Rows[0]["SOAltQty"]);
-                BalanceQuantity = Convert.ToDecimal(dt.Rows[0]["BalanceQuantity"]);
-                ToleranceQty = Convert.ToDecimal(dt.Rows[0]["ToleranceQty"]);
-                ToleranceAltQty = Convert.ToDecimal(dt.Rows[0]["ToleranceAltQty"]);
-
-            }
-
             if (HttpContext.Current.Session["MultiUOMData"] != null)
             {
+                DataTable dt = new DataTable();
                 DataRow[] MultiUoMresult;
                 dt = (DataTable)HttpContext.Current.Session["MultiUOMData"];
                 MultiUoMresult = dt.Select("SrlNo ='" + SLNo + "' and UpdateRow ='True'");
@@ -1118,10 +1121,37 @@ namespace ERP.OMS.Management.Activities
 
             }
 
-            if (QuantityValue > (BalanceQuantity + ToleranceQty))
+            ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesInvoice_Details");
+            proc.AddVarcharPara("@Action", 500, "FetchSOToleranceQty");
+            proc.AddVarcharPara("@Doc_ID", 100, SODoc_ID);
+            proc.AddVarcharPara("@DocDetailsID", 100, SODocDetailsID);
+            DataTable dt1 = proc.GetTable();
+
+            if (dt1 != null && dt1.Rows.Count > 0)
             {
-                qtyCheck = 0;
+                SOQty = Convert.ToDecimal(dt1.Rows[0]["SOQty"]);
+                SOAltQty = Convert.ToDecimal(dt1.Rows[0]["SOAltQty"]);
+                BalanceQuantity = Convert.ToDecimal(dt1.Rows[0]["BalanceQuantity"]);
+                ToleranceQty = Convert.ToDecimal(dt1.Rows[0]["ToleranceQty"]);
+                ToleranceAltQty = Convert.ToDecimal(dt1.Rows[0]["ToleranceAltQty"]);
+
             }
+
+            if (IsToleranceInSalesOrder == "1")
+            {
+                if (QuantityValue > (BalanceQuantity + ToleranceQty))
+                {
+                    qtyCheck = 0;
+                }
+            }
+            else
+            {
+                if (QuantityValue > BalanceQuantity)
+                {
+                    qtyCheck = 0;
+                }
+            }
+           
 
             return qtyCheck;
         }
