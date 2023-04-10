@@ -38,7 +38,7 @@
     </style>
 
     <style>
-        /*Rev 1.0*/
+        /*Rev 2.0*/
 
         select
         {
@@ -521,7 +521,7 @@
     margin-bottom: 5px;
 }
 
-        /*Rev end 1.0*/
+        /*Rev end 2.0*/
         </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
