@@ -581,22 +581,22 @@ namespace ERP.OMS.Management.Activities
                 {
                     strNewVal = Convert.ToString(drr["WHSTWarehouse_Id"]);
 
-                    if (strNewVal == strOldVal)
-                    {
-                        drr["WarehouseName"] = "";
-                        drr["Quantity"] = "";
-                        drr["BatchNo"] = "";
-                        drr["SalesUOMName"] = "";
-                        drr["SalesQuantity"] = "";
-                        drr["StkUOMName"] = "";
-                        drr["MfgDate"] = "";
-                        drr["ExpiryDate"] = "";
-                    }
+                    //if (strNewVal == strOldVal)
+                    //{
+                    //    drr["WarehouseName"] = "";
+                    //    drr["Quantity"] = "";
+                    //    drr["BatchNo"] = "";
+                    //    drr["SalesUOMName"] = "";
+                    //    drr["SalesQuantity"] = "";
+                    //    drr["StkUOMName"] = "";
+                    //    drr["MfgDate"] = "";
+                    //    drr["ExpiryDate"] = "";
+                    //}
 
                     strOldVal = strNewVal;
                 }
 
-                Session["LoopSalesOrderWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
+              //  Session["LoopSalesOrderWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
                 tempdt.Columns.Remove("WHSTWarehouse_Id");
                 return tempdt;
             }
@@ -615,34 +615,34 @@ namespace ERP.OMS.Management.Activities
 
                 DataTable dt = new DataTable();
                 ProcedureExecute proc = new ProcedureExecute("Prc_WarehousewiseStockJournal_details");
-                proc.AddVarcharPara("@Action", 500, "WHSJDestinationWarehouse");
+                proc.AddVarcharPara("@Action", 500, "WHSJDestinationWarehouseWHSJ");
                 proc.AddVarcharPara("@AdjId", 500, Convert.ToString(Request.QueryString["Key"]));
                 proc.AddVarcharPara("@Multiwarehouse", 500, Convert.ToString(multiwarehouse));
                 dt = proc.GetTable();
 
                 string strNewVal = "", strOldVal = "";
                 DataTable tempdt = dt.Copy();
-                foreach (DataRow drr in tempdt.Rows)
-                {
-                    strNewVal = Convert.ToString(drr["WHSTWarehouse_Id"]);
+                //foreach (DataRow drr in tempdt.Rows)
+                //{
+                //    strNewVal = Convert.ToString(drr["WHSTWarehouse_Id"]);
 
-                    if (strNewVal == strOldVal)
-                    {
-                        drr["WarehouseName"] = "";
-                        drr["Quantity"] = "";
-                        drr["BatchNo"] = "";
-                        drr["SalesUOMName"] = "";
-                        drr["SalesQuantity"] = "";
-                        drr["StkUOMName"] = "";
-                        drr["MfgDate"] = "";
-                        drr["ExpiryDate"] = "";
-                    }
+                //    if (strNewVal == strOldVal)
+                //    {
+                //        drr["WarehouseName"] = "";
+                //        drr["Quantity"] = "";
+                //        drr["BatchNo"] = "";
+                //        drr["SalesUOMName"] = "";
+                //        drr["SalesQuantity"] = "";
+                //        drr["StkUOMName"] = "";
+                //        drr["MfgDate"] = "";
+                //        drr["ExpiryDate"] = "";
+                //    }
 
-                    strOldVal = strNewVal;
-                }
+                //    strOldVal = strNewVal;
+                //}
 
-                Session["LoopSalesOrderWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
-                tempdt.Columns.Remove("WHSTWarehouse_Id");
+                //Session["LoopSalesOrderWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
+               // tempdt.Columns.Remove("WHSTWarehouse_Id");
                 return tempdt;
             }
             catch
@@ -1118,7 +1118,7 @@ namespace ERP.OMS.Management.Activities
             if (Session["WHSJSour_WarehouseData"] != null)
             {
                 DataTable Warehousedt = (DataTable)Session["WHSJSour_WarehouseData"];
-                tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID");
+                tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "Quantity", "BatchID", "SerialID", "MfgDate", "ExpiryDate");
             }
             else
             {
@@ -1807,6 +1807,64 @@ namespace ERP.OMS.Management.Activities
                 DataTable tempSourceWarehousedt = new DataTable();
                 tempSourceWarehousedt = (DataTable)Session["TempSourceWarehousedt"];
                 HttpContext.Current.Session["TempSourceWarehousedt"] = null;
+
+                //REV 2.0
+                foreach (DataRow wtrow in tempWarehousedt.Rows)
+                {
+                    string strMfgDate = Convert.ToString(wtrow["MfgDate"]).Trim();
+                    string strExpiryDate = Convert.ToString(wtrow["ExpiryDate"]).Trim();
+
+                    if (strMfgDate != "")
+                    {
+                        string DD = strMfgDate.Substring(0, 2);
+                        string MM = strMfgDate.Substring(3, 2);
+                        string YYYY = strMfgDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        wtrow["MfgDate"] = Date;
+                    }
+
+                    if (strExpiryDate != "")
+                    {
+                        string DD = strExpiryDate.Substring(0, 2);
+                        string MM = strExpiryDate.Substring(3, 2);
+                        string YYYY = strExpiryDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        wtrow["ExpiryDate"] = Date;
+                    }
+                }
+                tempWarehousedt.AcceptChanges();
+
+                foreach (DataRow wtrow in tempSourceWarehousedt.Rows)
+                {
+                    string strMfgDate = Convert.ToString(wtrow["MfgDate"]).Trim();
+                    string strExpiryDate = Convert.ToString(wtrow["ExpiryDate"]).Trim();
+
+                    if (strMfgDate != "")
+                    {
+                        string DD = strMfgDate.Substring(0, 2);
+                        string MM = strMfgDate.Substring(3, 2);
+                        string YYYY = strMfgDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        wtrow["MfgDate"] = Date;
+                    }
+
+                    if (strExpiryDate != "")
+                    {
+                        string DD = strExpiryDate.Substring(0, 2);
+                        string MM = strExpiryDate.Substring(3, 2);
+                        string YYYY = strExpiryDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        wtrow["ExpiryDate"] = Date;
+                    }
+                }
+                tempSourceWarehousedt.AcceptChanges();
+                //REV 2.0 END
+
+
 
                 Int64 Proj_id = 0;
                 if (lookup_Project.Text != "")
@@ -4337,8 +4395,8 @@ namespace ERP.OMS.Management.Activities
                     {
                         string maxID = (Convert.ToString(Warehousedt.Compute("MAX([SrlNo])", "")) != "") ? Convert.ToString(Convert.ToInt32(Warehousedt.Compute("MAX([SrlNo])", "")) + 1) : "1";
                         //REV RAJDIP
-                        //var updaterows = Warehousedt.Select("WarehouseID ='" + WarehouseID + "' AND BatchID='" + BatchID + "' AND Product_SrlNo='" + ProductSerialID + "'");
-                        var updaterows = Warehousedt.Select("WarehouseID ='" + WarehouseID + "' AND SrlNo='" + ProductSerialID + "' AND Product_SrlNo='" + ProductSerialID + "'");
+                        var updaterows = Warehousedt.Select("WarehouseID ='" + WarehouseID + "' AND BatchID='" + BatchID + "' AND Product_SrlNo='" + ProductSerialID + "'");
+                        //var updaterows = Warehousedt.Select("WarehouseID ='" + WarehouseID + "' AND SrlNo='" + ProductSerialID + "' AND Product_SrlNo='" + ProductSerialID + "'");
                         //END REV RAJDIP
                         if (updaterows.Length == 0)
                         {
@@ -4357,9 +4415,15 @@ namespace ERP.OMS.Management.Activities
                                 //row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 //row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
 
-                                row["Quantity"] = (Convert.ToDecimal(Qty));
-                                row["TotalQuantity"] = (Convert.ToDecimal(Qty));
-                                row["SalesQuantity"] = (Convert.ToDecimal(Qty) + " " + Sales_UOM_Name);
+                                //row["Quantity"] = (Convert.ToDecimal(Qty));
+                                //row["TotalQuantity"] = (Convert.ToDecimal(Qty));
+                                //row["SalesQuantity"] = (Convert.ToDecimal(Qty) + " " + Sales_UOM_Name);
+
+                                row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
+                                row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
+                                row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
+
+
                                 row["MfgDate"] = MfgDate;
                                 row["ExpiryDate"] = ExpiryDate;
                                 row["WarehouseID"] = WarehouseID;
