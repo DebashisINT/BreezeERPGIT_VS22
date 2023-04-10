@@ -1331,7 +1331,7 @@
                                 <div class="Left_Content" style="">
                                     <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
                                         <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
-                                        <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />
+                                        <%--<ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />--%>
                                     </dxe:ASPxTextBox>
                                     <span id="spntxtQuantity" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                 </div>
