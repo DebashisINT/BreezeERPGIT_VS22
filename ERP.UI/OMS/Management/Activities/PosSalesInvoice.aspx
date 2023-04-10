@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableViewStateMac="false" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="PosSalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesInvoice" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                10-04-2023        2.0.37           Pallab              Transactions pages design modification
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableViewStateMac="false" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="PosSalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesInvoice" %>
 
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -7569,6 +7574,506 @@ function CmbWarehouse_ValueChange() {
             margin-bottom: 7px;
         }
     </style>
+
+    <style>
+        /*Rev 1.0*/
+
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px !important;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            bottom: 13px;
+            right: 10px;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #deliveryDate
+        {
+            position: relative !important;
+            z-index: 1 !important;
+            background: transparent;
+        }
+
+        .dxeDisabled_PlasticBlue
+        {
+            z-index: 0 !important;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #deliveryDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #deliveryDate_B-1 #deliveryDate_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        .simple-select::after {
+            /*content: '<';*/
+            content: url(../../../assests/images/left-arw.png);
+            position: absolute;
+            top: 6px;
+            right: -2px;
+            font-size: 16px;
+            transform: rotate(269deg);
+            font-weight: 500;
+            background: #094e8c;
+            color: #fff;
+            height: 18px;
+            display: block;
+            width: 26px;
+            /* padding: 10px 0; */
+            border-radius: 4px;
+            text-align: center;
+            line-height: 18px;
+            z-index: 0;
+        }
+        .simple-select {
+            position: relative;
+                z-index: 0;
+        }
+        .simple-select:disabled::after
+        {
+            background: #1111113b;
+        }
+        select.btn
+        {
+            padding-right: 10px !important;
+        }
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: 1;
+    }
+
+        .styled-checkbox + label {
+            position: relative;
+            /*cursor: pointer;*/
+            padding: 0;
+            margin-bottom: 0 !important;
+        }
+
+            .styled-checkbox + label:before {
+                content: "";
+                margin-right: 6px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                /*background: #d7d7d7;*/
+                margin-top: 2px;
+                border-radius: 2px;
+                border: 1px solid #c5c5c5;
+            }
+
+        .styled-checkbox:hover + label:before {
+            background: #094e8c;
+        }
+
+
+        .styled-checkbox:checked + label:before {
+            background: #094e8c;
+        }
+
+        .styled-checkbox:disabled + label {
+            color: #b8b8b8;
+            cursor: auto;
+        }
+
+            .styled-checkbox:disabled + label:before {
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        .styled-checkbox:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            background: white;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+            transform: rotate(45deg);
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin-right: 0px !important;
+        }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
+
+        .modal-dialog
+        {
+            width: 50%;
+        }
+
+        .modal-header
+        {
+            padding: 8px 4px 8px 10px;
+            background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridLocationwiseStockStatus ,
+        #GrdQuotation
+        {
+            max-width: 98% !important;
+        }
+
+        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
+        {
+            width: 95% !important;
+        }*/
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled , .dxeDisabled_PlasticBlue
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 3px;
+        }
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
+
+        .dxeBase_PlasticBlue .dxichCellSys
+        {
+            padding-top: 2px !important;
+        }
+
+        .pBackDiv
+        {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #1111112e;
+        }
+        .HeaderStyle th
+        {
+            padding: 5px;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .pb-10
+        {
+            padding-bottom: 10px;
+        }
+
+        .pTop10 {
+    padding-top: 20px;
+}
+        .custom-padd
+        {
+            padding-top: 4px;
+    padding-bottom: 10px;
+        }
+
+        input + label
+        {
+                margin-right: 10px;
+        }
+
+        .btn
+        {
+            margin-bottom: 0;
+        }
+
+        .pl-10
+        {
+            padding-left: 10px;
+        }
+
+        /*.col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }*/
+
+        .devCheck
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-5
+        {
+            margin-top: 5px;
+        }
+
+        #txtProdSearch
+        {
+            margin-bottom: 10px;
+        }
+
+        select.btn
+        {
+           position: relative;
+           z-index: 0;
+        }
+
+        select
+        {
+            margin-bottom: 0;
+        }
+
+        .form-control
+        {
+            background-color: transparent;
+        }
+
+        #massrecdt
+        {
+            width: 100%;
+        }
+
+        /*.col-sm-3 , .col-md-3{
+            margin-bottom: 10px;
+        }*/
+
+        .crossBtn
+        {
+            top: 25px;
+                right: 25px;
+        }
+
+        input[type="text"], input[type="password"], textarea
+        {
+                margin-bottom: 0;
+        }
+
+        .typeNotification span
+        {
+             color: #ffffff !important;
+        }
+
+        #rdl_Salesquotation
+        {
+            margin-top: 8px;
+    line-height: 20px;
+        }
+
+        #ASPxLabel8
+        {
+            line-height: 16px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+                margin-top: 0 !important;
+        }
+
+        #OFDBankSelect
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .mt-28{
+            margin-top: 28px;
+        }
+
+        .mb-10{
+            margin-bottom: 10px;
+        }
+
+        /*.col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0;
+        }*/
+
+        #CallbackPanel_LPV
+        {
+            top: 450px !important;
+        }
+
+        /*.GridViewArea
+        {
+            z-index: 0;
+        }*/
+
+        select.btn
+        {
+            height: 34px !important;
+        }
+
+        .makeFullscreen >table
+        {
+            z-index: 0;
+        }
+        .makeFullscreen .makeFullscreen-icon.half
+        {
+                z-index: 0;
+        }
+
+        .lblmBot4 > span, .lblmBot4 > label
+        {
+                margin-bottom: 0px !important;
+        }
+
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0px !important;
+        }
+
+        .btn
+        {
+            padding: 5px 10px;
+        }
+        .mbot5 .col-md-8 {
+    margin-bottom: 5px;
+}
+
+        .wrapHolder
+        {
+            height: auto;
+        }
+
+        #idOutstanding
+        {
+            min-height: 18px !important;
+        }
+
+        .bod-table > tbody > tr > td
+        {
+            background: #fff !important;
+        }
+        .dxeDisabled_PlasticBlue
+        {
+            background: #f3f3f3 !important;
+        }
+
+        
+
+        /*Rev end 1.0*/
+        </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="JS/PosSalesInvoice.js?var=2.6"></script>
@@ -7577,7 +8082,9 @@ function CmbWarehouse_ValueChange() {
     <script src="UserControls/Js/ucPaymentDetails.js?var=1.0"></script>
 
     <asp:HiddenField ID="hfVSFileName" runat="server" />
-    <div class="panel-title clearfix" id="myDiv">
+    <%--Rev 2.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-title clearfix" id="myDiv">
         <h3 class="pull-left">
             <asp:Label ID="lblHeadTitle" Text="" runat="server"></asp:Label>
             <%--<label>Add Proforma Invoice/ Quotation</label>--%>
@@ -7756,7 +8263,7 @@ function CmbWarehouse_ValueChange() {
         <div id="divcross" runat="server" class="crossBtn"><a href="PosSalesInvoiceList.aspx"><i class="fa fa-times"></i></a></div>
 
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <asp:Panel ID="pnl_quotation" runat="server">
             <div class="">
                 <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
@@ -7765,7 +8272,7 @@ function CmbWarehouse_ValueChange() {
                             <ContentCollection>
                                 <dxe:ContentControl runat="server">
                                     <div class="">
-                                        <div style="background: #c2d8e6;">
+                                        <div style="">
                                             <table class="bod-table">
                                                 <tbody>
                                                     <tr>
@@ -7773,7 +8280,7 @@ function CmbWarehouse_ValueChange() {
                                                         <td id="divScheme" runat="server" style="padding-top: 10px; width: 177px">
                                                             <dxe:ASPxLabel ID="lbl_NumberingScheme" runat="server" Text="Numbering Scheme">
                                                             </dxe:ASPxLabel>
-                                                            <div>
+                                                            <div class="simple-select">
                                                                 <asp:DropDownList ID="ddl_numberingScheme" runat="server" Width="100%">
                                                                 </asp:DropDownList>
                                                             </div>
@@ -7799,6 +8306,9 @@ function CmbWarehouse_ValueChange() {
                                                                 </ButtonStyle>
                                                                 <ClientSideEvents DateChanged="function(s, e) {DateCheck();}" GotFocus="function(s,e){tstartdate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}"  />
                                                             </dxe:ASPxDateEdit>
+                                                            <%--Rev 1.0--%>
+                                                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                            <%--Rev end 1.0--%>
                                                         </td>
 
                                                         <td class="relative" id="tdDeliveryType" runat="server">
@@ -7833,6 +8343,9 @@ function CmbWarehouse_ValueChange() {
                                                             <span id="MandatorysdeliveryDate" style="display: none" class="errorField">
                                                                 <img id="MandatorysdeliveryDateid" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"> </img>
                                                             </span>
+                                                            <%--Rev 1.0--%>
+                                                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                            <%--Rev end 1.0--%>
                                                         </td>
 
 
@@ -7934,6 +8447,9 @@ function CmbWarehouse_ValueChange() {
                                                                 <ButtonStyle Width="13px">
                                                                 </ButtonStyle>
                                                             </dxe:ASPxDateEdit>
+                                                            <%--Rev 1.0--%>
+                                                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                            <%--Rev end 1.0--%>
                                                         </td>
 
 
@@ -8016,6 +8532,7 @@ function CmbWarehouse_ValueChange() {
                                                         <td>                                          
                                                             <dxe:ASPxLabel ID="ASPxLabel14" runat="server" Text="Transaction Category">
                                                             </dxe:ASPxLabel>
+                                                            <div class="simple-select">
                                                             <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%">
                                                                 <asp:ListItem  Selected="True" Text="Select" Value="0"></asp:ListItem>
                                                                 <asp:ListItem Text="B2B" Value="B2B" />
@@ -8025,7 +8542,7 @@ function CmbWarehouse_ValueChange() {
                                                                 <asp:ListItem Text="EXPWOP" Value="EXPWOP" />
                                                                 <asp:ListItem Text="DEXP" Value="DEXP" />
                                                             </asp:DropDownList>
-                                           
+                                                            </div>
                                                         </td>                                                 
                                                         <td>
                                                              <asp:CheckBox ID="CB_ReverseCharge" runat="server" Text="Reverse Charge" TextAlign="Right" Checked="false"></asp:CheckBox>
@@ -8733,10 +9250,10 @@ function CmbWarehouse_ValueChange() {
                                         <br />
                                         <div class="col-md-12" id="divSubmitButton">
                                             <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                             </dxe:ASPxButton>
-                                            <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick(s,e);}" />
                                             </dxe:ASPxButton>
 
@@ -9806,7 +10323,7 @@ function CmbWarehouse_ValueChange() {
                     <headerstyle backcolor="LightGray" forecolor="Black" />
         </dxe:ASPxPopupControl>
     </div>
-    <div>
+        <div>
         <asp:HiddenField ID="HdUpdateMainGrid" runat="server" />
         <asp:HiddenField ID="hdfIsDelete" runat="server" />
         <asp:HiddenField ID="hdfLookupCustomer" runat="server" />
@@ -9830,7 +10347,7 @@ function CmbWarehouse_ValueChange() {
         <asp:HiddenField runat="server" ID="hdnShowOldUnitInPOS" />
         <%-- Subhra 23-04-2019 --%>
     </div>
-
+    </div>
     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
         <PanelCollection>
             <dxe:PanelContent runat="server">
