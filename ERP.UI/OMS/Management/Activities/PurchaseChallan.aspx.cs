@@ -1,6 +1,7 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0   v2.0.37	Priti	04-03-2023	0025690:Alt Qty is not updating as per the main qty while entering Purchase GRN
 // 2.0   v2.0.37	Priti	13-03-2023	0025723:There is multiple rows inserted in warehouse tables while making stock batch wise in same warehouse in Purchase GRN
+// 3.0   V2.0.38    Priti   11-04-2023  0025797:Cannot enter duplicate batch in Same warehouse, for the same product with same batch number
 
 #endregion//====================================================End Revision History=====================================================================
 
@@ -4917,8 +4918,45 @@ namespace ERP.OMS.Management.Activities
             }
             return status;
         }
+        //REV 3.0
+        [WebMethod]
+        public static bool CheckUniqueBatchNo(string BatchNo,string WarehouseID,string ProductID)
+        {           
+            DataTable dt = new DataTable();
+            Boolean status = false;
+            BusinessLogicLayer.GenericMethod oGeneric = new BusinessLogicLayer.GenericMethod();
 
+            if (BatchNo != "" && Convert.ToString(BatchNo).Trim() != "")
+            {
+                ProcedureExecute proc;
+                try
+                {
+                    using (proc = new ProcedureExecute("proc_Fetch_PruchaseChallanDetails"))
+                    {
+                        proc.AddVarcharPara("@action", 50, "CheckUniqueBatchNo");                       
+                        proc.AddVarcharPara("@BatchNo", 200, BatchNo);
+                        proc.AddBigIntegerPara("@WarehouseID",Convert.ToInt32(WarehouseID));
+                        proc.AddBigIntegerPara("@ProductID", Convert.ToInt32(ProductID));
+                        proc.AddBooleanPara("@ReturnValue", false, QueryParameterDirection.Output);
+                        int i = proc.RunActionQuery();
+                        status = Convert.ToBoolean(proc.GetParaValue("@ReturnValue"));
+                        
+                    }
+                }
 
+                catch (Exception ex)
+                {
+                    return false;
+                }
+
+                finally
+                {
+                    proc = null;
+                }
+            }
+            return status;
+        }
+        //REV 3.0 END
         [WebMethod]
         public static object PurchaseOrderDocumentAddress(string OrderId)
         {

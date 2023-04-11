@@ -1,6 +1,7 @@
 <%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                23-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+2.0                10-04-2023        2.0.38           Priti               0025801 : Unable to delete HSN code from HSN master though the user rights are given
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Products" Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -5468,9 +5469,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
                                             </div>
+                                            <%--  Rev 2.0--%>
                                             <%--Start HSN Pdf link add Tanmoy 18-07-2019 --%>
-                                            <span style="color: #b11212;">Not sure about HSN code ? <a href="http://www.cbic.gov.in/resources//htdocs-cbec/gst/goods-rates-booklet-03July2017.pdf" target="_blank">Look up here</a></span>
+<%--                                            <span style="color: #b11212;">Not sure about HSN code ? <a href="http://www.cbic.gov.in/resources//htdocs-cbec/gst/goods-rates-booklet-03July2017.pdf" target="_blank">Look up here</a></span>--%>
                                             <%--End HSN Pdf link add Tanmoy 18-07-2019 --%>
+                                          
+                                            <span style="color: #b11212;">Not sure about HSN code ? <a href="https://services.gst.gov.in/services/searchhsnsac" target="_blank">Look up here</a></span>
+                                           <%-- Rev 2.0 End--%>
                                         </div>
 
                                         <div class="col-md-2">

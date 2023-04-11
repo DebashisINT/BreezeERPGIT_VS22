@@ -13,21 +13,17 @@
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
-    <script src="JS/SearchPopupDatatable.js"></script>
-   
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" rel="stylesheet" />
-    
+    <script src="JS/SearchPopupDatatable.js"></script>   
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" rel="stylesheet" />    
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelPurchase.js"></script>
     <script type='text/javascript'>
         var SecondUOM = [];
         var SecondUOMProductId = "";
     </script>
-
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <%--  <script src="JS/SearchPopup.js"></script>--%>
     <script src="JS/ProductStockIN.js?v00000.007"></script>
-
-    <script src="JS/PurchaseChallan.js?v=8.8"></script>
+    <script src="JS/PurchaseChallan.js?v=9.1"></script>
     <link href="CSS/PurchaseChallan.css" rel="stylesheet" />
 
     <%--Use for set focus on UOM after press ok on UOM--%>
@@ -1787,7 +1783,7 @@
                                         Batch
                                     </div>
                                     <div class="Left_Content" style="">
-                                        <input type="text" id="txtBatch" placeholder="Batch" />
+                                        <input type="text" id="txtBatch" placeholder="Batch" onchange="BatchNoUniqueCheck()" />
                                         <span id="rfvBatch" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
                                     </div>
                                 </div>
