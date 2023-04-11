@@ -7830,11 +7830,7 @@ function CmbWarehouse_ValueChange() {
             background: #f3f3f3 !important;
         }
 
-        .dxeButtonDisabled_PlasticBlue
-        {
-            background: #b5b5b5 !important;
-            border-color: #b5b5b5 !important;
-        }
+        
 
         #ddlValTech
         {
@@ -8069,7 +8065,11 @@ function CmbWarehouse_ValueChange() {
         {
             background: #f3f3f3 !important;
         }
-
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
         
 
         /*Rev end 1.0*/

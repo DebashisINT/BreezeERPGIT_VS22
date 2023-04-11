@@ -1,4 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"  EnableEventValidation="false" MasterPageFile="~/OMS/MasterPage/ERP.Master"  CodeBehind="POSFinancePosting.aspx.cs" Inherits="ERP.OMS.Management.Activities.POSFinancePosting" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                11-04-2023        2.0.37           Pallab              Transactions pages design modification
+====================================================== Revision History =============================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true"  EnableEventValidation="false" MasterPageFile="~/OMS/MasterPage/ERP.Master"  CodeBehind="POSFinancePosting.aspx.cs" Inherits="ERP.OMS.Management.Activities.POSFinancePosting" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
       <style type="text/css">
@@ -38,8 +43,9 @@
     </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-      <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>POS Finance Posting
             </h3>
@@ -47,7 +53,7 @@
           
         </div>
           </div>
-     <div class="form_main">
+        <div class="form_main">
 
          <table style="width: 100%;margin-top: 10px;">
 
@@ -84,4 +90,5 @@
                 </tr>--%>
             </table>
          </div>
-        </asp:Content>
+    </div>
+</asp:Content>

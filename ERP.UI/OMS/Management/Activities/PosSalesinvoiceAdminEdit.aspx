@@ -1,22 +1,31 @@
-﻿<%@ Page Language="C#" Title="Special Edit" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="PosSalesinvoiceAdminEdit.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesinvoiceAdminEdit" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                11-04-2023        2.0.37           Pallab              Transactions pages design modification
+====================================================== Revision History =============================================--%>
+
+<%@ Page Language="C#" Title="Special Edit" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="PosSalesinvoiceAdminEdit.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesinvoiceAdminEdit" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/ucPaymentDetails.ascx" TagPrefix="uc1" TagName="ucPaymentDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="JS/PosSalesinvoiceAdminEdit.js?v=1.0"></script>
     <link href="CSS/PosSalesinvoiceAdminEdit.css" rel="stylesheet" />
+    
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="UserControls/Js/ucPaymentDetails.js"></script>
     <script src="JS/SearchPopup.js?var=1.0"></script>
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix" id="myDiv" runat="server">
             <h3 class="clearfix pull-left">
                 <asp:Label ID="lblHeadTitle" runat="server" Text="Special Edit "></asp:Label>
             </h3>
+        </div>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix" style="background: #f9f9f9;border: 1px solid #dcdcdc;padding: 30px 20px;border-radius: 3px">
             <div class="row">
                 <div class="col-md-6" style="border-right:1px solid #ccc">
@@ -807,7 +816,7 @@
         
 
     </div>
-
+    </div>
     <dxe:ASPxPopupControl ID="ManualReceipt" runat="server" ClientInstanceName="cManualReceipt"
             Width="500px" HeaderText="Update ManualReceipt" PopupHorizontalAlign="WindowCenter"
             PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
