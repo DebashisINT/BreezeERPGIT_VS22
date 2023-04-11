@@ -1,5 +1,10 @@
 ﻿
-    var Pre_Quantity = "0";
+//==========================================================Revision History ============================================================================================
+// 1.0   Priti   V2.0.38   11-04-2023     0025797:Cannot enter duplicate batch in Same warehouse, for the same product with same batch number
+
+//========================================== End Revision History =======================================================================================================
+
+var Pre_Quantity = "0";
 var Pre_Amt = "0";
 var Pre_TotalAmt = "0";
 var Cur_Quantity = "0";
@@ -343,8 +348,34 @@ function BindWarehouse(){
         }
     });
 }
+//REV 1.0
+function BatchNoUniqueCheck() {
+    var BatchNo = document.getElementById("txtBatch").value;
+    var WarehouseID = $("#ddlWarehouse").val();
+    var ProductID=$("#hdfProductID").val();
+    $.ajax({
+        type: "POST",
+        url: "PurchaseChallan.aspx/CheckUniqueBatchNo",
+        data: JSON.stringify({ BatchNo: BatchNo, WarehouseID: WarehouseID, ProductID: ProductID }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+            var data = msg.d;
 
+            if (data == true) {
+                $("#rfvBatch").show();
 
+                document.getElementById("txtBatch").value = '';
+                document.getElementById("txtBatch").focus();
+            }
+            else {
+                $("#rfvBatch").hide();
+            }
+        }
+    });
+}
+//REV 1.0 END
 function txtBillNo_TextChanged() {
     var VoucherNo = document.getElementById("txtVoucherNo").value;
 
