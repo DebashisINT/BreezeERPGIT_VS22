@@ -330,8 +330,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /*content: '<';*/
             content: url(../../../assests/images/left-arw.png);
             position: absolute;
-            top: 26px;
-            right: 13px;
+            top: 6px;
+            right: -2px;
             font-size: 16px;
             transform: rotate(269deg);
             font-weight: 500;
@@ -638,7 +638,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             width: 100%;
         }
 
-        .col-sm-3 , .col-md-3{
+        .col-sm-3 , .col-md-3 , .col-md-2{
             margin-bottom: 10px;
         }
 
@@ -840,7 +840,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             </div>
 
                                             <div class="col-md-2">
-                                                <label style="margin-top: 8px">Document No.</label>
+                                                <label style="">Document No.</label>
                                                 <div>
 
                                                     <dxe:ASPxTextBox runat="server" ID="txtVoucherNo" ClientInstanceName="ctxtVoucherNo" MaxLength="16" Text="Auto" ClientEnabled="false">
@@ -854,7 +854,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
                                             <div class="col-md-2">
-                                                <label style="margin-top: 8px">Posting Date</label>
+                                                <label style="">Posting Date</label>
                                                 <div>
                                                     <dxe:ASPxDateEdit ID="dtTDate" runat="server" ClientInstanceName="cdtTDate" EditFormat="Custom" AllowNull="false"
                                                         Font-Size="12px" UseMaskBehavior="True" Width="100%" EditFormatString="dd-MM-yyyy" CssClass="pull-left">

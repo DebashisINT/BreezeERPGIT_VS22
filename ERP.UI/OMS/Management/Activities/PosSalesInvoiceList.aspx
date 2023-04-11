@@ -3380,9 +3380,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             width: 100%;
         }
 
-        /*.col-sm-3 , .col-md-3{
+        .col-sm-3 , .col-md-3 , #btnCash , #btnCredit , #btnFin , #btnIST , #btnCRP , #btnInfluencerReturn{
             margin-bottom: 10px;
-        }*/
+        }
 
         .crossBtn
         {
@@ -3610,25 +3610,25 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('IST')" class="btn btn-success btn-xs hide" id="btnIST"><span>Interstate <u>S</u>tock Transfer</span> </a>
             <a href="javascript:void(0);" onclick="ShowReceiptPayment()" class="btn btn-success btn-xs hide" id="btnCRP"><span>Add <u>R</u>eceipt/Payment</span> </a>--%>
 
-            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Cash')" class="btn btn-success btn-radius" id="btnCash"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>C</u>ash Invoice</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Cash')" class="btn btn-success " id="btnCash"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>C</u>ash Invoice</span> </a>
 
-            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Crd')" class="btn btn-success btn-radius" id="btnCredit"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add Cre<u>d</u>it Invoice</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Fin')" class="btn btn-success btn-radius" id="btnFin"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>F</u>inance Invoice</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('IST')" class="btn btn-success btn-radius" id="btnIST"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Interstate <u>S</u>tock Transfer</span> </a>
-            <a href="javascript:void(0);" onclick="ShowReceiptPayment()" class="btn btn-success btn-radius " id="btnCRP"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>R</u>eceipt/Payment</span> </a>
-            <a href="javascript:void(0);" onclick="onInfluencerReturn()" class="btn btn-success btn-radius " id="btnInfluencerReturn"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add Influencer Adjustment</span> </a>
-            <a href="javascript:void(0);" onclick="onApprovalList();" class="btn btn-success btn-radius "><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Show Pending POS Status</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Crd')" class="btn btn-success " id="btnCredit"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add Cre<u>d</u>it Invoice</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Fin')" class="btn btn-success " id="btnFin"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>F</u>inance Invoice</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('IST')" class="btn btn-success " id="btnIST"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Interstate <u>S</u>tock Transfer</span> </a>
+            <a href="javascript:void(0);" onclick="ShowReceiptPayment()" class="btn btn-success  " id="btnCRP"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>R</u>eceipt/Payment</span> </a>
+            <a href="javascript:void(0);" onclick="onInfluencerReturn()" class="btn btn-success  " id="btnInfluencerReturn"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add Influencer Adjustment</span> </a>
+            <a href="javascript:void(0);" onclick="onApprovalList();" class="btn btn-success  "><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Show Pending POS Status</span> </a>
 
             <%} %>
 
             <% if (rights.CanAssignbranch)
                { %>
-            <a href="javascript:void(0);" onclick="MassBranchAssign()" class="btn btn-primary btn-radius "><span class="btn-icon"><i class="fa fa-user"></i></span><span><u>M</u>ass Unit Assign</span> </a>
+            <a href="javascript:void(0);" onclick="MassBranchAssign()" class="btn btn-primary "><span class="btn-icon"><i class="fa fa-user"></i></span><span><u>M</u>ass Unit Assign</span> </a>
             <%} %>
             <%--<a href="javascript:void(0);" class="btn btn-danger"><span>Delete</span> </a>--%>
 
 
-            <a href="javascript:void(0);" onclick="InvoiceWatingClick()" class="btn btn-primary btn-radius relative typeNotificationBtn "><span class="btn-icon"><i class="fa fa-file-pdf-o"></i></span><span><u>I</u>nvoice Waiting </span>
+            <a href="javascript:void(0);" onclick="InvoiceWatingClick()" class="btn btn-primary relative typeNotificationBtn "><span class="btn-icon"><i class="fa fa-file-pdf-o"></i></span><span><u>I</u>nvoice Waiting </span>
                 <span class="typeNotification">
                     <dxe:ASPxLabel runat="server" Text="" ID="lblweatingCount" ClientInstanceName="clblweatingCount"></dxe:ASPxLabel>
                 </span>
