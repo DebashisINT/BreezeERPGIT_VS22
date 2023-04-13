@@ -1,4 +1,8 @@
-﻿
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                13-04-2023        2.0.37           Pallab              25820: Purchase Indent/Requisition page design modification
+====================================================== Revision History =============================================--%>
+
 <%@ Page Title="Purchase Indent/Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseIndent.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseIndent" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -659,10 +663,269 @@ function ProductsComboGotFocusChange(s, e) {
         }
     </style>
     <%-- Project Hierarchy End --%>
+
+    <style>
+        /*Rev 1.0*/
+
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px !important;
+            /*-webkit-appearance: none;
+            position: relative;
+            z-index: 1;*/
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            bottom: 9px;
+            right: 20px;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        #FormDate , #toDate , #ASPxDateEditFrom , #ASPxDateEditTo , #tDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .dxeDisabled_PlasticBlue
+        {
+            z-index: 0 !important;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #ASPxDateEditFrom_B-1 , #ASPxDateEditTo_B-1 , #tDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #ASPxDateEditFrom_B-1 #ASPxDateEditFrom_B-1Img , #ASPxDateEditTo_B-1 #ASPxDateEditTo_B-1Img ,
+        #tDate_B-1 #tDate_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        select.btn
+        {
+            padding-right: 10px !important;
+        }
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: 1;
+    }
+
+        .styled-checkbox + label {
+            position: relative;
+            /*cursor: pointer;*/
+            padding: 0;
+            margin-bottom: 0 !important;
+        }
+
+            .styled-checkbox + label:before {
+                content: "";
+                margin-right: 6px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                /*background: #d7d7d7;*/
+                margin-top: 2px;
+                border-radius: 2px;
+                border: 1px solid #c5c5c5;
+            }
+
+        .styled-checkbox:hover + label:before {
+            background: #094e8c;
+        }
+
+
+        .styled-checkbox:checked + label:before {
+            background: #094e8c;
+        }
+
+        .styled-checkbox:disabled + label {
+            color: #b8b8b8;
+            cursor: auto;
+        }
+
+            .styled-checkbox:disabled + label:before {
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        .styled-checkbox:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            background: white;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+            transform: rotate(45deg);
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+        .crossBtn
+        {
+            top: 25px;
+                right: 25px;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridLocationwiseStockStatus ,
+        #GrdSalesReturn
+        {
+            max-width: 98% !important;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .mb-10{
+            margin-bottom: 10px !important;
+        }
+
+        .makeFullscreen >table
+        {
+            z-index: 0;
+        }
+        .makeFullscreen .makeFullscreen-icon.half
+        {
+                z-index: 0;
+        }
+
+        /*.btn
+        {
+            padding: 5px 10px;
+        }*/
+
+
+        /*Rev end 1.0*/
+
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left"><span class="">
                 <asp:Label ID="lblHeading" runat="server" Text="Purchase Indent/Requisition"></asp:Label></span>
@@ -717,20 +980,28 @@ function ProductsComboGotFocusChange(s, e) {
                     <tr>
                         <td>
                             <label>From Date</label></td>
-                        <td>
+                        <%--Rev 1.0: "for-cust-icon" class add --%>
+                        <td class="for-cust-icon">
                             <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                                 <ButtonStyle Width="13px">
                                 </ButtonStyle>
                             </dxe:ASPxDateEdit>
+                            <%--Rev 1.0--%>
+                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                            <%--Rev end 1.0--%>
                         </td>
                         <td>
                             <label>To Date</label>
                         </td>
-                        <td>
+                        <%--Rev 1.0: "for-cust-icon" class add --%>
+                        <td class="for-cust-icon">
                             <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                                 <ButtonStyle Width="13px">
                                 </ButtonStyle>
                             </dxe:ASPxDateEdit>
+                            <%--Rev 1.0--%>
+                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                            <%--Rev end 1.0--%>
                         </td>
                         <td>
                             <label>Unit</label></td>
@@ -752,17 +1023,17 @@ function ProductsComboGotFocusChange(s, e) {
         </div>
 
     </div>
-    <div class="form_main">
-        <div class="clearfix" id="btnAddNew">
+        <div class="form_main">
+        <div class="clearfix mb-10" id="btnAddNew">
             <div style="float: left; padding-right: 5px;">
                 <% if (rights.CanAdd)
                    { %>
-                <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success btn-radius">
+                <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success">
                     <span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>I</u>ndent/Requisition</span> </a>
                 <% } %>
                 <% if (rights.CanExport)
                    { %>
-                <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-sm btn-primary btn-radius" OnSelectedIndexChanged="drdExport_SelectedIndexChanged" AutoPostBack="true">
+                <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-sm btn-primary" OnSelectedIndexChanged="drdExport_SelectedIndexChanged" AutoPostBack="true">
                     <asp:ListItem Value="0">Export to</asp:ListItem>
                     <asp:ListItem Value="1">PDF</asp:ListItem>
                     <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -792,7 +1063,7 @@ function ProductsComboGotFocusChange(s, e) {
 
         </div>
         <div id="DivEntry" style="display: none">
-            <div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+            <div style=" padding: 8px 0; margin-bottom: 15px; border-radius: 4px;" class="clearfix">
                 <div class="col-md-3" id="divNumberingScheme">
                     <label style="">Numbering Scheme</label>
                     <div>
@@ -824,19 +1095,23 @@ function ProductsComboGotFocusChange(s, e) {
                             <ClientSideEvents DateChanged="function(s,e){TDateChange();}" GotFocus="function(s,e){ctDate.ShowDropDown();}"></ClientSideEvents>
                             <ValidationSettings RequiredField-IsRequired="true" ErrorFrameStyle-CssClass="absolute"></ValidationSettings>
                         </dxe:ASPxDateEdit>
+                        
                     </div>
                 </div>
-                <div class="col-md-3">
+                
+                <div class="col-md-3 ">
 
                     <label>Unit</label>
-                    <div>
+                    <%--Rev 1.0 : "simple-select" class add--%>
+                    <div class="simple-select">
                         <asp:DropDownList ID="ddlBranch" runat="server" DataSourceID="dsBranch" onchange="ddlBranch_SelectedIndexChanged()"
                             DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID" Width="100%">
                         </asp:DropDownList>
                     </div>
                 </div>
                 <div style="clear: both"></div>
-                <div class="col-md-3" id="DivForUnit" runat="server">
+                <%--Rev 1.0 : "simple-select" class add--%>
+                <div class="col-md-3 simple-select" id="DivForUnit" runat="server">
 
                     <label>For Unit</label>
                     <div>
@@ -2191,6 +2466,7 @@ function ProductsComboGotFocusChange(s, e) {
             Modal="True">
         </dxe:ASPxLoadingPanel>
         <%--PurchaseOrderList Popup END --%>
+    </div>
     </div>
     <asp:HiddenField runat="server" ID="hdnConvertionOverideVisible" />
     <asp:HiddenField runat="server" ID="hdnShowUOMConversionInEntry" />
