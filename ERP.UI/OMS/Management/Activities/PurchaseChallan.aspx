@@ -1783,7 +1783,8 @@
                                         Batch
                                     </div>
                                     <div class="Left_Content" style="">
-                                        <input type="text" id="txtBatch" placeholder="Batch" onchange="BatchNoUniqueCheck()" />
+                                       <%-- onchange="BatchNoUniqueCheck()"--%>
+                                        <input type="text" id="txtBatch" placeholder="Batch"  />
                                         <span id="rfvBatch" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
                                     </div>
                                 </div>
