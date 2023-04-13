@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                24-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+2.0                13-04-2023        2.0.38           Priti               0025801:Unable to delete HSN code from HSN master though the user rights are given.
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="HSN.aspx.cs" Inherits="ERP.OMS.Management.Master.HSN" %>
@@ -25,6 +26,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             Status = 'SAVE_NEW';
             document.getElementById('txtCode').value = '';
             document.getElementById('txtDescription').value = '';
+            //Rev 2.0
+            $("#txtCode").prop('disabled', false)
+             //Rev 2.0 End
             cPopUp_groupMaster.Show();
         }
         function Call_save() {
@@ -198,7 +202,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             cPopUp_groupMaster.SetHeaderText('Modify HSN');
             $('#MandatoryCode').css({ 'display': 'none' });
             $('#MandatoryDesc').css({ 'display': 'none' });
-            $("#txtCode").attr("disabled", "disabled");
+            $("#txtCode").attr("disabled", "disabled");            
             Status = obj;
             grid.PerformCallback('BEFORE_' + obj);
             cPopUp_groupMaster.Show();
@@ -218,22 +222,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         function gridRowclick(s, e) {
             $('#gridudfGroup').find('tr').removeClass('rowActive');
-            $('.floatedBtnArea').removeClass('insideGrid');
-            //$('.floatedBtnArea a .ico').css({ 'opacity': '0' });
+            $('.floatedBtnArea').removeClass('insideGrid');           
             $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea').addClass('insideGrid');
             $(s.GetRow(e.visibleIndex)).addClass('rowActive');
-            setTimeout(function () {
-                //alert('delay');
-                var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');
-                //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a .ico').css({'opacity': '1'});
-                //$(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a').each(function (e) {
-                //    setTimeout(function () {
-                //        $(this).fadeIn();
-                //    }, 100);
-                //});    
-                $.each(lists, function (index, value) {
-                    //console.log(index);
-                    //console.log(value);
+            setTimeout(function () {               
+                var lists = $(s.GetRow(e.visibleIndex)).find('.floatedBtnArea a');                 
+                $.each(lists, function (index, value) {                   
                     setTimeout(function () {
                         $(value).css({ 'opacity': '1' });
                     }, 100);
@@ -716,7 +710,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <LastPageButton Visible="True">
                             </LastPageButton>
 
-<PageSizeItemSettings Items="10,50, 100, 150, 200" Visible="True"></PageSizeItemSettings>
+                        <PageSizeItemSettings Items="10,50, 100, 150, 200" Visible="True"></PageSizeItemSettings>
                         </settingspager>
 
                         <settingsediting mode="PopupEditForm" popupeditformheight="200px" popupeditformhorizontalalign="Center"
@@ -728,7 +722,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                         <settingscommandbutton>
                            
-                            <EditButton Image-Url="../../../assests/images/Edit.png" ButtonType="Image" Image-AlternateText="Edit" Styles-Style-CssClass="pad">
+                         <%--   <EditButton Image-Url="../../../assests/images/Edit.png" ButtonType="Image" Image-AlternateText="Edit" Styles-Style-CssClass="pad">
                                     <Image AlternateText="Edit" Url="../../../assests/images/Edit.png"></Image>
                              </EditButton>
                             <DeleteButton Image-Url="../../../assests/images/Delete.png" ButtonType="Image" Image-AlternateText="Delete" Styles-Style-CssClass="pad">
@@ -739,7 +733,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <Style CssClass="btn btn-primary"></Style>
                                     </Styles>
                             </UpdateButton>
-                            <CancelButton Text="Cancel" ButtonType="Button"></CancelButton>
+                            <CancelButton Text="Cancel" ButtonType="Button"></CancelButton>--%>
                         </settingscommandbutton>
                         <settingssearchpanel visible="True"  Delay="7000"/>
                         <settingstext popupeditformcaption="Add/Modify Category" confirmdelete="Confirm delete?" />
@@ -766,8 +760,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <Settings AllowAutoFilterTextInputTimer="False" />
                             </dxe:GridViewDataTextColumn>
 
-
-                            <dxe:GridViewDataTextColumn Caption="" VisibleIndex="2" Width="0" Visible="false" >
+                          <%--  Rev 2.0--%>
+                            <dxe:GridViewDataTextColumn Caption="Action" VisibleIndex="2" Width="0" Visible="true" >
                                 <CellStyle HorizontalAlign="Center">
                                 </CellStyle>
                                 <HeaderStyle HorizontalAlign="Center" />
@@ -779,18 +773,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                          <% if (rights.CanEdit)
                                        { %>
                                     <a href="javascript:void(0);" onclick="OnEdit('EDIT~'+'<%#Eval("Code") %>')">
-                                       <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>
+                                        <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a> 
+                                    </a>
                                     <% } %>
                                     <% if (rights.CanDelete)
                                        { %>
                                      <a href="javascript:void(0);" onclick="DeleteRow('<%#Eval("Code") %>')"  >
-                                        <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>
+                                        <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span>
+                                         <span class='hidden-xs'>Delete</span>
+                                     </a>
                                      <% } %>
                                     </div>
                                 </DataItemTemplate>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
                             </dxe:GridViewDataTextColumn>
-                      
+                            <%--  Rev 2.0 End--%>
 
                               <dxe:GridViewDataTextColumn Caption="" VisibleIndex="3" Width="8%" >
                                 <CellStyle HorizontalAlign="Center">
