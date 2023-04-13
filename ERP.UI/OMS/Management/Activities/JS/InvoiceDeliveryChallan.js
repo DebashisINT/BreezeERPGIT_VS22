@@ -1,6 +1,8 @@
 ﻿//==========================================================Revision History ============================================================================================
 // 1.0  Priti   V2.0.36    13-01-2023    0025577:In the Stock selection window, alternate quantity is not calculating automatically if the main qty has been changed.
 // 2.0  Priti   V2.0.37    30-03-2023    0025764: The Bill from/Dispatch From Button to be made available in the Edit Mode of Sales - Invoice Cum Challan
+// 3.0  Priti   V2.0.38    13-04-2023    0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
+
 //========================================== End Revision History =======================================================================================================--%>
 function closeWarehouse(s, e) {
     e.cancel = false;
@@ -2534,7 +2536,9 @@ function SelecttedProductAddUomConversion() {
 
 function Save_ButtonClick() {
     LoadingPanel.Show();
-
+    //Rev 3.0
+    cbtn_SaveRecords_p.SetVisible(false);
+    //Rev 3.0 End
     flag = true;
     $('#hfControlData').val($('#hfControlSaveData').val());
     grid.batchEditApi.EndEdit();
@@ -2545,17 +2549,11 @@ function Save_ButtonClick() {
         LoadingPanel.Hide();
         jAlert("Please Select Project.");
         flag = false;
+        //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
         return;
-    }
-
-    //var VehNumlen = $("#lstAssignTo").val();
-
-    //if (VehNumlen.length > 1) {
-    //    LoadingPanel.Hide();
-    //    jAlert("Cannot select more than one vehicle.");
-    //    flag = false;
-    //    return;
-    //}
+    }   
 
     $.ajax({
         type: "POST",
@@ -2564,21 +2562,8 @@ function Save_ButtonClick() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: false,
-        success: function (r) {
-            //$("#hdnEntityType").val(r.d);
-            var val = r.d;
-            //if (val[0].CustomerId =="")
-            //{
-            //    LoadingPanel.Hide();
-            //    flag = false;
-            //    jAlert("Please select registered customer.")
-            //}
-            //if (val[0].BranchCompany =="")
-            //{
-            //    LoadingPanel.Hide();
-            //    flag = false;
-            //    jAlert("This Branch/Company are not map with EInvoice.")
-            //}
+        success: function (r) {           
+            var val = r.d;            
             if (val != null) {
                 if (val[0].BranchCompany != "") {
                     if (val[0].CustomerId != "") {
@@ -2595,6 +2580,9 @@ function Save_ButtonClick() {
                                 LoadingPanel.Hide();
 
                                 jAlert("Address1 , Address2 and landmark  are mandatory for billing and shipping.");
+                                //Rev 3.0 
+                                cbtn_SaveRecords_p.SetVisible(true);
+                                //Rev 3.0 End
                                 flag = false;
                                 return;
 
@@ -2603,6 +2591,9 @@ function Save_ButtonClick() {
                                 LoadingPanel.Hide();
 
                                 jAlert("Please enter Address1 , Address2 and landmark  between 3 to 100 numbers.");
+                                //Rev 3.0 
+                                cbtn_SaveRecords_p.SetVisible(true);
+                                //Rev 3.0 End
                                 flag = false;
                                 return;
                             }
@@ -2619,6 +2610,9 @@ function Save_ButtonClick() {
     if (QuoteNo == '' || QuoteNo == null) {
         LoadingPanel.Hide();
         $('#MandatorysQuoteno').attr('style', 'display:block');
+        //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
         flag = false;
     }
     else {
@@ -2636,23 +2630,23 @@ function Save_ButtonClick() {
     var endDate = new Date(edate);
     if (sdate == null || sdate == "") {
         LoadingPanel.Hide();
+        //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
         flag = false;
         $('#MandatorysDate').attr('style', 'display:block');
     }
     else { $('#MandatorysDate').attr('style', 'display:none'); }
     if (sdate == "") {
         LoadingPanel.Hide();
+        //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
         flag = false;
         $('#MandatoryEDate').attr('style', 'display:block');
     }
     else {
-        $('#MandatoryEDate').attr('style', 'display:none');
-        //if (startDate > endDate) {
-
-        //    flag = false;
-        //    $('#MandatoryEgSDate').attr('style', 'display:block');
-        //}
-        //else { $('#MandatoryEgSDate').attr('style', 'display:none'); }
+        $('#MandatoryEDate').attr('style', 'display:none');       
     }
     // Quote Date validation End
 
@@ -2660,7 +2654,9 @@ function Save_ButtonClick() {
     var customerId = GetObjectID('hdnCustomerId').value
     if (customerId == '' || customerId == null) {
         LoadingPanel.Hide();
-
+        //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
         $('#MandatorysCustomer').attr('style', 'display:block');
         flag = false;
     }
@@ -2673,6 +2669,9 @@ function Save_ButtonClick() {
         flag = false;
         jAlert("A manual Numbering Scheme must be defined for the Sales Challan of the selected Branch.");
         LoadingPanel.Hide();
+        //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
     } else {
         $('#mandetorydchallanNoScheme').attr('style', 'display:none');
     }
@@ -2682,6 +2681,9 @@ function Save_ButtonClick() {
     if ($("#hdnCrDateMandatory").val() == "1") {
         if (ctxtCreditDays.GetValue() == 0) {
             LoadingPanel.Hide();
+            //Rev 3.0 
+            cbtn_SaveRecords_p.SetVisible(true);
+            //Rev 3.0 End
             jAlert("Credit Days must be greater than Zero(0)");
             flag = false;
         }
@@ -2694,6 +2696,9 @@ function Save_ButtonClick() {
         if (taxcodeid == '' || taxcodeid == null) {
             $('#Mandatorytaxcode').attr('style', 'display:block');
             flag = false;
+            //Rev 3.0 
+            cbtn_SaveRecords_p.SetVisible(true);
+            //Rev 3.0 End
         }
         else {
             $('#Mandatorytaxcode').attr('style', 'display:none');
@@ -2793,6 +2798,9 @@ function Save_ButtonClick() {
         }
         else {
             LoadingPanel.Hide();
+            //Rev 3.0 
+            cbtn_SaveRecords_p.SetVisible(true);
+            //Rev 3.0 End
             jAlert('Cannot Save. You must enter atleast one Product to save this entry.');
         }
     }
@@ -2800,7 +2808,9 @@ function Save_ButtonClick() {
 
 function SaveExit_ButtonClick() {
     LoadingPanel.Show();
-
+    //Rev 3.0
+    cbtn_SaveRecords_p.SetVisible(false);
+    //Rev 3.0 End
     flag = true;
     $('#hfControlData').val($('#hfControlSaveData').val());
     grid.batchEditApi.EndEdit();
@@ -2810,6 +2820,9 @@ function SaveExit_ButtonClick() {
         LoadingPanel.Hide();
         jAlert("Please Select Project.");
         flag = false;
+         //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
         return;
     }
 
@@ -2862,6 +2875,9 @@ function SaveExit_ButtonClick() {
 
                                 jAlert("Address1 , Address2 and landmark  are mandatory for billing and shipping.");
                                 flag = false;
+                                 //Rev 3.0 
+                                cbtn_SaveRecords_p.SetVisible(true);
+                                 //Rev 3.0 End
                                 return;
 
                             }
@@ -2870,6 +2886,9 @@ function SaveExit_ButtonClick() {
 
                                 jAlert("Please enter Address1 , Address2 and landmark  between 3 to 100 numbers.");
                                 flag = false;
+                                 //Rev 3.0 
+                                cbtn_SaveRecords_p.SetVisible(true);
+                                 //Rev 3.0 End
                                 return;
                             }
                         }
@@ -2886,6 +2905,9 @@ function SaveExit_ButtonClick() {
         LoadingPanel.Hide();
         $('#MandatorysQuoteno').attr('style', 'display:block');
         flag = false;
+         //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
     }
     else {
         $('#MandatorysQuoteno').attr('style', 'display:none');
@@ -2905,6 +2927,9 @@ function SaveExit_ButtonClick() {
         LoadingPanel.Hide();
         flag = false;
         $('#MandatorysDate').attr('style', 'display:block');
+         //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
     }
     else { $('#MandatorysDate').attr('style', 'display:none'); }
     //if (edate == null || sdate == "") {
@@ -2912,6 +2937,9 @@ function SaveExit_ButtonClick() {
         LoadingPanel.Hide();
         flag = false;
         $('#MandatoryEDate').attr('style', 'display:block');
+         //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
     }
     else {
         //$('#MandatoryEDate').attr('style', 'display:none');
@@ -2931,6 +2959,9 @@ function SaveExit_ButtonClick() {
     if (customerId == '' || customerId == null) {
         LoadingPanel.Hide();
         $('#MandatorysCustomer').attr('style', 'display:block');
+         //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
         flag = false;
     }
     else {
@@ -2950,6 +2981,9 @@ function SaveExit_ButtonClick() {
         flag = false;
         jAlert("A manual Numbering Scheme must be defined for the Sales Challan of the selected Branch.");
         LoadingPanel.Hide();
+         //Rev 3.0 
+        cbtn_SaveRecords_p.SetVisible(true);
+         //Rev 3.0 End
     } else {
         $('#mandetorydchallanNoScheme').attr('style', 'display:none');
     }
@@ -2977,6 +3011,9 @@ function SaveExit_ButtonClick() {
         if (ctxtCreditDays.GetValue() == 0) {
             LoadingPanel.Hide();
             jAlert("Credit Days must be greater than Zero(0)");
+             //Rev 3.0 
+            cbtn_SaveRecords_p.SetVisible(true);
+             //Rev 3.0 End
             flag = false;
         }
     }
@@ -3076,6 +3113,9 @@ function SaveExit_ButtonClick() {
         else {
             LoadingPanel.Hide();
             jAlert('Cannot Save. You must enter atleast one Product to save this entry.');
+             //Rev 3.0 
+            cbtn_SaveRecords_p.SetVisible(true);
+             //Rev 3.0 End
         }
     }
 }
