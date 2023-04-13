@@ -1,7 +1,8 @@
 ﻿<%--/*********************************************************************************************************
  * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module 
  *                                          Refer: 25223
-   Rev 2.0      Pallab        V2.0.37       Transactions pages design modification
+   Rev 2.0      Pallab        V2.0.37       Add Sales Order page design modification
+                                            Refer: 25813
  **********************************************************************************************************/--%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderAdd.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
     Inherits="ERP.OMS.Management.Activities.SalesOrderAdd" EnableEventValidation="false" %>
@@ -823,7 +824,7 @@ function PerformCallToGridBind() {
             cursor: pointer;
         }
 
-        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dt_OADate
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_OADate
         {
             position: relative;
             z-index: 1;
@@ -835,7 +836,7 @@ function PerformCallToGridBind() {
             z-index: 0 !important;
         }
 
-        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dt_OADate_B-1
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_OADate_B-1
         {
             background: transparent !important;
             border: none;
@@ -844,7 +845,7 @@ function PerformCallToGridBind() {
         }
 
         #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
-        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dt_OADate_B-1 #dt_OADate_B-1Img
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_OADate_B-1 #dt_OADate_B-1Img
         {
             display: none;
         }
@@ -1209,6 +1210,16 @@ function PerformCallToGridBind() {
         #ASPxLabel8
         {
             line-height: 16px;
+        }
+
+        /*#dt_PLSales_DDD_PW-1
+        {
+            z-index: 999 !important;
+        }*/
+
+        #dt_SaleInvoiceDue
+        {
+            z-index: 0;
         }
 
         /*Rev end 2.0*/
@@ -1713,8 +1724,7 @@ function PerformCallToGridBind() {
                                             </dxe:ASPxTextBox>
                                         </div>
 
-                                        <%--Rev 2.0: "for-cust-icon" class add --%>
-                                        <div class="col-md-2 lblmTop8 for-cust-icon">
+                                        <div class="col-md-2 lblmTop8">
                                             <dxe:ASPxLabel ID="lbl_DueDate" runat="server" Text="Due Date">
                                             </dxe:ASPxLabel>
                                             <dxe:ASPxDateEdit ID="dt_SaleInvoiceDue" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdt_SaleInvoiceDue" Width="100%">
@@ -1722,9 +1732,6 @@ function PerformCallToGridBind() {
                                                 </ButtonStyle>
                                                 <ClientSideEvents GotFocus="function(s,e){cdt_SaleInvoiceDue.ShowDropDown();}" />
                                             </dxe:ASPxDateEdit>
-                                            <%--Rev 2.0--%>
-                                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                                            <%--Rev end 2.0--%>
                                         </div>
 
 

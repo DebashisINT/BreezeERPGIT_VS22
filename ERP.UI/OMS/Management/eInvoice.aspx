@@ -1,6 +1,6 @@
 ﻿<%--====================================================Revision History=========================================================================
  1.0   v2.0.37	Priti	13-03-2023	0025686:Eway Bill Cancel not working for Transit Sales Invoice & Credit Note
- 2.0   v2.0.37	Pallab	10-04-2023	Transactions pages design modification
+ 2.0   v2.0.37	Pallab	10-04-2023	0025812:E -Invoice pages design modification
 ====================================================End Revision History=====================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="eInvoice.aspx.cs" Inherits="ERP.OMS.Management.eInvoice" %>
@@ -74,8 +74,9 @@
         }
 
         #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate , #ASPxDateEdit1 , #ASPxDateEdit2 ,
-        #ASPxDateEdit3 , #ASPxDateEdit4 , #ASPxDateEdit7 , #ASPxDateEdit8 , #ASPxDateEdit9 , #ASPxDateEdit10 , #ASPxDateEdit11 , #ASPxDateEdit12 ,
-        #ASPxDateEdit13 , #ASPxDateEdit14
+        #ASPxDateEdit3 , #ASPxDateEdit4 , #ASPxDateEdit5 , #ASPxDateEdit6 , #ASPxDateEdit7 , #ASPxDateEdit8 , #ASPxDateEdit9 , #ASPxDateEdit10 , #ASPxDateEdit11 , #ASPxDateEdit12 ,
+        #ASPxDateEdit13 , #ASPxDateEdit14 , #ASPxDateEdit15, #ASPxDateEdit16 , #ASPxDateEdit17, #ASPxDateEdit18 , #ASPxDateEdit19, #ASPxDateEdit20 , #ASPxDateEdit21, #ASPxDateEdit22 ,
+        #ASPxDateEdit25, #ASPxDateEdit26
         {
             position: relative;
             z-index: 1;
@@ -88,8 +89,10 @@
         }
 
         #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1 ,
-        #ASPxDateEdit1_B-1 , #ASPxDateEdit2_B-1 , #ASPxDateEdit3_B-1 , #ASPxDateEdit4_B-1 , #ASPxDateEdit7_B-1 , #ASPxDateEdit8_B-1 ,
-        #ASPxDateEdit9_B-1 , #ASPxDateEdit10_B-1 , #ASPxDateEdit11_B-1 , #ASPxDateEdit12_B-1 , #ASPxDateEdit13_B-1 , #ASPxDateEdit14_B-1
+        #ASPxDateEdit1_B-1 , #ASPxDateEdit2_B-1 , #ASPxDateEdit3_B-1 , #ASPxDateEdit4_B-1 , #ASPxDateEdit5_B-1 , #ASPxDateEdit6_B-1 , #ASPxDateEdit7_B-1 , #ASPxDateEdit8_B-1 ,
+        #ASPxDateEdit9_B-1 , #ASPxDateEdit10_B-1 , #ASPxDateEdit11_B-1 , #ASPxDateEdit12_B-1 , #ASPxDateEdit13_B-1 , #ASPxDateEdit14_B-1 , #ASPxDateEdit15_B-1 , #ASPxDateEdit16_B-1 ,
+        #ASPxDateEdit17_B-1 , #ASPxDateEdit18_B-1 , #ASPxDateEdit19_B-1 , #ASPxDateEdit20_B-1 , #ASPxDateEdit21_B-1 , #ASPxDateEdit22_B-1 , #ASPxDateEdit25_B-1 , #ASPxDateEdit26_B-1
+
         {
             background: transparent !important;
             border: none;
@@ -100,9 +103,11 @@
         #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
         #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img ,
         #ASPxDateEdit1_B-1 #ASPxDateEdit1_B-1Img , #ASPxDateEdit2_B-1 #ASPxDateEdit2_B-1Img , #ASPxDateEdit3_B-1 #ASPxDateEdit3_B-1Img ,
-        #ASPxDateEdit4_B-1 #ASPxDateEdit4_B-1Img , #ASPxDateEdit7_B-1 #ASPxDateEdit7_B-1Img , #ASPxDateEdit8_B-1 #ASPxDateEdit8_B-1Img ,
+        #ASPxDateEdit4_B-1 #ASPxDateEdit4_B-1Img , #ASPxDateEdit5_B-1 #ASPxDateEdit5_B-1Img , #ASPxDateEdit6_B-1 #ASPxDateEdit6_B-1Img , #ASPxDateEdit7_B-1 #ASPxDateEdit7_B-1Img , #ASPxDateEdit8_B-1 #ASPxDateEdit8_B-1Img ,
         #ASPxDateEdit9_B-1 #ASPxDateEdit9_B-1Img , #ASPxDateEdit10_B-1 #ASPxDateEdit10_B-1Img , #ASPxDateEdit11_B-1 #ASPxDateEdit11_B-1Img , #ASPxDateEdit12_B-1  #ASPxDateEdit12_B-1Img ,
-        #ASPxDateEdit13_B-1  #ASPxDateEdit13_B-1Img , #ASPxDateEdit14_B-1  #ASPxDateEdit14_B-1Img
+        #ASPxDateEdit13_B-1  #ASPxDateEdit13_B-1Img , #ASPxDateEdit14_B-1  #ASPxDateEdit14_B-1Img , #ASPxDateEdit15_B-1  #ASPxDateEdit15_B-1Img , #ASPxDateEdit16_B-1  #ASPxDateEdit16_B-1Img ,
+        #ASPxDateEdit17_B-1  #ASPxDateEdit17_B-1Img , #ASPxDateEdit18_B-1  #ASPxDateEdit18_B-1Img , #ASPxDateEdit19_B-1  #ASPxDateEdit19_B-1Img , #ASPxDateEdit20_B-1  #ASPxDateEdit20_B-1Img ,
+        #ASPxDateEdit21_B-1  #ASPxDateEdit21_B-1Img , #ASPxDateEdit22_B-1  #ASPxDateEdit22_B-1Img , #ASPxDateEdit25_B-1  #ASPxDateEdit25_B-1Img , #ASPxDateEdit26_B-1  #ASPxDateEdit26_B-1Img
         {
             display: none;
         }
