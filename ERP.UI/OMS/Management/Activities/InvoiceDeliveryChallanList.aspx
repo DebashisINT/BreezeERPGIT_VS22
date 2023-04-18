@@ -1,6 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti    V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
-   2.0   Pallab   V2.0.37     07-04-2023     Transactions pages design modification
+   2.0   Pallab   V2.0.37     07-04-2023     25844: Sales Invoice Cum Challan module design modification
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InvoiceDeliveryChallanList.aspx.cs" Inherits="ERP.OMS.Management.Activities.InvoiceDeliveryChallanList" 
@@ -1211,8 +1211,8 @@
             background: #094e8c !important;
         }
 
-        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridLocationwiseStockStatus 
-        
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridLocationwiseStockStatus ,
+        #GrdQuotation
         {
             max-width: 98% !important;
         }
@@ -1421,6 +1421,8 @@
         {
             top: 450px !important;
         }
+
+        
 
         /*Rev end 2.0*/
         </style>

@@ -714,6 +714,20 @@
             max-width: 100% !important;
         }*/
         /*Rev end 2.0*/
+
+        #ASPXPopupControl2_PW-1
+        {
+            top: 155px !important;
+        }
+        /*@media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1
+            {
+                position:fixed !important;
+                left: 13% !important;
+                top: 60px !important;
+            }
+        }*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {

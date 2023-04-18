@@ -1,6 +1,6 @@
 <%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                04-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                04-04-2023        2.0.37           Pallab              25829: Import Bank Statement module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Imports Bank Statement" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" Inherits="ERP.OMS.Management.DailyTask.management_DailyTask_frmBankStatement_" CodeBehind="frmBankStatement.aspx.cs" %>

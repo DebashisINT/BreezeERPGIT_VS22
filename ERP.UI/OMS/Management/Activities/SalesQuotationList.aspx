@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                05-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                05-04-2023        2.0.37           Pallab              25849: Proforma Invoice/Quotation module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Proforma Invoice/ Quotation" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"

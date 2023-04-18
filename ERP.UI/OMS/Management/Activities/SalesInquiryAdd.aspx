@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                05-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                05-04-2023        2.0.37           Pallab              25846: Add Sales Inquiry module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInquiryAdd.aspx.cs" EnableEventValidation="false" Inherits="ERP.OMS.Management.Activities.SalesInquiryAdd" %>
@@ -1006,6 +1006,16 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         input[type="text"], input[type="password"], textarea
         {
                 margin-bottom: 0;
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1
+            {
+                position:fixed !important;
+                left: 13% !important;
+                top: 60px !important;
+            }
         }
 
         /*Rev end 1.0*/
