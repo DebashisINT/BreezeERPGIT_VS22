@@ -588,22 +588,16 @@ E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\BusinessLogicLayer.dll
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\DataAccessLayer.dll
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\EntityLayer.dll
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\UtilityLayer.dll
-E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.VisualStudio.TemplateWizardInterface.dll
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE.dll
-E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\VSLangProj.dll
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\VsWebSite.Interop.dll
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE80.dll
-E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\stdole.dll
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\EntityLayer.pdb
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\UtilityLayer.pdb
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\BusinessLogicLayer.pdb
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\DataAccessLayer.pdb
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\DocumentFormat.OpenXml.xml
-E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\System.Web.Http.xml
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.Web.Infrastructure.xml
-E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.VisualStudio.TemplateWizardInterface.xml
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE.xml
-E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\VSLangProj.xml
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE80.xml
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.CopyComplete
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\ERP.dll.config
@@ -722,3 +716,4 @@ C:\Projects\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.CoreCompileInputs.cach
 C:\Projects\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.CopyComplete
 C:\Projects\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.dll
 C:\Projects\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.pdb
+E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\System.Web.Http.dll
