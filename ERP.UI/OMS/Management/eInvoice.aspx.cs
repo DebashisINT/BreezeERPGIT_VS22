@@ -1,5 +1,7 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0   v2.0.37	Priti	13-03-2023	0025686:Eway Bill Cancel not working for Transit Sales Invoice & Credit Note
+// 2.0   v2.0.38	Priti	18-04-2023	0025725:If an Eway Bill or IRN is cancelled from the Portal directly need to update the ERP tables accordingly next time the Document is
+
 #endregion//====================================================End Revision History=====================================================================
 
 
@@ -418,7 +420,22 @@ namespace ERP.OMS.Management
                             {
                                 foreach (errorlog item in err.error.args.irp_error.details)
                                 {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+                                    //Rev 2.0
+                                    if (item.ErrorCode == "9999")
+                                    {
+                                        DBEngine objDb = new DBEngine();
+                                        objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET IsIRNCancelled=1,IRN_Cancell_Date='" + DateTime.Now.ToString("MM/dd/yyyy H:mm") + "' WHERE Irn='" + objCancelDetails.Irn + "'");
+                                        objDb.GetDataTable("EXEC PRC_CANCELIRNSI " + id + "");
+                                        output = "IRN Cancelled successfully.";
+
+                                    }
+                                    //Rev 2.0 End
+                                    else
+                                    {
+                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+                                        output = "Error occurs while IRN Cancellation.";
+
+                                    }
                                 }
                             }
                             else
@@ -429,10 +446,12 @@ namespace ERP.OMS.Management
                                 {
                                     objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','" + "0" + "','" + item + "')");
                                 }
+
+                                output = "Error occurs while IRN Cancellation.";
+
                             }
 
 
-                            output = "Error occurs while IRN Cancellation.";
                         }
 
 
