@@ -916,6 +916,13 @@
     <Compile Include="OMS\Management\Activities\SalesOrderListHTML.aspx.designer.cs">
       <DependentUpon>SalesOrderListHTML.aspx</DependentUpon>
     </Compile>
+    <Compile Include="OMS\Management\Activities\SalesOrderNewList.aspx.cs">
+      <DependentUpon>SalesOrderNewList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OMS\Management\Activities\SalesOrderNewList.aspx.designer.cs">
+      <DependentUpon>SalesOrderNewList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OMS\Management\Activities\SalesRateScheme.aspx.cs">
       <DependentUpon>SalesRateScheme.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -11559,6 +11566,7 @@
     <Content Include="OMS\Management\Activities\JS\SalesInvoice.js" />
     <Content Include="OMS\Management\Activities\JS\SalesOrderAdd.js" />
     <Content Include="OMS\Management\Activities\JS\SalesOrderEntityList.js" />
+    <Content Include="OMS\Management\Activities\JS\SalesOrderNewList.js" />
     <Content Include="OMS\Management\Activities\JS\SalesQuotation.js" />
     <Content Include="OMS\Management\Activities\JS\SalesQuotationList.js" />
     <Content Include="OMS\Management\Activities\JS\SalesReturn.js" />
@@ -11789,6 +11797,7 @@
     <Content Include="OMS\Management\Activities\SalesInvoice.aspx" />
     <Content Include="OMS\Management\Activities\SalesOrderEntityList.aspx" />
     <Content Include="OMS\Management\Activities\SalesOrderListHTML.aspx" />
+    <Content Include="OMS\Management\Activities\SalesOrderNewList.aspx" />
     <Content Include="OMS\Management\Activities\SalesOrderSpecialEdit.aspx" />
     <Content Include="OMS\Management\Activities\SalesQuotationList.aspx" />
     <Content Include="OMS\Management\Activities\SalesRateScheme.aspx" />
@@ -13844,7 +13853,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>7665</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:7670/</IISUrl>
+          <IISUrl>http://localhost:7671/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
