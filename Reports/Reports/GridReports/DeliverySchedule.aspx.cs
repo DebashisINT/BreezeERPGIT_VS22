@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=============================================================================================================================
+//1.0   v2 .0.37    Debashis    18/04/2023  Error occurred "Input string was not in a correct format." while export Delivery schedule Report.
+//                                          Now it has been taken care of.Refer: 0025850
+#endregion=======================End Revision History=======================================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -143,7 +147,10 @@ namespace Reports.Reports.GridReports
                 // Create and fill a DataSet.
                 DataSet ds = new DataSet();
                 myCommand.Fill(ds, "Main");
-                myCommand = new SqlDataAdapter("SELECT PARTYNAME,TOTORDQTY,PRODQTY,SCHDELQTY,ACTDELQTY,PENDDELQTY,WARRANTYDAYS FROM DELIVERYSCHEDULE_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PARTYNAME='Gross Total :' AND BRANCH_ID=99999999999999", con);
+                //Rev 1.0
+                //myCommand = new SqlDataAdapter("SELECT PARTYNAME,TOTORDQTY,PRODQTY,SCHDELQTY,ACTDELQTY,PENDDELQTY,WARRANTYDAYS FROM DELIVERYSCHEDULE_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PARTYNAME='Gross Total :' AND BRANCH_ID=99999999999999", con);
+                myCommand = new SqlDataAdapter("SELECT PARTYNAME,ISNULL(TOTORDQTY,0.00) AS TOTORDQTY,ISNULL(PRODQTY,0.00) AS PRODQTY,ISNULL(SCHDELQTY,0.00) AS SCHDELQTY,ISNULL(ACTDELQTY,0.00) AS ACTDELQTY,ISNULL(PENDDELQTY,0.00) AS PENDDELQTY,ISNULL(WARRANTYDAYS,0.00) AS WARRANTYDAYS FROM DELIVERYSCHEDULE_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PARTYNAME='Gross Total :' AND BRANCH_ID=99999999999999", con);
+                //End of Rev 1.0
                 myCommand.Fill(ds, "GrossTotal");
                 myCommand.Dispose();
                 con.Dispose();
