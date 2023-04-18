@@ -2,8 +2,8 @@
    1.0   Priti     V2.0.36     0025577:Alt UOM is enabled false if we want to modify the stock details after saving the document.cmbSecondUOM remove ClientEnabled="false"
    2.0   Priti     V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
    3.0   Priti     V2.0.37    14-03-2023     0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
-   4.0   Pallab    V2.0.37    07-04-2023     Transactions pages design // 3.0  Priti   V2.0.38    13-04-2023    0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created// 3.0  Priti   V2.0.38    13-04-2023    0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
-   5.0   Priti     V2.0.38    13-04-2023    0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
+   4.0   Pallab    V2.0.37    07-04-2023     0025845: Add Sales Invoice Cum Challan module design modification
+   5.0   Priti     V2.0.38    13-04-2023     0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
 
 
 ========================================== End Revision History =======================================================================================================--%>
@@ -1761,6 +1761,16 @@
         .backSelect
         {
             background: #42b39e !important;
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1
+            {
+                position:fixed !important;
+                left: 13% !important;
+                top: 60px !important;
+            }
         }
 
         /*Rev end 4.0*/

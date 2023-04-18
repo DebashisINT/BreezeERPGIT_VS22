@@ -1,7 +1,7 @@
 ﻿<%--=======================================================Revision History=========================================================================
     1.0 Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911
     2.0 Priti    V2.0.36  02-02-2023     0025253: listing view upgradation required of Journals of Accounts & Finance
-    3.0 Pallab   V2.0.37  04-04-2023     Transactions pages design modification
+    3.0 Pallab   V2.0.37  04-04-2023     0025830: Journal Voucher module design modification
 =========================================================End Revision History========================================================================--%>
 
 <%@ Page Title="Journal Entry" EnableEventValidation="false" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalEntry.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.JournalVoucherEntry" %>
@@ -5770,13 +5770,14 @@
                 <div style="padding-right: 5px;">
                     <% if (rights.CanAdd)
                         { %>
-                    <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Journal</span> </a>
-                    <a href="javascript:void(0);" onclick="OnAddButtonClickTDS()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>T</u>DS Journal</span> </a>
+                    <%--Rev 3.0: "btn-radius" class removed--%>
+                    <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Journal</span> </a>
+                    <a href="javascript:void(0);" onclick="OnAddButtonClickTDS()" class="btn btn-success"><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>T</u>DS Journal</span> </a>
                     <% } %>
 
                     <% if (rights.CanExport)
                         { %>
-                    <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+                    <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                         <asp:ListItem Value="0">Export to</asp:ListItem>
                         <asp:ListItem Value="1">PDF</asp:ListItem>
                         <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -5784,6 +5785,7 @@
                         <asp:ListItem Value="4">CSV</asp:ListItem>
                     </asp:DropDownList>
                     <% } %>
+                    <%--Rev end 3.0--%>
                     <table class="padTabtype2 pull-right" id="gridFilter">
                         <tr>
                             <td>

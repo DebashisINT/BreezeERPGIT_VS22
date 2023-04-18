@@ -3660,7 +3660,7 @@ textarea.form-control.input-sm {
 
 
 .dxeDisabled_PlasticBlue, .dxeDisabled_PlasticBlue td.dxe, .dxeDisabled_PlasticBlue .dxeEditArea_PlasticBlue, .dxeDisabled_PlasticBlue .dxeMemoEditArea_PlasticBlue {
-    background:#eee;
+    background: #eee !important;
 }
 
 .btn .btn-icon {

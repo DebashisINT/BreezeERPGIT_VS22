@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                05-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                05-04-2023        2.0.37           Pallab              25848: Add Proforma Invoice/Quotation module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Sales Quotation" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesQuotation.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesQuotation" %>
@@ -488,7 +488,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             cursor: pointer;
         }
 
-        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PlQuoteExpiry
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PlQuoteExpiry , #dtProjValidUpto , #dtProjValidFrom
         {
             position: relative;
             z-index: 1;
@@ -500,7 +500,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             z-index: 0 !important;
         }
 
-        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PlQuoteExpiry_B-1
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PlQuoteExpiry_B-1 , #dtProjValidUpto_B-1 , #dtProjValidFrom_B-1
         {
             background: transparent !important;
             border: none;
@@ -509,7 +509,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
 
         #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
-        #dt_PlQuoteExpiry_B-1 #dt_PlQuoteExpiry_B-1Img
+        #dt_PlQuoteExpiry_B-1 #dt_PlQuoteExpiry_B-1Img , #dtProjValidUpto_B-1 #dtProjValidUpto_B-1Img , #dtProjValidFrom_B-1 #dtProjValidFrom_B-1Img
         {
             display: none;
         }
@@ -874,6 +874,16 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 z-index: 0;
         }
 
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 13% !important;
+                top: 60px !important;
+            }
+        }
+
         /*Rev end 1.0*/
         </style>
 </asp:Content>
@@ -1119,6 +1129,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             </dxe:ASPxDateEdit>
                                             <span id="MandatorysDate" style="display: none" class="validclass">
                                                 <img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI1" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
+                                            <%--Rev 1.0--%>
+                                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                            <%--Rev end 1.0--%>
                                         </div>
                                         <div style="clear: both"></div>
                                         <div class="col-md-3">
@@ -1133,6 +1146,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <span id="MandatoryEgSDate" style="display: none" class="validclass">
                                                 <img id="2gridHistory_DXPEForm_efnew_DXEFL_DXEditor12_EI14" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc"
                                                     title="Expiry Date must be greater than or equal to Proformat Date."></span>
+                                            <%--Rev 1.0--%>
+                                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                            <%--Rev end 1.0--%>
                                         </div>
                                         <%--Rev 1.0: "simple-select" class add --%>
                                         <div class="col-md-3 simple-select">
@@ -1430,6 +1446,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                <%-- <ClientSideEvents DateChanged="ValidfromCheck" />--%>	
                                                 <ClientSideEvents GotFocus="function(s,e){cdtProjValidFrom.ShowDropDown();}" />	
                                             </dxe:ASPxDateEdit>	
+                                            <%--Rev 1.0--%>
+                                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                            <%--Rev end 1.0--%>
                                         </div>	
                                         <div class="col-md-2 lblmTop8">	
                                             <label>	
@@ -1441,6 +1460,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 </ButtonStyle>	
                                                 <ClientSideEvents GotFocus="function(s,e){cdtProjValidUpto.ShowDropDown();}" />	
                                             </dxe:ASPxDateEdit>	
+                                            <%--Rev 1.0--%>
+                                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                            <%--Rev end 1.0--%>
                                         </div>
                                         <%--Rev work start 06.07.2022 mantise no:25008--%>
                                         <div class="col-md-2 lblmTop8" id="divposGst">
