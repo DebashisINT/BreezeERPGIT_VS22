@@ -5307,12 +5307,17 @@
         {
             height: 30px !important;
             border-radius: 4px;
-            /*-webkit-appearance: none;
+            /*-webkit-appearance: none;*/
             position: relative;
-            z-index: 1;*/
+            z-index: 1;
             background-color: transparent;
             padding-left: 10px !important;
             padding-right: 22px !important;
+        }
+
+        .simple-select select
+        {
+            -webkit-appearance: none;
         }
 
         .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
@@ -5336,7 +5341,11 @@
             cursor: pointer;
         }
 
-        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #FormDate , #toDate
+        .right-20{
+            right: 20px !important;
+        }
+
+        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #FormDate , #toDate , #tDate
         {
             position: relative;
             z-index: 1;
@@ -5348,7 +5357,7 @@
             z-index: 0 !important;
         }
 
-        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #FormDate_B-1 , #toDate_B-1
+        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #FormDate_B-1 , #toDate_B-1 , #tDate_B-1
         {
             background: transparent !important;
             border: none;
@@ -5357,7 +5366,7 @@
         }
 
         #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img ,
-        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img, #tDate_B-1 #tDate_B-1Img
         {
             display: none;
         }
@@ -5371,8 +5380,8 @@
             /*content: '<';*/
             content: url(../../../assests/images/left-arw.png);
             position: absolute;
-            top: 31px;
-            right: 8px;
+            top: 6px;
+            right: -2px;
             font-size: 16px;
             transform: rotate(269deg);
             font-weight: 500;
@@ -5702,6 +5711,30 @@
         .panel-fullscreen
         {
                 z-index: 99 !important;
+        }
+
+        .crossBtn
+        {
+             right: 25px;
+             top: 25px;
+        }
+
+        #txtBillNo
+        {
+            margin-bottom: 0;
+        }
+
+        .col-md-3
+        {
+            margin-bottom: 10px;
+        }
+
+        @media only screen and (max-width: 1444px) and (min-width: 1150px)
+        {
+            #gridFilter
+            {
+                    margin-top: 20px !important;
+            }
         }
         /*Rev end 3.0*/
     </style>
@@ -6130,10 +6163,11 @@
         <div id="divAddNew" class="clearfix" style="display: none">
             <div class="clearfix">
             </div>
-            <div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+            <div style=" padding: 8px 0; margin-bottom: 0px; border-radius: 4px;" class="clearfix">
                 <div class="col-md-3" id="div_Edit">
                     <label>Select Numbering Scheme</label>
-                    <div>
+                    <%--Rev 3.0 : "simple-select" class add--%>
+                    <div class="simple-select">
                         <%-- <dxe:ASPxComboBox ID="CmbScheme" EnableIncrementalFiltering="True" ClientInstanceName="cCmbScheme" DataSourceID="SqlSchematype"
                             TextField="SchemaName" ValueField="ID" TabIndex="1" SelectedIndex="0"
                             runat="server" ValueType="System.String" Width="100%" EnableSynchronization="True">
@@ -6168,11 +6202,15 @@
                             UseMaskBehavior="True" Width="100%" meta:resourcekey="tDateResource1">
                             <ClientSideEvents DateChanged="function(s,e){DateChange()}" />
                         </dxe:ASPxDateEdit>
+                        <%--Rev 3.0--%>
+                        <img src="/assests/images/calendar-icon.png" class="calendar-icon right-20"/>
+                        <%--Rev end 3.0--%>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label>Unit</label>
-                    <div>
+                    <%--Rev 3.0 : "simple-select" class add--%>
+                    <div class="simple-select">
                         <asp:DropDownList ID="ddlBranch" runat="server" DataSourceID="dsBranch" Enabled="false"
                             DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID" Width="100%"
                             meta:resourcekey="ddlBranchResource1" onchange="ddlBranch_ChangeIndex()" onfocus="BranchGotFocus()">
@@ -6181,7 +6219,8 @@
                 </div>
                 <div class="col-md-3">
                     <label>Place Of Supply</label>
-                    <div>
+                    <%--Rev 3.0 : "simple-select" class add--%>
+                    <div class="simple-select">
                         <asp:DropDownList ID="ddlSupplyState" runat="server" DataSourceID="dsSupplyState"
                             DataTextField="state_name" DataValueField="state_id" Width="100%">
                         </asp:DropDownList>
@@ -6189,7 +6228,8 @@
                 </div>
                 <div class="col-md-3">
                     <label>Amounts are</label>
-                    <div>
+                    <%--Rev 3.0 : "simple-select" class add--%>
+                    <div class="simple-select">
                         <asp:DropDownList ID="ddl_AmountAre" runat="server" DataSourceID="dsTaxType"
                             DataTextField="taxGrp_Description" DataValueField="taxGrp_Id" Width="100%">
                         </asp:DropDownList>
@@ -6197,7 +6237,7 @@
                 </div>
                 <div class="col-md-3">
                     <label></label>
-                    <div style="padding-top: 12px;">
+                    <div style="padding-top: 4px;">
                         <dxe:ASPxCheckBox ID="IsRcm" ClientInstanceName="IsRcm" Checked="false" Text="Reverse Mechanism" TextAlign="Right" runat="server">
                             <ClientSideEvents CheckedChanged="RcmCheckChange" />
                         </dxe:ASPxCheckBox>
