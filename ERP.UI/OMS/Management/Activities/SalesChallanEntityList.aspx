@@ -1,7 +1,7 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti    V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
    2.0	 PRITI    V2.0.38	  03/04/2023	    0025289: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Challan
-   3.0	 Pallab   V2.0.38	  06/04/2023	    Transactions pages design modification
+   3.0	 Pallab   V2.0.38	  06/04/2023	    0025855: Sales Challan module design modification
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
