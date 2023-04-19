@@ -672,6 +672,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             box-shadow: 1px 1px 10px #1111112e;
         }
 
+        #popupApproval_PW-1
+        {
+            top: 30px !important;
+            left: 50px !important;
+        }
+
 
         /*#lookup_project
         {

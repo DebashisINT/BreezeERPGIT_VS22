@@ -137,7 +137,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /*content: '<';*/
             content: url(../../../assests/images/left-arw.png);
             position: absolute;
-            top: 31px;
+            top: 26px;
             right: 13px;
             font-size: 16px;
             transform: rotate(269deg);
@@ -276,6 +276,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .dxeCalendarDay_PlasticBlue
         {
                 padding: 6px 6px;
+        }
+
+        #lookupCashBank_DDD_PW-1
+        {
+            left: -218px;
         }
         /*Rev end 1.0*/
     </style>
