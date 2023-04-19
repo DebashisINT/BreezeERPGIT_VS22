@@ -1,7 +1,7 @@
 ﻿<%--=======================================================Revision History=========================================================================
  1.0   Priti    V2.0.36  02-02-2023    0025262: Listing view upgradation required of Manual BRS of Accounts & Finance
  2.0   Priti    V2.0.38  03-04-2023   0025773: Manual BRS not working
- 3.0   Pallab   V2.0.38  04-04-2023   Transactions pages design modification
+ 3.0   Pallab   V2.0.38  04-04-2023   25857: Manual BRS module design modification
 
 =========================================================End Revision History========================================================================--%>
 
@@ -902,6 +902,11 @@
         #massrecdt
         {
             width: 100%;
+        }
+
+        #CallbackPanel_LPV
+        {
+                top: 505px !important;
         }
         /*Rev end 3.0*/
     </style>

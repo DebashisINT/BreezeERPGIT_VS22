@@ -1,6 +1,6 @@
 ﻿<%--=======================================================Revision History=========================================================================    
     1.0 Priti    V2.0.36  02-02-2023     0025264: listing view upgradation required of Contra Voucher of Accounts & Finance
-    2.0 Pallab   V2.0.37  05-04-2023     Transactions pages design modification
+    2.0 Pallab   V2.0.37  05-04-2023     25858: Contra Voucher module design modification
 =========================================================End Revision History========================================================================--%>
 
 
@@ -1970,15 +1970,11 @@ function gridRowclick(s, e) {
             cursor: pointer;
         }
 
-        .calendar-icon-2 {
-            position: absolute;
-            bottom: 7px;
-            right: 4px;
-            z-index: 0;
-            cursor: pointer;
+        .right-20{
+            right: 20px !important;
         }
 
-        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #FormDate , #toDate , #dtTDate , #InstDate
+        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #FormDate , #toDate , #dtTDate , #InstDate, #tDate
         {
             position: relative;
             z-index: 1;
@@ -1990,7 +1986,7 @@ function gridRowclick(s, e) {
             z-index: 0 !important;
         }
 
-        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #InstDate_B-1
+        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #InstDate_B-1, #tDate_B-1
         {
             background: transparent !important;
             border: none;
@@ -1999,7 +1995,7 @@ function gridRowclick(s, e) {
         }
 
         #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img ,
-        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #InstDate_B-1 #InstDate_B-1Img
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #InstDate_B-1 #InstDate_B-1Img, #tDate_B-1 #tDate_B-1Img
         {
             display: none;
         }
@@ -2481,7 +2477,7 @@ function gridRowclick(s, e) {
             </table>
         </div>
         <div id="divAddNew" style="display: none" runat="server">
-            <div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+            <div style=" padding: 8px 0; margin-bottom: 15px; border-radius: 4px; " class="clearfix">
                 <div class="col-md-2" id="divNumberingScheme">
                     <label style="">Select Numbering Scheme <span style="color: red">*</span></label>
                     <div>
@@ -2516,12 +2512,16 @@ function gridRowclick(s, e) {
                             <ClientSideEvents DateChanged="function(s,e){TDateChange();}" GotFocus="function(s,e){tDate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" ></ClientSideEvents>
                             <ValidationSettings RequiredField-IsRequired="true"></ValidationSettings>
                         </dxe:ASPxDateEdit>
+                        <%--Rev 2.0--%>
+                        <img src="/assests/images/calendar-icon.png" class="calendar-icon right-20"/>
+                        <%--Rev end 2.0--%>
                     </div>
                 </div>
                 <div class="col-md-3">
 
                     <label style="margin-top: 0">From Unit <span style="color: red">*</span></label>
-                    <div>
+                    <%--Rev 2.0 : "simple-select" class add--%>
+                    <div class="simple-select">
                         <%-- <asp:DropDownList ID="ddlBranch" runat="server" DataSourceID="dsBranch" onchange="BranchFrom_SelectedIndexChanged()"
                             DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID" Width="100%">
                         </asp:DropDownList>--%>
@@ -2534,7 +2534,8 @@ function gridRowclick(s, e) {
                 <div class="col-md-3">
 
                     <label style="margin-top: 0">To Unit <span style="color: red">*</span></label>
-                    <div>
+                    <%--Rev 2.0 : "simple-select" class add--%>
+                    <div class="simple-select">
                         <%-- <asp:DropDownList ID="ddlBranchTo" runat="server" DataSourceID="dsBranch"
                             DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID" Width="100%" onchange="batchgridFocus()">
                         </asp:DropDownList>--%>
