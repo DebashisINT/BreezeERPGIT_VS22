@@ -1,4 +1,9 @@
-﻿<%@ Page Title="Document" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="Product_Document.aspx.cs" 
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti   V2.0.39     21-04-2023     25884: Error while trying to view Product Master Document Attachment
+========================================== End Revision History =======================================================================================================--%>
+
+
+<%@ Page Title="Document" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="Product_Document.aspx.cs" 
     Inherits="ERP.OMS.Management.Master.Product_Document" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
         
@@ -94,7 +99,7 @@
 
         }
         function OnDocumentView(obj1, obj2) {
-            debugger;
+           
             var docid = obj1;
             var filename;
             var chk = obj2.includes("~");
@@ -106,12 +111,15 @@
             }
             if (filename != '' && filename != null) {
                 var d = new Date();
-                var n = d.getFullYear();
+                //Rev 1.0
+                //var n = d.getFullYear();
+                var n = obj2.split('/')[1];
+                //Rev 1.0 End
                 var url = '\\OMS\\Management\\Documents\\' + docid + '\\' + n + '\\' + filename;
                
-                //window.open(url, '_blank');
+               
                 var seturl = '\\OMS\\Management\\DailyTask\\viewImage.aspx?id=' + url;
-               // alert(seturl);
+              
                 popup.contentUrl = url;
                 popup.Show();
                 popup.SetHeaderText('View Document');
