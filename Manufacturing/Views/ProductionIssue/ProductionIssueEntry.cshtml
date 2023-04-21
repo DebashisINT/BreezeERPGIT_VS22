@@ -126,13 +126,13 @@
     }
 </style>
 <script>
-
+    var _ProductIds = 0;
     function SelectionChanged(s, e) {
         //REV 2.0
         //s.GetSelectedFieldValues("DetailsID", GetSelectedFieldValuesCallback);
        
         var DetailsID = POProductGridLookup.GetSelectedKeysOnPage();
-        var _ProductIds = 0;
+       
         var hdnProductIDS = [];
         hdnProductIDS = DetailsID;
         for (var i = 0; i < hdnProductIDS.length; i++) {
@@ -141,9 +141,11 @@
             }
             else {
                 _ProductIds = hdnProductIDS[i] + ',' + _ProductIds;
+
             }
             $("#hdnProductIDS").val(_ProductIds);
         }
+
         //REV 2.0 END
 
     }

@@ -1,4 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="OrderDeliveryScheduleAdd.aspx.cs" Inherits="ERP.OMS.Management.Activities.OrderDeliveryScheduleAdd" %>
+﻿<%--==================================================== Revision History =========================================================================
+1.0	    v2.0.38		priti	 18-04-2023      0025842:The Serial No of the Last Sales Order Schedule is over-written for the Previous Schedules
+====================================================End Revision History===================================================================--%>
+
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="OrderDeliveryScheduleAdd.aspx.cs" Inherits="ERP.OMS.Management.Activities.OrderDeliveryScheduleAdd" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc1" TagName="UOMConversionControl" %>
 
@@ -440,7 +446,9 @@
                 $("#hdnTotalDeliveryQty").val(cOpeningGrid.cphdnTotalDeliveryQty);
                 //End Rev 24428  z
                 //End Rev 24428
-
+                //Rev 1.0
+                ctxtSerialNumber.SetText('');
+                //Rev 1.0 End
                 jAlert('Saved Successfully');
 
             }
