@@ -5729,13 +5729,18 @@
             margin-bottom: 10px;
         }
 
-        @media only screen and (max-width: 1444px) and (min-width: 1150px)
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        /*@media only screen and (max-width: 1444px) and (min-width: 1150px)
         {
             #gridFilter
             {
                     margin-top: 20px !important;
             }
-        }
+        }*/
         /*Rev end 3.0*/
     </style>
 </asp:Content>

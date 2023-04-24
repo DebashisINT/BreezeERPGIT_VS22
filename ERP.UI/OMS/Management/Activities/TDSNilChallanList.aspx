@@ -1,6 +1,6 @@
 ﻿<%--=======================================================Revision History========================================================================= 
     1.0     Priti    V2.0.36   17-02-2023     	0025266: Listing view upgradation required of TDS Nil Challan of Accounts & Finance
-    2.0     Pallab   V2.0.37   05-04-2023     	Transactions pages design modification
+    2.0     Pallab   V2.0.37   05-04-2023     	0025886: TDS Nil Challan module design modification
 =========================================================End Revision History========================================================================--%>
 
 
@@ -191,7 +191,7 @@
         .calendar-icon {
             position: absolute;
             bottom: 6px;
-            right: 20px;
+            right: 18px;
             z-index: 0;
             cursor: pointer;
         }
@@ -578,7 +578,11 @@
 
         #CallbackPanel_LPV
         {
-                top: 410px !important;
+            top: 410px !important;
+        }
+        .padTab
+        {
+            margin-left: 5px !important;
         }
         /*Rev end 2.0*/
         </style>

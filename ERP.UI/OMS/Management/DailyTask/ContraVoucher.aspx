@@ -1971,7 +1971,7 @@ function gridRowclick(s, e) {
         }
 
         .right-20{
-            right: 20px !important;
+            right: 18px !important;
         }
 
         #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #FormDate , #toDate , #dtTDate , #InstDate, #tDate
@@ -2349,6 +2349,12 @@ function gridRowclick(s, e) {
         #CallbackPanel_LPV
         {
                 top: 410px !important;
+        }
+
+        .col-md-2
+        {
+            padding-right: 12px;
+            padding-left: 12px;
         }
         /*Rev end 2.0*/
     </style>
@@ -2751,7 +2757,7 @@ function gridRowclick(s, e) {
                 <div>
                     <br />
                 </div>
-                <div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+                <div style=" padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
                     <div class="col-md-3">
                         <label id="tdITypeLable" style="">Instrument Type</label>
                         <div style="" id="tdITypeValue">
@@ -2791,6 +2797,9 @@ function gridRowclick(s, e) {
                                 <ButtonStyle Width="13px">
                                 </ButtonStyle>
                             </dxe:ASPxDateEdit>
+                            <%--Rev 1.0--%>
+                            <img src="/assests/images/calendar-icon.png" class="calendar-icon right-20"/>
+                            <%--Rev end 1.0--%>
                         </div>
                     </div>
                     <div style="clear: both"></div>

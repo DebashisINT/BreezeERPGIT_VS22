@@ -1,6 +1,6 @@
 <%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                04-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                04-04-2023        2.0.37           Pallab              25882: Cash/Bank Voucher Add module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Cash/Bank Voucher" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" Inherits="ERP.OMS.Management.DailyTask.management_DailyTask_CashBankEntry" CodeBehind="CashBankEntry.aspx.cs" %>
@@ -1294,7 +1294,8 @@ $('#<%=hdnBranchId.ClientID %>').val(defaultbranch);
                                                                 </div>
                                                                 <div class="col-md-1">
                                                                     <label>Currency  </label>
-                                                                    <div>
+                                                                    <%--Rev 1.0: "simple-select" class add --%>
+                                                                    <div class="simple-select">
                                                                         <dxe:ASPxComboBox ID="CmbCurrency" EnableIncrementalFiltering="True" ClientInstanceName="cCmbCurrency"
                                                                             TextField="Currency_AlphaCode" ValueField="Currency_ID" SelectedIndex="0" Native="true"
                                                                             runat="server" ValueType="System.String" EnableSynchronization="True" Width="100%" CssClass="pull-left">
@@ -1399,11 +1400,14 @@ $('#<%=hdnBranchId.ClientID %>').val(defaultbranch);
                                                                         <dxe:ASPxLabel ID="lbl_AmountAre" runat="server" Text="Amounts are">
                                                                         </dxe:ASPxLabel>
                                                                     </label>
+                                                                    <%--Rev 1.0: "simple-select" class add --%>
+                                                                    <div class="simple-select">
                                                                     <dxe:ASPxComboBox ID="ddl_AmountAre" runat="server" ClientIDMode="Static" ClientInstanceName="cddl_AmountAre"
                                                                         Width="100%" Native="true">
 
                                                                         <ClientSideEvents LostFocus="function(s, e) { cddl_AmountAre_LostFocus()}" />
                                                                     </dxe:ASPxComboBox>
+                                                                    </div>
                                                                 </div>
                                                               <div class="col-md-2" style="padding-top: 25px;" runat="server" id="dvTDSpop">
                                                                     <label class="mTop5">&nbsp;</label>
