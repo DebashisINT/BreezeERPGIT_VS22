@@ -1,3 +1,7 @@
+<%--=======================================================Revision History=========================================================    
+    1.0   Pallab    V2.0.38   20-04-2023      25868: Add Vendor Payment/Receipt module design modification
+=========================================================End Revision History=======================================================--%>
+
 <%@ Page Title="VendorPaymentReceipt" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorPaymentReceipt.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorPaymentReceipt" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>
@@ -327,10 +331,464 @@ function Currency_Rate() {
 
     </script>
 
+    <style>
+        /*Rev 1.0*/
 
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px !important;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            bottom: 6px;
+            right: 20px;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate , #dtChallandate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .dxeDisabled_PlasticBlue
+        {
+            z-index: 0 !important;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1 ,
+        #dtChallandate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img ,
+        #dtChallandate_B-1 #dtChallandate_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        .simple-select::after {
+            /*content: '<';*/
+            content: url(../../../assests/images/left-arw.png);
+            position: absolute;
+            top: 6px;
+            right: -2px;
+            font-size: 16px;
+            transform: rotate(269deg);
+            font-weight: 500;
+            background: #094e8c;
+            color: #fff;
+            height: 18px;
+            display: block;
+            width: 26px;
+            /* padding: 10px 0; */
+            border-radius: 4px;
+            text-align: center;
+            line-height: 18px;
+            z-index: 0;
+        }
+        .simple-select {
+            position: relative;
+                z-index: 0;
+        }
+        .simple-select:disabled::after
+        {
+            background: #1111113b;
+        }
+        select.btn
+        {
+            padding-right: 10px !important;
+        }
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: 1;
+    }
+
+        .styled-checkbox + label {
+            position: relative;
+            /*cursor: pointer;*/
+            padding: 0;
+            margin-bottom: 0 !important;
+        }
+
+            .styled-checkbox + label:before {
+                content: "";
+                margin-right: 6px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                /*background: #d7d7d7;*/
+                margin-top: 2px;
+                border-radius: 2px;
+                border: 1px solid #c5c5c5;
+            }
+
+        .styled-checkbox:hover + label:before {
+            background: #094e8c;
+        }
+
+
+        .styled-checkbox:checked + label:before {
+            background: #094e8c;
+        }
+
+        .styled-checkbox:disabled + label {
+            color: #b8b8b8;
+            cursor: auto;
+        }
+
+            .styled-checkbox:disabled + label:before {
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        .styled-checkbox:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            background: white;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+            transform: rotate(45deg);
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin-right: 5px;
+        }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
+
+        .modal-dialog
+        {
+            width: 50%;
+        }
+
+        .modal-header
+        {
+            padding: 8px 4px 8px 10px;
+            background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridLocationwiseStockStatus 
+        
+        {
+            max-width: 98% !important;
+        }
+
+        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
+        {
+            width: 95% !important;
+        }*/
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 3px;
+        }
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
+
+        .dxeBase_PlasticBlue .dxichCellSys
+        {
+            padding-top: 2px !important;
+        }
+
+        .pBackDiv
+        {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #1111112e;
+        }
+        .HeaderStyle th
+        {
+            padding: 5px;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .pb-10
+        {
+            padding-bottom: 10px;
+        }
+
+        .pTop10 {
+    padding-top: 20px;
+}
+        .custom-padd
+        {
+            padding-top: 4px;
+    padding-bottom: 10px;
+        }
+
+        input + label
+        {
+                margin-right: 10px;
+        }
+
+        .btn
+        {
+            margin-bottom: 0;
+        }
+
+        .pl-10
+        {
+            padding-left: 10px;
+        }
+
+        /*.col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }*/
+
+        .devCheck
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-5
+        {
+            margin-top: 5px;
+        }
+
+        #txtProdSearch
+        {
+            margin-bottom: 10px;
+        }
+
+        select.btn
+        {
+           position: relative;
+           z-index: 0;
+        }
+
+        select
+        {
+            margin-bottom: 0;
+        }
+
+        .form-control
+        {
+            background-color: transparent;
+        }
+
+        #massrecdt
+        {
+            width: 100%;
+        }
+
+        .col-sm-3 , .col-md-3 , .col-md-2 , #txtSalesManSearch{
+            margin-bottom: 10px;
+        }
+
+        .crossBtn
+        {
+            top: 25px;
+                right: 25px;
+        }
+
+        input[type="text"], input[type="password"], textarea
+        {
+                margin-bottom: 0;
+        }
+
+        .typeNotification span
+        {
+             color: #ffffff !important;
+        }
+
+        #rdl_Salesquotation
+        {
+            margin-top: 8px;
+    line-height: 20px;
+        }
+
+        /*#ASPxLabel8
+        {
+            line-height: 16px;
+        }*/
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+                margin-top: 0 !important;
+        }
+
+        #OFDBankSelect
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .mt-28{
+            margin-top: 28px;
+        }
+
+        .mb-10{
+            margin-bottom: 10px;
+        }
+
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0;
+        }
+
+        .backSelect
+        {
+            background: #42b39e !important;
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #DocumentpopUp_PW-1
+            {
+                position:fixed !important;
+                left: 13% !important;
+                top: 60px !important;
+            }
+        }
+
+        /*Rev end 1.0*/
+        </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-title clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-title clearfix">
         <h3 class="pull-left">
             <asp:Label ID="lblHeadTitle" Text="Add Vendor Payment/Receipt" runat="server"></asp:Label>
         </h3>
@@ -374,7 +832,7 @@ function Currency_Rate() {
         </div>
         <div id="divcross" class="crossBtn" style="margin-left: 100px;"><a href="VendorPaymentReceiptList.aspx"><i class="fa fa-times"></i></a></div>
     </div>
-    <div class="form_main  clearfix">
+        <div class="form_main  clearfix">
 
         <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
             <TabPages>
@@ -382,14 +840,15 @@ function Currency_Rate() {
                     <ContentCollection>
                         <dxe:ContentControl runat="server">
                             <div id="DivEntry">
-                                <div id="divChangable" runat="server" style="background: #f5f4f3; padding: 5px 0 5px 0; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc;">
+                                <div id="divChangable" runat="server" style=" padding: 5px 0 5px 0; margin-bottom: 10px; border-radius: 4px;">
                                     <div class="">
 
                                         <div class="col-md-3">
-                                            <label for="exampleInputName2" style="margin-top: 8px">
+                                            <label for="exampleInputName2" style="">
                                                 Voucher Type <b id="bTypeText" runat="server" style="width: 20%; display: none; font-size: 12px"></b>
                                             </label>
-                                            <div>
+                                            <%--Rev 1.0: "simple-select" class add --%>
+                                            <div class="simple-select">
                                                 <asp:DropDownList ID="ComboVoucherType" runat="server" Width="100%" onchange="rbtnType_SelectedIndexChanged()">
                                                     <asp:ListItem Text="Payment" Value="P" Selected="True" />
                                                     <asp:ListItem Text="Receipt" Value="R" />
@@ -397,7 +856,7 @@ function Currency_Rate() {
                                             </div>
                                         </div>
                                         <div class="col-md-3" id="divNumberingScheme" runat="server">
-                                            <label style="margin-top: 8px">Numbering Scheme</label>
+                                            <label style="">Numbering Scheme</label>
                                             <dxe:ASPxComboBox ID="CmbScheme" EnableIncrementalFiltering="True" ClientInstanceName="cCmbScheme"
                                                 SelectedIndex="0" EnableCallbackMode="true"
                                                 TextField="SchemaName" ValueField="ID"
@@ -434,6 +893,9 @@ function Currency_Rate() {
                                                     <ClientSideEvents GotFocus="TransDate_GotFocus" LostFocus="function(s, e) { SetLostFocusonDemand(e)}"></ClientSideEvents>
                                                 </dxe:ASPxDateEdit>
                                                 <span id="MandatoryTransDate" class="iconTransDate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                                                <%--Rev 1.0--%>
+                                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                <%--Rev end 1.0--%>
                                             </div>
                                         </div>
 
@@ -442,7 +904,8 @@ function Currency_Rate() {
                                         <div class="col-md-2 lblmTop8">
 
                                             <label>For Unit <span style="color: red">*</span></label>
-                                            <div>
+                                            <%--Rev 1.0: "simple-select" class add --%>
+                                            <div class="simple-select">
                                                 <asp:DropDownList ID="ddlBranch" runat="server" DataSourceID="dsBranch" onchange="ddlBranch_SelectedIndexChanged()"
                                                     DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID" Width="100%">
                                                 </asp:DropDownList>
@@ -589,7 +1052,7 @@ function Currency_Rate() {
 
 
 
-                                        <div class="col-md-4" style="margin-top: 7px; margin-bottom: 5px;" id="ProductSection" runat="server">
+                                        <div class="col-md-4" style=" margin-bottom: 5px;" id="ProductSection" runat="server">
                                             <div style="height: auto; margin-bottom: 5px;">
                                                 Select product to calculate GST for Advance
                                             </div>
@@ -853,7 +1316,7 @@ function Currency_Rate() {
 
                                         <span id="tdSaveButtonNew" runat="server">
                                             <dxe:ASPxButton ID="btnSaveNew" ClientInstanceName="cbtnSaveNew" runat="server"
-                                                AutoPostBack="false" CssClass="btn btn-primary" TabIndex="0" Text="Save & N&#818;ew"
+                                                AutoPostBack="false" CssClass="btn btn-success" TabIndex="0" Text="Save & N&#818;ew"
                                                 UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {SaveButtonClickNew();}" />
                                             </dxe:ASPxButton>
@@ -861,7 +1324,7 @@ function Currency_Rate() {
                                         </span>
                                         <span id="tdSaveButton" runat="server">
                                             <dxe:ASPxButton ID="btnSaveRecords" ClientInstanceName="cbtnSaveRecords" runat="server"
-                                                AutoPostBack="false" CssClass="btn btn-primary" TabIndex="0" Text="Save & Ex&#818;it"
+                                                AutoPostBack="false" CssClass="btn btn-success" TabIndex="0" Text="Save & Ex&#818;it"
                                                 UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {SaveButtonClick();}" />
                                             </dxe:ASPxButton>
@@ -1310,7 +1773,7 @@ function Currency_Rate() {
         <asp:HiddenField ID="hdntdschecking" runat="server" />
         <%--TDS Section --%>
     </div>
-    <div id="DivHiddenField">
+        <div id="DivHiddenField">
         <asp:HiddenField ID="hdnBtnClick" runat="server" />
         <asp:HiddenField ID="hdnInstrumentType" runat="server" />
         <asp:HiddenField ID="hdnPageStatus" runat="server" />
@@ -1329,7 +1792,7 @@ function Currency_Rate() {
         <%--for Project  --%>
     </div>
 
-    <div id="DivDataSource">
+        <div id="DivDataSource">
         <%-- <asp:SqlDataSource ID="SqlSchematype" runat="server"
             SelectCommand=""></asp:SqlDataSource>--%>
         <asp:SqlDataSource ID="SqlCurrencyBind" runat="server"></asp:SqlDataSource>
@@ -1337,9 +1800,10 @@ function Currency_Rate() {
             ConflictDetection="CompareAllValues"
             SelectCommand=""></asp:SqlDataSource>
     </div>
-    <dxe:ASPxLoadingPanel ID="LoadingPanel" runat="server" ClientInstanceName="LoadingPanel" ContainerElementID="grid"
+        <dxe:ASPxLoadingPanel ID="LoadingPanel" runat="server" ClientInstanceName="LoadingPanel" ContainerElementID="grid"
         Modal="True">
     </dxe:ASPxLoadingPanel>
+    </div>
     <%--UDF Popup --%>
     <dxe:ASPxPopupControl ID="ASPXPopupControl" runat="server"
         CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="popup" Height="630px"

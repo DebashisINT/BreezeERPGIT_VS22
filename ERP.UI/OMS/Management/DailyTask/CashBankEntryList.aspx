@@ -2,7 +2,7 @@
     1.0     Priti    V2.0.36   02-02-2023     0025263: Listing view upgradation required of Cash/Bank Voucher of Accounts & Finance
     2.0     Priti    V2.0.36   17-02-2023      After Listing view upgradation delete data show in listing issue solved.
     3.0     Priti    V2.0.38   03-04-2023      REv 2.0 Revert work from Page to procedure 
-    4.0     Pallab   V2.0.38   04-04-2023      Transactions pages design modification 
+    4.0     Pallab   V2.0.38   04-04-2023      25881: Cash/Bank Voucher List module design modification 
 =========================================================End Revision History========================================================================--%>
 
 

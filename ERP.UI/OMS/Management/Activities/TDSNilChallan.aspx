@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                05-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                05-04-2023        2.0.37           Pallab              25886: TDS Nil Challan module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="TDSNilChallan.aspx.cs" Inherits="ERP.OMS.Management.Activities.TDSNilChallan" %>
@@ -168,7 +168,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             cursor: pointer;
         }
 
-        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #FormDate , #toDate , #dtTDate , #InstDate
+        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #FormDate , #toDate , #dtTDate , #tdsDate
         {
             position: relative;
             z-index: 1;
@@ -180,7 +180,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             z-index: 0 !important;
         }
 
-        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #InstDate_B-1
+        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #tdsDate_B-1
         {
             background: transparent !important;
             border: none;
@@ -189,7 +189,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
 
         #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img ,
-        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #InstDate_B-1 #InstDate_B-1Img
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #tdsDate_B-1 #tdsDate_B-1Img
         {
             display: none;
         }
@@ -587,14 +587,17 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <dxe:ASPxTextBox ID="txtDeductionON" ClientEnabled="false" Width="100%" runat="server" ClientInstanceName="ctxtDeductionON"></dxe:ASPxTextBox>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 for-cust-icon">
                         <label>Date of Deposit</label>
-                        <div class="relative">
+                        <div class="">
                             <dxe:ASPxDateEdit ID="tdsDate" ClientEnabled="false" runat="server" ClientInstanceName="ctdsDate" EditFormat="Custom"
                                 Font-Size="12px" UseMaskBehavior="True" Width="100%" EditFormatString="dd-MM-yyyy" CssClass="pull-left">
                                 <ButtonStyle Width="13px"></ButtonStyle>
 
                             </dxe:ASPxDateEdit>
+                            <%--Rev 1.0--%>
+                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                            <%--Rev end 1.0--%>
                         </div>
                     </div>
                     <div class="col-sm-3">
