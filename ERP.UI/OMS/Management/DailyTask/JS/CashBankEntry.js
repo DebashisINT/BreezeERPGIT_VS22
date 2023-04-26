@@ -1,4 +1,7 @@
-﻿
+﻿//====================================================Revision History =========================================================================
+//1.0   V2.0.39 	Priti	26-04-2023	0025931: Error while selecting Project Code while making Cash/Bank entry
+//====================================================End Revision History=====================================================================
+
 var ISdatatable = 0;
 var tdspay = 0;
 
@@ -1518,7 +1521,7 @@ function cddl_AmountAre_LostFocus() {
 }
 function Project_gotFocus() {
     if ($("#hdnProjectSelectInEntryModule").val() == "1")
-        clookup_Project.gridView.Refresh();
+    clookup_Project.gridView.Refresh();
     clookup_Project.SetFocus()
     clookup_Project.ShowDropDown();
 }
@@ -2382,7 +2385,10 @@ function CmbScheme_ValueChange() {
     $('#txtVoucherNo').attr('maxLength', schemelength);
     $('#hdnBranchId').val(branchID);
     $('#hfIsFilter').val(branchID);
-
+    //Rev 1.0
+    var grid = clookup_Project.GetGridView();
+    grid.UnselectRows(); 
+    //Rev 1.0 End
     document.getElementById('ddlBranch').value = branchID;
     //cddlCashBank.PerformCallback(branchID);
     var OtherDetails = {}

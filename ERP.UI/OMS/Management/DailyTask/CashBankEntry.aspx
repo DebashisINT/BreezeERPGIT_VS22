@@ -18,7 +18,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
     <link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
     <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="JS/CashBankEntry.js?v=4.2"></script>
+    <script src="JS/CashBankEntry.js?v=5.0"></script>
 
     <script>
         var currentEditableVisibleIndex;
