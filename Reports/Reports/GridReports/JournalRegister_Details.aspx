@@ -1,6 +1,7 @@
 ﻿<%--====================================================== Revision History ============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                13-02-2023        2.0.36           Pallab              25575 : Report pages modification
+2.0                24-04-2023        2.0.38           Pallab              25909: Journal Voucher Register - Detail Report module zoom popup upper part visible issue fix
 ====================================================== Revision History ================================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.JournalRegister_Details" %>
@@ -488,6 +489,27 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 padding: 6px 6px;
         }
         /*Rev end 1.0*/
+
+        /*Rev 2.0*/
+
+        #ASPXPopupControl2_PW-1
+        {
+            position: fixed !important;
+            top: 10% !important;
+            left: 10% !important;
+        }
+
+        @media only screen and (max-width: 1450px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 10px !important;
+                top: 8% !important;
+            }
+        }
+
+        /*Rev end 2.0*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -668,8 +690,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <%--Rev end 1.0--%>
             </div>
 
-            <%--<div class="col-md-2" style="padding-top: 20px;">--%>
-            <div class="col-md-2" style="padding-top: 25px;">
+            
+            <div class="col-md-2" style="padding-top: 20px;">
                 <table>
                     <tr>
                         <td>

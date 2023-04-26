@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History ============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                14-02-2023        2.0.36           Pallab              25575 : Report pages design modification
+2.0                24-04-2023        2.0.38           Pallab              25905: Subledger wise Cash/Bank Book - Detail Report module zoom popup upper part visible issue fix
 ====================================================== Revision History ================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CashBankBookDetail_Subledgerwise.aspx.cs" 
@@ -614,6 +615,27 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 max-width: 97%  !important;
         }*/
         /*Rev end 1.0*/
+
+        /*Rev 2.0*/
+
+        #ASPXPopupControl2_PW-1
+        {
+            position: fixed !important;
+            top: 10% !important;
+            left: 10% !important;
+        }
+
+        @media only screen and (max-width: 1450px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 10px !important;
+                top: 8% !important;
+            }
+        }
+
+        /*Rev end 2.0*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
