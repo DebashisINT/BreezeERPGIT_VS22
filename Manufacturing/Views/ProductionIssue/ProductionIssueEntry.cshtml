@@ -1,7 +1,8 @@
 ﻿@*====================================================Revision History=========================================================================
            1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
            2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
- ====================================================End Revision History=====================================================================*@
+           3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
+    ====================================================End Revision History=====================================================================*@
 
 
 @using System.Web.UI.WebControls
@@ -126,13 +127,16 @@
     }
 </style>
 <script>
+    //Rev 3.0
     var _ProductIds = 0;
+     //Rev 3.0 End
     function SelectionChanged(s, e) {
         //REV 2.0
         //s.GetSelectedFieldValues("DetailsID", GetSelectedFieldValuesCallback);
-       
         var DetailsID = POProductGridLookup.GetSelectedKeysOnPage();
-       
+        //Rev 3.0
+        //var _ProductIds = 0;
+        //Rev 3.0 End
         var hdnProductIDS = [];
         hdnProductIDS = DetailsID;
         for (var i = 0; i < hdnProductIDS.length; i++) {
@@ -149,11 +153,11 @@
         //REV 2.0 END
 
     }
-    function GetSelectedFieldValuesCallback(values) {        
+    function GetSelectedFieldValuesCallback(values) {
         try {
-           
+
             var _ProductIds = 0;
-            for (var i = 0; i < values.length; i++) {               
+            for (var i = 0; i < values.length; i++) {
                 if (_ProductIds == 0) {
                     _ProductIds = values[i];
                 }
@@ -163,8 +167,8 @@
                 $("#hdnProductIDS").val(_ProductIds);
             }
         } finally {
-            
-        }     
+
+        }
 
     }
     function BindGridForProductSelection() {
