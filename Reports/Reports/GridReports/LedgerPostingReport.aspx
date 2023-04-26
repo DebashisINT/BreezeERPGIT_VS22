@@ -1,6 +1,7 @@
 ﻿<%--====================================================== Revision History ============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                13-02-2023        2.0.36           Pallab              25575 : Report pages modification
+2.0                24-04-2023        2.0.38           Pallab              25908 : Ledger Posting - Detail Report module zoom popup upper part visible issue fix
 ====================================================== Revision History ================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="LedgerPostingReport.aspx.cs" Inherits="Reports.Reports.GridReports.LedgerPostingReport" %>
@@ -73,7 +74,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         /*rev end Pallab*/
     </style>
     <%-- For Single selection when click on ok button--%>
-          <script type="text/javascript">
+    <script type="text/javascript">
               
               function ValueSelected(e, indexName) {
                   if (e.code == "Enter" || e.code == "NumpadEnter") {
@@ -1196,9 +1197,30 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         .TableMain100 #ShowGrid
         {
-                max-width: 99%  !important;
+                max-width: 98%  !important;
         }
         /*Rev end 1.0*/
+
+        /*Rev 2.0*/
+
+        #ASPXPopupControl2_PW-1
+        {
+            position: fixed !important;
+            top: 10% !important;
+            left: 10% !important;
+        }
+
+        @media only screen and (max-width: 1450px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 10px !important;
+                top: 8% !important;
+            }
+        }
+
+        /*Rev end 2.0*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {

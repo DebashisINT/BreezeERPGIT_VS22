@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                06-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                06-04-2023        2.0.37           Pallab              25919: Imports Sales Invoice module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Imports Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInvoice_Import.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoice_Import" %>
