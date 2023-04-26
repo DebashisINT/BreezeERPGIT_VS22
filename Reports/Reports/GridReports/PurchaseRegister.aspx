@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                21-02-2023        2.0.36           Pallab              25575 : Report pages design modification
+2.0                26-04-2023        2.0.38           Pallab              25939 : Purchase Register - Summary module zoom popup upper part visible issue fix
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseRegister.aspx.cs" 
@@ -667,6 +668,27 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             max-width: 100% !important;
         }*/
         /*Rev end 1.0*/
+
+        /*Rev 2.0*/
+
+        #ASPXPopupControl2_PW-1 , #popupApproval_PW-1
+        {
+            position: fixed !important;
+            top: 10% !important;
+            left: 10% !important;
+        }
+
+        @media only screen and (max-width: 1450px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1 , #popupApproval_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 10px !important;
+                top: 5% !important;
+            }
+        }
+
+        /*Rev end 2.0*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
