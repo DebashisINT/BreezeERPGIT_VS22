@@ -1,4 +1,7 @@
-﻿using System;
+﻿//====================================================Revision History =========================================================================
+//1.0   V2.0.39 	Priti	26-04-2023		0025928: Error while adding Manual Purchase Return
+//====================================================End Revision History=====================================================================
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -1564,21 +1567,17 @@ namespace ERP.OMS.Management.Activities
                     string SrlNo = Convert.ToString(args.NewValues["SrlNo"]);
                     string[] ProductDetailsList = ProductDetails.Split(new string[] { "||@||" }, StringSplitOptions.None);
                     string ProductID = ProductDetailsList[0];
-
                     string ProductName = Convert.ToString(args.NewValues["ProductName"]);
-
                     string Description = Convert.ToString(ProductDetailsList[1]);
                   //  string Description = Convert.ToString(args.NewValues["Description"]);
                     string Quantity = Convert.ToString(args.NewValues["Quantity"]);
                     string UOM = Convert.ToString(args.NewValues["UOM"]);
                     string Warehouse = Convert.ToString(args.NewValues["Warehouse"]);
-
                     decimal strMultiplier = Convert.ToDecimal(ProductDetailsList[7]);
                     string StockQuantity = Convert.ToString(Convert.ToDecimal(Quantity) * strMultiplier);
                     string StockUOM = Convert.ToString(ProductDetailsList[4]);
                     //string StockQuantity = Convert.ToString(args.NewValues["StockQuantity"]);
                     //string StockUOM = Convert.ToString(args.NewValues["StockUOM"]);
-
                     string SalePrice = Convert.ToString(args.NewValues["SalePrice"]);
                     string Discount = (Convert.ToString(args.NewValues["Discount"]) != "") ? Convert.ToString(args.NewValues["Discount"]) : "0";
                     string Amount = (Convert.ToString(args.NewValues["Amount"]) != "") ? Convert.ToString(args.NewValues["Amount"]) : "0";
@@ -2086,75 +2085,83 @@ namespace ERP.OMS.Management.Activities
                 string GSTRateTaxMasterMandatory = ComBL.GetSystemSettingsResult("GSTRateTaxMasterMandatory");
                 if (!String.IsNullOrEmpty(GSTRateTaxMasterMandatory))
                 {
-                    if (GSTRateTaxMasterMandatory == "Yes")
+                    //Rev 1.0
+                    if(strTaxType !="3")
                     {
-
-                        DataTable dtTaxDetails = new DataTable();
-                        ProcedureExecute procT = new ProcedureExecute("prc_PurchaseReturn_Details");
-                        procT.AddVarcharPara("@Action", 500, "PRMGetTaxDetailsByProductID");
-                        procT.AddPara("@PRMProductDetails", dtQuoataionDetails);
-                        procT.AddVarcharPara("@TaxOption", 10, Convert.ToString(strTaxType));
-                        procT.AddVarcharPara("@SupplyState", 15, Convert.ToString(shippingStateCode));
-                        procT.AddVarcharPara("@branchId", 10, Convert.ToString(strBranch));
-                        procT.AddVarcharPara("@CompanyId", 500, Convert.ToString(Session["LastCompany"]));
-                        procT.AddVarcharPara("@ENTITY_ID", 100, Convert.ToString(hdnCustomerId.Value));
-                        procT.AddVarcharPara("@TaxDATE", 100, Convert.ToString(dt_PLQuote.Date.ToString("yyyy-MM-dd")));
-                        dtTaxDetails = procT.GetTable();
-
-                        if (dtTaxDetails != null && dtTaxDetails.Rows.Count > 0)
+                    //Rev 1.0 End
+                        if (GSTRateTaxMasterMandatory == "Yes")
                         {
 
-                            DataTable TaxForExceptionCheck = new DataTable();
+                            DataTable dtTaxDetails = new DataTable();
+                            ProcedureExecute procT = new ProcedureExecute("prc_PurchaseReturn_Details");
+                            procT.AddVarcharPara("@Action", 500, "PRMGetTaxDetailsByProductID");
+                            procT.AddPara("@PRMProductDetails", dtQuoataionDetails);
+                            procT.AddVarcharPara("@TaxOption", 10, Convert.ToString(strTaxType));
+                            procT.AddVarcharPara("@SupplyState", 15, Convert.ToString(shippingStateCode));
+                            procT.AddVarcharPara("@branchId", 10, Convert.ToString(strBranch));
+                            procT.AddVarcharPara("@CompanyId", 500, Convert.ToString(Session["LastCompany"]));
+                            procT.AddVarcharPara("@ENTITY_ID", 100, Convert.ToString(hdnCustomerId.Value));
+                            procT.AddVarcharPara("@TaxDATE", 100, Convert.ToString(dt_PLQuote.Date.ToString("yyyy-MM-dd")));
+                            dtTaxDetails = procT.GetTable();
 
-                            string ShippingStateForException = "";
-                            string sCode = BillingShippingControl.GetShippingStateCode(Request.QueryString["key"]);
-                            ShippingStateForException = sCode;
-                            if (ShippingStateForException.Trim() != "")
+                            if (dtTaxDetails != null && dtTaxDetails.Rows.Count > 0)
                             {
-                                ShippingStateForException = ShippingStateForException.Substring(ShippingStateForException.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
-                            }
-                            string incluexclutype = "";
-                            string incluexcluitype = Convert.ToString(ddl_AmountAre.Value);
-                            if (incluexcluitype == "1")
-                            {
-                                incluexclutype = "E";
-                            }
-                            else if (incluexcluitype == "2")
-                            {
-                                incluexclutype = "I";
-                            }
-                            TaxForExceptionCheck = gstTaxDetails.SetTaxTableDataWithProductSerialForPurchaseRoundOffWithException(ref tempQuotation, "SrlNo", "ProductID", "Amount", "TaxAmount", "TotalAmount", TaxDetailTable, "P", dt_PLQuote.Date.ToString("yyyy-MM-dd"), strBranch, ShippingStateForException, incluexclutype, Convert.ToString(hdnCustomerId.Value), "Quantity", "PO");
 
+                                DataTable TaxForExceptionCheck = new DataTable();
 
-
-                            foreach (DataRow dr in dtTaxDetails.Rows)
-                            {
-                                string SerialID = Convert.ToString(dr["SrlNo"]);
-                                string TaxID = Convert.ToString(dr["TaxCode"]);
-                                decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
-                                string ProductName = Convert.ToString(dr["ProductName"]);
-                                DataRow[] rows = TaxForExceptionCheck.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
-
-                                if (rows != null && rows.Length > 0)
+                                string ShippingStateForException = "";
+                                string sCode = BillingShippingControl.GetShippingStateCode(Request.QueryString["key"]);
+                                ShippingStateForException = sCode;
+                                if (ShippingStateForException.Trim() != "")
                                 {
-                                    //decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
-                                    decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
+                                    ShippingStateForException = ShippingStateForException.Substring(ShippingStateForException.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
+                                }
+                                string incluexclutype = "";
+                                string incluexcluitype = Convert.ToString(ddl_AmountAre.Value);
+                                if (incluexcluitype == "1")
+                                {
+                                    incluexclutype = "E";
+                                }
+                                else if (incluexcluitype == "2")
+                                {
+                                    incluexclutype = "I";
+                                }
+                                TaxForExceptionCheck = gstTaxDetails.SetTaxTableDataWithProductSerialForPurchaseRoundOffWithException(ref tempQuotation, "SrlNo", "ProductID", "Amount", "TaxAmount", "TotalAmount", TaxDetailTable, "P", dt_PLQuote.Date.ToString("yyyy-MM-dd"), strBranch, ShippingStateForException, incluexclutype, Convert.ToString(hdnCustomerId.Value), "Quantity", "PO");
 
-                                    if (EntryTaxAmount != _TaxAmount)
+
+
+                                foreach (DataRow dr in dtTaxDetails.Rows)
+                                {
+                                    string SerialID = Convert.ToString(dr["SrlNo"]);
+                                    string TaxID = Convert.ToString(dr["TaxCode"]);
+                                    decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
+                                    string ProductName = Convert.ToString(dr["ProductName"]);
+                                    DataRow[] rows = TaxForExceptionCheck.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
+
+                                    if (rows != null && rows.Length > 0)
                                     {
-                                        validate = "checkAcurateTaxAmount";
-                                        grid.JSProperties["cpSerialNo"] = SerialID;
-                                        grid.JSProperties["cpProductName"] = ProductName;
-                                        break;
+                                        //decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
+                                        decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
+
+                                        if (EntryTaxAmount != _TaxAmount)
+                                        {
+                                            validate = "checkAcurateTaxAmount";
+                                            grid.JSProperties["cpSerialNo"] = SerialID;
+                                            grid.JSProperties["cpProductName"] = ProductName;
+                                            break;
+                                        }
+
+
                                     }
 
-
                                 }
-
                             }
+
                         }
 
+                    //Rev 1.0
                     }
+                    //Rev 1.0 End
                 }
 
 
