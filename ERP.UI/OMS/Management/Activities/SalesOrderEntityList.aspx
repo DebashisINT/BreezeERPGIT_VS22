@@ -1,6 +1,6 @@
 ﻿<%--====================================================Revision History=========================================================================
  1.0   Priti    V2.0.36                   Change Approval Realted Dev Express Table Bind to HTML table 
- 2.0   Pallab   V2.0.37    06-04-2023     Transactions pages design modification
+ 2.0   Pallab   V2.0.37    06-04-2023     25948: Sales Order module design modification
 ====================================================End Revision History=====================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"

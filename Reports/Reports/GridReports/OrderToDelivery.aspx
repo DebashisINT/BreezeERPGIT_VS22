@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                22-02-2023        2.0.36           Pallab              25575 : Report pages design modification
+2.0                27-04-2023        2.0.38           Pallab              25957: Order To Delivery module zoom popup upper part visible issue fix
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="OrderToDelivery.aspx.cs" Inherits="Reports.Reports.GridReports.OrderToDelivery" %>
@@ -666,6 +667,27 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             max-width: 100% !important;
         }*/
         /*Rev end 1.0*/
+
+        /*Rev 2.0*/
+
+        #ASPXPopupControl2_PW-1 , #popupApproval_PW-1 , #ASPXPopupControl1_PW-1
+        {
+            position: fixed !important;
+            top: 10% !important;
+            left: 10% !important;
+        }
+
+        @media only screen and (max-width: 1450px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1 , #popupApproval_PW-1 , #ASPXPopupControl1_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 20px !important;
+                top: 5% !important;
+            }
+        }
+
+        /*Rev end 2.0*/
     </style>
     <script>
         $(document).ready(function () {
@@ -930,27 +952,29 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <asp:HiddenField ID="hdnSelectedProjects" runat="server" />
             </div>
             <div class="clear"></div>
-             <div class="col-md-2" style="padding-top:15px">
+            <%--Rev 2.0: "col-md-2" changed with "col-md-3" class--%>
+             <div class="col-md-3" style="padding-top:15px">
                  <asp:CheckBox runat="server" ID="chkPIQuot" Checked="false" style="color: #b5285f" Text="Show Quotation Details" />
             </div>
             <%--<div class="clear"></div>--%>
-             <div class="col-md-2" style="padding-top:15px">
+             <div class="col-md-3" style="padding-top:15px">
                  <asp:CheckBox runat="server" ID="chkInvoice" Checked="false" style="color: #b5285f" Text="Show Invoice Details" />
             </div>
-             <div class="col-md-2" style="padding-top:15px">
+             <div class="col-md-3" style="padding-top:15px">
                  <asp:CheckBox runat="server" ID="chkChallan" Checked="false" style="color: #b5285f" Text="Show Challan Details" />
             </div>
-             <div class="col-md-2" style="padding-top:15px">
+             <div class="col-md-3" style="padding-top:15px">
                  <asp:CheckBox runat="server" ID="chkApprov" Checked="false" style="color: #b5285f" Text="Show Approval Details" />
             </div>
-            <div class="col-md-2" style="padding-top:15px">
+            <div class="clear"></div>
+            <div class="col-md-3" style="padding-top:15px">
                  <asp:CheckBox runat="server" ID="chkTransport" Checked="false" style="color: #b5285f" Text="Show Transporter Details" />
             </div>            
-            <div class="clear"></div>
-            <div class="col-md-2" style="padding-top:18px">
+            
+            <div class="col-md-3" style="padding-top:18px">
                  <asp:CheckBox runat="server" ID="chkSOPrintStage" Checked="false" style="color: #b5285f" Text="Show SO Print Stage Details" />
             </div> 
-            <div class="col-md-2" style="padding-top:18px">
+            <div class="col-md-3" style="padding-top:18px">
                  <asp:CheckBox runat="server" ID="chkReadyToInv" Checked="false" style="color: #b5285f" Text="Show Ready to Inv. Details" />
             </div> 
            <div class="col-md-2" style="padding-top: 15px; padding-bottom: 12px;">
@@ -988,7 +1012,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
-                                        <a href="javascript:void(0)" target="_blank" onclick="OpenOrdToDelvDetails('<%#Eval("QUOTE_ID") %>','<%#Eval("PITYPE") %>')">
+                                        <a href="javascript:void(0)" target="" onclick="OpenOrdToDelvDetails('<%#Eval("QUOTE_ID") %>','<%#Eval("PITYPE") %>')">
                                             <%#Eval("PIQUOTATION_NO")%>
                                         </a>
                                     </DataItemTemplate>
@@ -1020,7 +1044,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
-                                        <a href="javascript:void(0)" target="_blank" onclick="OpenOrdToDelvDetails('<%#Eval("SOID") %>','<%#Eval("SOTYPE") %>')">
+                                        <a href="javascript:void(0)" target="" onclick="OpenOrdToDelvDetails('<%#Eval("SOID") %>','<%#Eval("SOTYPE") %>')">
                                             <%#Eval("SONO")%>
                                         </a>
                                     </DataItemTemplate>
@@ -1108,7 +1132,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
-                                        <a href="javascript:void(0)" target="_blank" onclick="OpenOrdToDelvDetails('<%#Eval("INVOICE_ID") %>','<%#Eval("SITYPE") %>')">
+                                        <a href="javascript:void(0)" target="" onclick="OpenOrdToDelvDetails('<%#Eval("INVOICE_ID") %>','<%#Eval("SITYPE") %>')">
                                             <%#Eval("SINO")%>
                                         </a>
                                     </DataItemTemplate>
@@ -1164,7 +1188,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
-                                        <a href="javascript:void(0)" target="_blank" onclick="OpenOrdToDelvDetails('<%#Eval("CHALLAN_ID") %>','<%#Eval("SCTYPE") %>')">
+                                        <a href="javascript:void(0)" target="" onclick="OpenOrdToDelvDetails('<%#Eval("CHALLAN_ID") %>','<%#Eval("SCTYPE") %>')">
                                             <%#Eval("SCNO")%>
                                         </a>
                                     </DataItemTemplate>
