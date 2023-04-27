@@ -1,6 +1,7 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti      V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
    2.0   Sanchita   V2.0.38     10-04-2023     Tolerance feature required in Sales Order Module. Refer: 25223     
+   3.0   Pallab     V2.0.38     27-04-2023     Add Sales Invoice module design modification. Refer: 25921
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoice" %>
@@ -928,9 +929,100 @@ $(document).ready(function () {
 })
 //End Rev Bapi
     </script>
+
+    <%--Rev 3.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+
+        <style>
+            #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dt_OADate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+            #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dt_OADate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dt_OADate_B-1 #dt_OADate_B-1Img
+        {
+            display: none;
+        }
+
+        .calendar-icon
+        {
+                right: 18px !important;
+        }
+
+        select#ddlInventory
+        {
+            -webkit-appearance: auto;
+                background: #42b39e !important;
+        }
+
+        .simple-select::after
+        {
+            top: 26px !important;
+            right: 13px !important;
+        }
+
+        .col-sm-3 , .col-md-3 , .col-md-2{
+            margin-bottom: 5px;
+        }
+
+        #rdl_Salesquotation
+        {
+            margin-top: 10px;
+        }
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+
+        /*#CustomerTableTbl.dynamicPopupTbl>tbody>tr>td
+        {
+            width: 33.33%;
+        }*/
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+            @media only screen and (max-width: 1380px) and (min-width: 1300px)
+            {
+
+                .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+
+                .simple-select::after
+                {
+                    right: 8px !important;
+                }
+                .calendar-icon {
+                    right: 13px !important;
+                }
+
+                input[type="radio"], input[type="checkbox"] {
+                    margin-right: 0px;
+                }
+            }
+        </style>
+    <%--Rev end 3.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-title clearfix">
+    <%--Rev 3.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-title clearfix">
         <h3 class="pull-left">
             <asp:Label ID="lblHeadTitle" Text="" runat="server"></asp:Label>
             <%--<label>Add Proforma Invoice/ Quotation</label>--%>
@@ -1108,7 +1200,7 @@ $(document).ready(function () {
         <div id="divcross" runat="server" class="crossBtn"><a href="SalesInvoiceList.aspx"><i class="fa fa-times"></i></a></div>
 
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <asp:Panel ID="pnl_quotation" runat="server">
             <div class="">
                 <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
@@ -1117,7 +1209,7 @@ $(document).ready(function () {
                             <ContentCollection>
                                 <dxe:ContentControl runat="server">
                                     <div class="">
-                                        <div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix col-md-12">
+                                        <div style=" padding: 8px 0; margin-bottom: 0px; border-radius: 4px; " class="clearfix col-md-12">
                                             <div class="col-md-2 lblmTop8">
                                                 <dxe:ASPxLabel ID="lbl_Inventory" runat="server" Text="Type">
                                                 </dxe:ASPxLabel>
@@ -1129,7 +1221,8 @@ $(document).ready(function () {
                                                     <asp:ListItem Text="All Item" Value="B" />
                                                 </asp:DropDownList>
                                             </div>
-                                            <div class="col-md-2 lblmTop8" id="divScheme" runat="server">
+                                            <%--Rev 3.0: "simple-select" class add --%>
+                                            <div class="col-md-2 lblmTop8 simple-select" id="divScheme" runat="server">
                                                 <dxe:ASPxLabel ID="lbl_NumberingScheme" runat="server" Text="Numbering Scheme">
                                                 </dxe:ASPxLabel>
                                                 <asp:DropDownList ID="ddl_numberingScheme" runat="server" Width="100%" TabIndex="2">
@@ -1144,9 +1237,9 @@ $(document).ready(function () {
                                                 <span id="MandatorysQuoteno" style="display: none" class="validclass">
                                                     <img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
                                                 </span>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="duplicateQuoteno" style="display: none" class="validclass"><img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Duplicate number">
+                                                <span id="duplicateQuoteno" style="display: none" class="validclass"><img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Duplicate number">
                                                 </span>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                
                                             </div>
                                             <div class="col-md-2 lblmTop8">
                                                 <dxe:ASPxLabel ID="lbl_SaleInvoiceDt" runat="server" Text="Posting Date">
@@ -1156,8 +1249,12 @@ $(document).ready(function () {
                                                     </ButtonStyle>
                                                     <ClientSideEvents DateChanged="function(s, e) {DateCheck();}" GotFocus="function(s,e){tstartdate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" />
                                                 </dxe:ASPxDateEdit>
+                                                <%--Rev 3.0--%>
+                                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                <%--Rev end 3.0--%>
                                             </div>
-                                            <div class="col-md-2 lblmTop8">
+                                            <%--Rev 3.0: "simple-select" class add --%>
+                                            <div class="col-md-2 lblmTop8 simple-select">
                                                 <dxe:ASPxLabel ID="lbl_Branch" runat="server" Text="Unit">
                                                 </dxe:ASPxLabel>
                                                 <asp:DropDownList ID="ddl_Branch" runat="server" Width="100%" TabIndex="4" onchange="ddlBranch_ChangeIndex()" Enabled="true">
@@ -1321,7 +1418,7 @@ $(document).ready(function () {
                                             <div class="col-md-2 lblmTop8">
                                                 <dxe:ASPxLabel ID="lbl_InvoiceNO" ClientInstanceName="clbl_InvoiceNO" runat="server" Text="Posting Date">
                                                 </dxe:ASPxLabel>
-                                                <div style="width: 100%; height: 23px; border: 1px solid #e6e6e6;">
+                                                <div style="width: 100%; border: 1px solid #e6e6e6;">
                                                     <dxe:ASPxCallbackPanel runat="server" ID="ComponentDatePanel" ClientInstanceName="cComponentDatePanel" OnCallback="ComponentDatePanel_Callback">
                                                         <PanelCollection>
                                                             <dxe:PanelContent runat="server">
@@ -1330,6 +1427,9 @@ $(document).ready(function () {
                                                             </dxe:PanelContent>
                                                         </PanelCollection>
                                                     </dxe:ASPxCallbackPanel>
+                                                    <%--Rev 3.0--%>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <%--Rev end 3.0--%>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 lblmTop8">
@@ -1382,8 +1482,12 @@ $(document).ready(function () {
                                                     </ButtonStyle>
                                                     <ClientSideEvents GotFocus="function(s,e){cdt_SaleInvoiceDue.ShowDropDown();}" />
                                                 </dxe:ASPxDateEdit>
+                                                <%--Rev 3.0--%>
+                                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                <%--Rev end 3.0--%>
                                             </div>
-                                            <div class="col-md-2 lblmTop8">
+                                            <%--Rev 3.0: "simple-select" class add --%>
+                                            <div class="col-md-2 lblmTop8 simple-select">
                                                 <dxe:ASPxLabel ID="lbl_Currency" runat="server" Text="Currency">
                                                 </dxe:ASPxLabel>
                                                 <asp:DropDownList ID="ddl_Currency" runat="server" Width="100%" TabIndex="13">
@@ -1984,10 +2088,10 @@ $(document).ready(function () {
                                         <br />
                                         <div class="col-md-12" id="divSubmitButton" runat="server">
                                             <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords_N" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords_N" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                             </dxe:ASPxButton>
-                                            <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords_p" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords_p" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
                                             </dxe:ASPxButton>
                                             <%--   <asp:Button ID="ASPxButton2" runat="server" Text="UDF" CssClass="btn btn-primary" OnClientClick="if(OpenUdf()){ return false;}" />--%>
@@ -3374,6 +3478,7 @@ $(document).ready(function () {
 
         </asp:Panel>
     </div>
+    </div>
     <div style="display: none">
         <dxe:ASPxDateEdit ID="dt_PlQuoteExpiry" runat="server" Date="" Width="100%" EditFormatString="dd-MM-yyyy" ClientInstanceName="tenddate" TabIndex="4">
             <ClientSideEvents DateChanged="Enddate" />
@@ -3734,7 +3839,7 @@ $(document).ready(function () {
                 <div class="modal-footer">
                     <% if (rightsProd.CanAdd)
                        { %>
-                    <button type="button" class="btn btn-success btn-radius" onclick="fn_PopOpen();">
+                    <button type="button" class="btn btn-success" onclick="fn_PopOpen();">
                         <span class="btn-icon"><i class="fa fa-plus"></i></span>
                         Add New
                     </button>

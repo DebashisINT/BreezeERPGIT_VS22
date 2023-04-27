@@ -1,6 +1,7 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
-   1.0   Priti   V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
-   2.0	 PRITI   V2.0.38	 03/04/2023	 0025291: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Invoice
+   1.0   Priti    V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
+   2.0	 PRITI    V2.0.38	  03/04/2023	 0025291: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Invoice
+   3.0	 Pallab   V2.0.38	  27/04/2023	 0025920: Sales Invoice module design modification 
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoiceList" 
@@ -1004,9 +1005,48 @@
         }
     </script>
 
+    <%--Rev 3.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+
+    <style>
+        .TableMain100 #ShowGrid, .TableMain100 #ShowGridList, .TableMain100 #ShowGridRet, .TableMain100 #ShowGridLocationwiseStockStatus,
+        #GrdQuotation{
+    max-width: 98% !important;
+}
+
+        select#ddlInventory
+        {
+            -webkit-appearance: auto !important;
+        }
+
+        input + label
+        {
+            margin-top: 13px;
+        }
+
+        #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 18% !important;
+                top: 20% !important;
+            }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 15% !important;
+                top: 60px !important;
+            }
+        }
+    </style>
+    <%--Rev end 3.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 3.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">Sales Invoice</h3>
             <div id="pageheaderContent" class="scrollHorizontal pull-right wrapHolder content horizontal-images" style="display: none;">
@@ -1035,20 +1075,28 @@
             <tr>
                 <td>
                     <label>From Date</label></td>
-                <td>
+                <%--Rev 3.0: "for-cust-icon" class add --%>
+                <td class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%" UseMaskBehavior="True">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 3.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 3.0--%>
                 </td>
                 <td>
                     <label>To Date</label>
                 </td>
-                <td>
+                 <%--Rev 3.0: "for-cust-icon" class add --%>
+                <td class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%" UseMaskBehavior="True">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 3.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 3.0--%>
                 </td>
                 <td>Unit</td>
                 <td>
@@ -1056,29 +1104,29 @@
                     </dxe:ASPxComboBox>
                 </td>
                 <td>
-                    <input type="button" value="Show" class="btn btn-primary btn-radius" onclick="updateGridByDate()" />
+                    <input type="button" value="Show" class="btn btn-primary " onclick="updateGridByDate()" />
                 </td>
 
             </tr>
 
         </table>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix" >
             <% if (rights.CanAdd)
                { %>
             <%--<a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-primary"><span><u>A</u>dd New</span> </a><%} %>--%>
-            <a href="javascript:void(0);" onclick="OnAddInventoryButtonClick()" class="btn btn-success btn-radius "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>I</u>nventory</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddNonInventoryButtonClick()" class="btn btn-success btn-radius "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>N</u>on Inventory</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddSeriviceButtonClick()" class="btn btn-success btn-radius "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>S</u>ervice</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddCapitalButtonClick()" class="btn btn-success btn-radius "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>C</u>apital Goods</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddBothButtonClick()" class="btn btn-success btn-radius "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>A</u>ll Items</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddInventoryButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>I</u>nventory</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddNonInventoryButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>N</u>on Inventory</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddSeriviceButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>S</u>ervice</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddCapitalButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>C</u>apital Goods</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddBothButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>A</u>ll Items</span> </a>
 
             <%} %>
 
             <% if (rights.CanExport)
                { %>
-            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
                 <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -1089,13 +1137,13 @@
             <%--Sandip Section for Approval Section in Design Start --%>
 
             <span id="spanStatus" runat="server">
-                <a href="javascript:void(0);" onclick="OpenPopUPUserWiseQuotaion()" class="btn btn-info btn-radius">
+                <a href="javascript:void(0);" onclick="OpenPopUPUserWiseQuotaion()" class="btn btn-info ">
                     <span>My Sales Invoice Status</span>
                     <%--<asp:Label ID="Label1" runat="server" Text=""></asp:Label>--%>                   
                 </a>
             </span>
             <span id="divPendingWaiting" runat="server">
-                <a href="javascript:void(0);" onclick="OpenPopUPApprovalStatus()" class="btn btn-warning btn-radius ">
+                <a href="javascript:void(0);" onclick="OpenPopUPApprovalStatus()" class="btn btn-warning ">
                     <span>Approval Waiting</span>
 
                     <asp:Label ID="lblWaiting" runat="server" Text=""></asp:Label>
@@ -1103,13 +1151,13 @@
                 <i class="fa fa-reply blink" style="font-size: 20px; margin-right: 10px;" aria-hidden="true"></i>
             </span>
             <span id="span1" runat="server">
-                <a href="javascript:void(0);" onclick="OpenPopUPApproveSO()" class="btn btn-primary btn-radius">
+                <a href="javascript:void(0);" onclick="OpenPopUPApproveSO()" class="btn btn-primary ">
                     <span>Approved Sales Order</span>
                 </a>
             </span>
 
             <span id="span2" runat="server">
-                <a href="javascript:void(0);" onclick="WaitingSalesInvoice()" class="btn btn-primary btn-radius">
+                <a href="javascript:void(0);" onclick="WaitingSalesInvoice()" class="btn btn-primary ">
                     <span>Sales Invoice Waiting</span>
                 </a>
             </span>
@@ -1117,8 +1165,9 @@
             <%--Sandip Section for Approval Section in Design End --%>
         </div>
     </div>
-    <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
-    <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    
+        <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
+        <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
     <%--<dxe:ASPxCallbackPanel runat="server" id="ComponentPanel" ClientInstanceName="cComponentPanel" OnCallback="Component_Callback">
 
          <PanelCollection>
@@ -1128,7 +1177,7 @@
              </dxe:PanelContent>
          </PanelCollection>
      </dxe:ASPxCallbackPanel>--%>
-    <div class="GridViewArea relative">
+        <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdQuotation" runat="server" KeyFieldName="Invoice_Id" AutoGenerateColumns="False" SettingsBehavior-AllowFocusedRow="true"
             Width="100%" ClientInstanceName="cGrdQuotation" OnCustomCallback="GrdQuotation_CustomCallback"
             Settings-HorizontalScrollBarMode="Auto" DataSourceID="EntityServerModeDataSource" SettingsDataSecurity-AllowEdit="false"
@@ -1389,6 +1438,7 @@
         <asp:HiddenField ID="hiddenedit" runat="server" />
 
         <uc1:VehicleDetailsControl runat="server" ID="VehicleDetailsControl" />
+    </div>
     </div>
     <div style="display: none">
         <dxe:ASPxGridViewExporter ID="exporter" GridViewID="GrdQuotation" runat="server" Landscape="false" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">

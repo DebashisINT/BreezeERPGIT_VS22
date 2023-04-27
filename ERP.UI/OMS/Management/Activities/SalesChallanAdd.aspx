@@ -8251,7 +8251,7 @@ function ProjectValueChange(s, e) {
         //Rev work close 28.06.2022 Mantise no:24949
     </script>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -8681,7 +8681,95 @@ function ProjectValueChange(s, e) {
         }
 
         /*Rev end 1.0*/
+        </style>--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+
+        <style>
+            #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dt_OADate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+            #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dt_OADate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dt_OADate_B-1 #dt_OADate_B-1Img
+        {
+            display: none;
+        }
+
+        .calendar-icon
+        {
+                right: 18px !important;
+        }
+
+        select#ddlInventory
+        {
+            -webkit-appearance: auto;
+        }
+
+        .simple-select::after
+        {
+            top: 26px !important;
+            right: 13px !important;
+        }
+
+        .col-sm-3 , .col-md-3 , .col-md-2{
+            margin-bottom: 5px;
+        }
+
+        #rdl_Salesquotation
+        {
+            margin-top: 10px;
+        }
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+
+        /*#CustomerTableTbl.dynamicPopupTbl>tbody>tr>td
+        {
+            width: 33.33%;
+        }*/
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+            @media only screen and (max-width: 1380px) and (min-width: 1300px)
+            {
+
+                .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+
+                .simple-select::after
+                {
+                    right: 8px !important;
+                }
+                .calendar-icon {
+                    right: 13px !important;
+                }
+
+                input[type="radio"], input[type="checkbox"] {
+                    margin-right: 0px;
+                }
+            }
         </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 
 
@@ -8882,7 +8970,7 @@ function ProjectValueChange(s, e) {
                                                     </dxe:ASPxCallbackPanel>--%>
                                         </div>
                                     </div>
-                                    <%--Rev 2.0: "simple-select" class add --%>
+                                    <%--Rev 1.0: "simple-select" class add --%>
                                     <div class="col-md-3 simple-select" id="ddl_numberingDiv" runat="server">
 
                                         <label>
@@ -8911,7 +8999,7 @@ function ProjectValueChange(s, e) {
 
                                     </div>
 
-                                    <%--Rev 2.0: "for-cust-icon" class add --%>
+                                    <%--Rev 1.0: "for-cust-icon" class add --%>
                                     <div class="col-md-2 for-cust-icon">
                                         <label>
                                             <dxe:ASPxLabel ID="ASPxLabel2" runat="server" Text="Posting Date" Width="120px" CssClass="inline">
@@ -8931,13 +9019,13 @@ function ProjectValueChange(s, e) {
                                         <span id="MandatoryEgSDate" style="display: none" class="validclass">
                                             <img id="3gridHistory_DXPEForm_efnew_DXEFL_DXEditor2114_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Sales Order date must not be prior date than quotation date"></span>
 
-                                        <%--Rev 2.0--%>
+                                        <%--Rev 1.0--%>
                                         <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                                        <%--Rev end 2.0--%>
+                                        <%--Rev end 1.0--%>
                                     </div>
 
 
-                                    <%--Rev 2.0: "simple-select" class add --%>
+                                    <%--Rev 1.0: "simple-select" class add --%>
                                     <div class="col-md-2 simple-select">
                                         <label>
                                             <dxe:ASPxLabel ID="lbl_Branch" runat="server" Text="Unit">
