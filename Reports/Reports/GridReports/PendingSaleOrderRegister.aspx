@@ -4,6 +4,8 @@
                                               Refer: 0025616
 2.0   V2.0.36     Pallab      22/02/2023      Report pages design modification.
                                               Refer: 0025575
+3.0   V2.0.38     Pallab      27/04/2023      Pending Sales Order Register module zoom popup upper part visible issue fix
+                                              Refer: 0025950
 ===================================End of Revision History=====================================================================--%>
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PendingSaleOrderRegister.aspx.cs" Inherits="Reports.Reports.GridReports.PendingSaleOrderRegister" %>
 
@@ -750,6 +752,27 @@
             max-width: 100% !important;
         }*/
         /*Rev end 2.0*/
+
+        /*Rev 3.0*/
+
+        #ASPXPopupControl2_PW-1 , #popupApproval_PW-1 , #ASPXPopupControl1_PW-1
+        {
+            position: fixed !important;
+            top: 10% !important;
+            left: 10% !important;
+        }
+
+        @media only screen and (max-width: 1450px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1 , #popupApproval_PW-1 , #ASPXPopupControl1_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 20px !important;
+                top: 5% !important;
+            }
+        }
+
+        /*Rev end 3.0*/
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
