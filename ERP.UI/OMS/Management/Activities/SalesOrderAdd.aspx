@@ -1250,7 +1250,7 @@ function PerformCallToGridBind() {
         /*Rev end 2.0*/
         </style>--%>
 
-    <%--Rev 1.0--%>
+    <%--Rev 2.0--%>
     <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
     
 
@@ -1278,13 +1278,36 @@ function PerformCallToGridBind() {
 
         .calendar-icon
         {
-                right: 15px !important;
+                right: 18px !important;
+        }
+
+        select#ddlInventory
+        {
+            -webkit-appearance: auto;
         }
 
         .simple-select::after
         {
             top: 26px !important;
-            right: 8px !important;
+            right: 13px !important;
+        }
+
+        .col-sm-3 , .col-md-3 , .col-md-2{
+            margin-bottom: 5px;
+        }
+
+        #rdl_Salesquotation
+        {
+            margin-top: 10px;
+        }
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+
+        #CustomerTableTbl.dynamicPopupTbl>tbody>tr>td
+        {
+            width: 33.33%;
         }
 
             @media only screen and (max-width: 1380px) and (min-width: 1300px)
@@ -1294,9 +1317,21 @@ function PerformCallToGridBind() {
                     padding-right: 10px;
                     padding-left: 10px;
                 }
+
+                .simple-select::after
+                {
+                    right: 8px !important;
+                }
+                .calendar-icon {
+                    right: 13px !important;
+                }
+
+                input[type="radio"], input[type="checkbox"] {
+                    margin-right: 0px;
+                }
             }
         </style>
-    <%--Rev end 1.0--%>
+    <%--Rev end 2.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%-- Subhra Section Start--%>

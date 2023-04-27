@@ -141,6 +141,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             z-index: 1;
             background: transparent;
         }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
     </style>
     <%--Rev end 1.0--%>
 </asp:Content>

@@ -874,12 +874,29 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 z-index: 0;
         }
 
+        select#ddlInventory
+        {
+            -webkit-appearance: auto;
+        }
+
+        #txtQuantity_ET
+        {
+            height: 30px !important;
+        }
+
+        #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 18% !important;
+                top: 20% !important;
+            }
+
         @media only screen and (max-width: 1380px) and (min-width: 1300px)
         {
             #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #Popup_InlineRemarks_PW-1
             {
                 position:fixed !important;
-                left: 13% !important;
+                left: 15% !important;
                 top: 60px !important;
             }
         }
@@ -2584,7 +2601,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 Quantity
                                             </div>
                                             <div class="Left_Content" style="">
-                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" DisplayFormatString="0.0000" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
+                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" DisplayFormatString="0.0000" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="30px">
                                                     <MaskSettings Mask="<0..999999999999>.<0..9999>" IncludeLiterals="DecimalSymbol" />
                                                     <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />
                                                 </dxe:ASPxTextBox>
