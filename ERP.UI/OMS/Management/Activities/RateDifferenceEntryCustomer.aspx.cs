@@ -1,4 +1,7 @@
-﻿using System;
+﻿//================================================== Revision History =============================================
+//1.0    V2.0.39    Priti   28-04-2023  0025930:An error is appearing while making Rate Difference Entry Customer
+//====================================================== Revision History =============================================
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -1401,11 +1404,12 @@ namespace ERP.OMS.Management.Activities
                .Where(gr => gr.Count() > 1)
                .Select(g => g.Key);
 
-                foreach (var d in duplicateRecords)
-                {
-                    validate = "duplicateProduct";
-                }
-
+                //Rev 1.0
+                //foreach (var d in duplicateRecords)
+                //{
+                //    validate = "duplicateProduct";
+                //}
+                //Rev 1.0 End
                 foreach (DataRow dr in tempQuotation.Rows)
                 {
                     decimal ProductQuantity = Convert.ToDecimal(dr["Quantity"]);
@@ -1919,6 +1923,7 @@ namespace ERP.OMS.Management.Activities
                     InvoiceDetails_Id += "," + Convert.ToString(grid_Products.GetSelectedFieldValues("ComponentDetailsID")[i]);
                 }
                 QuoComponent1 = QuoComponent1.TrimStart(',');
+                InvoiceDetails_Id = InvoiceDetails_Id.TrimStart(',');
                 string Quote_Nos = Convert.ToString(e.Parameters.Split('~')[1]);
                 string companyId = Convert.ToString(HttpContext.Current.Session["LastCompany"]);
                 var SelectedSalesInvoiceType = rdl_SalesInvoice.SelectedValue;
@@ -1930,8 +1935,15 @@ namespace ERP.OMS.Management.Activities
                     if (!string.IsNullOrEmpty(IdKey))
                     {
                         if (SelectedSalesInvoiceType == "TSI")
-                        { dt_QuotationDetails = objSalesReturnBL.GetTransitInvoiceforRDEC(QuoComponent1, IdKey, Product_id1, companyId, fin_year); }
-                        else { dt_QuotationDetails = objSalesReturnBL.GetSalesInvoiceforRDEC(QuoComponent1, IdKey, Product_id1, companyId, fin_year); }
+                        { 
+                            dt_QuotationDetails = objSalesReturnBL.GetTransitInvoiceforRDEC(QuoComponent1, IdKey, Product_id1, companyId, fin_year); }
+                        else 
+                        { 
+                            //Rev 1.0
+                            //dt_QuotationDetails = objSalesReturnBL.GetSalesInvoiceforRDEC(QuoComponent1, IdKey, Product_id1, companyId, fin_year);
+                            dt_QuotationDetails = objSalesReturnBL.GetSalesInvoiceforRDECbySIDetailsID(QuoComponent1, IdKey, Product_id1, companyId, fin_year, InvoiceDetails_Id);
+                            //Rev 1.0 End
+                        }
 
                     }
 
