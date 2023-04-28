@@ -1,4 +1,7 @@
-﻿using System;
+﻿//================================================== Revision History =============================================
+//1.0    V2.0.39    Priti   28-04-2023  0025930:An error is appearing while making Rate Difference Entry Customer
+//====================================================== Revision History =============================================
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -1009,6 +1012,21 @@ namespace BusinessLogicLayer
 
             return proc.GetTable();
         }
+        //Rev 1.0
+        public DataTable GetSalesInvoiceforRDECbySIDetailsID(string Invoice_Id, string Invoice_Key, string Product_Ids, string comapanyid, string finyear,string InvoiceDetails_Ids)
+        {
+            ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_Details");
+            proc.AddVarcharPara("@Action", 100, "GetSalesInvoiceforRDECbySIDetailsID");
+            proc.AddVarcharPara("@invoice_ID", 4000, Invoice_Id);
+            proc.AddVarcharPara("@OrderID_Key", 1000, Invoice_Key);
+            proc.AddVarcharPara("@Product_Id", 1000, Product_Ids);
+            proc.AddVarcharPara("@campany_Id", 100, comapanyid);
+            proc.AddVarcharPara("@FinYear", 100, finyear);
+            proc.AddVarcharPara("@SelectedComponentList", 100, InvoiceDetails_Ids);
+            return proc.GetTable();
+
+        }
+        //Rev 1.0 End
         public DataTable GetIndentDetailsForCRGridBind(string Indent_Id, string Order_Key, string Product_Ids, string comapanyid, string finyear)
         {
             ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_Details");
