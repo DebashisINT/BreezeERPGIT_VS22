@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerPayment.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerPayment" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                28-04-2023        2.0.38           Pallab              25968: Add Customer Payment module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerPayment.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerPayment" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -51,6 +56,113 @@
         //Hierarchy End Tanmoy
     </script>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+
+    <style>
+            #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate , #InstDate
+            {
+                position: relative;
+                z-index: 1;
+                background: transparent;
+            }
+
+            #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1, #InstDate_B-1
+            {
+                background: transparent !important;
+                border: none;
+                width: 30px;
+                padding: 10px !important;
+            }
+
+            #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+            #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img,
+            #InstDate_B-1 #InstDate_B-1Img
+            {
+                display: none;
+            }
+
+        .calendar-icon
+        {
+                right: 18px !important;
+        }
+
+        /*select#ddlInventory
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .simple-select::after
+        {
+            top: 6px !important;
+            right: -2px !important;
+        }
+
+        .col-sm-3 , .col-md-3 , .col-md-2{
+            margin-bottom: 5px;
+        }
+
+        #rdl_Salesquotation
+        {
+            margin-top: 10px;
+        }
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+        .lblmBot4 > span, .lblmBot4 > label
+        {
+                margin-bottom: 0px !important;
+        }
+
+        #drdTransCategory.aspNetDisabled {
+    background: #f3f3f3 !important;
+}
+
+       /* #CustomerTableTbl.dynamicPopupTbl>tbody>tr>td
+        {
+            width: 33.33%;
+        }*/
+
+       .lblmTop8>span, .lblmTop8>label
+        {
+                margin-top: 0 !important;
+        }
+
+       input + label
+       {
+               margin-top: 3px;
+               margin-right: 5px;
+       }
+
+       #txtVoucherNo
+       {
+               width: 100%;
+       }
+
+            @media only screen and (max-width: 1380px) and (min-width: 1300px)
+            {
+
+                .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+
+                /*.simple-select::after
+                {
+                    right: 8px !important;
+                }*/
+                .calendar-icon {
+                    right: 13px !important;
+                }
+
+                input[type="radio"], input[type="checkbox"] {
+                    margin-right: 0px;
+                }
+            }
+        </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -58,7 +170,8 @@
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
         <ClientSideEvents ControlsInitialized="AllControlInitilize" />
     </dxe:ASPxGlobalEvents>
-
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
     <div class="panel-title clearfix" id="myDiv">
         <div id="pageheaderContent" class=" pull-right wrapHolder content horizontal-images" style="width: auto !important" runat="server">
             <div class="Top clearfix">
@@ -117,10 +230,7 @@
 
 
 
-
-
     <div id="ApprovalCross" runat="server" class="crossBtn"><a href="CustomerReceiptPaymentList.aspx"><i class="fa fa-times"></i></a></div>
-
 
 
 
@@ -138,9 +248,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="">
-                                        <div style="background: #f5f4f3; padding: 5px 0 5px 0; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc;">
+                                        <div style=" padding: 5px 0 5px 0; margin-bottom: 10px; border-radius: 4px; ">
                                             <div class="col-md-2" id="divNumberingScheme" runat="server">
-                                                <label style="margin-top: 8px">Numbering Scheme</label>
+                                                <label style="">Numbering Scheme</label>
                                                 <div>
                                                     <dxe:ASPxComboBox ID="CmbScheme" ClientInstanceName="cCmbScheme"
                                                         SelectedIndex="0" EnableCallbackMode="false"
@@ -153,7 +263,7 @@
                                             </div>
 
                                             <div class="col-md-2">
-                                                <label style="margin-top: 8px">Document No.</label>
+                                                <label style="">Document No.</label>
                                                 <div>
 
                                                     <dxe:ASPxTextBox runat="server" ID="txtVoucherNo" ClientInstanceName="ctxtVoucherNo" MaxLength="16" Text="Auto" ClientEnabled="false">
@@ -167,7 +277,7 @@
 
 
                                             <div class="col-md-2">
-                                                <label style="margin-top: 8px">Posting Date</label>
+                                                <label style="">Posting Date</label>
                                                 <div>
                                                     <dxe:ASPxDateEdit ID="dtTDate" runat="server" ClientInstanceName="cdtTDate" EditFormat="Custom" AllowNull="false"
                                                         Font-Size="12px" UseMaskBehavior="True" Width="100%" EditFormatString="dd-MM-yyyy" CssClass="pull-left">
@@ -175,6 +285,9 @@
                                                         <ClientSideEvents LostFocus="function(s, e) { SetLostFocusonDemand(e)}"></ClientSideEvents>
                                                     </dxe:ASPxDateEdit>
                                                     <span id="MandatoryTransDate" class="iconTransDate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                                                    <%--Rev 1.0--%>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <%--Rev end 1.0--%>
                                                 </div>
                                             </div>
 
@@ -267,7 +380,7 @@
 
 
                                             <div id="multipleredio" class="col-md-2" runat="server">
-                                                <div style="padding-top: 20px; margin-top: 10px">
+                                                <div style="padding-top: 13px; margin-top: 10px">
                                                     <asp:RadioButtonList ID="rdl_MultipleType" runat="server" Width="160px" RepeatDirection="Horizontal" onchange="return selectValue();">
                                                         <asp:ListItem Text="Single" Value="S" Selected="True"></asp:ListItem>
                                                         <asp:ListItem Text="Multiple" Value="M"></asp:ListItem>
@@ -280,7 +393,8 @@
 
                                                 <div class="col-md-2 lblmTop8">
                                                     <label style="">Instrument Type</label>
-                                                    <div style="">
+                                                    <%--Rev 1.0: "simple-select" class add--%>
+                                                    <div style="" class="simple-select">
                                                         <dxe:ASPxComboBox ID="cmbInstrumentType" runat="server" ClientInstanceName="cComboInstrumentTypee" Font-Size="12px"
                                                             ValueType="System.String" Width="100%" EnableIncrementalFiltering="True" Native="true">
                                                             <Items>
@@ -315,6 +429,9 @@
                                                             <ButtonStyle Width="13px">
                                                             </ButtonStyle>
                                                         </dxe:ASPxDateEdit>
+                                                        <%--Rev 1.0--%>
+                                                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                        <%--Rev end 1.0--%>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3" id="divDrawnOn" style="" runat="server">
@@ -599,14 +716,14 @@
                                                     <td style="padding: 5px 0px;">
                                                         <span id="tdSaveButtonNew" runat="server">
                                                             <dxe:ASPxButton ID="btnSaveNew" ClientInstanceName="cbtnSaveNew" runat="server"
-                                                                AutoPostBack="false" CssClass="btn btn-primary" TabIndex="0" Text="S&#818;ave & New"
+                                                                AutoPostBack="false" CssClass="btn btn-success" TabIndex="0" Text="S&#818;ave & New"
                                                                 UseSubmitBehavior="False">
                                                                 <ClientSideEvents Click="function(s, e) {SaveButtonClickNew();}" />
                                                             </dxe:ASPxButton>
                                                         </span>
                                                         <span id="tdSaveButton" runat="server">
                                                             <dxe:ASPxButton ID="btnSaveRecords" ClientInstanceName="cbtnSaveRecords" runat="server"
-                                                                AutoPostBack="false" CssClass="btn btn-primary" TabIndex="0" Text="Save & Ex&#818;it"
+                                                                AutoPostBack="false" CssClass="btn btn-success" TabIndex="0" Text="Save & Ex&#818;it"
                                                                 UseSubmitBehavior="False">
                                                                 <ClientSideEvents Click="function(s, e) {SaveButtonClick();}" />
                                                             </dxe:ASPxButton>
@@ -668,7 +785,7 @@
 
     </dxe:ASPxPageControl>
 
-
+    </div>
 
 
 

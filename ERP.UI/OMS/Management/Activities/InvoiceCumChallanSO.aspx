@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                10-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                10-04-2023        2.0.37           Pallab              25959: Invoice cum Challan with SO module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InvoiceCumChallanSO.aspx.cs" Inherits="ERP.OMS.Management.Activities.InvoiceCumChallanSO" %>

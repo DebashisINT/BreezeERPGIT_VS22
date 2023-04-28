@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                10-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                10-04-2023        2.0.37           Pallab              25970: Add Sales Invoice (Cash) module design modification & check in small device
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableViewStateMac="false" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="PosSalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesInvoice" %>
@@ -7575,7 +7575,7 @@ function CmbWarehouse_ValueChange() {
         }
     </style>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -8073,7 +8073,110 @@ function CmbWarehouse_ValueChange() {
         
 
         /*Rev end 1.0*/
+        </style>--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+
+    <style>
+            #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #deliveryDate , #dtPostingDate , #dtChallandate
+            {
+                position: relative;
+                z-index: 1;
+                background: transparent;
+            }
+
+            #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #deliveryDate_B-1 , #dtPostingDate_B-1 , #dtChallandate_B-1
+            {
+                background: transparent !important;
+                border: none;
+                width: 30px;
+                padding: 10px !important;
+            }
+
+            #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+            #dt_PLSales_B-1 #dt_PLSales_B-1Img , #deliveryDate_B-1 #deliveryDate_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img , #dtChallandate_B-1 #dtChallandate_B-1Img
+            {
+                display: none;
+            }
+
+        .calendar-icon
+        {
+                right: 9px !important;
+                bottom: 14px;
+        }
+
+        /*select#ddlInventory
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .simple-select::after
+        {
+            top: 6px !important;
+            right: -2px !important;
+        }
+
+        .col-sm-3 , .col-md-3 , .col-md-2{
+            margin-bottom: 5px;
+        }
+
+        #rdl_Salesquotation
+        {
+            margin-top: 10px;
+        }
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+        .lblmBot4 > span, .lblmBot4 > label
+        {
+                margin-bottom: 0px !important;
+        }
+
+        #drdTransCategory.aspNetDisabled {
+    background: #f3f3f3 !important;
+}
+
+       /* #CustomerTableTbl.dynamicPopupTbl>tbody>tr>td
+        {
+            width: 33.33%;
+        }*/
+
+       .lblmTop8>span, .lblmTop8>label
+        {
+                margin-top: 0 !important;
+        }
+
+       input + label
+       {
+               margin-top: 3px;
+               margin-right: 5px;
+       }
+
+            @media only screen and (max-width: 1380px) and (min-width: 1300px)
+            {
+
+                .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+
+                /*.simple-select::after
+                {
+                    right: 8px !important;
+                }*/
+                .calendar-icon {
+                    right: 9px !important;
+                }
+
+                input[type="radio"], input[type="checkbox"] {
+                    margin-right: 0px;
+                }
+            }
         </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="JS/PosSalesInvoice.js?var=2.6"></script>
@@ -8379,6 +8482,9 @@ function CmbWarehouse_ValueChange() {
 
 
                                                         </td>
+                                                        
+                                                    </tr>
+                                                    <tr>
                                                         <td style="width: 180px">
                                                             <dxe:ASPxLabel ID="ASPxLabel3" runat="server" Text="Salesman(ISD)">
                                                             </dxe:ASPxLabel>
@@ -8390,8 +8496,6 @@ function CmbWarehouse_ValueChange() {
                                                                 <%-- End Rev Rajdip --%>
                                                             </dxe:ASPxComboBox>
                                                         </td>
-                                                    </tr>
-                                                    <tr>
 
                                                         <td>
                                                             <dxe:ASPxLabel ID="lbl_Refference" runat="server" Text="Reference">
@@ -8441,7 +8545,26 @@ function CmbWarehouse_ValueChange() {
                                                                 <img id="mandetorydtxtChallanNo" style="display: none" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory">
                                                             </span>
                                                         </td>
-                                                        <td>
+                                                        
+                                                        <%--<td></td>--%>
+
+
+                                                        <%--  <td>
+                                                         <select class="form-control">
+                                                             <option>Select Barcode</option>
+                                                             <option>Select Model</option>
+                                                             <option>Select Serial</option>
+                                                         </select>
+                                                     </td>
+                                                     <td>
+                                                         <div class="input-group">
+                                                             <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                                                             <span class="input-group-addon btn-primary" style="padding: 5px;"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+                                                        </div>
+                                                     </td>--%>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="relative">
                                                             <label>Challan Date</label>
                                                             <dxe:ASPxDateEdit ID="dtChallandate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cdtChallandate" ClientEnabled="false" Width="100%">
                                                                 <ButtonStyle Width="13px">
@@ -8501,24 +8624,7 @@ function CmbWarehouse_ValueChange() {
                                                                 <ClientSideEvents EndCallback="componentEndCallBack" />
                                                             </dxe:ASPxCallbackPanel>
                                                         </td>
-                                                        <td></td>
 
-
-                                                        <%--  <td>
-                                                         <select class="form-control">
-                                                             <option>Select Barcode</option>
-                                                             <option>Select Model</option>
-                                                             <option>Select Serial</option>
-                                                         </select>
-                                                     </td>
-                                                     <td>
-                                                         <div class="input-group">
-                                                             <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-                                                             <span class="input-group-addon btn-primary" style="padding: 5px;"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
-                                                        </div>
-                                                     </td>--%>
-                                                    </tr>
-                                                    <tr>
                                                         <td>
                                                             <div class="" id="divposGst">
                                                                 <dxe:ASPxLabel ID="lbl_PosForGst" runat="server" Text="Place Of Supply [GST]">
@@ -8558,9 +8664,9 @@ function CmbWarehouse_ValueChange() {
                                                         </td>
                                                         
                                                         
+                                                        <%--<td></td>
                                                         <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td></td>--%>
                                                     </tr>
                                                 </tbody>
                                             </table>

@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                07-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                07-04-2023        2.0.37           Pallab              25954: Approved Sales Order module design modification
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ApproveSaleasOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ApproveSaleasOrder"

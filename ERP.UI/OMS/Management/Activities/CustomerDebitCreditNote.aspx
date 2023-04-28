@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                10-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                10-04-2023        2.0.37           Pallab              25964: Add Customer Debit/Credit Note module design modification & check in small device
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerDebitCreditNote.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerDebitCreditNote" %>
@@ -107,476 +107,103 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     </script>
     <link href="CSS/CustomerDebitCreditNote.css" rel="stylesheet" />
 
+    
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+
     <style>
-        /*Rev 1.0*/
-
-        select
-        {
-            height: 30px !important;
-            border-radius: 4px !important;
-            /*-webkit-appearance: none;
-            position: relative;
-            z-index: 1;*/
-            background-color: transparent;
-            padding-left: 10px !important;
-            padding-right: 22px !important;
-        }
-
-        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
-        {
-            height: 30px;
-            border-radius: 4px;
-        }
-
-        .dxeButtonEditButton_PlasticBlue
-        {
-            background: #094e8c !important;
-            border-radius: 4px !important;
-            padding: 0 4px !important;
-        }
-
-        .calendar-icon {
-            position: absolute;
-            bottom: 6px;
-            right: 20px;
-            z-index: 0;
-            cursor: pointer;
-        }
-
-        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate
-        {
-            position: relative;
-            z-index: 1;
-            background: transparent;
-        }
-
-        .dxeDisabled_PlasticBlue
-        {
-            z-index: 0 !important;
-        }
-
-        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1
-        {
-            background: transparent !important;
-            border: none;
-            width: 30px;
-            padding: 10px !important;
-        }
-
-        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
-        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img
-        {
-            display: none;
-        }
-
-        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
-        {
-            background: #1b5ea4 !important;
-        }
-
-        .simple-select::after {
-            /*content: '<';*/
-            content: url(../../../assests/images/left-arw.png);
-            position: absolute;
-            top: 26px;
-            right: 13px;
-            font-size: 16px;
-            transform: rotate(269deg);
-            font-weight: 500;
-            background: #094e8c;
-            color: #fff;
-            height: 18px;
-            display: block;
-            width: 26px;
-            /* padding: 10px 0; */
-            border-radius: 4px;
-            text-align: center;
-            line-height: 18px;
-            z-index: 0;
-        }
-        .simple-select {
-            position: relative;
-                z-index: 0;
-        }
-        .simple-select:disabled::after
-        {
-            background: #1111113b;
-        }
-        select.btn
-        {
-            padding-right: 10px !important;
-        }
-
-        .panel-group .panel
-        {
-            box-shadow: 1px 1px 8px #1111113b;
-            border-radius: 8px;
-        }
-
-        .dxpLite_PlasticBlue .dxp-current
-        {
-            background-color: #1b5ea4;
-            padding: 3px 5px;
-            border-radius: 2px;
-        }
-
-        #accordion {
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
-
-        .dxgvHeader_PlasticBlue {
-    background: #1b5ea4 !important;
-    color: #fff !important;
-}
-        #ShowGrid
-        {
-            margin-top: 10px;
-        }
-
-        .pt-25{
-                padding-top: 25px !important;
-        }
-
-        .styled-checkbox {
-        position: absolute;
-        opacity: 0;
-        z-index: 1;
-    }
-
-        .styled-checkbox + label {
-            position: relative;
-            /*cursor: pointer;*/
-            padding: 0;
-            margin-bottom: 0 !important;
-        }
-
-            .styled-checkbox + label:before {
-                content: "";
-                margin-right: 6px;
-                display: inline-block;
-                vertical-align: text-top;
-                width: 16px;
-                height: 16px;
-                /*background: #d7d7d7;*/
-                margin-top: 2px;
-                border-radius: 2px;
-                border: 1px solid #c5c5c5;
+            #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate
+            {
+                position: relative;
+                z-index: 1;
+                background: transparent;
             }
 
-        .styled-checkbox:hover + label:before {
-            background: #094e8c;
-        }
-
-
-        .styled-checkbox:checked + label:before {
-            background: #094e8c;
-        }
-
-        .styled-checkbox:disabled + label {
-            color: #b8b8b8;
-            cursor: auto;
-        }
-
-            .styled-checkbox:disabled + label:before {
-                box-shadow: none;
-                background: #ddd;
+            #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1
+            {
+                background: transparent !important;
+                border: none;
+                width: 30px;
+                padding: 10px !important;
             }
 
-        .styled-checkbox:checked + label:after {
-            content: "";
-            position: absolute;
-            left: 3px;
-            top: 9px;
-            background: white;
-            width: 2px;
-            height: 2px;
-            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
-            transform: rotate(45deg);
+            #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+            #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img
+            {
+                display: none;
+            }
+
+        .calendar-icon
+        {
+                right: 18px !important;
         }
 
-        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        /*select#ddlInventory
         {
-            padding: 6px 6px 6px !important;
-        }
-
-        #lookupCardBank_DDD_PW-1
-        {
-                left: -182px !important;
-        }
-        .plhead a>i
-        {
-                top: 9px;
-        }
-
-        .clsTo
-        {
-            display: flex;
-    align-items: flex-start;
-        }
-
-        input[type="radio"], input[type="checkbox"]
-        {
-            margin-right: 5px;
-        }
-        .dxeCalendarDay_PlasticBlue
-        {
-                padding: 6px 6px;
-        }
-
-        .modal-dialog
-        {
-            width: 50%;
-        }
-
-        .modal-header
-        {
-            padding: 8px 4px 8px 10px;
-            background: #094e8c !important;
-        }
-
-        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridLocationwiseStockStatus ,
-        #GvJvSearch
-        {
-            max-width: 98% !important;
-        }
-
-        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
-        {
-            width: 95% !important;
+            -webkit-appearance: auto;
         }*/
 
-        .btn-info
+        .simple-select::after
         {
-                background-color: #1da8d1 !important;
-                background-image: none;
+            top: 26px !important;
+            right: 13px !important;
         }
 
-        .for-cust-icon {
-            position: relative;
-            z-index: 1;
-        }
-
-        .dxeDisabled_PlasticBlue, .aspNetDisabled
-        {
-            background: #f3f3f3 !important;
-        }
-
-        .dxeButtonDisabled_PlasticBlue
-        {
-            background: #b5b5b5 !important;
-            border-color: #b5b5b5 !important;
-        }
-
-        #ddlValTech
-        {
-            width: 100% !important;
-            margin-bottom: 0 !important;
-        }
-
-        .dis-flex
-        {
-            display: flex;
-            align-items: baseline;
-        }
-
-        input + label
-        {
-            line-height: 1;
-                margin-top: 3px;
-        }
-
-        .dxtlHeader_PlasticBlue
-        {
-            background: #094e8c !important;
-        }
-
-        .dxeBase_PlasticBlue .dxichCellSys
-        {
-            padding-top: 2px !important;
-        }
-
-        .pBackDiv
-        {
-            border-radius: 10px;
-            box-shadow: 1px 1px 10px #1111112e;
-        }
-        .HeaderStyle th
-        {
-            padding: 5px;
-        }
-
-        .for-cust-icon {
-            position: relative;
-            z-index: 1;
-        }
-
-        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
-        {
-            padding-top: 15px;
-        }
-
-        .pb-10
-        {
-            padding-bottom: 10px;
-        }
-
-        .pTop10 {
-    padding-top: 20px;
-}
-        .custom-padd
-        {
-            padding-top: 4px;
-    padding-bottom: 10px;
-        }
-
-        input + label
-        {
-                margin-right: 10px;
-        }
-
-        .btn
-        {
-            margin-bottom: 0;
-        }
-
-        .pl-10
-        {
-            padding-left: 10px;
-        }
-
-        /*.col-md-3>label, .col-md-3>span
-        {
-            margin-top: 0 !important;
-        }*/
-
-        .devCheck
-        {
-            margin-top: 5px;
-        }
-
-        .mtc-5
-        {
-            margin-top: 5px;
-        }
-
-        #txtProdSearch
-        {
-            margin-bottom: 10px;
-        }
-
-        select.btn
-        {
-           position: relative;
-           z-index: 0;
-        }
-
-        select
-        {
-            margin-bottom: 0;
-        }
-
-        .form-control
-        {
-            background-color: transparent;
-        }
-
-        #massrecdt
-        {
-            width: 100%;
-        }
-
-        .col-sm-3 , .col-md-3{
-            margin-bottom: 10px;
-        }
-
-        .crossBtn
-        {
-            top: 25px;
-                right: 25px;
-        }
-
-        input[type="text"], input[type="password"], textarea
-        {
-                margin-bottom: 0;
-        }
-
-        .typeNotification span
-        {
-             color: #ffffff !important;
+        .col-sm-3 , .col-md-3 , .col-md-2{
+            margin-bottom: 5px;
         }
 
         #rdl_Salesquotation
         {
-            margin-top: 8px;
-    line-height: 20px;
+            margin-top: 10px;
         }
-
-        #ASPxLabel8
+        .col-md-3>label, .col-md-3>span
         {
-            line-height: 16px;
+            margin-top: 0 !important;
         }
-
-        .lblmTop8>span, .lblmTop8>label
-        {
-                margin-top: 0 !important;
-        }
-
-        #OFDBankSelect
-        {
-            height: 30px;
-            border-radius: 4px;
-        }
-
-        .mt-28{
-            margin-top: 28px;
-        }
-
-        .mb-10{
-            margin-bottom: 10px;
-        }
-
-        /*.col-md-3>label, .col-md-3>span
-        {
-            margin-top: 0;
-        }*/
-
-        #CallbackPanel_LPV
-        {
-            top: 450px !important;
-        }
-
-        /*.GridViewArea
-        {
-            z-index: 0;
-        }*/
-
-        select.btn
-        {
-            height: 34px !important;
-        }
-
-        .makeFullscreen >table
-        {
-            z-index: 0;
-        }
-        .makeFullscreen .makeFullscreen-icon.half
-        {
-                z-index: 0;
-        }
-
         .lblmBot4 > span, .lblmBot4 > label
         {
                 margin-bottom: 0px !important;
         }
 
-        .col-md-3>label, .col-md-3>span
+        #drdTransCategory.aspNetDisabled {
+    background: #f3f3f3 !important;
+}
+
+       /* #CustomerTableTbl.dynamicPopupTbl>tbody>tr>td
         {
-            margin-top: 0px !important;
+            width: 33.33%;
+        }*/
+
+       .lblmTop8>span, .lblmTop8>label
+        {
+                margin-top: 0 !important;
         }
 
-        /*Rev end 1.0*/
+            @media only screen and (max-width: 1380px) and (min-width: 1300px)
+            {
+
+                .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+
+                .simple-select::after
+                {
+                    right: 8px !important;
+                }
+                .calendar-icon {
+                    right: 13px !important;
+                }
+
+                input[type="radio"], input[type="checkbox"] {
+                    margin-right: 0px;
+                }
+            }
         </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -1084,7 +711,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="ModuleSegment1header"></h4>
+                    <%--Rev 1.0: modal title add --%>
+                    <h4 class="modal-title" id="ModuleSegment1header">Segment1 Search</h4>
                 </div>
                 <div class="modal-body">
                     <input type="text" onkeydown="Segment1keydown(event)" id="txtSegment1Search" autofocus width="100%" placeholder="Search By Segment Name,Segment Code" />
@@ -1110,7 +738,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="ModuleSegment2Header"></h4>
+                    <%--Rev 1.0: modal title add --%>
+                    <h4 class="modal-title" id="ModuleSegment2Header">Segment2 Search</h4>
                 </div>
                 <div class="modal-body">
                     <input type="text" onkeydown="Segment2keydown(event)" id="txtSegment2Search" autofocus width="100%" placeholder="Search By Segment Name,Segment Code" />
@@ -1136,7 +765,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="ModuleSegment3Header"></h4>
+                    <%--Rev 1.0: modal title add --%>
+                    <h4 class="modal-title" id="ModuleSegment3Header">Segment3 Search</h4>
                 </div>
                 <div class="modal-body">
                     <input type="text" onkeydown="Segment3keydown(event)" id="txtSegment3Search" autofocus width="100%" placeholder="Search By Segment Name,Segment Code" />
@@ -1162,6 +792,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <%--Rev 1.0: modal title add --%>
                     <h4 class="modal-title" id="ModuleSegment4Header">Segment4 Search</h4>
                 </div>
                 <div class="modal-body">

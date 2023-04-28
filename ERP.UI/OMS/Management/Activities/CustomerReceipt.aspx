@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                10-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                28-04-2023        2.0.37           Pallab              25967: Add Customer Receipt module design modification & check in small device
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerReceipt.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerReceipt" %>
@@ -259,7 +259,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
     </style>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -741,7 +741,109 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
 
         /*Rev end 1.0*/
+        </style>--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+
+    <style>
+            #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate
+            {
+                position: relative;
+                z-index: 1;
+                background: transparent;
+            }
+
+            #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1
+            {
+                background: transparent !important;
+                border: none;
+                width: 30px;
+                padding: 10px !important;
+            }
+
+            #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+            #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img
+            {
+                display: none;
+            }
+
+        .calendar-icon
+        {
+                right: 18px !important;
+        }
+
+        /*select#ddlInventory
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .simple-select::after
+        {
+            top: 6px !important;
+            right: -2px !important;
+        }
+
+        .col-sm-3 , .col-md-3 , .col-md-2{
+            margin-bottom: 5px;
+        }
+
+        #rdl_Salesquotation
+        {
+            margin-top: 10px;
+        }
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+        .lblmBot4 > span, .lblmBot4 > label
+        {
+                margin-bottom: 0px !important;
+        }
+
+        #drdTransCategory.aspNetDisabled {
+    background: #f3f3f3 !important;
+}
+
+       /* #CustomerTableTbl.dynamicPopupTbl>tbody>tr>td
+        {
+            width: 33.33%;
+        }*/
+
+       .lblmTop8>span, .lblmTop8>label
+        {
+                margin-top: 0 !important;
+        }
+
+       input + label
+       {
+               margin-top: 3px;
+               margin-right: 5px;
+       }
+
+            @media only screen and (max-width: 1380px) and (min-width: 1300px)
+            {
+
+                .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+
+                /*.simple-select::after
+                {
+                    right: 8px !important;
+                }*/
+                .calendar-icon {
+                    right: 13px !important;
+                }
+
+                input[type="radio"], input[type="checkbox"] {
+                    margin-right: 0px;
+                }
+            }
         </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -827,7 +929,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <div class="">
                                         <div style=" padding: 5px 0 5px 0; margin-bottom: 10px; border-radius: 4px;">
                                             <div class="col-md-2" id="divNumberingScheme" runat="server">
-                                                <label style="margin-top: 8px">Numbering Scheme</label>
+                                                <label style="">Numbering Scheme</label>
                                                 <div>
                                                     <dxe:ASPxComboBox ID="CmbScheme" ClientInstanceName="cCmbScheme"
                                                         SelectedIndex="0" EnableCallbackMode="false"
@@ -894,7 +996,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                                                     <% if (rights.CanAdd && hdAddEdit.Value != "Edit")
                                                        { %>
-                                                    <a href="#" onclick="AddcustomerClick()" style="position: absolute; top: 9px; margin-left: 11px; font-size: 16px;"><i id="openlink" class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                                                    <a href="#" onclick="AddcustomerClick()" style="position: absolute; top: 2px; margin-left: 8px; font-size: 16px;"><i id="openlink" class="fa fa-plus-circle" aria-hidden="true"></i></a>
                                                     <% } %>
 
                                                     <span style="color: red">*</span>
@@ -966,7 +1068,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
                                             <div id="multipleredio" class="col-md-2" runat="server">
-                                                <div style="padding-top: 20px; margin-top: 10px">
+                                                <div style="padding-top: 14px; margin-top: 10px">
                                                     <asp:RadioButtonList ID="rdl_MultipleType" runat="server" Width="160px" RepeatDirection="Horizontal" onchange="return selectValue();">
                                                         <asp:ListItem Text="Single" Value="S" Selected="True"></asp:ListItem>
                                                         <asp:ListItem Text="Multiple" Value="M"></asp:ListItem>
