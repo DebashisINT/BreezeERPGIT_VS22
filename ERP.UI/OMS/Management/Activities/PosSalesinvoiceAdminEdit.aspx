@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                11-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                11-04-2023        2.0.37           Pallab              25984: Special Edit(POS) module design modification & check in small device
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" Title="Special Edit" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="PosSalesinvoiceAdminEdit.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesinvoiceAdminEdit" %>
