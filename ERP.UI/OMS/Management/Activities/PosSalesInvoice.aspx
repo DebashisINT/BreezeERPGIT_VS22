@@ -8155,6 +8155,11 @@ function CmbWarehouse_ValueChange() {
                margin-right: 5px;
        }
 
+       .bod-table > tbody > tr > td
+       {
+           background: #ffffff;
+       }
+
             @media only screen and (max-width: 1380px) and (min-width: 1300px)
             {
 

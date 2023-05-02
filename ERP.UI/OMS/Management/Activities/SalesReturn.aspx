@@ -1,6 +1,6 @@
 ﻿<%--====================================================Revision History=========================================================================
  1.0   Priti     V2.0.37    05-03-2023      0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
- 2.0   Pallab    V2.0.37    12-04-2023     	Transactions pages design modification
+ 2.0   Pallab    V2.0.37    12-04-2023     	0025992: Add Sales Return module design modification & check in small device
 ====================================================End Revision History=====================================================================
 --%>
 
@@ -1099,7 +1099,7 @@ display: none !important;
 
     <%--Batch Product Popup End--%>
 
-    <style>
+    <%--<style>
         /*Rev 2.0*/
 
         select
@@ -1491,7 +1491,78 @@ display: none !important;
 
         /*Rev end 2.0*/
 
+    </style>--%>
+
+    <%--Rev 2.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+
+    <style>
+        select#ddlInventory
+        {
+            -webkit-appearance: auto !important;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 7px;
+        }
+
+        /*span
+        {
+            font-size: 14px !important;
+        }*/
+
+        /*span#lblHeadTitle
+        {
+            font-size: 26px !important;
+            font-weight: 400 !important;
+        }*/
+
+        .simple-select::after
+        {
+            top: 28px;
+        }
+
+        .col-md-2 > label, .col-md-2 > span, .col-md-6 > span, .col-md-1 > label, .col-md-1 > span
+        {
+                margin-top: 5px;
+                font-size: 14px !important;
+        }
+
+        .cust-top-31.simple-select::after
+        {
+            top: 31px !important;
+        }
+
+        #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 18% !important;
+                top: 20% !important;
+            }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #e0e0e0;
+        }
+
+        #drdTransCategory
+        {
+
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 15% !important;
+                top: 60px !important;
+            }
+        }
     </style>
+    <%--Rev end 2.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -1917,7 +1988,7 @@ display: none !important;
                                             </div>
 
                                             <div class="clear"></div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 pt-10">
                                                 <asp:Label ID="ASPxLabel4" runat="server" Text="Reason For Return"></asp:Label>
 
                                                 <asp:TextBox ID="txtReasonforChange" runat="server" TabIndex="16" Width="100%" TextMode="MultiLine" Rows="5" Columns="10" Height="50px" onblur="return blurOut()"></asp:TextBox>
@@ -1934,7 +2005,7 @@ display: none !important;
                                                 </dxe:ASPxComboBox>
                                             </div>
                                             <%--Rev 2.0 : "simple-select" class add--%>
-                                              <div class="col-md-2 simple-select">
+                                              <div class="col-md-2 simple-select cust-top-31">
                                                 <dxe:ASPxLabel ID="ASPxLabel2" runat="server" Text="Transaction Category">
                                                 </dxe:ASPxLabel>
                                                 <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" Enabled="false">

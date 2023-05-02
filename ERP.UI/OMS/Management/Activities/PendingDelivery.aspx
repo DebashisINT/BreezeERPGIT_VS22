@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                11-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                11-04-2023        2.0.37           Pallab              25986: Undelivered List module design modification & check in small device
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PendingDelivery.aspx.cs"
@@ -476,7 +476,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         });
     </script>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -868,7 +868,32 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         /*Rev end 1.0*/
 
+    </style>--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        #GrdOrder {
+            max-width: 98% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        /*.calendar-icon
+        {
+                right: 10px;
+        }*/
     </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <dxe:ASPxPopupControl ID="Popup_OrderStatus" runat="server" ClientInstanceName="cOrderStatus"
