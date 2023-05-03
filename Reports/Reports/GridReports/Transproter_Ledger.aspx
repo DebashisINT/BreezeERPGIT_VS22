@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                21-02-2023        2.0.36           Pallab              25575 : Report pages design modification
+2.0                02-05-2023        2.0.38           Pallab              25998 : Transporter Ledger module zoom popup upper part visible issue fix for small device
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="Transproter_Ledger.aspx.cs" Inherits="Reports.Reports.GridReports.Transproter_Ledger" %>
@@ -727,6 +728,27 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             max-width: 100% !important;
         }*/
         /*Rev end 1.0*/
+
+        /*Rev 2.0*/
+
+        #ASPXPopupControl2_PW-1 , #popupApproval_PW-1 , #ASPXPopupControl1_PW-1
+        {
+            position: fixed !important;
+            top: 10% !important;
+            left: 12% !important;
+        }
+
+        @media only screen and (max-width: 1450px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1 , #popupApproval_PW-1 , #ASPXPopupControl1_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 50px !important;
+                top: 10% !important;
+            }
+        }
+
+        /*Rev end 2.0*/
     </style>
 
 </asp:Content>

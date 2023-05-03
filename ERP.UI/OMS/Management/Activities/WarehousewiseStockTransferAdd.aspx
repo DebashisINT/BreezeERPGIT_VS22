@@ -1,5 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================
-    1.0   Priti   V2.0.36   23 - 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+    1.0   Priti    V2.0.36   23 - 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+    2.0   Pallab   V2.0.36   03 - 05 - 2023    0026006: In Warehouse wise Stock Transfer, multiple coloumns are not showing in the grid when the page resolution is set at 100%
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -671,8 +672,10 @@
                                 </PropertiesTextEdit>
                             </dxe:GridViewDataTextColumn>
                             <%--Batch Product Popup Start--%>
-
-                            <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="2" Width="20%" ReadOnly="True">
+                            <%--Rev 2.0--%>
+                            <%--<dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="2" Width="20%" ReadOnly="True">--%>
+                            <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="2" Width="130px" ReadOnly="True">
+                            <%--Rev end 2.0--%>
                                 <PropertiesButtonEdit>
                                     <ClientSideEvents ButtonClick="ProductButnClick" KeyDown="ProductKeyDown" />
                                     <Buttons>
@@ -695,12 +698,16 @@
                                 </EditCellStyle>
                             </dxe:GridViewDataTextColumn>
                             <%--Batch Product Popup End--%>
-                            <dxe:GridViewDataTextColumn FieldName="Discription" Caption="Description" VisibleIndex="3" Width="15%" ReadOnly="true">
-
+                            <%--Rev 2.0--%>
+                            <%--<dxe:GridViewDataTextColumn FieldName="Discription" Caption="Description" VisibleIndex="3" Width="15%" ReadOnly="true">--%>
+                            <dxe:GridViewDataTextColumn FieldName="Discription" Caption="Description" VisibleIndex="3" Width="100px" ReadOnly="true">
+                            <%--Rev end 2.0--%>
                                 <CellStyle Wrap="True"></CellStyle>
                             </dxe:GridViewDataTextColumn>
-
-                            <dxe:GridViewDataButtonEditColumn FieldName="SourceWarehouse" Caption="Source Warehouse" VisibleIndex="4" Width="15%" ReadOnly="True">
+                            <%--Rev 2.0--%>
+                            <%--<dxe:GridViewDataButtonEditColumn FieldName="SourceWarehouse" Caption="Source Warehouse" VisibleIndex="4" Width="15%" ReadOnly="True">--%>
+                            <dxe:GridViewDataButtonEditColumn FieldName="SourceWarehouse" Caption="Source Warehouse" VisibleIndex="4" Width="130px" ReadOnly="True">
+                            <%--Rev end 2.0--%>
                                 <PropertiesButtonEdit>
                                     <ClientSideEvents ButtonClick="SourceWarehouseButnClick" KeyDown="SourceWarehouseKeyDown" />
                                     <Buttons>
