@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History ============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                17-02-2023        V2.0.36           Pallab              25575 : Report pages design modification
+2.0                03-05-2023        V2.0.38           Pallab              26016 : Vendor Ledger module zoom popup upper part visible issue fix for small device
 ====================================================== Revision History ================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="Customer_Ledger.aspx.cs"
@@ -1009,6 +1010,26 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             max-width: 100% !important;
         }*/
         /*Rev end 1.0*/
+        /*Rev 2.0*/
+
+        #ASPXPopupControl2_PW-1 , #popupApproval_PW-1 , #ASPXPopupControl1_PW-1
+        {
+            position: fixed !important;
+            top: 10% !important;
+            left: 10% !important;
+        }
+
+        @media only screen and (max-width: 1450px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1 , #popupApproval_PW-1 , #ASPXPopupControl1_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 60px !important;
+                top: 8% !important;
+            }
+        }
+
+        /*Rev end 2.0*/
     </style>
     <script>
         $(document).ready(function () {

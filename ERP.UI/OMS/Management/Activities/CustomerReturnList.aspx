@@ -1,6 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                12-04-2023        2.0.37           Pallab              Transactions pages design modification
+1.0                12-04-2023        2.0.37           Pallab              26007: Customer Return module design modification & check in small device
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CustomerReturnList.aspx.cs"  MasterPageFile="~/OMS/MasterPage/ERP.Master"  Inherits="ERP.OMS.Management.Activities.CustomerReturnList" %>
@@ -45,7 +45,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     </script>
     <script src="JS/CustomerReturnList.js"></script>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -280,7 +280,37 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         /*Rev end 1.0*/
 
+    </style>--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        /*#GrdOrder {
+            max-width: 98% !important;
+        }*/
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+                right: 10px;
+        }
     </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%--Rev 1.0: "outer-div-main" class add --%>
