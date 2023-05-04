@@ -1,4 +1,8 @@
-﻿using System;
+﻿//====================================================== Revision History ===========================================================
+// Rev Number     DATE            VERSION          DEVELOPER             CHANGES
+// 1.0            04-05-2023      2.0.38           Pallab/Sanchita       25935: Event banner should dynamically change according to the date for ERP
+//====================================================== Revision History ===========================================================
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8079,5 +8083,34 @@ namespace BusinessLogicLayer
             DTCurrency.Dispose();
         }
         // End of Rev Sanchita
+
+        // Rev 1.0
+
+        public string GetEventImage()
+        {
+            string strEventImage = "";
+
+            if (ConfigurationManager.AppSettings["ErpConnectionMaster"] != null)
+            {
+                DataTable dtInst = new DataTable();
+                SqlConnection con = new SqlConnection(Convert.ToString(ConfigurationManager.AppSettings["ErpConnectionMaster"]));
+
+                SqlCommand cmd = new SqlCommand("PRC_MASTER_EVENTBANNERIMAGEDETAILS", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ACTION", "GETEVENTIMAGE");
+
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter Adap = new SqlDataAdapter();
+                Adap.SelectCommand = cmd;
+                Adap.Fill(dtInst);
+
+                if (dtInst.Rows.Count > 0)
+                {
+                    strEventImage = dtInst.Rows[0]["Value"].ToString();
+                }
+            }
+            return strEventImage;
+        }
+        // End of Rev 1.0
     }
 }

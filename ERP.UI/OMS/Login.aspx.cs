@@ -1,4 +1,8 @@
-﻿using System;
+﻿//====================================================== Revision History ===========================================================
+// Rev Number     DATE            VERSION          DEVELOPER             CHANGES
+// 1.0            04-05-2023      2.0.38           Pallab/Sanchita       25935: Event banner should dynamically change according to the date for ERP
+//====================================================== Revision History ===========================================================
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -14,6 +18,9 @@ using System.IO;
 using System.Xml;
 using System.Web.Services;
 using System.Collections.Generic;
+// Rev 1.0
+using DataAccessLayer;
+// End of 1.0
 
 public partial class pLogin : System.Web.UI.Page
 {
@@ -130,6 +137,10 @@ public partial class pLogin : System.Web.UI.Page
             //divConn.Style.Add("display", "none");
 
             //divConn.Visible = false;
+
+            // Rev 1.0
+            EV1.Src = oDBEngine.GetEventImage();
+            // End of Rev 1.0
 
             divConn.Attributes["style"] = "display: none;";
 

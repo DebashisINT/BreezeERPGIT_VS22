@@ -1,4 +1,8 @@
-﻿using NewCompany.Models;
+﻿//====================================================== Revision History ===========================================================
+// Rev Number     DATE            VERSION          DEVELOPER             CHANGES
+// 1.0            04-05-2023      2.0.38           Pallab/Sanchita       25935: Event banner should dynamically change according to the date for ERP
+//====================================================== Revision History ===========================================================
+using NewCompany.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -104,6 +108,10 @@ namespace NewCompany.Controllers
                         {
                             Session["ErpConnection"] = constr;
                             Session["LastVersion"] = getApplicationVersion();
+                            // Rev 1.0
+                            ViewBag.Src = oDBEngine.GetEventImage();
+                            // End of Rev 1.0
+
                             return View("~/Views/NewCompany/Login.cshtml");
                         }
                     }
@@ -122,12 +130,18 @@ namespace NewCompany.Controllers
                         Session["Company_Code"] = "";
                         Session["ErpConnection"] = constr;
                         Session["LastVersion"] = getApplicationVersion();
+                        // Rev 1.0
+                        ViewBag.Src = oDBEngine.GetEventImage();
+                        // End of Rev 1.0
                         return View("~/Views/NewCompany/Login.cshtml");
                     }
                 }
             }
             else
             {
+                // Rev 1.0
+                ViewBag.Src = oDBEngine.GetEventImage();
+                // End of Rev 1.0
                 return View("~/Views/NewCompany/Login.cshtml");
             }
         }

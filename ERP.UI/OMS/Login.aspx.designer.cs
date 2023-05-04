@@ -9,8 +9,18 @@
 
 
 
-public partial class pLogin {
-    
+public partial class pLogin
+{
+
+    /// <summary>
+    /// EV1 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlImage EV1;
+
     /// <summary>
     /// lblMessage control.
     /// </summary>
@@ -19,7 +29,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.Label lblMessage;
-    
+
     /// <summary>
     /// rurl control.
     /// </summary>
@@ -28,7 +38,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlInputHidden rurl;
-    
+
     /// <summary>
     /// txtUserName control.
     /// </summary>
@@ -37,7 +47,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.TextBox txtUserName;
-    
+
     /// <summary>
     /// rqvUserName control.
     /// </summary>
@@ -46,7 +56,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.RequiredFieldValidator rqvUserName;
-    
+
     /// <summary>
     /// txtPassword control.
     /// </summary>
@@ -55,7 +65,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.TextBox txtPassword;
-    
+
     /// <summary>
     /// rqvPassword control.
     /// </summary>
@@ -64,7 +74,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.RequiredFieldValidator rqvPassword;
-    
+
     /// <summary>
     /// divConn control.
     /// </summary>
@@ -73,7 +83,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlGenericControl divConn;
-    
+
     /// <summary>
     /// ddlConn control.
     /// </summary>
@@ -82,7 +92,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.DropDownList ddlConn;
-    
+
     /// <summary>
     /// btnProceed control.
     /// </summary>
@@ -91,7 +101,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnProceed;
-    
+
     /// <summary>
     /// ShowDB control.
     /// </summary>
@@ -100,7 +110,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.Button ShowDB;
-    
+
     /// <summary>
     /// btnLoginCls control.
     /// </summary>
@@ -109,7 +119,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnLoginCls;
-    
+
     /// <summary>
     /// Submit1 control.
     /// </summary>
@@ -118,7 +128,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.Button Submit1;
-    
+
     /// <summary>
     /// LinkButton1 control.
     /// </summary>
@@ -127,7 +137,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
-    
+
     /// <summary>
     /// hdnCompanyCount control.
     /// </summary>
@@ -136,7 +146,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.HiddenField hdnCompanyCount;
-    
+
     /// <summary>
     /// ismobile control.
     /// </summary>
@@ -145,7 +155,7 @@ public partial class pLogin {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.HiddenField ismobile;
-    
+
     /// <summary>
     /// lblVersion control.
     /// </summary>

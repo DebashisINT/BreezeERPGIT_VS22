@@ -4,6 +4,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                12-01-2023        2.0.35           Pallab              Change login url attached image(Image show when url share in social media)
 2.0                08-02-2023        2.0.35           Pallab              New team member names add
 3.0                19-04-2023        2.0.38           Pallab              25856: Login page error fix
+4.0                04-05-2023        2.0.38           Pallab              25935: Event banner should dynamically change according to the date for ERP
 ====================================================== Revision History ===========================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" Inherits="pLogin"
@@ -1324,8 +1325,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     <img src="/assests/images/logo.png"  />
                   </div>
                   <div class="event-img">
-                    <img src="/assests/images/event-banner.jpg"  />
+                    
+                    <%--Rev 4.0 : id="EV1" & runat="server" added--%>
+                    <%--<img src="/assests/images/event-banner.jpg" />--%>   
+                    <img id="EV1" runat="server" src="" />
+                    <%--End of Rev 4.0--%>
                 </div>
+                  
             </div>
             <h1>Power-packed <span class="spEmpa" style="font-weight: 600;color: #062aa5;">Digital ERP</span> For <br />
                 Indian Businesses.</h1>
