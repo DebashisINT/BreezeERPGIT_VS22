@@ -6062,7 +6062,7 @@ var SelectedWarehouseID = "0";
         }
     </style>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -6448,7 +6448,7 @@ var SelectedWarehouseID = "0";
 
         #ASPxLabel8
         {
-            margin-top: 2px;
+            margin-top: 8px;
         }
 
         /*.btn
@@ -6459,7 +6459,96 @@ var SelectedWarehouseID = "0";
 
         /*Rev end 1.0*/
 
+    </style>--%>
+
+    <%--Rev 2.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+
+    <style>
+        select#ddlInventory
+        {
+            -webkit-appearance: auto !important;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 7px;
+        }
+
+        #GrdOrder
+        {
+            max-width: 98% !important;
+        }
+
+        /*span
+        {
+            font-size: 14px !important;
+        }*/
+
+        /*span#lblHeadTitle
+        {
+            font-size: 26px !important;
+            font-weight: 400 !important;
+        }*/
+
+        .simple-select::after
+        {
+            top: 27px;
+        }
+
+        .col-md-2 > label, .col-md-2 > span, .col-md-6 > span, .col-md-1 > label, .col-md-1 > span
+        {
+                margin-top: 5px;
+                font-size: 14px !important;
+        }
+
+        .cust-top-31.simple-select::after
+        {
+            top: 31px !important;
+        }
+
+        #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 18% !important;
+                top: 20% !important;
+            }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #e0e0e0;
+        }
+
+        #drdTransCategory
+        {
+
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 15% !important;
+                top: 60px !important;
+            }
+            .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12
+            {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+            .simple-select::after
+            {
+                right: 10px;
+            }
+            .calendar-icon
+            {
+                right: 16px;
+            }
+        }
     </style>
+    <%--Rev end 2.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="JS/SearchPopup.js"></script>
@@ -6864,7 +6953,7 @@ var SelectedWarehouseID = "0";
 
 
                                                 <%--Rev 1.0 : "simple-select" class add--%>
-                                            <div class="col-md-2 simple-select">
+                                            <div class="col-md-2 simple-select cust-top-31">
                                                 <dxe:ASPxLabel ID="ASPxLabel8" runat="server" Text="Transaction Category">
                                                 </dxe:ASPxLabel>
                                                 <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" Enabled="false">

@@ -2626,7 +2626,7 @@ function acpContactPersonPhoneEndCall(s, e) {
     </script>
     <%--End of Mantis Issue 25152--%>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -3066,7 +3066,77 @@ function acpContactPersonPhoneEndCall(s, e) {
         }
 
         /*Rev end 1.0*/
-        </style>
+        </style>--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GrdSalesReturn {
+            max-width: 98% !important;
+        }
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dt_OADate , #dt_PODue
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dt_OADate_B-1 , #dt_PODue_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dt_OADate_B-1 #dt_OADate_B-1Img ,
+        #dt_PODue_B-1 #dt_PODue_B-1Img
+        {
+            display: none;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+                right: 20px;
+                bottom: 8px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        .col-md-2, .col-md-4 {
+    margin-bottom: 10px;
+}
+
+        .simple-select::after
+        {
+                top: 26px;
+        }
+
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%-- <script src="JS/SearchPopup.js"></script>--%>
@@ -3306,7 +3376,7 @@ function acpContactPersonPhoneEndCall(s, e) {
                                         </dxe:ASPxComboBox>
                                     </div>
                                     <div class="col-md-2 lblmTop8" id="indentRequisition" runat="server">
-                                        <asp:RadioButtonList ID="rdl_Salesquotation" runat="server" RepeatDirection="Horizontal" onchange="return selectValueForRadioBtn();" Width="85%">
+                                        <asp:RadioButtonList ID="rdl_Salesquotation" runat="server" RepeatDirection="Horizontal" onchange="return selectValueForRadioBtn();" Width="100%">
                                             <asp:ListItem Text="Indent" Value="Indent"></asp:ListItem>
                                             <asp:ListItem Text="Quotation" Value="Quotation"></asp:ListItem>
                                         </asp:RadioButtonList>

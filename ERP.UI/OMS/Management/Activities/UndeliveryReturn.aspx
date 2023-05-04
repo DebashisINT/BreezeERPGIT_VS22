@@ -5351,7 +5351,7 @@ var SelectedWarehouseID = "0";
          }
     </script>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -5743,7 +5743,83 @@ var SelectedWarehouseID = "0";
 
         /*Rev end 1.0*/
 
+    </style>--%>
+
+    <%--Rev 2.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+
+    <style>
+        select#ddlInventory
+        {
+            -webkit-appearance: auto !important;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 7px;
+        }
+
+        #GrdOrder
+        {
+            max-width: 98% !important;
+        }
+
+        /*span
+        {
+            font-size: 14px !important;
+        }*/
+
+        /*span#lblHeadTitle
+        {
+            font-size: 26px !important;
+            font-weight: 400 !important;
+        }*/
+
+        .simple-select::after
+        {
+            top: 28px;
+        }
+
+        .col-md-2 > label, .col-md-2 > span, .col-md-6 > span, .col-md-1 > label, .col-md-1 > span
+        {
+                margin-top: 5px;
+                font-size: 14px !important;
+        }
+
+        .cust-top-31.simple-select::after
+        {
+            top: 31px !important;
+        }
+
+        #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 18% !important;
+                top: 20% !important;
+            }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #e0e0e0;
+        }
+
+        #drdTransCategory
+        {
+
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #Popup_InlineRemarks_PW-1
+            {
+                position:fixed !important;
+                left: 15% !important;
+                top: 60px !important;
+            }
+        }
     </style>
+    <%--Rev end 2.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="JS/SearchPopup.js"></script>
@@ -6207,7 +6283,7 @@ var SelectedWarehouseID = "0";
                                                 <asp:Label ID="lbl_Rate" runat="server" Text="Exch Rate"></asp:Label>
                                                 <%--  <dxe:ASPxLabel ID="lbl_Rate" runat="server" Text="Exch Rate">
                                                 </dxe:ASPxLabel>--%>
-                                                <dxe:ASPxTextBox ID="txt_Rate" ClientInstanceName="ctxt_Rate" runat="server" TabIndex="14" Width="100%" Height="28px">
+                                                <dxe:ASPxTextBox ID="txt_Rate" ClientInstanceName="ctxt_Rate" runat="server" TabIndex="14" Width="100%" Height="30px">
                                                     <MaskSettings Mask="<0..999999999>.<0..9999>" AllowMouseWheel="false" />
                                                     <ClientSideEvents LostFocus="ReBindGrid_Currency" GotFocus="function(s,e){ctxt_Rate.ShowDropDown();}" />
                                                 </dxe:ASPxTextBox>

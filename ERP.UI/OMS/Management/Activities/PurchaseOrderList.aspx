@@ -20,7 +20,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         // End of Mantis Issue 25394
     </script>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -281,7 +281,37 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         /*Rev end 1.0*/
 
+    </style>--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GrdSalesReturn {
+            max-width: 98% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+                right: 18px;
+        }
     </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%--Rev 1.0: "outer-div-main" class add --%>
