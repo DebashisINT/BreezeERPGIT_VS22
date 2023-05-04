@@ -1,6 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================
     1.0   Priti    V2.0.36   23 - 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
-    2.0   Pallab   V2.0.36   03 - 05 - 2023    0026006: In Warehouse wise Stock Transfer, multiple coloumns are not showing in the grid when the page resolution is set at 100%
+    2.0   Pallab   V2.0.38   03 - 05 - 2023    0026006: In Warehouse wise Stock Transfer, multiple coloumns are not showing in the grid when the page resolution is set at 100%
 ========================================== End Revision History =======================================================================================================--%>
 
 
