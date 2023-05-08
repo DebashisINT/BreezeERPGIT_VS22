@@ -1,4 +1,8 @@
-﻿<%@ Page Title="Stock Transfer" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false"
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   08-05-2023      25871: Add GRN (Inter State Stock Transfer) module design modification
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Title="Stock Transfer" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false"
     CodeBehind="PurchaseChallan_OD.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseChallan_OD" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>
@@ -63,9 +67,115 @@
     </script>
     <script src="JS/PurchaseChallan_OD.js"></script>
     <link href="CSS/PurchaseChallanOD.css" rel="stylesheet" />
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        /*#grid {
+            max-width: 98% !important;
+        }*/
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate , #dt_PartyDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1 ,
+        #dt_PartyDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img ,
+        #dt_PartyDate_B-1 #dt_PartyDate_B-1Img
+        {
+            display: none;
+        }
+
+        /*select
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .calendar-icon
+        {
+                right: 20px;
+                bottom: 8px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        .col-md-2, .col-md-4 {
+    margin-bottom: 10px;
+}
+
+        .simple-select::after
+        {
+                top: 26px;
+            right: 13px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .backSelect {
+    background: #42b39e !important;
+}
+
+        #ddlInventory
+        {
+                -webkit-appearance: auto;
+        }
+
+        /*.wid-90
+        {
+            width: 100%;
+        }
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
+        {
+            width: 97%;
+        }*/
+        .newLbl
+        {
+                margin: 3px 0 !important;
+        }
+
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">
                 <asp:Label ID="lblHeading" runat="server" Text="Add GRN (Inter State Stock Transfer)"></asp:Label>
@@ -154,7 +264,7 @@
             <div id="divcross" runat="server" class="crossBtn"><a href="PurchaseChallanList_OD.aspx"><i class="fa fa-times"></i></a></div>
         </div>
     </div>
-    <div class=" form_main row">
+        <div class=" form_main row">
         <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
             <TabPages>
                 <dxe:TabPage Name="General" Text="General">
@@ -172,8 +282,9 @@
                                             <asp:ListItem Text="Capital Goods" Value="C" />
                                         </asp:DropDownList>
                                     </div>
-                                    <div class="col-md-2 lblmTop8" runat="server" id="divNumberingScheme">
-                                        <dxe:ASPxLabel ID="lbl_NumberingScheme" Width="120px" runat="server" Text="Numbering Scheme">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 lblmTop8 simple-select" runat="server" id="divNumberingScheme">
+                                        <dxe:ASPxLabel ID="lbl_NumberingScheme" Width="160px" runat="server" Text="Numbering Scheme">
                                         </dxe:ASPxLabel>
                                         <asp:DropDownList ID="ddl_numberingScheme" runat="server" Width="100%"
                                             DataTextField="SchemaName" DataValueField="ID" onchange="CmbScheme_ValueChange()">
@@ -196,8 +307,12 @@
                                             </ButtonStyle>
                                             <ClientSideEvents DateChanged="function(s, e) { GetIndentREquiNo(e)}" />
                                         </dxe:ASPxDateEdit>
+                                        <%--Rev 1.0--%>
+                                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                        <%--Rev end 1.0--%>
                                     </div>
-                                    <div class="col-md-2 lblmTop8">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 lblmTop8 simple-select">
                                         <dxe:ASPxLabel ID="lbl_Branch" runat="server" Text="To Unit">
                                         </dxe:ASPxLabel>
                                         <span style="color: red;">*</span>
@@ -205,7 +320,8 @@
                                             DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID">
                                         </asp:DropDownList>
                                     </div>
-                                    <div class="col-md-2 lblmTop8">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 lblmTop8 simple-select">
                                         <dxe:ASPxLabel ID="lbl_ToBranch" runat="server" Text="From Unit">
                                         </dxe:ASPxLabel>
                                         <span style="color: red;">*</span>
@@ -275,6 +391,9 @@
                                             <ButtonStyle Width="13px">
                                             </ButtonStyle>
                                         </dxe:ASPxDateEdit>
+                                        <%--Rev 1.0--%>
+                                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                        <%--Rev end 1.0--%>
                                     </div>
                                     <div class="col-md-2 lblmTop8">
                                         <dxe:ASPxLabel ID="ASPxLabel1" runat="server" Text="Select Stock Transfer No.">
@@ -396,7 +515,8 @@
                                         <dxe:ASPxTextBox ID="txt_Refference" runat="server" Width="100%">
                                         </dxe:ASPxTextBox>
                                     </div>
-                                    <div class="col-md-2 lblmTop8">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 lblmTop8 simple-select">
                                         <dxe:ASPxLabel ID="lbl_Currency" runat="server" Text="Currency">
                                         </dxe:ASPxLabel>
                                         <asp:DropDownList ID="ddl_Currency" runat="server" Width="100%" DataValueField="Currency_ID"
@@ -664,10 +784,10 @@
                                 </div>
                                 <div class="col-md-12" style="padding-top: 15px;">
                                     <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                    <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">
+                                    <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
                                         <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                     </dxe:ASPxButton>
-                                    <dxe:ASPxButton ID="btn_SaveRecordsExit" ClientInstanceName="cbtn_SaveRecordsExit" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">
+                                    <dxe:ASPxButton ID="btn_SaveRecordsExit" ClientInstanceName="cbtn_SaveRecordsExit" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
                                         <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
                                     </dxe:ASPxButton>
                                     <dxe:ASPxButton ID="btn_SaveRecordsUDF" ClientInstanceName="cbtn_SaveRecordsUDF" runat="server" AutoPostBack="False" Text="UDF" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">
@@ -719,7 +839,7 @@
 	                                            }"></ClientSideEvents>
         </dxe:ASPxPageControl>
     </div>
-
+    </div>
     <%-- Vendor List --%>
     <asp:SqlDataSource runat="server" ID="dsCustomer" 
         SelectCommand="prc_Purchasechallan_Details" SelectCommandType="StoredProcedure">

@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseInvoiceCumGRN.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseInvoiceCumGRN" EnableEventValidation="false" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                05-05-2023        2.0.37           Pallab              26043: Add Purchase Invoice Cum GRN module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseInvoiceCumGRN.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseInvoiceCumGRN" EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -1460,10 +1465,111 @@ function DateCheck() {
 }
     </script>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        #grid {
+            max-width: 98% !important;
+        }
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PartyDate , #dt_partyInvDt , #dt_EntryDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PartyDate_B-1 , #dt_partyInvDt_B-1 , #dt_EntryDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PartyDate_B-1 #dt_PartyDate_B-1Img , #dt_partyInvDt_B-1 #dt_partyInvDt_B-1Img, #dt_EntryDate_B-1 #dt_EntryDate_B-1Img
+        {
+            display: none;
+        }
+
+        /*select
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .calendar-icon
+        {
+                right: 20px;
+                bottom: 8px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        .col-md-2, .col-md-4 {
+    margin-bottom: 10px;
+}
+
+        .simple-select::after
+        {
+                top: 26px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .backSelect {
+    background: #42b39e !important;
+}
+
+        #ddlInventory
+        {
+                -webkit-appearance: auto;
+        }
+
+        .wid-90
+        {
+            width: 100%;
+        }
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
+        {
+            width: 97%;
+        }
+        .newLbl
+        {
+                margin: 3px 0 !important;
+        }
+
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">
                 <span class="">
@@ -1608,7 +1714,7 @@ function DateCheck() {
 
     </div>
 
-    <div class="form_main">
+        <div class="form_main">
 
 
         <div class="row">
@@ -1632,8 +1738,9 @@ function DateCheck() {
                                             </asp:DropDownList>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 lblmTop8" runat="server" id="divNumberingScheme">
-                                        <dxe:ASPxLabel ID="lbl_NumberingScheme" Width="120px" runat="server" Text="Numbering Scheme">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 lblmTop8 simple-select" runat="server" id="divNumberingScheme">
+                                        <dxe:ASPxLabel ID="lbl_NumberingScheme" Width="160px" runat="server" Text="Numbering Scheme">
                                         </dxe:ASPxLabel>
                                         <asp:DropDownList ID="ddl_numberingScheme" runat="server" Width="100%" DataSourceID="SqlSchematype" DataTextField="SchemaName" DataValueField="ID"
                                             onchange="CmbScheme_ValueChange()">
@@ -1661,9 +1768,12 @@ function DateCheck() {
                                             <ClientSideEvents DateChanged="function(s, e) { DateCheck()}" GotFocus="function(s,e){cPLQuoteDate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" />
                                         </dxe:ASPxDateEdit>
                                         <span id="MandatoryDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
-
+                                        <%--Rev 1.0--%>
+                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                    <%--Rev end 1.0--%>
                                     </div>
-                                    <div class="col-md-2 lblmTop8">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 lblmTop8 simple-select">
                                         <dxe:ASPxLabel ID="lbl_Branch" runat="server" Text="For Unit">
                                         </dxe:ASPxLabel>
                                         <span style="color: red;">*</span>
@@ -1930,7 +2040,8 @@ function DateCheck() {
                                             <ClientSideEvents GotFocus="function(s,e){cddl_cashBank.ShowDropDown();}" />
                                         </dxe:ASPxComboBox>
                                     </div>
-                                    <div class="col-md-2 lblmTop8">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 lblmTop8 simple-select">
                                         <dxe:ASPxLabel ID="lbl_Currency" runat="server" Text="Currency">
                                         </dxe:ASPxLabel>
                                         <asp:DropDownList ID="ddl_Currency" runat="server" Width="100%" onchange="ddl_Currency_Rate_Change()">
@@ -1999,7 +2110,7 @@ function DateCheck() {
                                         </dxe:ASPxComboBox>
                                     </div>
                                     <div style="clear: both;"></div>
-                                    <div class="col-md-2 mtop8">
+                                    <div class="col-md-2">
                                         <dxe:ASPxLabel ID="ASPxLabel12" runat="server" Text="E-Way Bill Number">
                                         </dxe:ASPxLabel>
                                         <%--<span style="color: red;">*</span>--%>
@@ -2034,6 +2145,9 @@ function DateCheck() {
                                             <ButtonStyle Width="13px">
                                             </ButtonStyle>
                                         </dxe:ASPxDateEdit>
+                                        <%--Rev 1.0--%>
+                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                    <%--Rev end 1.0--%>
                                     </div>
                                     <div class="col-md-2 lblmTop8">
                                         <dxe:ASPxLabel ID="ASPxLabel13" runat="server" Text="Place Of Supply[GST]">
@@ -2529,15 +2643,15 @@ function DateCheck() {
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 pt-10">
                                         <table>
                                             <tr>
                                                 <td>
                                                     <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                                    <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveNewRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                                    <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveNewRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                         <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                                     </dxe:ASPxButton>
-                                                    <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                                    <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                         <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
                                                     </dxe:ASPxButton>
                                                     <dxe:ASPxButton ID="btnSaveUdf" ClientInstanceName="cbtn_SaveUdf" runat="server" AutoPostBack="False" Text="U&#818;DF" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
@@ -4144,7 +4258,7 @@ function DateCheck() {
             <%-- <clientsideevents endcallback="panelEndCallBack" />--%>
         </dxe:ASPxCallbackPanel>
     </div>
-
+    </div>
     <%-- new Modified Hidden Tax Field--%>
     <asp:HiddenField runat="server" ID="HDItemLevelTaxDetails" />
     <asp:HiddenField runat="server" ID="HDHSNCodewisetaxSchemid" />

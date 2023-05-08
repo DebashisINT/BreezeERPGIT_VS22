@@ -1,4 +1,8 @@
-﻿<%@ Page Title="Self Purchase Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false"
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   08-05-2023      26054: Add Self Invoice module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Title="Self Purchase Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false"
     AutoEventWireup="true" CodeBehind="SelfPurchaseInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.SelfPurchaseInvoice" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VendorBillingShipping.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>
@@ -5638,10 +5642,120 @@ function ddl_AmountAre_valueChange() {
 
 
     <%--Added By : Samrat Roy -- New Billing/Shipping Section End--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        /*#grid {
+            max-width: 98% !important;
+        }*/
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate , #dt_partyInvDt, #dt_EntryDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1 ,
+        #dt_partyInvDt_B-1 , #dt_EntryDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img ,
+        #dt_partyInvDt_B-1 #dt_partyInvDt_B-1Img , #dt_EntryDate_B-1 #dt_EntryDate_B-1Img
+        {
+            display: none;
+        }
+
+        /*select
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .calendar-icon
+        {
+                right: 20px;
+                bottom: 6px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        .col-md-2, .col-md-4 {
+    margin-bottom: 10px;
+}
+
+        .simple-select::after
+        {
+                top: 26px;
+            right: 13px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .backSelect {
+    background: #42b39e !important;
+}
+
+        #ddlInventory
+        {
+                -webkit-appearance: auto;
+        }
+
+        /*.wid-90
+        {
+            width: 100%;
+        }
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
+        {
+            width: 97%;
+        }*/
+        .newLbl
+        {
+                margin: 3px 0 !important;
+        }
+
+        .lblBot > span, .lblBot > label
+        {
+                margin-bottom: 3px !important;
+        }
+
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">
                 <span class="">
@@ -5788,7 +5902,7 @@ function ddl_AmountAre_valueChange() {
 
     </div>
 
-    <div class="form_main">
+        <div class="form_main">
 
         <div class="row">
             <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
@@ -5809,10 +5923,10 @@ function ddl_AmountAre_valueChange() {
 
                                         </div>
                                     </div>
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 simple-select" runat="server" id="divNumberingScheme">
 
-                                    <div class="col-md-2" runat="server" id="divNumberingScheme">
-
-                                        <dxe:ASPxLabel ID="lbl_NumberingScheme" Width="120px" runat="server" Text="Numbering Scheme">
+                                        <dxe:ASPxLabel ID="lbl_NumberingScheme" Width="160px" runat="server" Text="Numbering Scheme">
                                         </dxe:ASPxLabel>
                                         <asp:DropDownList ID="ddl_numberingScheme" runat="server" Width="100%" DataSourceID="SqlSchematype" DataTextField="SchemaName" DataValueField="ID"
                                             onchange="CmbScheme_ValueChange()">
@@ -5843,9 +5957,12 @@ function ddl_AmountAre_valueChange() {
                                             <ClientSideEvents DateChanged="function(s, e) { DateCheck()}" GotFocus="function(s,e){cPLQuoteDate.ShowDropDown();}" />
                                         </dxe:ASPxDateEdit>
                                         <span id="MandatoryDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
-
+                                        <%--Rev 1.0--%>
+                                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                        <%--Rev end 1.0--%>
                                     </div>
-                                    <div class="col-md-2">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 simple-select">
                                         <dxe:ASPxLabel ID="lbl_Branch" runat="server" Text="for Unit">
                                         </dxe:ASPxLabel>
                                         <span style="color: red;">*</span>
@@ -5972,6 +6089,9 @@ function ddl_AmountAre_valueChange() {
                                                     <span id="MandatoryPartyDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                                     <span id="MandatoryEgSDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Party Invoice Date can not be greater than Invoice Date"></span>
                                                     <%--                                            <span id="MandatoryDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>--%>
+                                                    <%--Rev 1.0--%>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <%--Rev end 1.0--%>
                                                 </div>
 
                                             </dxe:PanelContent>
@@ -6137,8 +6257,8 @@ function ddl_AmountAre_valueChange() {
                                             <ClientSideEvents GotFocus="function(s,e){cddl_cashBank.ShowDropDown();}" />
                                         </dxe:ASPxComboBox>
                                     </div>
-
-                                    <div class="col-md-2 lblmTop8">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 lblmTop8 simple-select">
 
                                         <dxe:ASPxLabel ID="lbl_Currency" runat="server" Text="Currency">
                                         </dxe:ASPxLabel>
@@ -6248,6 +6368,9 @@ function ddl_AmountAre_valueChange() {
                                             </ButtonStyle>
 
                                         </dxe:ASPxDateEdit>
+                                        <%--Rev 1.0--%>
+                                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                        <%--Rev end 1.0--%>
                                     </div>
                                     <%-- New Modification For Entry Date on 15022018 by Sam Section End--%>
 
@@ -6650,10 +6773,10 @@ function ddl_AmountAre_valueChange() {
                                     <%-- id="divSubmitButton" runat="server"--%>
                                     <div class="col-md-12 padTop10">
                                         <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                        <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveNewRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                        <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveNewRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                             <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                         </dxe:ASPxButton>
-                                        <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="Save & E&#818;xit" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                        <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="Save & E&#818;xit" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                             <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
                                         </dxe:ASPxButton>
                                         <dxe:ASPxButton ID="btnSaveUdf" ClientInstanceName="cbtn_SaveUdf" runat="server" AutoPostBack="False" Text="U&#818;DF" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
@@ -8178,7 +8301,7 @@ function ddl_AmountAre_valueChange() {
             <%-- <clientsideevents endcallback="panelEndCallBack" />--%>
         </dxe:ASPxCallbackPanel>
     </div>
-
+    </div>
     <%-- new Modified Hidden Tax Field--%>
     <asp:HiddenField runat="server" ID="HDItemLevelTaxDetails" />
     <asp:HiddenField runat="server" ID="HDHSNCodewisetaxSchemid" />

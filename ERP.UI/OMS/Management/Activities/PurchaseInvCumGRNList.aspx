@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseInvCumGRNList.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseInvCumGRNList" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                05-05-2023        2.0.37           Pallab              26042: Purchase Invoice Cum GRN module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseInvCumGRNList.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseInvCumGRNList" %>
 
 
 
@@ -30,32 +35,71 @@
     </script>
     <script src="JS/PurchaseInvCumGrnList.js?v=1.31"></script>
     <link href="CSS/PurchaseInvoiceList.css" rel="stylesheet" />
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GrdQuotation {
+            max-width: 98% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+                right: 18px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
         <ClientSideEvents ControlsInitialized="AllControlInitilize" />
     </dxe:ASPxGlobalEvents>
-    <div class="panel-heading clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading clearfix">
         <div class="panel-title pull-left">
             <h3>Purchase Invoice Cum GRN</h3>
         </div>
         <table class="padTab pull-right">
             <tr>
                 <td>From </td>
-                <td style="width: 150px">
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td style="width: 150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="FormDate" runat="server" OnInit="FormDate_Init" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </td>
                 <td>To 
                 </td>
-                <td style="width: 150px">
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td style="width: 150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="toDate" runat="server" OnInit="toDate_Init" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
-
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </td>
                 <td>Unit</td>
                 <td>
@@ -70,22 +114,22 @@
 
         </table> 
     </div>
-    <%--Code Added by Sam For Filteration Section Start--%>
+        <%--Code Added by Sam For Filteration Section Start--%>
 
-    <%--Code Added by Sam For Filteration Section Start--%>
+        <%--Code Added by Sam For Filteration Section Start--%>
 
 
 
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix">
             <% if (rights.CanAdd)
                { %>
             <%--<a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-primary"><span> <u>A</u>dd New</span> </a>--%>
-            <a href="javascript:void(0);" onclick="OnAddInventoryButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>I</u>nventory</a>
-            <a href="javascript:void(0);" onclick="OnAddNonInventoryButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>N</u>on Inventory </a>
-            <a href="javascript:void(0);" onclick="OnAddCapitalButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>C</u>apital Goods</a>
-            <a href="javascript:void(0);" onclick="OnAddBothButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>B</u>oth</a>
-            <a href="javascript:void(0);" onclick="OnAddServiceButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>S</u>ervice </a>
+            <a href="javascript:void(0);" onclick="OnAddInventoryButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>I</u>nventory</a>
+            <a href="javascript:void(0);" onclick="OnAddNonInventoryButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>N</u>on Inventory </a>
+            <a href="javascript:void(0);" onclick="OnAddCapitalButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>C</u>apital Goods</a>
+            <a href="javascript:void(0);" onclick="OnAddBothButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>B</u>oth</a>
+            <a href="javascript:void(0);" onclick="OnAddServiceButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span>Add <u>S</u>ervice </a>
             <%} %>
             <% if (rights.CanExport)
                { %>
@@ -114,10 +158,10 @@
 
         </div>
     </div>
-
-      <div id="spnEditLock" runat="server" style="display:none; color:red;text-align:center"></div>
-     <div id="spnDeleteLock" runat="server" style="display:none; color:red;text-align:center"></div>
-    <div class="GridViewArea relative">
+        
+        <div id="spnEditLock" runat="server" style="display:none; color:red;text-align:center"></div>
+        <div id="spnDeleteLock" runat="server" style="display:none; color:red;text-align:center"></div>
+        <div class="GridViewArea relative">
         
     <div class="makeFullscreen ">
          <span class="fullScreenTitle">Purchase Indent/Requisition</span>
@@ -328,6 +372,7 @@
         <dx:LinqServerModeDataSource ID="EntityServerModeDataSource" runat="server" OnSelecting="EntityServerModeDataSource_Selecting"
             ContextTypeName="ERPDataClassesDataContext" TableName="v_PBChallanList" />
         <asp:HiddenField ID="hiddenedit" runat="server" />
+    </div>
     </div>
     </div>
     <div style="display: none">

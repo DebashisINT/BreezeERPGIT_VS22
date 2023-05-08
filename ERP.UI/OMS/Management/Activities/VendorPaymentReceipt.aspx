@@ -331,52 +331,24 @@ function Currency_Rate() {
 
     </script>
 
-    <style>
-        /*Rev 1.0*/
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
         select
         {
-            height: 30px !important;
-            border-radius: 4px !important;
-            -webkit-appearance: none;
-            position: relative;
             z-index: 1;
-            background-color: transparent;
-            padding-left: 10px !important;
-            padding-right: 22px !important;
         }
 
-        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
-        {
-            height: 30px;
-            border-radius: 4px;
+        #grid {
+            max-width: 98% !important;
         }
-
-        .dxeButtonEditButton_PlasticBlue
-        {
-            background: #094e8c !important;
-            border-radius: 4px !important;
-            padding: 0 4px !important;
-        }
-
-        .calendar-icon {
-            position: absolute;
-            bottom: 6px;
-            right: 20px;
-            z-index: 0;
-            cursor: pointer;
-        }
-
         #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate , #dtChallandate
         {
             position: relative;
             z-index: 1;
             background: transparent;
-        }
-
-        .dxeDisabled_PlasticBlue
-        {
-            z-index: 0 !important;
         }
 
         #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1 ,
@@ -395,395 +367,74 @@ function Currency_Rate() {
             display: none;
         }
 
-        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        /*select
         {
-            background: #1b5ea4 !important;
-        }
-
-        .simple-select::after {
-            /*content: '<';*/
-            content: url(../../../assests/images/left-arw.png);
-            position: absolute;
-            top: 6px;
-            right: -2px;
-            font-size: 16px;
-            transform: rotate(269deg);
-            font-weight: 500;
-            background: #094e8c;
-            color: #fff;
-            height: 18px;
-            display: block;
-            width: 26px;
-            /* padding: 10px 0; */
-            border-radius: 4px;
-            text-align: center;
-            line-height: 18px;
-            z-index: 0;
-        }
-        .simple-select {
-            position: relative;
-                z-index: 0;
-        }
-        .simple-select:disabled::after
-        {
-            background: #1111113b;
-        }
-        select.btn
-        {
-            padding-right: 10px !important;
-        }
-
-        .panel-group .panel
-        {
-            box-shadow: 1px 1px 8px #1111113b;
-            border-radius: 8px;
-        }
-
-        .dxpLite_PlasticBlue .dxp-current
-        {
-            background-color: #1b5ea4;
-            padding: 3px 5px;
-            border-radius: 2px;
-        }
-
-        #accordion {
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
-
-        .dxgvHeader_PlasticBlue {
-    background: #1b5ea4 !important;
-    color: #fff !important;
-}
-        #ShowGrid
-        {
-            margin-top: 10px;
-        }
-
-        .pt-25{
-                padding-top: 25px !important;
-        }
-
-        .styled-checkbox {
-        position: absolute;
-        opacity: 0;
-        z-index: 1;
-    }
-
-        .styled-checkbox + label {
-            position: relative;
-            /*cursor: pointer;*/
-            padding: 0;
-            margin-bottom: 0 !important;
-        }
-
-            .styled-checkbox + label:before {
-                content: "";
-                margin-right: 6px;
-                display: inline-block;
-                vertical-align: text-top;
-                width: 16px;
-                height: 16px;
-                /*background: #d7d7d7;*/
-                margin-top: 2px;
-                border-radius: 2px;
-                border: 1px solid #c5c5c5;
-            }
-
-        .styled-checkbox:hover + label:before {
-            background: #094e8c;
-        }
-
-
-        .styled-checkbox:checked + label:before {
-            background: #094e8c;
-        }
-
-        .styled-checkbox:disabled + label {
-            color: #b8b8b8;
-            cursor: auto;
-        }
-
-            .styled-checkbox:disabled + label:before {
-                box-shadow: none;
-                background: #ddd;
-            }
-
-        .styled-checkbox:checked + label:after {
-            content: "";
-            position: absolute;
-            left: 3px;
-            top: 9px;
-            background: white;
-            width: 2px;
-            height: 2px;
-            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
-            transform: rotate(45deg);
-        }
-
-        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
-        {
-            padding: 6px 6px 6px !important;
-        }
-
-        #lookupCardBank_DDD_PW-1
-        {
-                left: -182px !important;
-        }
-        .plhead a>i
-        {
-                top: 9px;
-        }
-
-        .clsTo
-        {
-            display: flex;
-    align-items: flex-start;
-        }
-
-        input[type="radio"], input[type="checkbox"]
-        {
-            margin-right: 5px;
-        }
-        .dxeCalendarDay_PlasticBlue
-        {
-                padding: 6px 6px;
-        }
-
-        .modal-dialog
-        {
-            width: 50%;
-        }
-
-        .modal-header
-        {
-            padding: 8px 4px 8px 10px;
-            background: #094e8c !important;
-        }
-
-        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #ShowGridLocationwiseStockStatus 
-        
-        {
-            max-width: 98% !important;
-        }
-
-        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
-        {
-            width: 95% !important;
+            -webkit-appearance: auto;
         }*/
 
-        .btn-info
+        .calendar-icon
         {
-                background-color: #1da8d1 !important;
-                background-image: none;
+                right: 20px;
+                bottom: 8px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
         }
 
-        .for-cust-icon {
-            position: relative;
-            z-index: 1;
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
         }
 
-        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        .col-md-2, .col-md-4 {
+    margin-bottom: 10px;
+}
+
+        .simple-select::after
+        {
+                top: 6px;
+            right: -2px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
         {
             background: #f3f3f3 !important;
         }
 
-        .dxeButtonDisabled_PlasticBlue
-        {
-            background: #b5b5b5 !important;
-            border-color: #b5b5b5 !important;
-        }
-
-        #ddlValTech
-        {
-            width: 100% !important;
-            margin-bottom: 0 !important;
-        }
-
-        .dis-flex
-        {
-            display: flex;
-            align-items: baseline;
-        }
-
-        input + label
-        {
-            line-height: 1;
-                margin-top: 3px;
-        }
-
-        .dxtlHeader_PlasticBlue
-        {
-            background: #094e8c !important;
-        }
-
-        .dxeBase_PlasticBlue .dxichCellSys
-        {
-            padding-top: 2px !important;
-        }
-
-        .pBackDiv
-        {
-            border-radius: 10px;
-            box-shadow: 1px 1px 10px #1111112e;
-        }
-        .HeaderStyle th
-        {
-            padding: 5px;
-        }
-
-        .for-cust-icon {
-            position: relative;
-            z-index: 1;
-        }
-
-        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
-        {
-            padding-top: 15px;
-        }
-
-        .pb-10
-        {
-            padding-bottom: 10px;
-        }
-
-        .pTop10 {
-    padding-top: 20px;
+        .backSelect {
+    background: #42b39e !important;
 }
-        .custom-padd
+
+        #ddlInventory
         {
-            padding-top: 4px;
-    padding-bottom: 10px;
+                -webkit-appearance: auto;
         }
 
-        input + label
-        {
-                margin-right: 10px;
-        }
-
-        .btn
-        {
-            margin-bottom: 0;
-        }
-
-        .pl-10
-        {
-            padding-left: 10px;
-        }
-
-        /*.col-md-3>label, .col-md-3>span
-        {
-            margin-top: 0 !important;
-        }*/
-
-        .devCheck
-        {
-            margin-top: 5px;
-        }
-
-        .mtc-5
-        {
-            margin-top: 5px;
-        }
-
-        #txtProdSearch
-        {
-            margin-bottom: 10px;
-        }
-
-        select.btn
-        {
-           position: relative;
-           z-index: 0;
-        }
-
-        select
-        {
-            margin-bottom: 0;
-        }
-
-        .form-control
-        {
-            background-color: transparent;
-        }
-
-        #massrecdt
+        /*.wid-90
         {
             width: 100%;
         }
-
-        .col-sm-3 , .col-md-3 , .col-md-2 , #txtSalesManSearch{
-            margin-bottom: 10px;
-        }
-
-        .crossBtn
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
         {
-            top: 25px;
-                right: 25px;
-        }
-
-        input[type="text"], input[type="password"], textarea
-        {
-                margin-bottom: 0;
-        }
-
-        .typeNotification span
-        {
-             color: #ffffff !important;
-        }
-
-        #rdl_Salesquotation
-        {
-            margin-top: 8px;
-    line-height: 20px;
-        }
-
-        /*#ASPxLabel8
-        {
-            line-height: 16px;
+            width: 97%;
         }*/
-
-        .lblmTop8>span, .lblmTop8>label
+        .newLbl
         {
-                margin-top: 0 !important;
+                margin: 3px 0 !important;
         }
 
-        #OFDBankSelect
-        {
-            height: 30px;
-            border-radius: 4px;
-        }
-
-        .mt-28{
-            margin-top: 28px;
-        }
-
-        .mb-10{
-            margin-bottom: 10px;
-        }
-
-        .col-md-3>label, .col-md-3>span
-        {
-            margin-top: 0;
-        }
-
-        .backSelect
-        {
-            background: #42b39e !important;
-        }
-
-        @media only screen and (max-width: 1380px) and (min-width: 1300px)
-        {
-            #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #DocumentpopUp_PW-1
-            {
-                position:fixed !important;
-                left: 13% !important;
-                top: 60px !important;
-            }
-        }
-
-        /*Rev end 1.0*/
-        </style>
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%--Rev 1.0: "outer-div-main" class add --%>
