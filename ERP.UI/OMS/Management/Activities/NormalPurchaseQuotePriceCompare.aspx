@@ -287,7 +287,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
     </style>
 
-    <style>
+    <%--<style>
         /*Rev 1.0*/
 
         select
@@ -529,7 +529,52 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         /*Rev end 1.0*/
 
+    </style>--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GrdSalesReturn {
+            max-width: 98% !important;
+        }
+        #FormDate , #toDate , #ASPxDateEditFrom , #ASPxDateEditTo , #FFromDate , #FToDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #ASPxDateEditFrom_B-1 , #ASPxDateEditTo_B-1 , #FFromDate_B-1 , #FToDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #ASPxDateEditFrom_B-1 #ASPxDateEditFrom_B-1Img , #ASPxDateEditTo_B-1 #ASPxDateEditTo_B-1Img ,
+        #FFromDate_B-1 #FFromDate_B-1Img , #FToDate_B-1 #FToDate_B-1Img
+        {
+            display: none;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+                right: 18px;
+        }
     </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%--Rev 1.0: "outer-div-main" class add --%>

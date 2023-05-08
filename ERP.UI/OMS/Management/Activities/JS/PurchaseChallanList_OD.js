@@ -217,7 +217,41 @@ function gridRowclick(s, e) {
             }, 100);
         });
     }, 200);
-}
+};
+
+$(document).ready(function () {
+    //Toggle fullscreen expandEntryGrid
+    $("#expandEntryGrid").click(function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.children('i').hasClass('fa-expand')) {
+            $this.removeClass('hovered half').addClass('full');
+            $this.attr('title', 'Minimize Grid');
+            $this.children('i').removeClass('fa-expand');
+            $this.children('i').addClass('fa-arrows-alt');
+            var gridId = $(this).attr('data-instance');
+            $(this).closest('.makeFullscreen').addClass('panel-fullscreen');
+            var cntWidth = $(this).parent('.makeFullscreen').width();
+            var browserHeight = document.documentElement.clientHeight;
+            var browserWidth = document.documentElement.clientWidth;
+            CgvPurchaseOrder.SetHeight(browserHeight - 150);
+            CgvPurchaseOrder.SetWidth(cntWidth);
+        }
+        else if ($this.children('i').hasClass('fa-arrows-alt')) {
+            $this.children('i').removeClass('fa-arrows-alt');
+            $this.removeClass('full').addClass('hovered half');
+            $this.attr('title', 'Maximize Grid');
+            $this.children('i').addClass('fa-expand');
+            var gridId = $(this).attr('data-instance');
+            $(this).closest('.makeFullscreen').removeClass('panel-fullscreen');
+            var browserHeight = document.documentElement.clientHeight;
+            var browserWidth = document.documentElement.clientWidth;
+            CgvPurchaseOrder.SetHeight(300);
+            var cntWidth = $this.parent('.makeFullscreen').width();
+            CgvPurchaseOrder.SetWidth(cntWidth);
+        }
+    });
+});
 
     $(document).ready(function () {
         if ($('body').hasClass('mini-navbar')) {

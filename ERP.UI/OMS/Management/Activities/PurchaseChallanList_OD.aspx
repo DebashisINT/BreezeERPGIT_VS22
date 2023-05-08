@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseChallanList_OD.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseChallanList_OD" %>
+﻿<%--=======================================================Revision History=======================================    
+    1.0   Pallab    V2.0.38   08-05-2023      25870: GRN (Inter State Stock Transfer) module design modification & check in small device
+=========================================================End Revision History=====================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseChallanList_OD.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseChallanList_OD" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -30,9 +34,41 @@
 }
 </style>
 <script src="JS/PurchaseChallanList_OD.js"></script>
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #Grid_PurchaseChallan {
+            max-width: 98% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 18px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading clearfix">
         <div class="panel-title pull-left" id="td_contact1" runat="server">
             <h3>
                 <asp:Label ID="lblHeadTitle" runat="server" Text="GRN (Inter State Stock Transfer)"></asp:Label>
@@ -42,20 +78,28 @@
             <tr>
                 <td>
                     <label>From Date</label></td>
-                <td>
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </td>
                 <td>
                     <label>To Date</label>
                 </td>
-                <td>
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </td>
                 <td>Unit</td>
                 <td>
@@ -70,18 +114,18 @@
 
         </table>
     </div>
-    <div class="form_main clearfix" id="btnAddNew">
-        <div style="float: left; padding-right: 5px;">
+        <div class="form_main clearfix" id="btnAddNew">
+        <div style="float: left; padding-right: 5px;" class="mb-10">
             <% if (rights.CanAdd)
                { %>
-            <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success btn-radius">
+            <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success ">
                 <span class="btn-icon"><i class="fa fa-plus" ></i></span>
                 <span><u>A</u>dd New</span> </a>
             <% } %>
 
             <% if (rights.CanExport)
                { %>
-            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
                 <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -112,7 +156,7 @@
         </div>
     </div>
 
-    <div class="relative">
+        <div class="relative">
         <div class="makeFullscreen ">
      <span class="fullScreenTitle">Purchase Indent/Requisition</span>
      <span class="makeFullscreen-icon half hovered " data-instance="InsgridBatch" title="Maximize Grid" id="expandEntryGrid">
@@ -240,7 +284,7 @@
         </dxe:ASPxGridViewExporter>
     </div>
     </div>
-
+    </div>
     <%--DEBASHIS--%>
     <div class="PopUpArea">
         <dxe:ASPxPopupControl ID="ASPxDocumentsPopup" runat="server" ClientInstanceName="cDocumentsPopup"

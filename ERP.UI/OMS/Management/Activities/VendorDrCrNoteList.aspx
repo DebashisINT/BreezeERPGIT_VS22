@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorDrCrNoteList.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorDrCrNoteList" %>
+﻿<%--=======================================================Revision History=======================================    
+    1.0   Pallab    V2.0.38   20-04-2023      26044: Vendor Credit/Debit Note module design modification & check in small device
+=========================================================End Revision History=====================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorDrCrNoteList.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorDrCrNoteList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -13,9 +17,41 @@
         }
     </style>
     <script src="JS/VendorDrCrNoteList.js"></script>
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GvJvSearch {
+            max-width: 98% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+                right: 10px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading clearfix">
         <div class="panel-title  pull-left">
             <h3 class="clearfix ">
                 <asp:Label ID="lblHeading" runat="server" Text="Vendor Credit/Debit Note"></asp:Label>
@@ -25,20 +61,28 @@
                     <tr>
                         <td>
                             <label>From Date</label></td>
-                        <td>
+                        <%--Rev 1.0: "for-cust-icon" class add --%>
+                        <td class="for-cust-icon">
                             <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                                 <ButtonStyle Width="13px">
                                 </ButtonStyle>
                             </dxe:ASPxDateEdit>
+                            <%--Rev 1.0--%>
+                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                            <%--Rev end 1.0--%>
                         </td>
                         <td>
                             <label>To Date</label>
                         </td>
-                        <td>
+                        <%--Rev 1.0: "for-cust-icon" class add --%>
+                        <td class="for-cust-icon">
                             <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                                 <ButtonStyle Width="13px">
                                 </ButtonStyle>
                             </dxe:ASPxDateEdit>
+                            <%--Rev 1.0--%>
+                            <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                            <%--Rev end 1.0--%>
                         </td>
                         <td>Unit</td>
                         <td>
@@ -53,21 +97,21 @@
 
                 </table>
     </div>
-    <div class="form_main rgth pull-left full">
+        <div class="form_main rgth pull-left full">
 
         <div class="clearfix">
-            <div style="padding-right: 5px;">
+            <div style="padding-right: 5px;" class="mb-10">
                 <span id="divAddButton">
                      <% if (rights.CanAdd)
                            { %>
-                    <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i> </span><span><u>A</u>dd New</span> </a>
+                    <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i> </span><span><u>A</u>dd New</span> </a>
                      <% } %>
                 </span>
                 <span id="divExportto">
                     <% if (rights.CanExport)
                            { %>
 
-                    <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+                    <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                         <asp:ListItem Value="0">Export to</asp:ListItem>
                         <asp:ListItem Value="1">PDF</asp:ListItem>
                         <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -250,7 +294,7 @@
             </div>
         </div>
     </div>
-
+    </div>
     <dxe:ASPxGridViewExporter ID="exporter" runat="server" Landscape="false" PaperKind="A3" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
     </dxe:ASPxGridViewExporter>
 
