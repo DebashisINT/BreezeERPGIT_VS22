@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PReturn.aspx.cs" EnableViewStateMac="false" EnableEventValidation="false" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.PReturn" %>
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   09-05-2023      26060: Add Purchase Return Request module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PReturn.aspx.cs" EnableViewStateMac="false" EnableEventValidation="false" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.PReturn" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 
 <%@ OutputCache Duration='5' VaryByParam="ID" %>
@@ -1038,16 +1042,152 @@
 
   </script>
 
-   
-    
-    
-
-    
     
     <%--Batch Product Popup End--%>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        /*#grid {
+            max-width: 98% !important;
+        }*/
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dtPostingDate , #dt_partyInvDt, #dt_EntryDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dtPostingDate_B-1 ,
+        #dt_partyInvDt_B-1 , #dt_EntryDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dtPostingDate_B-1 #dtPostingDate_B-1Img ,
+        #dt_partyInvDt_B-1 #dt_partyInvDt_B-1Img , #dt_EntryDate_B-1 #dt_EntryDate_B-1Img
+        {
+            display: none;
+        }
+
+        /*select
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .calendar-icon
+        {
+                right: 18px;
+                bottom: 6px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        .col-md-2, .col-md-4 {
+    margin-bottom: 10px;
+}
+
+        .simple-select::after
+        {
+                top: 26px;
+            right: 13px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .backSelect {
+    background: #42b39e !important;
+}
+
+        #ddlInventory
+        {
+                -webkit-appearance: auto;
+        }
+
+        /*.wid-90
+        {
+            width: 100%;
+        }
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
+        {
+            width: 97%;
+        }*/
+        .newLbl
+        {
+                margin: 3px 0 !important;
+        }
+
+        .lblBot > span, .lblBot > label
+        {
+                margin-bottom: 3px !important;
+        }
+
+        .col-md-2 > label, .col-md-2 > span, .col-md-1 > label, .col-md-1 > span
+        {
+            margin-top: 4px;
+            font-size: 14px;
+        }
+
+        .col-md-6 span
+        {
+            font-size: 14px;
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12
+            {
+                 padding-right: 10px;
+                 padding-left: 10px;
+            }
+            .simple-select::after
+        {
+                top: 26px;
+            right: 8px;
+        }
+            .calendar-icon
+        {
+                right: 14px;
+                bottom: 6px;
+        }
+        }
+
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-title clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-title clearfix">
         <h3 class="pull-left">
             <asp:Label ID="lblHeadTitle" Text="" runat="server"></asp:Label>
 
@@ -1180,7 +1320,7 @@
         <div id="divcross" runat="server" class="crossBtn"><a href="PReturnList.aspx"><i class="fa fa-times"></i></a></div>
 
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <asp:Panel ID="pnl_quotation" runat="server">
             <div class="">
                 <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
@@ -1189,8 +1329,9 @@
                             <ContentCollection>
                                 <dxe:ContentControl runat="server">
                                     <div class="">
-                                        <div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix col-md-12">
-                                            <div class="col-md-2" id="divScheme" runat="server">
+                                        <div style=" padding: 8px 0; margin-bottom: 0px; border-radius: 4px; " class="clearfix col-md-12">
+                                            <%--Rev 1.0: "simple-select" class add --%>
+                                            <div class="col-md-2 simple-select" id="divScheme" runat="server">
 
                                                 <asp:Label ID="lbl_NumberingScheme" runat="server" Text="Numbering Scheme"></asp:Label>
                                                 <asp:DropDownList ID="ddl_numberingScheme" runat="server" Width="100%" TabIndex="1">
@@ -1217,8 +1358,12 @@
                                                     <ButtonStyle Width="13px">
                                                     </ButtonStyle>
                                                 </dxe:ASPxDateEdit>
+                                                <%--Rev 1.0--%>
+                                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                <%--Rev end 1.0--%>
                                             </div>
-                                            <div class="col-md-2">
+                                            <%--Rev 1.0: "simple-select" class add --%>
+                                            <div class="col-md-2 simple-select">
                                                 <asp:Label ID="lbl_Branch" runat="server" Text="Unit"></asp:Label>
 
                                                 <asp:DropDownList ID="ddl_Branch" runat="server" Width="100%" TabIndex="4" onchange="onBranchItems()">
@@ -1255,7 +1400,9 @@
                                                     <ClientSideEvents TextChanged="function(s, e) { cmbRequestTextChange()}"></ClientSideEvents>
                                                 </dxe:ASPxComboBox>
                                             </div>
-                                            <div class="col-md-2">
+
+                                            <%--Rev 1.0: "simple-select" class add --%>
+                                            <div class="col-md-2 simple-select">
 
                                                 <asp:Label ID="ASPxLabel8" runat="server" Text="Stock Out Unit"></asp:Label>
                                                 <asp:DropDownList ID="ddl_StockOutBranch" runat="server" Width="100%" TabIndex="4">
@@ -1275,7 +1422,7 @@
                                             </div>
 
                                             <div class="col-md-2">
-                                                <asp:RadioButtonList ID="rdl_PurchaseInvoice" runat="server" RepeatDirection="Horizontal" TabIndex="9" onchange="return selectValue();" Width="120px">
+                                                <asp:RadioButtonList ID="rdl_PurchaseInvoice" runat="server" RepeatDirection="Horizontal" TabIndex="9" onchange="return selectValue();" Width="160px">
                                                     <asp:ListItem Text="Purchase Invoice" Value="SIN"></asp:ListItem>
                                                 </asp:RadioButtonList>
 
@@ -1427,7 +1574,8 @@
                                                 </dxe:ASPxDateEdit>
                                             </div>
 
-                                            <div class="col-md-1">
+                                            <%--Rev 1.0: "simple-select" class add --%>
+                                            <div class="col-md-1 simple-select">
                                                 <asp:Label ID="lbl_Currency" runat="server" Text="Currency"></asp:Label>
                                                 <%-- <dxe:ASPxLabel ID="lbl_Currency" runat="server" Text="Currency">
                                                 </dxe:ASPxLabel>--%>
@@ -1934,10 +2082,10 @@
                                         <br />
                                         <div class="clearfix" id="divSubmitButton" runat="server">
                                             <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" UseSubmitBehavior="False" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">
+                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" UseSubmitBehavior="False" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
                                                 <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                             </dxe:ASPxButton>
-                                            <dxe:ASPxButton ID="ASPxButton2" ClientInstanceName="cbtn_SaveRecords" runat="server" UseSubmitBehavior="False" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">
+                                            <dxe:ASPxButton ID="ASPxButton2" ClientInstanceName="cbtn_SaveRecords" runat="server" UseSubmitBehavior="False" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
                                                 <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
                                             </dxe:ASPxButton>
                                             <%--   <asp:Button ID="ASPxButton2" runat="server" Text="UDF" CssClass="btn btn-primary" OnClientClick="if(OpenUdf()){ return false;}" />--%>
@@ -3177,7 +3325,7 @@
             <%--Debu Section End--%>
         </asp:Panel>
     </div>
-
+    </div>
 
     <script type="text/javascript">
 

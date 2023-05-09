@@ -1,4 +1,7 @@
-﻿
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   09-05-2023      26060: Add Purchase Return Request module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
 <%@ Page Title="BranchRequisitionReturn" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BranchRequisitionReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.BranchRequisitionReturn" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -1632,9 +1635,127 @@ function ProductsGotFocusFromID(s, e) {
     </script>
     <link href="CSS/BranchRequisitionReturn.css" rel="stylesheet" />
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        /*#grid {
+            max-width: 98% !important;
+        }*/
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #tDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #tDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #tDate_B-1 #tDate_B-1Img
+        {
+            display: none;
+        }
+
+        /*select
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .calendar-icon
+        {
+            right: 20px;
+            bottom: -23px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        .col-md-2, .col-md-4 {
+            margin-bottom: 10px;
+        }
+
+        .simple-select::after
+        {
+            top: 6px;
+            right: -2px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .backSelect {
+            background: #42b39e !important;
+        }
+
+        #ddlInventory
+        {
+                -webkit-appearance: auto;
+        }
+
+        /*.wid-90
+        {
+            width: 100%;
+        }
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
+        {
+            width: 97%;
+        }*/
+        .newLbl
+        {
+                margin: 3px 0 !important;
+        }
+
+        .lblBot > span, .lblBot > label
+        {
+                margin-bottom: 3px !important;
+        }
+
+        .col-md-3>label, .col-md-3>span
+        {
+                margin-top: 0px;
+        }
+
+        #txtVendorName
+        {
+                width: 100%;
+        }
+
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left"><span class="">
                 <asp:Label ID="lblHeading" runat="server" Text="Add Purchase Return Request"></asp:Label></span>
@@ -1710,8 +1831,8 @@ function ProductsGotFocusFromID(s, e) {
         </div>
 
     </div>
-    <div id="DivEntry">
-        <div style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+        <div id="DivEntry">
+        <div style=" padding: 8px 0; margin-bottom: 15px; border-radius: 4px;" class="clearfix">
             <div class="col-md-2 lblmTop8" id="divNumberingScheme" runat="server">
                 <label style="">Numbering Scheme</label>
                 <div>
@@ -1744,12 +1865,16 @@ function ProductsGotFocusFromID(s, e) {
                         <ClientSideEvents DateChanged="function(s,e){TDateChange();}" GotFocus="function(s,e){ctDate.ShowDropDown();}"></ClientSideEvents>
                         <ValidationSettings RequiredField-IsRequired="true" ErrorFrameStyle-CssClass="absolute"></ValidationSettings>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </div>
             </div>
             <div class="col-md-3">
 
                 <label>From Unit</label>
-                <div>
+                <%--Rev 1.0: "simple-select" class add --%>
+                <div class="simple-select">
                     <asp:DropDownList ID="ddlBranch" runat="server" DataSourceID="dsBranch" onchange="ddlBranchFor_SelectedIndexChanged()"
                         DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID" Width="100%">
                     </asp:DropDownList>
@@ -1928,14 +2053,14 @@ function ProductsGotFocusFromID(s, e) {
                     <td>
                         <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
                         <dxe:ASPxButton ID="btnnew" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & N&#818;ew"
-                            CssClass="btn btn-primary"
+                            CssClass="btn btn-success"
                             meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                             <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                         </dxe:ASPxButton>
 
                     </td>
                     <td>
-                        <dxe:ASPxButton ID="btnSaveExit" ClientInstanceName="cbtn_SaveRecordsExit" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-primary"
+                        <dxe:ASPxButton ID="btnSaveExit" ClientInstanceName="cbtn_SaveRecordsExit" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success"
                             meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                             <ClientSideEvents Click="function(s, e) {SaveExitButtonClick();}" />
                         </dxe:ASPxButton>
@@ -2258,6 +2383,7 @@ function ProductsGotFocusFromID(s, e) {
             </dxe:ASPxPopupControl>
         </div>
 
+    </div>
     </div>
     <div id="HiddenField">
         <asp:HiddenField ID="hdnRefreshType" runat="server" />
