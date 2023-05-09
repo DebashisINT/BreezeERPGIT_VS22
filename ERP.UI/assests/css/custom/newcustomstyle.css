@@ -398,8 +398,12 @@ input[type="text"], input[type="password"], textarea {
     width: 100%;
 }
 
+.txtQuantity {
+    height: 30px !important;
+}
+
 @media only screen and (max-width: 1380px) and (min-width: 1300px) {
-    #Popup_MultiUOM_PW-1, #Popup_Warehouse_PW-1, #Popup_Taxes_PW-1, #aspxTaxpopUp_PW-1, #Popup_InlineRemarks_PW-1, #popupBillDsep_PW-1, #popup_taggingGrid_PW-1 {
+    #Popup_MultiUOM_PW-1, #Popup_Warehouse_PW-1, #Popup_Taxes_PW-1, #aspxTaxpopUp_PW-1, #Popup_InlineRemarks_PW-1, #popupBillDsep_PW-1, #popup_taggingGrid_PW-1, #ProductpopUp_PW-1 {
         position: fixed !important;
         left: 13% !important;
         top: 60px !important;
