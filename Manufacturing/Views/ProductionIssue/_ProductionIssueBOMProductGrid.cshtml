@@ -1,4 +1,8 @@
-﻿
+﻿@*================================================== Revision History =============================================
+    Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+    1.0                11-05-2023        V2.0.38           Priti              0026074: Some of the issues found in Issue for Production
+    ====================================================== Revision History =============================================*@
+
 @Html.DevExpress().GridView(settings =>
 {
     settings.Name = "gridProductionBOMProductList";
@@ -13,8 +17,9 @@
     settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
     settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
     settings.ClientSideEvents.EndCallback = "WOBOMProductEndCallBack";
-    
-
+    //Rev 1.0
+    settings.SettingsPager.PageSize = 100000;
+    //Rev 1.0 end
     settings.SettingsBehavior.AllowSort = false;
     //settings.Settings.AllowSort = false;
     //settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
@@ -400,15 +405,15 @@
             var UOM = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "ProductUOM" });
             var Warehouse = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "Warehouse" });
             var InventoryType = (string)grid.GetRowValues(e.VisibleIndex, new string[] { "InventoryType" });
-            
+
             var buttonHtml = "";
-            buttonHtml = string.Format(" <a class='example-image-link' style='cursor: pointer;' onclick='grid_WarehouseDetailsClick("+e.VisibleIndex+")' data-lightbox='example-1'><img src='/assests/images/warehouse.png'></a>");
+            buttonHtml = string.Format(" <a class='example-image-link' style='cursor: pointer;' onclick='grid_WarehouseDetailsClick(" + e.VisibleIndex + ")' data-lightbox='example-1'><img src='/assests/images/warehouse.png'></a>");
             e.Cell.ID = "WarehouseDetailsOpen";
             e.Cell.Text = buttonHtml;
         }
     };
 
-   
+
 
     settings.CustomJSProperties = (s, e) =>
     {

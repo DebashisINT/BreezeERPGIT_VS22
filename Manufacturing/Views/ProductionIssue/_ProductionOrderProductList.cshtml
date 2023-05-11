@@ -1,18 +1,26 @@
-﻿@Html.DevExpress().GridView(settings =>
+﻿@*================================================== Revision History =============================================
+    Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+    1.0                11-05-2023        V2.0.38           Priti              0026074: Some of the issues found in Issue for Production
+====================================================== Revision History =============================================*@
+
+@Html.DevExpress().GridView(settings =>
 {
     settings.Name = "POProductGridLookup";
     settings.CallbackRouteValues = new { Action = "GetPOProductList", Controller = "ProductionIssue" };
     settings.KeyFieldName = "DetailsID";
-    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);   
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
     settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
     settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
     settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
-    settings.SettingsBehavior.AllowSort = false;    
-    settings.CommandColumn.Visible = false;   
+    settings.SettingsBehavior.AllowSort = true;
+
     settings.CommandColumn.Visible = true;
     settings.CommandColumn.ShowSelectCheckbox = true;
-    
-  
+    //REV 1.0
+    settings.CommandColumn.ShowClearFilterButton = true;
+    settings.CommandColumn.SelectAllCheckboxMode = ViewBag.SelectAllCheckBoxMode;
+    settings.SettingsPager.PageSize = 100000;
+    //REV 1.0 END
     settings.ClientSideEvents.SelectionChanged = "SelectionChanged";
     settings.Columns.Add(x =>
     {
@@ -22,7 +30,7 @@
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
-        x.ReadOnly = true;        
+        x.ReadOnly = true;
 
     });
     settings.Columns.Add(x =>
@@ -50,7 +58,7 @@
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
         //x.Settings.AllowSort = false;
     });
-   
+
     settings.Columns.Add(x =>
     {
         x.FieldName = "ProductQty";
@@ -61,7 +69,7 @@
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
         DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
-       // txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
+        // txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
@@ -78,9 +86,9 @@
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         //x.Settings.AllowSort = false;
     });
-   
+
     settings.SettingsEditing.ShowModelErrorsForEditors = true;
-   // settings.SettingsEditing.BatchEditSettings.StartEditAction = DevExpress.Web.GridViewBatchStartEditAction.Click;
+    // settings.SettingsEditing.BatchEditSettings.StartEditAction = DevExpress.Web.GridViewBatchStartEditAction.Click;
 
     //settings.Columns.Add(x =>
     //{

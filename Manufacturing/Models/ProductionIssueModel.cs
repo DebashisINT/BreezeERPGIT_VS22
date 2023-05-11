@@ -131,7 +131,7 @@ namespace Manufacturing.Models
                 {
                     string ViewMfgDate = Convert.ToDateTime(_ViewMfgDate).ToString("yyyy-MM-dd");
 
-                    DateTime ViewExpiryDate = Convert.ToDateTime(dr["ViewExpiryDate"]);
+                    //DateTime ViewExpiryDate = Convert.ToDateTime(dr["ViewExpiryDate"]);
 
 
                     //IFormatProvider culture = new CultureInfo("en-US", true);
@@ -151,13 +151,22 @@ namespace Manufacturing.Models
                     {
                         dr["ViewMfgDate"] = ViewMfgDate;
                     }
+                   
+                }
+                string _ViewExpiryDate = Convert.ToString(dr["ViewExpiryDate"]);
+                if (_ViewExpiryDate != "")
+                {
+                    string ViewExpiryDate = Convert.ToDateTime(_ViewExpiryDate).ToString("yyyy-MM-dd");
                     if (ViewExpiryDate != null)
                     {
-                        dr["ViewExpiryDate"] = ViewExpiryDate.ToString("yyyy-MM-dd");
-                        //dr["ViewExpiryDate"] = ViewExpiryDate;
+                        dr["ViewExpiryDate"] = ViewExpiryDate;
+
+
                     }
                 }
-                
+
+
+
             }
             dtWarehouse.AcceptChanges();
 
