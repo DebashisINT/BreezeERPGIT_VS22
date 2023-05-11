@@ -6434,6 +6434,7 @@
                                     <ValidationSettings Display="None"></ValidationSettings>
                                 </PropertiesTextEdit>
                                 <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                <HeaderStyle HorizontalAlign="Right" />
                             </dxe:GridViewDataTextColumn>
 
                             <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="Receipt" Caption="Credit" Width="120">
@@ -6447,6 +6448,7 @@
                                     <ValidationSettings Display="None"></ValidationSettings>
                                 </PropertiesTextEdit>
                                 <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                <HeaderStyle HorizontalAlign="Right" />
                             </dxe:GridViewDataTextColumn>
 
 
@@ -6519,7 +6521,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="clearfix" style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; margin-top: 36px;">
+            <div class="clearfix" style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; margin-top: 42px;">
                 <div class="col-md-12">
                     <label>Main Narration</label>
                     <div>
@@ -6537,7 +6539,7 @@
 
                     <td style="width: 100px;" id="tdSaveButton" runat="Server">
 
-                        <dxe:ASPxButton ID="btnSaveRecords" ClientInstanceName="cbtnSaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-primary" UseSubmitBehavior="False">
+                        <dxe:ASPxButton ID="btnSaveRecords" ClientInstanceName="cbtnSaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-success" UseSubmitBehavior="False">
                             <ClientSideEvents Click="function(s, e) {SaveButtonClick();}" />
                         </dxe:ASPxButton>
                     </td>

@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReceiveFromServiceCenterList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   11-05-2023      26092: Receive From Service Centre module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReceiveFromServiceCenterList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
      Inherits="ERP.OMS.Management.Activities.ReceiveFromServiceCenterList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -159,6 +163,42 @@
             });
         });
     </script>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GrdOrder {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:content>
 
 <asp:content id="Content2" contentplaceholderid="ContentPlaceHolder1" runat="server">
@@ -251,21 +291,23 @@
                         </dxe:PopupControlContentControl>
             </ContentCollection>
         </dxe:ASPxPopupControl>
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>Receive From Service Centre</h3>
         </div>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix">
              <% if (rights.CanAdd)
                 { %>
-            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span><u>A</u>dd New</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span><span><u>A</u>dd New</span> </a>
             <% } %>
             
                 <% if (rights.CanExport)
                    { %>
-             <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+             <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
                 <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -275,7 +317,7 @@
              <% } %>
         </div>
     </div>
-    <div class="GridViewArea relative">
+        <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdOrder" runat="server" KeyFieldName="Service_Id" AutoGenerateColumns="False"
             Width="100%" ClientInstanceName="cGrdOrder" OnCustomCallback="GrdOrder_CustomCallback" 
             DataSourceID="EntityServerModeDataSource" SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false" Settings-VerticalScrollableHeight="250" Settings-VerticalScrollBarMode="Auto" >
@@ -387,6 +429,7 @@
         <dx:LinqServerModeDataSource ID="EntityServerModeDataSource" runat="server" OnSelecting="EntityServerModeDataSource_Selecting"
                 ContextTypeName="ERPDataClassesDataContext" TableName="V_ReceiveFromServiceCenterList" />
         <asp:HiddenField ID="hiddenedit" runat="server" />
+    </div>
     </div>
     <div style="display: none">
         <dxe:ASPxGridViewExporter ID="exporter" runat="server" Landscape="false" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">

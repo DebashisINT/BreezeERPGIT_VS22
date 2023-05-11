@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="IssueToCustomerReturnList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"  Inherits="ERP.OMS.Management.Activities.IssueToCustomerReturnList" %>
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   11-05-2023      26096: Issue To Customer module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="IssueToCustomerReturnList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"  Inherits="ERP.OMS.Management.Activities.IssueToCustomerReturnList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
      Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -231,24 +235,62 @@
             });
         });
     </script>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GrdCustomerReturn {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 10px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>Issue To Customer </h3>
         </div>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix">
              <% if (rights.CanAdd)
                                    { %>
-            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span>Add <u>N</u>ormal</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddManualButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span>Add <u>M</u>anual</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span><span>Add <u>N</u>ormal</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddManualButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span><span>Add <u>M</u>anual</span> </a>
             <%} %>
 
             <% if (rights.CanExport)
                                                { %>
-            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
                 <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -262,20 +304,28 @@
                         <tr>
                             <td>
                                 <label>From Date</label></td>
-                            <td>
+                            <%--Rev 1.0: "for-cust-icon" class add --%>
+                            <td class="for-cust-icon">
                                 <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                                     <buttonstyle width="13px">
                         </buttonstyle>
                                 </dxe:ASPxDateEdit>
+                                <%--Rev 1.0--%>
+                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                <%--Rev end 1.0--%>
                             </td>
                             <td>
                                 <label>To Date</label>
                             </td>
-                            <td>
+                            <%--Rev 1.0: "for-cust-icon" class add --%>
+                            <td class="for-cust-icon">
                                 <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                                     <buttonstyle width="13px">
                         </buttonstyle>
                                 </dxe:ASPxDateEdit>
+                                <%--Rev 1.0--%>
+                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                <%--Rev end 1.0--%>
                             </td>
                             <td>Unit</td>
                             <td>
@@ -291,7 +341,7 @@
                     </table>
         </div>
     </div>
-     <div class="GridViewArea relative">
+        <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdCustomerReturn" runat="server" KeyFieldName="SrlNo" AutoGenerateColumns="False"  
             Width="100%" ClientInstanceName="cGrdCustomerReturn" OnCustomCallback="GrdCustomerReturn_CustomCallback" SettingsBehavior-AllowFocusedRow="true" Settings-VerticalScrollableHeight="250" Settings-VerticalScrollBarMode="Auto"
            DataSourceID="EntityServerModeDataSource"  SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false" 
@@ -402,6 +452,7 @@
         <dx:LinqServerModeDataSource ID="EntityServerModeDataSource" runat="server" OnSelecting="EntityServerModeDataSource_Selecting"
             ContextTypeName="ERPDataClassesDataContext" TableName="v_IssueToCustomerReturnList" />
         <asp:HiddenField ID="hiddenedit" runat="server" />
+    </div>
     </div>
     <div style="display: none">
         <dxe:ASPxGridViewExporter ID="exporter" GridViewID="GrdCustomerReturn" runat="server" Landscape="false" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
