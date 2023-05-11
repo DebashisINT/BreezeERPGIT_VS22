@@ -1,6 +1,7 @@
 <%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                04-04-2023        2.0.37           Pallab              25882: Cash/Bank Voucher Add module design modification
+1.0                04-04-2023        2.0.37           Pallab              Transactions pages design modification
+2.0                11-05-2023        2.0.38           Sanchita            In the TDS Challan module(Cash/Bank) the FY 23-24 is missing. Refer: 26091     
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Cash/Bank Voucher" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" Inherits="ERP.OMS.Management.DailyTask.management_DailyTask_CashBankEntry" CodeBehind="CashBankEntry.aspx.cs" %>
@@ -18,7 +19,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
     <link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
     <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="JS/CashBankEntry.js?v=5.0"></script>
+    <script src="JS/CashBankEntry.js?v=4.2"></script>
 
     <script>
         var currentEditableVisibleIndex;
@@ -1294,8 +1295,7 @@ $('#<%=hdnBranchId.ClientID %>').val(defaultbranch);
                                                                 </div>
                                                                 <div class="col-md-1">
                                                                     <label>Currency  </label>
-                                                                    <%--Rev 1.0: "simple-select" class add --%>
-                                                                    <div class="simple-select">
+                                                                    <div>
                                                                         <dxe:ASPxComboBox ID="CmbCurrency" EnableIncrementalFiltering="True" ClientInstanceName="cCmbCurrency"
                                                                             TextField="Currency_AlphaCode" ValueField="Currency_ID" SelectedIndex="0" Native="true"
                                                                             runat="server" ValueType="System.String" EnableSynchronization="True" Width="100%" CssClass="pull-left">
@@ -1400,14 +1400,11 @@ $('#<%=hdnBranchId.ClientID %>').val(defaultbranch);
                                                                         <dxe:ASPxLabel ID="lbl_AmountAre" runat="server" Text="Amounts are">
                                                                         </dxe:ASPxLabel>
                                                                     </label>
-                                                                    <%--Rev 1.0: "simple-select" class add --%>
-                                                                    <div class="simple-select">
                                                                     <dxe:ASPxComboBox ID="ddl_AmountAre" runat="server" ClientIDMode="Static" ClientInstanceName="cddl_AmountAre"
                                                                         Width="100%" Native="true">
 
                                                                         <ClientSideEvents LostFocus="function(s, e) { cddl_AmountAre_LostFocus()}" />
                                                                     </dxe:ASPxComboBox>
-                                                                    </div>
                                                                 </div>
                                                               <div class="col-md-2" style="padding-top: 25px;" runat="server" id="dvTDSpop">
                                                                     <label class="mTop5">&nbsp;</label>
@@ -2380,7 +2377,11 @@ $('#<%=hdnBranchId.ClientID %>').val(defaultbranch);
                                     <option value="2020-21">2020-21</option>
                                     <option value="2021-22">2021-22</option>
                                     <option value="2022-23">2022-23</option>
-                                    <option value="2023-24">2024-25</option>
+                                    <%--Rev 2.0--%>
+                                    <%--<option value="2023-24">2024-25</option>--%>
+                                    <option value="2023-24">2023-24</option>
+                                    <option value="2024-25">2024-25</option>
+                                    <%--End of Rev 2.0--%>
 
                                 </select>
                             </div>

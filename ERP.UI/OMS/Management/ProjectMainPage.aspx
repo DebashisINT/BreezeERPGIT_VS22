@@ -1,5 +1,5 @@
 <%--*************************************************************************************************************************************
-Rev 1.0     Sanchita        V2.0.38     Message will be fired from first tab when logged out from the 2nd tab.
+Rev 1.0     Sanchita        V2.0.38     Message will be fired from first tab when logged out from the 2nd tab. Refer: 26091
 *************************************************************************************************************************************--%>
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.management_ProjectMainPage" CodeBehind="ProjectMainPage.aspx.cs" %>
 
@@ -99,8 +99,9 @@ Rev 1.0     Sanchita        V2.0.38     Message will be fired from first tab whe
                 async: false,
                 success: function (data) {
                     if (data.d == 1) {
-                        alert("Session expired !!!");
-                        window.parent.location.href = '../login.aspx';
+                        jAlert('Session expired !!!', 'Alert', function () {
+                            window.parent.location.href = '../login.aspx';
+                        });
                     }
                 },
                 error: function (data) {
