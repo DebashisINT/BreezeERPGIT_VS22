@@ -1,5 +1,6 @@
 ﻿//@*==================================================== Revision History =========================================================================
 //     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+//     2.0  Priti V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
 //====================================================End Revision History=====================================================================*@
 using BusinessLogicLayer;
 using DataAccessLayer;
@@ -384,6 +385,10 @@ namespace Manufacturing.Controllers
                 }
             }
             catch { }
+            //REV 2.0
+            GridViewSelectAllCheckBoxMode selectAllMode = GridViewSelectAllCheckBoxMode.Page;
+            ViewBag.SelectAllCheckBoxMode = selectAllMode;
+            //REV 2.0
             return PartialView("_ProductionOrderProductList", bomproductdata);
         }
 

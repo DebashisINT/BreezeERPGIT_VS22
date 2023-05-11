@@ -1,8 +1,10 @@
 ﻿@*====================================================Revision History=========================================================================
-           1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
-           2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
-           3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
-    ====================================================End Revision History=====================================================================*@
+    1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+    2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
+    3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
+    4.0  Priti   V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
+
+====================================================End Revision History=====================================================================*@
 
 
 @using System.Web.UI.WebControls
@@ -128,30 +130,37 @@
 </style>
 <script>
     //Rev 3.0
-    var _ProductIds = 0;
+   // var _ProductIds = 0;
      //Rev 3.0 End
     function SelectionChanged(s, e) {
         //REV 2.0
         //s.GetSelectedFieldValues("DetailsID", GetSelectedFieldValuesCallback);
         var DetailsID = POProductGridLookup.GetSelectedKeysOnPage();
-        //Rev 3.0
-        //var _ProductIds = 0;
-        //Rev 3.0 End
-        var hdnProductIDS = [];
-        hdnProductIDS = DetailsID;
-        for (var i = 0; i < hdnProductIDS.length; i++) {
-            if (_ProductIds == 0) {
-                _ProductIds = hdnProductIDS[i];
-            }
-            else {
-                _ProductIds = hdnProductIDS[i] + ',' + _ProductIds;
+         //REV 2.0 END
+        //REV 4.0
+        if (DetailsID.length != 0) {
+        //REV 4.0 END
+            //Rev 3.0
+            var _ProductIds = 0;
+            //Rev 3.0 End
+            var hdnProductIDS = [];
+            hdnProductIDS = DetailsID;
+            for (var i = 0; i < hdnProductIDS.length; i++) {
+                if (_ProductIds == 0) {
+                    _ProductIds = hdnProductIDS[i];
+                }
+                else {
+                    _ProductIds = hdnProductIDS[i] + ',' + _ProductIds;
 
+                }
+                $("#hdnProductIDS").val(_ProductIds);
             }
-            $("#hdnProductIDS").val(_ProductIds);
+        //REV 4.0
         }
-
-        //REV 2.0 END
-
+        else {
+            $("#hdnProductIDS").val("0");
+        }
+        //REV 4.0 END
     }
     function GetSelectedFieldValuesCallback(values) {
         try {
@@ -171,6 +180,7 @@
         }
 
     }
+
     function BindGridForProductSelection() {
         var _ProductIds = $("#hdnProductIDS").val();
 
@@ -1211,7 +1221,7 @@
             for (var i = 0; i < 1000; i++) {
                 if (gridProductionBOMProductList.GetRow(i)) {
                     if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 12);
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
                         gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
                     }
                 }
@@ -1220,7 +1230,7 @@
             for (i = -1; i > -1000; i--) {
                 if (gridProductionBOMProductList.GetRow(i)) {
                     if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 12);
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
                         gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
                     }
                 }
@@ -1276,7 +1286,8 @@
         }
 
         var order_schemaid = $('#hdnSchemaId').val();
-        var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+       // var ActualAdditionalCost = $('#txtActualAdditionalCost').val();
+        var ActualAdditionalCost = '';
         if (ActualAdditionalCost == '') {
             ActualAdditionalCost = parseFloat(0).toFixed(2);
             $('#txtActualAdditionalCost').val(ActualAdditionalCost);
@@ -1301,15 +1312,21 @@
             if (tempStockOfProduct == undefined || tempStockOfProduct.length == 0) {
                 if (IsInventory != 'No') {
                     requireddata = 1;
+
+                    if (requireddata ==1) {
+                        jAlert("Please add stock details for slno " + SlNO);
+                        return false;
+
+                    }
                 }
 
             }
         }
 
-        if (requireddata == 1) {
-            jAlert("Please enter all stock warehouse details to process.");
-            return false;
-        }
+        //if (requireddata == 1) {
+        //    jAlert("Please enter all stock warehouse details to process.");
+        //    return false;
+        //}
 
         for (var i = 0; i < visiablerow; i++) {
             gridProductionBOMProductList.batchEditApi.EndEdit();
