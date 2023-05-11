@@ -1,6 +1,7 @@
 ﻿<%--====================================================Revision History=========================================================================
  1.0   Priti    V2.0.36                   Change Approval Realted Dev Express Table Bind to HTML table 
  2.0   Pallab   V2.0.37    06-04-2023     25948: Sales Order module design modification
+ 3.0   Pallab   V2.0.38    11-05-2023     26100: sales order "Order waiting" button value batch design change
 ====================================================End Revision History=====================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -1109,6 +1110,26 @@
         }
 
         /*Rev end 2.0*/
+
+        /*Rev 3.0*/
+        .typeNotification
+        {
+            position: initial !important;
+            display: inherit !important;
+            width: auto !important;
+            line-height: 22px !important;
+            background: #683ad5 !important;
+            padding: 1px 5px !important;
+            border-radius: 2px !important;
+            margin-left: 4px !important;
+            font-size: 14px !important;
+        }
+
+        .btn.typeNotificationBtn
+        {
+            padding-right: 10px !important;
+        }
+        /*Rev end 3.0*/
         </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

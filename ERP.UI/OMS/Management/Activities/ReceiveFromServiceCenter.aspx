@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReceiveFromServiceCenter.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   11-05-2023      26094: Add - Receive From Service Center module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReceiveFromServiceCenter.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
      Inherits="ERP.OMS.Management.Activities.ReceiveFromServiceCenter" %>
 
 
@@ -3949,6 +3953,145 @@ function fn_Deletecity(keyValue) {
             display: none !important;
         }
     </style>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        /*#grid {
+            max-width: 98% !important;
+        }*/
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dt_BTOut , #dt_refCreditNoteDt
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dt_BTOut_B-1 ,
+        #dt_refCreditNoteDt_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dt_BTOut_B-1 #dt_BTOut_B-1Img ,
+        #dt_refCreditNoteDt_B-1 #dt_refCreditNoteDt_B-1Img
+        {
+            display: none;
+        }
+
+        /*select
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .calendar-icon
+        {
+                right: 18px;
+                bottom: 6px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        .col-md-2, .col-md-4 {
+    margin-bottom: 5px;
+}
+
+        .simple-select::after
+        {
+                top: 26px;
+            right: 13px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .backSelect {
+    background: #42b39e !important;
+}
+
+        #ddlInventory
+        {
+                -webkit-appearance: auto;
+        }
+
+        /*.wid-90
+        {
+            width: 100%;
+        }
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
+        {
+            width: 97%;
+        }*/
+        .newLbl
+        {
+                margin: 3px 0 !important;
+        }
+
+        .lblBot > span, .lblBot > label
+        {
+                margin-bottom: 3px !important;
+        }
+
+        .col-md-2 > label, .col-md-2 > span, .col-md-1 > label, .col-md-1 > span
+        {
+            margin-top: 0px;
+            font-size: 14px;
+        }
+
+        .col-md-6 span
+        {
+            font-size: 14px;
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12
+            {
+                 padding-right: 10px;
+                 padding-left: 10px;
+            }
+            .simple-select::after
+        {
+                top: 26px;
+            right: 8px;
+        }
+            .calendar-icon
+        {
+                right: 14px;
+                bottom: 6px;
+        }
+        }
+
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%-- Subhra Section Start--%>
@@ -3957,8 +4100,9 @@ function fn_Deletecity(keyValue) {
 
     <%--Subhra Section End--%>
 
-
-    <div class="panel-title clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-title clearfix">
 
         <h3 class="pull-left">
             <%--<asp:Label ID="lblHeadTitle" Text="" runat="server"></asp:Label>--%>
@@ -4030,7 +4174,7 @@ function fn_Deletecity(keyValue) {
         <div class="crossBtn"><a href="ReceiveFromServiceCenterList.aspx"><i class="fa fa-times"></i></a></div>
 
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <asp:Panel ID="pnl_quotation" runat="server">
             <div class="row">
 
@@ -4040,10 +4184,11 @@ function fn_Deletecity(keyValue) {
                             <ContentCollection>
                                 <dxe:ContentControl runat="server">
                                     <div class="row">
-                                    <div id="ddl_numbering" class="col-md-3" runat="server">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div id="ddl_numbering" class="col-md-3 simple-select" runat="server">
 
                                         <label>
-                                            <dxe:ASPxLabel ID="lbl_NumberingScheme" Width="120px" runat="server" Text="Numbering Scheme">
+                                            <dxe:ASPxLabel ID="lbl_NumberingScheme" Width="160px" runat="server" Text="Numbering Scheme">
                                             </dxe:ASPxLabel>
                                         </label>
                                         <asp:DropDownList ID="ddl_numberingScheme" runat="server" Width="100%" TabIndex="1">
@@ -4086,7 +4231,9 @@ function fn_Deletecity(keyValue) {
                                             <img id="3gridHistory_DXPEForm_efnew_DXEFL_DXEditor211_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
                                         <span id="MandatoryEgSDate" style="display: none" class="validclass">
                                             <img id="3gridHistory_DXPEForm_efnew_DXEFL_DXEditor2114_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Sales Order date must not be prior date than quotation date"></span>
-
+                                        <%--Rev 1.0--%>
+                                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                        <%--Rev end 1.0--%>
 
                                     </div>
                                     <div class="col-md-3">
@@ -4164,8 +4311,8 @@ function fn_Deletecity(keyValue) {
 
                                         </dxe:ASPxCallbackPanel>
                                     </div>
-                                    
-                                    <div class="col-md-3">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-3 simple-select">
                                         <label>
                                             <dxe:ASPxLabel ID="lbl_transferFrom_Branch" runat="server" Text="Unit">
                                             </dxe:ASPxLabel>
@@ -4181,8 +4328,8 @@ function fn_Deletecity(keyValue) {
 
                                         </dxe:ASPxCallbackPanel>
                                     </div>
-
-                                    <div class="col-md-2">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-2 simple-select">
                                         <label>
                                             <dxe:ASPxLabel ID="lbl_Servicecenter" runat="server" Text="Service Center">
                                             </dxe:ASPxLabel>
@@ -4198,8 +4345,8 @@ function fn_Deletecity(keyValue) {
 
                                         </dxe:ASPxCallbackPanel>
                                     </div>
-                                    
-                                     <div class="col-md-3">
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                     <div class="col-md-3 simple-select">
                                         <label>
                                             <dxe:ASPxLabel ID="lbl_transferTo_Branch" runat="server" Text="Transfer To Unit">
                                             </dxe:ASPxLabel>
@@ -4209,7 +4356,7 @@ function fn_Deletecity(keyValue) {
                                     </div>
                                         
                                      <div class="col-md-2">
-                                        <span style="margin: 3px 0; display: block">
+                                        <span style=" display: block">
                                             <dxe:ASPxLabel ID="ASPxLabel3" runat="server" Text="Call No">
                                             </dxe:ASPxLabel>
                                         </span>
@@ -4267,7 +4414,7 @@ function fn_Deletecity(keyValue) {
 
                                     <div style="clear: both;"></div>
                                     <div class="col-md-6">
-                                        <span style="margin: 3px 0; display: block">
+                                        <span style=" display: block">
                                             <dxe:ASPxLabel ID="lbl_Refference" runat="server" Text="Narration">
                                             </dxe:ASPxLabel>
                                         </span>
@@ -4626,12 +4773,12 @@ function fn_Deletecity(keyValue) {
                                     <br />
                                     <div class="col-md-12">
                                         <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                        <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">
+                                        <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
                                             <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                         </dxe:ASPxButton>
                                       <%--  <asp:Button ID="ASPxButton2" runat="server" Text="UDF" CssClass="btn btn-primary" OnClientClick="if(OpenUdf()){ return false;}" />--%>
 
-                                         <dxe:ASPxButton ID="ASPxButton12" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">
+                                         <dxe:ASPxButton ID="ASPxButton12" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
                          <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
                     </dxe:ASPxButton>
                                         <asp:Button ID="Button1" runat="server" Text="UDF" CssClass="btn btn-primary" OnClientClick="if(OpenUdf()){ return false;}" />
@@ -5971,7 +6118,7 @@ function fn_Deletecity(keyValue) {
             </contentcollection>
         </dxe:ASPxPopupControl>
     </div>
-
+    </div>
 
     <%--Batch Product Popup Start--%>
 

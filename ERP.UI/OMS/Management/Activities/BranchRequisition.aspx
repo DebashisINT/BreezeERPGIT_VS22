@@ -1,6 +1,7 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
- 1.0   Priti   V2.0.36   19-01-2023    0025371: Listing view upgradation required of Branch Requisition of Inventory
- 2.0   Priti   V2.0.36   06-02-2023    0025645: Branch Requisition - While Adding a Product, the Search is not working properly
+ 1.0   Priti    V2.0.36   19-01-2023    0025371: Listing view upgradation required of Branch Requisition of Inventory
+ 2.0   Priti    V2.0.36   06-02-2023    0025645: Branch Requisition - While Adding a Product, the Search is not working properly
+ 3.0   Pallab   V2.0.38   10-05-2023    0026079: Branch Requisition module design modification & check in small device
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -884,9 +885,53 @@ function Currency_Rate() {
     </script>
     <%--End of Mantis Issue 25087--%>
     <%--Batch Product Popup End--%>
+
+    <%--Rev 3.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #gridjournal {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        
+    </style>
+    <%--Rev end 3.0--%>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading clearfix">
+    <%--Rev 3.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-heading clearfix">
         <div class="panel-title clearfix">
             <div style="padding-right: 5px;">
                 <h3 class="pull-left"><span class="">
@@ -961,20 +1006,28 @@ function Currency_Rate() {
                         <tr>
                             <td>
                                 <label>From Date</label></td>
-                            <td>
+                            <%--Rev 3.0: "for-cust-icon" class add --%>
+                            <td style="width: 150px" class="for-cust-icon">
                                 <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                                     <ButtonStyle Width="13px">
                                     </ButtonStyle>
                                 </dxe:ASPxDateEdit>
+                                <%--Rev 3.0--%>
+                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                <%--Rev end 3.0--%>
                             </td>
                             <td>
                                 <label>To Date</label>
                             </td>
-                            <td>
+                            <%--Rev 3.0: "for-cust-icon" class add --%>
+                            <td style="width: 150px" class="for-cust-icon">
                                 <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                                     <ButtonStyle Width="13px">
                                     </ButtonStyle>
                                 </dxe:ASPxDateEdit>
+                                <%--Rev 3.0--%>
+                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                <%--Rev end 3.0--%>
                             </td>
                             <td>
                                 <label>Branch</label></td>
@@ -995,16 +1048,16 @@ function Currency_Rate() {
         </div>
 
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix" id="btnAddNew">
-            <div style="float: left; padding-right: 5px;">
+            <div style="float: left; padding-right: 5px;" class="mb-10">
                 <% if (rights.CanAdd)
                    { %>
-                <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>A</u>dd New</span> </a>
+                <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>A</u>dd New</span> </a>
                 <% } %>
                 <% if (rights.CanExport)
                    { %>
-                <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="drdExport_SelectedIndexChanged" AutoPostBack="true">
+                <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="drdExport_SelectedIndexChanged" AutoPostBack="true">
                     <asp:ListItem Value="0">Export to</asp:ListItem>
                     <asp:ListItem Value="1">PDF</asp:ListItem>
                     <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -1017,13 +1070,13 @@ function Currency_Rate() {
                 <%--Sandip Section for Approval Section in Design Start --%>
 
                 <span id="spanStatus" runat="server">
-                    <a href="javascript:void(0);" onclick="OpenPopUPUserWiseQuotaion()" class="btn btn-primary btn-radius">
+                    <a href="javascript:void(0);" onclick="OpenPopUPUserWiseQuotaion()" class="btn btn-primary ">
                         <span>My Branch Requisition Status</span>
 
                     </a>
                 </span>
                 <span id="divPendingWaiting" runat="server">
-                    <a href="javascript:void(0);" onclick="OpenPopUPApprovalStatus()" class="btn btn-primary btn-radius">
+                    <a href="javascript:void(0);" onclick="OpenPopUPApprovalStatus()" class="btn btn-primary ">
                         <span>Branch Requisition Waiting</span>
                         <asp:Label ID="lblWaiting" runat="server" Text=""></asp:Label>
                     </a>
@@ -1328,7 +1381,7 @@ function Currency_Rate() {
 
                             </td>
                             <td>
-                                <dxe:ASPxButton ID="btnSaveExit" ClientInstanceName="cbtn_SaveRecordsExit" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-primary"
+                                <dxe:ASPxButton ID="btnSaveExit" ClientInstanceName="cbtn_SaveRecordsExit" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success"
                                     meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                     <ClientSideEvents Click="function(s, e) {SaveExitButtonClick();}" />
                                 </dxe:ASPxButton>
@@ -1992,6 +2045,7 @@ function Currency_Rate() {
             Modal="True">
         </dxe:ASPxLoadingPanel>
         
+    </div>
     </div>
     <asp:HiddenField ID="hdnProjectSelectInEntryModule" runat="server" />
     <asp:HiddenField ID="hdnProjectMandatory" runat="server" />

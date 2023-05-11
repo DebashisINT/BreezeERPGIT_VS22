@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="import_consumption.aspx.cs" Inherits="ERP.OMS.Management.Activities.import_consumption" %>
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   11-05-2023      26095: Import - Warehouse Stock OUT module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Title="" Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="import_consumption.aspx.cs" Inherits="ERP.OMS.Management.Activities.import_consumption" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -17,7 +21,47 @@
     </style>
 
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
 
+        #GrdOrder {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        #FileUploadMain
+        {
+            border-radius: 4px;
+            height: 30px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -243,7 +287,9 @@
         }
     </style>
 
-    <div class="panel-heading clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading clearfix">
         <div class="panel-title clearfix">
             <div style="padding-right: 5px;">
                 <h3 class="pull-left">Import - Warehouse Stock OUT
@@ -251,7 +297,7 @@
             </div>
         </div>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <asp:UpdatePanel ID="updpnlRefresh" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
 
@@ -268,7 +314,7 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content tabs">
                                     <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                                        <div class="row">
+                                        <div class="row mb-10">
                                             <div class="col-md-3">
                                                 <label><b>Choose File</b> </label>
                                                 <div>
@@ -295,7 +341,7 @@
                                         </div>
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="Section2">
-                                        <div class="">
+                                        <div class="mb-10">
 
                                             <div class="row">
                                                 <div class="col-md-3">
@@ -440,6 +486,7 @@
             </Triggers>
 
         </asp:UpdatePanel>
+    </div>
     </div>
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
         <ClientSideEvents ControlsInitialized="AllControlInitilize" />

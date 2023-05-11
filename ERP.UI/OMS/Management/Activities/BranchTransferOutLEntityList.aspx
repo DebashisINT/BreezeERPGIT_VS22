@@ -1,5 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
-   1.0   Priti   V2.0.36     0025372: Listing view upgradation required of Branch Transfer Out of Inventory
+   1.0   Priti    V2.0.36     0025372: Listing view upgradation required of Branch Transfer Out of Inventory
+   2.0   Pallab   V2.0.38     0026081: Branch Transfer Out module design modification & check in small device
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -183,6 +184,43 @@
         }
         //Rev work close 12.07.2022 mantise no :0025011: Update E-way Bill
     </script>
+
+    <%--Rev 2.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GrdOrder {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+        
+    </style>
+    <%--Rev end 2.0--%>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -307,7 +345,10 @@
 
 
     </dxe:ASPxPopupControl>
-    <div class="panel-heading clearfix">
+
+    <%--Rev 2.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-heading clearfix">
         <div class="panel-title pull-left">
             <h3>Branch Transfer Out</h3>
         </div>
@@ -315,20 +356,28 @@
             <tr>
                 <td>
                     <label>From Date</label></td>
-                <td>
+                <%--Rev 2.0: "for-cust-icon" class add --%>
+                <td style="width: 150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 2.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 2.0--%>
                 </td>
                 <td>
                     <label>To Date</label>
                 </td>
-                <td>
+                <%--Rev 2.0: "for-cust-icon" class add --%>
+                <td style="width: 150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 2.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 2.0--%>
                 </td>
                 <td>Branch</td>
                 <td>
@@ -343,16 +392,16 @@
 
         </table>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix">
             <% if (rights.CanAdd)
                { %>
-            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>A</u>dd New</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>A</u>dd New</span> </a>
             <% } %>
 
             <% if (rights.CanExport)
                { %>
-            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
                 <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -363,10 +412,10 @@
         </div>
     </div>
 
-      <div id="spnEditLock" runat="server" style="display:none; color:red;text-align:center"></div>
-     <div id="spnDeleteLock" runat="server" style="display:none; color:red;text-align:center"></div>
+        <div id="spnEditLock" runat="server" style="display:none; color:red;text-align:center"></div>
+        <div id="spnDeleteLock" runat="server" style="display:none; color:red;text-align:center"></div>
 
-    <div class="GridViewArea relative">
+        <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdOrder" runat="server" KeyFieldName="SlNo" AutoGenerateColumns="False"
             Width="100%" ClientInstanceName="cGrdOrder" OnCustomCallback="GrdOrder_CustomCallback" OnHtmlRowPrepared="AvailableStockgrid_HtmlRowPrepared"
             DataSourceID="EntityServerModeDataSource" SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false"
@@ -557,6 +606,7 @@
             ContextTypeName="ERPDataClassesDataContext" TableName="v_BranchStockOutEntityList" />
 
 
+    </div>
     </div>
     <div style="display: none">
         <dxe:ASPxGridViewExporter ID="exporter" runat="server" Landscape="false" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
