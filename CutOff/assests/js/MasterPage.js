@@ -1,9 +1,40 @@
-﻿
+﻿/*************************************************************************************************************************************
+    Rev 1.0     Sanchita        V2.0.38     Message will be fired from first tab when logged out from the 2nd tab.Refer: 26091
+ *************************************************************************************************************************************/
+
 window.onunload = function () {
     eraseCookie('ERPACTIVEURL');
 };
 
+// Rev 1.0
+document.addEventListener("visibilitychange", () => {
+    // it could be either hidden or visible
+    if (document.visibilityState === 'visible') {
+        checkSessionLogoutMasterPage();
+    }
+});
 
+function checkSessionLogoutMasterPage() {
+    $.ajax({
+        type: "POST",
+        url: "/oms/Management/projectmainpage.aspx/checkSessionLogout",
+        //data: JSON.stringify(dt),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            if (data.d == 1) {
+                jAlert('Session expired !!!', 'Alert', function () {
+                    window.parent.location.href = '/oms/login.aspx';
+                });
+            }
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+// End of Rev 1.0
 
 (function (global) {
 
