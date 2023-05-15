@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
+﻿<%--================================================== Revision History ==========================================================================
+1.0  12-05-2023    V2.0.38    Priti  25888 : Import module required for Consolidated Customer Opening
+====================================================== Revision History ======================================================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
     CodeBehind="ConsolidatedVendorList.aspx.cs" Inherits="OpeningEntry.ERP.ConsolidatedVendorList" EnableEventValidation="false" %>
-
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
         function OnMoreInfoClick(CustomerId) {
@@ -44,6 +44,21 @@
             $("#drdExport").val(0);
         }
     </script>
+    <%-- Rev 1.0--%>
+     <script type="text/javascript">
+
+         function ImportUpdatePopOpen(e) {
+             $("#modalimport").modal('show');
+         }
+         function ViewLogData() {
+             cGvLogSearch.Refresh();
+         }
+         function ShowLogData(haslog) {
+             ;
+             $('#btnViewLog').click();
+         }
+     </script>
+  <%--  Rev 1.0 End--%>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -75,6 +90,11 @@
 
                     <asp:DropDownList ID="ddl_Branch" runat="server" Width="200px" TabIndex="1">
                     </asp:DropDownList>
+                  <%-- Rev 1.0--%>
+                <asp:LinkButton ID="lnlDownloaderexcel" runat="server" OnClick="lnlDownloaderexcel_Click" CssClass="btn btn-info btn-radius pull-rigth mBot0">Download Format</asp:LinkButton>
+                <button type="button" onclick="ImportUpdatePopOpen();" class="btn btn-primary btn-radius">Import(Add/Update)</button>
+                <button type="button" class="btn btn-warning btn-radius" data-toggle="modal" data-target="#modalSS" id="btnViewLog" onclick="ViewLogData();">View Log</button>
+               <%-- Rev 1.0 End--%>
             </div>
         </div>
         <div class="GridViewArea">
@@ -220,6 +240,100 @@
 
         <ClientSideEvents CloseUp="TaggedAfterHide" />
     </dxe:ASPxPopupControl>
+     <%--  Rev 1.0--%>
+      <div class="modal fade" id="modalimport" role="dialog">
+        <div class="modal-dialog VerySmall">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select File to Import (Add/Update)</h4>
+                </div>
+                <div class="modal-body">
 
+                    <div class="col-md-12">
+                        <div id="divproduct">
+
+                            <div>
+                                <asp:FileUpload ID="OFDBankSelect" accept=".xls,.xlsx" runat="server" Width="100%" />
+                                <div class="pTop10  mTop5">
+                                    <asp:Button ID="BtnSaveexcel" runat="server" Text="Import(Add/Update)"  OnClick="BtnSaveexcel_Click" CssClass="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+      <div class="modal fade" id="modalSS" role="dialog">
+        <div class="modal-dialog fullWidth">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Customer Import Log</h4>
+                </div>
+                <div class="modal-body">
+
+                    <dxe:ASPxGridView ID="GvLogSearch" runat="server" AutoGenerateColumns="False" SettingsBehavior-AllowSort="true"
+                        ClientInstanceName="cGvLogSearch" KeyFieldName="LOG_ID" Width="100%" OnDataBinding="GvLogSearch_DataBinding" Settings-VerticalScrollBarMode="Auto" Settings-VerticalScrollableHeight="400">
+
+                        <SettingsBehavior ConfirmDelete="false" ColumnResizeMode="NextColumn" />
+                        <Styles>
+                            <Header SortingImageSpacing="5px" ImageSpacing="5px"></Header>
+                            <FocusedRow HorizontalAlign="Left" VerticalAlign="Top" CssClass="gridselectrow"></FocusedRow>
+                            <LoadingPanel ImageSpacing="10px"></LoadingPanel>
+                            <FocusedGroupRow CssClass="gridselectrow"></FocusedGroupRow>
+                            <Footer CssClass="gridfooter"></Footer>
+                        </Styles>
+                        <Columns>
+                            <dxe:GridViewDataTextColumn Visible="False" VisibleIndex="0" FieldName="LOG_ID" Caption="LogID" SortOrder="Descending">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="CREATEDON" Caption="Date" Width="10%">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                                <PropertiesTextEdit DisplayFormatString="dd/MM/yyyy"></PropertiesTextEdit>
+                            </dxe:GridViewDataTextColumn>
+
+                            <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="LOG_DOCNO" Caption="Document Number" Width="10%">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                                <PropertiesTextEdit DisplayFormatString="dd/MM/yyyy"></PropertiesTextEdit>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="LOG_LOOPNUMBER" Caption="Row Number" Width="13%">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="3" FieldName="cnt_firstName" Width="8%" Caption="Vendor Name">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="LOG_FILENAME" Width="14%" Caption="File Name">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                                <PropertiesTextEdit DisplayFormatString="dd/MM/yyyy"></PropertiesTextEdit>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="LOG_DESCRIPTION" Caption="Description" Width="10%" Settings-AllowAutoFilter="False">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+
+                            <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="LOG_STASTUS" Caption="Status" Width="14%" Settings-AllowAutoFilter="False">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                        </Columns>
+                        <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" ShowFilterRowMenu="true" />
+                        <SettingsSearchPanel Visible="false" />
+                        <SettingsPager NumericButtonCount="200" PageSize="200" ShowSeparators="True" Mode="ShowPager">
+                            <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="200,400,600" />
+                            <FirstPageButton Visible="True">
+                            </FirstPageButton>
+                            <LastPageButton Visible="True">
+                            </LastPageButton>
+                        </SettingsPager>
+                    </dxe:ASPxGridView>
+                </div>
+            </div>
+        </div>
+    </div>
+     <%-- Rev 1.0 End--%>
 
 </asp:Content>

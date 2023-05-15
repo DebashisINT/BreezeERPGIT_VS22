@@ -63,6 +63,10 @@
     <Reference Include="DevExpress.Web.Mvc.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ERP.UI\bin\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -91,105 +95,7 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ERP\ConsolidatedCustomerList.aspx" />
-    <Content Include="ERP\ConsolidatedCustomer.aspx" />
-    <Content Include="ERP\ConsolidatedTransportedList.aspx" />
-    <Content Include="ERP\ConsolidatedTransporter.aspx" />
-    <Content Include="ERP\ConsolidatedVendor.aspx" />
-    <Content Include="ERP\ConsolidatedVendorList.aspx" />
-    <Content Include="ERP\CustomerReceiptPayment.aspx" />
-    <Content Include="ERP\CustomerReceiptPaymentList.aspx" />
-    <Content Include="ERP\EntriesDocuments.aspx" />
-    <Content Include="ERP\js\PurchaseOrder.js" />
-    <Content Include="ERP\js\PurchaseOrderList.js" />
-    <Content Include="ERP\js\SearchPopup.css" />
-    <Content Include="ERP\js\SearchPopup.js" />
-    <Content Include="ERP\PurchaseInvoiceList.aspx" />
-    <Content Include="ERP\PurchaseOrderList.aspx" />
-    <Content Include="ERP\SalesInvoiceList.aspx" />
-    <Content Include="ERP\SalesOrderList.aspx" />
-    <Content Include="ERP\SalesQuotationList.aspx" />
-    <Content Include="ERP\Services\OpeningMaster.asmx" />
-    <Content Include="ERP\VendorPaymentReceipt.aspx" />
-    <Content Include="ERP\VendorPaymentReceiptList.aspx" />
-    <Content Include="ERP\frm_BranchUdfPopUp.aspx" />
-    <Content Include="Login.aspx" />
-    <Content Include="Master.Master" />
-    <Content Include="assests\bootstrap\css\bootstrap-theme.css.map" />
-    <Content Include="assests\bootstrap\css\bootstrap.css.map" />
-    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="assests\css\custom\style.css.bak" />
-    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.eot" />
-    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
-    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
-    <Content Include="assests\fonts\font-awesome\fonts\FontAwesome.otf" />
-    <Content Include="assests\fonts\font-awesome\less\animated.less" />
-    <Content Include="assests\fonts\font-awesome\less\bordered-pulled.less" />
-    <Content Include="assests\fonts\font-awesome\less\core.less" />
-    <Content Include="assests\fonts\font-awesome\less\fixed-width.less" />
-    <Content Include="assests\fonts\font-awesome\less\font-awesome.less" />
-    <Content Include="assests\fonts\font-awesome\less\icons.less" />
-    <Content Include="assests\fonts\font-awesome\less\larger.less" />
-    <Content Include="assests\fonts\font-awesome\less\list.less" />
-    <Content Include="assests\fonts\font-awesome\less\mixins.less" />
-    <Content Include="assests\fonts\font-awesome\less\path.less" />
-    <Content Include="assests\fonts\font-awesome\less\rotated-flipped.less" />
-    <Content Include="assests\fonts\font-awesome\less\screen-reader.less" />
-    <Content Include="assests\fonts\font-awesome\less\stacked.less" />
-    <Content Include="assests\fonts\font-awesome\less\variables.less" />
-    <Content Include="assests\fonts\font-awesome\scss\font-awesome.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_animated.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_bordered-pulled.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_core.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_fixed-width.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_icons.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_larger.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_list.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_mixins.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_path.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_rotated-flipped.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_screen-reader.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_stacked.scss" />
-    <Content Include="assests\fonts\font-awesome\scss\_variables.scss" />
-    <Content Include="assests\js\jquery-1.10.2.min.map" />
-    <Content Include="OMS\MasterPage\ERP.Master" />
-    <Content Include="OMS\modalfiles\agreement.htm" />
-    <Content Include="OMS\modalfiles\blackdot.gif" />
-    <Content Include="OMS\modalfiles\modal.css" />
-    <Content Include="OMS\modalfiles\modal.js" />
-    <Content Include="OMS\modalfiles\newsletter.htm" />
-    <Content Include="OMS\modalfiles\originalmodal.js" />
-    <Content Include="OMS\windowfiles\close.gif" />
-    <Content Include="OMS\windowfiles\dhtmlwindow.css" />
-    <Content Include="OMS\windowfiles\dhtmlwindow.js" />
-    <Content Include="OMS\windowfiles\external.htm" />
-    <Content Include="OMS\windowfiles\external2.htm" />
-    <Content Include="OMS\windowfiles\max.gif" />
-    <Content Include="OMS\windowfiles\min.gif" />
-    <Content Include="OMS\windowfiles\resize.gif" />
-    <Content Include="OMS\windowfiles\restore.gif" />
-    <Content Include="OpeningEntry\DBML\OpeningEntryDBML.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>OpeningEntryDBML.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Models\OpeningDataClasses.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>OpeningDataClasses.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-    <None Include="Properties\PublishProfiles\OpeningEntry.pubxml" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assests\bootstrap\css\bootstrap-datetimepicker.min.css" />
@@ -218,7 +124,6 @@
     <Content Include="assests\fonts\font-awesome\css\font-awesome.css" />
     <Content Include="assests\fonts\font-awesome\css\font-awesome.min.css" />
     <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="assests\fonts\font-awesome\HELP-US-OUT.txt" />
     <Content Include="assests\images\1.png" />
     <Content Include="assests\images\10.png" />
     <Content Include="assests\images\11.png" />
@@ -538,6 +443,106 @@
     <Content Include="assests\pluggins\jquery.alert\jquery.alerts.css" />
     <Content Include="assests\pluggins\jquery.alert\jquery.alerts.js" />
     <Content Include="assests\pluggins\jquery.alert\jquery.ui.draggable.js" />
+    <Content Include="ERP\ConsolidatedCustomerList.aspx" />
+    <Content Include="ERP\ConsolidatedCustomer.aspx" />
+    <Content Include="ERP\ConsolidatedTransportedList.aspx" />
+    <Content Include="ERP\ConsolidatedTransporter.aspx" />
+    <Content Include="ERP\ConsolidatedVendor.aspx" />
+    <Content Include="ERP\ConsolidatedVendorList.aspx" />
+    <Content Include="ERP\CustomerReceiptPayment.aspx" />
+    <Content Include="ERP\CustomerReceiptPaymentList.aspx" />
+    <Content Include="ERP\EntriesDocuments.aspx" />
+    <Content Include="ERP\js\PurchaseOrder.js" />
+    <Content Include="ERP\js\PurchaseOrderList.js" />
+    <Content Include="ERP\js\SearchPopup.css" />
+    <Content Include="ERP\js\SearchPopup.js" />
+    <Content Include="ERP\PurchaseInvoiceList.aspx" />
+    <Content Include="ERP\PurchaseOrderList.aspx" />
+    <Content Include="ERP\SalesInvoiceList.aspx" />
+    <Content Include="ERP\SalesOrderList.aspx" />
+    <Content Include="ERP\SalesQuotationList.aspx" />
+    <Content Include="ERP\Services\OpeningMaster.asmx" />
+    <Content Include="ERP\VendorPaymentReceipt.aspx" />
+    <Content Include="ERP\VendorPaymentReceiptList.aspx" />
+    <Content Include="ERP\frm_BranchUdfPopUp.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Master.Master" />
+    <Content Include="OMS\MasterPage\ERP.Master" />
+    <Content Include="OMS\modalfiles\agreement.htm" />
+    <Content Include="OMS\modalfiles\blackdot.gif" />
+    <Content Include="OMS\modalfiles\modal.css" />
+    <Content Include="OMS\modalfiles\modal.js" />
+    <Content Include="OMS\modalfiles\newsletter.htm" />
+    <Content Include="OMS\modalfiles\originalmodal.js" />
+    <Content Include="OMS\windowfiles\close.gif" />
+    <Content Include="OMS\windowfiles\dhtmlwindow.css" />
+    <Content Include="OMS\windowfiles\dhtmlwindow.js" />
+    <Content Include="OMS\windowfiles\external.htm" />
+    <Content Include="OMS\windowfiles\external2.htm" />
+    <Content Include="OMS\windowfiles\max.gif" />
+    <Content Include="OMS\windowfiles\min.gif" />
+    <Content Include="OMS\windowfiles\resize.gif" />
+    <Content Include="OMS\windowfiles\restore.gif" />
+    <Content Include="OpeningEntry\DBML\OpeningEntryDBML.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>OpeningEntryDBML.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Models\OpeningDataClasses.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>OpeningDataClasses.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="assests\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="assests\bootstrap\css\bootstrap.css.map" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assests\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assests\css\custom\style.css.bak" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assests\fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assests\fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="assests\fonts\font-awesome\less\animated.less" />
+    <Content Include="assests\fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="assests\fonts\font-awesome\less\core.less" />
+    <Content Include="assests\fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="assests\fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="assests\fonts\font-awesome\less\icons.less" />
+    <Content Include="assests\fonts\font-awesome\less\larger.less" />
+    <Content Include="assests\fonts\font-awesome\less\list.less" />
+    <Content Include="assests\fonts\font-awesome\less\mixins.less" />
+    <Content Include="assests\fonts\font-awesome\less\path.less" />
+    <Content Include="assests\fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="assests\fonts\font-awesome\less\screen-reader.less" />
+    <Content Include="assests\fonts\font-awesome\less\stacked.less" />
+    <Content Include="assests\fonts\font-awesome\less\variables.less" />
+    <Content Include="assests\fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_core.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_list.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_path.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="assests\fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="assests\js\jquery-1.10.2.min.map" />
+    <None Include="Properties\PublishProfiles\OpeningEntry.pubxml" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="ERP\CustomerNote.aspx" />
     <Content Include="ERP\ProjectMainPage.aspx" />
     <Content Include="License.txt" />
@@ -603,9 +608,6 @@
     <Content Include="UserControls\ucPaymentDetails.ascx" />
     <Content Include="UserControls\VehicleDetailsControl.ascx" />
     <Content Include="ERP\VendorDebitCreditNote.aspx" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ERP\ConsolidatedCustomerList.aspx.cs">
