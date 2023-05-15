@@ -1312,12 +1312,13 @@
             if (tempStockOfProduct == undefined || tempStockOfProduct.length == 0) {
                 if (IsInventory != 'No') {
                     requireddata = 1;
-
+                    //REV 4.0
                     if (requireddata ==1) {
-                        jAlert("Please add stock details for slno " + SlNO);
+                        jAlert("Please add warehouse stock details for Sl. No. " + SlNO);
                         return false;
 
                     }
+                    //REV 4.0 END
                 }
 
             }
