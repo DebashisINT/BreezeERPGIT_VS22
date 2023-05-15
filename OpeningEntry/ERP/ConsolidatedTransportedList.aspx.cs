@@ -540,11 +540,11 @@ namespace OpeningEntry.ERP
         protected void lnlDownloaderexcel_Click(object sender, EventArgs e)
         {
 
-            string strFileName = "ConsolidatedCustomerOS.xlsx";
+            string strFileName = "ConsolidatedTransporterOS.xlsx";
             string strPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + strFileName);
 
             Response.ContentType = "application/xlsx";
-            Response.AppendHeader("Content-Disposition", "attachment; filename=ConsolidatedCustomerOS.xlsx");
+            Response.AppendHeader("Content-Disposition", "attachment; filename=ConsolidatedTransporterOS.xlsx");
             Response.TransmitFile(strPath);
             Response.End();
         }
