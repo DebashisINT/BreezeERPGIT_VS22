@@ -1,3 +1,7 @@
+//================================================== Revision History ==========================================================================
+//1.0  15-05-2023    V2.0.38    Priti  25893 : Import Module Required for Importing Ledger/Subledger Opening
+//====================================================== Revision History ======================================================================
+
 using System;
 using System.Configuration;
 using System.Data;
@@ -16,7 +20,13 @@ using System.Collections.Generic;
 using DevExpress.Web;
 using EntityLayer.CommonELS;
 using DataAccessLayer;
-
+//Rev 1.0
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Text.RegularExpressions;
+using System.Web.Services.Description;
+using System.IO;
+//Rev 1.0 End
 namespace ERP.OMS.Management.Master
 {
 
@@ -28,7 +38,13 @@ namespace ERP.OMS.Management.Master
         String strOpeningDr;
         DataTable dataTable = new DataTable();
         DBEngine odebEngine = new DBEngine();
-
+        //Rev 1.0
+        private static String path, path1, FileName, s, time, cannotParse;
+        string FilePath = "";
+        public string[] InputName = new string[20];
+        public string[] InputType = new string[20];
+        public string[] InputValue = new string[20];
+        //Rev 1.0 End
         //BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine(ConfigurationSettings.AppSettings["DBConnectionDefault"]); MULTI
         BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
         public EntityLayer.CommonELS.UserRightsForPage rights = new UserRightsForPage();
@@ -538,7 +554,318 @@ namespace ERP.OMS.Management.Master
             }
         }
 
+        //Rev 1.0
+        #region Import
+        protected void BtnSaveexcel_Click(object sender, EventArgs e)
+        {
+            string fName = string.Empty;
+            Boolean HasLog = false;
+            if (OFDBankSelect.FileContent.Length != 0)
+            {
+                path = String.Empty;
+                path1 = String.Empty;
+                FileName = String.Empty;
+                s = String.Empty;
+                time = String.Empty;
+                cannotParse = String.Empty;
 
-        
+                BusinessLogicLayer.TransctionDescription td = new BusinessLogicLayer.TransctionDescription();
+
+                FilePath = Path.GetFullPath(OFDBankSelect.PostedFile.FileName);
+                FileName = Path.GetFileName(FilePath);
+                string fileExtension = Path.GetExtension(FileName);
+
+                if (fileExtension.ToUpper() != ".XLS" && fileExtension.ToUpper() != ".XLSX")
+                {
+                    Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Uploaded file format not supported by the system');</script>");
+                    return;
+                }
+
+                if (fileExtension.Equals(".xlsx"))
+                {
+                    fName = FileName.Replace(".xlsx", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".xlsx");
+                }
+
+                else if (fileExtension.Equals(".xls"))
+                {
+                    fName = FileName.Replace(".xls", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".xls");
+                }
+
+                else if (fileExtension.Equals(".csv"))
+                {
+                    fName = FileName.Replace(".csv", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".csv");
+                }
+                Session["FileName"] = fName;
+
+                string subPath = "Import"; // Your code goes here
+
+                bool exists = System.IO.Directory.Exists(Server.MapPath(subPath));
+
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(Server.MapPath(subPath));
+
+                String UploadPath = Server.MapPath((Convert.ToString("Import/") + Session["FileName"].ToString()));
+                OFDBankSelect.PostedFile.SaveAs(UploadPath);
+
+                ClearArray();
+
+                BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+                try
+                {
+                    HttpPostedFile file = OFDBankSelect.PostedFile;
+                    String extension = Path.GetExtension(FileName);
+                    HasLog = Import_To_Grid(UploadPath, extension, file);
+                }
+                catch (Exception ex)
+                {
+                    HasLog = false;
+                }
+                if (!HasLog)
+                {
+                    Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Please flow the log file.!'); ShowLogData('" + HasLog + "');</script>");
+
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Import Process Successfully Completed!'); ShowLogData('" + HasLog + "');</script>");
+
+                }
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Selected File Cannot Be Blank');</script>");
+            }
+        }
+        public void ClearArray()
+        {
+            Array.Clear(InputName, 0, InputName.Length - 1);
+            Array.Clear(InputType, 0, InputType.Length - 1);
+            Array.Clear(InputValue, 0, InputValue.Length - 1);
+        }
+        private string GetValue(SpreadsheetDocument doc, Cell cell)
+        {
+            string value = cell.CellValue.InnerText;
+            if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
+            {
+                return doc.WorkbookPart.SharedStringTablePart.SharedStringTable.ChildElements.GetItem(int.Parse(value)).InnerText;
+            }
+            return value;
+        }
+        public static int? GetColumnIndexFromName(string columnName)
+        {
+            //return columnIndex;
+            string name = columnName;
+            int number = 0;
+            int pow = 1;
+            for (int i = name.Length - 1; i >= 0; i--)
+            {
+                number += (name[i] - 'A' + 1) * pow;
+                pow *= 26;
+            }
+            return number;
+        }
+        public static string GetColumnName(string cellReference)
+        {
+            // Create a regular expression to match the column name portion of the cell name.
+            Regex regex = new Regex("[A-Za-z]+");
+            Match match = regex.Match(cellReference);
+
+            return match.Value;
+        }
+        public Boolean Import_To_Grid(string FilePath, string Extension, HttpPostedFile file)
+        {
+
+            Boolean Success = false;
+            Boolean HasLog = false;
+            int loopcounter = 1;
+
+            if (file.FileName.Trim() != "")
+            {
+
+                if (Extension.ToUpper() == ".XLS" || Extension.ToUpper() == ".XLSX")
+                {
+                    DataTable dt = new DataTable();
+
+                    using (SpreadsheetDocument spreadSheetDocument = SpreadsheetDocument.Open(FilePath, false))
+                    {
+
+                        Sheet sheet = spreadSheetDocument.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
+                        Worksheet worksheet = (spreadSheetDocument.WorkbookPart.GetPartById(sheet.Id.Value) as WorksheetPart).Worksheet;
+                        IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
+                        foreach (Row row in rows)
+                        {
+                            if (row.RowIndex.Value == 1)
+                            {
+                                foreach (Cell cell in row.Descendants<Cell>())
+                                {
+                                    if (cell.CellValue != null)
+                                    {
+                                        dt.Columns.Add(GetValue(spreadSheetDocument, cell));
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                DataRow tempRow = dt.NewRow();
+                                int columnIndex = 0;
+                                foreach (Cell cell in row.Descendants<Cell>())
+                                {
+                                    // Gets the column index of the cell with data
+                                    int cellColumnIndex = (int)GetColumnIndexFromName(GetColumnName(cell.CellReference));
+                                    cellColumnIndex--; //zero based index
+                                    if (columnIndex < cellColumnIndex)
+                                    {
+                                        do
+                                        {
+                                            tempRow[columnIndex] = ""; //Insert blank data here;
+                                            columnIndex++;
+                                        }
+                                        while (columnIndex < cellColumnIndex);
+                                    }
+                                    try
+                                    {
+                                        tempRow[columnIndex] = GetValue(spreadSheetDocument, cell);
+                                    }
+                                    catch
+                                    {
+                                        tempRow[columnIndex] = "";
+                                    }
+
+                                    columnIndex++;
+                                }
+                                dt.Rows.Add(tempRow);
+                            }
+                        }
+                    }
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+
+                        string Account = string.Empty;
+                        string Unit_Name = string.Empty;
+                        string SubAccount = string.Empty;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            loopcounter++;
+                            try
+                            {
+                                 Unit_Name = Convert.ToString(row["Unit*"]);
+                                 Account = Convert.ToString(row["Account*"]);
+                                 SubAccount = Convert.ToString(row["Sub Account"]);
+                                string BalanceAmount = Convert.ToString(row["Balance Amount*"]);
+                                string DR_CR = Convert.ToString(row["DR_CR*"]);                                
+                                string UserId = Convert.ToString(HttpContext.Current.Session["userid"]);
+                                string CompanyID = Convert.ToString(Session["LastCompany"]);
+                                string FinYear = Convert.ToString(Session["LastFinYear"]);
+
+
+                                DataSet dt2 = InsertConsolidatedVendorDataFromExcel(Unit_Name, Account, SubAccount, BalanceAmount, DR_CR, CompanyID, FinYear);
+
+                                if (dt2 != null && dt2.Tables[0].Rows.Count > 0)
+                                {
+                                    foreach (DataRow row2 in dt2.Tables[0].Rows)
+                                    {
+                                        Success = Convert.ToBoolean(row2["Success"]);
+                                        HasLog = Convert.ToBoolean(row2["HasLog"]);
+                                    }
+                                }
+                                if (!HasLog)
+                                {
+                                    string description = Convert.ToString(dt2.Tables[0].Rows[0]["MSG"]);
+                                    string CustInternal_Id = Convert.ToString(dt2.Tables[0].Rows[0]["CustInternal_Id"]);
+
+                                    int loginsert = InsertConsolidatedVendorImportLog(Account, SubAccount, Unit_Name, loopcounter, UserId, Session["FileName"].ToString(), description, "Failed", CustInternal_Id);
+                                }
+                                else
+                                {
+                                    string description = Convert.ToString(dt2.Tables[0].Rows[0]["MSG"]);
+                                    string CustInternal_Id = Convert.ToString(dt2.Tables[0].Rows[0]["CustInternal_Id"]);
+                                    int loginsert = InsertConsolidatedVendorImportLog(Account, SubAccount, Unit_Name, loopcounter, UserId, Session["FileName"].ToString(), description, "Success", CustInternal_Id);
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Success = false;
+                                HasLog = false;
+                                // string description = Convert.ToString(dt2.Tables[0].Rows[0]["MSG"]);
+                                int loginsert = InsertConsolidatedVendorImportLog(Account, SubAccount, Unit_Name, loopcounter, "", Session["FileName"].ToString(), ex.Message.ToString(), "Failed", "");
+                            }
+
+                        }
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+            return HasLog;
+        }
+        public DataSet InsertConsolidatedVendorDataFromExcel(string Unit_Name, string Account, string SubAccount, string BalanceAmount, string DR_CR, string CompanyID, string FinYear)
+        {
+            DataSet ds = new DataSet();
+            ProcedureExecute proc = new ProcedureExecute("PRC_OPENINGENTRIESIMPORTFROMEXCEL");
+            proc.AddVarcharPara("@Action", 100, "InsertOpeningBalanceDataFromExcel");
+            proc.AddVarcharPara("@Unit_Name", 100, Unit_Name);
+            proc.AddVarcharPara("@Account", 200, Account);
+            proc.AddVarcharPara("@SubAccount", 200, SubAccount);          
+            proc.AddPara("@Balance_Amount", Convert.ToDecimal(BalanceAmount));
+            proc.AddVarcharPara("@DR_CR", 20, DR_CR);
+            proc.AddVarcharPara("@CompanyID", 100, CompanyID);
+            proc.AddVarcharPara("@FinYear", 100, FinYear);
+            ds = proc.GetDataSet();
+            return ds;
+        }
+        public int InsertConsolidatedVendorImportLog(string Account, string SubAccount,string Unit_Name , int loopnumber, string userid, string filename, string description, string status, string CUSTOMERID)
+        {
+            int i;
+            ProcedureExecute proc = new ProcedureExecute("PRC_OPENINGENTRIESIMPORTLOG");
+            proc.AddVarcharPara("@action", 150, "InsertOpeningBalanceLog");
+            proc.AddVarcharPara("@Account", 200, Account);
+            proc.AddVarcharPara("@SubAccount", 200, SubAccount);
+            proc.AddVarcharPara("@Unit_Name", 200, Unit_Name);
+            proc.AddVarcharPara("@Doc_TYpe", 100, "OpeningBalance");
+            proc.AddIntegerPara("@LoopNumber", loopnumber);
+            proc.AddVarcharPara("@UserId", 150, userid);
+            proc.AddVarcharPara("@FileName", 150, filename);
+            proc.AddVarcharPara("@decription", 150, description);
+            proc.AddVarcharPara("@status", 150, status);
+            proc.AddVarcharPara("@CUSTOMERID", 150, CUSTOMERID);
+            i = proc.RunActionQuery();
+
+            return i;
+        }
+        public DataSet GetCustomerLog(string Filename)
+        {
+            DataSet ds = new DataSet();
+            ProcedureExecute proc = new ProcedureExecute("PRC_OPENINGENTRIESIMPORTLOG");
+            proc.AddVarcharPara("@action", 150, "GeOpeningBalanceLog");
+            proc.AddVarcharPara("@FileName", 150, Filename);
+            ds = proc.GetDataSet();
+            return ds;
+        }
+        protected void lnlDownloaderexcel_Click(object sender, EventArgs e)
+        {
+
+            string strFileName = "ConsolidatedAccountOS.xlsx";
+            string strPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + strFileName);
+
+            Response.ContentType = "application/xlsx";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=ConsolidatedAccountOS.xlsx");
+            Response.TransmitFile(strPath);
+            Response.End();
+        }
+
+        protected void GvLogSearch_DataBinding(object sender, EventArgs e)
+        {
+            string fileName = Convert.ToString(Session["FileName"]);
+            DataSet dt2 = GetCustomerLog(fileName);
+            GvLogSearch.DataSource = dt2.Tables[0];
+        }
+        #endregion
+        //Rev 1.0 End
+
     }
 }
