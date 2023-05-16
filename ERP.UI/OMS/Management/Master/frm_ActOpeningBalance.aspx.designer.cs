@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP.OMS.Management.Master {
-    
-    
-    public partial class management_master_frm_ActOpeningBalance {
-        
+namespace ERP.OMS.Management.Master
+{
+
+
+    public partial class management_master_frm_ActOpeningBalance
+    {
+
         /// <summary>
         /// lblTotDebit control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblTotDebit;
-        
+
         /// <summary>
         /// lblTotCredit control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblTotCredit;
-        
+
         /// <summary>
         /// cmbBranch control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbBranch;
-        
+
         /// <summary>
         /// cmbAccount control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbAccount;
-        
+
         /// <summary>
         /// txtSubName control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit txtSubName;
-        
+
         /// <summary>
         /// cmbDrorCr control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbDrorCr;
-        
+
         /// <summary>
         /// AmountPanel control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel AmountPanel;
-        
+
         /// <summary>
         /// txtAmmount control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtAmmount;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton Button1;
-        
+
         /// <summary>
         /// ASPxButton1 control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton1;
-        
+
         /// <summary>
         /// drdExport control.
         /// </summary>
@@ -110,7 +112,16 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList drdExport;
-        
+
+        /// <summary>
+        /// lnlDownloaderexcel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnlDownloaderexcel;
+
         /// <summary>
         /// OpeningGrid control.
         /// </summary>
@@ -119,7 +130,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView OpeningGrid;
-        
+
         /// <summary>
         /// diffAmt control.
         /// </summary>
@@ -128,7 +139,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel diffAmt;
-        
+
         /// <summary>
         /// totalDebit control.
         /// </summary>
@@ -137,7 +148,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox totalDebit;
-        
+
         /// <summary>
         /// totalCredit control.
         /// </summary>
@@ -146,7 +157,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox totalCredit;
-        
+
         /// <summary>
         /// FinalSave control.
         /// </summary>
@@ -155,7 +166,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton FinalSave;
-        
+
         /// <summary>
         /// dsBranch control.
         /// </summary>
@@ -164,7 +175,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource dsBranch;
-        
+
         /// <summary>
         /// exporter control.
         /// </summary>
@@ -173,7 +184,7 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridViewExporter exporter;
-        
+
         /// <summary>
         /// hdSubAccountId control.
         /// </summary>
@@ -182,5 +193,32 @@ namespace ERP.OMS.Management.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdSubAccountId;
+
+        /// <summary>
+        /// OFDBankSelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload OFDBankSelect;
+
+        /// <summary>
+        /// BtnSaveexcel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSaveexcel;
+
+        /// <summary>
+        /// GvLogSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxGridView GvLogSearch;
     }
 }
