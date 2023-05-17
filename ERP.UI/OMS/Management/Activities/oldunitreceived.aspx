@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OldUnitReceived.aspx.cs" Inherits="ERP.OMS.Management.Activities.OldUnitReceived" MasterPageFile="~/OMS/MasterPage/ERP.Master" %>
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   15-05-2023      26126: Old Unit Received module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OldUnitReceived.aspx.cs" Inherits="ERP.OMS.Management.Activities.OldUnitReceived" MasterPageFile="~/OMS/MasterPage/ERP.Master" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -244,10 +248,54 @@
             });
         });
     </script>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #gridStatus {
+            max-width: 98% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading clearfix">
         <div class="panel-title pull-left">
             <h3>Old Unit Received</h3>
         </div>
@@ -255,21 +303,28 @@
             <tr>
                 <td>
                     From </td>
-                <td style="width:150px">
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td style="width:150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="FormDate" runat="server" OnInit="FormDate_Init" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </td>
                 <td>
                     To 
                 </td>
-                <td style="width:150px">
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td style="width:150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="toDate" runat="server" OnInit="toDate_Init" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
-
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </td>
                 <td>Unit</td>
                 <td>
@@ -286,11 +341,11 @@
         </table>
     </div>
 
-    <div class="form_main">
+        <div class="form_main">
 
 
 
-        <div class="clearfix">
+        <div class="clearfix mb-10">
             <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-sm btn-primary" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
@@ -534,6 +589,7 @@
         </div>
         <%--        <dxe:ASPxGridViewExporter ID="exporter" runat="server">
         </dxe:ASPxGridViewExporter>--%>
+    </div>
     </div>
     <dxe:ASPxPopupControl ID="Popup_ReceivedBranch" runat="server" ClientInstanceName="cPopup_ReceivedBranch"
         Width="400px" HeaderText="Received Branch" PopupHorizontalAlign="WindowCenter"

@@ -1,7 +1,7 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
-   1.0   Priti   V2.0.36     10-01-2023     0025324: Views to be converted to Procedures in the Listing Page of Transaction / Transit Sales/Purchase / Sales Invoice
-   2.0   Priti   V2.0.36     17-02-2023     After Listing view upgradation delete data show in listing issue solved.
-
+   1.0   Priti     V2.0.36     10-01-2023      0025324: Views to be converted to Procedures in the Listing Page of Transaction / Transit Sales/Purchase / Sales Invoice
+   2.0   Priti     V2.0.36     17-02-2023      After Listing view upgradation delete data show in listing issue solved.
+   3.0   Pallab    V2.0.38     16-05-2023      26142: Transit Sales Invoice module design modification & check in small device
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -581,29 +581,79 @@
         });
     </script>
     <link href="CSS/TSalesInvoiceList.css" rel="stylesheet" />
+    <%--Rev 3.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #GrdQuotation {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 3.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 3.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">Transit Sales Invoice</h3>
         </div>
         <table class="padTab pull-right" style="margin-top:5px;">
             <tr>
                 <td>From </td>
-                <td style="width: 150px">
+                <%--Rev 3.0: "for-cust-icon" class add --%>
+                <td style="width: 150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 3.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 3.0--%>
                 </td>
                 <td>To 
                 </td>
-                <td style="width: 150px">
+                <%--Rev 3.0: "for-cust-icon" class add --%>
+                <td style="width: 150px" class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
-
+                    <%--Rev 3.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 3.0--%>
                 </td>
                 <td>Unit</td>
                 <td>
@@ -618,18 +668,18 @@
         </table>
 
     </div>
-    <%--Code Added by Sam For Filteration Section Start--%>
+        <%--Code Added by Sam For Filteration Section Start--%>
 
-    <%--Code Added by Sam For Filteration Section Start--%>
-    <div class="form_main">
+        <%--Code Added by Sam For Filteration Section Start--%>
+        <div class="form_main">
         <div class="clearfix">
             <% if (rights.CanAdd)
                { %>
-            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span><u>A</u>dd New</span> </a><%} %>
+            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus" ></i></span><span><u>A</u>dd New</span> </a><%} %>
 
             <% if (rights.CanExport)
                { %>
-            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
                 <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -658,7 +708,7 @@
             <%--Sandip Section for Approval Section in Design End --%>
         </div>
     </div>
-    <div class="GridViewArea relative">
+        <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdQuotation" runat="server" KeyFieldName="Invoice_Id" AutoGenerateColumns="False" SettingsBehavior-AllowFocusedRow="true" OnPageIndexChanged="GrdQuotation_PageIndexChanged"
             Width="100%" ClientInstanceName="cgrid" OnCustomCallback="GrdQuotation_CustomCallback" OnDataBinding="GrdQuotation_DataBinding"
             DataSourceID="EntityServerModeDataSource" SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" 
@@ -822,6 +872,7 @@
             <SettingsLoadingPanel Text="Please Wait..." />
         </dxe:ASPxGridView>
         <asp:HiddenField ID="hiddenedit" runat="server" />
+    </div>
     </div>
     <dx:LinqServerModeDataSource ID="EntityServerModeDataSource" runat="server" OnSelecting="EntityServerModeDataSource_Selecting"
         ContextTypeName="ERPDataClassesDataContext" TableName="v_TransitSBList" />

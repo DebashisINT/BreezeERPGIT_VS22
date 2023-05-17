@@ -278,6 +278,155 @@
         //End Rev Bapi
 
     </script>
+
+    <%--Rev 2.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        /*#grid {
+            max-width: 98% !important;
+        }*/
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PLSales , #dt_SaleInvoiceDue , #dt_BTOut , #dt_refCreditNoteDt
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PLSales_B-1 , #dt_SaleInvoiceDue_B-1 , #dt_BTOut_B-1 ,
+        #dt_refCreditNoteDt_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_PLSales_B-1 #dt_PLSales_B-1Img , #dt_SaleInvoiceDue_B-1 #dt_SaleInvoiceDue_B-1Img , #dt_BTOut_B-1 #dt_BTOut_B-1Img ,
+        #dt_refCreditNoteDt_B-1 #dt_refCreditNoteDt_B-1Img
+        {
+            display: none;
+        }
+
+        /*select
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .calendar-icon
+        {
+                right: 18px;
+                bottom: 6px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0 !important;
+        }
+
+        .col-md-2, .col-md-4 {
+    margin-bottom: 5px;
+}
+
+        .simple-select::after
+        {
+                top: 26px;
+            right: 13px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .backSelect {
+    background: #42b39e !important;
+}
+
+        #ddlInventory
+        {
+                -webkit-appearance: auto;
+        }
+
+        /*.wid-90
+        {
+            width: 100%;
+        }
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
+        {
+            width: 97%;
+        }*/
+        .newLbl
+        {
+                margin: 3px 0 !important;
+        }
+
+        .lblBot > span, .lblBot > label
+        {
+                margin-bottom: 3px !important;
+        }
+
+        .col-md-2 > label, .col-md-2 > span, .col-md-1 > label, .col-md-1 > span
+        {
+            margin-top: 0px;
+            font-size: 14px;
+        }
+
+        .col-md-6 span
+        {
+            font-size: 14px;
+        }
+
+        #gridDEstination
+        {
+            width:99% !important;
+        }
+
+        #txtEntity , #txtCustName
+        {
+            width: 100%;
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12
+            {
+                 padding-right: 10px;
+                 padding-left: 10px;
+            }
+            .simple-select::after
+        {
+                top: 31px;
+            right: 8px;
+        }
+            .calendar-icon
+        {
+                right: 14px;
+                bottom: 6px;
+        }
+        }
+
+    </style>
+    <%--Rev end 2.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:HiddenField runat="server" ID="hdnConvertionOverideVisible" />
@@ -286,13 +435,15 @@
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
         <ClientSideEvents ControlsInitialized="AllControlInitilize" />
     </dxe:ASPxGlobalEvents>
-    <div class="panel-title clearfix" id="myDiv">
+    <%--Rev 2.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-title clearfix" id="myDiv">
         <h3 class="pull-left">
             <asp:Label ID="lblHeading" runat="server" Text="Add Warehouse Wise Stock Transfer"></asp:Label>
         </h3>
     </div>
-    <div id="ApprovalCross" runat="server" class="crossBtn"><a href="WarehousewiseStockTransferList.aspx"><i class="fa fa-times"></i></a></div>
-    <div class="form_main">
+        <div id="ApprovalCross" runat="server" class="crossBtn"><a href="WarehousewiseStockTransferList.aspx"><i class="fa fa-times"></i></a></div>
+        <div class="form_main">
 
         <div class="boxBorder">
             <div class="styledBox mTop5">
@@ -329,8 +480,12 @@
                             <span id="MandatoryDate" class="iconNumberScheme pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
 
                         </div>
+                        <%--Rev 2.0--%>
+                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                        <%--Rev end 2.0--%>
                     </div>
-                    <div class="col-md-2">
+                    <%--Rev 2.0: "simple-select" class add --%>
+                    <div class="col-md-2 simple-select">
                         <label class="darkLabel mTop5">From Unit<span style="color: red">*</span></label>
                         <div class="relative">
                             <asp:DropDownList ID="ddlBranch" runat="server" onchange="ddlBranch_SelectedIndexChanged()"
@@ -340,7 +495,8 @@
 
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <%--Rev 1.0: "simple-select" class add --%>
+                    <div class="col-md-2 simple-select">
                         <label class="darkLabel mTop5">To Unit<span style="color: red">*</span></label>
                         <div class="relative">
                             <asp:DropDownList ID="ddlBranchTo" runat="server" onchange="ddlBranchTo_SelectedIndexChanged()"
@@ -367,7 +523,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label class="darkLabel mTop5">Remarks</label>
+                        <label class="darkLabel ">Remarks</label>
                         <div>
                             <dxe:ASPxTextBox runat="server" ID="txRemarks" ClientInstanceName="ctxRemarks" MaxLength="500" Width="100%">
                             </dxe:ASPxTextBox>
@@ -660,21 +816,21 @@
                         SettingsPager-Mode="ShowAllRecords" Settings-HorizontalScrollBarMode="Visible">
                         <SettingsPager Visible="false"></SettingsPager>
                         <Columns>
-                            <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="30px" VisibleIndex="0"
+                            <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="50px" VisibleIndex="0"
                                 Caption=" ">
                                 <CustomButtons>
                                     <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomDelete" Image-Url="/assests/images/crs.png">
                                     </dxe:GridViewCommandColumnCustomButton>
                                 </CustomButtons>
                             </dxe:GridViewCommandColumn>
-                            <dxe:GridViewDataTextColumn FieldName="SrlNo" Caption="Sl#" ReadOnly="true" VisibleIndex="1" Width="30px">
+                            <dxe:GridViewDataTextColumn FieldName="SrlNo" Caption="Sl#" ReadOnly="true" VisibleIndex="1" Width="50px">
                                 <PropertiesTextEdit>
                                 </PropertiesTextEdit>
                             </dxe:GridViewDataTextColumn>
                             <%--Batch Product Popup Start--%>
                             <%--Rev 2.0--%>
                             <%--<dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="2" Width="20%" ReadOnly="True">--%>
-                            <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="2" Width="130px" ReadOnly="True">
+                            <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="2" Width="150px" ReadOnly="True">
                             <%--Rev end 2.0--%>
                                 <PropertiesButtonEdit>
                                     <ClientSideEvents ButtonClick="ProductButnClick" KeyDown="ProductKeyDown" />
@@ -700,13 +856,13 @@
                             <%--Batch Product Popup End--%>
                             <%--Rev 2.0--%>
                             <%--<dxe:GridViewDataTextColumn FieldName="Discription" Caption="Description" VisibleIndex="3" Width="15%" ReadOnly="true">--%>
-                            <dxe:GridViewDataTextColumn FieldName="Discription" Caption="Description" VisibleIndex="3" Width="100px" ReadOnly="true">
+                            <dxe:GridViewDataTextColumn FieldName="Discription" Caption="Description" VisibleIndex="3" Width="150px" ReadOnly="true">
                             <%--Rev end 2.0--%>
                                 <CellStyle Wrap="True"></CellStyle>
                             </dxe:GridViewDataTextColumn>
                             <%--Rev 2.0--%>
                             <%--<dxe:GridViewDataButtonEditColumn FieldName="SourceWarehouse" Caption="Source Warehouse" VisibleIndex="4" Width="15%" ReadOnly="True">--%>
-                            <dxe:GridViewDataButtonEditColumn FieldName="SourceWarehouse" Caption="Source Warehouse" VisibleIndex="4" Width="130px" ReadOnly="True">
+                            <dxe:GridViewDataButtonEditColumn FieldName="SourceWarehouse" Caption="Source Warehouse" VisibleIndex="4" Width="150px" ReadOnly="True">
                             <%--Rev end 2.0--%>
                                 <PropertiesButtonEdit>
                                     <ClientSideEvents ButtonClick="SourceWarehouseButnClick" KeyDown="SourceWarehouseKeyDown" />
@@ -720,7 +876,7 @@
                                 <CellStyle Wrap="True" CssClass="hide"></CellStyle>
                             </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn FieldName="AvlStkSourceWH" Caption="Avl. Stock" VisibleIndex="5" Width="80px" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
+                            <dxe:GridViewDataTextColumn FieldName="AvlStkSourceWH" Caption="Avl. Stock" VisibleIndex="5" Width="100px" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
                                 <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.0000">
                                     <%-- <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" AllowMouseWheel="false" />--%>
                                     <%--<MaskSettings Mask="<-999999999..999999999g>.<0..99>" AllowMouseWheel="false" />--%>
@@ -749,7 +905,7 @@
                                 <CellStyle HorizontalAlign="Right"></CellStyle>
                             </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn FieldName="TransferQuantity" Caption="Transfer Qty" VisibleIndex="8" Width="92px" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
+                            <dxe:GridViewDataTextColumn FieldName="TransferQuantity" Caption="Transfer Qty" VisibleIndex="8" Width="110px" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
                                 <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.0000">
                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" AllowMouseWheel="false" />
                                     <ClientSideEvents LostFocus="QuantityTextChange" />
@@ -791,7 +947,7 @@
 
 
                                <%--  Manis End 24428--%> 
-                            <dxe:GridViewCommandColumn Width="90px" VisibleIndex="13" Caption="Stk Details">
+                            <dxe:GridViewCommandColumn Width="100px" VisibleIndex="13" Caption="Stk Details">
                                 <CustomButtons>
                                     <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomWarehouse" Image-Url="/assests/images/warehouse.png">
                                     </dxe:GridViewCommandColumnCustomButton>
@@ -1143,7 +1299,7 @@
                                             <%--<% if (rights.CanAdd)
                                        { %>--%>
                                             <dxe:ASPxButton ID="btnSaveRecords" ClientInstanceName="cbtnSaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave & New" ClientVisible="false"
-                                                CssClass="btn btn-primary" UseSubmitBehavior="False">
+                                                CssClass="btn btn-success" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {SaveButtonClick();}" />
                                             </dxe:ASPxButton>
                                             <%--  <%} %>--%>
@@ -1187,6 +1343,9 @@
             <asp:HiddenField runat="server" ID="hdnWSTAutoPrint" Value="" />
                <asp:HiddenField ID="hdProductID" runat="server" />
            <%--  End of Rev  Mantis Issue 24428--%>
+            </div>
+        </div>
+    </div>
             <!--Product Modal -->
             <div class="modal fade" id="ProductModel" role="dialog">
                 <div class="modal-dialog">
