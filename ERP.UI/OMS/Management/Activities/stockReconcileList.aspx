@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="stockReconcileList.aspx.cs" Inherits="ERP.OMS.Management.Activities.stockReconcileList" %>
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   15-05-2023      26122: Stock Reconcile module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="stockReconcileList.aspx.cs" Inherits="ERP.OMS.Management.Activities.stockReconcileList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -349,34 +353,78 @@
 
     </script>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div class="panel-heading clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading clearfix">
         <div class="panel-title pull-left">
             <h3 class="pull-left">Stock Reconcile</h3>
 
         </div>
-        <table class="padTab pull-right" style="margin-top: 7px; margin-right: 35px">
+        <table class="padTab pull-right" style="margin-top: 7px;">
             <tbody>
                 <tr>
                     <td>
                         <label>From </label>
                     </td>
-                    <td>
+                    <%--Rev 1.0: "for-cust-icon" class add --%>
+                    <td class="for-cust-icon">
                         <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%" UseMaskBehavior="True">
                             <ButtonStyle Width="13px">
                             </ButtonStyle>
                         </dxe:ASPxDateEdit>
+                        <%--Rev 1.0--%>
+                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                        <%--Rev end 1.0--%>
                     </td>
                     <td>
                         <label>To </label>
                     </td>
-                    <td>
+                    <%--Rev 1.0: "for-cust-icon" class add --%>
+                    <td class="for-cust-icon">
                         <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%" UseMaskBehavior="True">
                             <ButtonStyle Width="13px">
                             </ButtonStyle>
                         </dxe:ASPxDateEdit>
+                        <%--Rev 1.0--%>
+                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                        <%--Rev end 1.0--%>
                     </td>
                     <td>Select Warehouse</td>
                     <td style="width: 150px">
@@ -385,23 +433,23 @@
                         </dxe:ASPxComboBox>
                     </td>
                     <td>
-                        <input type="button" value="Show" class="btn btn-primary btn-radius" onclick="updateGridByDate()" />
+                        <input type="button" value="Show" class="btn btn-primary " onclick="updateGridByDate()" />
                     </td>
                 </tr>
 
             </tbody>
         </table>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div>
             <% if (rights.CanAdd)
                { %>
 
-            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>New</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><span>New</span> </a>
             <%} %>
             <% if (rights.CanExport)
                { %>
-            <asp:DropDownList ID="drdStkAdj" runat="server" CssClass="btn btn-primary btn-radius " OnSelectedIndexChanged="ReconcileStkAdjustmentListExport_SelectedIndexChanged" AutoPostBack="true">
+            <asp:DropDownList ID="drdStkAdj" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="ReconcileStkAdjustmentListExport_SelectedIndexChanged" AutoPostBack="true">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
                 <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -409,9 +457,9 @@
                 <asp:ListItem Value="4">CSV</asp:ListItem>
             </asp:DropDownList>
             <% } %>
-            <asp:LinkButton ID="lnlDownloaderexcel" runat="server" OnClick="lnlDownloaderexcel_Click" CssClass="btn btn-info btn-radius mBot0">Download Format</asp:LinkButton>
-            <button type="button" onclick="ImportUpdatePopOpenEmployeesTarget();" class="btn btn-warning btn-radius">Import(Add)</button>
-            <button type="button" onclick="ShowCommitList();" class="btn btn-primary btn-radius">Committed Stock List</button>
+            <asp:LinkButton ID="lnlDownloaderexcel" runat="server" OnClick="lnlDownloaderexcel_Click" CssClass="btn btn-info mBot0">Download Format</asp:LinkButton>
+            <button type="button" onclick="ImportUpdatePopOpenEmployeesTarget();" class="btn btn-warning ">Import(Add)</button>
+            <button type="button" onclick="ShowCommitList();" class="btn btn-primary ">Committed Stock List</button>
 
         </div>
         <div>
@@ -557,7 +605,7 @@
             </div>
         </div>
     </div>
-
+    </div>
     <dxe:ASPxPopupControl ID="Popup_PostStlAdj" runat="server" ClientInstanceName="cPopup_PostStlAdj"
         Width="150px" Height="50px" HeaderText="Stock Adjustment List" PopupHorizontalAlign="WindowCenter"
         BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"

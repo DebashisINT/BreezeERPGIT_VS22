@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="phycicalStoctVerification.aspx.cs" Inherits="ERP.OMS.Management.Activities.phycicalStoctVerification" %>
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   15-05-2023      26124: Physical Stock Taking module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="phycicalStoctVerification.aspx.cs" Inherits="ERP.OMS.Management.Activities.phycicalStoctVerification" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 
@@ -68,19 +72,60 @@
         }
     </style>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
     
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
     <script src="JS/phycicalStoctVerification.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">Physical Stock Taking</h3>
 
             <div class="crossBtn" onclick="CrossBtnClose();"><i class="fa fa-times"></i></div>
         </div>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <table class="padTab resposive_table" style="margin-top: 7px;">
             <tbody>
                 <tr>
@@ -141,7 +186,7 @@
 
                           <% if (rights.CanExport)
                             { %>
-                        <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+                        <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                             <asp:ListItem Value="0">Export to</asp:ListItem>
                             <asp:ListItem Value="1">PDF</asp:ListItem>
                             <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -182,7 +227,9 @@
                                      </ButtonStyle>
                         <ClientSideEvents GotFocus="function(s,e){tstartdate.ShowDropDown();}" />
                      </dxe:ASPxDateEdit>
-
+                        <%--Rev 1.0--%>
+                        <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                        <%--Rev end 1.0--%>
                     </div>
                 </div>
 
@@ -197,7 +244,7 @@
                     <div class="fakeInput"> <dxe:ASPxLabel runat="server" ID="lblAltQuantity" ClientInstanceName="clblAltQuantity"></dxe:ASPxLabel></div>
                 </div>
                 <div class="col-md-2 mTop5 pTop13" id="div_Resetbtn" style="display:none">
-                 <dxe:ASPxButton ID="Resetbtn_SaveRecords" ClientInstanceName="cResetbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Reset" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                 <dxe:ASPxButton ID="Resetbtn_SaveRecords" ClientInstanceName="cResetbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Reset" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                     <ClientSideEvents Click="function(s, e) {ResetProduct_ButtonClick();}" />
                 </dxe:ASPxButton>
                  </div>
@@ -349,7 +396,7 @@
                      <% if (rights.CanAdd)
                           { %>
                     
-                <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                     <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                 </dxe:ASPxButton>
                  
@@ -369,7 +416,7 @@
 
 
     </div>
-
+    </div>
    <%-- //calculate and commit start --%>
 
     <dxe:ASPxPopupControl ID="Popup_CalculateCommit" runat="server" ClientInstanceName="cPopup_CalculateCommit"

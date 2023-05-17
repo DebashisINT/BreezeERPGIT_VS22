@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="InstallationCoupon.aspx.cs" Inherits="ERP.OMS.Management.Activities.InstallationCoupon"
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   15-05-2023      26125: Installation Coupon module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="InstallationCoupon.aspx.cs" Inherits="ERP.OMS.Management.Activities.InstallationCoupon"
     MasterPageFile="~/OMS/MasterPage/ERP.Master" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -125,12 +129,55 @@
 
     </script>
 
-    <div class="panel-heading">
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>Installation Coupon</h3>
         </div>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <table class="TableMain100" style="width: 100%">
             <%--<tr style="display:none;">
                 <td>Branch:</td>
@@ -213,7 +260,7 @@
                                 <EditFormSettings Visible="True"></EditFormSettings>
                             </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" Width="0">
+                            <dxe:GridViewDataTextColumn CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" Width="10%">
                                 <DataItemTemplate>
 
                                     <%--<% if (rights.CanAdd)
@@ -299,6 +346,7 @@
         </table>
         <dxe:ASPxGridViewExporter ID="exporter" runat="server">
         </dxe:ASPxGridViewExporter>
+    </div>
     </div>
     <!-- Installation verification Modal -->
     <dxe:ASPxPopupControl ID="Popup_Installationverification" runat="server" ClientInstanceName="cPopup_Installationverification"

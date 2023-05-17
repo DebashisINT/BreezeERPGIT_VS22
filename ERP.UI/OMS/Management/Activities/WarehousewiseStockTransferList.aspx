@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockTransferList.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockTransferList" %>
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.38   12-05-2023      26112: Warehouse Wise Stock Transfer module design modification & check in small device
+=========================================================End Revision History===================================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockTransferList.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockTransferList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -283,36 +287,79 @@
             }
     </style>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
         <ClientSideEvents ControlsInitialized="AllControlInitilize" />
     </dxe:ASPxGlobalEvents>
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">Warehouse Wise Stock Transfer </h3>
         </div>
     </div>
-    <table class="padTab">
+        <table class="padTab">
         <tr>
             <td>
                 <label>From Date</label></td>
-            <td>
+            <%--Rev 1.0: "for-cust-icon" class add --%>
+            <td class="for-cust-icon">
                 <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True">
                     <ButtonStyle Width="13px">
                     </ButtonStyle>
                 </dxe:ASPxDateEdit>
+                <%--Rev 1.0--%>
+                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                <%--Rev end 1.0--%>
             </td>
             <td>
                 <label>To Date</label>
             </td>
-            <td>
+            <%--Rev 1.0: "for-cust-icon" class add --%>
+            <td class="for-cust-icon">
                 <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True">
                     <ButtonStyle Width="13px">
                     </ButtonStyle>
                 </dxe:ASPxDateEdit>
-
+                <%--Rev 1.0--%>
+                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                <%--Rev end 1.0--%>
             </td>
             <td>Unit</td>
             <td>
@@ -326,14 +373,14 @@
         </tr>
 
     </table>
-    <div class="form_main">
+        <div class="form_main">
         <% if (rights.CanAdd)
            { %>
-        <a href="javascript:void(0);" onclick="OnAddClick()" id="AddId" class="btn btn-success  btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span><u>A</u>dd Transfer </a>
+        <a href="javascript:void(0);" onclick="OnAddClick()" id="AddId" class="btn btn-success "><span class="btn-icon"><i class="fa fa-plus"></i></span><u>A</u>dd Transfer </a>
         <%} %>
         <% if (rights.CanExport)
            { %>
-        <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+        <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary " OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
             <asp:ListItem Value="0">Export to</asp:ListItem>
             <asp:ListItem Value="1">PDF</asp:ListItem>
             <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -343,7 +390,7 @@
         <% } %>
         <% if (rights.CanReturn)
            { %>
-        <a href="javascript:void(0);" onclick="ReturnClick()" id="ReturnId" class="btn btn-success  btn-radius"><span class="btn-icon"><i class="fa fa-plus"></i></span>Return</a>
+        <a href="javascript:void(0);" onclick="ReturnClick()" id="ReturnId" class="btn btn-info "><span class="btn-icon"><i class="fa fa-plus"></i></span>Return</a>
         <% } %>
         <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
         <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
@@ -687,7 +734,7 @@
     <asp:HiddenField ID="hddnInvoiceID" runat="server" />
     <%--Rev work close 12.07.2022 mantise no :0025011: Update E-way Bill--%>
     </div>
-
+    </div>
     <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
     <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
 
