@@ -1453,6 +1453,11 @@
                 display: none;
             }
 
+            #GrdQuotation
+        {
+            max-width: 99% !important;
+        }
+
         .calendar-icon
         {
                 right: 18px !important;

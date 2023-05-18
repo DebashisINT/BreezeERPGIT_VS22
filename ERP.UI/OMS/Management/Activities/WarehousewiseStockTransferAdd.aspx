@@ -415,7 +415,7 @@
             }
             .simple-select::after
         {
-                top: 31px;
+                top: 26px;
             right: 8px;
         }
             .calendar-icon
@@ -1375,7 +1375,7 @@
                         <div class="modal-footer">
                             <% if (rightsProd.CanAdd)
                                { %>
-                            <button type="button" class="btn btn-success btn-radius" onclick="fn_PopOpen();">
+                            <button type="button" class="btn btn-success" onclick="fn_PopOpen();">
                                 <span class="btn-icon"><i class="fa fa-plus"></i></span>
                                 Add New
                             </button>

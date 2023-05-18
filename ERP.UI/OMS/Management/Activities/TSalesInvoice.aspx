@@ -7741,7 +7741,7 @@ function fn_Edit(keyValue) {
                                                 Quantity
                                             </div>
                                             <div class="Left_Content" style="">
-                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
+                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="31px">
                                                     <MaskSettings Mask="<0..999999999999>.<0..99>" IncludeLiterals="DecimalSymbol" />
                                                     <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />
                                                 </dxe:ASPxTextBox>
@@ -7751,7 +7751,7 @@ function fn_Edit(keyValue) {
                                         <div class="col-md-3">
                                             <div>
                                             </div>
-                                            <div class="Left_Content" style="padding-top: 14px">
+                                            <div class="Left_Content" style="padding-top: 17px">
                                                 <dxe:ASPxButton ID="btnWarehouse" ClientInstanceName="cbtnWarehouse" Width="50px" runat="server" AutoPostBack="False" UseSubmitBehavior="True" Text="Add" CssClass="btn btn-primary">
                                                     <ClientSideEvents Click="function(s, e) {if(!document.getElementById('myCheck').checked) SaveWarehouse();}" />
                                                 </dxe:ASPxButton>

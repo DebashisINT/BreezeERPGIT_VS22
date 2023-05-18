@@ -4537,7 +4537,7 @@
                 <div class="modal-footer">
                     <% if (rightsProd.CanAdd)
                        { %>
-                    <button type="button" class="btn btn-success btn-radius" onclick="fn_PopOpen();">
+                    <button type="button" class="btn btn-success " onclick="fn_PopOpen();">
                         <span class="btn-icon"><i class="fa fa-plus"></i></span>
                         Add New
                     </button>
@@ -5225,11 +5225,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3" id="div_Quantity">
-                                            <div style="margin-bottom: 2px;">
+                                            <div style="margin-bottom: 4px;">
                                                 Quantity
                                             </div>
                                             <div class="Left_Content" style="">
-                                                <dxe:ASPxTextBox ID="ASPxTextBox2" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" DisplayFormatString="0.0000" Font-Size="12px" Width="100%" Height="15px" ClientSideEvents-GotFocus="ALTQuantityGotFocus">
+                                                <dxe:ASPxTextBox ID="ASPxTextBox2" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" DisplayFormatString="0.0000" Font-Size="12px" Width="100%" Height="31px" ClientSideEvents-GotFocus="ALTQuantityGotFocus">
                                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
                                                     <%--<ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />--%>
                                                     <ClientSideEvents TextChanged="function(s,e) { ChangePackingByQuantityinjs();}" />
@@ -5266,7 +5266,7 @@
                                     <div class="col-md-3">
                                         <div>
                                         </div>
-                                        <div class="Left_Content" style="padding-top: 14px">
+                                        <div class="Left_Content" style="padding-top: 19px">
                                             <dxe:ASPxButton ID="ASPxButton8" ClientInstanceName="cbtnWarehouse" UseSubmitBehavior="false" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary">
                                                 <ClientSideEvents Click="function(s, e) {SaveWarehouse();}" />
                                             </dxe:ASPxButton>

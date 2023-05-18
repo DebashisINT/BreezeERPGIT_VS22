@@ -1444,6 +1444,13 @@ function DateCheck() {
                 margin: 3px 0 !important;
         }
 
+        .ui-widget.ui-widget-content
+        {
+            position: fixed;
+            top: 40%;
+            left: 40%;
+        }
+
     </style>
     <%--Rev end 1.0--%>
 </asp:Content>
