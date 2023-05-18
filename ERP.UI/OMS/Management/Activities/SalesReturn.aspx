@@ -1,6 +1,7 @@
 ﻿<%--====================================================Revision History=========================================================================
  1.0   Priti     V2.0.37    05-03-2023      0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
  2.0   Pallab    V2.0.37    12-04-2023     	0025992: Add Sales Return module design modification & check in small device
+ 3.0   Pallab    V2.0.38    17-05-2023     	0026153: In Add Sales Return module, after select customer, module "cross button" is hiding, should be fix
 ====================================================End Revision History=====================================================================
 --%>
 
@@ -21,10 +22,13 @@
     <script src="JS/SearchPopupDatatable.js"></script>
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevel.js?var=1.2" type="text/javascript"></script>
+    <%--Rev 2.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    <%--Rev end 2.0--%>
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="JS/SalesReturn.js?v=2.1"></script>
     <link href="CSS/SalesReturn.css" rel="stylesheet" />
-
+    
     <%--Use for set focus on UOM after press ok on UOM--%>
     <script>
        
@@ -1100,7 +1104,7 @@ display: none !important;
     <%--Batch Product Popup End--%>
 
     <%--Rev 2.0--%>
-    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
 
     <style>
         select#ddlInventory
@@ -3574,8 +3578,9 @@ display: none !important;
                 });
 
 
-
-                $('.crossBtn').hide();
+                /*Rev 3.0*/
+                //$('.crossBtn').hide();
+                /*Rev end 3.0*/
                 //   page.GetTabByName('General').SetEnabled(false);
                 $('#CustModel').modal('hide');
             }
