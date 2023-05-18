@@ -4642,6 +4642,16 @@ function fn_Deletecity(keyValue) {
         {
             font-size: 14px;
         }
+        #ProductpopUp_PW-1
+        {
+            height: 420px !important;
+            width: 824px !important;
+        }
+
+        #ProductpopUp_PW-1 > .dxpc-mainDiv
+        {
+            height: 420px;
+        }
 
         @media only screen and (max-width: 1380px) and (min-width: 1300px)
         {
@@ -6610,7 +6620,7 @@ function fn_Deletecity(keyValue) {
                                                 Quantity
                                             </div>
                                             <div class="Left_Content" style="">
-                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
+                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="31px">
                                                     <%-- <MaskSettings Mask="<0..999999999999>.<0..99>" IncludeLiterals="DecimalSymbol" />--%>
                                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" IncludeLiterals="DecimalSymbol" />
                                                     <%--   <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />--%>
@@ -6651,7 +6661,7 @@ function fn_Deletecity(keyValue) {
                                         <div class="col-md-3">
                                             <div>
                                             </div>
-                                            <div class="Left_Content" style="padding-top: 14px">
+                                            <div class="Left_Content" style="padding-top: 17px">
                                                 <dxe:ASPxButton ID="btnWarehouse" ClientInstanceName="cbtnWarehouse" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary">
                                                     <ClientSideEvents Click="function(s, e) {if(!document.getElementById('myCheck').checked)  SaveWarehouse();}" />
                                                 </dxe:ASPxButton>

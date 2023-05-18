@@ -2440,7 +2440,7 @@ select {
     width: auto;
 }
 select.btn {
-    height:30px !important;
+    height:31px !important;
     margin-right: 5px !important;
 }
 select.btn.btn-xs {
@@ -4153,7 +4153,7 @@ label, .mylabel1, .clsTo, .dxeBase_PlasticBlue {
     /* padding: 10px 0; */
     border-radius: 4px;
     text-align: center;
-    line-height: 19px;
+    line-height: 18px;
     z-index: 0;
 }
 

@@ -1,5 +1,6 @@
 ﻿//=======================================================Revision History =========================================================================
-//1.0     Priti   V2.0.36   17 - 02 - 2023     After Listing view upgradation delete data show in listing issue solved.
+//1.0     Priti    V2.0.36   17 - 02 - 2023     After Listing view upgradation delete data show in listing issue solved.
+//2.0     Pallab   V2.0.38   18 - 05 - 2023     26166: The Product Name and Description is too small in the Grid of Purchase Indent Module when the Screen Resolution is 1366X768
 //=========================================================End Revision History========================================================================
     $(function () {
             $('#UOMModal').on('hide.bs.modal', function () {
@@ -2710,7 +2711,48 @@ function CmbScheme_LostFocus() {
             }
 
         });
+        /*Rev 2.0*/
+        $("#expandEntryft67").click(function (e) {
+            e.preventDefault();
 
+            var $this = $(this);
+
+            if ($this.children('i').hasClass('fa-expand')) {
+                $this.removeClass('hovered half').addClass('full');
+                $this.attr('title', 'Minimize Grid');
+                $this.children('i').removeClass('fa-expand');
+                $this.children('i').addClass('fa-arrows-alt');
+                var gridId = $(this).attr('data-instance');
+                $(this).closest('.makeFullscreen').addClass('panel-fullscreen');
+                var cntWidth = $(this).parent('.makeFullscreen').width();
+                var browserHeight = document.documentElement.clientHeight;
+                var browserWidth = document.documentElement.clientWidth;
+
+
+                CgvPurchaseIndent.SetHeight(browserHeight - 150);
+                CgvPurchaseIndent.SetWidth(cntWidth);
+            }
+            else if ($this.children('i').hasClass('fa-arrows-alt')) {
+                $this.children('i').removeClass('fa-arrows-alt');
+                $this.removeClass('full').addClass('hovered half');
+                $this.attr('title', 'Maximize Grid');
+                $this.children('i').addClass('fa-expand');
+                var gridId = $(this).attr('data-instance');
+                $(this).closest('.makeFullscreen').removeClass('panel-fullscreen');
+
+                var browserHeight = document.documentElement.clientHeight;
+                var browserWidth = document.documentElement.clientWidth;
+
+
+                CgvPurchaseIndent.SetHeight(450);
+
+                var cntWidth = $this.parent('.makeFullscreen').width();
+                CgvPurchaseIndent.SetWidth(cntWidth);
+
+            }
+
+        });
+        /*Rev end 2.0*/
     });
 
     $(document).ready(function () {

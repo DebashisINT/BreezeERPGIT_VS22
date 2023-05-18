@@ -101,6 +101,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
                 right: 18px;
         }
+
+        .floatedBtnArea
+        {
+            width: 62% !important;
+            height: 70px;
+        }
+
+        .dxgvSearchPanel_PlasticBlue
+        {
+            padding: 25px 4px 20px 10px;
+        }
+        .floatedBtnArea > a
+        {
+                margin-bottom: 10px;
+        }
     </style>
     <%--Rev end 1.0--%>
 </asp:Content>
@@ -203,7 +218,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         <div class="GridViewArea relative">
 
         <div class="makeFullscreen ">
-            <span class="fullScreenTitle">Purchase Indent/Requisition</span>
+            <span class="fullScreenTitle">Purchase Invoice</span>
             <span class="makeFullscreen-icon half hovered " data-instance="cgrid" title="Maximize Grid" id="expandcgrid">
                 <i class="fa fa-expand"></i>
             </span>

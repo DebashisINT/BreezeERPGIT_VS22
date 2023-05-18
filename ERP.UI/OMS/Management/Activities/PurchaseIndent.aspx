@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                13-04-2023        2.0.37           Pallab              25820: Purchase Indent/Requisition page design modification
+2.0                18-05-2023        2.0.38           Pallab              26166: The Product Name and Description is too small in the Grid of Purchase Indent Module when the Screen Resolution is 1366X768
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Purchase Indent/Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseIndent.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseIndent" %>
@@ -674,6 +675,12 @@ function ProductsComboGotFocusChange(s, e) {
             z-index: 0;
         }
 
+        .simple-select::after
+        {
+            top: 6px;
+            right: -2px;
+        }
+
         #GrdSalesReturn {
             max-width: 98% !important;
         }
@@ -696,6 +703,16 @@ function ProductsComboGotFocusChange(s, e) {
         .padTabtype2 > tbody > tr > td
         {
             vertical-align: bottom;
+        }
+
+        input[disabled], select[disabled]
+        {
+            background: #eee;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 0px !important;
         }
     </style>
     <%--Rev end 1.0--%>
@@ -1233,7 +1250,7 @@ function ProductsComboGotFocusChange(s, e) {
             <div>
                 <div class="makeFullscreen ">
                     <span class="fullScreenTitle">Purchase Indent/Requisition</span>
-                    <span class="makeFullscreen-icon half hovered " data-instance="InsgridBatch" title="Maximize ..3314444" id="expandEntryft67"><i class="fa fa-expand"></i></span>
+                    <span class="makeFullscreen-icon half hovered " data-instance="InsgridBatch" title="Minimize Grid" id="expandEntryft67"><i class="fa fa-expand"></i></span>
                     <dxe:ASPxGridView runat="server" ClientInstanceName="InsgridBatch" ID="gridBatch" KeyFieldName="PurchaseIndentID"
                         OnBatchUpdate="gridBatch_BatchUpdate"
                         OnCellEditorInitialize="gridBatch_CellEditorInitialize"
@@ -1264,8 +1281,10 @@ function ProductsComboGotFocusChange(s, e) {
                         </dxe:GridViewDataComboBoxColumn>--%>
 
                             <%--Batch Product Popup Start--%>
-
-                            <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product Name" VisibleIndex="2">
+                            <%--Rev 2.0--%>
+                            <%--<dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product Name" VisibleIndex="2">--%>
+                            <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product Name" VisibleIndex="2" Width="100">
+                            <%--Rev end 2.0--%>
                                 <PropertiesButtonEdit>
                                     <ClientSideEvents ButtonClick="ProductButnClick" KeyDown="ProductKeyDown" LostFocus="ProductsGotFocus" GotFocus="ProductsGotFocusFromID" />
                                     <Buttons>
@@ -1278,8 +1297,10 @@ function ProductsComboGotFocusChange(s, e) {
                             <%--Batch Product Popup End--%>
 
                            
-
-                            <dxe:GridViewDataTextColumn VisibleIndex="3" Caption="Description" FieldName="gvColDiscription" Width="">
+                            <%--Rev 2.0--%>
+                            <%--<dxe:GridViewDataTextColumn VisibleIndex="3" Caption="Description" FieldName="gvColDiscription"  Width="">--%>
+                            <dxe:GridViewDataTextColumn VisibleIndex="3" Caption="Description" FieldName="gvColDiscription"  Width="110">
+                            <%--Rev end 2.0--%>
                                 <PropertiesTextEdit>
                                 </PropertiesTextEdit>
                                 <CellStyle Wrap="true" HorizontalAlign="Left" CssClass="gridcellleft"></CellStyle>
