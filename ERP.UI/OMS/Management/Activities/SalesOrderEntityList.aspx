@@ -1117,18 +1117,31 @@
             position: initial !important;
             display: inherit !important;
             width: auto !important;
-            line-height: 22px !important;
+            line-height: 19px !important;
             background: #683ad5 !important;
             padding: 1px 5px !important;
             border-radius: 2px !important;
             margin-left: 4px !important;
             font-size: 14px !important;
+            height: 20px;
         }
 
         .btn.typeNotificationBtn
         {
             padding-right: 10px !important;
+                height: 30px;
         }
+
+        .btn.typeNotificationBtn #lblQuoteweatingCount
+        {
+                line-height: 18px;
+        }
+
+        .hight-30
+        {
+                height: 30px;
+        }
+
         /*Rev end 3.0*/
         </style>
 </asp:Content>
@@ -1259,7 +1272,7 @@
         <div class="clearfix">
             <% if (rights.CanAdd)
                 { %>
-            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>New</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success hight-30"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>New</span> </a>
             <% } %>
 
             <% if (rights.CanExport)

@@ -8,6 +8,8 @@ Rev Number       DATE            VERSION        DEVELOPER            CHANGES
 1.0              08-02-2023      2.0.35         Pallab               inner page grid issue fix and design modification
 2.0              01-03-2023      2.0.36         Pallab               The Profile Image in the Welcome Panel in ERP has become so large that other functions in ERP could not be used.
                                                                      Refer: 25708
+3.0              17-05-2023      2.0.38         Pallab               When manually clicked for sidebar menu open, page main content part right side hiding issue fix
+                                                                     Refer: 26152
 ====================================================== Revision History ===========================================================*/
 
 *:focus {
@@ -498,9 +500,12 @@ p.copyright {
     min-height: 800px;
     /*z-index: 100;*/
     position: relative !important;
-    margin-left: 175px;
+    /*rev 3.0*/
+    /*margin-left: 175px;*/
+    margin-left: 50px;
+    /*rev end 3.0*/
     padding: 15px 15px;
-    margin-top:75px;
+    margin-top: 75px;
 }
 .tpLbl {
     background: #61d2ac;
@@ -4273,3 +4278,9 @@ label, .mylabel1, .clsTo, .dxeBase_PlasticBlue {
         color: #fff;
         opacity: 1;
     }
+/*Rev 3.0*/
+.dxgvControl_PlasticBlue, .dxgvDisabled_PlasticBlue
+{
+    width: 100% !important;
+}
+/*Rev end 3.0*/
