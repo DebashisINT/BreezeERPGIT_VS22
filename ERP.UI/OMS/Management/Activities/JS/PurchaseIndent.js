@@ -1,6 +1,7 @@
 ﻿//=======================================================Revision History =========================================================================
 //1.0     Priti    V2.0.36   17 - 02 - 2023     After Listing view upgradation delete data show in listing issue solved.
 //2.0     Pallab   V2.0.38   18 - 05 - 2023     26166: The Product Name and Description is too small in the Grid of Purchase Indent Module when the Screen Resolution is 1366X768
+//3.0     Sanchita V2.0.40   19 - 05 - 2023     Rate and Value is not populating in Purchase Indent with Multi UOM. Refer: 26164
 //=========================================================End Revision History========================================================================
     $(function () {
             $('#UOMModal').on('hide.bs.modal', function () {
@@ -111,6 +112,10 @@ function OnMultiUOMEndCallback(s, e) {
         }
         //InsgridBatch.GetEditor("SalePrice").SetValue(BaseRate);
         //InsgridBatch.GetEditor("Amount").SetValue(BaseQty * BaseRate)
+        // Rev 3.0
+        InsgridBatch.GetEditor("gvColRate").SetValue(BaseRate);
+        InsgridBatch.GetEditor("gvColValue").SetValue(BaseQty * BaseRate)
+        // End of Rev 3.0
         InsgridBatch.GetEditor("Order_AltQuantity").SetValue(cgrid_MultiUOM.cpAltQty);
         InsgridBatch.GetEditor("Order_AltUOM").SetValue(cgrid_MultiUOM.cpAltUom);
     }
