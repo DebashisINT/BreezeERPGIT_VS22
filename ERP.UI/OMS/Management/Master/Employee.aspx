@@ -744,7 +744,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #EmployeeGrid , .TableMain100 #GrdEmployee
         {
-            max-width: 98% !important;
+            max-width: 99% !important;
         }
 
         /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div

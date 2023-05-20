@@ -2929,7 +2929,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -3298,12 +3298,17 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         .mt-24
         {
-            margin-top: 24px;
+            margin-top: 24px !important;
         }
 
         .col-md-3
         {
             margin-top: 8px;
+        }
+
+        .chosen-container-single .chosen-single div::after
+        {
+                font-size: 17px;
         }
 
         /*.dxeDisabled_PlasticBlue, .aspNetDisabled {

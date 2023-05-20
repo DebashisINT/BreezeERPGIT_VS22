@@ -993,6 +993,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
              top: 25px;
         }
 
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px !important;
+        }
+
         /*.dxeDisabled_PlasticBlue, .aspNetDisabled {
     opacity: 0.4 !important;
     color: #ffffff !important;

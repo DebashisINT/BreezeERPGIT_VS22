@@ -1235,7 +1235,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -1634,7 +1634,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             position: absolute;
             top: 2px;
             right: 5px;
-            font-size: 18px;
+            font-size: 17px;
             transform: rotate(269deg);
             font-weight: 500;
         }
@@ -1908,6 +1908,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
                                                     </dxe:ASPxDateEdit>
+                                                    <%--Rev 1.0--%>
+                                                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                <%--Rev end 1.0--%>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">

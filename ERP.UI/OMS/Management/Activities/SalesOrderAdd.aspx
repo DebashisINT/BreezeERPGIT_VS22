@@ -1391,7 +1391,7 @@ function PerformCallToGridBind() {
                                             <%--  <dxe:ASPxComboBox ID="ddl_Quotation" runat="server" ClientInstanceName="cddl_Quotatione" TabIndex="12" Width="100%">
                         <clientsideevents selectedindexchanged="function(s, e) { QuotationNumberChanged();}" />
                     </dxe:ASPxComboBox>--%>
-                                            <asp:RadioButtonList ID="rdl_Salesquotation" runat="server" RepeatDirection="Horizontal" onchange="return selectValue();" Width="85%">
+                                            <asp:RadioButtonList ID="rdl_Salesquotation" runat="server" RepeatDirection="Horizontal" onchange="return selectValue();" Width="90%">
                                                 <asp:ListItem Text="Quotation" Value="QN"></asp:ListItem>
                                                 <asp:ListItem Text="Inquiry" Value="SINQ"></asp:ListItem>
                                             </asp:RadioButtonList>
@@ -3216,7 +3216,7 @@ function PerformCallToGridBind() {
                                                 Quantity
                                             </div>
                                             <div class="Left_Content" style="">
-                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="15px">
+                                                <dxe:ASPxTextBox ID="txtQuantity" runat="server" ClientInstanceName="ctxtQuantity" HorizontalAlign="Right" Font-Size="12px" Width="100%" Height="31px">
                                                     <MaskSettings Mask="<0..999999999999>.<0..99>" IncludeLiterals="DecimalSymbol" />
                                                     <ClientSideEvents TextChanged="function(s, e) {SaveWarehouse();}" />
                                                 </dxe:ASPxTextBox>
@@ -3226,7 +3226,7 @@ function PerformCallToGridBind() {
                                         <div class="col-md-3">
                                             <div>
                                             </div>
-                                            <div class="Left_Content" style="padding-top: 14px">
+                                            <div class="Left_Content" style="padding-top: 17px">
                                                 <dxe:ASPxButton ID="btnWarehouse" ClientInstanceName="cbtnWarehouse" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary" UseSubmitBehavior="false">
                                                     <ClientSideEvents Click="function(s, e) {if(!document.getElementById('myCheck').checked) SaveWarehouse();}" />
                                                 </dxe:ASPxButton>

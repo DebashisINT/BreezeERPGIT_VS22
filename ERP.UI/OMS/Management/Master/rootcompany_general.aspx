@@ -384,7 +384,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -938,7 +938,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     <%--Rev end 1.0--%>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <%--Rev 1.0 : "simple-select" class add --%>
+                                            <div class="col-md-3 simple-select">
                                                 <label>Currency </label>
                                                 <div>
                                                     <asp:DropDownList ID="ddlcurrency" runat="server" Width="100%">
