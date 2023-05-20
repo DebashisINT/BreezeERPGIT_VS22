@@ -12,7 +12,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
 
         #EmployeeGrid {
-            width: 100 % !important;
+            width: 100% !important;
         }
         .myAssignTarget {
         margin-bottom: 0;
@@ -1069,7 +1069,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
             height: 30px !important;
             border-radius: 4px;
-            -webkit-appearance: none;
+            /*-webkit-appearance: none;*/
             position: relative;
             z-index: 1;
             background-color: transparent;

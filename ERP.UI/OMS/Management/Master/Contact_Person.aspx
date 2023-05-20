@@ -161,7 +161,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
             height: 30px !important;
             border-radius: 4px;
-            -webkit-appearance: none;
+            /*-webkit-appearance: none;*/
             position: relative;
             z-index: 1;
             background-color: transparent;
@@ -614,6 +614,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .col-md-3
         {
             margin-top: 8px;
+        }
+
+        a:hover.dxeHyperlink_PlasticBlue {
+            color: #ffffff;
         }
 
         /*.dxeDisabled_PlasticBlue, .aspNetDisabled {

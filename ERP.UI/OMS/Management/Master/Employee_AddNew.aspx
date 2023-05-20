@@ -1,3 +1,8 @@
+<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                19-05-2023        2.0.38           Pallab              26177: Add Employee module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
 <%@ Page Language="C#" AutoEventWireup="True"
     Inherits="ERP.OMS.Management.Master.management_master_Employee_AddNew" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="Employee_AddNew.aspx.cs" EnableEventValidation="false" %>
 
@@ -424,6 +429,552 @@
         }*/
     </style>
     <%--  <link href="../../css/choosen.min.css" rel="stylesheet" />--%>
+    
+    <style>
+        /*Rev 1.0*/
+        .outer-div-main {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #11111154;
+        }
+
+        /*.form_main {
+            overflow: hidden;
+        }*/
+
+        label , .mylabel1, .clsTo, .dxeBase_PlasticBlue
+        {
+            color: #141414 !important;
+            font-size: 14px !important;
+                font-weight: 500 !important;
+                margin-bottom: 0 !important;
+                    line-height: 20px;
+        }
+
+        #GrpSelLbl .dxeBase_PlasticBlue
+        {
+                line-height: 20px !important;
+        }
+
+        select
+        {
+            height: 30px !important;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 1;
+            background-color: transparent;
+            padding-left: 10px !important;
+            padding-right: 22px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
+        {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .dxeButtonEditButton_PlasticBlue
+        {
+            background: #094e8c !important;
+            border-radius: 4px !important;
+            padding: 0 4px !important;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            bottom: 6px;
+            right: 20px;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #cmbDOJ , #cmbLeaveEff
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .dxeDisabled_PlasticBlue
+        {
+            z-index: 0 !important;
+        }
+
+        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #cmbDOJ_B-1 , #cmbLeaveEff_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img ,
+        #cmbDOJ_B-1 #cmbDOJ_B-1Img , #cmbLeaveEff_B-1 cmbLeaveEff_B-1Img
+        {
+            display: none;
+        }
+
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
+        {
+            background: #1b5ea4 !important;
+        }
+
+        .simple-select::after {
+            /*content: '<';*/
+            content: url(../../../assests/images/left-arw.png);
+            position: absolute;
+            top: 26px;
+            right: 13px;
+            font-size: 16px;
+            transform: rotate(269deg);
+            font-weight: 500;
+            background: #094e8c;
+            color: #fff;
+            height: 18px;
+            display: block;
+            width: 26px;
+            /* padding: 10px 0; */
+            border-radius: 4px;
+            text-align: center;
+            line-height: 18px;
+            z-index: 0;
+        }
+        .simple-select {
+            position: relative;
+        }
+        .simple-select:disabled::after
+        {
+            background: #1111113b;
+        }
+        /*select.btn
+        {
+            padding-right: 10px !important;
+        }*/
+
+        .panel-group .panel
+        {
+            box-shadow: 1px 1px 8px #1111113b;
+            border-radius: 8px;
+        }
+
+        .dxpLite_PlasticBlue .dxp-current
+        {
+            background-color: #1b5ea4;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+        #accordion {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .dxgvHeader_PlasticBlue {
+    background: #1b5ea4 !important;
+    color: #fff !important;
+}
+        #ShowGrid
+        {
+            margin-top: 10px;
+        }
+
+        .pt-25{
+                padding-top: 25px !important;
+        }
+
+        .styled-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: 1;
+    }
+
+        .styled-checkbox + label {
+            position: relative;
+            /*cursor: pointer;*/
+            padding: 0;
+            margin-bottom: 0 !important;
+        }
+
+            .styled-checkbox + label:before {
+                content: "";
+                margin-right: 6px;
+                display: inline-block;
+                vertical-align: text-top;
+                width: 16px;
+                height: 16px;
+                /*background: #d7d7d7;*/
+                margin-top: 2px;
+                border-radius: 2px;
+                border: 1px solid #c5c5c5;
+            }
+
+        .styled-checkbox:hover + label:before {
+            background: #094e8c;
+        }
+
+
+        .styled-checkbox:checked + label:before {
+            background: #094e8c;
+        }
+
+        .styled-checkbox:disabled + label {
+            color: #b8b8b8;
+            cursor: auto;
+        }
+
+            .styled-checkbox:disabled + label:before {
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        .styled-checkbox:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 9px;
+            background: white;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+            transform: rotate(45deg);
+        }
+
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
+        {
+            padding: 6px 6px 6px !important;
+        }
+
+        #lookupCardBank_DDD_PW-1
+        {
+                left: -182px !important;
+        }
+        .plhead a>i
+        {
+                top: 9px;
+        }
+
+        .clsTo
+        {
+            display: flex;
+    align-items: flex-start;
+        }
+
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin-right: 5px;
+        }
+        .dxeCalendarDay_PlasticBlue
+        {
+                padding: 6px 6px;
+        }
+
+        .modal-dialog
+        {
+            width: 50%;
+        }
+
+        .modal-header
+        {
+            padding: 8px 4px 8px 10px;
+            background: #094e8c !important;
+        }
+
+        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #EmployeeGrid , .TableMain100 #RootGrid
+        {
+            max-width: 98% !important;
+        }
+
+        /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
+        {
+            width: 95% !important;
+        }*/
+
+        .btn-info
+        {
+                background-color: #1da8d1 !important;
+                background-image: none;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxeDisabled_PlasticBlue, .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .dxeButtonDisabled_PlasticBlue
+        {
+            background: #b5b5b5 !important;
+            border-color: #b5b5b5 !important;
+        }
+
+        #ddlValTech
+        {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .dis-flex
+        {
+            display: flex;
+            align-items: baseline;
+        }
+
+        input + label
+        {
+            line-height: 1;
+                margin-top: 3px;
+        }
+
+        .dxtlHeader_PlasticBlue
+        {
+            background: #094e8c !important;
+        }
+
+        .dxeBase_PlasticBlue .dxichCellSys
+        {
+            padding-top: 2px !important;
+        }
+
+        .pBackDiv
+        {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #1111112e;
+        }
+        .HeaderStyle th
+        {
+            padding: 5px;
+        }
+
+        .for-cust-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
+        {
+            padding-top: 15px;
+        }
+
+        .pt-2
+        {
+            padding-top: 5px;
+        }
+        .pt-10
+        {
+            padding-top: 10px;
+        }
+
+        .pt-15
+        {
+            padding-top: 15px;
+        }
+
+        .pb-10
+        {
+            padding-bottom: 10px;
+        }
+
+        .pTop10 {
+    padding-top: 20px;
+}
+        .custom-padd
+        {
+            padding-top: 4px;
+    padding-bottom: 10px;
+        }
+
+        input + label
+        {
+                margin-right: 10px;
+        }
+
+        .btn
+        {
+            margin-bottom: 0;
+        }
+
+        .pl-10
+        {
+            padding-left: 10px;
+        }
+
+        .col-md-3>label, .col-md-3>span
+        {
+            margin-top: 0 !important;
+        }
+
+        .devCheck
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-5
+        {
+            margin-top: 5px;
+        }
+
+        .mtc-10
+        {
+            margin-top: 10px;
+        }
+
+        /*select.btn
+        {
+           position: relative;
+           z-index: 0;
+        }*/
+
+        select
+        {
+            margin-bottom: 0;
+        }
+
+        .form-control
+        {
+            background-color: transparent;
+        }
+
+        select.btn-radius {
+    padding: 4px 8px 6px 11px !important;
+}
+        .mt-30{
+            margin-top: 30px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .btn-radius
+        {
+            padding: 4px 11px !important;
+            border-radius: 4px !important;
+        }
+
+        .crossBtn
+        {
+             right: 30px;
+             top: 25px;
+        }
+
+        .mb-10
+        {
+            margin-bottom: 10px;
+        }
+
+        .btn-cust
+        {
+            background-color: #108b47 !important;
+            color: #fff;
+        }
+
+        .btn-cust:hover
+        {
+            background-color: #097439 !important;
+            color: #fff;
+        }
+
+        .gHesder
+        {
+            background: #1b5ca0 !important;
+            color: #ffffff !important;
+            padding: 6px 0 6px !important;
+        }
+
+        .close
+        {
+             color: #fff;
+             opacity: .5;
+             font-weight: 400;
+        }
+
+        .mt-24
+        {
+            margin-top: 24px;
+        }
+
+        .col-md-3
+        {
+            margin-top: 8px;
+        }
+
+        #upldBigLogo , #upldSmallLogo
+        {
+            width: 100%;
+        }
+
+        .chosen-container-single .chosen-single span
+        {
+            min-height: 30px;
+            line-height: 30px;
+        }
+
+        .chosen-container-single .chosen-single div {
+        background: #094e8c;
+        color: #fff;
+        border-radius: 4px;
+        height: 26px;
+        top: 1px;
+        right: 1px;
+        /*position:relative;*/
+    }
+
+        .chosen-container-single .chosen-single div b {
+            display: none;
+        }
+
+        .chosen-container-single .chosen-single div::after {
+            /*content: '<';*/
+            content: url(../../../assests/images/left-arw.png);
+            position: absolute;
+            top: 2px;
+            right: 5px;
+            font-size: 17px;
+            transform: rotate(269deg);
+            font-weight: 500;
+        }
+
+    .chosen-container-active.chosen-with-drop .chosen-single div {
+        background: #094e8c;
+        color: #fff;
+    }
+
+        .chosen-container-active.chosen-with-drop .chosen-single div::after {
+            transform: rotate(90deg);
+            right: 5px;
+        }
+
+        .panel-title
+        {
+            padding-bottom: 20px;
+        }
+
+        .chosen-container-single .chosen-single
+        {
+            z-index: 1;
+        }
+
+        /*.dxeDisabled_PlasticBlue, .aspNetDisabled {
+            opacity: 0.4 !important;
+            color: #ffffff !important;
+        }*/
+                /*.padTopbutton {
+            padding-top: 27px;
+        }*/
+        /*#lookup_project
+        {
+            max-width: 100% !important;
+        }*/
+        /*Rev end 1.0*/
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -435,21 +986,23 @@
             //$(".chzn-select-deselect").chosen({ allow_single_deselect: true });
         });
     </script>
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>Add Employee</h3>
             <div class="crossBtn"><a href="Employee.aspx"><i class="fa fa-times"></i></a></div>
         </div>
     </div>
-    <div class="form_main" style="border: 1px solid #ccc; padding: 5px 15px;">
+        <div class="form_main" style="border: 1px solid #ccc; padding: 5px 15px;">
         <table class="TableMain100">
             <tr id="TrGeneral" runat="server">
                 <td>
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
                             <div class="">
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Salutation</label>
                                     <div>
                                         <asp:DropDownList ID="CmbSalutation" runat="server" Width="100%">
@@ -479,7 +1032,8 @@
                                         </asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Gender</label>
                                     <div>
                                         <asp:DropDownList ID="cmbGender" runat="server" Width="100%">
@@ -505,13 +1059,17 @@
                                         </dxe:ASPxDateEdit>
                                         <span id="MandatoryDOJ" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; right: -14px; top: 10px; display: none" title="Mandatory"></span>
                                     </div>
+                                    <%--Rev 1.0--%>
+                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                    <%--Rev end 1.0--%>
                                 </div>
                                 <div class="col-md-3" style="display: none">
                                     <div>
                                         <asp:Button ID="btnJoin" Visible="false" CssClass="btn btn-primary btnUpdate" Text="Click to Continue" runat="server" OnClick="btnJoin_Click" />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Organization<span style="color: red">*</span></label>
                                     <div style="position: relative">
                                         <asp:DropDownList ID="cmbOrganization" runat="server" Width="100%">
@@ -529,7 +1087,8 @@
                                         <span id="MandatoryDOJ2" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; right: -14px; top: 10px; display: none" title="Mandatory"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Job Responsibility<span style="color: red">*</span> </label>
                                     <div style="position: relative">
                                         <asp:DropDownList ID="cmbJobResponse" runat="server" Width="100%">
@@ -537,7 +1096,8 @@
                                         <span id="MandatoryJobResponse" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; right: -18px; top: 10px; display: none" title="Mandatory"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Branch<span style="color: red">*</span></label>
                                     <div style="position: relative">
                                         <asp:DropDownList ID="cmbBranch" runat="server" Width="100%">
@@ -545,7 +1105,8 @@
                                         <span id="MandatoryBranch" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; right: -18px; top: 10px; display: none" title="Mandatory"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Designation<span style="color: red">*</span></label>
                                     <div style="position: relative">
                                         <asp:DropDownList ID="cmbDesg" runat="server" Width="100%">
@@ -553,7 +1114,8 @@
                                         <span id="MandatoryDesignation" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; right: -18px; top: 10px; display: none" title="Mandatory"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Employee Type<span style="color: red">*</span></label>
                                     <div style="position: relative">
                                         <asp:DropDownList ID="EmpType" runat="server" Width="100%">
@@ -588,7 +1150,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>
                                         Department<span style="color: red">*</span>
                                     </label>
@@ -598,7 +1161,8 @@
                                         <span id="MandatoryDepartment" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; right: -18px; top: 10px; display: none" title="Mandatory"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Report To<span style="color: red">*</span></label>
                                     <div style="position: relative">
                                         <asp:DropDownList data-placeholder="Select or type here" Visible="false" runat="server" ID="ddlReportTo" class="chzn-select" Style="width: 255px;">
@@ -609,7 +1173,8 @@
                                         <asp:HiddenField ID="txtReportTo_hidden" runat="server" />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Working Hour<span style="color: red">*</span></label>
                                     <div style="position: relative">
                                         <asp:DropDownList ID="cmbWorkingHr" runat="server" Width="100%">
@@ -617,7 +1182,8 @@
                                         <span id="MandatoryWorkinghr" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; right: -18px; top: 8px; display: none" title="Mandatory"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <%--Rev 1.0 : "simple-select" class add --%>
+                                <div class="col-md-3 simple-select">
                                     <label>Leave Policy<span style="color: red">*</span></label>
                                     <div style="position: relative">
                                         <asp:DropDownList ID="cmbLeaveP" runat="server" Width="100%">
@@ -633,6 +1199,9 @@
                                         </dxe:ASPxDateEdit>
                                         <span id="MandatoryLeaveEff" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; right: -18px; top: 8px; display: none" title="Mandatory"></span>
                                     </div>
+                                    <%--Rev 1.0--%>
+                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                    <%--Rev end 1.0--%>
                                 </div>
                                 <div style="clear: both"></div>
 
@@ -744,7 +1313,7 @@
             Modal="True">
         </dxe:ASPxLoadingPanel>
     </div>
-
+    </div>
     <style>
         a img {
             border: none;

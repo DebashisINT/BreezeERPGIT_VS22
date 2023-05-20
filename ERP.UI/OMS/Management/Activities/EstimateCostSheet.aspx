@@ -484,6 +484,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 top: 20% !important;
             }
 
+        .aspNetDisabled
+        {
+                background: #f3f3f3 !important;
+        }
+
         @media only screen and (max-width: 1380px) and (min-width: 1300px)
         {
             #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #Popup_InlineRemarks_PW-1
@@ -988,7 +993,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <asp:TextBox ID="txtAppRejRemarks" runat="server" Width="100%" TextMode="MultiLine" Rows="2" Columns="8" Height="50px"></asp:TextBox>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mt-10">
                                             <asp:Label ID="lblRearks" runat="server" Text="Remarks"></asp:Label>
                                             <asp:TextBox ID="txtProjRemarks" runat="server" Width="100%" TextMode="MultiLine" Rows="3" Columns="10" Height="50px">	
                                                     	

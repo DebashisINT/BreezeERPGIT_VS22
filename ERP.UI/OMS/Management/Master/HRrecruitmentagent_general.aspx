@@ -1281,7 +1281,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             cursor: pointer;
         }
 
-        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #txtDOB , #txtAnniversary
+        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #txtDOB , #txtAnniversary , #DateOfIncoorporation
         {
             position: relative;
             z-index: 1;
@@ -1293,7 +1293,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             z-index: 0 !important;
         }
 
-        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #txtDOB_B-1 , #txtAnniversary_B-1
+        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #txtDOB_B-1 , #txtAnniversary_B-1 , #DateOfIncoorporation_B-1
         {
             background: transparent !important;
             border: none;
@@ -1303,7 +1303,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img ,
         #txtDOB_B-1 #txtDOB_B-1Img ,
-        #txtAnniversary_B-1 #txtAnniversary_B-1Img
+        #txtAnniversary_B-1 #txtAnniversary_B-1Img , #DateOfIncoorporation_B-1 #DateOfIncoorporation_B-1Img
         {
             display: none;
         }
@@ -1313,7 +1313,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             background: #1b5ea4 !important;
         }
 
-        .simple-select::after {
+        .simple-select::after , .simple-select-2::after {
             /*content: '<';*/
             content: url(../../../assests/images/left-arw.png);
             position: absolute;
@@ -1330,10 +1330,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
-        .simple-select {
+        .simple-select-2::after
+        {
+            top: 34px !important;
+        }
+        .simple-select , .simple-select-2 {
             position: relative;
         }
         .simple-select:disabled::after
@@ -1600,7 +1604,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         .col-md-3>label, .col-md-3>span
         {
-            margin-top: 0 !important;
+            margin-top: 8px !important;
         }
 
         .devCheck
@@ -1698,6 +1702,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .col-md-3
         {
             margin-top: 8px;
+        }
+
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px !important;
         }
 
         /*.dxeDisabled_PlasticBlue, .aspNetDisabled {
@@ -1881,7 +1890,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             </div>
                                             <div class="col-md-2">
                                                 <label>
-                                                    <dxe:ASPxLabel ID="ASPxLabel17" runat="server" Text="Referred By" Width="73px">
+                                                    <dxe:ASPxLabel ID="ASPxLabel17" runat="server" Text="Referred By" Width="90px">
                                                     </dxe:ASPxLabel>
                                                 </label>
                                                 <div>
@@ -1913,7 +1922,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             </div>
                                             <div class="clear"></div>
                                             <div class="col-md-3 lblmTop8">
-                                                <label style="margin-top: 0">
+                                                <label style="margin-top: 5px">
                                                     <dxe:ASPxLabel ID="ASPxLabel2" runat="server" Text="Date Of Incorporation">
                                                     </dxe:ASPxLabel>
                                                 </label>
@@ -2098,7 +2107,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3 simple-select">
+                                            <div class="col-md-3 simple-select-2">
                                                 <label>
                                                     <dxe:ASPxLabel ID="ASPxLabel6" runat="server" Text="Accounts Group">
                                                     </dxe:ASPxLabel>

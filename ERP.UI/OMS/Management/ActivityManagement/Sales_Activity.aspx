@@ -2101,7 +2101,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 1;
         }
         .simple-select {
@@ -2475,6 +2475,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* bottom: -15px; */
             margin-left: -9px;
         }
+
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px;
+        }
         /*Rev end 1.0*/
     </style>
 </asp:Content>
@@ -2734,7 +2739,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <div class="clear"></div>
                 <div class="col-md-12">     
                     
-                      <asp:Button ID="btnSubmit" Text="S&#818;ave & New" runat="server" CssClass="btn btn-primary" style="padding: 5px 10px;"  OnClick="btnSubmit_Click" AccessKey="N" />  
+                      <asp:Button ID="btnSubmit" Text="S&#818;ave & New" runat="server" CssClass="btn btn-success" style="padding: 5px 10px;"  OnClick="btnSubmit_Click" AccessKey="N" />  
                     <asp:Button ID="btnSubmitExit" Text="Save & Ex&#818;it" runat="server" CssClass="btn btn-primary" style="padding: 5px 10px;"  OnClick="btnSubmitExit_Click" />                               
                    </div>
                 <asp:HiddenField ID="hdntab" runat="server" />

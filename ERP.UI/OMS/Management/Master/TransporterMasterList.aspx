@@ -170,7 +170,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
             height: 30px !important;
             border-radius: 4px;
-            -webkit-appearance: none;
+            /*-webkit-appearance: none;*/
             position: relative;
             z-index: 1;
             background-color: transparent;
@@ -393,7 +393,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #EmployeeGrid
         {
-            max-width: 98% !important;
+            max-width: 99% !important;
         }
 
         /*div.dxtcSys > .dxtc-content > div, div.dxtcSys > .dxtc-content > div > div
