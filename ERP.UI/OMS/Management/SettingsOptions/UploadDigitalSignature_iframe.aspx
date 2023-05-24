@@ -1,3 +1,7 @@
+<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      23-05-2023          0026206: Digital Signature module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master"
     Inherits="ERP.OMS.Management.SettingsOptions.management_SettingsOptions_UploadDigitalSignature_iframe" Codebehind="UploadDigitalSignature_iframe.aspx.cs" %>
 
@@ -73,10 +77,54 @@
 
     </script>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: none;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>Digital Signature</h3>
         </div>
@@ -85,7 +133,7 @@
         <div class="form_main">
         <table id="tblSummary" border="0" cellpadding="0" cellspacing="0" class="TableMain100">
             <tr>
-                <td colspan="2" style="text-align: left;">
+                <td colspan="2" style="text-align: left; padding-bottom: 10px">
                     <table>
                         <tr>
                             <td >
@@ -200,4 +248,5 @@
             </tr>
         </table>
             </div>
+    </div>
 </asp:Content>

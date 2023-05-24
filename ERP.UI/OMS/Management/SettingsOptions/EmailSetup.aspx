@@ -1,3 +1,7 @@
+<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      23-05-2023          0026207: Email Accounts Setup module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.SettingsOptions.management_SettingsOptions_EmailSetup" CodeBehind="EmailSetup.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -56,20 +60,64 @@
             table-layout: auto !important;
         }
     </style>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: none;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>Email Accounts Setup</h3>
         </div>
 
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <table class="TableMain100">
 
             <tr>
                 <td>
-                    <table width="100%">
+                    <table width="100%" class="mb-10">
                         <tr>
                             <td id="Td1" align="left">
                                 <% if (rights.CanAdd)
@@ -245,5 +293,6 @@
                 </td>
             </tr>
         </table>
+    </div>
     </div>
 </asp:Content>

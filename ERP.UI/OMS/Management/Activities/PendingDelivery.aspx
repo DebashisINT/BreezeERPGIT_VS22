@@ -875,7 +875,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     
     <style>
         #GrdOrder {
-            max-width: 98% !important;
+            max-width: 99% !important;
         }
         #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
             position: relative;

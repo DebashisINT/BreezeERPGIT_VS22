@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalCreditorsAdjustPInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.JournalCreditorsAdjustPInvoiceList" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      22-05-2023          0026194: Adjustment of Documents - Journal with Purchase Invoice module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalCreditorsAdjustPInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.JournalCreditorsAdjustPInvoiceList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -173,6 +177,48 @@
             });
         });
     </script>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -180,31 +226,39 @@
         <ClientSideEvents ControlsInitialized="AllControlInitilize" />
     </dxe:ASPxGlobalEvents>
 
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">Adjustment of Documents - Journal with Purchase Invoice</h3>
         </div>
     </div>
-    <table class="padTab">
+        <table class="padTab">
         <tr>
             <td>
                 <label>From Date</label></td>
-            <td>
+            <%--Rev 1.0: "for-cust-icon" class add --%>
+            <td class="for-cust-icon">
                 <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True">
                     <ButtonStyle Width="13px">
                     </ButtonStyle>
                 </dxe:ASPxDateEdit>
+                <%--Rev 1.0--%>
+                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                <%--Rev end 1.0--%>
             </td>
             <td>
                 <label>To Date</label>
             </td>
-            <td>
+            <%--Rev 1.0: "for-cust-icon" class add --%>
+            <td class="for-cust-icon">
                 <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True">
                     <ButtonStyle Width="13px">
                     </ButtonStyle>
                 </dxe:ASPxDateEdit>
-
+                <%--Rev 1.0--%>
+                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                <%--Rev end 1.0--%>
             </td>
             <td>Unit</td>
             <td>
@@ -219,15 +273,15 @@
 
     </table>
 
-    <div class="form_main">
+        <div class="form_main">
         <% if (rights.CanAdd)
            { %>
-        <a href="javascript:void(0);" onclick="OnAddClick()" id="AddId" class="btn btn-success btn-radius"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span><u>A</u>dd Adjustment</span> </a>
+        <a href="javascript:void(0);" onclick="OnAddClick()" id="AddId" class="btn btn-success"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span><u>A</u>dd Adjustment</span> </a>
         <%} %>
 
         <% if (rights.CanExport)
            { %>
-        <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary btn-radius" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+        <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
             <asp:ListItem Value="0">Export to</asp:ListItem>
             <asp:ListItem Value="1">PDF</asp:ListItem>
             <asp:ListItem Value="2">XLS</asp:ListItem>
@@ -387,7 +441,7 @@
             <asp:HiddenField ID="hiddenedit" runat="server" />
         </div>
     </div>
-
+    </div>
 
 
 
