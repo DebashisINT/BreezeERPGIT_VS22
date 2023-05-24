@@ -1095,7 +1095,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <td>
                                 <% if (rights.CanAdd) 
                                    { %>          
-                            <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-primary"><span>Add New</span> </a> 
+                            <a href="javascript:void(0);" onclick="AddButtonClick()" class="btn btn-success"><span>Add New</span> </a> 
                              <% } %>
                             <a href="javascript:void(0);" onclick="Budget_open()" title="Budget"  class="btn btn-primary">
                                Target Sale Of Product</a>

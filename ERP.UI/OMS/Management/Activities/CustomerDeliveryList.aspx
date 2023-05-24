@@ -328,7 +328,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         #GrdOrder {
             max-width: 98% !important;
         }
-        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry , #ASPxDateEditFrom , #ASPxDateEditTo {
             position: relative;
             z-index: 1;
             background: transparent;
@@ -343,6 +343,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
                 right: 10px;
         }*/
+
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_partyInvDt_B-1, #ASPxDateEditFrom_B-1, #ASPxDateEditTo_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_partyInvDt_B-1 #dt_partyInvDt_B-1Img, #ASPxDateEditFrom_B-1 #ASPxDateEditFrom_B-1Img, #ASPxDateEditTo_B-1 #ASPxDateEditTo_B-1Img
+        {
+            display: none;
+        }
     </style>
     <%--Rev end 1.0--%>
 </asp:Content>
@@ -367,7 +382,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         </td>
                         <td>From Date :</td>
                         <%--Rev 1.0: "for-cust-icon" class add --%>
-                        <td width="100px" class="for-cust-icon">
+                        <td width="150px" class="for-cust-icon">
                                 <dxe:ASPxDateEdit ID="ASPxDateEditFrom" runat="server" ClientInstanceName="cFormDate" EditFormat="Custom" EditFormatString="dd-MM-yyyy"  UseMaskBehavior="True" TabIndex="23">
                                     <ButtonStyle Width="13px"></ButtonStyle>
                                 </dxe:ASPxDateEdit>
@@ -377,7 +392,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         </td>
                         <td>To Date :</td>
                         <%--Rev 1.0: "for-cust-icon" class add --%>
-                        <td width="100px" class="for-cust-icon">
+                        <td width="150px" class="for-cust-icon">
                             <dxe:ASPxDateEdit ID="ASPxDateEditTo" runat="server" EditFormat="Custom" ClientInstanceName="ctoDate" EditFormatString="dd-MM-yyyy" UseMaskBehavior="True" TabIndex="23" >
                                 <ButtonStyle Width="13px"></ButtonStyle>
                             </dxe:ASPxDateEdit>

@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="influencerManagement.aspx.cs" Inherits="ERP.OMS.Management.Activities.influencerManagement" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      23-05-2023          0026199: Influencer Opening module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="influencerManagement.aspx.cs" Inherits="ERP.OMS.Management.Activities.influencerManagement" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 
@@ -1105,14 +1109,58 @@
 
     </script>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 0;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: auto;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading clearfix">
         <div class="panel-title pull-left">
             <h3>Influencer Opening</h3>
         </div>
     </div>
-    <div class="form_main newtab">
+        <div class="form_main newtab">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
           <li class="active">
@@ -1143,21 +1191,28 @@
             <tr>
                 <td>
                     <label>From Date</label></td>
-                <td>
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </td>
                 <td>
                     <label>To Date</label>
                 </td>
-                <td>
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td class="for-cust-icon">
                     <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True">
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
-
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                    <%--Rev end 1.0--%>
                 </td>
                 <td>Unit</td>
                 <td>
@@ -1165,7 +1220,7 @@
                     </dxe:ASPxComboBox>
                 </td>
                 <td class="">
-                    <input type="button" value="Show" class="btn btn-primary btn-radius" onclick="updateGridByDate()" />
+                    <input type="button" value="Show" class="btn btn-primary " onclick="updateGridByDate()" />
                     
                     <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary pull-right btn-radius hide" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                         <asp:ListItem Value="0">Export to</asp:ListItem>
@@ -1759,5 +1814,6 @@
           </div>
         </div>
 
+    </div>
     </div>
 </asp:Content>

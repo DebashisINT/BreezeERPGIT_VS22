@@ -3801,7 +3801,7 @@ function PerformCallToGridBind() {
     <%--  <asp:SqlDataSource ID="sqlQuationList" runat="server" 
         SelectCommand="select ttq.Quote_Id,ttq.Quote_Number,IsNull(CONVERT(VARCHAR(10), ttq.Quote_Date, 103),'') as Quote_Date	 ,case when( tmc.cnt_middleName is null  or tmc.cnt_middleName='') then isnull(tmc.cnt_firstName,'')+' ' +isnull(tmc.cnt_LastName,'')+' ' else   isnull(tmc.cnt_firstName,'')+' '+ isnull(tmc.cnt_middleName,'')+' ' +isnull(tmc.cnt_LastName,'')+' ' end as name from tbl_trans_Quotation  ttq left join tbl_master_contact tmc on ttq.Customer_Id=tmc.cnt_internalId where ttq.Quote_Number is not null and ttq.Quote_Number <>' '"></asp:SqlDataSource>--%>
     <dxe:ASPxPopupControl ID="Popup_MultiUOM" runat="server" ClientInstanceName="cPopup_MultiUOM"
-        Width="1000px" HeaderText="Multi UOM Details" PopupHorizontalAlign="WindowCenter"
+        Width="1100px" HeaderText="Multi UOM Details" PopupHorizontalAlign="WindowCenter"
         BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
         Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
         ContentStyle-CssClass="pad">

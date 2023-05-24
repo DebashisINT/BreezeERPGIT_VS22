@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SystemControl.aspx.cs" Inherits="ERP.OMS.Management.Master.SystemControl" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      24-05-2023          0026218: System Control module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SystemControl.aspx.cs" Inherits="ERP.OMS.Management.Master.SystemControl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -443,10 +447,212 @@
             }
         }
     </script>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+            margin-bottom: 0;
+            -webkit-appearance: none;
+        }
+
+        /*#grid {
+            max-width: 98% !important;
+        }*/
+        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_partyInvDt
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_partyInvDt_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
+        #dt_partyInvDt_B-1 #dt_partyInvDt_B-1Img
+        {
+            display: none;
+        }
+
+        /*select
+        {
+            -webkit-appearance: auto;
+        }*/
+
+        .calendar-icon
+        {
+                right: 18px;
+                bottom: 6px;
+        }
+        .padTabtype2 > tbody > tr > td
+        {
+            vertical-align: bottom;
+        }
+        #rdl_Salesquotation
+        {
+            margin-top: 0px;
+        }
+
+        .lblmTop8>span, .lblmTop8>label
+        {
+            margin-top: 8px !important;
+        }
+
+        .col-md-2, .col-md-4 {
+    margin-bottom: 5px;
+}
+
+        .simple-select::after
+        {
+                top: 34px;
+            right: 13px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
+        {
+            padding: 0;
+        }
+
+        .aspNetDisabled
+        {
+            background: #f3f3f3 !important;
+        }
+
+        .backSelect {
+    background: #42b39e !important;
+}
+
+        #ddlInventory
+        {
+                -webkit-appearance: auto;
+        }
+
+        /*.wid-90
+        {
+            width: 100%;
+        }
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-content
+        {
+            width: 97%;
+        }*/
+        .newLbl
+        {
+                margin: 3px 0 !important;
+        }
+
+        .lblBot > span, .lblBot > label
+        {
+                margin-bottom: 3px !important;
+        }
+
+        .col-md-2 > label, .col-md-2 > span, .col-md-1 > label, .col-md-1 > span
+        {
+            margin-top: 8px !important;
+            font-size: 14px;
+        }
+
+        .col-md-6 span
+        {
+            font-size: 14px;
+        }
+
+        #gridDEstination
+        {
+            width:99% !important;
+        }
+
+        #txtEntity , #txtCustName
+        {
+            width: 100%;
+        }
+        .col-md-6 span
+        {
+            margin-top: 8px !important;
+        }
+
+        .rds
+        {
+            margin-top: 10px !important;
+        }
+
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , select
+        {
+            height: 30px !important;
+            
+        }
+        select
+        {
+            background-color: transparent;
+                padding: 0 20px 0 5px !important;
+        }
+
+        .newLbl
+        {
+            font-size: 14px;
+            margin: 3px 0 !important;
+            font-weight: 500 !important;
+            margin-bottom: 0 !important;
+            line-height: 20px;
+        }
+
+        .crossBtn {
+            top: 25px !important;
+            right: 25px !important;
+        }
+
+        .wrapHolder
+        {
+            height: 60px;
+        }
+        #rdl_SaleInvoice
+        {
+            margin-top: 12px;
+        }
+
+        .dxeRoot_PlasticBlue
+        {
+            width: 100% !important;
+        }
+
+        #ShowFilter {
+            padding-bottom: 0px !important;
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12
+            {
+                 padding-right: 10px;
+                 padding-left: 10px;
+            }
+            .simple-select::after
+        {
+                top: 34px;
+            right: 8px;
+        }
+            .calendar-icon
+        {
+                right: 14px;
+                bottom: 6px;
+        }
+        }
+
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">System Control
             </h3>
@@ -454,7 +660,7 @@
     </div>
 
 
-    <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ActiveTabIndex="2" ClientInstanceName="page"
+        <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ActiveTabIndex="2" ClientInstanceName="page"
         Font-Size="12px" Width="100%">
         <TabPages>
             <dxe:TabPage Name="General" Text="General">
@@ -684,7 +890,7 @@
 
                         </div>
                         <div class="col-md-2"></div>
-                        <div style="padding: 15px 10px 10px 10px;">
+                        <div style="padding: 28px 10px 10px 10px;">
                             <dxe:ASPxButton ID="btn_imagecompressed" TabIndex="4" ClientInstanceName="btn_imagecompressed" runat="server" AutoPostBack="False" Text="S&#818;ave" CssClass="btn btn-primary" UseSubmitBehavior="False">
                                 <ClientSideEvents Click="function(s, e) {SaveButtonClickImagecompresssettig('Insert');}" />
                             </dxe:ASPxButton>
@@ -736,7 +942,8 @@
                             </dxe:ASPxTextBox>
 
                         </div>
-                        <div class="col-md-3">
+                        <%--Rev 1.0: "simple-select" class add --%>
+                        <div class="col-md-3 simple-select">
 
                             <label>Restriction Type </label>
                             <%--<asp:TextBox ID="TextBox1" runat="server" Width="100%" TextMode="Number"></asp:TextBox>--%>
@@ -749,7 +956,7 @@
                         </div>
 
 
-                        <div style="padding: 15px 10px 10px 10px;">
+                        <div style="padding: 28px 10px 10px 10px;">
                             <dxe:ASPxButton ID="ASPxButton2" TabIndex="4" ClientInstanceName="btn_inf" runat="server" AutoPostBack="False" Text="S&#818;ave" CssClass="btn btn-primary" UseSubmitBehavior="False">
                                 <ClientSideEvents Click="function(s, e) {SaveButtonClickInfluencer('Insert');}" />
                             </dxe:ASPxButton>
@@ -831,7 +1038,7 @@
                             <asp:DropDownList ID="ddlHoliday" runat="server" Width="100%">
                             </asp:DropDownList>
                         </div>
-                        <div style="padding: 15px 10px 10px 10px;">
+                        <div style="padding: 28px 10px 10px 10px;">
                             <dxe:ASPxButton ID="btn_holiday" TabIndex="4" ClientInstanceName="btn_holiday" runat="server" AutoPostBack="False" Text="S&#818;ave" CssClass="btn btn-primary" UseSubmitBehavior="False">
                                 <ClientSideEvents Click="function(s, e) {SaveButtonClickHoliday('Insert');}" />
                             </dxe:ASPxButton>
@@ -860,7 +1067,7 @@
 	                                            }
 	                                            }"></ClientSideEvents>--%>
     </dxe:ASPxPageControl>
-
+    </div>
 
 
 

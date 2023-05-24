@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false"
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      23-05-2023          0026203: Report Header Footer Template design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false"
     Inherits="ERP.OMS.Management.ToolsUtilities.management_utilities_frmHeaderFooterTempl" CodeBehind="frmHeaderFooterTempl.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -894,19 +898,62 @@
         }
     </style>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        select
+        {
+            z-index: 1;
+        }
+
+        #gridAdvanceAdj {
+            max-width: 99% !important;
+        }
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        select
+        {
+            -webkit-appearance: none;
+        }
+
+        .calendar-icon
+        {
+            right: 20px;
+        }
+
+        .panel-title h3
+        {
+            padding-top: 0px !important;
+        }
+
+        .fakeInput
+        {
+                min-height: 30px;
+    border-radius: 4px;
+        }
+        
+    </style>
+    <%--Rev end 1.0--%>
 
 </asp:Content>
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>Report Header Footer Template</h3>
 
         </div>
     </div>
-    <div class="form_main" style="border: 1px solid #ccc; padding: 10px 15px;">
-        <div class="row">
+        <div class="form_main" style="border: 1px solid #ccc; padding: 10px 15px;">
+        <div class="row mb-10">
             <div class="col-md-12">
                 <%-- if (rights.CanAdd)
                    { --%><input id="btnAdd" type="button" value="Add" class="btn btn-primary" onclick="btnAdd_Click()" /><%--} --%>
@@ -1017,7 +1064,8 @@
                                             </asp:DropDownList>
                                         </div>
                                     </div>
-                                    <div class="col-md-3" id="TrReserveWord" >
+                                    <%--Rev 1.0: "simple-select" class add --%>
+                                    <div class="col-md-3 simple-select" id="TrReserveWord" >
                                         <label>Module Name :</label>
                                         <div class="relative">
                                             <asp:DropDownList ID="ddlModuleName" runat="server" Width="100%">
@@ -1193,6 +1241,7 @@
                 </td>
             </tr>
         </table>
+    </div>
     </div>
     <asp:HiddenField ID="hdnIsEditMode" runat="server" />
     <dxe:ASPxPopupControl ID="ASPXPopupControl_Bulk" runat="server" ContentUrl="frmHeaderFooterTempl.aspx"
