@@ -3833,7 +3833,7 @@ function PerformCallToGridBind() {
                                             <div>
                                                 <%--Mantis Issue 24913--%>
                                                 <%--<input type="text" style="width:80px" id="UOMQuantity" style="text-align: right;" maxlength="18" readonly="true" class="allownumericwithdecimal" />--%>
-                                                <input type="text" style="width:80px" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
+                                                <input type="text" style="width:105px" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
                                                 <%--End of Mantis Issue 24913--%>
                                             </div>
                                         </div>
