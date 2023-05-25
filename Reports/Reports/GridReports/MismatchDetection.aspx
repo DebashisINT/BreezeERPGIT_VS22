@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="MismatchDetection.aspx.cs" Inherits="Reports.Reports.GridReports.MismatchDetection" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      25-05-2023          0026231: Mismatch Detection module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="MismatchDetection.aspx.cs" Inherits="Reports.Reports.GridReports.MismatchDetection" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -142,10 +146,36 @@
             });
         });
     </script>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px;
+        }
+        .simple-select::after
+        {
+            top: 7px;
+            right: -2px;
+        }
+        .checkbox label
+        {
+            line-height: 14px;
+        }
+        .checkbox-group label:before
+        {
+            top: 1px;
+        }
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
           <div class="panel panel-info">
             <div class="panel-heading" role="tab" id="headingOne">
@@ -185,9 +215,10 @@
           </div>
         </div>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="row">
-            <div class="col-md-2">
+            <%--Rev 1.0: "simple-select" class add --%>
+            <div class="col-md-2 simple-select">
                 <div style="color: #b5285f;" class="clsTo">
                     <asp:Label ID="Label5" runat="Server" Text="Mismatch For : " CssClass="mylabel1"></asp:Label>
                 </div>
@@ -212,6 +243,9 @@
                         <ButtonStyle Width="13px">
                         </ButtonStyle>
                     </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                <%--Rev end 1.0--%>
                 </div>
             </div>
             <div class="col-md-2">
@@ -226,6 +260,9 @@
                         </ButtonStyle>
 
                     </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                <%--Rev end 1.0--%>
                 </div>
             </div>
             <div class="col-md-2" style="padding:0;padding-top: 12px;">
@@ -251,7 +288,7 @@
             <div class="clear"></div>
         </div>
     </div>    
-
+    </div>
     <dxe:ASPxGridViewExporter ID="exporter" runat="server" Landscape="true" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
     </dxe:ASPxGridViewExporter>
 

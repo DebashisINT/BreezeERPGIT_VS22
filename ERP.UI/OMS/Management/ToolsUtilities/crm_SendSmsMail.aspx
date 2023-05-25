@@ -1,4 +1,8 @@
-﻿<%@ Page Title="SMS Notification" Language="C#" EnableEventValidation="false" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="crm_SendSmsMail.aspx.cs" Inherits="ERP.OMS.Management.ToolsUtilities.crm_SendSmsMail" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      25-05-2023          0026232: SMS Notification module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="SMS Notification" Language="C#" EnableEventValidation="false" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="crm_SendSmsMail.aspx.cs" Inherits="ERP.OMS.Management.ToolsUtilities.crm_SendSmsMail" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 
@@ -305,6 +309,30 @@
             });
         });
     </script>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px;
+        }
+        /*.simple-select::after
+        {
+            top: 7px;
+            right: -2px;
+        }*/
+        .checkbox label
+        {
+            line-height: 14px;
+        }
+        .checkbox-group label:before
+        {
+            top: 1px;
+        }
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%-- <div class="panel-heading">
@@ -312,7 +340,9 @@
             <h3>Marketing Campaign</h3>
         </div>
     </div>--%>
-    <div class="panel-title clearfix">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-title clearfix">
         <h3 class="pull-left">
             <asp:Label ID="lblHeadTitle" Text="" runat="server">SMS Notification</asp:Label>
             <%--<label>Add Proforma Invoice/ Quotation</label>--%>
@@ -322,7 +352,7 @@
         <div id="divcross" runat="server" class="crossBtn"><a href="MarketingCampaignList.aspx"><i class="fa fa-times"></i></a></div>--%>
 
     </div>
-    <div class="form_main" style="border: 1px solid #ccc; padding: 10px 15px;">
+        <div class="form_main" style="border: 1px solid #ccc; padding: 10px 15px;">
         <%-- <div class="row">
             <div class="col-md-12">
                 <div class="col-md-3">
@@ -366,8 +396,8 @@
             </div>
         </div>--%>
         <div class="row">
-            
-            <div class="col-md-3">
+            <%--Rev 1.0: "simple-select" class add --%>
+            <div class="col-md-3 simple-select">
                 <label>Entity Type</label>
                 <asp:DropDownList runat="server" CssClass="form-control" ID="ddlType">
                     <asp:ListItem Value="Select" Text="Select" />
@@ -456,7 +486,7 @@
             <div class="col-md-12">
                 
                     <%--<button id="btnSms" class="btn btn-success" onclick="SendMessage();">Send SMS</button>--%>
-                    <dxe:ASPxButton Text="Send SMS" ID="btnSms" CssClass="btn btn-success" UseSubmitBehavior="false" ClientSideEvents-Click="btnSmsClick" runat="server" />
+                    <dxe:ASPxButton Text="Send SMS" ID="btnSms" CssClass="btn btn-info" UseSubmitBehavior="false" ClientSideEvents-Click="btnSmsClick" runat="server" />
                     <%--<button class="btn btn-success" data-toggle="modal" id="btnEmail" data-target="#MailPopup" onclick="return false;" data-backdrop="static" data-keyboard="true">Send Email</button>--%>
                     <%--    <asp:Button Text="Send Email" ID="btnEmail" CssClass="btn btn-success" data-toggle="modal" data-target="#skillPopup" data-backdrop="static" data-keyboard="true" runat="server" />--%>
                     <%--<asp:Button Text="Convert To Lead" runat="server" CssClass="btn btn-success" ID="btnConvertLead" />--%>
@@ -466,7 +496,7 @@
             </div>
         </div>
     </div>
-
+    </div>
     <div class="modal fade pmsModal w40" id="MailPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

@@ -1,5 +1,6 @@
 ﻿/*************************************************************************************************************************************
-    Rev 1.0     Sanchita        V2.0.38     Message will be fired from first tab when logged out from the 2nd tab.Refer: 26091
+    Rev 1.0     Sanchita      V2.0.38     Message will be fired from first tab when logged out from the 2nd tab.Refer: 26091
+    Rev 2.0     Pallab        V2.0.38     "Session expired" message change and alert design modification. Refer: 26230
  *************************************************************************************************************************************/
 
 window.onunload = function () {
@@ -336,9 +337,14 @@ function checkSessionLogoutMasterPage() {
         async: false,
         success: function (data) {
             if (data.d == 1) {
-                jAlert('Session expired !!!', 'Alert', function () {
+                /*Rev 2.0*/
+                //jAlert('Session expired !!!', 'Alert', function () {
+                //    window.parent.location.href = '/oms/login.aspx';
+                //});
+                jAlert('Session has expired !!!', 'Alert', function () {
                     window.parent.location.href = '/oms/login.aspx';
                 });
+                /*Rev end 2.0*/
             }
         },
         error: function (data) {
