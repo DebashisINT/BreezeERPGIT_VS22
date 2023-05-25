@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="DashboardSetting.aspx.cs" Inherits="ERP.OMS.Management.DashboardSetting.DashboardSetting" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      25-05-2023          0026234: Dashboard Setting module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="DashboardSetting.aspx.cs" Inherits="ERP.OMS.Management.DashboardSetting.DashboardSetting" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -67,16 +71,62 @@
         }
     </style>
 
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px;
+        }
+        /*.simple-select::after
+        {
+            top: 7px;
+            right: -2px;
+        }*/
+        .checkbox label
+        {
+            line-height: 14px;
+        }
+        .checkbox-group label:before
+        {
+            top: 1px;
+        }
+
+        #EmployeeGrid
+        {
+            width: 99% !important;
+        }
+
+        .padTbl
+        {
+            width: 50%;
+        }
+
+        .panel-default>.panel-heading
+        {
+                background-color: #ffffff !important;
+                    padding: 6px 15px !important;
+                    background-image: none !important;
+        }
+        .panel-group .panel+.panel {
+            margin-top: 12px;
+        }
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title clearfix">
             <h3 class="pull-left">DashBoard</h3>
 
             <div class="crossBtn"><a href="DashBoardSettingList.aspx"><i class="fa fa-times"></i></a></div>
         </div>
     </div>
-    <div class="form_main">
+        <div class="form_main">
         <div class="row">
 
             <div class="col-md-12">
@@ -124,9 +174,9 @@
                         <asp:ListBox ID="list1" runat="server" Style="height: 160px !important; width: 310px" SelectionMode="Multiple"></asp:ListBox>
                     </td>
                     <td align="center" style="padding-top: 5px;">
-                        <input type="button" class="btn btn-primary" id="btnAdd" value=">" style="width: 50px;" /><br />
-                        <input type="button" class="btn btn-primary" id="btnAddAll" value=">>" style="width: 50px;" /><br />
-                        <input type="button" class="btn btn-primary" id="btnRemove" value="<" style="width: 50px;" /><br />
+                        <input type="button" class="btn btn-primary mb-10" id="btnAdd" value=">" style="width: 50px;" /><br />
+                        <input type="button" class="btn btn-primary mb-10" id="btnAddAll" value=">>" style="width: 50px;" /><br />
+                        <input type="button" class="btn btn-primary mb-10" id="btnRemove" value="<" style="width: 50px;" /><br />
                         <input type="button" class="btn btn-primary" id="btnRemoveAll" value="<<" style="width: 50px;" />
                     </td>
                     <td align="center" style="padding-top: 8px;">
@@ -144,8 +194,8 @@
             </div>
         </div>
     </div>
-    <div class="clear"></div>
-    <div class="Row">
+        <div class="clear"></div>
+        <div class="Row">
         <div class="col-md-12 " style="padding-top: 15px; padding-left: 5px">
             <div class="Left_Content">
                 <button type="button" class="btn btn-primary"  onclick="apply()">Save</button>
@@ -157,7 +207,7 @@
 
 
     </div>
-
+    </div>
     <!--Employee Modal -->
     <div class="modal fade" id="UserGroupModel" role="dialog">
         <div class="modal-dialog">

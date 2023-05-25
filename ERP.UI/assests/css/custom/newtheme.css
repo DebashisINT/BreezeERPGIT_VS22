@@ -10,6 +10,8 @@ Rev Number       DATE            VERSION        DEVELOPER            CHANGES
                                                                      Refer: 25708
 3.0              17-05-2023      2.0.38         Pallab               When manually clicked for sidebar menu open, page main content part right side hiding issue fix
                                                                      Refer: 26152
+4.0              25-05-2023      2.0.38         Pallab               "Session expired" message change and alert design modification
+                                                                     Refer: 26230
 ====================================================== Revision History ===========================================================*/
 
 *:focus {
@@ -4284,3 +4286,26 @@ label, .mylabel1, .clsTo, .dxeBase_PlasticBlue {
     width: 100% !important;
 }
 /*Rev end 3.0*/
+/*Rev 4.0*/
+.ui-widget.ui-widget-content {
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 70%);
+    border: 2px solid #d6d6d6;
+    border-radius: 8px;
+}
+
+.ui-widget-header {
+    border: 1px solid #063566 !important;
+    background: #063566 !important;
+    border-radius: 7px 7px 0 0 !important;
+}
+
+.ui-dialog-buttonset {
+    padding: 5px 0;
+    border-radius: 0 0 7px 7px !important;
+}
+
+.ui-dialog .ui-dialog-content h6 {
+    font-size: 17px !IMPORTANT;
+    color: #333;
+}
+/*Rev end 4.0*/

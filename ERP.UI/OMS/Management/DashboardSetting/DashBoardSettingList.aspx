@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="DashBoardSettingList.aspx.cs" Inherits="ERP.OMS.Management.DashboardSetting.DashBoardSettingList" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      25-05-2023          0026233: Dashboard Settings module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="DashBoardSettingList.aspx.cs" Inherits="ERP.OMS.Management.DashboardSetting.DashBoardSettingList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -78,9 +82,39 @@
         });
     </script>
 
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px;
+        }
+        /*.simple-select::after
+        {
+            top: 7px;
+            right: -2px;
+        }*/
+        .checkbox label
+        {
+            line-height: 14px;
+        }
+        .checkbox-group label:before
+        {
+            top: 1px;
+        }
+
+        #EmployeeGrid
+        {
+            width: 99% !important;
+        }
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title" id="td_dashboard" runat="server">
             <h3>
                 <asp:Label ID="lblHeadTitle" runat="server" Text="Dashboard Settings"></asp:Label>
@@ -88,7 +122,7 @@
         </div>
     </div>
 
-    <div class="form_main">
+        <div class="form_main">
         <div class="clearfix mBot10">
                 <% if (rights.CanAdd)
                       { %>
@@ -241,5 +275,5 @@
         </table>
 
     </div>
-
+    </div>
 </asp:Content>

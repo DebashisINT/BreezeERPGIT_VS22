@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="eInvoice-configuration.aspx.cs" Inherits="ERP.OMS.Management.Master.eInvoice_configuration" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      25-05-2023          0026229: E-Invoice Configuration module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="eInvoice-configuration.aspx.cs" Inherits="ERP.OMS.Management.Master.eInvoice_configuration" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/20.1.6/css/dx.common.css" />
@@ -1413,6 +1417,29 @@
             font-size:13px !important;
         }
     </style>
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px;
+        }
+        .simple-select::after
+        {
+            top: 7px;
+            right: -2px;
+        }
+        .checkbox label
+        {
+            line-height: 14px;
+        }
+        .checkbox-group label:before
+        {
+            top: 1px;
+        }
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="panel-title clearfix">
@@ -1452,7 +1479,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div>
+                                            <%--Rev 1.0: "simple-select" class add --%>
+                                            <div class="simple-select">
                                                 <%--<select class="form-control minSelect">
                                                     <option>Select</option>
                                                 </select>--%>
@@ -1492,7 +1520,8 @@
                                         </td>
                                         <td>
 
-                                            <div>
+                                            <%--Rev 1.0: "simple-select" class add --%>
+                                            <div class="simple-select">
                                                 <%-- <select class="form-control minSelect">
                                                     <option>Select</option>
                                                 </select>--%>
@@ -2025,7 +2054,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div style="padding-top: 27px;">
+                                                <div style="padding-top: 25px; padding-bottom: 10px;">
                                                     <table>
                                                         <tr>
                                                             <td style="padding-right: 30px">
@@ -2092,7 +2121,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="Discard_Click()">Discard</button>
+                    <button type="button" class="btn btn-info" onclick="Discard_Click()">Discard</button>
                     <button type="button" class="btn btn-success" id="btnActivationSave" onclick="eInvoiceActivation_Update();">Save</button>
                 </div>
             </div>

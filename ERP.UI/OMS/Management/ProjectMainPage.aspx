@@ -1,5 +1,6 @@
 <%--*************************************************************************************************************************************
-Rev 1.0     Sanchita        V2.0.38     Message will be fired from first tab when logged out from the 2nd tab. Refer: 26091
+Rev 1.0     Sanchita      V2.0.38     Message will be fired from first tab when logged out from the 2nd tab. Refer: 26091
+Rev 2.0     Pallab        V2.0.38     "Session expired" message change and alert design modification. Refer: 26230
 *************************************************************************************************************************************--%>
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.management_ProjectMainPage" CodeBehind="ProjectMainPage.aspx.cs" %>
 
@@ -99,9 +100,14 @@ Rev 1.0     Sanchita        V2.0.38     Message will be fired from first tab whe
                 async: false,
                 success: function (data) {
                     if (data.d == 1) {
-                        jAlert('Session expired !!!', 'Alert', function () {
+                        /*Rev 2.0*/
+                        //jAlert('Session expired !!!', 'Alert', function () {
+                        //    window.parent.location.href = '../login.aspx';
+                        //});
+                        jAlert('Session has expired !!!', 'Alert', function () {
                             window.parent.location.href = '../login.aspx';
                         });
+                        /*Rev end 2.0*/
                     }
                 },
                 error: function (data) {

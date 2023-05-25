@@ -1,4 +1,8 @@
-﻿<%@ Page Title="MAC User" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" 
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.38      25-05-2023          0026225: User MAC Address Add module design modification & check in small device
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="MAC User" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" 
     Inherits="ERP.OMS.Management.Master.WebMacaccessAdd" CodeBehind="WebMacaccessAdd.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -336,17 +340,30 @@
         }
 
     </script>
+
+    <%--Rev 1.0--%>
+    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
+    
+    <style>
+        .chosen-container-single .chosen-single div::after
+        {
+            font-size: 17px;
+        }
+    </style>
+    <%--Rev end 1.0--%>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="panel-heading">
+    <%--Rev 1.0: "outer-div-main" class add --%>
+    <div class="outer-div-main clearfix">
+        <div class="panel-heading">
         <div class="panel-title">
             <h3>User MAC Address Add</h3>
             <div class="crossBtn"><a href="WebMacAccess.aspx"><i class="fa fa-times"></i></a></div>
         </div>
 
     </div>
-    <div class="form_main" style="border:1px solid #ccc;">
+        <div class="form_main" style="border:1px solid #ccc;">
         <table class="TableMain100">
             <%--            <tr>
                 <td class="EHEADER" style="text-align: center; height: 20px;">
@@ -407,6 +424,7 @@
                 </td>
             </tr>
         </table>
+    </div>
     </div>
         <div>
 
