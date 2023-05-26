@@ -789,7 +789,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label id="lblProject" runat="server">Project</label>
                     <dxe:ASPxGridLookup ID="lookup_Project" runat="server" ClientInstanceName="clookup_Project" DataSourceID="EntityServerModeDataTransporter"
                         KeyFieldName="Proj_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" TabIndex="15">
@@ -828,12 +828,6 @@
                     <dx:LinqServerModeDataSource ID="EntityServerModeDataTransporter" runat="server" OnSelecting="EntityServerModeDataSalesChallan_Selecting"
                         ContextTypeName="ERPDataClassesDataContext" TableName="ProjectCodeBind" />
                 </div>
-                <div class="col-md-4">
-                    <dxe:ASPxLabel ID="lblHierarchy" runat="server" Text="Hierarchy">
-                    </dxe:ASPxLabel>
-                    <asp:DropDownList ID="ddlHierarchy" runat="server" Width="100%" Enabled="false">
-                    </asp:DropDownList>
-                </div>
                 <%--Rev 1.0--%>
                 <div class="col-md-3">
                     <label>Party Invoice No </label>
@@ -853,6 +847,13 @@
                     </div>
                 </div>
                 <%--End of Rev 1.0--%>
+                <div class="col-md-3">
+                    <dxe:ASPxLabel ID="lblHierarchy" runat="server" Text="Hierarchy">
+                    </dxe:ASPxLabel>
+                    <asp:DropDownList ID="ddlHierarchy" runat="server" Width="100%" Enabled="false">
+                    </asp:DropDownList>
+                </div>
+                
             </div>
         </div>
         <div style="padding-top: 15px;">
