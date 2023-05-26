@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OpeningEntry.ERP {
-    
-    
-    public partial class ConsolidatedTransporter {
-        
+namespace OpeningEntry.ERP
+{
+
+
+    public partial class ConsolidatedTransporter
+    {
+
         /// <summary>
         /// lblTotDebit control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblTotDebit;
-        
+
         /// <summary>
         /// lblTotCredit control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblTotCredit;
-        
+
         /// <summary>
         /// ddl_Branch control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_Branch;
-        
+
         /// <summary>
         /// ComponentQuotationPanel control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel ComponentQuotationPanel;
-        
+
         /// <summary>
         /// lookup_Customer control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridLookup lookup_Customer;
-        
+
         /// <summary>
         /// ddltype control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddltype;
-        
+
         /// <summary>
         /// tbldescripion control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tbldescripion;
-        
+
         /// <summary>
         /// txt_Docno control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_Docno;
-        
+
         /// <summary>
         /// dt_date control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dt_date;
-        
+
         /// <summary>
         /// txt_fullbill control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_fullbill;
-        
+
         /// <summary>
         /// dtdate_Due control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dtdate_Due;
-        
+
         /// <summary>
         /// dtdate_Ref control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dtdate_Ref;
-        
+
         /// <summary>
         /// txt_disamt control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_disamt;
-        
+
         /// <summary>
         /// txt_docamt control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_docamt;
-        
+
         /// <summary>
         /// txt_commprcntg control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_commprcntg;
-        
+
         /// <summary>
         /// txt_commAmt control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_commAmt;
-        
+
         /// <summary>
         /// tbldescripion2 control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tbldescripion2;
-        
+
         /// <summary>
         /// txt_Docno2 control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_Docno2;
-        
+
         /// <summary>
         /// dt_date2 control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dt_date2;
-        
+
         /// <summary>
         /// txt_docamt2 control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_docamt2;
-        
+
         /// <summary>
         /// txt_commprcntg2 control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_commprcntg2;
-        
+
         /// <summary>
         /// txt_commAmt2 control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_commAmt2;
-        
+
         /// <summary>
         /// tblconsolidatevendor control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tblconsolidatevendor;
-        
+
         /// <summary>
         /// dt_vendor control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dt_vendor;
-        
+
         /// <summary>
         /// txt_vendor_amt control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_vendor_amt;
-        
+
         /// <summary>
         /// lblProject control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProject;
-        
+
         /// <summary>
         /// lookup_Project control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridLookup lookup_Project;
-        
+
         /// <summary>
         /// EntityServerModeDataTransporter control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Data.Linq.LinqServerModeDataSource EntityServerModeDataTransporter;
-        
+
         /// <summary>
         /// lblHierarchy control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblHierarchy;
-        
+
         /// <summary>
         /// ddlHierarchy control.
         /// </summary>
@@ -281,7 +283,25 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlHierarchy;
-        
+
+        /// <summary>
+        /// txtPartyInvNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTextBox txtPartyInvNo;
+
+        /// <summary>
+        /// dtPartyInvDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxDateEdit dtPartyInvDate;
+
         /// <summary>
         /// FinalSave control.
         /// </summary>
@@ -290,7 +310,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton FinalSave;
-        
+
         /// <summary>
         /// ddldetails control.
         /// </summary>
@@ -299,7 +319,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddldetails;
-        
+
         /// <summary>
         /// OpeningGrid control.
         /// </summary>
@@ -308,7 +328,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView OpeningGrid;
-        
+
         /// <summary>
         /// dsCustomer control.
         /// </summary>
@@ -317,7 +337,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource dsCustomer;
-        
+
         /// <summary>
         /// exporter control.
         /// </summary>
@@ -326,7 +346,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridViewExporter exporter;
-        
+
         /// <summary>
         /// hdncus control.
         /// </summary>
@@ -335,7 +355,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdncus;
-        
+
         /// <summary>
         /// hiddnmodid control.
         /// </summary>
@@ -344,7 +364,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddnmodid;
-        
+
         /// <summary>
         /// hdnProjectSelectInEntryModule control.
         /// </summary>
@@ -353,7 +373,7 @@ namespace OpeningEntry.ERP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnProjectSelectInEntryModule;
-        
+
         /// <summary>
         /// hdnProjectMandatory control.
         /// </summary>
