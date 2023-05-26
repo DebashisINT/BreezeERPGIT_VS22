@@ -1,4 +1,8 @@
-﻿using DataAccessLayer;
+﻿/**********************************************************************************************************************
+ * Rev 1.0      Sanchita    V2.0.38     26-05-2023      Party Invoice No & Party Invoice Date fields required in the 
+ *                                                      Consolidated Vendor Opening Module. Refer: 25889
+ * **********************************************************************************************************************/
+using DataAccessLayer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -204,6 +208,10 @@ namespace OpeningBusinessLogic.Vendorconsolidate
 
         public string Company { get; set; }
 
+        // Rev 1.0
+        public string PartyInvNo { get; set; }
+        public DateTime? PartyInvDate { get; set; }
+        // End of Rev 1.0
     }
 
 

@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer.Replacement;
+﻿/**********************************************************************************************************************
+ * Rev 1.0      Sanchita    V2.0.38     26-05-2023      Party Invoice No & Party Invoice Date fields required in the 
+ *                                                      Consolidated Vendor Opening Module. Refer: 25889
+ * **********************************************************************************************************************/
+using BusinessLogicLayer.Replacement;
 using DevExpress.Web;
 using DevExpress.Web.Data;
 using EntityLayer.CommonELS;
@@ -340,7 +344,11 @@ namespace OpeningEntry.ERP
                         CommmAmt = (ddltype.SelectedValue == "PB" || ddltype.SelectedValue == "RET") ? txt_commAmt.Text : txt_commAmt2.Text,
                         Company = Company,
                         FinYear = FinYear,
-                        User = User
+                        User = User,
+                        // Rev 1.0
+                        PartyInvNo = txtPartyInvNo.Text,
+                        PartyInvDate = (String.IsNullOrEmpty(dtPartyInvDate.Text) ? default(DateTime?) : Convert.ToDateTime(dtPartyInvDate.Date)) 
+                        // End of Rev 1.0
                     });
 
                     string CustomerconsolidateXML = VendorConsolidate.ConvertToXml(customerconsolidate, 0);
@@ -437,7 +445,10 @@ namespace OpeningEntry.ERP
                         AgentId = "",
                         Commpercntag = (ddltype.SelectedValue == "PB" || ddltype.SelectedValue == "RET") ? txt_commprcntg.Text : txt_commprcntg2.Text,
                         CommmAmt = (ddltype.SelectedValue == "PB" || ddltype.SelectedValue == "RET") ? txt_commAmt.Text : txt_commAmt2.Text,
-
+                        // Rev 1.0
+                        PartyInvNo = txtPartyInvNo.Text,
+                        PartyInvDate = (String.IsNullOrEmpty(dtPartyInvDate.Text) ? default(DateTime?) : Convert.ToDateTime(dtPartyInvDate.Date))
+                        // End of Rev 1.0
                     });
 
                     string Customerconsolidate22XML = VendorConsolidate.ConvertToXml(customerconsolidate, 0);

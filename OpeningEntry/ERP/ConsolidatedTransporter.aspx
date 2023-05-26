@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
+﻿<%--/**********************************************************************************************************************
+ * Rev 1.0      Sanchita    V2.0.38     26-05-2023      Party Invoice No & Party Invoice Date fields required in 
+ *                                                      the Consolidated Transporter Opening Module. Refer: 25891
+ * ***********************************************************************************************************************/--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
     CodeBehind="ConsolidatedTransporter.aspx.cs" Inherits="OpeningEntry.ERP.ConsolidatedTransporter" EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -322,6 +326,11 @@
                 dt_vendor.SetText('');
                 ctxt_vendor_amt.SetText('');
 
+                // Rev 1.0
+                ctxtPartyInvNo.SetText('');
+                cdtPartyInvDate.SetText('');
+                // End of Rev 1.0
+
                 jAlert('Saved Successfully');
                 TypeCheck();
 
@@ -354,7 +363,9 @@
             }
         }
 
-        function onOpeningEdit(mod, cus, type, brnch, DocNumber, Date, FullBill, DueDate, RefDate, DocAmount, OSAmount, Commper, Commamount, Unpaidamt) {
+        /* Rev 1.0 ( PartyInvNo and PartyInvDate ) */
+        function onOpeningEdit(mod, cus, type, brnch, DocNumber, Date, FullBill, DueDate, RefDate, DocAmount, OSAmount, Commper, Commamount, Unpaidamt
+            , PartyInvNo, PartyInvDate ) {
 
             $("#hiddnmodid").val(mod);
             $("#ddl_Branch").val(brnch);
@@ -408,7 +419,10 @@
                 ctxt_commprcntg2.SetText(Commper);
                 ctxt_commAmt2.SetText(Commamount);
             }
-
+            // Rev 1.0
+            ctxtPartyInvNo.SetText(PartyInvNo);
+            cdtPartyInvDate.SetText(PartyInvDate);
+            // End of Rev 1.0
 
             if (parseFloat(OSAmount) != parseFloat(Unpaidamt)) {
                 $("#FinalSave").attr('style', 'display:none;');
@@ -778,7 +792,7 @@
                 <div class="col-md-2">
                     <label id="lblProject" runat="server">Project</label>
                     <dxe:ASPxGridLookup ID="lookup_Project" runat="server" ClientInstanceName="clookup_Project" DataSourceID="EntityServerModeDataTransporter"
-                        KeyFieldName="Proj_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" TabIndex="4">
+                        KeyFieldName="Proj_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" TabIndex="15">
                         <columns>                                               
                         <dxe:GridViewDataColumn FieldName="Proj_Code" Visible="true" VisibleIndex="1" Caption="Project Code" Settings-AutoFilterCondition="Contains" Width="200px">
                         </dxe:GridViewDataColumn>
@@ -820,6 +834,25 @@
                     <asp:DropDownList ID="ddlHierarchy" runat="server" Width="100%" Enabled="false">
                     </asp:DropDownList>
                 </div>
+                <%--Rev 1.0--%>
+                <div class="col-md-3">
+                    <label>Party Invoice No </label>
+                    <div>
+                        <dxe:ASPxTextBox ID="txtPartyInvNo" runat="server" ClientInstanceName="ctxtPartyInvNo" TabIndex="16" Width="100%">
+                        </dxe:ASPxTextBox>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>Party Invoice Date </label>
+                    <div>
+                        <dxe:ASPxDateEdit ID="dtPartyInvDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cdtPartyInvDate" TabIndex="17" Width="100%">
+                            <buttonstyle width="13px">
+                            </buttonstyle>
+
+                        </dxe:ASPxDateEdit>
+                    </div>
+                </div>
+                <%--End of Rev 1.0--%>
             </div>
         </div>
         <div style="padding-top: 15px;">
@@ -881,27 +914,38 @@
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
-
-                    <dxe:GridViewDataTextColumn Caption="Full Bill Amount" FieldName="FullBill" ReadOnly="True" Visible="False" VisibleIndex="5">
-                        <Settings AutoFilterCondition="Contains" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn Caption="Due Date" FieldName="DueDate" ReadOnly="True" Visible="True" VisibleIndex="6" width="80px">
-                        <Settings AutoFilterCondition="Contains" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn Caption="Ref Date" FieldName="RefDate" ReadOnly="True" Visible="True" VisibleIndex="7" width="80px">
+                    <%--Rev 1.0--%>
+                    <dxe:GridViewDataTextColumn Caption="Party Invoice No" FieldName="PartyInvNo" ReadOnly="True" Visible="True" VisibleIndex="5">
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
 
-                    <dxe:GridViewDataTextColumn Caption="Doc Amount" FieldName="DocAmount" ReadOnly="True" Visible="True" VisibleIndex="8">
+                    <dxe:GridViewDataTextColumn Caption="Party Invoice Date" FieldName="PartyInvDate" ReadOnly="True" Visible="True" VisibleIndex="6" width="80px">
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                    <%--End of Rev 1.0--%>
+
+
+                    <dxe:GridViewDataTextColumn Caption="Full Bill Amount" FieldName="FullBill" ReadOnly="True" Visible="False" VisibleIndex="7">
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+
+                    <dxe:GridViewDataTextColumn Caption="Due Date" FieldName="DueDate" ReadOnly="True" Visible="True" VisibleIndex="8" width="80px">
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+
+                    <dxe:GridViewDataTextColumn Caption="Ref Date" FieldName="RefDate" ReadOnly="True" Visible="True" VisibleIndex="9" width="80px">
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+
+
+                    <dxe:GridViewDataTextColumn Caption="Doc Amount" FieldName="DocAmount" ReadOnly="True" Visible="True" VisibleIndex="10">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
 
-                    <dxe:GridViewDataTextColumn Caption="OS Amount" FieldName="OSAmount" ReadOnly="True" Visible="True" VisibleIndex="9">
+                    <dxe:GridViewDataTextColumn Caption="OS Amount" FieldName="OSAmount" ReadOnly="True" Visible="True" VisibleIndex="11">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
@@ -911,34 +955,34 @@
 
 
 
-                    <dxe:GridViewDataTextColumn Caption="Comm %" FieldName="Commper" ReadOnly="True" Visible="True" VisibleIndex="10">
+                    <dxe:GridViewDataTextColumn Caption="Comm %" FieldName="Commper" ReadOnly="True" Visible="True" VisibleIndex="12">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
 
-                    <dxe:GridViewDataTextColumn Caption="Comm Amount" FieldName="Commamount" ReadOnly="True" Visible="True" VisibleIndex="11">
+                    <dxe:GridViewDataTextColumn Caption="Comm Amount" FieldName="Commamount" ReadOnly="True" Visible="True" VisibleIndex="13">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
 
-                    <dxe:GridViewDataTextColumn Caption="Type" FieldName="Type" ReadOnly="True" Visible="False" VisibleIndex="11">
+                    <dxe:GridViewDataTextColumn Caption="Type" FieldName="Type" ReadOnly="True" Visible="False" VisibleIndex="14">
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
 
-                    <dxe:GridViewDataTextColumn Caption="Unpaid Amount" FieldName="Unpaidamt" ReadOnly="True" Visible="True" VisibleIndex="13">
+                    <dxe:GridViewDataTextColumn Caption="Unpaid Amount" FieldName="Unpaidamt" ReadOnly="True" Visible="True" VisibleIndex="15">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
 
-                    <dxe:GridViewDataTextColumn Caption="Type" FieldName="Branch" ReadOnly="True" Visible="False" VisibleIndex="14">
+                    <dxe:GridViewDataTextColumn Caption="Type" FieldName="Branch" ReadOnly="True" Visible="False" VisibleIndex="16">
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
-                    <dxe:GridViewDataTextColumn ReadOnly="True" CellStyle-HorizontalAlign="Center" VisibleIndex="15">
+                    <dxe:GridViewDataTextColumn ReadOnly="True" CellStyle-HorizontalAlign="Center" VisibleIndex="17">
                         <HeaderStyle HorizontalAlign="Center" />
 
 
@@ -947,13 +991,13 @@
                             Actions
                         </HeaderTemplate>
                         <DataItemTemplate>
-
+                            <%--Rev 1.0 (columns PartyInvNo and PartyInvDate added) --%>
                             <% if (rights.CanEdit)
                                { %>
                             <a href="javascript:void(0);" onclick="onOpeningEdit('<%#Eval("ModId")%>','<%#Eval("CustomerId")%>',
                                 '<%#Eval("Type")%>','<%#Eval("branch_id")%>','<%#Eval("DocNumber")%>','<%#Eval("Date")%>',
                                 '<%#Eval("FullBill")%>','<%#Eval("DueDate")%>','<%#Eval("RefDate")%>','<%#Eval("DocAmount")%>','<%#Eval("OSAmount")%>','<%#Eval("Commper")%>','<%#Eval("Commamount")%>','<%#Eval("Unpaidamt")%>'
-                                )"
+                                ,'<%#Eval("PartyInvNo")%>','<%#Eval("PartyInvDate")%>')"
                                 title="Edit" class="pad">
                                 <img src="/assests/images/Edit.png" /></a>
 
