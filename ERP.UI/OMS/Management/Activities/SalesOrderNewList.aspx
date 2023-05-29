@@ -1,7 +1,7 @@
-﻿<%--====================================================Revision History=========================================================================
- 1.0   Priti    V2.0.38    17-04-2023  0025832:Create New page for Sales Order Listing
+﻿<%--====================================================Revision History=======================================================================
+ Create by: PRITI on 29-05-2023. Refer:
+0025832: Create New page for Sales Order Listing & ADD *
 ====================================================End Revision History=====================================================================--%>
-
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesOrderNewList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesOrderNewList" %>
 
@@ -23,7 +23,7 @@
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <%-- END DATATABLE SCRIPT FOR HTML TABLE--%>
     <link href="../../../assests/css/custom/jquery.confirm.css" rel="stylesheet" />
-    <script src="JS/SalesOrderNewList.js?v=1.3"></script>
+    <script src="JS/SalesOrderNewList.js?v=1.4"></script>
     <link href="CSS/SalesOrderEntityList.css" rel="stylesheet" />
     <%-- ADD DATATABLE STYLE--%>
     <style>
@@ -781,14 +781,14 @@
                 if (ActiveUser != null) {
                     $.ajax({
                         type: "POST",
-                        url: "SalesOrderList.aspx/GetEditablePermission",
+                        url: "SalesOrderNewList.aspx/GetEditablePermission",
                         data: "{'ActiveUser':'" + ActiveUser + "'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         async: false,
                         success: function (msg) {                          
                             var status = msg.d;
-                            var url = 'SalesOrderAdd.aspx?key=' + keyValue + '&Permission=' + status + '&type=SO';
+                            var url = 'SalesOrderAddNew.aspx?key=' + keyValue + '&Permission=' + status + '&type=SO';
                             window.location.href = url;
                         }
                     });
@@ -814,14 +814,14 @@
                 if (ActiveUser != null) {
                     $.ajax({
                         type: "POST",
-                        url: "SalesOrderList.aspx/GetEditablePermission",
+                        url: "SalesOrderNewList.aspx/GetEditablePermission",
                         data: "{'ActiveUser':'" + ActiveUser + "'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         async: false,
                         success: function (msg) {
                             var status = msg.d;
-                            var url = 'SalesOrderAdd.aspx?key=' + keyValue + '&Permission=' + status + '&type=COPY';
+                            var url = 'SalesOrderAddNew.aspx?key=' + keyValue + '&Permission=' + status + '&type=COPY';
                             window.location.href = url;
                         }
                     });
@@ -854,7 +854,7 @@
                                 if (ActiveUser != null) {
                                     $.ajax({
                                         type: "POST",
-                                        url: "SalesOrderList.aspx/GetEditablePermission",
+                                        url: "SalesOrderNewList.aspx/GetEditablePermission",
                                         data: "{'ActiveUser':'" + ActiveUser + "'}",
                                         contentType: "application/json; charset=utf-8",
                                         dataType: "json",
@@ -862,7 +862,7 @@
                                         success: function (msg) {
                                            
                                             var status = msg.d;
-                                            var url = 'SalesOrderAdd.aspx?key=' + keyValue + '&Permission=' + status + '&type=SO' + '&type1=PO';
+                                            var url = 'SalesOrderAddNew.aspx?key=' + keyValue + '&Permission=' + status + '&type=SO' + '&type1=PO';
                                             window.location.href = url;
                                         }
                                     });
@@ -895,7 +895,7 @@
                     if (ActiveUser != null) {
                         $.ajax({
                             type: "POST",
-                            url: "SalesOrderList.aspx/GetEditablePermission",
+                            url: "SalesOrderNewList.aspx/GetEditablePermission",
                             data: "{'ActiveUser':'" + ActiveUser + "'}",
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -903,7 +903,7 @@
                             success: function (msg) {
 
                                 var status = msg.d;
-                                var url = 'SalesOrderAdd.aspx?key=' + keyValue + '&Permission=' + status + '&type=SO' + '&type1=PO';
+                                var url = 'SalesOrderAddNew.aspx?key=' + keyValue + '&Permission=' + status + '&type=SO' + '&type1=PO';
                                 window.location.href = url;
                             }
                         });
