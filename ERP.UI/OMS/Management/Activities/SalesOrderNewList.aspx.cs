@@ -1,5 +1,6 @@
 ﻿//====================================================Revision History=========================================================================
-// 1.0  Priti   V2.0.38  17-04-2023  Change Approval Realted Dev Express Table Bind to HTML table
+// Create by: PRITI on 29-05-2023. Refer:
+//0025832: Create New page for Sales Order Listing & ADD
 //====================================================End Revision History=====================================================================
 
 
@@ -43,7 +44,7 @@ namespace ERP.OMS.Management.Activities
        
         protected void Page_Load(object sender, EventArgs e)
         {
-            rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/management/Activities/SalesOrderEntityList.aspx");
+            rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/management/Activities/SalesOrderNewList.aspx");
 
 
             CommonBL cSOrder = new CommonBL();

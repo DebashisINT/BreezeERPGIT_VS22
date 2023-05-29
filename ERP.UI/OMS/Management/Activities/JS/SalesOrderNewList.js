@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿//====================================================Revision History=======================================================================
+//* Create by: PRITI on 29-05-2023. Refer:
+//0025832: Create New page for Sales Order Listing & ADD *
+//====================================================End Revision History=====================================================================--%>
+
+$(document).ready(function () {
     $('.navbar-minimalize').click(function () {
         if ($('body').hasClass('mini-navbar')) {
             var windowWidth = $(window).width();
@@ -105,7 +110,7 @@ function OrderWattingOkClick() {
     var listKey = CwatingOrdergrid.GetRowKey(index);
     if (listKey) {
         if (CwatingOrdergrid.GetRow(index).children[6].innerText != "Advance") {
-            var url = 'SalesOrderAdd.aspx?key=' + 'ADD&&BasketId=' + listKey;
+            var url = 'SalesOrderAddNew.aspx?key=' + 'ADD&&BasketId=' + listKey;
             window.location.href = url;
         } 
     }
@@ -117,7 +122,7 @@ function OnWaitingGridKeyPress(e) {
         var listKey = CwatingOrdergrid.GetRowKey(index);
         if (listKey) {
             if (CwatingOrdergrid.GetRow(index).children[6].innerText != "Advance") {
-                var url = 'SalesOrderAdd.aspx?key=' + 'ADD&&BasketId=' + listKey;               
+                var url = 'SalesOrderAddNew.aspx?key=' + 'ADD&&BasketId=' + listKey;               
                 window.location.href = url;
             } 
         }
@@ -137,7 +142,7 @@ function ListRowClicked(s, e) {
     var listKey = CwatingOrdergrid.GetRowKey(index);
     if (e.htmlEvent.target.id != "CloseRemoveWattingBtn") {
         if (CwatingOrdergrid.GetRow(index).children[6].innerText != "Advance") {
-            var url = 'SalesOrderAdd.aspx?key=' + 'ADD&&BasketId=' + listKey;           
+            var url = 'SalesOrderAddNew.aspx?key=' + 'ADD&&BasketId=' + listKey;           
             window.location.href = url;
         } 
     }
@@ -277,9 +282,12 @@ function PendingApproval() {
     });
 }
 function OnGetApprovedRowValues(obj) {
-    uri = "SalesOrderAdd.aspx?key=" + obj + "&status=2" + '&type=SO' + '&isformApprove=YES' + '&UpperApprove=UpApprove';
-    popup.SetContentUrl(uri);
-    popup.Show();
+    //uri = "SalesOrderAddNew.aspx?key=" + obj + "&status=2" + '&type=SO' + '&isformApprove=YES' + '&UpperApprove=UpApprove';
+    //popup.SetContentUrl(uri);
+    //popup.Show();
+
+    var url = "SalesOrderAddNew.aspx?key=" + obj + "&status=2" + '&type=SO' + '&isformApprove=YES' + '&UpperApprove=UpApprove';
+    window.location.href = url;
 }
 
 
@@ -292,11 +300,11 @@ function OnGetApprovedRowValues(obj) {
 function GetApprovedQuoteId(s, e, itemIndex) {
     var rowvalue = cgridPendingApproval.GetRowValues(itemIndex, 'ID', OnGetApprovedRowValues);
 }
-function OnGetApprovedRowValues(obj) {
-    uri = "SalesOrderAdd.aspx?key=" + obj + "&status=2" + '&type=SO' + '&isformApprove=YES' + '&UpperApprove=UpApprove';
-    popup.SetContentUrl(uri);
-    popup.Show();
-}
+//function OnGetApprovedRowValues(obj) {
+//    uri = "SalesOrderAddNew.aspx?key=" + obj + "&status=2" + '&type=SO' + '&isformApprove=YES' + '&UpperApprove=UpApprove';
+//    popup.SetContentUrl(uri);
+//    popup.Show();
+//}
 function closeUserApproval() {
     popup.Hide();   
 }
@@ -307,7 +315,7 @@ function GetRejectedQuoteId(s, e, itemIndex) {
     cgridPendingApproval.GetRowValues(itemIndex, 'ID', OnGetRejectedRowValues);
 }
 function OnGetRejectedRowValues(obj) {
-    uri = "SalesOrderAdd.aspx?key=" + obj + "&status=3" + '&type=SO' + '&UpperApprove=UpApprove';
+    uri = "SalesOrderAddNew.aspx?key=" + obj + "&status=3" + '&type=SO' + '&UpperApprove=UpApprove';
     popup.SetContentUrl(uri);
     popup.Show();
 }
@@ -583,7 +591,7 @@ function SavePrpformaStatus() {
 }
 
 function OnViewClick(keyValue) {
-    var url = 'SalesOrderAdd.aspx?key=' + keyValue + '&req=V' + '&type=SO';
+    var url = 'SalesOrderAddNew.aspx?key=' + keyValue + '&req=V' + '&type=SO';
     window.location.href = url;
 }
 
@@ -761,7 +769,7 @@ function CancelClosed_save() {
 
 
 function OnAddButtonClick() {
-    var url = 'SalesOrderAdd.aspx?key=' + 'ADD';
+    var url = 'SalesOrderAddNew.aspx?key=' + 'ADD';
     window.location.href = url;
 }
 
