@@ -1,4 +1,7 @@
-﻿var isFirstTime = true;
+﻿/**********************************************************************************************************************************
+ 1.0      30-05-2023        2.0.38        Sanchita      ERP - Listing Views - Purchase Invoice. refer: 26250
+***********************************************************************************************************************************/
+var isFirstTime = true;
 
 // Purchase Invoice Section Start
 updatePBGridByDate = function () {
@@ -24,7 +27,11 @@ updatePBGridByDate = function () {
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
 
-        cgrid.Refresh();
+        // Rev 1.0
+        //cgrid.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
+        // End of Rev 1.0
 
         //$("#drdExport").val(0);
     }

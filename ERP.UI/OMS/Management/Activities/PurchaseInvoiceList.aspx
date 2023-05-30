@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                05-05-2023        2.0.37           Pallab              26038: Purchase Invoice module design modification & check in small device
+2.0                30-05-2023        2.0.38           Sanchita            ERP - Listing Views - Purchase Invoice. refer: 26250   
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Purchase Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false"
@@ -15,6 +16,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <%--Filteration Section Start By Sam--%>
     <script src="JS/PurchaseInvoice.js"></script>
     <script type="text/javascript" src="../../CentralData/JSScript/GenericJScript.js"></script>
+     <%--Rev 2.0--%>
+    <script>
+        function CallbackPanelEndCall(s, e) {
+            cgrid.Refresh();
+        }
+
+    </script>
+    <%--End of Rev 2.0 --%>
     <script>
         //Mantis Issue 25013
         $(document).ready(function () {
@@ -1103,5 +1112,14 @@ popup.Hide();
  
  <asp:HiddenField ID="hdndatadeletefrom" runat="server" />
     <asp:HiddenField ID="hdndatadeleteto" runat="server" />--%>
+    <%--Rev 2.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--End of Rev 2.0--%>
 </asp:Content>
 
