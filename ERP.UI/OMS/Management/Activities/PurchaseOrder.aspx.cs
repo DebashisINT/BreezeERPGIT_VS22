@@ -1,4 +1,7 @@
-﻿using System;
+﻿//====================================================Revision History=========================================================
+//Rev 1.0      Priti      V2.0.38   30-05-2023     0026258:The Search Panel to be made available in the Product Popup in Purchase Order entry Module
+//====================================================End Revision History=====================================================================
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -470,6 +473,9 @@ namespace ERP.OMS.Management.Activities
                 Session["POwarehousedetailstempDelete"] = null;
                 Session["MultiUOMData"] = null;
                 Session["InlineRemarks"] = null;
+                //Rev 1.0
+                Session["ProductIndentDetails"] = null;
+                //Rev 1.0 End
                 PopulateGSTCSTVATCombo(DateTime.Now.ToString("yyyy-MM-dd"));
                 PopulateChargeGSTCSTVATCombo(DateTime.Now.ToString("yyyy-MM-dd"));
                 if (Request.QueryString["key"] == "ADD")
@@ -10035,22 +10041,34 @@ namespace ERP.OMS.Management.Activities
                             
                             if (DocType == "Indent")
                             {
-                                dt_QuotationDetails = objPurchaseOrderBL.GetIndentDetailsFromPO(QuoComponent, IdKey, "", "Edit");
+                                //Rev 1.0
+                                //dt_QuotationDetails = objPurchaseOrderBL.GetIndentDetailsFromPO(QuoComponent, IdKey, "", "Edit");
+                                dt_QuotationDetails = objPurchaseOrderBL.GetIndentDetails(QuoComponent, IdKey, "", "Edit");
+                                //Rev 1.0 End
                             }
                             else if (DocType == "Quotation")
                             {
-                                dt_QuotationDetails = objPurchaseOrderBL.GetQuotationDetailsFromPO(QuoComponent, IdKey, "", "Edit");
+                                //Rev 1.0 
+                                //dt_QuotationDetails = objPurchaseOrderBL.GetQuotationDetailsFromPO(QuoComponent, IdKey, "", "Edit");
+                                dt_QuotationDetails = objPurchaseOrderBL.GetQuotationDetails(QuoComponent, IdKey, "", "Edit");
+                                //Rev 1.0 End
                             }
                         }
                         else
                         {
                             if (DocType == "Indent")
                             {
-                                dt_QuotationDetails = objPurchaseOrderBL.GetIndentDetailsFromPO(QuoComponent, "0", "", "Add");
+                                //Rev 1.0 
+                                //dt_QuotationDetails = objPurchaseOrderBL.GetIndentDetailsFromPO(QuoComponent, "0", "", "Add");
+                                dt_QuotationDetails = objPurchaseOrderBL.GetIndentDetails(QuoComponent, "0", "", "Add");
+                                //Rev 1.0 End
                             }
                             else if (DocType == "Quotation")
                             {
-                                dt_QuotationDetails = objPurchaseOrderBL.GetQuotationDetailsFromPO(QuoComponent, "0", "", "Add");
+                                //Rev 1.0 
+                                //dt_QuotationDetails = objPurchaseOrderBL.GetQuotationDetailsFromPO(QuoComponent, "0", "", "Add");
+                                dt_QuotationDetails = objPurchaseOrderBL.GetQuotationDetails(QuoComponent, "0", "", "Add");
+                                //Rev 1.0 End
                             }
                         }
 
@@ -10061,7 +10079,14 @@ namespace ERP.OMS.Management.Activities
                     //}
                     //Session["ProductOrderDetails"] = null;
 
-                    grid_Products.DataSource = GetProductsInfo(dt_QuotationDetails);
+                    //Rev 1.0                   
+                   
+                    Session["ProductIndentDetails"] = dt_QuotationDetails;
+                    grid_Products.DataSource = dt_QuotationDetails;
+                    //grid_Products.DataSource = GetProductsInfo(dt_QuotationDetails);
+                    //Rev 1.0 End
+
+
                     grid_Products.DataBind();
                     grid_Products.JSProperties["cpComponentDetails"] = QuoComponentNumber + "~" + QuoComponentDate + "~" + ProjId;
                 }
@@ -10708,5 +10733,14 @@ namespace ERP.OMS.Management.Activities
         }
         //End of Mantis Issue 25152
 
+        //Rev 1.0
+        protected void grid_Products_DataBinding(object sender, EventArgs e)
+        {
+            if (Session["ProductIndentDetails"] != null)
+            {
+                grid_Products.DataSource = (DataTable)Session["ProductIndentDetails"];
+            }
+        }
+        //Rev 1.0 End
     }
 }
