@@ -2632,7 +2632,8 @@ function acpContactPersonPhoneEndCall(s, e) {
     <style>
         select
         {
-            z-index: 0;
+            z-index: 1;
+            cursor: pointer;
         }
 
         #GrdSalesReturn {
@@ -2661,6 +2662,10 @@ function acpContactPersonPhoneEndCall(s, e) {
         }
 
         select
+        {
+            -webkit-appearance: none;
+        }
+        select#ddlInventory
         {
             -webkit-appearance: auto;
         }
@@ -2691,6 +2696,11 @@ function acpContactPersonPhoneEndCall(s, e) {
         .simple-select::after
         {
                 top: 26px;
+        }
+
+        input[disabled]
+        {
+            background: #f3f3f3;
         }
 
     </style>
