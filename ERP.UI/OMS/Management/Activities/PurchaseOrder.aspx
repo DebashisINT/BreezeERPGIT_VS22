@@ -3015,7 +3015,8 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                     <dxe:ASPxGridView runat="server" KeyFieldName="QuoteDetails_Id" ClientInstanceName="cgridproducts" ID="grid_Products"
                                                         Width="100%" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false" SettingsPager-Mode="ShowAllRecords" OnCustomCallback="cgridProducts_CustomCallback"
                                                         Settings-ShowFooter="false" AutoGenerateColumns="False" OnHtmlRowCreated="aspxGridProduct_HtmlRowCreated"
-                                                        OnRowInserting="Productgrid_RowInserting" OnRowUpdating="Productgrid_RowUpdating" OnRowDeleting="Productgrid_RowDeleting" Settings-VerticalScrollableHeight="300" Settings-VerticalScrollBarMode="Visible">
+                                                        OnRowInserting="Productgrid_RowInserting" OnRowUpdating="Productgrid_RowUpdating" OnRowDeleting="Productgrid_RowDeleting" Settings-VerticalScrollableHeight="300" 
+                                                        Settings-VerticalScrollBarMode="Visible" OnDataBinding="grid_Products_DataBinding">
 
                                                         <SettingsBehavior AllowDragDrop="False" AllowSort="False"></SettingsBehavior>
                                                         <SettingsPager Visible="false"></SettingsPager>
@@ -3040,7 +3041,7 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                             </dxe:GridViewDataTextColumn>
 
                                                         </Columns>
-
+                                                        <Settings ShowFilterRow="true" ShowFilterRowMenu="true" />
                                                         <SettingsDataSecurity AllowEdit="true" />
                                                         <ClientSideEvents EndCallback="gridProducts_EndCallback" />
                                                     </dxe:ASPxGridView>

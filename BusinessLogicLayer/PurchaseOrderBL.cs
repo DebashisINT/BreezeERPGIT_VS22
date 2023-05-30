@@ -1,4 +1,7 @@
-﻿using DataAccessLayer;
+﻿//=================================================Revision History=========================================================
+//Rev 1.0      Priti      V2.0.38   30-05-2023     0026258:The Search Panel to be made available in the Product Popup in Purchase Order entry Module
+//====================================================End Revision History=====================================================================
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -243,7 +246,26 @@ namespace BusinessLogicLayer
             proc.AddVarcharPara("@Mode", 10, Action);
             return proc.GetTable();
         }
-
+        //Rev 1.0
+        public DataTable GetIndentDetails(string Indent_Id, string Order_Key, string Product_Ids, string Action)
+        {
+            ProcedureExecute proc = new ProcedureExecute("prc_PurchaseOrderDetailsList");
+            proc.AddVarcharPara("@Action", 100, "GetIndentDetails");
+            proc.AddVarcharPara("@Indent_Id", 4000, Indent_Id);
+            proc.AddIntegerPara("@PurchaseOrder_Id", Convert.ToInt32(Order_Key));
+            proc.AddVarcharPara("@Mode", 10, Action);
+            return proc.GetTable();
+        }
+        public DataTable GetQuotationDetails(string Indent_Id, string Order_Key, string Product_Ids, string Action)
+        {
+            ProcedureExecute proc = new ProcedureExecute("prc_PurchaseOrderDetailsList");
+            proc.AddVarcharPara("@Action", 100, "GetPurchaseQuotationDetails");
+            proc.AddVarcharPara("@Indent_Id", 4000, Indent_Id);
+            proc.AddIntegerPara("@PurchaseOrder_Id", Convert.ToInt32(Order_Key));
+            proc.AddVarcharPara("@Mode", 10, Action);
+            return proc.GetTable();
+        }
+        //Rev 1.0 End
         public DataTable GetQuotationDetailsFromPO(string Indent_Id, string Order_Key, string Product_Ids, string Action)
         {
             ProcedureExecute proc = new ProcedureExecute("prc_PurchaseOrderDetailsList");
