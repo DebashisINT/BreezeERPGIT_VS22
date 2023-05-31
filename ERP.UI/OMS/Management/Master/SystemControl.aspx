@@ -1,5 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 1.0   Pallab    V2.0.38      24-05-2023          0026218: System Control module design modification & check in small device
+2.0   Priti     V2.0.38      30-05-2023          0026218: System Control module design modification & check in small device
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SystemControl.aspx.cs" Inherits="ERP.OMS.Management.Master.SystemControl" %>
@@ -789,14 +791,14 @@
                                 </div>
                             </div>
                             <div class="col-md-2 " id="DivReturnTNumbering" runat="server">
-                                <label class="mTop5">Return transfer Numbering</label>
+                                <label id="lbltransfer" runat="server" class="mTop5">Return transfer Numbering</label>
                                 <div class="relative">
                                     <dxe:ASPxComboBox ID="cmbReturnTNumbering" runat="server" ClientInstanceName="ccmbReturnTNumbering"
                                         Width="100%">
                                     </dxe:ASPxComboBox>
                                 </div>
                             </div>
-                            <div class="col-md-2 ">
+                            <div class="col-md-3 ">
                                 <label class="mTop5">Main Account for Party Journal</label>
                                 <div class="relative">
                                     <dxe:ASPxComboBox ID="cmbMainAccount" runat="server" ClientInstanceName="ccmbMainAccount"
@@ -814,6 +816,7 @@
                                     </dxe:ASPxTextBox>
                                 </div>
                             </div>
+                             <div style="clear: both;"></div>
                             <%--Mantis Issue 24818--%>
                             <div class="col-md-3 " runat="server" id="Div1">
                                  <label class="mTop5">Opportunity Close - the Suppression Day of Month</label>
