@@ -1,4 +1,8 @@
-﻿using DataAccessLayer;
+﻿//================================================== Revision History =============================================
+//1.0   Priti     V2.0.38     31-05-2023    0026218: System Control module design modification & check in small device
+//====================================================== Revision History =============================================
+
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -87,6 +91,15 @@ namespace ERP.OMS.Management.Master
                     DivDefectWarehouse.Style.Add("display", "!inline-block");
                     DivAutoNumberingforDefect.Style.Add("display", "!inline-block");
                 }
+
+                //Rev 1.0
+                string IsConsiderExcessQtyIssueforProduction = masterBl.GetSettings("IsConsiderExcessQtyIssueforProduction");
+                if (IsConsiderExcessQtyIssueforProduction == "1")
+                {
+                    DivReplaceablehouse.Style.Add("display", "!inline-block");
+                    lbltransfer.InnerText = "Warehouse wise Stock Transfer";
+                }
+                //Rev 1.0 End
 
                 BindWarehouse();
                 BindAutoAdjustmentNumbering();
