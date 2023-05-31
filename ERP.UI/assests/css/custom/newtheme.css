@@ -503,8 +503,8 @@ p.copyright {
     /*z-index: 100;*/
     position: relative !important;
     /*rev 3.0*/
-    /*margin-left: 175px;*/
-    margin-left: 50px;
+    margin-left: 175px;
+    /*margin-left: 50px;*/
     /*rev end 3.0*/
     padding: 15px 15px;
     margin-top: 75px;
@@ -2605,7 +2605,8 @@ input + label {
     margin-left: 5px;
 }
 .cmpName {
-    line-height:26px;
+    line-height: 26px;
+    color: #f3f3f3;
 }
 .dxtc-link, .dxgvHeader_PlasticBlue td {
     font-size: 12px !important;
