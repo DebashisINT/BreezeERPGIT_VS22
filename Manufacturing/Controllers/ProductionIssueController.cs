@@ -1,6 +1,8 @@
 ﻿//@*==================================================== Revision History =========================================================================
 //     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
 //     2.0  Priti V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
+//     3.0  Priti V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+
 //====================================================End Revision History=====================================================================*@
 using BusinessLogicLayer;
 using DataAccessLayer;
@@ -60,6 +62,9 @@ namespace Manufacturing.Controllers
         [HttpGet]
         public ActionResult ProductionIssueEntry()
         {
+            //Rev 3.0
+            string IsConsiderExcessQtyIssueforProduction = cSOrder.GetSystemSettingsResult("IsConsiderExcessQtyIssueforProduction");
+            //Rev 3.0 End
             string ProjectSelectInEntryModule = cSOrder.GetSystemSettingsResult("ProjectSelectInEntryModule");
             string HierarchySelectInEntryModule = cSOrder.GetSystemSettingsResult("Show_Hierarchy");
             string ProductionOrderShowNoOutstanding = cSOrder.GetSystemSettingsResult("ProductionOrderShowNoOutstanding");
@@ -204,7 +209,12 @@ namespace Manufacturing.Controllers
             ViewBag.ProjectShow = ProjectSelectInEntryModule;
             ViewBag.WorkOrderModuleSkipped = WorkOrderModuleSkipped;
             ViewBag.POShowNoOutstanding = ProductionOrderShowNoOutstanding;
-            ViewBag.ShowMRPTaggingIssueForProduction = IsMRPTaggingIssueForProduction;//REV 1.0
+            //REV 1.0
+            ViewBag.ShowMRPTaggingIssueForProduction = IsMRPTaggingIssueForProduction;
+            //Rev 1.0 End
+            //Rev 3.0
+            ViewBag.ConsiderExcessQty = IsConsiderExcessQtyIssueforProduction;
+            //Rev 3.0 End
             TempData["Count"] = 1;
             TempData.Keep();
 
@@ -420,6 +430,9 @@ namespace Manufacturing.Controllers
 
         public ActionResult GetProductionIssueDetailsProductList(Int64 DetailsID = 0)
         {
+            //Rev 3.0
+            string IsConsiderExcessQtyIssueforProduction = cSOrder.GetSystemSettingsResult("IsConsiderExcessQtyIssueforProduction");
+            //Rev 3.0 End
             string WorkOrderModuleSkipped = cSOrder.GetSystemSettingsResult("WorkOrderModuleSkipped");
             BOMProduct bomproductdataobj = new BOMProduct();
             List<BOMProduct> bomproductdata = new List<BOMProduct>();
@@ -559,6 +572,9 @@ namespace Manufacturing.Controllers
                 }
             }
             catch { }
+            //Rev 3.0
+            ViewBag.ConsiderExcessQty = IsConsiderExcessQtyIssueforProduction;
+            //Rev 3.0 End
             return PartialView("_ProductionIssueBOMProductGrid", bomproductdata);
         }
 

@@ -1,10 +1,11 @@
 ﻿@*====================================================Revision History=========================================================================
-        1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
-        2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
-        3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
-        4.0  Priti   V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
-        5.0  Pallab  V2.0.38    31-05-2023  0026266: Issue for Production "Production Order No." dropdown issue fix
-    ====================================================End Revision History=====================================================================*@
+1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
+3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
+4.0  Priti   V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
+5.0  Pallab  V2.0.38    31-05-2023  0026266: Issue for Production "Production Order No." dropdown issue fix
+6.0  Priti   V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+====================================================End Revision History=====================================================================*@
 
 
 @using System.Web.UI.WebControls
@@ -132,7 +133,6 @@
         border: 1px solid #54749d;
         color: #fff;
     }
-    
 </style>
 <script>
     //Rev 3.0
@@ -1412,18 +1412,23 @@
 
                 var msgbalqty = '';
                 var msgbalqtyindex = 0;
-                for (var i = 0; i < visiablerow; i++) {
-                    if (gridProductionBOMProductList.GetRow(i)) {
-                        //gridProductionBOMProductList.batchEditApi.StartEdit(i, 3);
-                        var Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
-                        var balQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'BalQty');
-                        if (parseFloat(Qty) > parseFloat(balQty)) {
-                            msgbalqty = 'Qty entered is greater than available quantity. Cannot proceed.';
-                            msgbalqtyindex = i;
+                //Rev 6.0
+                if ('@ViewBag.ConsiderExcessQty' == "No") {
+                //Rev 6.0 End
+                    for (var i = 0; i < visiablerow; i++) {
+                        if (gridProductionBOMProductList.GetRow(i)) {
+                            //gridProductionBOMProductList.batchEditApi.StartEdit(i, 3);
+                            var Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
+                            var balQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'BalQty');
+                            if (parseFloat(Qty) > parseFloat(balQty)) {
+                                 msgbalqty = 'Qty entered is greater than available quantity. Cannot proceed.';
+                                msgbalqtyindex = i;
+                            }
                         }
                     }
+                //Rev 6.0 
                 }
-
+                //Rev 6.0 End
                 if (msgbalqty == '') {
 
                     gridProductionBOMProductList.UpdateEdit();
