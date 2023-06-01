@@ -4282,10 +4282,10 @@ label, .mylabel1, .clsTo, .dxeBase_PlasticBlue {
         opacity: 1;
     }
 /*Rev 3.0*/
-.dxgvControl_PlasticBlue, .dxgvDisabled_PlasticBlue
+/*.dxgvControl_PlasticBlue, .dxgvDisabled_PlasticBlue
 {
     width: 100% !important;
-}
+}*/
 /*Rev end 3.0*/
 /*Rev 4.0*/
 .ui-widget.ui-widget-content {
