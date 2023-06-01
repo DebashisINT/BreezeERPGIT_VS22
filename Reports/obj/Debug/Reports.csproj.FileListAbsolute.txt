@@ -399,7 +399,6 @@ D:\Priti\BreezeERPGIT_VS22\Reports\bin\ru\DevExpress.Sparkline.v15.1.Core.resour
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CoreCompileInputs.cache
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.csproj.CopyComplete
 D:\Priti\BreezeERPGIT_VS22\Reports\obj\Debug\Reports.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\Microsoft.Web.Infrastructure.xml
 C:\Projects\BreezeERPGIT_VS22\Reports\bin\Reports.dll.config
 C:\Projects\BreezeERPGIT_VS22\Reports\bin\Reports.dll
 C:\Projects\BreezeERPGIT_VS22\Reports\bin\Reports.pdb
@@ -502,3 +501,7 @@ C:\Projects\BreezeERPGIT_VS22\Reports\bin\System.Web.Razor.dll
 C:\Projects\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.Razor.dll
 C:\Projects\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.Deployment.dll
 C:\Projects\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.dll
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.Razor.dll
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.Deployment.dll
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.dll
+E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\System.Web.WebPages.Razor.dll

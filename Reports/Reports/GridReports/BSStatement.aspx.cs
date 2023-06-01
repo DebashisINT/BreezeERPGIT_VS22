@@ -1,4 +1,9 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=========================
+//1.0   v2 .0.37    Debashis    01/06/2023  Running Balance Required in the Third Level Zooming report for PL - Horizontal & BS Horizontal from any Ledger.
+//                                          Refer: 0026252
+#endregion
+
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -38,6 +43,9 @@ namespace Reports.Reports.GridReports
         DateTime dtFrom;
         DateTime dtTo;
         static int PageStart = 1;
+        //Rev 1.0
+        decimal TotalDebit = 0, TotalCredit = 0, TotalOpening = 0, TotalDBCR = 0;
+        //End of Rev 1.0
         public EntityLayer.CommonELS.UserRightsForPage rights = new UserRightsForPage();
 
         protected void Page_PreInit(object sender, EventArgs e) // lead add
@@ -1027,7 +1035,38 @@ namespace Reports.Reports.GridReports
         }
         protected void ShowGridDetails2Level_SummaryDisplayText(object sender, ASPxGridViewSummaryDisplayTextEventArgs e)
         {
-            e.Text = string.Format("{0}", e.Value);
+            //Rev 1.0
+            //e.Text = string.Format("{0}", e.Value);
+            if (e.Item.FieldName == "OPENING")
+            {
+                TotalOpening = Convert.ToDecimal(e.Value);
+            }
+            else if (e.Item.FieldName == "PR_DR_AMT")
+            {
+                TotalDebit = Convert.ToDecimal(e.Value);
+            }
+            else if (e.Item.FieldName == "PR_CR_AMT")
+            {
+                TotalCredit = Convert.ToDecimal(e.Value);
+            }
+
+            if (e.Item.FieldName == "CLOSING")
+            {
+                if (TotalOpening == 0 || TotalOpening > 0)
+                {
+                    TotalDBCR = (TotalOpening + TotalDebit) - TotalCredit;
+                }
+                else
+                {
+                    TotalDBCR = TotalDebit - (TotalOpening + TotalCredit);
+                }
+                e.Text= TotalDBCR.ToString();
+            }
+            else
+            {
+                e.Text = string.Format("{0}", e.Value);
+            }
+            //End of Rev 1.0
         }
 
 
