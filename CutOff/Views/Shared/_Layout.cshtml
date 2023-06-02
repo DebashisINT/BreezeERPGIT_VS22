@@ -1,8 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@*************************************************************************************************************************************
+   Rev 1.0     Pallab        V2.0.38     "Session expired" message change and alert design modification. Refer: 26230
+**************************************************************************************************************************************@
+<!DOCTYPE html>
 <html>
 <head>
     @*Rev Number         DATE              VERSION          DEVELOPER           CHANGES*@
-    @*1.0                03-01-2023        2.0.35           Pallab              Year not showing properly in About popup*@ 
+    @*1.0                03-01-2023        2.0.35           Pallab              Year not showing properly in About popup*@
     <title>@ViewBag.Title</title>
     @Html.DevExpress().GetStyleSheets(
             //new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -32,6 +35,11 @@
     <link rel="stylesheet" href="/assests/css/custom/newtheme.css" />
     <link rel="stylesheet" href="/assests/css/custom/PMSStyles.css" />
     <link href="~/assests/pluggins/tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+
+    @*Rev 1.0*@
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
+    @*Rev end 1.0*@
 
     <script src="~/assests/js/jquery.min.js"></script>
     @Html.DevExpress().GetScripts(
@@ -1326,19 +1334,19 @@
         </div>
     </div>
     <div class="mainWraper">
-            <header id="header" class="clearfix transit">
-                @{
-      Html.RenderAction("_PartialHeaderLayout", "CuttoffMaster");
-                }
-            </header>
+        <header id="header" class="clearfix transit">
+            @{
+                Html.RenderAction("_PartialHeaderLayout", "CuttoffMaster");
+            }
+        </header>
 
 
-            <section class="rightSide transit clearfix" style="min-height: 415px;">
-                @RenderBody()
-                @RenderSection("Scripts", required: false)
-            </section>
-            <script src="~/assests/pluggins/customScroll/customScroll.js" ></script>
-        </div>
-   
+        <section class="rightSide transit clearfix" style="min-height: 415px;">
+            @RenderBody()
+            @RenderSection("Scripts", required: false)
+        </section>
+        <script src="~/assests/pluggins/customScroll/customScroll.js"></script>
+    </div>
+
 </body>
 </html>

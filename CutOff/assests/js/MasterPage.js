@@ -29,9 +29,20 @@ function checkSessionLogoutMasterPage() {
                 //jAlert('Session expired !!!', 'Alert', function () {
                 //    window.parent.location.href = '/oms/login.aspx';
                 //});
-                jAlert('Session has expired !!!', 'Alert', function () {
-                    window.parent.location.href = '/oms/login.aspx';
-                });
+                //jAlert('Session has expired !!!', 'Alert', function () {
+                //    window.parent.location.href = '/oms/login.aspx';
+                //});
+
+                Swal.fire({
+                    confirmButtonText: 'Login',
+                    title: 'User Session has Expired!',
+                    text: 'You have been logged out. Please log in again.',
+                    allowOutsideClick: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.parent.location.href = '/oms/login.aspx';
+                    }
+                })
                 /*Rev end 2.0*/
             }
         },
