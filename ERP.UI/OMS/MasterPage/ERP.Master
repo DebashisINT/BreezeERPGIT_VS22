@@ -1,4 +1,8 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ERP.master.cs" Inherits="ERP.OMS.MasterPage.ERP" %>
+﻿<%--*************************************************************************************************************************************
+   Rev 1.0     Pallab        V2.0.38     "Session expired" message change and alert design modification. Refer: 26230
+*************************************************************************************************************************************--%>
+
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ERP.master.cs" Inherits="ERP.OMS.MasterPage.ERP" %>
 
 <%--<%@ Register Src="~/OMS/Management/Headermain.ascx" TagPrefix="uc" TagName="Fyear" %>--%>
 <%@ Register Src="~/OMS/MasterPage/UserControls/ucPartialMenu.ascx" TagPrefix="ucMenu" TagName="ucpartialMenu" %>
@@ -224,7 +228,10 @@
 
     <script type="text/javascript" src="/assests/js/modalmsg.js"></script>
     <script src="/OMS/MasterPage/Js/MasterPage.js?v=0.2" type="text/javascript"></script>
-
+    <%--Rev 1.0--%>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
+    <%--Rev end 1.0--%>
     <link href="../../assests/css/RES.css" rel="stylesheet" />
     <meta name="theme-color" content="#0C78B1" />
     <!-- Windows Phone -->
