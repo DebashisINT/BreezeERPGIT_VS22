@@ -1,4 +1,7 @@
-﻿using BusinessLogicLayer;
+﻿//==================================================== Revision History =================================================================================================
+// 1.0  Priti V2.0.38    05-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Production
+//====================================================End Revision History===============================================================================================
+using BusinessLogicLayer;
 using DevExpress.Web;
 using EntityLayer.CommonELS;
 using ERP.Models;
@@ -37,6 +40,21 @@ namespace ERP.OMS.Management.Activities
             toDate.MaxDate = Convert.ToDateTime(Session["FinYearEndDate"]);
             toDate.MinDate = Convert.ToDateTime(Session["FinYearStartDate"]);
             rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/Management/Activities/WarehousewiseStockTransferList.aspx");
+
+            //Rev 1.0
+            string IsConsiderExcessQty = objmaster.GetSettings("IsConsiderExcessQtyIssueforProduction");
+            if (!String.IsNullOrEmpty(IsConsiderExcessQty))
+            {
+                if (IsConsiderExcessQty == "1")
+                {                    
+                    gridAdvanceAdj.Columns[15].Width = 200;
+                }
+                else if (IsConsiderExcessQty == "0")
+                {                    
+                    gridAdvanceAdj.Columns[15].Width = 0;
+                }
+            }
+            //Rev 1.0 End
             string TechnicianStockAdjustment = objmaster.GetSettings("TechnicianStockTransfer");
             if (!String.IsNullOrEmpty(TechnicianStockAdjustment))
             {

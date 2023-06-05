@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK02122020" Class="ERPDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ADHUNIK" Class="ERPDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Table Name="dbo.v_FinanceReconciliationList" Member="v_FinanceReconciliationLists">
     <Type Name="v_FinanceReconciliationList">
       <Column Name="SrlNo" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
@@ -4058,33 +4058,6 @@
       <Column Name="EWayBillDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.v_WarehouseWiseStocktransferList" Member="v_WarehouseWiseStocktransferLists">
-    <Type Name="v_WarehouseWiseStocktransferList">
-      <Column Name="StockTransfer_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="StockTransfer_No" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="Stock_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="branch_description" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="Branch_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="SourceWarehouseName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="DestWarehouseName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="CreatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="LastUpdatedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
-      <Column Name="Technician_Name" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
-      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="Remarks" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="branch_descriptionTo" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="BranchTo_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="Editlock" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Deletelock" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="EntityName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
-      <Column Name="EntityCode" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
-      <Column Name="Employee_Name" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
-      <Column Name="WHStockTrans_EmployeeId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="EWayBillNumber" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="EWayBillDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.v_WarehouseWiseStockJournalList" Member="v_WarehouseWiseStockJournalLists">
     <Type Name="v_WarehouseWiseStockJournalList">
       <Column Name="StockJournal_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
@@ -5282,6 +5255,34 @@
       <Column Name="Entered_On" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Updated_By" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Updated_On" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_WarehouseWiseStocktransferList" Member="v_WarehouseWiseStocktransferLists">
+    <Type Name="v_WarehouseWiseStocktransferList">
+      <Column Name="StockTransfer_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="StockTransfer_No" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Stock_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="branch_description" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Branch_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SourceWarehouseName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DestWarehouseName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19)" CanBeNull="true" />
+      <Column Name="Technician_Name" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="branch_descriptionTo" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="BranchTo_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Editlock" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Deletelock" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="EntityName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="EntityCode" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="Employee_Name" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
+      <Column Name="WHStockTrans_EmployeeId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EWayBillNumber" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="EWayBillDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Issue_No" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>
