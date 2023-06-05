@@ -1,5 +1,7 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   12-05-2023      26112: Warehouse Wise Stock Transfer module design modification & check in small device
+    2.0   Priti     V2.0.38   05-06-2023    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WarehousewiseStockTransferList.aspx.cs" Inherits="ERP.OMS.Management.Activities.WarehousewiseStockTransferList" %>
@@ -555,6 +557,16 @@
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
                     <%--Rev work close 12.07.2022 mantise no :0025011: Update E-way Bill--%>
+                   <%-- Rev 2.0--%>
+                    <dxe:GridViewDataTextColumn Caption="Issue No." FieldName="Issue_No" Width="100"
+                        VisibleIndex="0">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                   <%-- Rev 2.0 End--%>
+
                     <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="17" Width="0">
                         <DataItemTemplate>
                             <div class='floatedBtnArea'>
