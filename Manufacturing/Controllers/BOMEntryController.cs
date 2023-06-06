@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer;
+﻿
+using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -1755,7 +1756,7 @@ namespace Manufacturing.Controllers
             BOMEntryModel objdata = new BOMEntryModel();
             //DataTable datasetobj;
             var datasetobj = objdata.GetBOMStandardCost("GetActualCost", Convert.ToInt64(Details_ID));
-            if (datasetobj.Rows.Count > 0)
+            if (datasetobj !=null && datasetobj.Rows.Count > 0)
             {
                 DataTable dt = datasetobj;
                 foreach (DataRow row in dt.Rows)
