@@ -1227,7 +1227,7 @@
             for (var i = 0; i < 1000; i++) {
                 if (gridProductionBOMProductList.GetRow(i)) {
                     if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 15);
                         gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
                     }
                 }
@@ -1236,7 +1236,7 @@
             for (i = -1; i > -1000; i--) {
                 if (gridProductionBOMProductList.GetRow(i)) {
                     if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 15);
                         gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
                     }
                 }
@@ -1248,7 +1248,7 @@
         for (var i = 0; i < 1000; i++) {
             if (gridProductionBOMProductList.GetRow(i)) {
                 if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 15);
                     gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(i);
                 }
             }
@@ -1257,7 +1257,7 @@
         for (i = -1; i > -1000; i--) {
             if (gridProductionBOMProductList.GetRow(i)) {
                 if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 15);
                     gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(i);
                 }
             }
@@ -1396,20 +1396,7 @@
 
         if (visiablerow > 0) {
             if (orderno != '' && OrderDate != '' && Order_Qty != '' && Unit != '' && ActualAdditionalCost != '' && requireddata == 0) {
-                //if (Production_ID > 0) {
-                //    var hdnOrder_Qty = $('#hdnProductQty').val();
-                //    if (hdnOrder_Qty > Order_Qty) {
-                //        jAlert("Order Qty not grater that previous qty value.");
-                //        return false;
-                //    }
-                //    else {
-                //        gridProductionBOMProductList.UpdateEdit();
-                //        gridProductionBOMProductList.UpdateEdit();
-                //    }
-                //}
-                //else {
-
-
+                
                 var msgbalqty = '';
                 var msgbalqtyindex = 0;
                 //Rev 6.0

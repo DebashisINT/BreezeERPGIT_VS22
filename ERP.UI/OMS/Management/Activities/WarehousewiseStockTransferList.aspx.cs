@@ -228,6 +228,12 @@ namespace ERP.OMS.Management.Activities
                 {
                     gridAdvanceAdj.JSProperties["cpReturnMesg"] = -2;
                 }
+                //Rev 1.0
+                else if (rowsNo == -10)
+                {
+                    gridAdvanceAdj.JSProperties["cpReturnMesg"] = "Used in other module.can not delete.";
+                }
+                //Rev 1.0 End
             }
         }
         protected void cmbExport_SelectedIndexChanged(object sender, EventArgs e)

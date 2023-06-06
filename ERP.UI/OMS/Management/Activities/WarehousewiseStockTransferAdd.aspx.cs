@@ -656,6 +656,13 @@ namespace ERP.OMS.Management.Activities
             {
                 status = "NOT-DONE";
             }
+            string ProductionIssue_ID = Convert.ToString(HeaderRow["ProductionIssue_ID"]);
+            if(ProductionIssue_ID!="0")
+            {
+                btn_SaveRecords.Visible = false;
+                btnSaveRecords.Visible = false;
+            }
+
             DataTable BRRequisitionTable;
             BRRequisitionTable = GetBRRequisition(WHDate, status, Convert.ToString(HeaderRow["Branch"]));
 
