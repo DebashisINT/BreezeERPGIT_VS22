@@ -1461,6 +1461,9 @@ namespace Manufacturing.Controllers
                         obj.Proj_Code = Convert.ToString(item["Proj_Code"]);
                         obj.Proj_Name = Convert.ToString(item["Proj_Name"]);
                         obj.Doctype = Convert.ToString(item["Doctype"]);
+                        //rev 3.0
+                        obj.StockTransfer_No = Convert.ToString(item["StockTransfer_No"]);
+                        //rev 3.0 End
                         list.Add(obj);
                     }
                 }

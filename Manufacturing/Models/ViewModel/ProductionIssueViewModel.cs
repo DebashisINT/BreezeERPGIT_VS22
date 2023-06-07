@@ -1,5 +1,7 @@
 ﻿//@*==================================================== Revision History =========================================================================
 //     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+//     2.0  Priti V2.0.38    07-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+
 //====================================================End Revision History=====================================================================*@
 using Manufacturing.Models.ViewModel.BOMEntryModel;
 using System;
@@ -105,6 +107,10 @@ namespace Manufacturing.Models.ViewModel
         public String MRP_No { get; set; }
         public String MRPDate { get; set; }
         //END REV 1.0
+
+        //Rev 2.0
+        public String StockTransfer_No { get; set; }
+        //Rev 2.0 End
     }
 
     public class udtProductionIssueDetails
