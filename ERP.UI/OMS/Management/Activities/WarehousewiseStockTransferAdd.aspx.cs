@@ -1,5 +1,7 @@
 ﻿//==========================================================Revision History ============================================================================================
-//    1.0   Priti   V2.0.36   23 - 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+//    1.0   Priti   V2.0.36    23- 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
+//    2.0   Priti   V2.0.38    06-06-2023       0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+
 //========================================== End Revision History =======================================================================================================
 
 using System;
@@ -656,13 +658,19 @@ namespace ERP.OMS.Management.Activities
             {
                 status = "NOT-DONE";
             }
+            //Rev 2.0
             string ProductionIssue_ID = Convert.ToString(HeaderRow["ProductionIssue_ID"]);
             if(ProductionIssue_ID!="0")
             {
-                btn_SaveRecords.Visible = false;
-                btnSaveRecords.Visible = false;
+                HndProductionIssueExistORNot.Value = "1";
+                //btn_SaveRecords.Visible = false;
+                //btnSaveRecords.Visible = false;
             }
-
+            else
+            {
+                HndProductionIssueExistORNot.Value = "0";
+            }
+            //Rev 2.0 end
             DataTable BRRequisitionTable;
             BRRequisitionTable = GetBRRequisition(WHDate, status, Convert.ToString(HeaderRow["Branch"]));
 

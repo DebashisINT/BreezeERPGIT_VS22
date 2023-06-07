@@ -822,6 +822,7 @@
     <Content Include="Views\MPS\_PartialParentBOM.cshtml" />
     <Content Include="Views\ProductionIssue\_ProductionOrderProductList.cshtml" />
     <Content Include="Views\ProductionIssue\_PartialMRPNO.cshtml" />
+    <Content Include="Views\ProductionIssue\_PartialPreViewLineItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

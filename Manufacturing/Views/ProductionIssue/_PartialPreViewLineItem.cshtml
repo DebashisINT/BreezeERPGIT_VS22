@@ -1,0 +1,113 @@
+﻿@*==================================================== Revision History =========================================================================
+     Create by: PRITI on 29-05-2023. Refer:
+    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+====================================================End Revision History=====================================================================*@
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridIssueProductDetailsList";
+    settings.CallbackRouteValues = new { Action = "GetIssueDetailsLineProductList", Controller = "ProductionIssue" };
+    settings.KeyFieldName = "SlNO";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
+    settings.SettingsBehavior.AllowSort = false;
+    settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
+    settings.CommandColumn.Visible = false;
+    settings.SettingsEditing.BatchEditSettings.EditMode = DevExpress.Web.GridViewBatchEditMode.Cell;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = DevExpress.Web.GridViewBatchStartEditAction.Click;
+    settings.SettingsPager.PageSize = 10000;
+
+    settings.SettingsEditing.NewItemRowPosition = DevExpress.Web.GridViewNewItemRowPosition.Bottom;
+
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "SlNO";
+        x.Caption = "Sl";
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(35);
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        x.ReadOnly = true;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductName";
+        x.Caption = "Part No.";
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(220);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.ReadOnly = true;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductDescription";
+        x.Caption = "Description";
+        x.ReadOnly = true;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductQty";
+        x.Caption = "MRP Qty";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
+        x.ReadOnly = true;
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ProductUOM";
+        x.Caption = "UOM";
+        x.ReadOnly = true;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ExcessQty";
+        x.Caption = "Excess Qty";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(80);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
+        x.ReadOnly = true;
+    });
+    //settings.CustomJSProperties = (s, e) =>
+    //{
+    //    if (ViewData["Success"] != null)
+    //    {
+    //        if (Convert.ToBoolean(ViewData["Success"]))
+    //        {
+    //            e.Properties["cpBatchUpdate"] = "1";
+    //        }
+    //    }
+    //    else
+    //    {
+    //        e.Properties["cpBatchUpdate"] = "0";
+    //    }
+    //    e.Properties["cpDetailsID"] = Convert.ToInt32(ViewData["DetailsID"]);
+    //    e.Properties["cpBOMNo"] = Convert.ToString(ViewData["BOMNo"]);
+    //    e.Properties["cpMessage"] = Convert.ToString(ViewData["Message"]);
+    //};
+
+}).Bind(Model).GetHtml()
+
+
+
+<input type="hidden" value="@ViewData["BOMEntryProductsTotalAm"]" id="hdnBOMEntryProductsTotalAm" />
+

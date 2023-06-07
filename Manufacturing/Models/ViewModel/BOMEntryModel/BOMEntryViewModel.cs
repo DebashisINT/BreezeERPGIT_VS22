@@ -1,4 +1,8 @@
-﻿using System;
+﻿//@*==================================================== Revision History =========================================================================
+//     1.0  Priti V2.0.38    06-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+//====================================================End Revision History=====================================================================*@
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -222,6 +226,10 @@ namespace Manufacturing.Models.ViewModel.BOMEntryModel
         public String AltUom { get; set; }
         public String MultiUOMSelectionForManufacturing { get; set; }
         //End of rev Pratik
+
+        //Rev 1.0
+        public String ExcessQty { get; set; }
+        //Rev 1.0 End
 
     }
 
