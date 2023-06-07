@@ -1,6 +1,8 @@
 ﻿//==========================================================Revision History ============================================================================================
 //    1.0   Priti   V2.0.36   23-01-2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
 //    2.0   Priti   V2.0.37   13-03-2023    0025602: Stock with multiple batches are not allowing to enter in Warehouse wise Stock Transfer
+//    3.0   Priti    V2.0.38  07-06-2023    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+
 //========================================== End Revision History =======================================================================================================
 
 
@@ -962,8 +964,17 @@ function AllControlInitilize() {
             //GridAddnewRow();         
 
             SuffleRows();
-            cbtnSaveRecords.SetVisible(false);
-            cbtn_SaveRecords.SetVisible(true);
+            //Rev 3.0
+            if ($("#HndProductionIssueExistORNot").val() == "1") {
+                cbtnSaveRecords.SetVisible(false);
+                cbtn_SaveRecords.SetVisible(false);
+            }
+            //Rev 3.0 End
+            else {
+                cbtnSaveRecords.SetVisible(false);
+                cbtn_SaveRecords.SetVisible(true);
+            }
+            
         }
 
         canCallBack = false;

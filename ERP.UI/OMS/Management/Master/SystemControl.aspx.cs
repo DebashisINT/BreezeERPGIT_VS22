@@ -93,8 +93,8 @@ namespace ERP.OMS.Management.Master
                 }
 
                 //Rev 1.0
-                string IsConsiderExcessQtyIssueforProduction = masterBl.GetSettings("IsConsiderExcessQtyIssueforProduction");
-                if (IsConsiderExcessQtyIssueforProduction == "1")
+                string IsWorkCenterAvailableWHST = masterBl.GetSettings("IsWorkCenterAvailableWHST");
+                if (IsWorkCenterAvailableWHST == "1")
                 {
                     DivReplaceablehouse.Style.Add("display", "!inline-block");
                     lbltransfer.InnerText = "Warehouse wise Stock Transfer";

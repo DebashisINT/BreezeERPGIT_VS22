@@ -1,4 +1,8 @@
-﻿@using System.Web.UI.WebControls
+﻿@*====================================================Revision History=========================================================================
+ 1.0  Priti   V2.0.36    23-01-2023  0025610:MRP Close Feature required
+ 2.0  Priti   V2.0.38    06-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+====================================================End Revision History=====================================================================*@
+@using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
 @model Manufacturing.Models.ViewModel.ProductionIssueViewModel
@@ -220,7 +224,7 @@
             //    setTimeout(function () {
             //        $(this).fadeIn();
             //    }, 100);
-            //});    
+            //});
             $.each(lists, function (index, value) {
                 //console.log(index);
                 //console.log(value);
@@ -230,8 +234,48 @@
             });
         }, 200);
     }
+
+    function PreviewLinecmbExport_SelectedIndexChanged() {
+        var exportid = $('#PreviewLineexportlist option:selected').val();
+        $('#PreviewLineexportlist').val(0);
+        if (exportid > 0) {
+            var url = '@Url.Action("ExportPreviewLineGridList", "ProductionIssue", new { type = "_type_" })'
+            window.location.href = url.replace("_type_", exportid);
+        }
+    }
+    function OnclickPreviewLineItems(productionissueid) {
+         if (parseInt(productionissueid) > 0) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SetPIDataByID", "ProductionIssue")",
+                data: { productionissueid: productionissueid, IsView: 0 },
+                success: function (response) {
+                    if (response != null && response == true) {
+                        $('#PreviewLineItemsModal').modal('show');
+                        setTimeout(function () {
+                            gridIssueProductDetailsList.Refresh();
+                        }, 500);
+                    }
+                    else {
+                        jAlert('Please try again later.');
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+
+
 </script>
 
+<style>
+   /* rev 2.0*/
+    #gridIssueProductDetailsList_DXStatus {
+        display: none;
+    }
+   /* rev 2.0 end*/
+</style>
 
 <div class="panel-heading">
     <div class="panel-title clearfix" id="myDiv">
@@ -254,7 +298,7 @@
 
     <div class="clearfix">
         <div class="md-pull-left">
-            <button type="button" class="btn btn-success btn-radius "  id="btnAddNew" onclick="location.href='@Url.Action("ProductionIssueEntry", "ProductionIssue")'"><span class="btn-icon"><i class="fa fa-plus"></i></span><u>A</u>dd New</button>
+            <button type="button" class="btn btn-success btn-radius " id="btnAddNew" onclick="location.href='@Url.Action("ProductionIssueEntry", "ProductionIssue")'"><span class="btn-icon"><i class="fa fa-plus"></i></span><u>A</u>dd New</button>
             <select id="exportlist" class="btn btn-primary btn-radius" onchange="cmbExport_SelectedIndexChanged()">
                 <option value="0">Export to</option>
                 <option value="1">PDF</option>
@@ -330,5 +374,31 @@
         </div>
     </div>
 
+    <div class="modal fade" id="PreviewLineItemsModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Preview Line Items</h4>
+                </div>
+                <div style="padding:5px">
+                    <select id="PreviewLineexportlist" class="btn btn-primary pull-right" onchange="PreviewLinecmbExport_SelectedIndexChanged()">
+                        <option value="0">Export to</option>
+                        <option value="1">PDF</option>
+                        <option value="2">XLSX</option>
+                        <option value="3">XLS</option>
+                        <option value="4">RTF</option>
+                        <option value="5">CSV</option>
+                    </select>
+                </div>
+                <div id="attachmentrefreshgrid">
+                    @{
+                        Html.RenderAction("GetIssueDetailsLineProductList", "ProductionIssue");
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </div>

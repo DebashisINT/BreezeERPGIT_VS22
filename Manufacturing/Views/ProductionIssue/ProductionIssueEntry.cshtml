@@ -1227,7 +1227,7 @@
             for (var i = 0; i < 1000; i++) {
                 if (gridProductionBOMProductList.GetRow(i)) {
                     if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 15);
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
                         gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
                     }
                 }
@@ -1236,7 +1236,7 @@
             for (i = -1; i > -1000; i--) {
                 if (gridProductionBOMProductList.GetRow(i)) {
                     if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 15);
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
                         gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(gridProductionBOMProductList.GetEditor("UpdateEdit").GetText() + i);
                     }
                 }
@@ -1248,7 +1248,7 @@
         for (var i = 0; i < 1000; i++) {
             if (gridProductionBOMProductList.GetRow(i)) {
                 if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 15);
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
                     gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(i);
                 }
             }
@@ -1257,7 +1257,7 @@
         for (i = -1; i > -1000; i--) {
             if (gridProductionBOMProductList.GetRow(i)) {
                 if (gridProductionBOMProductList.GetRow(i).style.display != "none") {
-                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 15);
+                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 14);
                     gridProductionBOMProductList.GetEditor("UpdateEdit").SetText(i);
                 }
             }
@@ -1272,6 +1272,18 @@
         if (parseInt(ProductionIssueID) > 0) {
             FullnFinalSave();
         }
+        //Rev 6.0
+        var IsMRPMandatoryIssueforProduction = '@ViewBag.IsMRPMandatoryIssueforProduction';
+        if (IsMRPMandatoryIssueforProduction == "Yes") { 
+            var MRP_ID = $('#hdnMRP_ID').val();
+            if ($('#hdnMRP_ID').val() == "") {
+                jAlert("Please select MRP.");
+                return false;  
+            }
+                     
+        }
+           //Rev 6.0 End
+
 
         setUpdateEditVlaueToGrid();
         savemode = mode;
@@ -1396,7 +1408,7 @@
 
         if (visiablerow > 0) {
             if (orderno != '' && OrderDate != '' && Order_Qty != '' && Unit != '' && ActualAdditionalCost != '' && requireddata == 0) {
-                
+
                 var msgbalqty = '';
                 var msgbalqtyindex = 0;
                 //Rev 6.0
@@ -1413,7 +1425,7 @@
                             }
                         }
                     }
-                //Rev 6.0 
+                //Rev 6.0
                 }
                 //Rev 6.0 End
                 if (msgbalqty == '') {
