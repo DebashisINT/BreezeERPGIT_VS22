@@ -221,6 +221,20 @@
             x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
         });
     }
+
+    if (ViewBag.ConsiderExcessQty == "Yes")
+    {
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "StockTransfer_No";
+            x.Caption = "Stock Transfer No";
+            //x.VisibleIndex = 1;
+            x.Width = System.Web.UI.WebControls.Unit.Pixel(220);
+            x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+            x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+            x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        });
+    }
     settings.Columns.Add(x =>
     {
         x.FieldName = "CreatedBy";
