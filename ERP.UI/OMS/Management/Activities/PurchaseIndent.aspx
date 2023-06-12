@@ -2,6 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                13-04-2023        2.0.37           Pallab              25820: Purchase Indent/Requisition page design modification
 2.0                18-05-2023        2.0.38           Pallab              26166: The Product Name and Description is too small in the Grid of Purchase Indent Module when the Screen Resolution is 1366X768
+3.0                12-06-2023        2.0.38           Pallab              26325: Add Purchase Indent/Requisition grid columns visibility issue fix
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Purchase Indent/Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseIndent.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseIndent" %>
@@ -1251,6 +1252,7 @@ function ProductsComboGotFocusChange(s, e) {
                 <div class="makeFullscreen ">
                     <span class="fullScreenTitle">Purchase Indent/Requisition</span>
                     <span class="makeFullscreen-icon half hovered " data-instance="InsgridBatch" title="Minimize Grid" id="expandEntryft67"><i class="fa fa-expand"></i></span>
+                    <%--Rev 3.0: "Column width chsnge"--%>
                     <dxe:ASPxGridView runat="server" ClientInstanceName="InsgridBatch" ID="gridBatch" KeyFieldName="PurchaseIndentID"
                         OnBatchUpdate="gridBatch_BatchUpdate"
                         OnCellEditorInitialize="gridBatch_CellEditorInitialize"
@@ -1262,7 +1264,7 @@ function ProductsComboGotFocusChange(s, e) {
                         OnRowDeleting="Grid_RowDeleting">
                         <SettingsPager Visible="false"></SettingsPager>
                         <Columns>
-                            <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="50" VisibleIndex="0" Caption="#" HeaderStyle-HorizontalAlign="Center">
+                            <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="40" VisibleIndex="0" Caption="#" HeaderStyle-HorizontalAlign="Center">
                                 <CustomButtons>
                                     <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomDelete" Image-Url="/assests/images/crs.png">
                                     </dxe:GridViewCommandColumnCustomButton>
@@ -1283,7 +1285,7 @@ function ProductsComboGotFocusChange(s, e) {
                             <%--Batch Product Popup Start--%>
                             <%--Rev 2.0--%>
                             <%--<dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product Name" VisibleIndex="2">--%>
-                            <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product Name" VisibleIndex="2" Width="100">
+                            <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product Name" VisibleIndex="2" Width="90">
                             <%--Rev end 2.0--%>
                                 <PropertiesButtonEdit>
                                     <ClientSideEvents ButtonClick="ProductButnClick" KeyDown="ProductKeyDown" LostFocus="ProductsGotFocus" GotFocus="ProductsGotFocusFromID" />
@@ -1299,14 +1301,14 @@ function ProductsComboGotFocusChange(s, e) {
                            
                             <%--Rev 2.0--%>
                             <%--<dxe:GridViewDataTextColumn VisibleIndex="3" Caption="Description" FieldName="gvColDiscription"  Width="">--%>
-                            <dxe:GridViewDataTextColumn VisibleIndex="3" Caption="Description" FieldName="gvColDiscription"  Width="110">
+                            <dxe:GridViewDataTextColumn VisibleIndex="3" Caption="Description" FieldName="gvColDiscription"  Width="100">
                             <%--Rev end 2.0--%>
                                 <PropertiesTextEdit>
                                 </PropertiesTextEdit>
                                 <CellStyle Wrap="true" HorizontalAlign="Left" CssClass="gridcellleft"></CellStyle>
                             </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewCommandColumn VisibleIndex="4" Caption="Addl. Desc." Width="6%">
+                            <dxe:GridViewCommandColumn VisibleIndex="4" Caption="Addl. Desc." Width="7%">
                                 <CustomButtons>
                                     <dxe:GridViewCommandColumnCustomButton Text=" " ID="addlDesc" Image-Url="/assests/images/more.png" Image-ToolTip="Addl. Desc.">
                                         <Image ToolTip="Addl. Desc." Url="/assests/images/more.png">
@@ -1317,7 +1319,7 @@ function ProductsComboGotFocusChange(s, e) {
 
 
 
-                            <dxe:GridViewDataTextColumn VisibleIndex="5" Caption="Quantity" FieldName="gvColQuantity" Width="110" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
+                            <dxe:GridViewDataTextColumn VisibleIndex="5" Caption="Quantity" FieldName="gvColQuantity" Width="90" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
                                 <PropertiesTextEdit FocusedStyle-HorizontalAlign="Right" Style-HorizontalAlign="Right">
                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" />
                                     <%--For quantity user control Subhra 17-02-2019--%>
@@ -1327,7 +1329,7 @@ function ProductsComboGotFocusChange(s, e) {
                                 </PropertiesTextEdit>
                                 <CellStyle Wrap="False" HorizontalAlign="Right" CssClass="gridcellleft"></CellStyle>
                             </dxe:GridViewDataTextColumn>
-                            <dxe:GridViewDataTextColumn VisibleIndex="6" Caption="UOM(Pur.)" FieldName="gvColUOM" Width="110" HeaderStyle-HorizontalAlign="Right">
+                            <dxe:GridViewDataTextColumn VisibleIndex="6" Caption="UOM(Pur.)" FieldName="gvColUOM" Width="90" HeaderStyle-HorizontalAlign="Right">
                                 <PropertiesTextEdit>
                                     <ClientSideEvents LostFocus="UomLostFocus" />
                                 </PropertiesTextEdit>
@@ -1336,7 +1338,7 @@ function ProductsComboGotFocusChange(s, e) {
                             </dxe:GridViewDataTextColumn>
 
 
-                            <dxe:GridViewCommandColumn VisibleIndex="7" Caption="Multi UOM" Width="6%">
+                            <dxe:GridViewCommandColumn VisibleIndex="7" Caption="Multi UOM" Width="60">
                                 <CustomButtons>
                                     <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomMultiUOM" Image-Url="/assests/images/MultiUomIcon.png" Image-ToolTip="Multi UOM">
                                     </dxe:GridViewCommandColumnCustomButton>
@@ -1344,7 +1346,7 @@ function ProductsComboGotFocusChange(s, e) {
                             </dxe:GridViewCommandColumn>
 
                                       <%--  Manis 24428--%> 
-                                     <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="8" Width="5%" ReadOnly="true">
+                                     <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="8" Width="60" ReadOnly="true">
                                                         <PropertiesTextEdit DisplayFormatString="0.0000" Style-HorizontalAlign="Right">
                                                            <%-- <ClientSideEvents GotFocus="QuantityGotFocus" LostFocus="QuantityTextChange" />--%>
                                                             <MaskSettings AllowMouseWheel="False" Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" />
@@ -1355,7 +1357,7 @@ function ProductsComboGotFocusChange(s, e) {
                                                         </CellStyle>
                                                     </dxe:GridViewDataTextColumn>
                                                      
-                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="Order_AltUOM" ReadOnly="true" VisibleIndex="9" Width="5%" >
+                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="Order_AltUOM" ReadOnly="true" VisibleIndex="9" Width="60" >
                                                         <PropertiesTextEdit>
                                                         </PropertiesTextEdit>
                                                     </dxe:GridViewDataTextColumn>
@@ -1364,14 +1366,14 @@ function ProductsComboGotFocusChange(s, e) {
                                                      <%--  Manis End 24428--%> 
 
                             <%--Mantis Issue 25235--%>
-                            <dxe:GridViewDataTextColumn Caption="Rate" FieldName="gvColRate" Width="110" HeaderStyle-HorizontalAlign="Right" VisibleIndex="10">
+                            <dxe:GridViewDataTextColumn Caption="Rate" FieldName="gvColRate" Width="80" HeaderStyle-HorizontalAlign="Right" VisibleIndex="10">
                                 <PropertiesTextEdit Style-HorizontalAlign="Right">
                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" />
                                     <ClientSideEvents LostFocus="AutoCalValueBtRate" />
                                 </PropertiesTextEdit>
                                 <CellStyle Wrap="False" HorizontalAlign="Right" CssClass="gridcellleft"></CellStyle>
                             </dxe:GridViewDataTextColumn>
-                            <dxe:GridViewDataTextColumn Caption="Value" FieldName="gvColValue" Width="110" HeaderStyle-HorizontalAlign="Right" VisibleIndex="11">
+                            <dxe:GridViewDataTextColumn Caption="Value" FieldName="gvColValue" Width="80" HeaderStyle-HorizontalAlign="Right" VisibleIndex="11">
                                 <PropertiesTextEdit Style-HorizontalAlign="Right">
                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" />
                                 </PropertiesTextEdit>
@@ -1427,7 +1429,7 @@ function ProductsComboGotFocusChange(s, e) {
                             <dxe:GridViewDataTextColumn FieldName="BalanceQty" Caption="Balance Qty" VisibleIndex="22" ReadOnly="True" Width="0">
                                             </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="140" VisibleIndex="14" Caption="Add New" HeaderStyle-HorizontalAlign="Center">
+                            <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="120" VisibleIndex="14" Caption="Add New" HeaderStyle-HorizontalAlign="Center">
                                 <CustomButtons>
                                     <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomAddNewRow" Image-Url="/assests/images/add.png">
                                     </dxe:GridViewCommandColumnCustomButton>
@@ -1438,6 +1440,8 @@ function ProductsComboGotFocusChange(s, e) {
                         <ClientSideEvents EndCallback="OnEndCallback" CustomButtonClick="OnCustomButtonClick" RowClick="GetVisibleIndex"
                             BatchEditStartEditing="gridFocusedRowChanged" />
                         <SettingsDataSecurity AllowEdit="true" />
+                        <%--Rev 3.0: "ColumnResizeMode add"--%>
+                        <SettingsBehavior ColumnResizeMode="Control"/>
                         <SettingsEditing Mode="Batch" NewItemRowPosition="Bottom">
                             <BatchEditSettings ShowConfirmOnLosingChanges="false" EditMode="Row" />
                         </SettingsEditing>
