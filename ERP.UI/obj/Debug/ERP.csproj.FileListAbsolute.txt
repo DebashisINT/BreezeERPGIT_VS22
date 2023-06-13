@@ -62,7 +62,6 @@ E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\DocumentFormat.OpenXml.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\EntityFramework.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\EntityLayer.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.Web.Infrastructure.dll
-E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\System.Net.Http.Formatting.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\System.Web.Http.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\UtilityLayer.dll
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.VisualStudio.TemplateWizardInterface.dll
@@ -109,9 +108,7 @@ E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\DevExpress.XtraTreeList.v15.1.xml
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\DocumentFormat.OpenXml.xml
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\System.Web.Http.xml
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.Web.Infrastructure.xml
-E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.VisualStudio.TemplateWizardInterface.xml
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE.xml
-E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\VSLangProj.xml
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE80.xml
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\DevExpress.Office.v15.1.Core.xml
 E:\PROJECTS\BreezeERPGIT_VS22\ERP.UI\bin\DevExpress.Web.ASPxSpellChecker.v15.1.xml

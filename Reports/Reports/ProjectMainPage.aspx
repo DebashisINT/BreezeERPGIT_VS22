@@ -278,6 +278,8 @@
     <li style="font:50px"><a style="font-size: small;"" href="/Reports/GridReports/WHWiseStockOutDetail.aspx">Warehouse Wise Stock-OUT - Details</a></li>
     <li style="font:50px"><a style="font-size: small;"" href="/Reports/GridReports/DeliveryScheduleDetails.aspx">Delivery Schedule - Details</a></li>
     <li style="font:50px"><a style="font-size: small;"" href="/Reports/GridReports/BatchExpiryAlert.aspx">Batch Expiry Alert</a></li>
+    <li style="font:50px"><a style="font-size: small;"" href="/Reports/GridReports/BSStatement.aspx">Balance Sheet Statement</a></li>
+    <li style="font:50px"><a style="font-size: small;"" href="/Reports/GridReports/TradingandPLStatement.aspx">Trading and PL Statement</a></li>
 </ul>
 
 

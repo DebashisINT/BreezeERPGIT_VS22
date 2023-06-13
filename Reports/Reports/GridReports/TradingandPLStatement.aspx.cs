@@ -1,7 +1,8 @@
-﻿#region =======================Revision History=========================
+﻿#region =======================Revision History=============================================================================================================
 //1.0   v2 .0.37    Debashis    01/06/2023  Running Balance Required in the Third Level Zooming report for PL - Horizontal & BS Horizontal from any Ledger.
-//                                          Refer: 0026252
-#endregion
+//                                          The Running Balance of the 3rd Level zooming of any ledger from PL - Horizontal & BS - Horizontal to be set as per Ledger Type
+//                                          Refer: 0026252 & 0026318
+#endregion =======================End of Revision History===================================================================================================
 
 using BusinessLogicLayer;
 using DevExpress.Export;
@@ -32,6 +33,7 @@ namespace Reports.Reports.GridReports
         static int PageStart = 1;
         //Rev 1.0
         decimal TotalDebit = 0, TotalCredit = 0, TotalOpening = 0, TotalDBCR=0;
+        string MainLedgerType = "";
         //End of Rev 1.0
 
         public EntityLayer.CommonELS.UserRightsForPage rights = new UserRightsForPage();
@@ -1063,6 +1065,7 @@ namespace Reports.Reports.GridReports
         {
             //Rev 1.0
             //e.Text = string.Format("{0}", e.Value);
+            MainLedgerType = hdnLedgertype.Value.ToString();
             if (e.Item.FieldName == "OPENING")
             {
                 TotalOpening = Convert.ToDecimal(e.Value);
@@ -1075,16 +1078,15 @@ namespace Reports.Reports.GridReports
             {
                 TotalCredit = Convert.ToDecimal(e.Value);
             }
-
-            if (e.Item.FieldName == "CLOSING")
+            else if (e.Item.FieldName == "CLOSING")
             {
-                if(TotalOpening==0 || TotalOpening>0)
+                if (MainLedgerType == "Asset" || MainLedgerType == "Expense")
                 {
-                    TotalDBCR = (TotalOpening+TotalDebit) - TotalCredit;
+                    TotalDBCR = (TotalOpening + TotalDebit) - TotalCredit;
                 }
                 else
                 {
-                    TotalDBCR = TotalDebit - (TotalOpening+TotalCredit);
+                    TotalDBCR = TotalDebit - (TotalOpening + TotalCredit);
                 }
                 e.Text = TotalDBCR.ToString();
             }
@@ -1094,6 +1096,21 @@ namespace Reports.Reports.GridReports
             }
             //End of Rev 1.0
         }
+
+        //Rev 1.0
+        protected void ShowGridDetails3Level_SummaryDisplayText(object sender, ASPxGridViewSummaryDisplayTextEventArgs e)
+        {
+            e.Text = string.Format("{0}", e.Value);
+        }
+        protected void gvStockSummary_SummaryDisplayText(object sender, ASPxGridViewSummaryDisplayTextEventArgs e)
+        {
+            e.Text = string.Format("{0}", e.Value);
+        }
+        protected void gridStockDetials_SummaryDisplayText(object sender, ASPxGridViewSummaryDisplayTextEventArgs e)
+        {
+            e.Text = string.Format("{0}", e.Value);
+        }
+        //End of Rev 1.0
 
         protected void ddlExport3_SelectedIndexChanged(object sender, EventArgs e)
         {
