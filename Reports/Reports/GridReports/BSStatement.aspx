@@ -1,8 +1,11 @@
 ﻿<%--================================================== Revision History ======================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                16-02-2023        V2.0.36           Pallab              25575 : Report pages design modification
-2.0                01-06-2023        V2.0.37           Debashis            0026252: Running Balance Required in the Third 
-                                                                           Level Zooming report for PL - Horizontal & BS Horizontal from any Ledger
+2.0                01-06-2023        V2.0.37           Debashis            Running Balance Required in the Third Level Zooming report for PL - Horizontal & 
+                                                                           BS Horizontal from any Ledger.
+                                                                           The Running Balance of the 3rd Level zooming of any ledger from PL - Horizontal & 
+                                                                           BS - Horizontal to be set as per Ledger Type
+                                                                           Refer: 0026252 & 0026318
 ====================================================== Revision History ==========================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BSStatement.aspx.cs" Inherits="Reports.Reports.GridReports.BSStatement" %>
@@ -154,11 +157,19 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             $("#compH1").text('<%=HttpContext.Current.Session["lablelCompanyName"]%>')
         }
 
-        function OnGetRowValuesLvl2(id) {
+        //Rev 2.0
+        //function OnGetRowValuesLvl2(id) {
+        //    $("#hdnEntity_Id").val(id);
+        //    cCallbackPanelDetail.PerformCallback();
+        //    cpopup2ndLevel.Show();
+        //}
+        function OnGetRowValuesLvl2(id,ledgertype) {
             $("#hdnEntity_Id").val(id);
+            $("#hdnLedgertype").val(ledgertype);
             cCallbackPanelDetail.PerformCallback();
             cpopup2ndLevel.Show();
         }
+        //End of Rev 2.0
 
         function RwoClick2ndLevel(s,e) {
             $("#hdnEntity_Id").val(s.GetRowKey(e.visibleIndex));
@@ -1353,7 +1364,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     border-bottom: none;
                     font-weight: bold;
                     margin-left: 2px;">A S S E T S</p>
-            <dxeTreeList:ASPxTreeList ID="TreeList"  runat="server"  SettingsBehavior-AllowSort="false" AutoGenerateColumns="False" on ClientInstanceName="treeList" OnDataBinding="ASPxTreeList1_DataBinding"
+            <dxeTreeList:ASPxTreeList ID="TreeList"  runat="server"  SettingsBehavior-AllowSort="false" AutoGenerateColumns="False" ClientInstanceName="treeList" OnDataBinding="ASPxTreeList1_DataBinding"
                 OnHtmlRowPrepared="ASPxTreeList1_HtmlRowPrepared"
                 Width="100%" KeyFieldName="ID" ParentFieldName="ParentID">
                 <columns>
@@ -1431,7 +1442,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <%--OnCustomCallback="ShowGridDetails2Level_CustomCallback"--%>
 
                                 <dxe:GridViewDataTextColumn FieldName="BRANCH_DESC" Caption="Unit" Width="30%" VisibleIndex="1" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable"/>
-                                <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="DOC_NO" Caption="Document No." Width="30%" HeaderStyle-CssClass="colDisable" >
+                                <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="DOC_NO" Caption="Document No." Width="15%" HeaderStyle-CssClass="colDisable" >
                                 <CellStyle HorizontalAlign="Left" >
                                 </CellStyle>
                                 <HeaderStyle HorizontalAlign="Center" />
@@ -1443,11 +1454,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <EditFormSettings Visible="False" />
                                 </dxe:GridViewDataTextColumn>
                                 <dxe:GridViewDataTextColumn FieldName="DOC_TYPE" Caption="Document Type" Width="10%" VisibleIndex="3" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable"/>
-                                 <dxe:GridViewDataDateColumn FieldName="DOC_DATE" Caption="Document Date" Width="10%" VisibleIndex="3" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable">
+                                 <dxe:GridViewDataDateColumn FieldName="DOC_DATE" Caption="Document Date" Width="10%" VisibleIndex="4" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable">
                                       <PropertiesDateEdit DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"></PropertiesDateEdit> 
                                  </dxe:GridViewDataDateColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTY_NAME" Caption="Party" Width="15%" VisibleIndex="3" HeaderStyle-CssClass="colDisable" />
+                                <dxe:GridViewDataTextColumn FieldName="PARTY_NAME" Caption="Party" Width="15%" VisibleIndex="5" HeaderStyle-CssClass="colDisable" />
 
 <%--                                <dxe:GridViewDataTextColumn FieldName="OP_DR_AMT" Caption="Opening (Dr.)" Width="8%" VisibleIndex="4" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False">
                                 </dxe:GridViewDataTextColumn>
@@ -1455,13 +1466,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <dxe:GridViewDataTextColumn FieldName="OP_CR_AMT" Caption="Opening (Cr.)" Width="8%" VisibleIndex="5" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False">
                                 </dxe:GridViewDataTextColumn>--%>
 
-                                <dxe:GridViewDataTextColumn FieldName="OPENING" Caption="Opening" Width="8%" VisibleIndex="5" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="OPENING" Caption="Opening" Width="10%" VisibleIndex="6" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable">
                                 </dxe:GridViewDataTextColumn>
                                 
-                                <dxe:GridViewDataTextColumn FieldName="PR_DR_AMT" Caption="Period (Dr.)" Width="8%" VisibleIndex="6" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="PR_DR_AMT" Caption="Period (Dr.)" Width="10%" VisibleIndex="7" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable">
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PR_CR_AMT" Caption="Period (Cr.)" Width="8%" VisibleIndex="7" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="PR_CR_AMT" Caption="Period (Cr.)" Width="10%" VisibleIndex="8" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False" HeaderStyle-CssClass="colDisable">
                                 </dxe:GridViewDataTextColumn>
 
                                <%-- <dxe:GridViewDataTextColumn FieldName="CL_DR_AMT" Caption="Closing (Dr.)" Width="8%" VisibleIndex="8" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)" Settings-AllowAutoFilter="False">
@@ -1480,7 +1491,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>--%>
 
-                                <dxe:GridViewDataTextColumn FieldName="CLOSING" Caption="Closing" Width="8%" VisibleIndex="12" HeaderStyle-CssClass="colDisable" >
+                                <dxe:GridViewDataTextColumn FieldName="CLOSING" Caption="Closing" Width="10%" VisibleIndex="12" HeaderStyle-CssClass="colDisable" >
                                     <PropertiesTextEdit DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)"></PropertiesTextEdit>
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
@@ -1497,16 +1508,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <TotalSummary>
                                  <dxe:ASPxSummaryItem FieldName="OP_DR_AMT" SummaryType="Sum"/>
                                  <dxe:ASPxSummaryItem FieldName="OP_CR_AMT" SummaryType="Sum"/>
-                                 <dxe:ASPxSummaryItem FieldName="PR_DR_AMT" SummaryType="Sum"/>
-                                 <dxe:ASPxSummaryItem FieldName="PR_CR_AMT" SummaryType="Sum"/>
+                                <%--Rev 2.0--%>
+                                 <%--<dxe:ASPxSummaryItem FieldName="PR_DR_AMT" SummaryType="Sum"/>
+                                 <dxe:ASPxSummaryItem FieldName="PR_CR_AMT" SummaryType="Sum"/>--%>
+                                <dxe:ASPxSummaryItem FieldName="PR_DR_AMT" SummaryType="Sum" DisplayFormat="#####,##,##,###0.00;(#####,##,##,###0.00)"/>
+                                <dxe:ASPxSummaryItem FieldName="PR_CR_AMT" SummaryType="Sum" DisplayFormat="#####,##,##,###0.00;(#####,##,##,###0.00)"/>
+                                <%--End of Rev 2.0--%>
                                  <dxe:ASPxSummaryItem FieldName="CL_DR_AMT" SummaryType="Sum"/>
                                  <dxe:ASPxSummaryItem FieldName="CL_CR_AMT" SummaryType="Sum"/>
                                  <dxe:ASPxSummaryItem FieldName="NETT" SummaryType="Sum"/>
                                  <%--Rev 2.0--%>
                                  <%--<dxe:ASPxSummaryItem FieldName="CLOSING" SummaryType="Sum"/>--%>
+                                 <%--<dxe:ASPxSummaryItem FieldName="OPENING" SummaryType="Sum"/>--%>
                                  <dxe:ASPxSummaryItem FieldName="CLOSING" SummaryType="Custom"/>
+                                 <dxe:ASPxSummaryItem FieldName="OPENING" SummaryType="Sum" DisplayFormat="#####,##,##,###0.00;(#####,##,##,###0.00)"/>
                                 <%--End of Rev 2.0--%>
-                                 <dxe:ASPxSummaryItem FieldName="OPENING" SummaryType="Sum"/>
                             </TotalSummary>
                            <%-- <ClientSideEvents EndCallback="EndShowGridDetails2Level" />--%>
 
@@ -1560,9 +1576,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                
                        
                     <div class="clearfix" >
+                        <%--Rev 2.0--%>
+                        <%--OnSummaryDisplayText="ShowGridDetails3Level_SummaryDisplayText"--%>
+                        <%--End of Rev 2.0--%>
                         <dxe:ASPxGridView runat="server" ID="ShowGridDetails1Level"  ClientInstanceName="cShowGridDetails1Level" KeyFieldName="Entity_Ids" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False"
                             OnDataBinding="ShowGridDetails1Level_DataBinding" KeyboardSupport="true" Settings-HorizontalScrollBarMode="Auto"
-                            OnSummaryDisplayText="ShowGridDetails2Level_SummaryDisplayText"   >
+                            OnSummaryDisplayText="ShowGridDetails3Level_SummaryDisplayText"   >
                             <ClientSideEvents EndCallback="ClosePopUpstkDetLev1"  />
                             <Columns>
                                 <dxe:GridViewDataTextColumn FieldName="group_name" Caption="Group Name" Width="15%" VisibleIndex="2" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.00;(#####,##,##,###0.00)">
@@ -1573,11 +1592,18 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <CellStyle HorizontalAlign="Left" >
                                 </CellStyle>
                                 <HeaderStyle HorizontalAlign="Center" />
-                                <DataItemTemplate>
+                                <%--Rev 2.0--%>
+                                <%--<DataItemTemplate>
                                       <a href="javascript:void(0)" onclick="OnGetRowValuesLvl2('<%#Eval("Entity_Ids") %>')" class="pad">
                                         <%#Eval("PARTY_NAME")%>
                                       </a> 
+                                </DataItemTemplate>--%>
+                                <DataItemTemplate>
+                                    <a href="javascript:void(0)" onclick="OnGetRowValuesLvl2('<%#Eval("Entity_Ids") %>','<%#Eval("LEDGER_TYPE") %>')" class="pad">
+                                        <%#Eval("PARTY_NAME")%>
+                                      </a> 
                                 </DataItemTemplate>
+                                <%--End of Rev 2.0--%>
                                 <EditFormSettings Visible="False" />
                                 </dxe:GridViewDataTextColumn>       
 
@@ -1682,12 +1708,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         </div>
                     </div>
                     <div class="clearfix">
-                        <dxe:ASPxGridView runat="server" ID="gvStockSummary"  ClientInstanceName="cgvStockSummary" KeyFieldName="SLNO" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False"
+                        <%--Rev 2.0--%>
+                        <%--OnSummaryDisplayText="ShowGridDetails2Level_SummaryDisplayText"--%>
+                        <%--End of Rev 2.0--%>
+                        <dxe:ASPxGridView runat="server" ID="gvStockSummary" ClientInstanceName="cgvStockSummary" KeyFieldName="SLNO" Width="100%" EnableRowsCache="false" AutoGenerateColumns="False"
                             OnDataBinding="gvStockSummary_DataBinding"  Settings-HorizontalScrollBarMode="Auto" 
-                            OnSummaryDisplayText="ShowGridDetails2Level_SummaryDisplayText" >
+                            OnSummaryDisplayText="gvStockSummary_SummaryDisplayText" >
                              <ClientSideEvents EndCallback="ClosePopUpstkSum"  />
                             <Columns>
-
                                 <dxe:GridViewDataTextColumn FieldName="branch_description" Width="280" Caption="Unit" VisibleIndex="1" />
                                 <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="sProducts_Description" Width="420" Caption="Product Name">
                                     <CellStyle HorizontalAlign="Left">
@@ -1787,9 +1815,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         </div>
                     </div>
                     <div class="clearfix" onkeypress="OnWaitingGridKeyPress3(event)">
+                        <%--Rev 2.0--%>
+                        <%--OnSummaryDisplayText="ShowGridDetails2Level_SummaryDisplayText"--%>
+                        <%--End of Rev 2.0--%>
                         <dxe:ASPxGridView runat="server" ID="gridStockDetials"  ClientInstanceName="cgridStockDetials" KeyFieldName="SEQ" Width="100%"  AutoGenerateColumns="False"
-                            OnDataBinding="grivaluation_DataBinding" KeyboardSupport="true" Settings-HorizontalScrollBarMode="Auto" OnSummaryDisplayText="ShowGridDetails2Level_SummaryDisplayText"
-                              >
+                            OnDataBinding="grivaluation_DataBinding" KeyboardSupport="true" Settings-HorizontalScrollBarMode="Auto" OnSummaryDisplayText="gridStockDetials_SummaryDisplayText">
                             <ClientSideEvents EndCallback="ClosePopUpstkDet"  />
                             <Columns>
                             <dxe:GridViewDataTextColumn Caption="Document Date" FieldName="Document_Date" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy"
@@ -1932,8 +1962,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <asp:HiddenField runat="server" ID="hdn_LedgerCode" />
     <asp:HiddenField runat="server" ID="hdnEntity_Id" />
     <asp:HiddenField runat="server" ID="hdnLedger" />
-
-
+    <%--Rev 2.0--%>
+    <asp:HiddenField runat="server" ID="hdnLedgertype" />
+    <%--End of Rev 2.0--%>
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
         <ClientSideEvents ControlsInitialized="AllControlInitilize" />
     </dxe:ASPxGlobalEvents>

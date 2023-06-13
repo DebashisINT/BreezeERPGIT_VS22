@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Reports.Reports.GridReports {
-    
-    
-    public partial class TradingandPLStatement {
-        
+namespace Reports.Reports.GridReports
+{
+
+
+    public partial class TradingandPLStatement
+    {
+
         /// <summary>
         /// Label3 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label3;
-        
+
         /// <summary>
         /// radPeriod control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton radPeriod;
-        
+
         /// <summary>
         /// radAsDate control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton radAsDate;
-        
+
         /// <summary>
         /// lblFromDate control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFromDate;
-        
+
         /// <summary>
         /// ASPxFromDate control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit ASPxFromDate;
-        
+
         /// <summary>
         /// lblToDate control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToDate;
-        
+
         /// <summary>
         /// ASPxToDate control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit ASPxToDate;
-        
+
         /// <summary>
         /// Label2 control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
-        
+
         /// <summary>
         /// ddlbranchHO control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlbranchHO;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// hdnActivityType control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnActivityType;
-        
+
         /// <summary>
         /// hdnActivityTypeText control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnActivityTypeText;
-        
+
         /// <summary>
         /// hdnSelectedBranches control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnSelectedBranches;
-        
+
         /// <summary>
         /// ASPxCallbackPanel1 control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel ASPxCallbackPanel1;
-        
+
         /// <summary>
         /// lookup_branch control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridLookup lookup_branch;
-        
+
         /// <summary>
         /// Label4 control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label4;
-        
+
         /// <summary>
         /// ddlValTech control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlValTech;
-        
+
         /// <summary>
         /// chkZero control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkZero;
-        
+
         /// <summary>
         /// chkExpandAll control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkExpandAll;
-        
+
         /// <summary>
         /// chkPercentage control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkPercentage;
-        
+
         /// <summary>
         /// chkClosingStock control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkClosingStock;
-        
+
         /// <summary>
         /// chkConsiderOverhead control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkConsiderOverhead;
-        
+
         /// <summary>
         /// Button6 control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button6;
-        
+
         /// <summary>
         /// CallbackPanel control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel CallbackPanel;
-        
+
         /// <summary>
         /// hfIsTransFilter control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIsTransFilter;
-        
+
         /// <summary>
         /// TreeList control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTreeList.ASPxTreeList TreeList;
-        
+
         /// <summary>
         /// TreeList1 control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTreeList.ASPxTreeList TreeList1;
-        
+
         /// <summary>
         /// ExpExporter control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTreeList.ASPxTreeListExporter ExpExporter;
-        
+
         /// <summary>
         /// IncomeExporter control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTreeList.ASPxTreeListExporter IncomeExporter;
-        
+
         /// <summary>
         /// hfIsProfnlossDetails control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIsProfnlossDetails;
-        
+
         /// <summary>
         /// popup control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl popup;
-        
+
         /// <summary>
         /// ASPxCallbackPanel2 control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel ASPxCallbackPanel2;
-        
+
         /// <summary>
         /// Button3 control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button3;
-        
+
         /// <summary>
         /// ShowGridDetails2Level control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView ShowGridDetails2Level;
-        
+
         /// <summary>
         /// exporterDetails control.
         /// </summary>
@@ -326,7 +328,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridViewExporter exporterDetails;
-        
+
         /// <summary>
         /// ASPXPopupControl2 control.
         /// </summary>
@@ -335,7 +337,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl ASPXPopupControl2;
-        
+
         /// <summary>
         /// pop1 control.
         /// </summary>
@@ -344,7 +346,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl pop1;
-        
+
         /// <summary>
         /// ASPxCallbackPanel3 control.
         /// </summary>
@@ -353,7 +355,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel ASPxCallbackPanel3;
-        
+
         /// <summary>
         /// FirstImport control.
         /// </summary>
@@ -362,7 +364,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button FirstImport;
-        
+
         /// <summary>
         /// ShowGridDetails1Level control.
         /// </summary>
@@ -371,7 +373,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView ShowGridDetails1Level;
-        
+
         /// <summary>
         /// Exporter1 control.
         /// </summary>
@@ -380,7 +382,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridViewExporter Exporter1;
-        
+
         /// <summary>
         /// StockSummary control.
         /// </summary>
@@ -389,7 +391,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl StockSummary;
-        
+
         /// <summary>
         /// clStockSummary control.
         /// </summary>
@@ -398,7 +400,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel clStockSummary;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -407,7 +409,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
-        
+
         /// <summary>
         /// gvStockSummary control.
         /// </summary>
@@ -416,7 +418,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView gvStockSummary;
-        
+
         /// <summary>
         /// SummaryExporter control.
         /// </summary>
@@ -425,7 +427,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridViewExporter SummaryExporter;
-        
+
         /// <summary>
         /// popStockDetails control.
         /// </summary>
@@ -434,7 +436,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl popStockDetails;
-        
+
         /// <summary>
         /// cpStockDetails control.
         /// </summary>
@@ -443,7 +445,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel cpStockDetails;
-        
+
         /// <summary>
         /// Button2 control.
         /// </summary>
@@ -452,7 +454,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
-        
+
         /// <summary>
         /// gridStockDetials control.
         /// </summary>
@@ -461,7 +463,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView gridStockDetials;
-        
+
         /// <summary>
         /// DetailsExporter control.
         /// </summary>
@@ -470,7 +472,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridViewExporter DetailsExporter;
-        
+
         /// <summary>
         /// hfIsStockValDetFilter control.
         /// </summary>
@@ -479,7 +481,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIsStockValDetFilter;
-        
+
         /// <summary>
         /// hdnProductiD control.
         /// </summary>
@@ -488,7 +490,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnProductiD;
-        
+
         /// <summary>
         /// hdnBranchId control.
         /// </summary>
@@ -497,7 +499,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnBranchId;
-        
+
         /// <summary>
         /// hdn_LedgerCode control.
         /// </summary>
@@ -506,7 +508,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdn_LedgerCode;
-        
+
         /// <summary>
         /// hdnEntity_Id control.
         /// </summary>
@@ -515,7 +517,7 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnEntity_Id;
-        
+
         /// <summary>
         /// hdnLedger control.
         /// </summary>
@@ -524,5 +526,14 @@ namespace Reports.Reports.GridReports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnLedger;
+
+        /// <summary>
+        /// hdnLedgertype control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLedgertype;
     }
 }
