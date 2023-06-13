@@ -1060,7 +1060,7 @@ namespace Reports.Reports.GridReports
                 }
                 else
                 {
-                    TotalDBCR = TotalDebit - (TotalOpening + TotalCredit);
+                    TotalDBCR = (TotalOpening + TotalCredit) - TotalDebit;
                 }
                 e.Text= TotalDBCR.ToString();
             }
