@@ -119,6 +119,21 @@ $(document).ready(function () {
 //    });
 //});
 
+// Rev 2.0
+$(function () {
+    $(".allownumericwithdecimal").on("keypress keyup blur", function (event) {
+        var patt = new RegExp(/[0-9]*[.]{1}[0-9]{4}/i);
+        var matchedString = $(this).val().match(patt);
+        if (matchedString) {
+            $(this).val(matchedString);
+        }
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+
+    });
+});
+// End of Rev 2.0
 
 function closeMultiUOM(s, e) {
     e.cancel = false;
@@ -270,6 +285,12 @@ function FinalMultiUOM() {
 
 }
 
+// Rev 2.0
+function DisableUpdate() {
+    cbtnMUltiUOM.SetVisible(false);
+}
+// End of Rev 2.0
+
 // Mantis Issue 24425, 24428
 function CalcBaseQty() {
    
@@ -290,6 +311,9 @@ function CalcBaseQty() {
         data: JSON.stringify({ ProductID: ProductID }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        // Rev 2.0
+        async: false,
+        // End of Rev 2.0
         success: function (msg) {
 
             if (msg.d.length != 0) {
@@ -334,8 +358,9 @@ function CalcBaseQty() {
             }
         }
     });
-
-   
+    // Rev 2.0
+    cbtnMUltiUOM.SetVisible(true);
+    // End of Rev 2.0
 }
 
 function CalcBaseRate() {
@@ -348,6 +373,9 @@ function CalcBaseRate() {
         var BaseRate = (altQty * altRate) / baseQty;
         ccmbBaseRate.SetValue(BaseRate);
     }
+    // Rev 2.0
+    cbtnMUltiUOM.SetVisible(true);
+    // End of Rev 2.0
 }
 // End of Mantis Issue 24425, 24428
 
