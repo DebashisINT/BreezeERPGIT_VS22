@@ -3927,7 +3927,10 @@ $(document).ready(function () {
                                             <div>
                                                 <%--Rev Sanchita--%>
                                                 <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18"  class="allownumericwithdecimal" />--%>
-                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
+                                               <%--Rev 4.0 --%>
+                                                <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />--%>
+                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onfocus="DisableUpdate()" onfocusout="CalcBaseRate()" />
+                                                <%--End of Rev 4.0--%>
                                                 <%--End of Rev Sanchita--%>
                                             </div>
                                         </div>
@@ -3984,6 +3987,8 @@ $(document).ready(function () {
                                                 <%--Mantis Issue 24425, 24428--%>
                                                 <%--Rev 4.0--%>
                                                 <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />--%>
+                                                
+                                                <ClientSideEvents GotFocus="function(s,e) { DisableUpdate();}" />
                                                 <ClientSideEvents LostFocus="function(s,e) { CalcBaseQty();}" />
                                                 <%--End of Rev 4.0--%>
                                                 <%--End of Mantis Issue 24425, 24428--%>
@@ -3999,7 +4004,12 @@ $(document).ready(function () {
                                         </div>
                                         <div>
                                             <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
-                                                <ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />
+                                                <%--Rev 4.0--%>
+                                                <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />--%>
+                                                
+                                                <ClientSideEvents GotFocus="function(s,e) { DisableUpdate();}" />
+                                                <ClientSideEvents LostFocus="function(s,e) { CalcBaseRate();}" />
+                                                 <%--End of Rev 4.0--%>
                                             </dxe:ASPxTextBox>
                                         </div>
                                     </div>
