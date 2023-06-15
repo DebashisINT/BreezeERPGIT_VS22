@@ -3045,28 +3045,28 @@ namespace ERP.OMS.Management.Activities
                                 // End of Mantis Issue 24425, 24428
 
                                 // Rev 2.0
-                                ////////DataRow[] MultiUoMresult;
+                                DataRow[] MultiUoMresult;
 
-                                ////////if (lookup_quotation.Value != null)
-                                ////////{
-                                ////////   MultiUoMresult = dtb.Select("DetailsId ='" + Val + "' and UpdateRow ='True'");
-                                ////////}
-                                ////////else
-                                ////////{
-                                ////////    MultiUoMresult = dtb.Select("SrlNo ='" + Val + "' and UpdateRow ='True'");
-                                ////////}
-                                ////////if (MultiUoMresult.Length > 0)
-                                ////////{
-                                ////////    if ( (Convert.ToDecimal(MultiUoMresult[0]["Quantity"])!= Convert.ToDecimal(dr["Quantity"]) ) ||
-                                ////////         ( String.Format("{0:.##}", MultiUoMresult[0]["BaseRate"]) != String.Format("{0:.##}", dr["SalePrice"]) ) ||
-                                ////////         ( String.Format("{0:.##}", MultiUoMresult[0]["AltQuantity"]) != String.Format("{0:.##}", dr["InvoiceDetails_AltQuantity"]) )
-                                ////////        )
-                                ////////    {
-                                ////////        validate = "checkMultiUOMData_QtyMismatch";
-                                ////////        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
-                                ////////        break;
-                                ////////    }
-                                ////////}
+                                if (lookup_quotation.Value != null)
+                                {
+                                    MultiUoMresult = dtb.Select("DetailsId ='" + Val + "' and UpdateRow ='True'");
+                                }
+                                else
+                                {
+                                    MultiUoMresult = dtb.Select("SrlNo ='" + Val + "' and UpdateRow ='True'");
+                                }
+                                if (MultiUoMresult.Length > 0)
+                                {
+                                    if ((Convert.ToDecimal(MultiUoMresult[0]["Quantity"]) != Convert.ToDecimal(dr["Quantity"])) ||
+                                        ( Math.Round(Convert.ToDecimal(MultiUoMresult[0]["AltQuantity"]),2) != Math.Round(Convert.ToDecimal(dr["InvoiceDetails_AltQuantity"]),2) ) ||
+                                        (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["BaseRate"]), 2) != Math.Round(Convert.ToDecimal(dr["SalePrice"]), 2))
+                                        )
+                                    {
+                                        validate = "checkMultiUOMData_QtyMismatch";
+                                        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                        break;
+                                    }
+                                }
                                 // End of Rev 2.0
                             }
                             else if (dtb.Rows.Count < 1)

@@ -4135,6 +4135,10 @@ $(document).ready(function () {
                             <dxe:ASPxButton ID="ASPxButton7" UseSubmitBehavior="false" ClientInstanceName="cbtnfinalUomSave" Width="50px" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary">
                                 <ClientSideEvents Click="function(s, e) {FinalMultiUOM();}" />
                             </dxe:ASPxButton>
+
+                             <%--Rev 4.0--%>
+                            <label id="lblInfoMsg" style="font-weight:bold; color:red; " > </label>
+                            <%--End of Rev 4.0--%>
                         </div>
                     </div>
                 </div>

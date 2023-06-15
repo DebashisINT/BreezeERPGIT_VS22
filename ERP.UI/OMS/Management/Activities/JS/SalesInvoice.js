@@ -294,6 +294,7 @@ function CalcBaseQty() {
 
     // Rev 2.0
     LoadingPanelMultiUOM.Show();
+    document.getElementById('lblInfoMsg').innerHTML = "";
     // End of Rev 2.0
 
     var Productdetails = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
@@ -353,13 +354,16 @@ function CalcBaseQty() {
             }
             else {
                 $("#UOMQuantity").val("0.0000");
+                // Rev 2.0
+                document.getElementById('lblInfoMsg').innerHTML = "Base Qunatity will not get auto calulated since no UOM Conversion details given for the selected Alt. UOM for Product : " + grid.GetEditor('Description').GetText();
+                // End of Rev 2.0
             }
         }
     });
 
-    // End of Rev Sanchita
+    // End of Rev 2.0
     LoadingPanelMultiUOM.Hide();
-    // End of Rev Sanchita
+    // End of Rev 2.0
  }
 
 function CalcBaseRate() {
@@ -382,6 +386,8 @@ function SaveMultiUOM() {
     //grid.GetEditor('ProductID').GetText().split("||@||")[3];
 
     // Rev 2.0
+    document.getElementById('lblInfoMsg').innerHTML = "";
+   
     if ($("#UOMQuantity").val() != 0 || cAltUOMQuantity.GetValue() != 0) {
         LoadingPanelMultiUOM.Show();
         setTimeout(() => {
@@ -4146,6 +4152,9 @@ function OnCustomButtonClick(s, e) {
                     ccmbAltRate.SetValue(0)
                     ccmbSecondUOM.SetValue("")
                     // End of Mantis Issue 24425, 24428
+                    // Rev 2.0
+                    document.getElementById('lblInfoMsg').innerHTML = "";
+                    // End of Rev 2.0
                     cPopup_MultiUOM.Show();
                     cgrid_MultiUOM.cpDuplicateAltUOM = "";
                     AutoPopulateMultiUOM();
