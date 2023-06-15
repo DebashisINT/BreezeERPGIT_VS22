@@ -1,6 +1,7 @@
 ﻿/*********************************************************************************************************
  * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module 
  *                                          Refer: 25223
+ * Rev 2.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320   
  **********************************************************************************************************/
 using System;
 using System.Configuration;
@@ -39,6 +40,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Web.Hosting;
 using Newtonsoft.Json.Linq;
+using EO.Web.Internal;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -3041,6 +3043,31 @@ namespace ERP.OMS.Management.Activities
                                 //    }
                                 //}
                                 // End of Mantis Issue 24425, 24428
+
+                                // Rev 2.0
+                                ////////DataRow[] MultiUoMresult;
+
+                                ////////if (lookup_quotation.Value != null)
+                                ////////{
+                                ////////   MultiUoMresult = dtb.Select("DetailsId ='" + Val + "' and UpdateRow ='True'");
+                                ////////}
+                                ////////else
+                                ////////{
+                                ////////    MultiUoMresult = dtb.Select("SrlNo ='" + Val + "' and UpdateRow ='True'");
+                                ////////}
+                                ////////if (MultiUoMresult.Length > 0)
+                                ////////{
+                                ////////    if ( (Convert.ToDecimal(MultiUoMresult[0]["Quantity"])!= Convert.ToDecimal(dr["Quantity"]) ) ||
+                                ////////         ( String.Format("{0:.##}", MultiUoMresult[0]["BaseRate"]) != String.Format("{0:.##}", dr["SalePrice"]) ) ||
+                                ////////         ( String.Format("{0:.##}", MultiUoMresult[0]["AltQuantity"]) != String.Format("{0:.##}", dr["InvoiceDetails_AltQuantity"]) )
+                                ////////        )
+                                ////////    {
+                                ////////        validate = "checkMultiUOMData_QtyMismatch";
+                                ////////        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                ////////        break;
+                                ////////    }
+                                ////////}
+                                // End of Rev 2.0
                             }
                             else if (dtb.Rows.Count < 1)
                             {
@@ -3423,12 +3450,14 @@ namespace ERP.OMS.Management.Activities
                 string Segment5 = Convert.ToString(hdnSegment5.Value);
 
 
-               
+
 
                 //Rev For Terms and Condition and salesman mandatory
+                // Rev 2.0 [validate == "checkMultiUOMData_QtyMismatch" added]
                 if (validate == "outrange" || validate == "duplicate" || validate == "checkWarehouse" || validate == "duplicateProduct" || validate == "nullAmount" || validate == "nullQuantity" || validate == "transporteMandatory" || validate == "TCMandatory" || validate == "minSalePriceMust" || validate == "MRPLess"
                     || validate == "DueDateLess" || validate == "BillingShippingNotLoaded" || validate == "SalesmanMandatory" || validate == "OrderTaggingMandatory"
-                    || validate == "checkMultiUOMData" || validate == "TCSMandatory" || validate == "ZeroTaxSalesInvoice" || validate == "checkAcurateTaxAmount" || validate == "NetAmountExceed")
+                    || validate == "checkMultiUOMData" || validate == "TCSMandatory" || validate == "ZeroTaxSalesInvoice" || validate == "checkAcurateTaxAmount" || validate == "NetAmountExceed"
+                    || validate == "checkMultiUOMData_QtyMismatch")
                 {
                     grid.JSProperties["cpSaveSuccessOrFail"] = validate;
                 }
