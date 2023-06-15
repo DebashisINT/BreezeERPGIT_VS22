@@ -355,7 +355,7 @@ function CalcBaseQty() {
             else {
                 $("#UOMQuantity").val("0.0000");
                 // Rev 2.0
-                document.getElementById('lblInfoMsg').innerHTML = "Base Qunatity will not get auto calulated since no UOM Conversion details given for the selected Alt. UOM for Product : " + grid.GetEditor('Description').GetText();
+                document.getElementById('lblInfoMsg').innerHTML = "Base Quantity will not get auto calculated since no UOM Conversion details given for the selected Alt. UOM for Product : " + grid.GetEditor('Description').GetText();
                 // End of Rev 2.0
             }
         }
