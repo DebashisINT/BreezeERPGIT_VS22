@@ -1,6 +1,8 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti     V2.0.36     10-02-2023      0025664:Transaction Category is not updated if the customer is B2C Type
    2.0   Pallab    V2.0.38     16-05-2023      0026143: Add Transit Sales Invoice module design modification & check in small device
+   3.0	 Priti     V2.0.38    15-06-2023       0026345:Transit Sales Invoice is generating duplicate Invoice
+
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Transit Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
@@ -2694,6 +2696,14 @@
                 jAlert(msg);
                 grid.cpSaveSuccessOrFail = '';
             }
+            //Rev 3.0
+            else if (grid.cpSaveSuccessOrFail == "duplicateTPI") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                jAlert('Can Not Save as Duplicate Trasit Sales Invoice with Duplicate Transit Purase Invoice');
+                grid.cpSaveSuccessOrFail = '';
+            }
+            //Rev 3.0 End
             else if (grid.cpReturnLedgerAmt == '-3') {
                 var dramt = 0;
                 var cramt = 0;
@@ -5790,7 +5800,7 @@ function fn_Edit(keyValue) {
 
 
 
-                            cGridTDSdocs.PerformCallback();
+                            //cGridTDSdocs.PerformCallback();
                         }
 
 
@@ -5798,7 +5808,7 @@ function fn_Edit(keyValue) {
                 });
             }
             else {
-                cGridTDSdocs.PerformCallback();
+                //cGridTDSdocs.PerformCallback();
             }
 
 
@@ -8558,7 +8568,10 @@ function fn_Edit(keyValue) {
 
 
     <!-- Modal -->
-    <div class="modal fade pmsModal w40" id="EinvoiceUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <%--Rev 3.0--%>
+    <%--<div class="modal fade pmsModal w40" id="EinvoiceUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >--%>
+    <div class="modal fade pmsModal w40" id="EinvoiceUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+   <%-- Rev 3.0 End   --%>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

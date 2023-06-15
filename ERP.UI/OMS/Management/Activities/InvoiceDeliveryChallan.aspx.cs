@@ -1,6 +1,8 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0  Priti   V2.0.37    02-03-2023    25711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
 // 2.0  Priti   V2.0.37    30-03-2023    0025764: The Bill from/Dispatch From Button to be made available in the Edit Mode of Sales - Invoice Cum Challan
+// 3.0  Priti   V2.0.38    13-06-2023    0026328: Mfg Date & Exp Date is showing wrong while making Invoice cum challan
+
 #endregion//====================================================End Revision History=====================================================================
 
 using System;
@@ -6550,30 +6552,32 @@ namespace ERP.OMS.Management.Activities
 
                 string strNewVal = "", strOldVal = "";
                 DataTable tempdt = dt.Copy();
-                foreach (DataRow drr in tempdt.Rows)
-                {
-                    strNewVal = Convert.ToString(drr["QuoteWarehouse_Id"]);
+                //Rev 3.0
+                //foreach (DataRow drr in tempdt.Rows)
+                //{
+                //    strNewVal = Convert.ToString(drr["QuoteWarehouse_Id"]);
 
-                    if (strNewVal == strOldVal)
-                    {
-                        drr["WarehouseName"] = "";
-                        drr["BatchNo"] = "";
-                        drr["SalesUOMName"] = "";
-                        drr["SalesQuantity"] = "";
-                        drr["StkUOMName"] = "";
-                        drr["StkQuantity"] = "";
-                        drr["ConversionMultiplier"] = "";
-                        drr["AvailableQty"] = "";
-                        drr["BalancrStk"] = "";
-                        drr["MfgDate"] = "";
-                        drr["ExpiryDate"] = "";
-                    }
+                //    if (strNewVal == strOldVal)
+                //    {
+                //        drr["WarehouseName"] = "";
+                //        drr["BatchNo"] = "";
+                //        drr["SalesUOMName"] = "";
+                //        drr["SalesQuantity"] = "";
+                //        drr["StkUOMName"] = "";
+                //        drr["StkQuantity"] = "";
+                //        drr["ConversionMultiplier"] = "";
+                //        drr["AvailableQty"] = "";
+                //        drr["BalancrStk"] = "";
+                //        drr["MfgDate"] = "";
+                //        drr["ExpiryDate"] = "";
+                //    }
 
-                    strOldVal = strNewVal;
-                }
+                //    strOldVal = strNewVal;
+                //}
 
-                Session["SI_LoopWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
-                tempdt.Columns.Remove("QuoteWarehouse_Id");
+                //Session["SI_LoopWarehouse"] = Convert.ToString(Convert.ToInt32(strNewVal) + 1);
+                //tempdt.Columns.Remove("QuoteWarehouse_Id");
+                //Rev 3.0 End
                 return tempdt;
             }
             catch

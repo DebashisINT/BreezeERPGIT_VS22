@@ -1,4 +1,9 @@
-﻿var FocusValue = '0';
+﻿//================================================== Revision History =============================================
+//Rev Number         DATE              VERSION         DEVELOPER           CHANGES
+//1.0                12-06-2023        2.0.38          Priti            SALES RETURN MNUAL Save & New Button issue.
+//====================================================== Revision History =============================================
+
+var FocusValue = '0';
 
  $(function () {
         $('#UOMModal').on('hide.bs.modal', function () {
@@ -3109,7 +3114,9 @@ function Save_ButtonClick() {
         jAlert('Please enter valid place of supply.')
         flag = false;
     }
-    var QuoteNo = $('#<%=txt_PLQuoteNo.ClientID %>').val();
+    //Rev 1.0
+    var QuoteNo = $('#txt_PLQuoteNo').val();
+    //Rev 1.0 End
     QuoteNo = QuoteNo.trim();
     if (QuoteNo == '' || QuoteNo == null) {
         $('#MandatorysQuoteno').attr('style', 'display:block');
