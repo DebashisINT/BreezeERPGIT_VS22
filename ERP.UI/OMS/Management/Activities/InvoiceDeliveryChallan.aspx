@@ -1,12 +1,10 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
-   1.0   Priti     V2.0.36     0025577:Alt UOM is enabled false if we want to modify the stock details after saving the document.cmbSecondUOM remove ClientEnabled="false"
-   2.0   Priti     V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
+   1.0   Priti     V2.0.36                   0025577:Alt UOM is enabled false if we want to modify the stock details after saving the document.cmbSecondUOM remove ClientEnabled="false"
+   2.0   Priti     V2.0.36    10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
    3.0   Priti     V2.0.37    14-03-2023     0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
    4.0   Pallab    V2.0.37    07-04-2023     0025845: Add Sales Invoice Cum Challan module design modification
    5.0   Priti     V2.0.38    13-04-2023     0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
-
-
-========================================== End Revision History =======================================================================================================--%>
+   ========================================= End Revision History =======================================================================================================--%>
 
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InvoiceDeliveryChallan.aspx.cs" Inherits="ERP.OMS.Management.Activities.InvoiceDeliveryChallan" EnableEventValidation="false" %>
@@ -5342,8 +5340,11 @@
 
 
         <!-- Modal -->
-<div class="modal fade pmsModal w40" id="exampleModalInvChallan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<%--Rev 5.0--%>
+<%--<div class="modal fade pmsModal w40" id="exampleModalInvChallan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >--%>
+<div class="modal fade pmsModal w40" id="exampleModalInvChallan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+<%--Rev 5.0 End --%>
+    <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Upload Confirmation</h5>

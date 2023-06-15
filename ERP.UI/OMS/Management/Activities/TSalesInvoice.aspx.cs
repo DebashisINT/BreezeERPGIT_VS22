@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region//====================================================Revision History=========================================================================
+// 1.0  Priti   V2.0.38    15-06-2023    0026345: Transit Sales Invoice is generating duplicate Invoice
+#endregion//====================================================End Revision History=====================================================================
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -2451,6 +2455,12 @@ namespace ERP.OMS.Management.Activities
                         grid.JSProperties["cpCRAmt"] = Convert.ToString(ReturnLedgerAmtList[1]);
 
                     }
+                    //Rev 1.0
+                    else if (strIsComplete == -80)
+                    {
+                        grid.JSProperties["cpSaveSuccessOrFail"] = "duplicateTPI";
+                    }
+                    //Rev 1.0 End
                     else
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = "errorInsert";
