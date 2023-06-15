@@ -272,6 +272,7 @@
             vertical-align: top;
         }
         /*End of Mantis Issue 24428*/
+
     </style>
 
     <script>
@@ -547,6 +548,17 @@
                 jAlert(msg);
                 grid.cpSaveSuccessOrFail = '';
             }
+            // Rev 4.0
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_QtyMismatch") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Please check Multi UOM details for SL No. not matching with outer grid " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            // End of Rev 4.0
             else {
                 var Quote_Number = grid.cpQuotationNo;
                 var Quote_ID = grid.cpQuotationID;
@@ -3771,6 +3783,12 @@ $(document).ready(function () {
     <dxe:ASPxLoadingPanel ID="LoadingPanel" runat="server" ClientInstanceName="LoadingPanel" ContainerElementID="divSubmitButton"
         Modal="True">
     </dxe:ASPxLoadingPanel>
+    
+    <%--Rev 4.0--%>
+    <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOM" runat="server" ClientInstanceName="LoadingPanelMultiUOM" ContainerElementID="divMultiUOM"
+        Modal="True">
+    </dxe:ASPxLoadingPanel>
+    <%--End of Rev 4.0--%>
 
     <!--Customer Modal -->
     <div class="modal fade" id="CustModel" role="dialog">
@@ -3905,13 +3923,14 @@ $(document).ready(function () {
         </ContentStyle>
         <ContentCollection>
             <dxe:PopupControlContentControl runat="server">
-                <div class="Top clearfix">
+                <%--Rev 4.0 [ id="divMultiUOM" added ] --%>
+                <div class="Top clearfix" id="divMultiUOM">
 
 
 
                     <div class="clearfix col-md-12" style="background: #f5f4f3; padding: 8px 0; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;">
 
-                        <table class="eqTble">
+                        <table class="eqTble" >
                             <tr>
                                 <%--Mantis Issue 24425, 24428--%>
                                 <dxe:GridViewDataTextColumn Caption="MultiUOMSR No"
@@ -3929,7 +3948,7 @@ $(document).ready(function () {
                                                 <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18"  class="allownumericwithdecimal" />--%>
                                                <%--Rev 4.0 --%>
                                                 <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />--%>
-                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onfocus="DisableUpdate()" onfocusout="CalcBaseRate()" />
+                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onfocusout="CalcBaseRate()" />
                                                 <%--End of Rev 4.0--%>
                                                 <%--End of Rev Sanchita--%>
                                             </div>
@@ -3987,8 +4006,6 @@ $(document).ready(function () {
                                                 <%--Mantis Issue 24425, 24428--%>
                                                 <%--Rev 4.0--%>
                                                 <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />--%>
-                                                
-                                                <ClientSideEvents GotFocus="function(s,e) { DisableUpdate();}" />
                                                 <ClientSideEvents LostFocus="function(s,e) { CalcBaseQty();}" />
                                                 <%--End of Rev 4.0--%>
                                                 <%--End of Mantis Issue 24425, 24428--%>
@@ -4006,8 +4023,6 @@ $(document).ready(function () {
                                             <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                 <%--Rev 4.0--%>
                                                 <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />--%>
-                                                
-                                                <ClientSideEvents GotFocus="function(s,e) { DisableUpdate();}" />
                                                 <ClientSideEvents LostFocus="function(s,e) { CalcBaseRate();}" />
                                                  <%--End of Rev 4.0--%>
                                             </dxe:ASPxTextBox>

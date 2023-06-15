@@ -285,18 +285,16 @@ function FinalMultiUOM() {
 
 }
 
-// Rev 2.0
-function DisableUpdate() {
-    cbtnMUltiUOM.SetVisible(false);
-}
-// End of Rev 2.0
-
 // Mantis Issue 24425, 24428
 function CalcBaseQty() {
    
     //var PackingQtyAlt = Productdetails.split("||@||")[20];  // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.packing_quantity)
     //var PackingQty = Productdetails.split("||@||")[22];  // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.sProduct_quantity)
     //var PackingSaleUOM = Productdetails.split("||@||")[25];  // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.packing_saleUOM)
+
+    // Rev 2.0
+    LoadingPanelMultiUOM.Show();
+    // End of Rev 2.0
 
     var Productdetails = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
     var PackingQtyAlt = 0;
@@ -358,10 +356,11 @@ function CalcBaseQty() {
             }
         }
     });
-    // Rev 2.0
-    cbtnMUltiUOM.SetVisible(true);
-    // End of Rev 2.0
-}
+
+    // End of Rev Sanchita
+    LoadingPanelMultiUOM.Hide();
+    // End of Rev Sanchita
+ }
 
 function CalcBaseRate() {
     var altQty = cAltUOMQuantity.GetValue();
@@ -373,16 +372,24 @@ function CalcBaseRate() {
         var BaseRate = (altQty * altRate) / baseQty;
         ccmbBaseRate.SetValue(BaseRate);
     }
-    // Rev 2.0
-    cbtnMUltiUOM.SetVisible(true);
-    // End of Rev 2.0
-}
+ }
 // End of Mantis Issue 24425, 24428
+
 
 function SaveMultiUOM() {
 
 
     //grid.GetEditor('ProductID').GetText().split("||@||")[3];
+
+    // Rev 2.0
+    if ($("#UOMQuantity").val() != 0 || cAltUOMQuantity.GetValue() != 0) {
+        LoadingPanelMultiUOM.Show();
+        setTimeout(() => {
+            LoadingPanelMultiUOM.Hide();
+
+        }, 1000)
+    }
+    // End of Rev 2.0
 
     var qnty = $("#UOMQuantity").val();
 
