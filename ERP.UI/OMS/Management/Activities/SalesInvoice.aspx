@@ -559,6 +559,15 @@
                 jAlert(msg);
                 grid.cpSaveSuccessOrFail = '';
             }
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_NotFound") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Multi UOM details not given for SL No. " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
             // End of Rev 4.0
             else {
                 var Quote_Number = grid.cpQuotationNo;
