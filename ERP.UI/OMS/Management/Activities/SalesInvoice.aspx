@@ -2,7 +2,7 @@
    1.0   Priti      V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
    2.0   Sanchita   V2.0.38     10-04-2023     Tolerance feature required in Sales Order Module. Refer: 25223     
    3.0   Pallab     V2.0.38     27-04-2023     Add Sales Invoice module design modification. Refer: 25921
-   4.0   Sanchita   V2.0.38     13-06-2023     Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320   
+   4.0   Sanchita   V2.0.38     13-06-2023     Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
    5.0   Pallab     V2.0.38     16-06-2023     "Multi UOM Details" popup parameter alignment issue fix . Mantis : 26331
 ========================================== End Revision History =======================================================================================================--%>
 
