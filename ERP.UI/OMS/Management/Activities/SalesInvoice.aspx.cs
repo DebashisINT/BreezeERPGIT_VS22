@@ -3067,6 +3067,12 @@ namespace ERP.OMS.Management.Activities
                                         break;
                                     }
                                 }
+                                else
+                                {
+                                    validate = "checkMultiUOMData_NotFound";
+                                    grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                    break;
+                                }
                                 // End of Rev 2.0
                             }
                             else if (dtb.Rows.Count < 1)
@@ -3453,11 +3459,11 @@ namespace ERP.OMS.Management.Activities
 
 
                 //Rev For Terms and Condition and salesman mandatory
-                // Rev 2.0 [validate == "checkMultiUOMData_QtyMismatch" added]
+                // Rev 2.0 [validate == "checkMultiUOMData_QtyMismatch", "checkMultiUOMData_NotFound" added]
                 if (validate == "outrange" || validate == "duplicate" || validate == "checkWarehouse" || validate == "duplicateProduct" || validate == "nullAmount" || validate == "nullQuantity" || validate == "transporteMandatory" || validate == "TCMandatory" || validate == "minSalePriceMust" || validate == "MRPLess"
                     || validate == "DueDateLess" || validate == "BillingShippingNotLoaded" || validate == "SalesmanMandatory" || validate == "OrderTaggingMandatory"
                     || validate == "checkMultiUOMData" || validate == "TCSMandatory" || validate == "ZeroTaxSalesInvoice" || validate == "checkAcurateTaxAmount" || validate == "NetAmountExceed"
-                    || validate == "checkMultiUOMData_QtyMismatch")
+                    || validate == "checkMultiUOMData_QtyMismatch" || validate== "checkMultiUOMData_NotFound")
                 {
                     grid.JSProperties["cpSaveSuccessOrFail"] = validate;
                 }
