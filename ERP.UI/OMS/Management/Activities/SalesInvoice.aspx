@@ -2,7 +2,8 @@
    1.0   Priti      V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
    2.0   Sanchita   V2.0.38     10-04-2023     Tolerance feature required in Sales Order Module. Refer: 25223     
    3.0   Pallab     V2.0.38     27-04-2023     Add Sales Invoice module design modification. Refer: 25921
-   4.0   Sanchita   V2.0.38     13-06-2023     Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320         
+   4.0   Sanchita   V2.0.38     13-06-2023     Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320   
+   5.0   Pallab     V2.0.38     16-06-2023     "Multi UOM Details" popup parameter alignment issue fix . Mantis : 26331
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoice" %>
@@ -1029,6 +1030,18 @@ $(document).ready(function () {
                     margin-right: 0px;
                 }
             }
+            /*Rev 5.0: for parameter alignment issue fix*/
+            .mlableWh
+            {
+                width: 120px !important;
+                padding-top: 25px !important;
+            }
+
+            .mlableWh .dxeBase_PlasticBlue , .mlableWh label
+            {
+                line-height: 13px !important;
+            }
+            /*Rev end 5.0*/
         </style>
     <%--Rev end 3.0--%>
 </asp:Content>
@@ -3983,7 +3996,7 @@ $(document).ready(function () {
                                 </td>
                                 <%--End of Mantis Issue 24425, 24428--%>
                                 <td>
-                                    <span style="font-size: 22px; padding-top: 15px; display: inline-block;">=</span>
+                                    <span style="font-size: 22px; padding-top: 20px; display: inline-block;">=</span>
                                 </td>
                                 <td>
                                     <div>
@@ -4060,12 +4073,16 @@ $(document).ready(function () {
 
                                 </td>
                                 <%--End of Mantis Issue 24425, 24428--%>
-                                <td style="padding-top: 14px;">
-                                    <dxe:ASPxButton ID="btnMUltiUOM" UseSubmitBehavior="false" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary">
-                                        <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
-                                    </dxe:ASPxButton>
-                                </td>
-                            </tr>
+                                <%--Rev 5.0: For "Add" button in separate table row(tr)--%>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 10px;">
+                                        <dxe:ASPxButton ID="btnMUltiUOM" UseSubmitBehavior="false" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary">
+                                            <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
+                                        </dxe:ASPxButton>
+                                    </td>
+                                </tr>
+                                <%--Rev end 5.0--%>
                         </table>
 
                     </div>
