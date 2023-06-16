@@ -3974,7 +3974,10 @@ $(document).ready(function () {
                                             <label>Base Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true"></dxe:ASPxTextBox>
+                                            <%--Rev 4.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true"></dxe:ASPxTextBox>--%>
+                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true"></dxe:ASPxTextBox>
+                                            <%--End of Rev 4.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -4020,8 +4023,9 @@ $(document).ready(function () {
                                             <label>Alt Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
-                                                <%--Rev 4.0--%>
+                                            <%--Rev 4.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">--%>
+                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                 <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />--%>
                                                 <ClientSideEvents LostFocus="function(s,e) { CalcBaseRate();}" />
                                                  <%--End of Rev 4.0--%>
@@ -4033,7 +4037,8 @@ $(document).ready(function () {
                                     <div style="margin-bottom: 5px;">
                                         <div>
                                         </div>
-                                        <div>
+                                        <%--Rev 4.0 [ class="mlableWh" added --%>
+                                        <div class="mlableWh" >
                                             <%--<label class="checkbox-inline mlableWh">
                                                 <asp:CheckBox ID="chkUpdateRow" Checked="false" runat="server" ></asp:CheckBox>
                                                 <span style="margin: 0px 0; display: block">
@@ -4041,7 +4046,8 @@ $(document).ready(function () {
                                                     </dxe:ASPxLabel>
                                                 </span>
                                             </label>--%>
-                                            <label class="checkbox-inline mlableWh">
+                                            <%--Rev 4.0 [ class="mlableWh" removed --%>
+                                            <label class="checkbox-inline ">
                                                 <input type="checkbox" id="chkUpdateRow" />
                                                 <span style="margin: 0px 0; display: block">
                                                     <dxe:ASPxLabel ID="ASPxLabel19" runat="server" Text="Update Row">
