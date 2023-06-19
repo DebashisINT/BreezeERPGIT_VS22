@@ -2571,6 +2571,15 @@ namespace ERP.OMS.Management.Activities
         protected global::DevExpress.Web.ASPxLoadingPanel LoadingPanelMultiUOM;
 
         /// <summary>
+        /// LoadingPanelMultiUOMSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxLoadingPanel LoadingPanelMultiUOMSave;
+
+        /// <summary>
         /// hs1 control.
         /// </summary>
         /// <remarks>

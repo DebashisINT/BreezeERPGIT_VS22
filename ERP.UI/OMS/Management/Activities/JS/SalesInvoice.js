@@ -228,6 +228,10 @@ function Edit_MultiUom(keyValue, SrlNo) {
 // End of Mantis Issue 24425, 24428
 
 function FinalMultiUOM() {
+
+    // Rev 2.0
+    LoadingPanelMultiUOMSave.Show();
+    //End of Rev 2.0
     
     UomLenthCalculation();
     if (Uomlength == 0 || Uomlength < 0) {
@@ -3077,8 +3081,9 @@ function OnMultiUOMEndCallback(s, e) {
         SalePriceTextChange(null, null);
         
         // Rev 2.0
-        cbtn_SaveRecords_N.SetVisible(false);
-        cbtn_SaveRecords_p.SetVisible(false);
+        cbtn_SaveRecords_N.SetVisible(true);
+        cbtn_SaveRecords_p.SetVisible(true);
+        LoadingPanelMultiUOMSave.Hide();
         // End of Rev 2.0
     }
 
