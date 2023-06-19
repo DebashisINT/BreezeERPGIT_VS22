@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   17-05-2023      0026158: Add Adjustment of Documents - Credit Note With Debit Note module design modification & check in small device
+    2.0   Pallab    V2.0.38   19-06-2023      0026387: Add Adjustment of Documents - Credit Note With Debit Note all bootstrap modal outside click event disable
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Title="CustomerCrNoteAdjustDrNote" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerCrNoteAdjustDrNote.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerCrNoteAdjustDrNote" %>
@@ -549,7 +550,10 @@
     </div>
     </div>
     <!--Customer Modal -->
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+        <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -582,7 +586,10 @@
 
 
     <%--Advance Receipt Selection Model--%>
-    <div class="modal fade" id="AdvanceModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="AdvanceModel" role="dialog">--%>
+    <div class="modal fade" id="AdvanceModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -615,7 +622,10 @@
 
 
     <%--Document Selection Model--%>
-    <div class="modal fade" id="DocumentModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="DocumentModel" role="dialog">--%>
+    <div class="modal fade" id="DocumentModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->

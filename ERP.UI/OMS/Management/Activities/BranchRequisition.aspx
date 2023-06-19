@@ -2,6 +2,7 @@
  1.0   Priti    V2.0.36   19-01-2023    0025371: Listing view upgradation required of Branch Requisition of Inventory
  2.0   Priti    V2.0.36   06-02-2023    0025645: Branch Requisition - While Adding a Product, the Search is not working properly
  3.0   Pallab   V2.0.38   10-05-2023    0026079: Branch Requisition module design modification & check in small device
+ 4.0   Pallab   V2.0.38   19-06-2023    0026385: Add Branch Requisition all bootstrap modal outside click event disable
 ========================================== End Revision History =======================================================================================================--%>
 
 
@@ -1963,7 +1964,10 @@ function Currency_Rate() {
         <%--UDF Popup End--%>
 
         <!--Product Modal -->
-        <div class="modal fade" id="ProductModel" role="dialog">
+            <%--Rev 4.0--%>
+        <%--<div class="modal fade" id="ProductModel" role="dialog">--%>
+        <div class="modal fade" id="ProductModel" role="dialog" data-backdrop="static" data-keyboard="false">
+            <%--Rev end 4.0--%>
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
