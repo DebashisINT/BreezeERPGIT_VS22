@@ -3076,7 +3076,10 @@ function OnMultiUOMEndCallback(s, e) {
 
         SalePriceTextChange(null, null);
         
-        
+        // Rev 2.0
+        cbtn_SaveRecords_N.SetVisible(false);
+        cbtn_SaveRecords_p.SetVisible(false);
+        // End of Rev 2.0
     }
 
     if (cgrid_MultiUOM.cpAllDetails == "EditData") {
@@ -4154,6 +4157,8 @@ function OnCustomButtonClick(s, e) {
                     // End of Mantis Issue 24425, 24428
                     // Rev 2.0
                     document.getElementById('lblInfoMsg').innerHTML = "";
+                    cbtn_SaveRecords_N.SetVisible(false);
+                    cbtn_SaveRecords_p.SetVisible(false);
                     // End of Rev 2.0
                     cPopup_MultiUOM.Show();
                     cgrid_MultiUOM.cpDuplicateAltUOM = "";
