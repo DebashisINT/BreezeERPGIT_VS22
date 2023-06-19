@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   09-05-2023      26060: Add Purchase Return Request module design modification & check in small device
+    2.0   Pallab    V2.0.38   19-06-2023    0026386: Add Purchase Return Request all bootstrap modal outside click event disable
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Title="BranchRequisitionReturn" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BranchRequisitionReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.BranchRequisitionReturn" %>
@@ -2446,7 +2447,10 @@ function ProductsGotFocusFromID(s, e) {
     <asp:HiddenField runat="server" ID="Keyval_internalId" />
     <asp:SqlDataSource ID="VendorDataSource" runat="server"  />
     <!--Customer Modal -->
-    <div class="modal fade" id="PartyModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="PartyModel" role="dialog">--%>
+        <div class="modal fade" id="PartyModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
