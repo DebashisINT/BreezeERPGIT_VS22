@@ -1,6 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
    1.0   Priti      V2.0.36     10-02-2023     0025664:Transaction Category is not updated if the customer is B2C Type
-   2.0   Sanchita   V2.0.38     10-04-2023     Tolerance feature required in Sales Order Module. Refer: 25223     
+   2.0   Sanchita   V2.0.38     10-04-2023     Tolerance feature required in Sales Order Module. Refer: 25223  -- WORK REVERTED   
    3.0   Pallab     V2.0.38     27-04-2023     Add Sales Invoice module design modification. Refer: 25921
    4.0   Sanchita   V2.0.38     13-06-2023     Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
    5.0   Pallab     V2.0.38     16-06-2023     "Multi UOM Details" popup parameter alignment issue fix . Mantis : 26331
@@ -3811,10 +3811,7 @@ $(document).ready(function () {
     <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOM" runat="server" ClientInstanceName="LoadingPanelMultiUOM" ContainerElementID="divMultiUOM"
         Modal="True">
     </dxe:ASPxLoadingPanel>
-     <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOMSave" runat="server" ClientInstanceName="LoadingPanelMultiUOMSave" ContainerElementID="divPageGeneral"
-        Modal="True">
-    </dxe:ASPxLoadingPanel>
-    <%--End of Rev 4.0--%>
+     <%--End of Rev 4.0--%>
 
     <!--Customer Modal -->
     <div class="modal fade" id="CustModel" role="dialog">
@@ -4573,7 +4570,7 @@ $(document).ready(function () {
     <asp:HiddenField runat="server" ID="hdnCoordinate" />
     <%--Rev work start 24.06.2022 mantise no:0024987--%>
     <%--Rev 2.0--%>
-    <asp:HiddenField runat="server" ID="hdnIsToleranceInSalesOrder" />
+   <%-- <asp:HiddenField runat="server" ID="hdnIsToleranceInSalesOrder" />--%>
     <%--End of Rev 2.0--%>
 
      <!--Schedule Modal -->

@@ -1,6 +1,6 @@
 ﻿<%--/*********************************************************************************************************
  * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module 
- *                                          Refer: 25223
+ *                                          Refer: 25223  -- WORK REVERTED
    Rev 2.0      Pallab        V2.0.37       Add Sales Order page design modification
                                             Refer: 25813
  **********************************************************************************************************/--%>
@@ -1749,13 +1749,13 @@ function PerformCallToGridBind() {
                                             </asp:DropDownList>
                                         </div>
                                         <%--Rev 1.0--%>
-                                        <div id="divQtyTolerance" runat="server" class="col-md-2 lblmTop8">
+                                        <%--<div id="divQtyTolerance" runat="server" class="col-md-2 lblmTop8">
                                             <dxe:ASPxLabel ID="lblTolerance" runat="server" Text="Quantity Tolerance %">
                                             </dxe:ASPxLabel>
                                            <dxe:ASPxTextBox runat="server" ID="txtQtyTolerance" ClientInstanceName="ctxtQtyTolerance" Width="100%" CssClass="pull-left">
                                                 <masksettings mask="<0..999>.<0..99>" includeliterals="DecimalSymbol" />
                                             </dxe:ASPxTextBox>
-                                        </div>
+                                        </div>--%>
                                         <%--End of Rev 1.0--%>
                                         <div style="clear: both;"></div>
                                         <div class="col-md-12">
