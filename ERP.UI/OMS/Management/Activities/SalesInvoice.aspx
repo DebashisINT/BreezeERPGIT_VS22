@@ -1235,7 +1235,8 @@ $(document).ready(function () {
         <div id="divcross" runat="server" class="crossBtn"><a href="SalesInvoiceList.aspx"><i class="fa fa-times"></i></a></div>
 
     </div>
-        <div class="form_main">
+        <%--Rev 4.0 [id="divPageGeneral"] --%>
+        <div class="form_main" id="divPageGeneral">
         <asp:Panel ID="pnl_quotation" runat="server">
             <div class="">
                 <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
@@ -3808,6 +3809,9 @@ $(document).ready(function () {
     
     <%--Rev 4.0--%>
     <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOM" runat="server" ClientInstanceName="LoadingPanelMultiUOM" ContainerElementID="divMultiUOM"
+        Modal="True">
+    </dxe:ASPxLoadingPanel>
+     <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOMSave" runat="server" ClientInstanceName="LoadingPanelMultiUOMSave" ContainerElementID="divPageGeneral"
         Modal="True">
     </dxe:ASPxLoadingPanel>
     <%--End of Rev 4.0--%>
