@@ -1,6 +1,6 @@
 ﻿/*********************************************************************************************************
  * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module 
- *                                          Refer: 25223
+ *                                          Refer: 25223   -- WORK REVERTED 
  * Rev 2.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
  **********************************************************************************************************/
 
@@ -229,10 +229,6 @@ function Edit_MultiUom(keyValue, SrlNo) {
 
 function FinalMultiUOM() {
 
-    // Rev 2.0
-    LoadingPanelMultiUOMSave.Show();
-    //End of Rev 2.0
-    
     UomLenthCalculation();
     if (Uomlength == 0 || Uomlength < 0) {
 
@@ -244,27 +240,27 @@ function FinalMultiUOM() {
     }
     else {
         // Rev 1.0
-        var SOQtyCheck = 1;
-        var SODoc_ID = grid.GetEditor('ComponentID').GetValue();
-        var SODocDetailsID = grid.GetEditor('DetailsId').GetValue();
-        var SLNo = grid.GetEditor('SrlNo').GetValue();
-        var IsToleranceInSalesOrder = document.getElementById('hdnIsToleranceInSalesOrder').value;
+        //var SOQtyCheck = 1;
+        //var SODoc_ID = grid.GetEditor('ComponentID').GetValue();
+        //var SODocDetailsID = grid.GetEditor('DetailsId').GetValue();
+        //var SLNo = grid.GetEditor('SrlNo').GetValue();
+        //var IsToleranceInSalesOrder = document.getElementById('hdnIsToleranceInSalesOrder').value;
 
-        $.ajax({
-            type: "POST",
-            url: "SalesInvoice.aspx/CheckSOQty",
-            data: JSON.stringify({ SODoc_ID: SODoc_ID, SODocDetailsID: SODocDetailsID, SLNo: SLNo, IsToleranceInSalesOrder: IsToleranceInSalesOrder }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (msg) {
+        //$.ajax({
+        //    type: "POST",
+        //    url: "SalesInvoice.aspx/CheckSOQty",
+        //    data: JSON.stringify({ SODoc_ID: SODoc_ID, SODocDetailsID: SODocDetailsID, SLNo: SLNo, IsToleranceInSalesOrder: IsToleranceInSalesOrder }),
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+        //    async: false,
+        //    success: function (msg) {
 
-                SOQtyCheck = msg.d;
+        //        SOQtyCheck = msg.d;
 
-            }
-        });
+        //    }
+        //});
 
-        if (SOQtyCheck == 1) {
+        //if (SOQtyCheck == 1) {
         // End of Rev 1.0
             cPopup_MultiUOM.Hide();
             // Mantis Issue 24425, 24428
@@ -275,14 +271,14 @@ function FinalMultiUOM() {
                 grid.batchEditApi.StartEdit(globalRowIndex, 11);
             }, 200)
         // Rev 1.0
-        }
-        else {
-            var OrdeMsg = 'Balance Quantity of selected Product from tagged document. <br/>Cannot enter quantity more than balance quantity.';
-            jAlert(OrdeMsg, 'Alert Dialog: [Balace Quantity ]', function (r) {
-                grid.batchEditApi.StartEdit(globalRowIndex, 7);
-            });
-            return;
-        }
+        //}
+        //else {
+        //    var OrdeMsg = 'Balance Quantity of selected Product from tagged document. <br/>Cannot enter quantity more than balance quantity.';
+        //    jAlert(OrdeMsg, 'Alert Dialog: [Balace Quantity ]', function (r) {
+        //        grid.batchEditApi.StartEdit(globalRowIndex, 7);
+        //    });
+        //    return;
+        //}
         // End of Rev 1.0
        
     }
@@ -3083,7 +3079,6 @@ function OnMultiUOMEndCallback(s, e) {
         // Rev 2.0
         cbtn_SaveRecords_N.SetVisible(true);
         cbtn_SaveRecords_p.SetVisible(true);
-        LoadingPanelMultiUOMSave.Hide();
         // End of Rev 2.0
     }
 
@@ -3275,41 +3270,42 @@ function QuantityTextChange(s, e) {
             }
 
             // Rev 1.0
-            var IsToleranceInSalesOrder = document.getElementById('hdnIsToleranceInSalesOrder').value;
+            //var IsToleranceInSalesOrder = document.getElementById('hdnIsToleranceInSalesOrder').value;
 
-            if (IsToleranceInSalesOrder == "1") {
-                var SOToleranceQty = 0;
+            //if (IsToleranceInSalesOrder == "1") {
+            //    var SOToleranceQty = 0;
 
-                $.ajax({
-                    type: "POST",
-                    url: "SalesInvoice.aspx/GetSOToleranceQty",
-                    data: JSON.stringify({ SODoc_ID: SODoc_ID, SODocDetailsID: SODocDetailsID }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: false,
-                    success: function (msg) {
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "SalesInvoice.aspx/GetSOToleranceQty",
+            //        data: JSON.stringify({ SODoc_ID: SODoc_ID, SODocDetailsID: SODocDetailsID }),
+            //        contentType: "application/json; charset=utf-8",
+            //        dataType: "json",
+            //        async: false,
+            //        success: function (msg) {
 
-                        SOToleranceQty = msg.d;
+            //            SOToleranceQty = msg.d;
 
-                    }
-                });
+            //        }
+            //    });
 
-                if ((CurrQty + SOToleranceQty) < 0) {
-                    grid.GetEditor("TotalQty").SetValue(TotalQty);
-                    grid.GetEditor("Quantity").SetValue(TotalQty);
-                    var OrdeMsg = 'Balance Quantity of selected Product from tagged document. <br/>Cannot enter quantity more than balance quantity.';
-                    grid.batchEditApi.EndEdit();
-                    jAlert(OrdeMsg, 'Alert Dialog: [Balace Quantity ]', function (r) {
-                        grid.batchEditApi.StartEdit(globalRowIndex, 7);
-                    });
-                    return false;
-                }
-                else {
-                    grid.GetEditor("TotalQty").SetValue(QuantityValue);
-                    grid.GetEditor("BalanceQty").SetValue(CurrQty);
-                }
-            }
-            else {
+            //    if ((CurrQty + SOToleranceQty) < 0) {
+            //        grid.GetEditor("TotalQty").SetValue(TotalQty);
+            //        grid.GetEditor("Quantity").SetValue(TotalQty);
+            //        var OrdeMsg = 'Balance Quantity of selected Product from tagged document. <br/>Cannot enter quantity more than balance quantity.';
+            //        grid.batchEditApi.EndEdit();
+            //        jAlert(OrdeMsg, 'Alert Dialog: [Balace Quantity ]', function (r) {
+            //            grid.batchEditApi.StartEdit(globalRowIndex, 7);
+            //        });
+            //        return false;
+            //    }
+            //    else {
+            //        grid.GetEditor("TotalQty").SetValue(QuantityValue);
+            //        grid.GetEditor("BalanceQty").SetValue(CurrQty);
+            //    }
+            //}
+            //else {
+            // End of Rev 1.0
                 if (CurrQty < 0) {
                     grid.GetEditor("TotalQty").SetValue(TotalQty);
                     grid.GetEditor("Quantity").SetValue(TotalQty);
@@ -3324,7 +3320,9 @@ function QuantityTextChange(s, e) {
                     grid.GetEditor("TotalQty").SetValue(QuantityValue);
                     grid.GetEditor("BalanceQty").SetValue(CurrQty);
                 }
-            }
+            // Rev 1.0
+            //}
+            // End of Rev 1.0
 
             var TotalAmount = (grid.GetEditor('TotalAmount').GetText() != null) ? grid.GetEditor('TotalAmount').GetText() : "0";
             var SONetAmount = (grid.GetEditor('SONetAmount').GetText() != null) ? grid.GetEditor('SONetAmount').GetText() : "0";
