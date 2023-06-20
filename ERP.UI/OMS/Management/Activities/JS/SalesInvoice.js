@@ -136,6 +136,10 @@ $(function () {
 // End of Rev 2.0
 
 function closeMultiUOM(s, e) {
+    // Rev 2.0
+    cbtn_SaveRecords_N.SetVisible(true);
+    cbtn_SaveRecords_p.SetVisible(true);
+    // End of Rev 2.0
     e.cancel = false;
     // cPopup_MultiUOM.Hide();
 }
