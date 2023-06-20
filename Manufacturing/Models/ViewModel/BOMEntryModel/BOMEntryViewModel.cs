@@ -1,5 +1,6 @@
 ﻿//@*==================================================== Revision History =========================================================================
-//     1.0  Priti V2.0.38    06-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+//1.0  Priti V2.0.38    06-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+//2.0  Priti V2.0.38    19-06-2023  0026367:In Production Order Qty:  1.A New field required in Production Order Module called 'BOMProductionQty'
 //====================================================End Revision History=====================================================================*@
 
 using System;
@@ -226,11 +227,13 @@ namespace Manufacturing.Models.ViewModel.BOMEntryModel
         public String AltUom { get; set; }
         public String MultiUOMSelectionForManufacturing { get; set; }
         //End of rev Pratik
-
         //Rev 1.0
         public String ExcessQty { get; set; }
         //Rev 1.0 End
-
+        //Rev 2.0
+        public String BOMProductionQty { get; set; }
+        public String sProduct_packageqty { get; set; }
+        //Rev 2.0 End
     }
 
 
