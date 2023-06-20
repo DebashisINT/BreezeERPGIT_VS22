@@ -1,4 +1,8 @@
-﻿using Manufacturing.Models.ViewModel.BOMEntryModel;
+﻿//@*==================================================== Revision History =========================================================================
+//1.0  Priti V2.0.38    19-06-2023  0026367:In Production Order Qty:  1.A New field required in Production Order Module called 'BOMProductionQty'
+//====================================================End Revision History=====================================================================*@
+
+using Manufacturing.Models.ViewModel.BOMEntryModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +106,11 @@ namespace Manufacturing.Models.ViewModel
         public Decimal Qty { get; set; }
 
         public Decimal Amount { get; set; }
+
+        //Rev 1.0
+        public Decimal BOMProductionQty { get; set; }
+        public Decimal sProduct_packageqty { get; set; }
+        //Rev 1.0 End
     }
 
 

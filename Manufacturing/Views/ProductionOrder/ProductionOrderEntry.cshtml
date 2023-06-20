@@ -11,6 +11,7 @@
 
 <link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
 <script src="~/Scripts/SearchPopup.js"></script>
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
 <script>
     function btnPartNoList_Click(s, e) {
         PartNolist('', 'PartNo');
@@ -277,7 +278,7 @@
             $('#txtActualAdditionalCost').val(ActualAdditionalCost);
 
 
-           
+
             var PartNo = BOMGridLookup.gridView.GetRow(globalindexcheck).children[10].innerHTML;
             var PartNoName = BOMGridLookup.gridView.GetRow(globalindexcheck).children[11].innerHTML;
             var ItemRev_No = BOMGridLookup.gridView.GetRow(globalindexcheck).children[12].innerHTML;
@@ -318,8 +319,8 @@
             {
                 $('#strRemarks').val(Remarks);
             }
-            
-           
+
+
             if (Proj_Code == '&nbsp;') {
                 $('#Proj_Code').val('');
             }
@@ -335,14 +336,14 @@
             {
                 $('#Hierarchy').val(Hierarchy);
             }
-           
+
             $('#ddlWarehouse').val(WarehouseID);
-            
+
 
             BOMGridLookup.SetTextWithoutApply(bomno);
 
 
-            
+
 
         }
         else {
@@ -417,7 +418,7 @@
             totalAmountSetLogic();
         }
 
-       
+
     }
 
     function totalAmountSetLogic() {
@@ -432,7 +433,7 @@
                 }
             }
             $('#txtGridProductEntryTotalAmount').val(caltotalamount.toFixed(2));
-            $('#txtActualComponentCost').val(caltotalamount.toFixed(2));            
+            $('#txtActualComponentCost').val(caltotalamount.toFixed(2));
         }
         //Logic For Set Total Amount 20-05-2019
         SetProductCost();
@@ -771,37 +772,94 @@
         $('#txtProductionOrderQty').val(newqty);
         var visiablerow = gridProductionBOMProductList.GetVisibleRowsOnPage();
         if (visiablerow > 0) {
-            for (var i = 500; i > -500; i--) {
-                if (gridProductionBOMProductList.GetRow(i)) {
-                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 3);
-                    var Qty = 0;
-                    Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'OLDQty');
-                   
-                    if (parseFloat(Qty) > 0) {
-                        var calcqty = (parseFloat(Qty) * newqty) / hdnproductqty;
-                        gridProductionBOMProductList.batchEditApi.EndEdit();
-                        gridProductionBOMProductList.batchEditApi.StartEdit();
-                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 5);
-                        gridProductionBOMProductList.GetEditor('ProductQty').SetValue(parseFloat(calcqty).toFixed(4));
 
-                        var Price = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Price');
-                        var ProductQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
+            if ('@ViewBag.IsConsiderProductPackagingQtyInProductionOrder' == "Yes") {
 
-                        if (Price != "" && parseFloat(calcqty).toFixed(4) != "") {
-                            var amount = parseFloat((parseFloat(calcqty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+                for (var i = 500; i > -500; i--) {
+                    if (gridProductionBOMProductList.GetRow(i)) {
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 3);
+                        var Qty = 0;
+                        Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'OLDQty');
 
-                            gridProductionBOMProductList.batchEditApi.StartEdit(i, 9);
-                            gridProductionBOMProductList.GetEditor('Amount').SetValue(amount);
-                            
+                        if (parseFloat(Qty) > 0) {
+                            var calcqty = (parseFloat(Qty) * newqty) / hdnproductqty;
+                            gridProductionBOMProductList.batchEditApi.EndEdit();
+                            gridProductionBOMProductList.batchEditApi.StartEdit();
+                            gridProductionBOMProductList.batchEditApi.StartEdit(i, 19);
+                            gridProductionBOMProductList.GetEditor('BOMProductionQty').SetValue(parseFloat(calcqty).toFixed(4));
+
+                            gridProductionBOMProductList.batchEditApi.StartEdit(i, 20);
+                            var packageqty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'sProduct_packageqty');
+
+                            var BOMProductionQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'BOMProductionQty');
+
+                            var CalProductionOrderQty = Math.ceil(parseFloat(BOMProductionQty) / parseFloat(packageqty)) * parseFloat(packageqty)
+
+                            gridProductionBOMProductList.batchEditApi.StartEdit(i, 5);
+                            if (parseFloat(packageqty) > 0) {
+                                gridProductionBOMProductList.GetEditor('ProductQty').SetValue(parseFloat(CalProductionOrderQty).toFixed(4));
+                                var Price = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Price');
+                                var ProductQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
+                                if (Price != "" && parseFloat(CalProductionOrderQty).toFixed(4) != "") {
+                                    var amount = parseFloat((parseFloat(CalProductionOrderQty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+                                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 9);
+                                    gridProductionBOMProductList.GetEditor('Amount').SetValue(amount);
+                                }
+                            }
+                            else {
+                                gridProductionBOMProductList.GetEditor('ProductQty').SetValue(parseFloat(calcqty).toFixed(4));
+                                var Price = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Price');
+                                var ProductQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
+
+                                if (Price != "" && parseFloat(calcqty).toFixed(4) != "") {
+                                    var amount = parseFloat((parseFloat(calcqty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+                                    gridProductionBOMProductList.batchEditApi.StartEdit(i, 9);
+                                    gridProductionBOMProductList.GetEditor('Amount').SetValue(amount);
+
+                                }
+                            }                           
                         }
-
-                       // globalrowindex = i;
-                       // BOMGridSetAmount("", "");
                     }
                 }
             }
+            else {
+                for (var i = 500; i > -500; i--) {
+                    if (gridProductionBOMProductList.GetRow(i)) {
+                        gridProductionBOMProductList.batchEditApi.StartEdit(i, 3);
+                        var Qty = 0;
+                        Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'OLDQty');
+
+                        if (parseFloat(Qty) > 0) {
+                            var calcqty = (parseFloat(Qty) * newqty) / hdnproductqty;
+                            gridProductionBOMProductList.batchEditApi.EndEdit();
+                            gridProductionBOMProductList.batchEditApi.StartEdit();
+                            gridProductionBOMProductList.batchEditApi.StartEdit(i, 5);
+                            gridProductionBOMProductList.GetEditor('ProductQty').SetValue(parseFloat(calcqty).toFixed(4));
+
+                            var Price = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Price');
+                            var ProductQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
+
+                            if (Price != "" && parseFloat(calcqty).toFixed(4) != "") {
+                                var amount = parseFloat((parseFloat(calcqty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+                                gridProductionBOMProductList.batchEditApi.StartEdit(i, 9);
+                                gridProductionBOMProductList.GetEditor('Amount').SetValue(amount);
+
+                            }
+
+                            // globalrowindex = i;
+                            // BOMGridSetAmount("", "");
+                        }
+                    }
+                }
+            }
+
+
+
+
             var hdnTotalResourceCost = $('#hdnTotalResourceCost').val();
-            
             var totResourceCost = $('#txtTotalResourceCost').val();
             $('#txtTotalResourceCost').val((newqty * parseFloat(hdnTotalResourceCost)) / hdnproductqty);
             totalAmountSetLogic();

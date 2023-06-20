@@ -1,4 +1,9 @@
-﻿@Html.DevExpress().GridView(settings =>
+﻿@*====================================================Revision History=========================================================================
+ 1.0  Priti   V2.0.38    19-06-2023  0026367:In Production Order Qty:  1. A New field required in Production Order Module called 'BOMProductionQty'
+====================================================End Revision History=====================================================================*@
+
+
+@Html.DevExpress().GridView(settings =>
 {
     settings.Name = "gridProductionBOMProductList";
 
@@ -12,36 +17,14 @@
     settings.Settings.VerticalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
     settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = false;
     settings.ClientSideEvents.EndCallback = "ProductionBOMProductEndCallBack";
-    //settings.SettingsEditing.BatchEditSettings.AllowEndEditOnValidationError = true;
-    ///settings.SettingsBehavior.ColumnResizeMode = DevExpress.Web.ColumnResizeMode.Control;
-    //settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
-    //settings.SettingsSearchPanel.Visible = true;
-    // settings.Settings.ShowFilterRow = false;
-    //settings.Settings.ShowGroupPanel = false;
-    // settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
-    // settings.ClientSideEvents.BatchEditStartEditing = "BatchStartEditing";
-    //settings.ClientSideEvents.CustomButtonClick = "grid_CustomButtonClick";
 
     settings.SettingsBehavior.AllowSort = false;
-    //settings.Settings.AllowSort = false;
-    //settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
-    //settings.Settings.SortOrder = DevExpress.Data.ColumnSortOrder.None;
-
     settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
     settings.CommandColumn.Visible = false;
     settings.SettingsEditing.BatchEditSettings.EditMode = DevExpress.Web.GridViewBatchEditMode.Cell;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = DevExpress.Web.GridViewBatchStartEditAction.Click;
-
-   // settings.OptionsColumn.AllowSort = false;
-    //settings.Settings.ShowFooter = true;
-    //settings.SettingsContextMenu.EnableFooterMenu = DevExpress.Utils.DefaultBoolean.True;
-
-
-    //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
-    //settings.SettingsPager.PageSizeItemSettings.Visible = false;
     settings.SettingsPager.PageSize = 10000;
-    //settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
-    //settings.Settings.ShowFilterRowMenu = false;
+
 
     settings.SettingsEditing.NewItemRowPosition = DevExpress.Web.GridViewNewItemRowPosition.Bottom;
     settings.ClientSideEvents.RowClick = "gridclick";
@@ -58,7 +41,7 @@
         //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
         //x.PropertiesEdit.Style.BackColor = System.Drawing.SystemColors.AppWorkspace;
         //x.Settings.AllowSort = false;
-        
+
     });
 
 
@@ -70,8 +53,8 @@
         x.Width = System.Web.UI.WebControls.Unit.Pixel(220);
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;       
-        x.ReadOnly = true;       
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.ReadOnly = true;
     });
     settings.Columns.Add(x =>
     {
@@ -81,13 +64,13 @@
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
 
         x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
-        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;       
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
     });
     settings.Columns.Add(x =>
     {
         x.FieldName = "DesignNo";
         x.Caption = "Drawing No.";
-        x.ReadOnly = true;      
+        x.ReadOnly = true;
         x.Width = System.Web.UI.WebControls.Unit.Pixel(150);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
@@ -334,7 +317,38 @@
         x.Width = System.Web.UI.WebControls.Unit.Pixel(0);
         //x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
     });
+    //  Rev 1.0
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BOMProductionQty";
+        x.Caption = "BOMProductionQty";
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
+        (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        x.ReadOnly = true;
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
+        x.FilterCellStyle.CssClass = "hide";
+    });
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "sProduct_packageqty";
+        x.Caption = "";
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
+        x.FilterCellStyle.CssClass = "hide";        
+        x.Settings.AllowAutoFilter = DefaultBoolean.False;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(0);        
+    });
 
+
+    //  Rev 1.0 End
     settings.CustomJSProperties = (s, e) =>
     {
         if (ViewData["Success"] != null)
@@ -342,29 +356,18 @@
             if (Convert.ToBoolean(ViewData["Success"]))
             {
                 e.Properties["cpBatchUpdate"] = "1";
-
             }
-
         }
         else
         {
             e.Properties["cpBatchUpdate"] = "0";
         }
-        //e.Properties["cpProductionID"] = Convert.ToInt32(ViewData["ProductionID"]);
-        //e.Properties["cpDetailsID"] = Convert.ToInt32(ViewData["DetailsID"]);
         e.Properties["cpOrderNo"] = Convert.ToString(ViewData["OrderNo"]);
         e.Properties["cpMessage"] = Convert.ToString(ViewData["Message"]);
     };
-
-
-
     settings.ClientSideEvents.BeginCallback = "OnStartCallback";
-
-
     settings.ClientSideEvents.EndCallback = "OnEndCallback";
 
 }).Bind(Model).GetHtml()
-
-
 
 <input type="hidden" value="@ViewData["BOMEntryProductsTotalAm"]" id="hdnBOMEntryProductsTotalAm" />

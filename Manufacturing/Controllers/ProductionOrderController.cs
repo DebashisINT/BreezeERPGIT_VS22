@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿//==================================================== Revision History =========================================================================
+// 1.0  Priti V2.0.38    19-06-2023  0026367:In Production Order Qty:  1.A New field required in Production Order Module called 'BOMProductionQty'
+//====================================================End Revision History=====================================================================
+
+using BusinessLogicLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
@@ -42,6 +46,9 @@ namespace Manufacturing.Controllers
 
         public ActionResult ProductionOrderEntry(Int64 DetailsID = 0)
         {
+            //Rev 1.0
+            string IsConsiderProductPackagingQtyInProductionOrder = cSOrder.GetSystemSettingsResult("IsConsiderProductPackagingQtyInProductionOrder");
+            //Rev 1.0 End
             string ProjectSelectInEntryModule = cSOrder.GetSystemSettingsResult("ProjectSelectInEntryModule");        
             try
             {
@@ -165,7 +172,10 @@ namespace Manufacturing.Controllers
             ViewBag.CanEdit = rights.CanEdit;
             ViewBag.CanDelete = rights.CanDelete;
             ViewBag.ProjectShow = ProjectSelectInEntryModule;
-           
+            //Rev 1.0
+            ViewBag.IsConsiderProductPackagingQtyInProductionOrder = IsConsiderProductPackagingQtyInProductionOrder;
+            //Rev 1.0 End
+
             TempData["Count"] = 1;
             TempData.Keep();
             return View("ProductionOrderEntry", objPO);
@@ -249,7 +259,10 @@ namespace Manufacturing.Controllers
                             }
 
                             bomproductdataobj.IsActive = Convert.ToBoolean(row["IsActive"]);
-
+                            //Rev 1.0
+                            bomproductdataobj.BOMProductionQty = Convert.ToString(row["BOMProductionQty"]);
+                            bomproductdataobj.sProduct_packageqty = Convert.ToString(row["sProduct_packageqty"]);
+                            //Rev 1.0 End
                             bomproductdata.Add(bomproductdataobj);
                         }
 
@@ -436,6 +449,10 @@ namespace Manufacturing.Controllers
                             obj.BOMProductsID = Convert.ToInt64(item.BOMProductsID);
                             obj.Qty = Convert.ToDecimal(item.ProductQty);
                             obj.Amount = Convert.ToDecimal(item.Amount);
+                            //Rev 1.0
+                            obj.BOMProductionQty = Convert.ToDecimal(item.BOMProductionQty);
+                            obj.sProduct_packageqty = Convert.ToDecimal(item.sProduct_packageqty);
+                            //Rev 1.0 End
                             udtlist.Add(obj);
                         }
                     }
