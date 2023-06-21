@@ -1,4 +1,7 @@
-﻿
+﻿/*********************************************************************************************************
+ * Rev 1.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
+ **********************************************************************************************************/
+
 $(function () {
     $('#UOMModal').on('hide.bs.modal', function () {
         grid.batchEditApi.StartEdit(globalRowIndex, 7);
@@ -96,12 +99,22 @@ document.onkeydown = function (e) {
     if (event.keyCode == 18) isCtrl = true;
     if (event.keyCode == 83 && event.altKey == true && getUrlVars().req != "V") { //run code for Alt + s -- ie, Save & New  
         StopDefaultAction(e);
-        Save_ButtonClick();
+        // Rev 1.0
+        //Save_ButtonClick();
+        if (document.getElementById('btn_SaveRecords').style.display != 'none') {
+            Save_ButtonClick();
+        }
+        // End of Rev 1.0
         altn = false;
     }
     else if (event.keyCode == 88 && event.altKey == true && getUrlVars().req != "V") { //run code for Ctrl+X -- ie, Save & Exit!     
         StopDefaultAction(e);
-        SaveExit_ButtonClick();
+        // Rev 1.0
+        //SaveExit_ButtonClick();
+        if (document.getElementById('ASPxButton1').style.display != 'none') {
+            SaveExit_ButtonClick();
+        }
+        // End of Rev 1.0
         altx = false;
     }
 }
@@ -1466,6 +1479,10 @@ function PopulateGSTCSTVAT(e) {
         //cddlVatGstCst.PerformCallback('1');
         cddlVatGstCst.SetSelectedIndex(0);
         cbtn_SaveRecords.SetVisible(true);
+        // Rev 1.0
+        cbtn_SaveRecords_N.SetVisible(true);
+        cbtn_SaveRecords_p.SetVisible(true);
+        // End of Rev 1.0
         grid.GetEditor('ProductID').Focus();
         if (grid.GetVisibleRowsOnPage() == 1) {
             grid.batchEditApi.StartEdit(-1, 2);
@@ -1479,6 +1496,10 @@ function PopulateGSTCSTVAT(e) {
         cddlVatGstCst.PerformCallback('2');
         cddlVatGstCst.Focus();
         cbtn_SaveRecords.SetVisible(true);
+        // Rev 1.0
+        cbtn_SaveRecords_N.SetVisible(true);
+        cbtn_SaveRecords_p.SetVisible(true);
+        // End of Rev 1.0
     }
     else if (key == 3) {
 
@@ -1488,6 +1509,10 @@ function PopulateGSTCSTVAT(e) {
         cddlVatGstCst.SetSelectedIndex(0);
         cddlVatGstCst.SetEnabled(false);
         cbtn_SaveRecords.SetVisible(false);
+        // Rev 1.0
+        cbtn_SaveRecords_N.SetVisible(false);
+        cbtn_SaveRecords_p.SetVisible(false);
+        // End of Rev 1.0
         if (grid.GetVisibleRowsOnPage() == 1) {
             grid.batchEditApi.StartEdit(-1, 2);
         }
@@ -1791,7 +1816,26 @@ function OnEndCallback(s, e) {
         jAlert(msg);
         OnAddNewClick();
     }
-
+    // Rev 1.0
+    else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_QtyMismatch") {
+        OnAddNewClick();
+        grid.cpSaveSuccessOrFail = null;
+        var SrlNo = grid.cpcheckMultiUOMData;
+        var msg = "Please check Multi UOM details for SL No. not matching with outer grid " + SrlNo;
+        grid.cpcheckMultiUOMData = null;
+        jAlert(msg);
+        grid.cpSaveSuccessOrFail = '';
+    }
+    else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_NotFound") {
+        OnAddNewClick();
+        grid.cpSaveSuccessOrFail = null;
+        var SrlNo = grid.cpcheckMultiUOMData;
+        var msg = "Multi UOM details not given for SL No. " + SrlNo;
+        grid.cpcheckMultiUOMData = null;
+        jAlert(msg);
+        grid.cpSaveSuccessOrFail = '';
+    }
+    // End of Rev 1.0
 
     else if (grid.cpSaveSuccessOrFail == "quantityTagged") {
         jAlert('Inquiry is tagged in Sale Quotation. So, Inquiry of selected products cannot be less than Quotation Quantity.');
@@ -3225,13 +3269,14 @@ function FinalMultiUOM() {
         return;
     }
     else {
-        cPopup_MultiUOM.Hide();
+        // Rev 1.0
+        //cPopup_MultiUOM.Hide();
+        // End of Rev 1.0
 
         // Mantis Issue 24428 
         var SLNo = grid.GetEditor('SrlNo').GetValue();
         cgrid_MultiUOM.PerformCallback('SetBaseQtyRateInGrid~' + SLNo);
-        // End of Mantis Issue 24428 
-
+        // End of Mantis Issue 24428
 
         setTimeout(function () {
             grid.batchEditApi.StartEdit(globalRowIndex, 11);
@@ -3244,7 +3289,28 @@ function closeWarehouse(s, e) {
     e.cancel = false;
     cGrdWarehouse.PerformCallback('WarehouseDelete');
 }
+
+// Rev 1.0
+$(function () {
+    $(".allownumericwithdecimal").on("keypress keyup blur", function (event) {
+        var patt = new RegExp(/[0-9]*[.]{1}[0-9]{4}/i);
+        var matchedString = $(this).val().match(patt);
+        if (matchedString) {
+            $(this).val(matchedString);
+        }
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+
+    });
+});
+// End of Rev 1.0
+
 function closeMultiUOM(s, e) {
+    // Rev 1.0
+    cbtn_SaveRecords_N.SetVisible(true);
+    cbtn_SaveRecords_p.SetVisible(true);
+    // End of Rev 1.0
     e.cancel = false;
     // cPopup_MultiUOM.Hide();
 }
@@ -3274,6 +3340,11 @@ function OnMultiUOMEndCallback(s, e) {
         spLostFocus(null, null);
         // End of Rev Sanchita
 
+        // Rev 1.0
+        cPopup_MultiUOM.Hide();  // closeMultiUOM() IS CALLED FROM WHERE SAVE BUTTONS AGAIN BECOMES VISIBLE
+        //cbtn_SaveRecords_N.SetVisible(true);
+        //cbtn_SaveRecords_p.SetVisible(true);
+        // End of Rev 1.0
     }
    
     if (cgrid_MultiUOM.cpAllDetails == "EditData") {
@@ -3975,6 +4046,18 @@ function PopulateMultiUomAltQuantity() {
 
 function SaveMultiUOM() {
     //debugger;
+    // Rev 1.0
+    document.getElementById('lblInfoMsg').innerHTML = "";
+
+    if ($("#UOMQuantity").val() != 0 || cAltUOMQuantity.GetValue() != 0) {
+        LoadingPanelMultiUOM.Show();
+        setTimeout(() => {
+            LoadingPanelMultiUOM.Hide();
+
+        }, 1000)
+    }
+    // End of Rev 1.0
+
     var qnty = $("#UOMQuantity").val();
     var UomId = ccmbUOM.GetValue();
     //var UomId = ccmbUOM.SetSelectedIndex(grid.GetEditor('ProductID').GetText().split("||@||")[3] - 1);

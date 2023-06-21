@@ -1235,8 +1235,7 @@ $(document).ready(function () {
         <div id="divcross" runat="server" class="crossBtn"><a href="SalesInvoiceList.aspx"><i class="fa fa-times"></i></a></div>
 
     </div>
-        <%--Rev 4.0 [id="divPageGeneral"] --%>
-        <div class="form_main" id="divPageGeneral">
+        <div class="form_main" >
         <asp:Panel ID="pnl_quotation" runat="server">
             <div class="">
                 <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
@@ -4051,7 +4050,7 @@ $(document).ready(function () {
                                             <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                 <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />--%>
                                                 <ClientSideEvents LostFocus="function(s,e) { CalcBaseRate();}" />
-                                                 <%--End of Rev 4.0--%>
+                                            <%--End of Rev 4.0--%>
                                             </dxe:ASPxTextBox>
                                         </div>
                                     </div>
