@@ -1,4 +1,8 @@
-﻿var globalRowIndex;
+﻿//==================================================== Revision History =========================================================================
+//1.0  Priti   V2.0.38    21-06-2023  0026405: Warehouse wise stock journal shows an "Internal Server error" while saving the document
+//====================================================End Revision History=====================================================================
+
+var globalRowIndex;
 var globalRowIndexDestination;
 var saveNewOrExit = '';
 var canCallBack = true;
@@ -2613,10 +2617,13 @@ function CmbWarehouseDest_ValueChange() {
     var WarehouseID = cCmbWarehouseDest.GetValue();
     var type = document.getElementById('hdfProductTypeDest').value;
 
-    if (type == "WBS" || type == "WB") {
-        cCmbBatchDest.PerformCallback('BindBatch~' + WarehouseID);
-    }
-    else if (type == "WS") {
+    //Rev 1.0
+   // if (type == "WBS" || type == "WB") {
+       // cCmbBatchDest.PerformCallback('BindBatch~' + WarehouseID);
+   // }
+    //else
+     //Rev 1.0
+    if (type == "WS") {
         checkListBoxDest.PerformCallback('BindSerial~' + WarehouseID + '~' + "0");
     }
 }

@@ -19,7 +19,7 @@
      <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
-    <script src="JS/WarehousewiseStockJournalJS.js?v=12.00"></script>
+    <script src="JS/WarehousewiseStockJournalJS.js?v=12.01"></script>
    
     <style type="text/css">
         /*#grid_DXMainTable > tbody > tr > td:last-child, #productLookUp_DDD_gv_DXMainTable > tbody > tr > td:nth-child(2) {

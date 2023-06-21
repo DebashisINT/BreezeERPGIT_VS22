@@ -1,16 +1,17 @@
-﻿@using System.Web.UI.WebControls
+﻿@*====================================================Revision History=========================================================================
+1.0  Priti   V2.0.38    21-06-2023  0026372:Manufacturing > Stock Receipt Module, document shall not be saved with 'Fresh' 'Reject' Qty - Warehouse'.
+====================================================End Revision History=====================================================================*@
+
+@using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
 @model Manufacturing.Models.ViewModel.StockReceiptViewModel
-
-
 @{
     ViewBag.Title = "Stock Receipt";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
 <script src="~/Scripts/SearchPopup.js"></script>
-
 <script>
     $(document).ready(function () {
         if ('@ViewBag.ProjectShow' == "Yes") {
@@ -590,7 +591,7 @@
         var ProductName = $('#FinishedItem').val();
         var ProductsID = $('#ProductID').val();
         var UOM = $('#FinishedUom').val();
-        var QuantityValue = (parseFloat($('#RejectedQuantity').val()));//gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        var QuantityValue = (parseFloat($('#RejectedQuantity').val()));
         var InventoryType = $('#InventoryType').val();
         var ProductDescription = $('#ProductDescription').val();
         $('#hdfProductType').val(InventoryType);
@@ -674,7 +675,7 @@
 
                 $("#ADelete").css("display", "block");
                 SelectedWarehouseID = "0";
-                $('#WarehouseDetailsModal').modal('show');
+                $('#WarehouseDetailsModalReject').modal('show');
                 StockDeatils();
                 $('#ctxtQuantity').val('');
             }
@@ -689,7 +690,7 @@
 
                 $("#ADelete").css("display", "block");
                 SelectedWarehouseID = "0";
-                $('#WarehouseDetailsModal').modal('show');
+                $('#WarehouseDetailsModalReject').modal('show');
                 StockDeatils();
                 $('#ctxtQuantity').val('');
             }
@@ -702,7 +703,7 @@
 
                 $("#ADelete").css("display", "none");
                 SelectedWarehouseID = "0";
-                $('#WarehouseDetailsModal').modal('show');
+                $('#WarehouseDetailsModalReject').modal('show');
                 StockDeatils();
                 $('#ctxtQuantity').val('');
                 UpdateSerialNo();
@@ -716,7 +717,7 @@
 
                 $("#ADelete").css("display", "block");
                 SelectedWarehouseID = "0";
-                $('#WarehouseDetailsModal').modal('show');
+                $('#WarehouseDetailsModalReject').modal('show');
                 StockDeatils();
                 $('#ctxtQuantity').val('');
 
@@ -734,7 +735,7 @@
 
                 $("#ADelete").css("display", "none");
                 SelectedWarehouseID = "0";
-                $('#WarehouseDetailsModal').modal('show');
+                $('#WarehouseDetailsModalReject').modal('show');
                 StockDeatils();
                 $('#ctxtQuantity').val('');
                 UpdateSerialNo();
@@ -751,7 +752,7 @@
 
                 SelectedWarehouseID = "0";
                 $("#ADelete").css("display", "none");
-                $('#WarehouseDetailsModal').modal('show');
+                $('#WarehouseDetailsModalReject').modal('show');
                 StockDeatils();
                 $('#ctxtQuantity').val('');
                 UpdateSerialNo();
@@ -769,7 +770,7 @@
 
                 $("#ADelete").css("display", "none");
                 SelectedWarehouseID = "0";
-                $('#WarehouseDetailsModal').modal('show');
+                $('#WarehouseDetailsModalReject').modal('show');
                 StockDeatils();
                 $('#ctxtQuantity').val('');
                 UpdateSerialNo();
@@ -992,28 +993,74 @@
             var SrlNo = id;
             var Unit = $('#ddlBankBranch option:selected').val();
 
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("setStockWarehouseList", "StockReceipt")",
-                data: { items: StockOfProduct, SrlNo: SrlNo, Unit: Unit },
-                success: function (response) {
-                    var data = response.split('|');
-                    if (data[1] == "False") {
-                        $('#hdnStkMsg').val(0);
-                        // gridProductionBOMProductList.batchEditApi.SetCellValue(tempindex, 'StkMsg', '0', '');
+            //Rev 1.0
+            if (SrlNo == "1") {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("setStockWarehouseList", "StockReceipt")",
+                    data: { items: StockOfProduct, SrlNo: SrlNo, Unit: Unit },
+                    success: function (response) {
+                        var data = response.split('|');
+                        if (data[1] == "False") {
+                            $('#hdnStkMsg').val(0);
+                        }
+                        if (data[0] == "True") {
+                            $('#hdnStkMsg').val(1);
+                            $('#hdnWarehouseDataFresh').val(SrlNo);
+                            $('#WarehouseDetailsModal').modal('hide');
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                        }
                     }
+                });
+            }
+            else {
+                 $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("setStockWarehouseList", "StockReceipt")",
+                    data: { items: StockOfProduct, SrlNo: SrlNo, Unit: Unit },
+                    success: function (response) {
+                        var data = response.split('|');
+                        if (data[1] == "False") {
+                            $('#hdnStkMsg').val(0);
+                        }
+                        if (data[0] == "True") {
+                            $('#hdnStkMsg').val(1);
+                            $('#hdnWarehouseDataReject').val(SrlNo);
+                            $('#WarehouseDetailsModal').modal('hide');
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                        }
+                    }
+                });
+            }
 
-                    if (data[0] == "True") {
-                        $('#hdnStkMsg').val(1);
-                        $('#WarehouseDetailsModal').modal('hide');
+            @*$.ajax({
+                    type: "POST",
+                    url: "@Url.Action("setStockWarehouseList", "StockReceipt")",
+                    data: { items: StockOfProduct, SrlNo: SrlNo, Unit: Unit },
+                    success: function (response) {
+                        var data = response.split('|');
+                        if (data[1] == "False") {
+                            $('#hdnStkMsg').val(0);
+                        }
+                        if (data[0] == "True") {
+                            $('#hdnStkMsg').val(1);                            
+                            $('#WarehouseDetailsModal').modal('hide');
+                        }
+                        else {
+                            jAlert("Please try again later!");
+                        }
                     }
-                    else {
-                        jAlert("Please try again later!");
-                    }
-                }
-            });
+                });*@
+            //Rev 1.0 End
         }
     }
+
+
+
 
     function flexFilter(arr, info) {
         var matchesFilter, matches = [];
@@ -1717,6 +1764,24 @@
                 return false;
             }
         }
+        //Rev 1.0
+        var hdnWarehouseDataFresh = $('#hdnWarehouseDataFresh').val();
+        if ($('#FreshQuantity').val() != "0") {
+            if (hdnWarehouseDataFresh == "0") {
+                jAlert("Please Enter Fresh Warehouse !");
+                isprocess = 0;
+            }
+        }
+
+
+        var hdnWarehouseDataReject = $('#hdnWarehouseDataReject').val();
+        if ($('#RejectedQuantity').val() != "0") {
+            if (hdnWarehouseDataReject == "0") {
+                jAlert("Please Enter Reject Warehouse !");
+                isprocess = 0;
+            }
+        }
+        //Rev 1.0 End
 
         if (isprocess == 1) {
             var obj = {};
@@ -1884,7 +1949,8 @@
 <input type="hidden" value="@Url.Action("StockReceiptList", "StockReceipt")" id="hdnStockReceiptListPage" />
 
 <input type="hidden" id="hdnStkMsg" value="0" />
-
+<input type="hidden" id="hdnWarehouseDataFresh" value="0" />
+<input type="hidden" id="hdnWarehouseDataReject" value="0" />
 @Html.HiddenFor(x => x.WorkOrderID)
 @Html.HiddenFor(x => x.ProductionOrderID)
 @Html.HiddenFor(x => x.WorkCenterID)
@@ -2208,46 +2274,46 @@
                 <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
                 <span>Save and Exit</span>
             </div>
-    }
+        }
 
-    @*<div class="inline-block pull-right">
+        @*<div class="inline-block pull-right">
 
-            <div class="inline-block mTop5">
-                <label class="stLbl ">Actual Additional Cost</label>
-                <div>
-                    <input type="text" value="" placeholder="0.00" id="txtActualAdditionalCost" maxlength="12" class="form-control decimalCheck" onchange="ChkMoneyDigitCount(this);" onkeypress="return validateFloatKeyPress(this,event);" />
+                <div class="inline-block mTop5">
+                    <label class="stLbl ">Actual Additional Cost</label>
+                    <div>
+                        <input type="text" value="" placeholder="0.00" id="txtActualAdditionalCost" maxlength="12" class="form-control decimalCheck" onchange="ChkMoneyDigitCount(this);" onkeypress="return validateFloatKeyPress(this,event);" />
+                    </div>
                 </div>
-            </div>
-            <div class="inline-block mTop5">
-                <label class="stLbl ">Actual Component Cost</label>
-                <div class="disab"><input type="text" value="" placeholder="0.00" class="form-control" id="txtActualComponentCost" disabled /></div>
-            </div>
-            <div class="inline-block mTop5">
-                <label class="stLbl ">Production Order Qty</label>
-                <div class="disab">
-                    <input type="text" value="" placeholder="0.00" class="form-control" id="txtProductionOrderQty" disabled />
+                <div class="inline-block mTop5">
+                    <label class="stLbl ">Actual Component Cost</label>
+                    <div class="disab"><input type="text" value="" placeholder="0.00" class="form-control" id="txtActualComponentCost" disabled /></div>
                 </div>
-            </div>
-
-            <div class="inline-block mTop5">
-                <label class="stLbl ">FG Receipt Qty</label>
-                <div class="disab">
-                    <input type="text" value="" placeholder="0.00" class="form-control" id="txtFGReceiptQty" disabled />
+                <div class="inline-block mTop5">
+                    <label class="stLbl ">Production Order Qty</label>
+                    <div class="disab">
+                        <input type="text" value="" placeholder="0.00" class="form-control" id="txtProductionOrderQty" disabled />
+                    </div>
                 </div>
-            </div>
-            <div class="inline-block mTop5">
-                <label class="stLbl ">Actual Product Cost</label>
-                <div class="disab">
-                    <input type="text" value="" placeholder="0.00" class="form-control" id="txtActualProductCost" disabled />
+
+                <div class="inline-block mTop5">
+                    <label class="stLbl ">FG Receipt Qty</label>
+                    <div class="disab">
+                        <input type="text" value="" placeholder="0.00" class="form-control" id="txtFGReceiptQty" disabled />
+                    </div>
                 </div>
-            </div>
-        </div>*@
+                <div class="inline-block mTop5">
+                    <label class="stLbl ">Actual Product Cost</label>
+                    <div class="disab">
+                        <input type="text" value="" placeholder="0.00" class="form-control" id="txtActualProductCost" disabled />
+                    </div>
+                </div>
+            </div>*@
 
-</div>
+    </div>
 
-<div class="row mTop10">
+    <div class="row mTop10">
 
-</div>
+    </div>
 </div>
 
 
@@ -2351,9 +2417,9 @@
                                     <span id="spnCmbWarehouse" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
                                 </div>
                             </div>
-                           
+
                             <div class="clear" id="_div_Break" style="display:none;"></div>
-                            
+
                             <div class="col-md-3" id="div_Batch">
                                 <div>
                                     Batch/Lot
@@ -2428,37 +2494,37 @@
 
                                 </div>
                             </div>
-                        
+
                             <div class="col-md-3" id="div_Serial">
                                 <div>
                                     Serial No
                                 </div>
                                 <div class="Left_Content" style="">
-                                    <input type="text" class="form-control" style="text-align:right;" id="txtserialID"  />
+                                    <input type="text" class="form-control" style="text-align:right;" id="txtserialID" />
                                     <span id="rfvSerial" class="pullleftClass fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                 </div>
                             </div>
 
-                                <div class="col-md-3">
-                                    <div>
-                                    </div>
-                                    <div class="Left_Content" style="padding-top: 12px">
-                                        <input type="button" onclick="SaveStock()" value="Add" class="btn btn-primary" />
-                                        @*<input id="btnSecondUOM" type="button" onclick="AlternateUOMDetails('POE')" value="2nd UOM" class="btn btn-success" />*@
+                            <div class="col-md-3">
+                                <div>
+                                </div>
+                                <div class="Left_Content" style="padding-top: 12px">
+                                    <input type="button" onclick="SaveStock()" value="Add" class="btn btn-primary" />
+                                    @*<input id="btnSecondUOM" type="button" onclick="AlternateUOMDetails('POE')" value="2nd UOM" class="btn btn-success" />*@
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div id="showData" class="gridStatic">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="button" onclick="FullnFinalSave()" value="Save & Exit" class="btn btn-success btn-radius" />
+                <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
             </div>
         </div>
-        <div id="showData" class="gridStatic">
-        </div>
-
-    </div>
-    <div class="modal-footer">
-        <input type="button" onclick="FullnFinalSave()" value="Save & Exit" class="btn btn-success btn-radius" />
-        <button type="button" class="btn btn-danger btn-radius" data-dismiss="modal">Close</button>
     </div>
 </div>
-        </div>
-    </div>
 <!-- Warehouse Details Modal -->
