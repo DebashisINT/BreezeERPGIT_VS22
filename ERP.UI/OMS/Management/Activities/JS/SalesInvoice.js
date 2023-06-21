@@ -266,7 +266,9 @@ function FinalMultiUOM() {
 
         //if (SOQtyCheck == 1) {
         // End of Rev 1.0
-            cPopup_MultiUOM.Hide();
+            // Rev 2.0
+            //cPopup_MultiUOM.Hide();
+            // End of Rev 2.0
             // Mantis Issue 24425, 24428
             var SLNo = grid.GetEditor('SrlNo').GetValue();
             cgrid_MultiUOM.PerformCallback('SetBaseQtyRateInGrid~' + SLNo);
@@ -3081,8 +3083,9 @@ function OnMultiUOMEndCallback(s, e) {
         SalePriceTextChange(null, null);
         
         // Rev 2.0
-        cbtn_SaveRecords_N.SetVisible(true);
-        cbtn_SaveRecords_p.SetVisible(true);
+        cPopup_MultiUOM.Hide();  // closeMultiUOM() IS CALLED FROM WHERE SAVE BUTTONS AGAIN BECOMES VISIBLE
+        //cbtn_SaveRecords_N.SetVisible(true);
+        //cbtn_SaveRecords_p.SetVisible(true);
         // End of Rev 2.0
     }
 
