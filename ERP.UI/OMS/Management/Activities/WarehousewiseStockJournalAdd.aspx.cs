@@ -615,7 +615,7 @@ namespace ERP.OMS.Management.Activities
 
                 DataTable dt = new DataTable();
                 ProcedureExecute proc = new ProcedureExecute("Prc_WarehousewiseStockJournal_details");
-                proc.AddVarcharPara("@Action", 500, "WHSJDestinationWarehouseWHSJ");
+                proc.AddVarcharPara("@Action", 500, "WHSJDestinationWarehouse");
                 proc.AddVarcharPara("@AdjId", 500, Convert.ToString(Request.QueryString["Key"]));
                 proc.AddVarcharPara("@Multiwarehouse", 500, Convert.ToString(multiwarehouse));
                 dt = proc.GetTable();
