@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                10-04-2023        2.0.37           Pallab              25964: Add Customer Debit/Credit Note module design modification & check in small device
+2.0                20-06-2023        2.0.38           Pallab              26394: Add Customer Debit/Credit Note all bootstrap modal outside click event disable
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerDebitCreditNote.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerDebitCreditNote" %>
@@ -705,7 +706,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
     </dxe:ASPxPageControl>
     </div>
-    <div class="modal fade" id="Segment1Model" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="Segment1Model" role="dialog">--%>
+    <div class="modal fade" id="Segment1Model" role="dialog" data-backdrop="static" data-keyboard="false">
+    <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -732,7 +736,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </div>
         </div>
     </div>
-    <div class="modal fade" id="Segment2Model" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="Segment2Model" role="dialog">--%>
+    <div class="modal fade" id="Segment2Model" role="dialog" data-backdrop="static" data-keyboard="false">
+    <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -759,7 +766,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </div>
         </div>
     </div>
-    <div class="modal fade" id="Segment3Model" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="Segment3Model" role="dialog">--%>
+    <div class="modal fade" id="Segment3Model" role="dialog" data-backdrop="static" data-keyboard="false">
+    <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -786,7 +796,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </div>
         </div>
     </div>
-    <div class="modal fade" id="Segment4Model" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="Segment4Model" role="dialog">--%>
+    <div class="modal fade" id="Segment4Model" role="dialog" data-backdrop="static" data-keyboard="false">
+    <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -813,7 +826,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </div>
         </div>
     </div>
-    <div class="modal fade" id="Segment5Model" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="Segment5Model" role="dialog">--%>
+    <div class="modal fade" id="Segment5Model" role="dialog" data-backdrop="static" data-keyboard="false">
+    <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -844,8 +860,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
     <%--Modal Section--%>
-
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+    <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -875,8 +893,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
 
-
-    <div class="modal fade" id="MainAccountModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="MainAccountModel" role="dialog">--%>
+    <div class="modal fade" id="MainAccountModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
