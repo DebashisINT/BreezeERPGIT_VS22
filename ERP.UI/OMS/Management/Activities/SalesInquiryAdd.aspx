@@ -3,6 +3,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                05-04-2023        2.0.37           Pallab              25846: Add Sales Inquiry module design modification
 2.0                21-06-2023        2.0.38           Sanchita            Some of the issues are there in Sales Invoice regarding 
                                                                           Multi UOM in EVAC - FOR ALL SALES MODULES. Refer : 26403
+3.0   Pallab     V2.0.38     16-06-2023     "Multi UOM Details" popup parameter alignment issue fix . Mantis : 26331
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInquiryAdd.aspx.cs" EnableEventValidation="false" Inherits="ERP.OMS.Management.Activities.SalesInquiryAdd" %>
@@ -3427,7 +3428,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                         <div>
                                             
                                         </div>
-                                        <%--Rev 2.0 [ class="mlableWh" added --%>
+                                        <%--Rev 2.0 [ class="mlableWh" added] --%>
                                         <div class="mlableWh" >
                                             <%--Rev Sanchita--%>
                                             <%--<label class="checkbox-inline mlableWh">
@@ -3449,18 +3450,18 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     
                                 </td>
                                 <%--End of Mantis Issue 24428--%>
-                                <%--Rev 5.0--%>
+                                <%--Rev 3.0--%>
                                 </tr>
                                 <tr>
-                                <%--End of Rev 5.0--%>
+                                <%--End of Rev 3.0--%>
                                     <td style="padding-top: 14px;">
                                         <dxe:ASPxButton ID="btnMUltiUOM" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary">
                                             <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
                                         </dxe:ASPxButton>
                                     </td>
-                                <%--Rev 5.0--%>
+                                <%--Rev 3.0--%>
                                 </tr>
-                                <%--End of Rev 5.0--%>
+                                <%--End of Rev 3.0--%>
                             </tr>
                         </table>
 

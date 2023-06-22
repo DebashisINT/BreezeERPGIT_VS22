@@ -1,4 +1,8 @@
-﻿(function (global) {
+﻿/*********************************************************************************************************
+ * Rev 1.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
+ * Rev 2.0      Sanchita      V2.0.38       Tax amount is not calculating automatically while modifying PI/Quotation. Mantis : 26411   
+**********************************************************************************************************/
+(function (global) {
     if (typeof (global) === "undefined") {
         throw new Error("window is undefined");
     }
@@ -96,12 +100,22 @@ document.onkeydown = function (e) {
     if (event.keyCode == 18) isCtrl = true;
     if (event.keyCode == 83 && event.altKey == true && getUrlVars().req != "V") { //run code for Alt + s -- ie, Save & New  
         StopDefaultAction(e);
-        Save_ButtonClick();
+        // Rev 1.0
+        //Save_ButtonClick();
+        if (document.getElementById('btn_SaveRecords').style.display != 'none') {
+            Save_ButtonClick();
+        }
+        // End of Rev 1.0
         altn = false;
     }
     else if (event.keyCode == 88 && event.altKey == true && getUrlVars().req != "V") { //run code for Ctrl+X -- ie, Save & Exit!     
         StopDefaultAction(e);
-        SaveExit_ButtonClick();
+        // Rev 1.0
+        //SaveExit_ButtonClick();
+        if (document.getElementById('ASPxButton1').style.display != 'none') {
+            SaveExit_ButtonClick();
+        }
+        // End of Rev 1.0
         altx = false;
     }
 }
@@ -1429,6 +1443,10 @@ function PopulateGSTCSTVAT(e) {
         //cddlVatGstCst.PerformCallback('1');
         cddlVatGstCst.SetSelectedIndex(0);
         cbtn_SaveRecords.SetVisible(true);
+        // Rev 1.0
+        cbtn_SaveRecords_N.SetVisible(true);
+        cbtn_SaveRecords_p.SetVisible(true);
+        // End of Rev 1.0
         grid.GetEditor('ProductID').Focus();
         if (grid.GetVisibleRowsOnPage() == 1) {
             grid.batchEditApi.StartEdit(-1, 2);
@@ -1442,6 +1460,10 @@ function PopulateGSTCSTVAT(e) {
         cddlVatGstCst.PerformCallback('2');
         cddlVatGstCst.Focus();
         cbtn_SaveRecords.SetVisible(true);
+        // Rev 1.0
+        cbtn_SaveRecords_N.SetVisible(true);
+        cbtn_SaveRecords_p.SetVisible(true);
+        // End of Rev 1.0
     }
     else if (key == 3) {
 
@@ -1451,6 +1473,10 @@ function PopulateGSTCSTVAT(e) {
         cddlVatGstCst.SetSelectedIndex(0);
         cddlVatGstCst.SetEnabled(false);
         cbtn_SaveRecords.SetVisible(false);
+        // Rev 1.0
+        cbtn_SaveRecords_N.SetVisible(false);
+        cbtn_SaveRecords_p.SetVisible(false);
+        // End of Rev 1.0
         if (grid.GetVisibleRowsOnPage() == 1) {
             grid.batchEditApi.StartEdit(-1, 2);
         }
@@ -1734,6 +1760,26 @@ function OnEndCallback(s, e) {
         jAlert(msg);
         OnAddNewClick();
     }
+    // Rev 1.0
+    else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_QtyMismatch") {
+        OnAddNewClick();
+        grid.cpSaveSuccessOrFail = null;
+        var SrlNo = grid.cpcheckMultiUOMData;
+        var msg = "Please check Multi UOM details for SL No. not matching with outer grid " + SrlNo;
+        grid.cpcheckMultiUOMData = null;
+        jAlert(msg);
+        grid.cpSaveSuccessOrFail = '';
+    }
+    else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_NotFound") {
+        OnAddNewClick();
+        grid.cpSaveSuccessOrFail = null;
+        var SrlNo = grid.cpcheckMultiUOMData;
+        var msg = "Multi UOM details not given for SL No. " + SrlNo;
+        grid.cpcheckMultiUOMData = null;
+        jAlert(msg);
+        grid.cpSaveSuccessOrFail = '';
+    }
+    // End of Rev 1.0
     else if (grid.cpSaveSuccessOrFail == "ExceedQuantity") {
         // grid.batchEditApi.StartEdit(0, 2);
         grid.cpSaveSuccessOrFail = null;
@@ -2689,7 +2735,14 @@ function RecalCulateTaxTotalAmountInline() {
 
 /// Code Above Added By Sam on 23022017 after make editable of sale price field End
 
+// Rev 2.0
+var Pre_TotalAmt = "0";
 
+function DiscountGotFocus(s, e) {
+    var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
+    Pre_TotalAmt = _Amount;
+}
+// End of Rev 2.0
 
 
 function DiscountTextChange(s, e) {
@@ -2757,6 +2810,23 @@ function DiscountTextChange(s, e) {
         grid.GetEditor('Discount').SetValue('0');
         grid.GetEditor('ProductID').Focus();
     }
+    
+   // Rev 2.0
+    var SrlNo = grid.GetEditor("SrlNo").GetValue();
+    var UniqueVal = $("#uniqueId").val();
+        $.ajax({
+            type: "POST",
+            url: "SalesQuotation.aspx/DeleteTaxForShipPartyChange",
+            data: JSON.stringify({ UniqueVal: UniqueVal, SrlNo: SrlNo }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                // RequiredShipToPartyValue = msg.d;
+            }
+        });
+
+    //}
+    // End of Rev 2.0
 }
 var _GetAmountValue = "0";
 function AmountTextFocus(s, e) {
@@ -3025,6 +3095,11 @@ function OnCustomButtonClick(s, e) {
                     ccmbAltRate.SetValue(0)
                     ccmbSecondUOM.SetValue("")
                     // End of Mantis Issue 24428
+                    // Rev 1.0
+                    document.getElementById('lblInfoMsg').innerHTML = "";
+                    cbtn_SaveRecords_N.SetVisible(false);
+                    cbtn_SaveRecords_p.SetVisible(false);
+                    // End of Rev 1.0
                     cPopup_MultiUOM.Show();
                     cgrid_MultiUOM.cpDuplicateAltUOM = "";
                     AutoPopulateMultiUOM();
@@ -3181,6 +3256,10 @@ function CalcBaseQty() {
     //var PackingQty = Productdetails.split("||@||")[22]; // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.sProduct_quantity)
     //var PackingSaleUOM = Productdetails.split("||@||")[25];  // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.packing_saleUOM)
 
+    // Rev 2.0
+    LoadingPanelMultiUOM.Show();
+    document.getElementById('lblInfoMsg').innerHTML = "";
+    // End of Rev 2.0
 
     var Productdetails = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
     var PackingQtyAlt = 0;
@@ -3194,6 +3273,9 @@ function CalcBaseQty() {
         data: JSON.stringify({ ProductID: ProductID }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        // Rev 2.0
+        async: false,
+        // End of Rev 2.0
         success: function (msg) {
 
             if (msg.d.length != 0) {
@@ -3228,14 +3310,22 @@ function CalcBaseQty() {
                 if (ConvFact > 0) {
                     var BaseQty = (altQty * ConvFact).toFixed(4);
                     $("#UOMQuantity").val(BaseQty);
+                    // Rev 2.0
+                    CalcBaseRate();
+                    // End of Rev 2.0
                 }
             }
             else {
                 $("#UOMQuantity").val("0.0000");
+                // Rev 2.0
+                document.getElementById('lblInfoMsg').innerHTML = "Base Quantity will not get auto calculated since no UOM Conversion details given for the selected Alt. UOM for Product : " + grid.GetEditor('Description').GetText();
+                // End of Rev 2.0
             }
         }
     });
-
+    // End of Rev 2.0
+    LoadingPanelMultiUOM.Hide();
+    // End of Rev 2.0
 
 }
 
@@ -3304,7 +3394,10 @@ function FinalMultiUOM() {
         return;
     }
     else {
-        cPopup_MultiUOM.Hide();
+        // Rev 1.0
+        //cPopup_MultiUOM.Hide();
+        // End of Rev 1.0
+
         // Mantis Issue 24428 
         var SLNo = grid.GetEditor('SrlNo').GetValue();
         cgrid_MultiUOM.PerformCallback('SetBaseQtyRateInGrid~' + SLNo);
@@ -3320,14 +3413,34 @@ function closeWarehouse(s, e) {
     e.cancel = false;
     cGrdWarehouse.PerformCallback('WarehouseDelete');
 }
+
+// Rev 1.0
+$(function () {
+    $(".allownumericwithdecimal").on("keypress keyup blur", function (event) {
+        var patt = new RegExp(/[0-9]*[.]{1}[0-9]{4}/i);
+        var matchedString = $(this).val().match(patt);
+        if (matchedString) {
+            $(this).val(matchedString);
+        }
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+
+    });
+});
+// End of Rev 1.0
+
 function closeMultiUOM(s, e) {
+    // Rev 1.0
+    cbtn_SaveRecords_N.SetVisible(true);
+    cbtn_SaveRecords_p.SetVisible(true);
+    // End of Rev 1.0
     e.cancel = false;
     // cPopup_MultiUOM.Hide();
 }
 
 
 function OnMultiUOMEndCallback(s, e) {
-    debugger;
     if (cgrid_MultiUOM.cpDuplicateAltUOM == "DuplicateAltUOM") {
         jAlert("Please Enter Different Alt. Quantity.");
         return;
@@ -3349,7 +3462,10 @@ function OnMultiUOMEndCallback(s, e) {
         // Rev Sanchita
         spLostFocus(null, null);
         // End of Rev Sanchita
-
+        // Rev 1.0
+        cPopup_MultiUOM.Hide();  // closeMultiUOM() IS CALLED FROM WHERE SAVE BUTTONS AGAIN BECOMES VISIBLE
+        // End of Rev 1.0
+        
     }
 
     if (cgrid_MultiUOM.cpAllDetails == "EditData") {
@@ -4008,6 +4124,18 @@ function SaveMultiUOM() {
    // debugger;
     //grid.GetEditor('ProductID').GetText().split("||@||")[3];
 
+    // Rev 1.0
+    document.getElementById('lblInfoMsg').innerHTML = "";
+
+    if ($("#UOMQuantity").val() != 0 || cAltUOMQuantity.GetValue() != 0) {
+        LoadingPanelMultiUOM.Show();
+        setTimeout(() => {
+            LoadingPanelMultiUOM.Hide();
+
+        }, 1000)
+    }
+    // End of Rev 1.0
+
     var qnty = $("#UOMQuantity").val();
 
 
@@ -4468,6 +4596,11 @@ function ProductsGotFocus(s, e) {
     $('#lblStkUOM').text(strStkUOM);
     $('#lblProduct').text(strProductName);
     $('#lblbranchName').text(strBranch);
+
+    // Rev 2.0
+    var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
+    Pre_TotalAmt = _Amount;
+    // End of Rev 2.0
 
     //if (ProductID != "0") {
     //   cacpAvailableStock.PerformCallback(strProductID);
