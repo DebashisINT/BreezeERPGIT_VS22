@@ -186,7 +186,8 @@ namespace Manufacturing.Controllers
         {
             BOMProduct bomproductdataobj = new BOMProduct();
             List<BOMProduct> bomproductdata = new List<BOMProduct>();
-            
+            string IsConsiderProductPackagingQtyInProductionOrder = cSOrder.GetSystemSettingsResult("IsConsiderProductPackagingQtyInProductionOrder");
+
             try
             {
 
@@ -247,7 +248,17 @@ namespace Manufacturing.Controllers
                             }
                             else
                             {
-                                bomproductdataobj.OLDQty = Convert.ToString(row["StkQty"]);
+                                //Rev 1.0
+                                if(IsConsiderProductPackagingQtyInProductionOrder=="Yes")
+                                {
+                                    bomproductdataobj.OLDQty = Convert.ToString(row["BOMProductionQty"]);
+                                }
+                                //Rev 1.0 End
+                                else
+                                {
+                                    bomproductdataobj.OLDQty = Convert.ToString(row["StkQty"]);
+                                }
+                                
                             }
                             if (TempData["ProductionOrderID"] != null)
                             {
