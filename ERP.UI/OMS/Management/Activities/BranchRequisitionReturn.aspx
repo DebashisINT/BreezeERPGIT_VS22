@@ -2082,8 +2082,8 @@ function ProductsGotFocusFromID(s, e) {
             <%--Batch Product Popup Start--%>
 
             <dxe:ASPxPopupControl ID="ProductpopUp" runat="server" ClientInstanceName="cProductpopUp"
-                CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="400"
-                Width="700" HeaderText="Select Product" AllowResize="true" ResizingMode="Postponed" Modal="true">
+                CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="420"
+                Width="830" HeaderText="Select Product" AllowResize="true" ResizingMode="Postponed" Modal="true">
                 <ContentCollection>
                     <dxe:PopupControlContentControl runat="server">
                         <label><strong>Search By Product Name</strong></label>

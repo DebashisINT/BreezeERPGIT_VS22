@@ -4194,7 +4194,10 @@ function CmbScheme_ValueChange() {
             <ClientSideEvents ControlsInitialized="AllControlInitilize" />
         </dxe:ASPxGlobalEvents>
         <!--Customer Modal -->
-        <div class="modal fade" id="CustModel" role="dialog">
+        <%--Rev 1.0--%>
+        <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+        <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 1.0--%>
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">

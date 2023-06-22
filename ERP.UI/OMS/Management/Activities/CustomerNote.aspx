@@ -1,4 +1,9 @@
-﻿<%@ Page Title="Customer Debit/Credit Note" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerNote.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerNote" EnableEventValidation="false" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                20-06-2023        2.0.38           Pallab              26395: Customer Debit/Credit Note module all bootstrap modal outside click event disable
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="Customer Debit/Credit Note" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerNote.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerNote" EnableEventValidation="false" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -3689,7 +3694,10 @@ function SaveExitButtonClick() {
         SelectCommand=""></asp:SqlDataSource>--%>
 
     <%--Main/Sub Account Model--%>
-    <div class="modal fade" id="MainAccountModel" role="dialog">
+    <%--Rev 1.0--%>
+    <%--<div class="modal fade" id="MainAccountModel" role="dialog">--%>
+    <div class="modal fade" id="MainAccountModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 1.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -3747,7 +3755,10 @@ function SaveExitButtonClick() {
     </div>
     <%-- End --%>
     <!--Customer Modal -->
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 1.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+    <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <%--Rev end 1.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
