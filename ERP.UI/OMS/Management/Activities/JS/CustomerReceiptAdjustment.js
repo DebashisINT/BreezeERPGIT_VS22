@@ -1,4 +1,9 @@
-﻿/*****************
+﻿//====================================================Revision History =========================================================================
+//1.0   v2.0.38	Priti	22-06-2023	0025222: Auto calculation of Adjusted amount during Adjustment of Document Entries-Advance with Invoice
+//====================================================End Revision History=====================================================================
+
+
+/*****************
 Global variable*/
 
 var ReceiptList = [];
@@ -356,6 +361,7 @@ function populateDocument(id) {
         PushOnPicked(id);
         
     }
+    //REV 1.0
     var AutocalculationAdjustmentInvoice = GetObjectID('hdnAutocalculationAdjustmentInvoice').value;
     if (AutocalculationAdjustmentInvoice == 1) {
         var OsAmt = cOsAmt.GetValue();
@@ -386,12 +392,19 @@ function populateDocument(id) {
                     //}
                 }
             }
-
-
             ShowRunningTotal();
-        }
+        }        
+        else {
+            if (grid.GetVisibleRowsOnPage() > 1) {
+               
+                PopOnPicked(grid.GetEditor("DocumentType").GetText() + grid.GetEditor("DocumentId").GetText());
+                grid.DeleteRow(globalRowindex);
+                SuffuleSerialNumber();
+                ShowRunningTotal();
+            }
+        }        
     }
-
+     //REV 1.0 END
 }
 
 
@@ -464,6 +477,9 @@ function gridCustomButtonClick(s,e) {
             PopOnPicked(grid.GetEditor("DocumentType").GetText() + grid.GetEditor("DocumentId").GetText());
             grid.DeleteRow(e.visibleIndex);
             SuffuleSerialNumber();
+            //Rev 1.0
+            ShowRunningTotal();
+            //Rev 1.0 End
         }
     }
     else if (e.buttonID == 'AddNew') {
