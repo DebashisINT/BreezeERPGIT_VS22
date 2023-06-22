@@ -9735,6 +9735,7 @@
     <Content Include="assests\css\custom\menu-bar.css" />
     <Content Include="assests\css\custom\menu-item.css" />
     <Content Include="assests\css\custom\MultipleSelectionDDLCSS.css" />
+    <Content Include="assests\css\custom\newcustomstyle.css" />
     <Content Include="assests\css\custom\newtheme.css" />
     <Content Include="assests\css\custom\PageStyle.css" />
     <Content Include="assests\css\custom\PMSStyles.css" />
