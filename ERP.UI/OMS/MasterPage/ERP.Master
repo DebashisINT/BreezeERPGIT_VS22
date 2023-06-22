@@ -229,8 +229,11 @@
     <script type="text/javascript" src="/assests/js/modalmsg.js"></script>
     <script src="/OMS/MasterPage/Js/MasterPage.js?v=0.2" type="text/javascript"></script>
     <%--Rev 1.0--%>
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
+    <%--<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>--%>
+
+    <link href="/assests/css/sweetalert2.min.css" rel="stylesheet"/>
+    <script src="/assests/js/sweetalert2.all.min.js"></script>
     <%--Rev end 1.0--%>
     <link href="../../assests/css/RES.css" rel="stylesheet" />
     <meta name="theme-color" content="#0C78B1" />
