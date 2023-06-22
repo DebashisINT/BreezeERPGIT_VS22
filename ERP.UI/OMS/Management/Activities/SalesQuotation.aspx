@@ -1,6 +1,9 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                05-04-2023        2.0.37           Pallab              25848: Add Proforma Invoice/Quotation module design modification
+2.0                21-06-2023        2.0.38           Sanchita            Some of the issues are there in Sales Invoice regarding 
+                                                                          Multi UOM in EVAC - FOR ALL SALES MODULES. Refer : 26403
+3.0                16-06-2023        V2.0.38          Pallab              "Multi UOM Details" popup parameter alignment issue fix . Mantis : 26331
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Sales Quotation" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesQuotation.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesQuotation" %>
@@ -1733,6 +1736,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     <dxe:GridViewDataSpinEditColumn FieldName="Discount" Caption="Disc(%)" VisibleIndex="15" Width="5%" HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesSpinEdit MinValue="0" MaxValue="100" AllowMouseWheel="false" DisplayFormatString="0.00" MaxLength="6" Style-HorizontalAlign="Right">
                                                             <SpinButtons ShowIncrementButtons="false"></SpinButtons>
+                                                            <%--Rev Sanchita2206--%>
+                                                            <ClientSideEvents LostFocus="DiscountValueChange" GotFocus="DiscountGotFocus" />
+                                                            <%--End of Rev Sanchita--%>
                                                             <ClientSideEvents LostFocus="DiscountTextChange" />
                                                         </PropertiesSpinEdit>
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
@@ -1990,12 +1996,20 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                         <div class="col-md-12" id="divSubmitButton">
                                             <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
                                              <asp:Label ID="lbl_ApprovalMSg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <%--Rev 2.0--%>
+                                           <%-- <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                             </dxe:ASPxButton>
                                             <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
+                                            </dxe:ASPxButton>--%>
+                                             <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords_N" runat="server" AutoPostBack="False" Text="S&#818;ave & New" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                                <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                             </dxe:ASPxButton>
+                                            <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords_p" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                                <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
+                                            </dxe:ASPxButton>
+                                            <%--End of Rev 2.0--%>
                                             <%--   <asp:Button ID="ASPxButton2" runat="server" Text="UDF" CssClass="btn btn-primary" OnClientClick="if(OpenUdf()){ return false;}" />--%>
                                             <dxe:ASPxButton ID="ASPxButton2" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="U&#818;DF" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {if(OpenUdf()){ return false}}" />
@@ -3244,7 +3258,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         </ContentStyle>
         <ContentCollection>
             <dxe:PopupControlContentControl runat="server">
-                <div class="Top clearfix">
+               <%--Rev 2.0 [ id="divMultiUOM" added ] --%>
+                <div class="Top clearfix" id="divMultiUOM">
 
 
 
@@ -3259,7 +3274,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 <label>Base Quantity</label>
                                             </div>
                                             <div>
-                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18"  class="allownumericwithdecimal" onchange="CalcBaseRate()" />
+                                                <%--Rev 2.0--%>
+                                                <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18"  class="allownumericwithdecimal" onchange="CalcBaseRate()" />--%>
+                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18"  class="allownumericwithdecimal" onfocusout="CalcBaseRate()" placeholder="0.0000" />
+                                                <%--End of Rev 2.0--%>
                                             </div>
                                         </div>
                                     </div>
@@ -3283,7 +3301,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <label>Base Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>
+                                            <%--Rev 2.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>--%>
+                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>
+                                            <%--End of Rev 2.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -3313,7 +3334,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <%--  <input type="text" id="AltUOMQuantity" style="text-align:right;"  maxlength="18" class="allownumericwithdecimal"/> --%>
                                             <dxe:ASPxTextBox ID="AltUOMQuantity" runat="server" ClientInstanceName="cAltUOMQuantity" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                   <%--Mantis Issue 24428--%>
-                                                <ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />
+                                                <%--Rev 2.0--%>
+                                                <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />--%>
+                                                <ClientSideEvents LostFocus="function(s,e) { CalcBaseQty();}" />
+                                                <%--End of Rev 2.0--%>
                                                 <%--End of Mantis Issue 24428--%>
                                             </dxe:ASPxTextBox>
                                         </div>
@@ -3326,9 +3350,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <label>Alt Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
+                                            <%--Rev 2.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
                                                 <ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />
+                                            </dxe:ASPxTextBox>--%>
+                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
+                                                <ClientSideEvents LostFocus="function(s,e) { CalcBaseRate();}" />
                                             </dxe:ASPxTextBox>
+                                            <%--End of Rev 2.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -3337,12 +3366,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                         <div>
                                             
                                         </div>
-                                        <div>
+                                        <%--Rev 2.0 [ class="mlableWh" added] --%>
+                                        <div class="mlableWh" >
                                             <%--Rev Sanchita--%>
                                             <%--<label class="checkbox-inline mlableWh">
                                                  <input type="checkbox" id="chkUpdateRow"  />
                                             </label>--%>
-                                            <label class="checkbox-inline mlableWh">
+                                            <%--Rev 2.0 [ class="mlableWh" removed --%>
+                                            <label class="checkbox-inline ">
                                                 <input type="checkbox" id="chkUpdateRow"  />
                                                 <span style="margin: 0px 0; display: block">
                                                     <dxe:ASPxLabel ID="ASPxLabel18" runat="server" Text="Update Row">
@@ -3446,6 +3477,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <dxe:ASPxButton ID="ASPxButton7" ClientInstanceName="cbtnfinalUomSave" Width="50px" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary">
                                 <ClientSideEvents Click="function(s, e) {FinalMultiUOM();}" />
                             </dxe:ASPxButton>
+                            <%--Rev 2.0--%>
+                            <label id="lblInfoMsg" style="font-weight:bold; color:red; " > </label>
+                            <%--End of Rev 2.0--%>
                         </div>
                     </div>
                 </div>
@@ -3656,4 +3690,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <asp:HiddenField runat="server" ID="hdnPlaceShiptoParty" />
     <asp:HiddenField runat="server" ID="hdnQuteMode" />
     <%--Rev work close 06.07.2022 mantise no:25008--%>
+
+    <%--Rev 2.0--%>
+    <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOM" runat="server" ClientInstanceName="LoadingPanelMultiUOM" ContainerElementID="divMultiUOM"
+        Modal="True">
+    </dxe:ASPxLoadingPanel>
+    <%--End of Rev 2.0--%>
 </asp:Content>
