@@ -1,7 +1,12 @@
-﻿<%--================================================== Revision History =============================================
-Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                13-03-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+﻿<%--================================================== Revision History =================================================================================
+Rev Number      DATE            VERSION          DEVELOPER      CHANGES
+1.0             13-03-2023      2.0.36           Pallab         25575 : Report pages design modification
+2.0             23-06-2023      2.0.37           Debashis       A new coloumn named as 'Stock Out Type' should be implemented after 'Header-Entity' coloumn 
+                                                                and before 'Line-Entity Code' in 'Warehouse Wise Stock Out- Details' report. Where only two 
+                                                                vale should be populated. They are-
+                                                                A. Issue
+                                                                B. Replaceable.Refer: 0026417
+====================================================== Revision History =================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="WHWiseStockOutDetail.aspx.cs" Inherits="Reports.Reports.GridReports.WHWiseStockOutDetail" %>
 
@@ -1376,11 +1381,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <%--Rev Debashis--%>
+                                <%--Rev 2.0--%>
                                 <dxe:GridViewDataTextColumn FieldName="REPLACEABLETYPE" Width="200px" Caption="Stock Out Type" VisibleIndex="12" HeaderStyle-CssClass="colDisable">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
-                                <%--End of Rev Debashis--%>
+                                <%--End of Rev 2.0--%>
 
                                 <dxe:GridViewDataTextColumn FieldName="DENTITYCODE" Width="120px" Caption="Line-Entity Code" VisibleIndex="13" HeaderStyle-CssClass="colDisable">
                                     <Settings AutoFilterCondition="Contains" />
