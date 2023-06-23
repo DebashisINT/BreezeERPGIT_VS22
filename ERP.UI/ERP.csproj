@@ -9765,6 +9765,7 @@
     <Content Include="assests\css\payrollCss\tableFormula.css" />
     <Content Include="assests\css\RES.css" />
     <Content Include="assests\css\SearchPopup.css" />
+    <Content Include="assests\css\sweetalert2.min.css" />
     <Content Include="assests\events\800192.jpg" />
     <Content Include="assests\events\800192B.jpg" />
     <Content Include="assests\events\cMas.gif" />
@@ -10350,6 +10351,7 @@
     <Content Include="assests\js\respond.js" />
     <Content Include="assests\js\respond.min.js" />
     <Content Include="assests\js\slimscroll.js" />
+    <Content Include="assests\js\sweetalert2.all.min.js" />
     <Content Include="assests\js\vendor\jquery-1.11.2.min.js" />
     <Content Include="assests\js\wz_tooltip.js" />
     <None Include="assests\js\_references.js" />
