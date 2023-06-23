@@ -1,5 +1,6 @@
 ﻿/***************************************************************************************************************************************
  * Rev 1.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
+ * Rev 2.0      Sanchita      V2.0.38       Tax amount is not calculating automatically while modifying PI/Quotation. Mantis : 26411
  ***************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -8960,7 +8961,24 @@ namespace ERP.OMS.Management.Activities
             return status;
         }
         [WebMethod]
-        public static string DeleteTaxForShipPartyChange(string UniqueVal, string SrlNo)
+        public static string DeleteTaxForShipPartyChange(string UniqueVal)
+        {
+            DataTable dt = new DataTable();
+            if (HttpContext.Current.Session["FinalTaxRecord" + Convert.ToString(UniqueVal)] != null)
+            {
+                dt = (DataTable)HttpContext.Current.Session["FinalTaxRecord" + Convert.ToString(UniqueVal)];
+                dt.Rows.Clear();
+                //HttpContext.Current.Session["FinalTaxRecord"]=null;
+                HttpContext.Current.Session["FinalTaxRecord" + Convert.ToString(UniqueVal)] = dt;
+            }
+
+
+            return null;
+
+        }
+        // Rev 2.0
+        [WebMethod]
+        public static string DeleteTaxForRateChange(string UniqueVal, string SrlNo)
         {
             DataTable dt = new DataTable();
             if (HttpContext.Current.Session["FinalTaxRecord" + Convert.ToString(UniqueVal)] != null)
@@ -8980,7 +8998,7 @@ namespace ERP.OMS.Management.Activities
             return null;
 
         }
-
+        // End of 2.0
 
     }
 
