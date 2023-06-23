@@ -2735,16 +2735,6 @@ function RecalCulateTaxTotalAmountInline() {
 
 /// Code Above Added By Sam on 23022017 after make editable of sale price field End
 
-// Rev 2.0
-var Pre_TotalAmt = "0";
-
-function DiscountGotFocus(s, e) {
-    var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
-    Pre_TotalAmt = _Amount;
-}
-// End of Rev 2.0
-
-
 function DiscountTextChange(s, e) {
     //var Amount = (grid.GetEditor('Amount').GetValue() != null) ? grid.GetEditor('Amount').GetValue() : "0";
     var Discount = (grid.GetEditor('Discount').GetValue() != null) ? grid.GetEditor('Discount').GetValue() : "0";
@@ -4596,11 +4586,6 @@ function ProductsGotFocus(s, e) {
     $('#lblStkUOM').text(strStkUOM);
     $('#lblProduct').text(strProductName);
     $('#lblbranchName').text(strBranch);
-
-    // Rev 2.0
-    var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
-    Pre_TotalAmt = _Amount;
-    // End of Rev 2.0
 
     //if (ProductID != "0") {
     //   cacpAvailableStock.PerformCallback(strProductID);
