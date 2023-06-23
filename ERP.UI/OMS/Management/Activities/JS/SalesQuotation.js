@@ -2816,7 +2816,7 @@ function DiscountTextChange(s, e) {
     var UniqueVal = $("#uniqueId").val();
         $.ajax({
             type: "POST",
-            url: "SalesQuotation.aspx/DeleteTaxForShipPartyChange",
+            url: "SalesQuotation.aspx/DeleteTaxForRateChange",
             data: JSON.stringify({ UniqueVal: UniqueVal, SrlNo: SrlNo }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
