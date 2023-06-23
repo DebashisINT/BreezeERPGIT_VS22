@@ -1,11 +1,13 @@
 ﻿@*====================================================Revision History=========================================================================
-1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
-2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
-3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
-4.0  Priti   V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
-5.0  Pallab  V2.0.38    31-05-2023  0026266: Issue for Production "Production Order No." dropdown issue fix
-6.0  Priti   V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
-====================================================End Revision History=====================================================================*@
+    1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+    2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
+    3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
+    4.0  Priti   V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
+    5.0  Pallab  V2.0.38    31-05-2023  0026266: Issue for Production "Production Order No." dropdown issue fix
+    6.0  Priti   V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+    7.0  Priti   V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
+
+    ====================================================End Revision History=====================================================================*@
 
 
 @using System.Web.UI.WebControls
@@ -1188,7 +1190,16 @@
         }
 
         var newqty = $(e).val();
-        var hdnproductqty = $('#hdnProductQty').val();
+       /* Rev 7.0*/
+        var hdnproductqty = 0;
+        var hdnProductionIssueID = $('#hdnProductionIssueID').val();
+        if (hdnProductionIssueID != "0") {
+            hdnproductqty = $('#hdnProductQtyEdit').val();
+        }
+        else {
+            hdnproductqty = $('#hdnProductQty').val();
+        }
+       /* Rev 7.0 End*/
         var visiablerow = gridProductionBOMProductList.GetVisibleRowsOnPage();
         if (visiablerow > 0) {
             for (var i = 500; i > -500; i--) {
@@ -1274,13 +1285,13 @@
         }
         //Rev 6.0
         var IsMRPMandatoryIssueforProduction = '@ViewBag.IsMRPMandatoryIssueforProduction';
-        if (IsMRPMandatoryIssueforProduction == "Yes") { 
+        if (IsMRPMandatoryIssueforProduction == "Yes") {
             var MRP_ID = $('#hdnMRP_ID').val();
             if ($('#hdnMRP_ID').val() == "") {
                 jAlert("Please select MRP.");
-                return false;  
+                return false;
             }
-                     
+
         }
            //Rev 6.0 End
 
@@ -2609,6 +2620,10 @@
 
 <input type="hidden" id="hdnProductionIssueListPage" value="@Url.Action("ProductionIssueList", "ProductionIssue")" />
 @Html.HiddenFor(x => x.Issue_Qty, new { @id = "hdnProductQty" })
+@*Rev 7.0*@
+@Html.HiddenFor(x => x.Finished_Qty, new { @id = "hdnProductQtyEdit" })
+@*Rev 7.0 End*@
+
 <input type="hidden" id="hdnIssue_QtyMax" value="@Model.MaxQty" />
 <input type="hidden" id="hdfWarehousetype" />
 <input type="hidden" id="hdfProductSrlNo" />
