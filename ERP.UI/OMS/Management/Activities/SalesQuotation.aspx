@@ -1740,10 +1740,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     <dxe:GridViewDataSpinEditColumn FieldName="Discount" Caption="Disc(%)" VisibleIndex="15" Width="5%" HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesSpinEdit MinValue="0" MaxValue="100" AllowMouseWheel="false" DisplayFormatString="0.00" MaxLength="6" Style-HorizontalAlign="Right">
                                                             <SpinButtons ShowIncrementButtons="false"></SpinButtons>
-                                                            <%--Rev Sanchita2206--%>
-                                                            <ClientSideEvents LostFocus="DiscountValueChange" GotFocus="DiscountGotFocus" />
-                                                            <%--End of Rev Sanchita--%>
-                                                            <ClientSideEvents LostFocus="DiscountTextChange" />
+                                                              <ClientSideEvents LostFocus="DiscountTextChange" />
                                                         </PropertiesSpinEdit>
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
                                                     </dxe:GridViewDataSpinEditColumn>
