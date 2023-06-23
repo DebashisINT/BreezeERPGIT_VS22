@@ -1,4 +1,8 @@
-﻿using Manufacturing.Models.ViewModel.BOMEntryModel;
+﻿//@*==================================================== Revision History =========================================================================
+//     1.0  Priti V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
+//====================================================End Revision History=====================================================================*@
+
+using Manufacturing.Models.ViewModel.BOMEntryModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,5 +105,9 @@ namespace Manufacturing.Models.ViewModel
 
         public String FinishedItemID { get; set; }
         public String WarehouseID { get; set; }
+
+        //Rev 1.0
+        public Decimal BalQty { get; set; }
+        //Rev 1.0 End
     }
 }

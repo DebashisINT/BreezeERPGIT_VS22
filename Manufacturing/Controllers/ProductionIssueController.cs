@@ -2,7 +2,7 @@
 //     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
 //     2.0  Priti V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
 //     3.0  Priti V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
-
+//     4.0  Priti V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
 //====================================================End Revision History=====================================================================*@
 
 using BusinessLogicLayer;
@@ -340,8 +340,9 @@ namespace Manufacturing.Controllers
                         objWOL.Hierarchy = Convert.ToString(row["HIERARCHY_NAME"]);
                         objWOL.FinishedItemID = Convert.ToString(row["Finished_ProductID"]);
                         objWOL.WarehouseID = Convert.ToString(row["BOMWarehouseID"]);
-
-
+                        //Rev 4.0
+                        objWOL.BalQty = Convert.ToDecimal(row["BalQty"]);
+                        //Rev 4.0 End
                         list.Add(objWOL);
 
 

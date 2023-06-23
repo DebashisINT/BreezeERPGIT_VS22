@@ -542,6 +542,11 @@
             var Finished_ProductID = WorkOrderGridLookup.gridView.GetRow(globalindexcheck2).children[23].innerHTML;
             var WarehouseID = WorkOrderGridLookup.gridView.GetRow(globalindexcheck2).children[24].innerHTML;
 
+            //Rev 7.0
+            var BalQty = WorkOrderGridLookup.gridView.GetRow(globalindexcheck2).children[25].innerHTML;
+            $('#hdnFGBalQty').val(BalQty);
+            //Rev 7.0 End
+
             $('#Description').val(Product_Name);
             $('#PartNoName').val(PartNoName);
             $('#DesignNo').val(DEsign);
@@ -1190,15 +1195,23 @@
         }
 
         var newqty = $(e).val();
-       /* Rev 7.0*/
-        var hdnproductqty = 0;
+        var hdnproductqty = $('#hdnProductQty').val();
+        //Rev 7.0
         var hdnProductionIssueID = $('#hdnProductionIssueID').val();
-        if (hdnProductionIssueID != "0") {
-            hdnproductqty = $('#hdnProductQtyEdit').val();
-        }
-        else {
-            hdnproductqty = $('#hdnProductQty').val();
-        }
+        var hdnFGBalQty = $('#hdnFGBalQty').val(); 
+        var hdnFGBalQtyEdit = $('#hdnFGBalQtyEdit').val();      
+        
+        //Rev 7.0 End
+
+       /* Rev 7.0*/
+        //var hdnproductqty = 0;
+        //var hdnProductionIssueID = $('#hdnProductionIssueID').val();
+        //if (hdnProductionIssueID != "0") {
+        //    hdnproductqty = $('#hdnProductQtyEdit').val();
+        //}
+        //else {
+        //    hdnproductqty = $('#hdnProductQty').val();
+        //}
        /* Rev 7.0 End*/
         var visiablerow = gridProductionBOMProductList.GetVisibleRowsOnPage();
         if (visiablerow > 0) {
@@ -1213,8 +1226,23 @@
                     //else {
                     //    Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
                     //}
+                    //Rev 7.0
+                    var ProductQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
+                    var BalQty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'BalQty');
+                     //Rev 7.0 End
                     if (parseFloat(Qty) > 0) {
-                        var calcqty = (parseFloat(Qty) * newqty) / hdnproductqty;
+
+                        var calcqty = 0;
+                        //Rev 7.0
+                        //var calcqty = (parseFloat(Qty) * newqty) / hdnproductqty;
+                        if (hdnProductionIssueID != "0") {
+                            calcqty = ( parseFloat(BalQty) / hdnFGBalQtyEdit) * newqty
+                        }
+                        else {
+                           // (Production Order Bal Qty / Production bal FG) * New FG
+                            calcqty=  (parseFloat(BalQty) / hdnFGBalQty) * newqty
+                        }
+                        //Rev 7.0 End
                         gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat(calcqty).toFixed(4));
                         globalrowindex = i;
                         // BOMGridSetAmount("", "");
@@ -2622,6 +2650,8 @@
 @Html.HiddenFor(x => x.Issue_Qty, new { @id = "hdnProductQty" })
 @*Rev 7.0*@
 @Html.HiddenFor(x => x.Finished_Qty, new { @id = "hdnProductQtyEdit" })
+@Html.HiddenFor(x => x.BalQty, new { @id = "hdnFGBalQty" })
+@Html.HiddenFor(x => x.MaxQty, new { @id = "hdnFGBalQtyEdit" })
 @*Rev 7.0 End*@
 
 <input type="hidden" id="hdnIssue_QtyMax" value="@Model.MaxQty" />

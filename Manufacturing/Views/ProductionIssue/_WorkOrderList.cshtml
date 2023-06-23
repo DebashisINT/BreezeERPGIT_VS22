@@ -1,11 +1,15 @@
-﻿@Html.DevExpress().GridLookup(
+﻿@*================================================== Revision History =============================================
+  1.0  Priti V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
+====================================================== Revision History =============================================*@
+
+@Html.DevExpress().GridLookup(
     settings =>
     {
         settings.Properties.Caption = " ";
         settings.Properties.CaptionCellStyle.CssClass = "hide";
         settings.Name = "WorkOrderGridLookup";
         settings.KeyFieldName = "WorkOrderID";
-       
+
         settings.GridViewProperties.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowSelectCheckbox = true;
@@ -28,8 +32,8 @@
         settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.None;
         settings.Properties.DisplayFormatString = "{0}";
         //settings.Properties.DisplayFormatInEditMode = true;
-     //   settings.Properties.ClientSideEvents.GotFocus = "WorkOrderGotFocus";
-        
+        //   settings.Properties.ClientSideEvents.GotFocus = "WorkOrderGotFocus";
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "ProductionOrderNo";
@@ -56,7 +60,7 @@
 
             });
         }
-       
+
 
         settings.Columns.Add(column =>
         {
@@ -286,6 +290,19 @@
             column.FilterCellStyle.CssClass = "hide";
             column.Settings.AllowAutoFilter = DefaultBoolean.False;
         });
+        //Rev 1.0
+        //26
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "BalQty";
+            column.Caption = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(0);
+            column.CellStyle.CssClass = "hide";
+            column.HeaderStyle.CssClass = "hide";
+            column.FilterCellStyle.CssClass = "hide";
+            column.Settings.AllowAutoFilter = DefaultBoolean.False;
+        });
+        //Rev 1.0 End
         settings.Properties.Caption = " ";
         settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
         settings.Properties.SelectionMode = DevExpress.Web.GridLookupSelectionMode.Single;
