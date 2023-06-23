@@ -3186,8 +3186,11 @@ hr.tfour {
     border: 1px solid #177a67;
     color: #fff !important;
 }
+#ddlInventory.aspNetDisabled {
+    background: #42b39e !important;
+}
 .ui-dialog-buttonset {
-    float:none !important;
+    float: none !important;
     text-align: center;
     padding-bottom: 7px;
 }
@@ -4339,3 +4342,10 @@ div:where(.swal2-container).swal2-backdrop-show, div:where(.swal2-container).swa
     background: rgb(0 0 0 / 10%) !important;
 }
 /*Rev end 4.0*/
+
+.dxeOutOfRWarn_PlasticBlue {
+    width: 200px !important;
+    z-index: 99999 !important;
+    left: -5px !important;
+    top: 30px !important;
+}

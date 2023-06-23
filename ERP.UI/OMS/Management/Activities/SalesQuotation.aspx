@@ -709,6 +709,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
             background: #f3f3f3 !important;
         }
+        #ddlInventory.aspNetDisabled
+        {
+                background: #42b39e !important;
+        }
 
         .dxeButtonDisabled_PlasticBlue
         {
@@ -1602,7 +1606,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                                                     <%--Batch Product Popup Start--%>
 
-                                                    <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="3" Width="14%">
+                                                    <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="3" Width="12%">
                                                         <PropertiesButtonEdit>
                                                             <ClientSideEvents ButtonClick="ProductButnClick" KeyDown="ProductKeyDown" GotFocus="ProductsGotFocusFromID" />
                                                             <Buttons>
@@ -1633,7 +1637,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     <%--       <dxe:GridViewDataTextColumn FieldName="SelectUOM" Caption="Select UOM" VisibleIndex="0" Visible="false" Width="18%">
                                                     </dxe:GridViewDataTextColumn>--%>
 
-                                                    <dxe:GridViewDataTextColumn FieldName="Description" Caption="Description" VisibleIndex="4" ReadOnly="True" Width="18%">
+                                                    <dxe:GridViewDataTextColumn FieldName="Description" Caption="Description" VisibleIndex="4" ReadOnly="True" Width="12%">
                                                         <CellStyle Wrap="True"></CellStyle>
                                                         <%--<PropertiesTextEdit>
                                                             <ClientSideEvents GotFocus="ProductsGotFocus" />
@@ -1668,7 +1672,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     </dxe:GridViewDataTextColumn>
 
 
-                                                    <dxe:GridViewCommandColumn VisibleIndex="8" Caption="Multi UOM" Width="6%">
+                                                    <dxe:GridViewCommandColumn VisibleIndex="8" Caption="Multi UOM" Width="7%">
                                                         <CustomButtons>
                                                             <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomMultiUOM" Image-Url="/assests/images/MultiUomIcon.png" Image-ToolTip="Multi UOM">
                                                             </dxe:GridViewCommandColumnCustomButton>
@@ -1676,7 +1680,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     </dxe:GridViewCommandColumn>
 
                                                         <%--  Manis 24428--%> 
-                                                       <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="9" Width="5%" ReadOnly="true">
+                                                       <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="9" Width="7%" ReadOnly="true">
                                                         <PropertiesTextEdit DisplayFormatString="0.0000" Style-HorizontalAlign="Right">
                                                             <ClientSideEvents GotFocus="QuantityGotFocus" LostFocus="QuantityTextChange" />
                                                             <MaskSettings AllowMouseWheel="False" Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" />
@@ -1687,7 +1691,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                         </CellStyle>
                                                     </dxe:GridViewDataTextColumn>
                                                      
-                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="Order_AltUOM" ReadOnly="true" VisibleIndex="10" Width="5%" >
+                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="Order_AltUOM" ReadOnly="true" VisibleIndex="10" Width="7%" >
                                                         <PropertiesTextEdit>
                                                         </PropertiesTextEdit>
                                                     </dxe:GridViewDataTextColumn>
@@ -1696,7 +1700,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     <%--Caption="Warehouse"--%>
 
 
-                                                    <dxe:GridViewCommandColumn VisibleIndex="11" Caption="Stk Details" Width="6%">
+                                                    <dxe:GridViewCommandColumn VisibleIndex="11" Caption="Stk Details" Width="7%">
                                                         <CustomButtons>
                                                             <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomWarehouse" Image-Url="/assests/images/warehouse.png" Image-ToolTip="Warehouse">
                                                             </dxe:GridViewCommandColumnCustomButton>
@@ -1763,7 +1767,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                             </dxe:GridViewCommandColumnCustomButton>
                                                         </CustomButtons>--%>
 
-                                                    <dxe:GridViewDataButtonEditColumn FieldName="TaxAmount" Caption="Charges" VisibleIndex="17" Width="6%" HeaderStyle-HorizontalAlign="Right">
+                                                    <dxe:GridViewDataButtonEditColumn FieldName="TaxAmount" Caption="Charges" VisibleIndex="17" Width="8%" HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesButtonEdit>
                                                             <ClientSideEvents ButtonClick="taxAmtButnClick" GotFocus="taxAmtButnClick1" KeyDown="TaxAmountKeyDown" />
                                                             <%--LostFocus="Taxlostfocus"--%>
@@ -1775,7 +1779,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                         </PropertiesButtonEdit>
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
                                                     </dxe:GridViewDataButtonEditColumn>
-                                                    <dxe:GridViewDataTextColumn FieldName="TotalAmount" Caption="Net Amount" VisibleIndex="18" Width="6%" ReadOnly="true" HeaderStyle-HorizontalAlign="Right">
+                                                    <dxe:GridViewDataTextColumn FieldName="TotalAmount" Caption="Net Amount" VisibleIndex="18" Width="8%" ReadOnly="true" HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right"></PropertiesTextEdit>
                                                         <PropertiesTextEdit>
                                                             <ClientSideEvents GotFocus="TotalAmountgotfocus" />
@@ -1785,7 +1789,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
                                                     </dxe:GridViewDataTextColumn>
 
-                                                    <dxe:GridViewDataTextColumn Caption="Remarks" FieldName="Quote_InlineRemarks" Width="150" VisibleIndex="19" PropertiesTextEdit-MaxLength="5000">
+                                                    <dxe:GridViewDataTextColumn Caption="Remarks" FieldName="Quote_InlineRemarks" Width="100" VisibleIndex="19" PropertiesTextEdit-MaxLength="5000">
                                                         <PropertiesTextEdit Style-HorizontalAlign="Left">
                                                             <Style HorizontalAlign="Left">
                                                             </Style>
@@ -1793,7 +1797,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     </dxe:GridViewDataTextColumn>
 
 
-                                                    <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="2.5%" VisibleIndex="20" Caption=" ">
+                                                    <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="3%" VisibleIndex="20" Caption=" ">
                                                         <CustomButtons>
                                                             <dxe:GridViewCommandColumnCustomButton Text=" " ID="AddNew" Image-Url="/assests/images/add.png">
                                                             </dxe:GridViewCommandColumnCustomButton>

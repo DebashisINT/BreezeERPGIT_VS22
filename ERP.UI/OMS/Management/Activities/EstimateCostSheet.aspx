@@ -488,6 +488,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         {
                 background: #f3f3f3 !important;
         }
+        #ddlInventory.aspNetDisabled
+        {
+            background: #42b39e !important;
+        }
 
         @media only screen and (max-width: 1380px) and (min-width: 1300px)
         {
