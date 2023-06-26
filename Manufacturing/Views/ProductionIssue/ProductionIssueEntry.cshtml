@@ -1198,9 +1198,9 @@
         var hdnproductqty = $('#hdnProductQty').val();
         //Rev 7.0
         var hdnProductionIssueID = $('#hdnProductionIssueID').val();
-        var hdnFGBalQty = $('#hdnFGBalQty').val(); 
-        var hdnFGBalQtyEdit = $('#hdnFGBalQtyEdit').val();      
-        
+        var hdnFGBalQty = $('#hdnFGBalQty').val();
+        var hdnFGBalQtyEdit = $('#hdnFGBalQtyEdit').val();
+
         //Rev 7.0 End
 
        /* Rev 7.0*/
@@ -1256,10 +1256,33 @@
                 }
             }
             totalAmountSetLogic();
+            //Rev 7.0
+            DeleteWarehouseData();
+            //Rev 7.o end
         }
 
     }
-
+    //Rev 7.0
+     function DeleteWarehouseData() {
+        if (StockOfProduct.length > 0) {          
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "@Url.Action("DeleteStockWarehouseList", "ProductionIssue")",
+                data: { items: StockOfProduct},
+                success: function (response) {
+                    var data = response;
+                    if (data == "True") {
+                        StockOfProduct = [];                      
+                    }                    
+                    else {
+                        jAlert("Please try again later!");
+                    }
+                }
+            });
+        }
+    }
+    //Rev 7.0 end
     function setUpdateEditVlaueToGrid() {
         var visiablerow = gridProductionBOMProductList.GetVisibleRowsOnPage();
         if (visiablerow > 0) {

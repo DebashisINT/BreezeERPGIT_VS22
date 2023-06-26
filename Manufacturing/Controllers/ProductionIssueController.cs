@@ -20,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using UtilityLayer;
 
 namespace Manufacturing.Controllers
@@ -1261,6 +1262,28 @@ namespace Manufacturing.Controllers
             return Json(Message);
         }
 
+        //Rev 4.0
+        [HttpPost]
+        public JsonResult DeleteStockWarehouseList(List<udtStockProduct> items)
+        {
+            Boolean Success = false;
+            String Message = "";
+           
+            try
+            {
+                DataTable dt = ToDataTable(items);
+                if (dt.Rows.Count > 0)
+                {
+                    Session["PIssue_WarehouseData"] = null;
+                }
+                    
+                Success = true;
+            }
+            catch { }
+            Message = Success.ToString() ;
+            return Json(Message);
+        }
+        //Rev 4.0 End
         [HttpPost]
         public JsonResult getProductSerialNo(String productid = "0", String warehouse = "0", String Batch = "0", String PostingDate = null)
         {
