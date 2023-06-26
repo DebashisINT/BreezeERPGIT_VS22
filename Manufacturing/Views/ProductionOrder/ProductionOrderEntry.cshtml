@@ -876,6 +876,11 @@
             var hdnTotalResourceCost = $('#hdnTotalResourceCost').val();
             var totResourceCost = $('#txtTotalResourceCost').val();
             $('#txtTotalResourceCost').val((newqty * parseFloat(hdnTotalResourceCost)) / hdnproductqty);
+            var txtTotalResourceCost = $('#txtTotalResourceCost').val();
+            if (txtTotalResourceCost == "" || txtTotalResourceCost == "NaN" || txtTotalResourceCost == "0.00" || txtTotalResourceCost == "0.00000") {
+               
+                $('#txtTotalResourceCost').val("0.00")
+            }
             totalAmountSetLogic();
             // $('#Order_Qty').focus();
         }
