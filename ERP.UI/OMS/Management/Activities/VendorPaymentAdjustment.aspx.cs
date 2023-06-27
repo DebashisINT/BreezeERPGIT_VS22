@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿//================================================== Revision History ================================================================================================
+//1.0   Priti     v2.0.39	 	 27-06-2023	   0026412: Auto calculation of Adjusted amount during Adjustment of Document Entries-Advance with Invoice for Vendor
+//====================================================== Revision History ================================================================================================--%>
+
+using BusinessLogicLayer;
 using DevExpress.Web;
 using DevExpress.Web.Data;
 using EntityLayer.CommonELS;
@@ -27,6 +31,21 @@ namespace ERP.OMS.Management.Activities
             if (!IsPostBack)
             {
                 rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/Management/Activities/VendorPaymentAdjustmentList.aspx");
+                //Rev 1.0
+                string AutocalculationAdjustmentInvoice = cbl.GetSystemSettingsResult("AutocalculationAdjustmentInvoiceVendor");
+                if (!String.IsNullOrEmpty(AutocalculationAdjustmentInvoice))
+                {
+                    if (AutocalculationAdjustmentInvoice == "Yes")
+                    {
+                        hdnAutocalculationAdjustmentInvoice.Value = "1";
+                    }
+                    else if (AutocalculationAdjustmentInvoice.ToUpper().Trim() == "NO")
+                    {
+                        hdnAutocalculationAdjustmentInvoice.Value = "0";
+                    }
+                }
+                //Rev 1.0 End
+
                 string ProjectSelectInEntryModule = cbl.GetSystemSettingsResult("ProjectSelectInEntryModule");
                 if (!String.IsNullOrEmpty(ProjectSelectInEntryModule))
                 {
