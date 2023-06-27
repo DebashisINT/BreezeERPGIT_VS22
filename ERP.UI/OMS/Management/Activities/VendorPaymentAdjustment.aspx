@@ -1,14 +1,18 @@
-﻿<%--================================================== Revision History =============================================
-1.0   Pallab    V2.0.38      18-05-2023          0026169: Add Adjustment of Documents - Advance With Invoice module design modification & check in small device
-====================================================== Revision History =============================================--%>
+﻿<%--================================================== Revision History ================================================================================================
+1.0   Pallab    V2.0.38      18-05-2023    0026169: Add Adjustment of Documents - Advance With Invoice module design modification & check in small device
+2.0   Priti     v2.0.39	 	 27-06-2023	   0026412: Auto calculation of Adjusted amount during Adjustment of Document Entries-Advance with Invoice for Vendor
+====================================================== Revision History ================================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorPaymentAdjustment.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorPaymentAdjustment" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
-    <script src="JS/SearchPopup.js?v=0.01"></script>
+   <%-- <script src="JS/SearchPopup.js?v=0.01"></script>--%>
     <link href="CSS/VendorPaymentAdjustment.css" rel="stylesheet" />
-
+    <script src="JS/SearchPopupDatatable.js"></script>
+     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
     <%--Rev 1.0--%>
     <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
     
@@ -206,7 +210,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <script src="JS/VendorPaymentAdjustment.js?v=1.8"></script>
+    <script src="JS/VendorPaymentAdjustment.js?v=1.9"></script>
 
 
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
@@ -658,6 +662,7 @@
     <asp:HiddenField ID="hdAdjustmentType" runat="server" />
      <asp:HiddenField ID="hddnProjectId" runat="server" />
     <asp:HiddenField ID="hdnProjectSelectInEntryModule" runat="server" />
-
-
+   <%-- Rev 2.0--%>
+    <asp:HiddenField ID="hdnAutocalculationAdjustmentInvoice" runat="server" />
+   <%-- Rev 2.0 End--%>
 </asp:Content>
