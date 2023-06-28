@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=============================================================================================================================
+//1.0   v2.0.38    Debashis    28/06/2023   A column Required for showing Customer Name in the Pending Sales Order Register - Columnar.Refer: 0026088
+#endregion=======================End of Revision History=====================================================================================================================
+
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -66,7 +70,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     Label2.Visible = true;
-                    ShowGridList.Columns[5].Visible = true;
+                    //Rev 1.0
+                    //ShowGridList.Columns[5].Visible = true;
+                    ShowGridList.Columns[6].Visible = true;
+                    //End of Rev 1.0
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -74,7 +81,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     Label2.Visible = false;
-                    ShowGridList.Columns[5].Visible = false;
+                    //Rev 1.0
+                    //ShowGridList.Columns[5].Visible = false;
+                    ShowGridList.Columns[6].Visible = false;
+                    //End of Rev 1.0
                     hdnProjectSelection.Value = "0";
                 }
             }
