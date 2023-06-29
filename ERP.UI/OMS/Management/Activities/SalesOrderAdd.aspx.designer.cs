@@ -2184,6 +2184,15 @@ namespace ERP.OMS.Management.Activities
         protected global::System.Web.UI.WebControls.HiddenField hdnProjectSelectInEntryModule;
 
         /// <summary>
+        /// LoadingPanelMultiUOM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxLoadingPanel LoadingPanelMultiUOM;
+
+        /// <summary>
         /// GlobalEvents control.
         /// </summary>
         /// <remarks>

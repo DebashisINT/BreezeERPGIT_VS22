@@ -2108,15 +2108,15 @@ namespace ERP.OMS.Management.Activities
 
                                 if (MultiUoMresult.Length > 0)
                                 {
-                                    ////////if ((Convert.ToDecimal(MultiUoMresult[0]["Quantity"]) != Convert.ToDecimal(dr["Quantity"])) ||
-                                    ////////    (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["AltQuantity"]), 2) != Math.Round(Convert.ToDecimal(dr["Order_AltQuantity"]), 2)) ||
-                                    ////////    (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["BaseRate"]), 2) != Math.Round(Convert.ToDecimal(dr["SalePrice"]), 2))
-                                    ////////    )
-                                    ////////{
-                                    ////////    validate = "checkMultiUOMData_QtyMismatch";
-                                    ////////    grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
-                                    ////////    break;
-                                    ////////}
+                                    if ((Convert.ToDecimal(MultiUoMresult[0]["Quantity"]) != Convert.ToDecimal(dr["Quantity"])) ||
+                                        (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["AltQuantity"]), 2) != Math.Round(Convert.ToDecimal(dr["Order_AltQuantity"]), 2)) ||
+                                        (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["BaseRate"]), 2) != Math.Round(Convert.ToDecimal(dr["SalePrice"]), 2))
+                                        )
+                                    {
+                                        validate = "checkMultiUOMData_QtyMismatch";
+                                        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                        break;
+                                    }
                                 }
                                 else
                                 {
