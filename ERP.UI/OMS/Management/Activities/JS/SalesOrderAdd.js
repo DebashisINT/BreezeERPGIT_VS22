@@ -1406,6 +1406,10 @@ function DiscountGotFocus(s, e) {
     }
   
     cbtn_SaveExitRecords.SetVisible(false);
+    // Rev 3.0
+    cbtn_SaveRecordsUDF.SetVisible(false);
+    cbtn_SaveRecordsTax.SetVisible(false);
+    // End of Rev 3.0
 
     var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
     Pre_TotalAmt = _Amount;
@@ -1431,7 +1435,7 @@ function QuantityGotFocus(s, e) {
     // Rev 3.0
     cbtn_SaveRecordsUDF.SetVisible(false);
     cbtn_SaveRecordsTax.SetVisible(false);
-    // End of Rev 3.0
+     // End of Rev 3.0
 
     var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
     Pre_TotalAmt = _Amount;
@@ -1579,6 +1583,10 @@ function SalesPriceGotFocus(s, e) {
     }
     if (getUrlVars().req != "V") {//Rev 2.0
         cbtn_SaveExitRecords.SetVisible(false);
+        // Rev 3.0
+        cbtn_SaveRecordsUDF.SetVisible(false);
+        cbtn_SaveRecordsTax.SetVisible(false);
+         // End of Rev 3.0
     }
 
     var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
@@ -1919,6 +1927,10 @@ function SalePriceTextChange(s, e) {
                 }
                 if (getUrlVars().req != "V") {//Rev 2.0
                     cbtn_SaveExitRecords.SetVisible(true);
+                    // Rev 3.0
+                    cbtn_SaveRecordsUDF.SetVisible(true);
+                    cbtn_SaveRecordsTax.SetVisible(true);
+                    // End of Rev 3.0
                 }
             }
         });
@@ -1941,6 +1953,10 @@ function SalePriceTextChange(s, e) {
         }
         if (getUrlVars().req != "V") {//Rev 2.0
             cbtn_SaveExitRecords.SetVisible(true);
+            // Rev 3.0
+            cbtn_SaveRecordsUDF.SetVisible(true);
+            cbtn_SaveRecordsTax.SetVisible(true);
+            // End of Rev 3.0
         }
     }
     
@@ -2165,6 +2181,10 @@ function DiscountTextChange(s, e) {
                     //cbtn_SaveNewRecords.SetVisible(true);
                     if (getUrlVars().req != "V") {//Rev 2.0
                         cbtn_SaveExitRecords.SetVisible(true);
+                        // Rev 3.0
+                        cbtn_SaveRecordsUDF.SetVisible(true);
+                        cbtn_SaveRecordsTax.SetVisible(true);
+                        // End of Rev 3.0
                     }
 
                 }
@@ -2188,6 +2208,10 @@ function DiscountTextChange(s, e) {
            // cbtn_SaveNewRecords.SetVisible(true);
             if (getUrlVars().req != "V") {//Rev 2.0
                 cbtn_SaveExitRecords.SetVisible(true);
+                // Rev 3.0
+                cbtn_SaveRecordsUDF.SetVisible(true);
+                cbtn_SaveRecordsTax.SetVisible(true);
+               // End of Rev 3.0
             }
 
         }
@@ -5327,17 +5351,21 @@ function QuantityTextChange(s, e) {
     var strSalePrice = (grid.GetEditor('SalePrice').GetValue() != null) ? grid.GetEditor('SalePrice').GetValue() : "0";
     if (strSalePrice == '0.00') {
 
-        if($("#hdnUpperApproveReject").val() == "")
-        {
-            if($("#hddnCustIdFromCRM").val() == "0")
-            {
-                cbtn_SaveNewRecords.SetVisible(true);
-            }
-        }
-        cbtn_SaveExitRecords.SetVisible(true);
         // Rev 3.0
-        cbtn_SaveRecordsUDF.SetVisible(true);
-        cbtn_SaveRecordsTax.SetVisible(true);
+        if ($("#hddnMultiUOMSelection").val() != "1") {
+        // End of Rev 3.0
+            if($("#hdnUpperApproveReject").val() == "")
+            {
+                if($("#hddnCustIdFromCRM").val() == "0")
+                {
+                    cbtn_SaveNewRecords.SetVisible(true);
+                }
+            }
+            cbtn_SaveExitRecords.SetVisible(true);
+        // Rev 3.0
+            cbtn_SaveRecordsUDF.SetVisible(true);
+            cbtn_SaveRecordsTax.SetVisible(true);
+        }
         // End of Rev 3.0
 
         SetTotalTaxableAmount(globalRowIndex, 8); 
