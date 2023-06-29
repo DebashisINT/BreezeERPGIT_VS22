@@ -1,8 +1,10 @@
 ﻿<%--/*********************************************************************************************************
- * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module 
- *                                          Refer: 25223  -- WORK REVERTED
-   Rev 2.0      Pallab        V2.0.37       Add Sales Order page design modification
-                                            Refer: 25813
+ * Rev 1.0      Sanchita      V2.0.37               Tolerance feature required in Sales Order Module 
+ *                                                  Refer: 25223  -- WORK REVERTED
+   Rev 2.0      Pallab        V2.0.37               Add Sales Order page design modification
+                                                    Refer: 25813
+   Rev 3.0      Sanchita      V2.0.39   28/06/2023  Some of the issues are there in Sales Invoice regarding 
+                                                    Multi UOM in EVAC - FOR ALL SALES ORDER. Refer: 26453
  **********************************************************************************************************/--%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderAdd.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
     Inherits="ERP.OMS.Management.Activities.SalesOrderAdd" EnableEventValidation="false" %>
@@ -327,6 +329,27 @@
                 jAlert(msg);
                 OnAddNewClick();
             }
+
+            // Rev 3.0
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_QtyMismatch") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Please check Multi UOM details for SL No. not matching with outer grid " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_NotFound") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Multi UOM details not given for SL No. " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            // End of Rev 3.0
 
             else if (grid.cpProductNotExists == "Select Product First") {
                 grid.batchEditApi.StartEdit(0, 1);
@@ -2354,11 +2377,12 @@ function PerformCallToGridBind() {
                                                 </dxe:ASPxButton>
                                             </span>
 
-                                            <dxe:ASPxButton ID="ASPxButton2" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="U&#818;DF" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <%--Rev 3.0 [ClientInstanceName="cbtn_SaveRecords" changed to new specific name] --%>
+                                            <dxe:ASPxButton ID="ASPxButton2" ClientInstanceName="cbtn_SaveRecordsUDF" runat="server" AutoPostBack="False" Text="U&#818;DF" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {if(OpenUdf()){ return false}}" />
                                             </dxe:ASPxButton>
 
-                                            <dxe:ASPxButton ID="ASPxButton3" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="T&#818;ax & Charges" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <dxe:ASPxButton ID="ASPxButton3" ClientInstanceName="cbtn_SaveRecordsTax" runat="server" AccessKey="X" AutoPostBack="False" Text="T&#818;ax & Charges" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {Save_TaxesClick();}" />
                                             </dxe:ASPxButton>
                                             <a href="javascript:void(0);" id="btnAddNew" runat="server" class="btn btn-primary" style="display: none"><span><u>A</u>ttachment(s)</span></a>
@@ -3341,6 +3365,11 @@ function PerformCallToGridBind() {
                  <asp:HiddenField runat="server" ID="hdnDocumentSegmentSettings" />
                 <asp:HiddenField runat="server" ID="hdnProjectSelectInEntryModule" />
                 <%--kaushik 24-2-2017--%>
+                <%--Rev 3.0--%>
+                <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOM" runat="server" ClientInstanceName="LoadingPanelMultiUOM" ContainerElementID="divMultiUOM"
+                    Modal="True">
+                </dxe:ASPxLoadingPanel>
+                 <%--End of Rev 3.0--%>
             </div>
             <%--End Sudip--%>
 
@@ -3811,7 +3840,8 @@ function PerformCallToGridBind() {
         </ContentStyle>
         <ContentCollection>
             <dxe:PopupControlContentControl runat="server">
-                <div class="Top clearfix">
+                <%--Rev 2.0 [ id="divMultiUOM" added ] --%>
+                <div class="Top clearfix" id="divMultiUOM">
 
 
 
@@ -3833,7 +3863,10 @@ function PerformCallToGridBind() {
                                             <div>
                                                 <%--Mantis Issue 24913--%>
                                                 <%--<input type="text" style="width:80px" id="UOMQuantity" style="text-align: right;" maxlength="18" readonly="true" class="allownumericwithdecimal" />--%>
-                                                <input type="text" style="width:105px" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
+                                                <%--Rev 3.0--%>
+                                                <%--<input type="text" style="width:105px" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />--%>
+                                                <input type="text" style="width:105px" id="UOMQuantity" style="text-align: right;" maxlength="18"  class="allownumericwithdecimal"  onfocusout="CalcBaseRate();" placeholder="0.0000"  />
+                                                <%--End of Rev 3.0--%>
                                                 <%--End of Mantis Issue 24913--%>
                                             </div>
                                         </div>
@@ -3858,7 +3891,10 @@ function PerformCallToGridBind() {
                                             <label>Base Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>
+                                            <%--Rev 3.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>--%>
+                                             <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>
+                                            <%--End of Rev 3.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -3888,7 +3924,10 @@ function PerformCallToGridBind() {
                                             <%--<input type="text" id="AltUOMQuantity" style="text-align:right;"  maxlength="18" class="allownumericwithdecimal"/> --%>
                                             <dxe:ASPxTextBox Width="80px" ID="AltUOMQuantity" runat="server" ClientInstanceName="cAltUOMQuantity" DisplayFormatString="0.0000" MaskSettings-Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                 <%--Mantis Issue 24397--%>
-                                                <ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />
+                                                <%--Rev 3.0--%>
+                                                <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />--%>
+                                                 <ClientSideEvents LostFocus="function(s,e) { CalcBaseQty();}" />
+                                                <%--End of Rev 3.0--%>
                                                 <%--End of Mantis Issue 24397--%>
                                             </dxe:ASPxTextBox>
                                         </div>
@@ -3901,9 +3940,14 @@ function PerformCallToGridBind() {
                                             <label>Alt Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
+                                            <%--Rev 3.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
                                                 <ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />
+                                            </dxe:ASPxTextBox>--%>
+                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
+                                                <ClientSideEvents LostFocus="function(s,e) { CalcBaseRate();}" />
                                             </dxe:ASPxTextBox>
+                                            <%--End of Rev 3.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -3912,7 +3956,8 @@ function PerformCallToGridBind() {
                                         <div>
                                             
                                         </div>
-                                        <div>
+                                        <%--Rev 3.0 [ class="mlableWh" added] --%>
+                                        <div class="mlableWh" >
                                             <%--<label class="checkbox-inline mlableWh">
                                                 <asp:CheckBox ID="chkUpdateRow" Checked="false" runat="server" ></asp:CheckBox>
                                                 <span style="margin: 0px 0; display: block">
@@ -3921,7 +3966,8 @@ function PerformCallToGridBind() {
                                                 </span>
                                             </label>--%>
 
-                                            <label class="checkbox-inline mlableWh">
+                                            <%--Rev 3.0 [ class="mlableWh" removed --%>
+                                            <label class="checkbox-inline ">
                                                 <input type="checkbox" id="chkUpdateRow"  />
                                                 <span style="margin: 0px 0; display: block">
                                                     <dxe:ASPxLabel ID="ASPxLabel18" runat="server" Text="Update Row">
@@ -3934,11 +3980,18 @@ function PerformCallToGridBind() {
                                     
                                 </td>
                                 <%--End of Mantis Issue 24397--%>
-                                <td style="padding-top: 14px;">
-                                    <dxe:ASPxButton ID="btnMUltiUOM" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary" UseSubmitBehavior="false">
-                                        <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
-                                    </dxe:ASPxButton>
-                                </td>
+                                <%--Rev 3.0--%>
+                                </tr>
+                                <tr>
+                                <%--Rev 3.0--%>
+                                    <td style="padding-top: 14px;">
+                                        <dxe:ASPxButton ID="btnMUltiUOM" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary" UseSubmitBehavior="false">
+                                            <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
+                                        </dxe:ASPxButton>
+                                    </td>
+                               <%--Rev 3.0--%>
+                               </tr>
+                               <%--End of Rev 3.0--%>
                             </tr>
                         </table>
 
@@ -4014,6 +4067,9 @@ function PerformCallToGridBind() {
                             <dxe:ASPxButton ID="ASPxButton7" ClientInstanceName="cbtnfinalUomSave" Width="50px" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary" UseSubmitBehavior="false">
                                 <ClientSideEvents Click="function(s, e) {FinalMultiUOM();}" />
                             </dxe:ASPxButton>
+                            <%--Rev 3.0--%>
+                            <label id="lblInfoMsg" style="font-weight:bold; color:red; " > </label>
+                            <%--End of Rev 3.0--%>
                         </div>
                         <br />
                         <asp:Label ID="lblUOMmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>

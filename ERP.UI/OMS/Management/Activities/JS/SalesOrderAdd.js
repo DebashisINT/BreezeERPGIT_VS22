@@ -1,6 +1,8 @@
 ﻿//====================================================Revision History=========================================================================
-// 1.0  Priti   V2.0.36  10-02-2023   0025665:Product Scheme rate was not captured automatically while making Sales Order
-// 2.0  Priti   V2.0.37  27-02-2023   0025693:Add&New button becomes active in Sales Order in the View Mode
+// 1.0  Priti       V2.0.36     10-02-2023   0025665:Product Scheme rate was not captured automatically while making Sales Order
+// 2.0  Priti       V2.0.37     27-02-2023   0025693:Add&New button becomes active in Sales Order in the View Mode
+// 3.0  Sanchita    V2.0.39     28-06-2023   Some of the issues are there in Sales Invoice regarding 
+//                                           Multi UOM in EVAC - FOR ALL SALES ORDER.Refer: 26453
 //====================================================End Revision History=====================================================================
 
 $(function () {
@@ -158,7 +160,30 @@ function validateOrderwithAmountAre(){
     return true;
 }
 
+// Rev 3.0
+$(function () {
+    $(".allownumericwithdecimal").on("keypress keyup blur", function (event) {
+        var patt = new RegExp(/[0-9]*[.]{1}[0-9]{4}/i);
+        var matchedString = $(this).val().match(patt);
+        if (matchedString) {
+            $(this).val(matchedString);
+        }
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+
+    });
+});
+// End of Rev 3.0
+
 function closeMultiUOM(s, e) {
+   // Rev 3.0
+    cbtn_SaveNewRecords.SetVisible(true);
+    cbtn_SaveExitRecords.SetVisible(true);
+    cbtn_SaveRecordsUDF.SetVisible(true);
+    cbtn_SaveRecordsTax.SetVisible(true);
+    // End of Rev 3.0
+
     e.cancel = false;
     // cPopup_MultiUOM.Hide();
 }
@@ -241,6 +266,10 @@ function OnMultiUOMEndCallback(s,e)
         // Rev Sanchita
         spLostFocus(null,null);
         // End of Rev Sanchita
+
+        // Rev 3.0
+        cPopup_MultiUOM.Hide();  // closeMultiUOM() IS CALLED FROM WHERE SAVE BUTTONS AGAIN BECOMES VISIBLE
+        // End of Rev 3.0
     }
     // End of Mantis Issue 24397
     // Mantis Issue 24425, 24428
@@ -299,7 +328,10 @@ function FinalMultiUOM()
     }
     else
     {
-        cPopup_MultiUOM.Hide();
+        // Rev 3.0
+        //cPopup_MultiUOM.Hide();
+        // End of Rev 3.0
+
         // Mantis Issue 24397
         var SLNo = grid.GetEditor('SrlNo').GetValue();
         cgrid_MultiUOM.PerformCallback('SetBaseQtyRateInGrid~'+ SLNo);
@@ -318,6 +350,11 @@ function CalcBaseQty()
     //var PackingQty = Productdetails.split("||@||")[22];  // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.sProduct_quantity)
     //var PackingSaleUOM = Productdetails.split("||@||")[25];  // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.packing_saleUOM)
 
+    // Rev 3.0
+    LoadingPanelMultiUOM.Show();
+    document.getElementById('lblInfoMsg').innerHTML = "";
+    // End of 3.0
+
     var Productdetails = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
     var PackingQtyAlt = 0;
     var PackingQty = 0;
@@ -330,6 +367,9 @@ function CalcBaseQty()
         data: JSON.stringify({ ProductID: ProductID }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        // Rev 3.0
+        async: false,
+        // End of Rev 3.0
         success: function (msg) {
            
             if (msg.d.length != 0) {
@@ -364,14 +404,22 @@ function CalcBaseQty()
                 if (ConvFact > 0) {
                     var BaseQty = (altQty * ConvFact).toFixed(4);
                     $("#UOMQuantity").val(BaseQty);
+                    // Rev 3.0
+                    CalcBaseRate();
+                    // End of Rev 3.0
                 }
             }
             else {
                 $("#UOMQuantity").val("0.0000");
+                // Rev 3.0
+                document.getElementById('lblInfoMsg').innerHTML = "Base Quantity will not get auto calculated since no UOM Conversion details given for the selected Alt. UOM for Product : " + grid.GetEditor('Description').GetText();
+                // End of Rev 3.0
             }
         }
     });
-    
+    // End of Rev 3.0
+    LoadingPanelMultiUOM.Hide();
+    // End of Rev 3.0
  
 }
 
@@ -409,6 +457,18 @@ function TotalAmountgotfocus(s, e) {
 }
        
 function SaveMultiUOM() {
+
+    // Rev 3.0
+    document.getElementById('lblInfoMsg').innerHTML = "";
+
+    if ($("#UOMQuantity").val() != 0 || cAltUOMQuantity.GetValue() != 0) {
+        LoadingPanelMultiUOM.Show();
+        setTimeout(() => {
+            LoadingPanelMultiUOM.Hide();
+
+        }, 1000)
+    }
+    // End of Rev 3.0
             
     //grid.GetEditor('ProductID').GetText().split("||@||")[3];
     var qnty = $("#UOMQuantity").val();
@@ -1224,10 +1284,20 @@ $(document).ready(function () {
                     break;
                 case 84:
                     StopDefaultAction(e);
-                    Save_TaxesClick();
+                    // Rev 3.0
+                    //Save_TaxesClick();
+                    if (document.getElementById('ASPxButton3').style.display != 'none') {
+                        Save_TaxesClick();
+                    }
+                    // End of Rev 3.0
                     break;
                 case 85:
-                    OpenUdf();
+                    // Rev 3.0
+                    //OpenUdf();
+                    if (document.getElementById('ASPxButton2').style.display != 'none') {
+                        OpenUdf();
+                    }
+                    // End of Rev 3.0
                     break;
                 case 69:
                     if (($("#TermsConditionseModal").data('bs.modal') || {}).isShown) {
@@ -1358,6 +1428,10 @@ function QuantityGotFocus(s, e) {
     }
     
     cbtn_SaveExitRecords.SetVisible(false);
+    // Rev 3.0
+    cbtn_SaveRecordsUDF.SetVisible(false);
+    cbtn_SaveRecordsTax.SetVisible(false);
+    // End of Rev 3.0
 
     var _Amount = (grid.GetEditor('Amount').GetText() != null) ? grid.GetEditor('Amount').GetText() : "0";
     Pre_TotalAmt = _Amount;
@@ -5124,6 +5198,11 @@ function QuantityTextChange(s, e) {
     }
     
     cbtn_SaveExitRecords.SetVisible(false);
+    // Rev 3.0
+    cbtn_SaveRecordsUDF.SetVisible(false);
+    cbtn_SaveRecordsTax.SetVisible(false);
+    // End of Rev 3.0
+
     //chinmoy added for multiUom start   
     // Rev Sanchita
     //if (($("#hddnMultiUOMSelection").val() == "1")) {
@@ -5256,6 +5335,11 @@ function QuantityTextChange(s, e) {
             }
         }
         cbtn_SaveExitRecords.SetVisible(true);
+        // Rev 3.0
+        cbtn_SaveRecordsUDF.SetVisible(true);
+        cbtn_SaveRecordsTax.SetVisible(true);
+        // End of Rev 3.0
+
         SetTotalTaxableAmount(globalRowIndex, 8); 
     }
     else
@@ -5673,6 +5757,13 @@ function OnCustomButtonClick(s, e) {
                     ccmbAltRate.SetValue(0)
                     ccmbSecondUOM.SetValue("")
                     // End of Mantis Issue 24397
+                    // Rev 3.0
+                    document.getElementById('lblInfoMsg').innerHTML = "";
+                    cbtn_SaveNewRecords.SetVisible(false);
+                    cbtn_SaveExitRecords.SetVisible(false);
+                    cbtn_SaveRecordsUDF.SetVisible(false);
+                    cbtn_SaveRecordsTax.SetVisible(false);
+                    // End of Rev 3.0
 
                     cPopup_MultiUOM.Show();
 

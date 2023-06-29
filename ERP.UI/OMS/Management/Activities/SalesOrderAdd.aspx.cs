@@ -1,6 +1,8 @@
 ﻿/*********************************************************************************************************
- * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module
- *                                          Refer: 25223  -- WORK REVERTED
+ * Rev 1.0      Sanchita      V2.0.37               Tolerance feature required in Sales Order Module
+ *                                                  Refer: 25223  -- WORK REVERTED
+ * Rev 2.0      Sanchita      V2.0.39   28/06/2023  Some of the issues are there in Sales Invoice regarding 
+                                                    Multi UOM in EVAC - FOR ALL SALES ORDER. Refer: 26453
  **********************************************************************************************************/
 using System;
 using System.Configuration;
@@ -3888,25 +3890,63 @@ namespace ERP.OMS.Management.Activities
                                 GetQuantityBaseOnProductforDetailsId(strSrlNo, ref strUOMQuantity);
 
 
-                                //Rev 24428
+                                // Rev 2.0
+                                ////Rev 24428
+                                //DataTable dtb = new DataTable();
+                                //dtb = (DataTable)Session["MultiUOMData"];
+                                ////if (Session["MultiUOMData"] != null)
+                                ////{
+                                //if (dtb.Rows.Count > 0)
+                                //{
+                                //   // Mantis Issue 24397
+                                //    //if (strUOMQuantity != null)
+                                //    //{
+                                //    //    if (strProductQuantity != strUOMQuantity)
+                                //    //    {
+                                //    //        validate = "checkMultiUOMData";
+                                //    //        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                //    //        break;
+                                //    //    }
+                                //    //}
+
+                                //    // End of Mantis Issue 24397
+                                //}
+                                //else if (dtb.Rows.Count < 1)
+                                //{
+                                //    validate = "checkMultiUOMData";
+                                //    grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                //    break;
+                                //}
+                                ////End Rev 24428
+                                ///
+
                                 DataTable dtb = new DataTable();
                                 dtb = (DataTable)Session["MultiUOMData"];
-                                //if (Session["MultiUOMData"] != null)
-                                //{
+
                                 if (dtb.Rows.Count > 0)
                                 {
-                                   // Mantis Issue 24397
-                                    //if (strUOMQuantity != null)
-                                    //{
-                                    //    if (strProductQuantity != strUOMQuantity)
-                                    //    {
-                                    //        validate = "checkMultiUOMData";
-                                    //        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
-                                    //        break;
-                                    //    }
-                                    //}
+                                    DataRow[] MultiUoMresult;
 
-                                    // End of Mantis Issue 24397
+                                    MultiUoMresult = dtb.Select("SrlNo ='" + strSrlNo + "' and UpdateRow ='True'");
+
+                                    if (MultiUoMresult.Length > 0)
+                                    {
+                                        if ((Convert.ToDecimal(MultiUoMresult[0]["Quantity"]) != Convert.ToDecimal(dr["Quantity"])) ||
+                                            (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["AltQuantity"]), 2) != Math.Round(Convert.ToDecimal(dr["Order_AltQuantity"]), 2)) ||
+                                            (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["BaseRate"]), 2) != Math.Round(Convert.ToDecimal(dr["SalePrice"]), 2))
+                                            )
+                                        {
+                                            validate = "checkMultiUOMData_QtyMismatch";
+                                            grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        validate = "checkMultiUOMData_NotFound";
+                                        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                        break;
+                                    }
                                 }
                                 else if (dtb.Rows.Count < 1)
                                 {
@@ -3914,7 +3954,7 @@ namespace ERP.OMS.Management.Activities
                                     grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
                                     break;
                                 }
-                                //End Rev 24428
+                                // End of Rev 2.0
                             }
                         }
                     }
@@ -4352,11 +4392,15 @@ namespace ERP.OMS.Management.Activities
                         }
                     }
 
+                    // Rev 2.0 [validate == "checkMultiUOMData_QtyMismatch", "checkMultiUOMData_NotFound" added]
                     if (validate == "outrange" || validate == "duplicate" || validate == "checkWarehouse" ||
                         validate == "duplicateProduct" ||
                         validate == "BillingShippingNull" || validate == "CrediDaysZero" || validate == "SalesManAgentMandatoryCheck" || validate == "BlankCustomerNotSaved"
                         || validate == "MoreThanStock" || validate == "ZeroStock" || validate == "Dormant_Customer" || validate == "checkMultiUOMData"
-                        || validate == "ExceedQuantity" || validate == "OverRatedTaggedQuantity" || validate == "nullQuantity" || validate == "checkAcurateTaxAmount")
+                        || validate == "ExceedQuantity" || validate == "OverRatedTaggedQuantity" || validate == "nullQuantity" 
+                        || validate == "checkAcurateTaxAmount"
+                        || validate == "checkMultiUOMData_QtyMismatch" || validate == "checkMultiUOMData_NotFound"
+                        )
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = validate;
                     }
