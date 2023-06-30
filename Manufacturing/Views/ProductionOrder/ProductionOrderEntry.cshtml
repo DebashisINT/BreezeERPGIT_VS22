@@ -1,18 +1,16 @@
-﻿@*================================================== Revision History =============================================
+﻿@*================================================== Revision History ===================================================================================================================
     Rev Number         DATE              VERSION          DEVELOPER           CHANGES
     1.0                23-06-2023        V2.0.38           Priti              0026367:In Production Order Qty:  1. A New field required in Production Order Module called 'BOMProductionQty'
-====================================================== Revision History =============================================*@
+    2.0                29-06-2023        V2.0.39           Priti              0026384:Show valuation rate feature is required in Production Order module
+    ====================================================== Revision History =================================================================================================================*@
 @using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
 @model Manufacturing.Models.ViewModel.ProductionOrderViewModel
-
-
 @{
     ViewBag.Title = "Production Order (Demand Order)";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
 <script src="~/Scripts/SearchPopup.js"></script>
 <link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
@@ -137,7 +135,82 @@
             }
         });
     }
+    //Rev 2.0
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
 
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+
+        return today;
+    }
+
+    function ProductGotFocus() {
+
+
+        gridProductionBOMProductList.batchEditApi.EndEdit();
+        gridProductionBOMProductList.batchEditApi.StartEdit();
+        var ProductName = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductName');
+        var ProductsID = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductId');
+        var ProductQty = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        var BankBranch = $("#ddlBankBranch").val();
+        var ProductOrderDate = GetServerDateFormat(OrderDate_dt.GetValue());
+        var Amount = '';
+        var Rate = '';
+
+        if ('@ViewBag.IsRateEditableinProductionOrder' == "Yes") {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetStockValuation", "ProductionOrder")",
+                data: JSON.stringify({ ProductId: ProductsID }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    var ObjData = msg.StockValuation;
+                    if (ObjData.length > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("GetStockValuationAmount", "ProductionOrder")",
+                            data: JSON.stringify({ Pro_Id: ProductsID, Qty: ProductQty, Valuationsign: ObjData, Fromdate: ProductOrderDate, BranchId: BankBranch }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (msg1) {
+                                var ObjData1 = msg1.ValuationAmount;
+                                if (ObjData1.length > 0) {
+                                    pageheaderContent.style.display = "block";
+                                    $("#divValuationRate").attr('style', 'display:block');
+                                    $("#divProductName").attr('style', 'display:block');
+
+                                    Amount = (ObjData1 * 1);
+                                    Rate = Amount / ProductQty;
+                                    document.getElementById('lblValuationRate').innerHTML = Rate;
+                                    document.getElementById('lblProductName').innerHTML = ProductName;
+
+                                }
+                            }
+
+                        });
+                    }
+                }
+
+            });
+        }
+    }
+     //Rev 2.0 End
     $(function () {
         PopulateWareHouseData();
         PopulateNumberingSchemeData();
@@ -878,7 +951,7 @@
             $('#txtTotalResourceCost').val((newqty * parseFloat(hdnTotalResourceCost)) / hdnproductqty);
             var txtTotalResourceCost = $('#txtTotalResourceCost').val();
             if (txtTotalResourceCost == "" || txtTotalResourceCost == "NaN" || txtTotalResourceCost == "0.00" || txtTotalResourceCost == "0.00000") {
-               
+
                 $('#txtTotalResourceCost').val("0.00")
             }
             totalAmountSetLogic();
@@ -1014,31 +1087,55 @@
 <input type="hidden" value="@Model.Details_ID" id="hdnDetails_ID" />
 <input type="hidden" value="@Model.BOMNo" id="hdnBOMNo" />
 <input type="hidden" id="hdnTotalResourceCost" />
-
-
-
 <input type="hidden" value="@Model.WarehouseID" id="hdnWarehouseID" />
-
 <input type="hidden" value="@Model.Order_Qty" id="hdnOrder_Qty" />
-
 <input type="hidden" value="@Model.Finished_Qty" id="hdnProductQty" />
-
 <input type="hidden" value="@Url.Action("ProductionOrderList", "ProductionOrder")" id="hdnProductionOrderListPage" />
-
 <input type="hidden" value="@ViewBag.IsView" id="hdnIsView" />
-
-
 <input type="hidden" value="@ViewBag.IsTagg" id="hdnIsTagg" />
-
 <input type="hidden" value="@Model.Order_SchemaID" id="hdnPO_SCHEMAID" />
 
 <div class="panel-title clearfix" id="myDiv">
     <h3 class="pull-left">
         <label>Production Order (Demand Order)</label>
     </h3>
+    <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images" style="display: none;" runat="server">
+        <div class="Top clearfix">
+            <ul>
+                <li>
+                    <div class="lblHolder" id="divProductName" style="display: none;" runat="server">
+                        <table>
+                            <tr>
+                                <td>Product Name</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblProductName" runat="server" Text="" CssClass="classout"></asp:Label>
+                                </td>
+                            </tr>
+                        </table>                        
+                    </div>
+                </li>
+                <li>
+                    <div class="lblHolder" id="divValuationRate" style="display: none;" runat="server">                       
+                        <table>
+                            <tr>
+                                <td>Valuation Rate</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblValuationRate" runat="server" Text="0.0" CssClass="classout"></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>          
+        </div>
+    </div>
     <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("ProductionOrderList", "ProductionOrder")"><i class="fa fa-times"></i></a></div>
 </div>
-@*<input type="hidden" value="@Model.FinishedItem" id="hdnFinishedItem" />*@
+
 <input type="hidden" value="0" id="hdnSchemaId" />
 <div class="boxBorder">
     <div class="styledBox">
@@ -1049,15 +1146,7 @@
                     <select id="ddlSchema" class="form-control" onchange="Scheme_ValueChange()"></select>
                     <span id="EddlSchema" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
                 </div>
-            </div>
-            @*<div class="col-sm-2">
-                    <label>BOM Type <span style="color:red">*</span></label>
-                    <select id="slcbomtype" class="form-control">
-                        <option value="Production">Production</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Assembly">Assembly</option>
-                    </select>
-                </div>*@
+            </div>          
 
             <div class=" col-sm-2">
                 <label>Production Order No. <span style="color:red">*</span></label>
