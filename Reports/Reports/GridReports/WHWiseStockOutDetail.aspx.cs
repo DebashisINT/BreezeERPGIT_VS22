@@ -1,4 +1,12 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=============================================================================================================================
+//1.0   v2.0.38    Debashis    28/06/2023   A new coloumn named as 'Stock Out Type' should be implemented after 'Header-Entity' coloumn 
+//                                          and before 'Line-Entity Code' in 'Warehouse Wise Stock Out- Details' report. Where only two 
+//                                          vale should be populated. They are-
+//                                          A. Issue
+//                                          B. Replaceable.Refer: 0026417
+#endregion=======================End of Revision History=====================================================================================================================
+
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -190,7 +198,10 @@ namespace Reports.Reports.GridReports
             {
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
                 con.Open();
-                string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,DOCUMENT_NO,DOCUMENT_DATE,HREMARKS,HREFNO,PARTY,EMPNAME,HENTITYCODE,HENTITYNAME,DENTITYCODE,DENTITYNAME,TRANSPORTATIONMODE,VEHICLENO,DETAILSREMARKS,DREFNO,PRODCODE,PRODNAME,PRODCLASS,BRAND,STOCKUOM,QUANTITY,RATE,AMOUNT,ENTEREDBY,ENTEREDON,UPDATEDBY,UPDATEDON,EWAYBILLNUMBER,EWAYBILLDATE FROM WAREHOUSEWISESTOCKOUTDETAILS_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND BRANCHDESC<>'Gross Total :' order by SEQ";
+                //Rev 1.0
+                //string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,DOCUMENT_NO,DOCUMENT_DATE,HREMARKS,HREFNO,PARTY,EMPNAME,HENTITYCODE,HENTITYNAME,DENTITYCODE,DENTITYNAME,TRANSPORTATIONMODE,VEHICLENO,DETAILSREMARKS,DREFNO,PRODCODE,PRODNAME,PRODCLASS,BRAND,STOCKUOM,QUANTITY,RATE,AMOUNT,ENTEREDBY,ENTEREDON,UPDATEDBY,UPDATEDON,EWAYBILLNUMBER,EWAYBILLDATE FROM WAREHOUSEWISESTOCKOUTDETAILS_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND BRANCHDESC<>'Gross Total :' order by SEQ";
+                string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,DOCUMENT_NO,DOCUMENT_DATE,HREMARKS,HREFNO,PARTY,EMPNAME,HENTITYCODE,HENTITYNAME,REPLACEABLETYPE,DENTITYCODE,DENTITYNAME,TRANSPORTATIONMODE,VEHICLENO,DETAILSREMARKS,DREFNO,PRODCODE,PRODNAME,PRODCLASS,BRAND,STOCKUOM,QUANTITY,RATE,AMOUNT,ENTEREDBY,ENTEREDON,UPDATEDBY,UPDATEDON,EWAYBILLNUMBER,EWAYBILLDATE FROM WAREHOUSEWISESTOCKOUTDETAILS_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND BRANCHDESC<>'Gross Total :' order by SEQ";
+                //End of Rev 1.0
                 SqlDataAdapter myCommand = new SqlDataAdapter(selectQuery, con);
 
                 // Create and fill a DataSet.
@@ -218,6 +229,9 @@ namespace Reports.Reports.GridReports
                 dtExport.Columns.Add(new DataColumn("Employee", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Header-Entity Code", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Header-Entity", typeof(string)));
+                //Rev 1.0
+                dtExport.Columns.Add(new DataColumn("Stock Out Type", typeof(string)));
+                //End of Rev 1.0
                 dtExport.Columns.Add(new DataColumn("Line-Entity Code", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Line-Entity", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Transportation Mode", typeof(string)));
@@ -254,6 +268,9 @@ namespace Reports.Reports.GridReports
                     row2["Employee"] = dr1["EMPNAME"];
                     row2["Header-Entity Code"] = dr1["HENTITYCODE"];
                     row2["Header-Entity"] = dr1["HENTITYNAME"];
+                    //Rev 1.0
+                    row2["Header-Entity"] = dr1["REPLACEABLETYPE"];
+                    //End of Rev 1.0
                     row2["Line-Entity Code"] = dr1["DENTITYCODE"];
                     row2["Line-Entity"] = dr1["DENTITYNAME"];
                     row2["Transportation Mode"] = dr1["TRANSPORTATIONMODE"];
@@ -292,6 +309,9 @@ namespace Reports.Reports.GridReports
                 dtExport.Columns.Remove("EMPNAME");
                 dtExport.Columns.Remove("HENTITYCODE");
                 dtExport.Columns.Remove("HENTITYNAME");
+                //Rev 1.0
+                dtExport.Columns.Remove("REPLACEABLETYPE");
+                //End of Rev 1.0
                 dtExport.Columns.Remove("DENTITYCODE");
                 dtExport.Columns.Remove("DENTITYNAME");
                 dtExport.Columns.Remove("TRANSPORTATIONMODE");
