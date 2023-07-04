@@ -1,8 +1,8 @@
-﻿/*********************************************************************************************************
- * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module 
- *                                          Refer: 25223   -- WORK REVERTED
+﻿/******************************************************************************************************************************************************************************
+ * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module Refer: 25223   -- WORK REVERTED *                                          
  * Rev 2.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
- **********************************************************************************************************/
+ * Rev 3.0      Priti         V2.0.39       Sales Invoice calculated on field is showing wrong value for GST calculation. Mantis : 0026479   
+ ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
 using System.Data;
@@ -9629,7 +9629,9 @@ namespace ERP.OMS.Management.Activities
                                         decimal finalCalCulatedOn = 0;
                                         decimal backProcessRate = (1 + (totalParcentage / 100));
                                         finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
-                                        obj.calCulatedOn = finalCalCulatedOn;
+                                        //Rev 3.0
+                                        //obj.calCulatedOn = finalCalCulatedOn;
+                                        //Rev 3.0 End
                                     }
                                 }
                             }
@@ -9779,7 +9781,9 @@ namespace ERP.OMS.Management.Activities
                                         decimal finalCalCulatedOn = 0;
                                         decimal backProcessRate = (1 + (totalParcentage / 100));
                                         finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
-                                        obj.calCulatedOn = finalCalCulatedOn;
+                                        //Rev 3.0
+                                        //obj.calCulatedOn = finalCalCulatedOn;
+                                        //Rev 3.0 End
                                     }
                                 }
                             }
