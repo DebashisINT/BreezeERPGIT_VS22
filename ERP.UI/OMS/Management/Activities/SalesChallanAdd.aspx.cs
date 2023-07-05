@@ -1,4 +1,7 @@
-﻿using System;
+﻿/****************************************************************************************************************
+ * Rev 1.0      Sanchita      V2.0.39       Multi UOM EVAC Issues status modulewise - Sales Challan. Mantis : 26515  
+ *****************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -3067,23 +3070,59 @@ namespace ERP.OMS.Management.Activities
                                 GetQuantityBaseOnProductforDetailsId(Val, ref strUOMQuantity);
 
                                 //Rev 24428
+                                // Rev 1.0
+                                //DataTable dtb = new DataTable();
+                                //dtb = (DataTable)Session["MultiUOMData"];
+                                ////if (Session["MultiUOMData"] != null)
+                                ////{
+                                //if (dtb.Rows.Count > 0)
+                                //{
+                                //    // Mantis Issue 24428
+                                //    //if (strUOMQuantity != null)
+                                //    //{
+                                //    //    if (strProductQuantity != strUOMQuantity)
+                                //    //    {
+                                //    //        validate = "checkMultiUOMData";
+                                //    //        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                //    //        break;
+                                //    //    }
+                                //    //}
+                                //    // End of Mantis Issue 24428
+                                //}
+                                //else if (dtb.Rows.Count < 1)
+                                //{
+                                //    validate = "checkMultiUOMData";
+                                //    grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                //    break;
+                                //}
+
                                 DataTable dtb = new DataTable();
                                 dtb = (DataTable)Session["MultiUOMData"];
-                                //if (Session["MultiUOMData"] != null)
-                                //{
+
                                 if (dtb.Rows.Count > 0)
                                 {
-                                    // Mantis Issue 24428
-                                    //if (strUOMQuantity != null)
-                                    //{
-                                    //    if (strProductQuantity != strUOMQuantity)
-                                    //    {
-                                    //        validate = "checkMultiUOMData";
-                                    //        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
-                                    //        break;
-                                    //    }
-                                    //}
-                                    // End of Mantis Issue 24428
+                                    DataRow[] MultiUoMresult;
+
+                                    MultiUoMresult = dtb.Select("SrlNo ='" + strSrlNo + "' and UpdateRow ='True'");
+
+                                    if (MultiUoMresult.Length > 0)
+                                    {
+                                        if ((Convert.ToDecimal(MultiUoMresult[0]["Quantity"]) != Convert.ToDecimal(dr["Quantity"])) ||
+                                            (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["AltQuantity"]), 2) != Math.Round(Convert.ToDecimal(dr["Order_AltQuantity"]), 2)) ||
+                                            (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["BaseRate"]), 2) != Math.Round(Convert.ToDecimal(dr["SalePrice"]), 2))
+                                            )
+                                        {
+                                            validate = "checkMultiUOMData_QtyMismatch";
+                                            grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        validate = "checkMultiUOMData_NotFound";
+                                        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                        break;
+                                    }
                                 }
                                 else if (dtb.Rows.Count < 1)
                                 {
@@ -3091,6 +3130,7 @@ namespace ERP.OMS.Management.Activities
                                     grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
                                     break;
                                 }
+                                // End of Rev 1.0
                                 //End Rev 24428
                             }
                         }
@@ -3174,7 +3214,12 @@ namespace ERP.OMS.Management.Activities
                     }
                     //End	
                     //// ############# Added By : Samrat Roy -- 02/05/2017 -- To check Transporter Mandatory Control 	
-                    if (validate == "outrange" || validate == "duplicateProduct" || validate == "checkWarehouse" || validate == "checkWarehouseQty" || validate == "BillingShippingBlank" || validate == "MoreThanStock" || validate == "checkMultiUOMData" || validate=="InvoiceTagRequired")
+                    // Rev 1.0 [validate == "checkMultiUOMData_QtyMismatch", "checkMultiUOMData_NotFound" added]
+                    if (validate == "outrange" || validate == "duplicateProduct" || validate == "checkWarehouse" || validate == "checkWarehouseQty" 
+                        || validate == "BillingShippingBlank" || validate == "MoreThanStock" || validate == "checkMultiUOMData" 
+                        || validate=="InvoiceTagRequired"
+                        || validate == "checkMultiUOMData_QtyMismatch" || validate == "checkMultiUOMData_NotFound"
+                        )
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = validate;
                     }
