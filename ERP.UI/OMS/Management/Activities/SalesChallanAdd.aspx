@@ -1,6 +1,8 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                06-04-2023        2.0.37           Pallab              25918: Add Sales Challan module design modification
+2.0                05-07-2023        2.0.39           Sanchita            Multi UOM EVAC Issues status modulewise - Sales Challan. 
+                                                                          Refer: 26515
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanAdd.aspx.cs"
@@ -126,10 +128,29 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             });
         }
 
+        // Rev 2.0
+        $(function () {
+            $(".allownumericwithdecimal").on("keypress keyup blur", function (event) {
+                var patt = new RegExp(/[0-9]*[.]{1}[0-9]{4}/i);
+                var matchedString = $(this).val().match(patt);
+                if (matchedString) {
+                    $(this).val(matchedString);
+                }
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+
+            });
+        });
+        // End of Rev 2.0
 
         //chinmoy start
 
         function closeMultiUOM(s, e) {
+            // Rev 2.0
+            cbtn_SaveRecords_N.SetVisible(true);
+            cbtn_SaveRecords_p.SetVisible(true);
+            // End of Rev 2.0
             e.cancel = false;
             // cPopup_MultiUOM.Hide();
         }
@@ -205,6 +226,18 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         function SaveMultiUOM() {
             //grid.GetEditor('ProductID').GetText().split("||@||")[3];
+
+            // Rev Sanchita
+            document.getElementById('lblInfoMsg').innerHTML = "";
+
+            if ($("#UOMQuantity").val() != 0 || cAltUOMQuantity.GetValue() != 0) {
+                LoadingPanelMultiUOM.Show();
+                setTimeout(() => {
+                    LoadingPanelMultiUOM.Hide();
+
+                }, 1000)
+            }
+            // End of Rev Sanchita
 
             var qnty = $("#UOMQuantity").val();
 
@@ -325,10 +358,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                 grid.GetEditor("Order_AltQuantity").SetValue(cgrid_MultiUOM.cpAltQty);
                 grid.GetEditor("Order_AltUOM").SetValue(cgrid_MultiUOM.cpAltUom);
+                // Rev 2.0
+                cPopup_MultiUOM.Hide();  // closeMultiUOM() IS CALLED FROM WHERE SAVE BUTTONS AGAIN BECOMES VISIBLE
+                // End of Rev 2.0
                 // Rev Sanchita
                 SalePriceTextChange(null, null);
                 // End of Rev Sanchita
 
+                
             }
 
             if (cgrid_MultiUOM.cpAllDetails == "EditData") {
@@ -371,7 +408,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 return;
             }
             else {
-                cPopup_MultiUOM.Hide();
+                // Rev 2.0
+                //cPopup_MultiUOM.Hide();
+                // End of Rev 2.0
                 // Mantis Issue 24428 
                 var SLNo = grid.GetEditor('SrlNo').GetValue();
                 cgrid_MultiUOM.PerformCallback('SetBaseQtyRateInGrid~' + SLNo);
@@ -810,11 +849,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         document.onkeydown = function (e) {
             if (event.keyCode == 78 && event.altKey == true && getUrlVars().req != "V") { //run code for Alt + N -- ie, Save & New  
                 StopDefaultAction(e);
-                Save_ButtonClick();
+                // Rev 2.0
+                //Save_ButtonClick();
+                if (document.getElementById('btn_SaveRecords').style.display != 'none') {
+                    Save_ButtonClick();
+                }
+                // End of Rev 2.0
             }
             else if (event.keyCode == 88 && event.altKey == true && getUrlVars().req != "V") { //run code for Alt + X -- ie, Save & Exit!     
                 StopDefaultAction(e);
-                SaveExit_ButtonClick();
+                // Rev 2.0
+                //SaveExit_ButtonClick();
+                if (document.getElementById('ASPxButton12').style.display != 'none') {
+                    SaveExit_ButtonClick();
+                }
+                // End of Rev 2.0
             }
             else if (event.keyCode == 84 && event.altKey == true && getUrlVars().req != "V") { //run code for Alt + T -- ie, Tax & Charges!     
                 StopDefaultAction(e);
@@ -4071,6 +4120,26 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 jAlert(msg);
                 grid.cpSaveSuccessOrFail = '';
             }
+            // Rev 2.0
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_QtyMismatch") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Please check Multi UOM details for SL No. not matching with outer grid " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_NotFound") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Multi UOM details not given for SL No. " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            // End of Rev 2.0
             else if (grid.cpSaveSuccessOrFail == "udfNotSaved") {
                 grid.batchEditApi.StartEdit(0, 2);
                 jAlert('UDF is set as Mandatory. Please enter values.', 'Alert', function () { OpenUdf(); });
@@ -5441,6 +5510,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             ccmbAltRate.SetValue(0)
                             ccmbSecondUOM.SetValue("")
                             // End of Mantis Issue 24428
+                            // Rev 2.0
+                            document.getElementById('lblInfoMsg').innerHTML = "";
+                            cbtn_SaveRecords_N.SetVisible(false);
+                            cbtn_SaveRecords_p.SetVisible(false);
+                            // End of Rev 2.0
                             cPopup_MultiUOM.Show();
                             cgrid_MultiUOM.cpDuplicateAltUOM = "";
                             // if ($("#hdnPageStatus").val() != "update") {
@@ -6656,7 +6730,10 @@ function FinalWarehouse() {
 // Mantis Issue 24428 
 function CalcBaseQty() {
 
-    debugger;
+    // Rev 2.0
+    LoadingPanelMultiUOM.Show();
+    document.getElementById('lblInfoMsg').innerHTML = "";
+    // End of Rev 2.0
 
     //var PackingQtyAlt = Productdetails.split("||@||")[20]; // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.packing_quantity)
     // var PackingQty = Productdetails.split("||@||")[22]; // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.sProduct_quantity)
@@ -6678,6 +6755,9 @@ function CalcBaseQty() {
         data: JSON.stringify({ ProductID: ProductID }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        // Rev 2.0
+        async: false,
+        // End of Rev 2.0
         success: function (msg) {
 
             if (msg.d.length != 0) {
@@ -6712,14 +6792,22 @@ function CalcBaseQty() {
                 if (ConvFact > 0) {
                     var BaseQty = (altQty * ConvFact).toFixed(4);
                     $("#UOMQuantity").val(BaseQty);
+                    // Rev 2.0
+                    CalcBaseRate();
+                    // End of Rev 2.0
                 }
             }
             else {
                 $("#UOMQuantity").val("0.0000");
+                // Rev 2.0
+                document.getElementById('lblInfoMsg').innerHTML = "Base Quantity will not get auto calculated since no UOM Conversion details given for the selected Alt. UOM for Product : " + grid.GetEditor('Description').GetText();
+                // End of Rev 2.0
             }
         }
     });
-
+    // End of Rev 2.0
+    LoadingPanelMultiUOM.Hide();
+    // End of Rev 2.0
 }
 
 function CalcBaseRate() {
@@ -9879,14 +9967,23 @@ function ProjectValueChange(s, e) {
                                     <div class="col-md-12">
                                         <asp:Label ID="ClientShowMsg" runat="server" Text="Already Delivered." CssClass="msgStyle" Visible="false"></asp:Label>
                                         <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
-                                        <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & N&#818;ew" UseSubmitBehavior="false" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
+                                        <%--Rev 2.0--%>
+                                        <%--<dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & N&#818;ew" UseSubmitBehavior="false" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
                                             <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
-                                        </dxe:ASPxButton>
+                                        </dxe:ASPxButton>--%>
                                         <%--  <asp:Button ID="ASPxButton2" runat="server" Text="UDF" CssClass="btn btn-primary" OnClientClick="if(OpenUdf()){ return false;}" />--%>
 
-                                        <dxe:ASPxButton ID="ASPxButton12" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" UseSubmitBehavior="false" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
+                                        <%--<dxe:ASPxButton ID="ASPxButton12" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" UseSubmitBehavior="false" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
+                                            <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
+                                        </dxe:ASPxButton>--%>
+
+                                        <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords_N" runat="server" AutoPostBack="False" Text="Save & N&#818;ew" UseSubmitBehavior="false" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
+                                            <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
+                                        </dxe:ASPxButton>
+                                        <dxe:ASPxButton ID="ASPxButton12" ClientInstanceName="cbtn_SaveRecords_p" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" UseSubmitBehavior="false" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1">
                                             <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
                                         </dxe:ASPxButton>
+                                        <%--End of Rev 2.0--%>
                                         <asp:Button ID="Button1" runat="server" Text="UDF" CssClass="btn btn-primary" OnClientClick="if(OpenUdf()){ return false;}" UseSubmitBehavior="false" />
 
                                         <dxe:ASPxButton ID="ASPxButton3" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="T&#818;ax & Charges" CssClass="btn btn-primary" UseSubmitBehavior="false" meta:resourcekey="btnSaveRecordsResource1">
@@ -10777,6 +10874,11 @@ function ProjectValueChange(s, e) {
             <%--kaushik 24-2-2017 --%>
             <asp:HiddenField runat="server" ID="IsUdfpresent" />
             <%--kaushik 24-2-2017--%>
+            <%--Rev 2.0--%>
+            <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOM" runat="server" ClientInstanceName="LoadingPanelMultiUOM" ContainerElementID="divMultiUOM"
+                Modal="True">
+            </dxe:ASPxLoadingPanel>
+           <%--End of Rev 2.0--%>
         </div>
         <%--    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
                 <PanelCollection>
@@ -11390,7 +11492,8 @@ function ProjectValueChange(s, e) {
         </ContentStyle>
         <ContentCollection>
             <dxe:PopupControlContentControl runat="server">
-                <div class="Top clearfix">
+                <%--Rev 2.0 [ id="divMultiUOM" added ] --%>
+                <div class="Top clearfix" id="divMultiUOM">
 
 
 
@@ -11407,7 +11510,10 @@ function ProjectValueChange(s, e) {
                                             <div>
                                                 <%--Rev Sanchita--%>
                                                 <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" />--%>
-                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
+                                                <%--Rev 2.0--%>
+                                                <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />--%>
+                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onfocusout="CalcBaseRate()" placeholder="0.0000" />
+                                                <%--End of Rev 2.0--%>
                                                 <%--End of Rev Sanchita--%>
                                             </div>
                                         </div>
@@ -11432,7 +11538,10 @@ function ProjectValueChange(s, e) {
                                             <label>Base Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true"></dxe:ASPxTextBox>
+                                            <%--Rev 2.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true"></dxe:ASPxTextBox>--%>
+                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true"></dxe:ASPxTextBox>
+                                            <%--End of Rev 2.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -11462,7 +11571,10 @@ function ProjectValueChange(s, e) {
                                             <%-- <input type="text" id="AltUOMQuantity" style="text-align:right;"  maxlength="18" class="allownumericwithdecimal"/>--%>
                                             <dxe:ASPxTextBox ID="AltUOMQuantity" runat="server" ClientInstanceName="cAltUOMQuantity" DisplayFormatString="0.0000" MaskSettings-Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                 <%--Mantis Issue 24428--%>
+                                                <%--Rev 2.0--%>
+                                                <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />--%>
                                                 <ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />
+                                                <%--End of Rev 2.0--%>
                                                 <%--End of Mantis Issue 24428--%>
                                             </dxe:ASPxTextBox>
                                         </div>
@@ -11475,9 +11587,14 @@ function ProjectValueChange(s, e) {
                                             <label>Alt Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
+                                            <%--Rev 2.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                 <ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />
+                                            </dxe:ASPxTextBox>--%>
+                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
+                                                <ClientSideEvents LostFocus="function(s,e) { CalcBaseRate();}" />
                                             </dxe:ASPxTextBox>
+                                            <%--End of Rev 2.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -11485,8 +11602,10 @@ function ProjectValueChange(s, e) {
                                     <div style="margin-bottom: 5px;">
                                         <div>
                                         </div>
-                                        <div>
-                                            <label class="checkbox-inline mlableWh">
+                                        <%--Rev 2.0 [ class="mlableWh" added] --%>
+                                        <div class="mlableWh">
+                                            <%--Rev 2.0 [ class="mlableWh" removed --%>
+                                            <label class="checkbox-inline ">
                                                 <input type="checkbox" id="chkUpdateRow" />
                                                 <span style="margin: 0px 0; display: block">
                                                     <dxe:ASPxLabel ID="ASPxLabel18" runat="server" Text="Update Row">
@@ -11499,11 +11618,18 @@ function ProjectValueChange(s, e) {
 
                                 </td>
                                 <%--End of Mantis Issue 24428--%>
-                                <td style="padding-top: 14px;">
-                                    <dxe:ASPxButton ID="btnMUltiUOM" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary" UseSubmitBehavior="false">
-                                        <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
-                                    </dxe:ASPxButton>
-                                </td>
+                                 <%--Rev 2.0--%>
+                                </tr>
+                                <tr>
+                                <%--End of Rev 2.0--%>
+                                    <td style="padding-top: 14px;">
+                                        <dxe:ASPxButton ID="btnMUltiUOM" ClientInstanceName="cbtnMUltiUOM" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary" UseSubmitBehavior="false">
+                                            <ClientSideEvents Click="function(s, e) { if(!document.getElementById('myCheck').checked)  {SaveMultiUOM();}}" />
+                                        </dxe:ASPxButton>
+                                    </td>
+                                <%--Rev 2.0--%>
+                                </tr>
+                                <%--End of Rev 2.0--%>
                             </tr>
                         </table>
 
@@ -11588,6 +11714,9 @@ function ProjectValueChange(s, e) {
                             <dxe:ASPxButton ID="ASPxButton7" ClientInstanceName="cbtnfinalUomSave" Width="50px" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary" UseSubmitBehavior="false">
                                 <ClientSideEvents Click="function(s, e) {FinalMultiUOM();}" />
                             </dxe:ASPxButton>
+                            <%--Rev 2.0--%>
+                            <label id="lblInfoMsg" style="font-weight:bold; color:red; " > </label>
+                            <%--End of Rev 2.0--%>
                         </div>
                     </div>
                 </div>
@@ -11708,4 +11837,5 @@ function ProjectValueChange(s, e) {
     <asp:HiddenField runat="server" ID="hdnEntityType" />
     <asp:HiddenField runat="server" ID="hdAddOrEdit" />
     <asp:HiddenField runat="server" ID="hdnPricingDetail" />
+    
 </asp:Content>
