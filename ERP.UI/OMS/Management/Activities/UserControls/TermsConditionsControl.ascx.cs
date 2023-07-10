@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿//==================================================== Revision History ==================================================================================
+// 1.0  Priti  V2.0.38  10-07-2023   0026528:Project Purchase Order Terms & Condition are becoming Blank if Something is Pasted in the Payment Terms Field
+//====================================================End Revision History================================================================================
+
+using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using System;
@@ -650,7 +654,10 @@ namespace ERP.OMS.Management.Activities.UserControls
             try
             {
                 ProcedureExecute proc = new ProcedureExecute("SP_TC_CRUD");
-                proc.AddVarcharPara("@TermsConditionData", 500, TermsConditionData);
+                //Rev 1.0
+                //proc.AddVarcharPara("@TermsConditionData", 500, TermsConditionData);
+                proc.AddVarcharPara("@TermsConditionData", 4000, TermsConditionData);
+                //Rev 1.0 End
                 proc.AddVarcharPara("@DocId", 500, DocId);
                 proc.AddVarcharPara("@DocType", 500, DocType);
                 //DataSet dt = proc.GetDataSet();
