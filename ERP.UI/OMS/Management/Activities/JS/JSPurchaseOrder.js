@@ -1,5 +1,6 @@
 ﻿//==========================================================Revision History ============================================================================================
 //    1.0   Priti   V2.0.36  17-01-2023   0025582:Error while creating Purchase Order by Tagging Indent.
+//    2.0	Priti   V2.0.39	 10-07-2023   0026534:Net amount calculation is wrong in Purchase Order while using Inclusive tax & tagging an Indent.
 //========================================== End Revision History =======================================================================================================--%>
 
 function fn_PopOpen()
@@ -564,6 +565,7 @@ function SetCustomer(Id, Name) {
         $('#CustModel').modal('hide');
         ctxtVendorName.SetText(Name);      
         GetObjectID('hdnCustomerId').value = Id;
+        GetObjectID('hdfLookupCustomer').value = Id;
         $('#MandatorysVendor').attr('style', 'display:none');
         var VendorId=Id;
         GetVendorGSTInFromBillShip(VendorId);
@@ -1620,17 +1622,135 @@ function SetDataToGrid(Quantity, packing, PackingUom, PackingSelectUom, producti
     grid.GetEditor('gvColQuantity').SetValue(Quantity);
              
     setTimeout(function () {
-        grid.batchEditApi.StartEdit(globalRowIndex, 7);
+        grid.batchEditApi.StartEdit(globalRowIndex, 9);
     }, 600)
-                 
+    //Rev 2.0          
+    AmountCalculation();
+    //Rev 2.0 End
+}
+//Rev 2.0
+function AmountCalculation() {    
+    pageheaderContent.style.display = "block";
+    divAvailableStk.style.display = "block";
+    var QuantityValue = (grid.GetEditor('gvColQuantity').GetValue() != null) ? grid.GetEditor('gvColQuantity').GetValue() : "0";
+    if (parseFloat(QuantityValue) != parseFloat(_GetQuantityValue)) {
+        var ProductID = grid.GetEditor('gvColProduct').GetValue();
+        if (ProductID != null) {
+            var SpliteDetails = ProductID.split("||@||");
+            var strMultiplier = SpliteDetails[7];
+            var strFactor = SpliteDetails[8];
+            var strRate = (ctxtRate.GetValue() != null && ctxtRate.GetValue() != "0") ? ctxtRate.GetValue() : "1";
+            var strProductID = SpliteDetails[0];
+            var strProductName = (grid.GetEditor('gvColProduct').GetText() != null) ? grid.GetEditor('gvColProduct').GetText() : "0";
+            var ddlbranch = $("[id*=ddl_Branch]");
+            var strBranch = ddlbranch.find("option:selected").text();
+            var strStkUOM = SpliteDetails[4];
+            var strSalePrice = (grid.GetEditor('gvColStockPurchasePrice').GetValue() != null) ? grid.GetEditor('gvColStockPurchasePrice').GetValue() : "0";
+            if (strRate == 0) {
+                strRate = 1;
+            }
+            var Amount = (QuantityValue * strFactor * (strSalePrice / strRate)).toFixed(2);
+            var tbAmount = grid.GetEditor("gvColAmount");
+            tbAmount.SetValue(Amount);
+            var tbTotalAmount = grid.GetEditor("gvColTotalAmountINR");
+            tbTotalAmount.SetValue(Amount);
+            $('#lblbranchName').text(strBranch);
+            var IsLinkedProduct = (grid.GetEditor('IsLinkedProduct').GetText() != null) ? grid.GetEditor('IsLinkedProduct').GetText() : "";
+            if (IsLinkedProduct != "Y") {
+                var tbAmount = grid.GetEditor("gvColAmount");
+                tbAmount.SetValue(Amount);
+                var tbTotalAmount = grid.GetEditor("gvColTotalAmountINR");
+                tbTotalAmount.SetValue(Amount);
+                QtyDiscountTextChange();
+            }
+        }
+        else {
+            jAlert('Select a product first.');
+            grid.GetEditor('gvColQuantity').SetValue('0');
+            grid.GetEditor('gvColProduct').Focus();
+        }
+    }
+    if ($("#hddnMultiUOMSelection").val() == "1") {
+        setTimeout(function () {
+            grid.batchEditApi.StartEdit(globalRowIndex, 7);
+        }, 800)
+    }
 
 }
+function QtyDiscountTextChange() {
+
+    var Discount = (grid.GetEditor('gvColDiscount').GetValue() != null) ? grid.GetEditor('gvColDiscount').GetValue() : "0";
+    var QuantityValue = (grid.GetEditor('gvColQuantity').GetValue() != null) ? grid.GetEditor('gvColQuantity').GetValue() : "0";
+    var ProductID = grid.GetEditor('gvColProduct').GetValue();
+    if (ProductID != null) {
+        var SpliteDetails = ProductID.split("||@||");
+        var strFactor = SpliteDetails[8];
+        var strRate = (ctxtRate.GetValue() != null && ctxtRate.GetValue() != "0") ? ctxtRate.GetValue() : "1";
+        var strSalePrice = (grid.GetEditor('gvColStockPurchasePrice').GetValue() != null) ? grid.GetEditor('gvColStockPurchasePrice').GetValue() : "0";
+        if (strSalePrice == '0') {
+            strSalePrice = SpliteDetails[6];
+        }
+        if (strRate == 0) {
+            strRate = 1;
+        }
+        var amountAfterDiscount = "";
+        var Amount = QuantityValue * strFactor * (strSalePrice / strRate);
+        Amount = Amount.toFixed(2);
+        if (Discount != "0" && Discount != "0.00") {
+            amountAfterDiscount = parseFloat(Amount) - ((parseFloat(Discount) * parseFloat(Amount)) / 100);
+            amountAfterDiscount = amountAfterDiscount.toFixed(2);
+            var tbAmount = grid.GetEditor("gvColAmount");
+            tbAmount.SetValue(amountAfterDiscount);
+            var tbTotalAmount = grid.GetEditor("gvColTotalAmountINR");
+            tbTotalAmount.SetValue(amountAfterDiscount);
+        }
+        else {
+            amountAfterDiscount = Amount;
+        }
+        //chinmoy edited for Discount start
+        var ShippingStateCode = $("#bsSCmbStateHF").val();
+        //End
+        var TaxType = "";
+        if (cddl_AmountAre.GetValue() == "1") {
+            TaxType = "E";
+        }
+        else if (cddl_AmountAre.GetValue() == "2") {
+            TaxType = "I";
+        }
+
+        var _SrlNo = grid.GetEditor("SrlNo").GetValue();
+        if (TaxOfProduct.filter(function (e) { return e.SrlNo == _SrlNo; }).length == 0) {
+            var ProductTaxes = { SrlNo: _SrlNo, IsTaxEntry: "N" }
+            TaxOfProduct.push(ProductTaxes);
+        }
+        else {
+            $.grep(TaxOfProduct, function (e) { if (e.SrlNo == _SrlNo) e.IsTaxEntry = "N"; });
+        }
+
+        var CompareStateCode;
+        if (cPurchaseOrderPosGst.GetValue() == "S") {
+            CompareStateCode = GeteShippingStateID();
+        }
+        else {
+            CompareStateCode = GetBillingStateID();
+        }
+        caluculateAndSetGST(grid.GetEditor("gvColAmount"), grid.GetEditor("gvColTaxAmount"), grid.GetEditor("gvColTotalAmountINR"), SpliteDetails[18], Amount, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val(), $("#hdnEntityType").val(), cPLQuoteDate.GetDate(), QuantityValue, 'P');
+    }
+    else {
+        jAlert('Select a product first.');
+        grid.GetEditor('gvColDiscount').SetValue('0');
+        grid.GetEditor('gvColProduct').Focus();
+    }
+    //ctaxUpdatePanel.PerformCallback('DelQtybySl~' + grid.GetEditor("SrlNo").GetValue());
+    deleteTax('DelQtybySl', grid.GetEditor("SrlNo").GetValue(), "");
+}
+//Rev 2.0 End
 function SetFoucs() {
 
 }
 
 function PurchasePriceTextFocus(s, e) {            
-    _GetQuantityValue = (grid.GetEditor('gvColQuantity').GetValue() != null) ? grid.GetEditor('gvColQuantity').GetValue() : "0";
+    //_GetQuantityValue = (grid.GetEditor('gvColQuantity').GetValue() != null) ? grid.GetEditor('gvColQuantity').GetValue() : "0";
     _GetPurchasePriceValue = (grid.GetEditor('gvColStockPurchasePrice').GetValue() != null) ? grid.GetEditor('gvColStockPurchasePrice').GetValue() : "0";
     _GetDiscountValue = (grid.GetEditor('gvColDiscount').GetValue() != null) ? grid.GetEditor('gvColDiscount').GetValue() : "0";
     _GetAmountValue = (grid.GetEditor('gvColAmount').GetValue() != null) ? grid.GetEditor('gvColAmount').GetValue() : "0";
@@ -1843,7 +1963,26 @@ function PurchasePriceTextChange(s, e) {
                 tbTotalAmount.SetValue(Amount);
                 DiscountTextChange(s, e);                       
             }
-        }               
+        }    
+        if (parseFloat(QuantityValue) != parseFloat(_GetQuantityValue)) {
+            if (strRate == 0) {
+                strRate = 1;
+            }
+            var Amount = (QuantityValue * strFactor * (strPurPrice / strRate)).toFixed(2);
+            var tbAmount = grid.GetEditor("gvColAmount");
+            tbAmount.SetValue(Amount);
+            var tbTotalAmount = grid.GetEditor("gvColTotalAmountINR");
+            tbTotalAmount.SetValue(Amount);
+            $('#lblbranchName').text(strBranch);
+            var IsLinkedProduct = (grid.GetEditor('IsLinkedProduct').GetText() != null) ? grid.GetEditor('IsLinkedProduct').GetText() : "";
+            if (IsLinkedProduct != "Y") {
+                var tbAmount = grid.GetEditor("gvColAmount");
+                tbAmount.SetValue(Amount);
+                var tbTotalAmount = grid.GetEditor("gvColTotalAmountINR");
+                tbTotalAmount.SetValue(Amount);
+                DiscountTextChange(s, e);
+            }
+        }    
         var finalNetAmount = parseFloat(tbTotalAmount);
         var finalAmount = parseFloat(cbnrlblAmountWithTaxValue.GetValue()) + (finalNetAmount - globalNetAmount);
         cbnrlblAmountWithTaxValue.SetText(parseFloat(Math.round(Math.abs(finalAmount) * 100) / 100).toFixed(2));                

@@ -3,7 +3,9 @@
  1.0    v2.0.22     Sanchita	21/04/2021		New check box "Dont Consider in Profitability Report" introduced module Warehouse wise Stock Journal .
 												checkbox "NotInProfReport" added.
 												Refer:  23986
-  
+ 2.0	v2.0.38	    PRITI		07-04-2023      0025689:Alt Qty column & data is not showing while making Warehouse wise Stock out
+ 3.0	v2.0.39	    PRITI		06-07-2023      0026523: Unable to Save Warehouse wise Stock Journal
+
  ***********************************************************************************************************************************/
 
 using System;
@@ -1129,6 +1131,10 @@ namespace ERP.OMS.Management.Activities
                 tempWarehousedt.Columns.Add("TotalQuantity", typeof(string));
                 tempWarehousedt.Columns.Add("BatchID", typeof(string));
                 tempWarehousedt.Columns.Add("SerialID", typeof(string));
+                //Rev 3.0
+                tempWarehousedt.Columns.Add("MfgDate", typeof(string));
+                tempWarehousedt.Columns.Add("ExpiryDate", typeof(string));
+                //Rev 3.0 End
             }
 
             //End
