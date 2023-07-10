@@ -1,6 +1,6 @@
 ﻿//====================================================Revision History=========================================================================
-// 1.0  Priti   V2.0.36     Change Approval Realted Dev Express Table Bind to HTML table 
-
+// 1.0  Priti       V2.0.36                     Change Approval Realted Dev Express Table Bind to HTML table 
+// 2.0	Sanchita	V2.0.39		10/07/2023		Need to export Sales Order Amount column in the excel format. Refer: 26533
 //====================================================End Revision History=====================================================================
 
 
@@ -357,7 +357,9 @@ namespace ERP.OMS.Management.Activities
         }
         public void bindexport(int Filter)
         {
-            GrdOrder.Columns[5].Visible = false;
+            // Rev 2.0
+            //GrdOrder.Columns[5].Visible = false;
+            // End of Rev 2.0
             string filename = "Sales Order";
             exporter.FileName = filename;
             exporter.FileName = "SalesOrder";
