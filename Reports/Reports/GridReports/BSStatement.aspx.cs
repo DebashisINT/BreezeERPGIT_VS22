@@ -2,6 +2,9 @@
 //1.0   v2 .0.37    Debashis    01/06/2023  Running Balance Required in the Third Level Zooming report for PL - Horizontal & BS Horizontal from any Ledger.
 //                                          The Running Balance of the 3rd Level zooming of any ledger from PL - Horizontal & BS - Horizontal to be set as per Ledger Type
 //                                          Refer: 0026252 & 0026318
+//2.0   v2 .0.38    Debashis    10/07/2023  The third Level Zooming in Balance Sheet the Total is different from the Running Closing Balance if we click on
+//                                          the Party Row instead of on the Party Hyperlink
+//                                          Refer: 0026542
 #endregion =======================End of Revision History===================================================================================================
 
 using DevExpress.Web;
@@ -35,6 +38,7 @@ using System.Diagnostics;
 using System.Drawing.Printing;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.Web;
+using BusinessLogicLayer.YearEnding;
 
 namespace Reports.Reports.GridReports
 {
@@ -78,7 +82,10 @@ namespace Reports.Reports.GridReports
                 Session["BSZooming1"] = null;
                 Session["BSSTockSummary"] = null;
                 Session["BSStockDetails"] = null;
-                
+                //Rev 2.0
+                Session["LedgerType"] = null;
+                //End of Rev 2.0
+
                 //TreeList.CollapseAll();
                 //TreeList1.CollapseAll();
                 radAsDate.Attributes.Add("OnClick", "DateAll('all')");
@@ -767,11 +774,16 @@ namespace Reports.Reports.GridReports
                     return (DataTable)Session["BSZooming"];
                 }
                 else
-                {
+                {                   
                     DataSet ds = new DataSet();
                     //SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["DBConnectionDefault"]);
                     if (!string.IsNullOrEmpty(ledger))
                     {
+                        //Rev 2.0
+                        DataTable dtLedgerType = new DataTable();
+                        dtLedgerType = oDBEngine.GetDataTable("Select MainAccount_AccountType from Master_MainAccount Where CONVERT(NVARCHAR(100),MainAccount_ReferenceID)='" + ledger.Replace("M", "") + "'");
+                        Session["LedgerType"] = dtLedgerType.Rows[0][0].ToString();
+                        //End of Rev 2.0
                         SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
                         SqlCommand cmd = new SqlCommand("prcr_BSZooming", con);
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -1039,7 +1051,17 @@ namespace Reports.Reports.GridReports
         {
             //Rev 1.0
             //e.Text = string.Format("{0}", e.Value);
-            MainLedgerType = hdnLedgertype.Value.ToString();
+            //Rev 2.0
+            //MainLedgerType = hdnLedgertype.Value.ToString();
+            if (!string.IsNullOrEmpty(hdnEntity_Id.Value.ToString()))
+            {
+                MainLedgerType = Session["LedgerType"].ToString();
+            }
+            else
+            {
+                MainLedgerType = hdnLedgertype.Value.ToString();
+            }
+            //End of Rev 2.0
             if (e.Item.FieldName == "OPENING")
             {
                 TotalOpening = Convert.ToDecimal(e.Value);
