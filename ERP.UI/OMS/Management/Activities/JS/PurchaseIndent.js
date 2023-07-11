@@ -2,6 +2,7 @@
 //1.0     Priti    V2.0.36   17 - 02 - 2023     After Listing view upgradation delete data show in listing issue solved.
 //2.0     Pallab   V2.0.38   18 - 05 - 2023     26166: The Product Name and Description is too small in the Grid of Purchase Indent Module when the Screen Resolution is 1366X768
 //3.0     Sanchita V2.0.40   19 - 05 - 2023     Rate and Value is not populating in Purchase Indent with Multi UOM. Refer: 26164
+//4.0     Priti    V2.0.39   11 - 07 - 2023     0026549: A setting is required to enter the backdated entries in Purchase Indent
 //=========================================================End Revision History========================================================================
     $(function () {
             $('#UOMModal').on('hide.bs.modal', function () {
@@ -2401,29 +2402,18 @@ function CmbScheme_ValueChange() {
             var schemelength = schemetypeValue.toString().split('~')[1];
             $('#txtVoucherNo').attr('maxLength', schemelength);
             var branchID = schemetypeValue.toString().split('~')[2];
-
             var fromdate = schemetypeValue.toString().split('~')[3];
             var todate = schemetypeValue.toString().split('~')[4];
-
             var dt = new Date();
-
             ctDate.SetDate(dt);
-
             if (dt < new Date(fromdate)) {
                 ctDate.SetDate(new Date(fromdate));
             }
-
             if (dt > new Date(todate)) {
                 ctDate.SetDate(new Date(todate));
             }
-
-
-
-
             ctDate.SetMinDate(new Date(fromdate));
             ctDate.SetMaxDate(new Date(todate));
-
-
             document.getElementById('ddlBranch').value = branchID;
             document.getElementById('ddlBranch').disabled = true;
             if (schemetype == '0') {
@@ -2437,7 +2427,15 @@ function CmbScheme_ValueChange() {
                 document.getElementById('txtVoucherNo').disabled = true;
                 document.getElementById('txtVoucherNo').value = "Auto";
                 $("#MandatoryBillNo").hide();
-                ctDate.Focus();
+                //Rev 4.0
+                //ctDate.Focus();
+                if ($("#HdnBackDatedEntryPurchaseIndent").val() == "1") {
+                    ctDate.SetEnabled(true);
+                }
+                else {
+                    ctDate.SetEnabled(false);
+                }
+                 //Rev 4.0 End
             }
             else if (schemetype == '2') {
                 $('#hdnSchemaType').val('2');
