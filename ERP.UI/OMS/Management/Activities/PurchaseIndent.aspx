@@ -3,10 +3,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                13-04-2023        2.0.37           Pallab              25820: Purchase Indent/Requisition page design modification
 2.0                18-05-2023        2.0.38           Pallab              26166: The Product Name and Description is too small in the Grid of Purchase Indent Module when the Screen Resolution is 1366X768
 3.0                12-06-2023        2.0.38           Pallab              26325: Add Purchase Indent/Requisition grid columns visibility issue fix
+4.0                11-07-2023        2.0.39           Priti               0026549: A setting is required to enter the backdated entries in Purchase Indent
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Purchase Indent/Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseIndent.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseIndent" %>
-
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc3" TagName="UOMConversionControl" %>
@@ -19,7 +19,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
      <script src="JS/SearchPopupDatatable.js"></script>
     <%--Use for set focus on UOM after press ok on UOM--%>
 
-    <script src="JS/PurchaseIndent.js?v=5.2"></script>
+    <script src="JS/PurchaseIndent.js?v=5.3"></script>
     <script>
         function PageLoad() {
             FinYearCheckOnPageLoad();
@@ -2620,4 +2620,7 @@ function ProductsComboGotFocusChange(s, e) {
         <ClientSideEvents EndCallback="CallbackPanelEndCall" />
     </dxe:ASPxCallbackPanel>
     <%--End of Mantis Issue 25394--%>
+    <%--Rev 4.0 --%>
+     <asp:HiddenField ID="HdnBackDatedEntryPurchaseIndent" runat="server" />
+  <%--  Rev 4.0 End--%>
 </asp:Content>

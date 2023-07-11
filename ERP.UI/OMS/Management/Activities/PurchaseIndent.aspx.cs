@@ -1,4 +1,7 @@
-﻿using System;
+﻿//====================================================Revision History=========================================================================
+//Rev 1.0      Priti      V2.0.39   11-07-2023     0026549:A setting is required to enter the backdated entries in Purchase Indent
+//====================================================End Revision History=====================================================================
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -301,6 +304,20 @@ namespace ERP.OMS.Management.Activities
                     }
                 }
 
+                //Rev 1.0
+                string BackDatedEntryPurchaseIndent = cbl.GetSystemSettingsResult("BackDatedEntryPurchaseIndent");
+                if (!String.IsNullOrEmpty(BackDatedEntryPurchaseIndent))
+                {
+                    if (BackDatedEntryPurchaseIndent.ToUpper().Trim() == "YES")
+                    {
+                        HdnBackDatedEntryPurchaseIndent.Value = "1";
+                    }
+                    else if (BackDatedEntryPurchaseIndent.ToUpper().Trim() == "NO")
+                    {
+                        HdnBackDatedEntryPurchaseIndent.Value = "0";
+                    }
+                }
+                //Rev 1.0 End
                 // Mantis Issue 25235
                 string IsVendorRequiredInPurchaseIndent = cbl.GetSystemSettingsResult("IsVendorRequiredInPurchaseIndent");
 
