@@ -5,6 +5,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 2.0                08-02-2023        2.0.35           Pallab              New team member names add
 3.0                19-04-2023        2.0.38           Pallab              25856: Login page error fix
 4.0                04-05-2023        2.0.38           Pallab              25935: Event banner should dynamically change according to the date for ERP
+5.0                11-05-2023        2.0.39           Pallab              26548: Login page theme issue after page loading
 ====================================================== Revision History ===========================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" Inherits="pLogin"
@@ -893,19 +894,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 }
             })
         })
-        window.addEventListener('load', function (event) {
-            /*Rev 3.0*/
-            /*var theme = localStorage.getItem('theme').toString();*/
-            var theme = localStorage.getItem('theme');
-            /*Rev end 3.0*/
-            console.log(theme)
-            if (theme != '' || theme != undefined) {
-                $("#themeClass").attr('class', '').addClass(theme);
-            } else {
-                $("#themeClass").addClass('screenDark');
-            }
+        /*Rev 5.0*/
+        //window.addEventListener('load', function (event) {
+        //    /*Rev 3.0*/
+        //    /*var theme = localStorage.getItem('theme').toString();*/
+        //    var theme = localStorage.getItem('theme');
+        //    /*Rev end 3.0*/
+        //    console.log(theme)
+        //    if (theme != '' || theme != undefined) {
+        //        $("#themeClass").attr('class', '').addClass(theme);
+        //    } else {
+        //        $("#themeClass").addClass('screenDark');
+        //    }
 
-        });
+        //});
+        /*Rev end 5.0*/
     </script>
     <style>
         .styleList {
