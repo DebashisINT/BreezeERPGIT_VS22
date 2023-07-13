@@ -1,15 +1,17 @@
 ﻿//==================================================== Revision History ==================================================================================
-// 1.0  Priti  V2.0.38  10-07-2023   0026528:Project Purchase Order Terms & Condition are becoming Blank if Something is Pasted in the Payment Terms Field
+// 1.0  Priti  V2.0.39  13-07-2023   0026528:Project Purchase Order Terms & Condition are becoming Blank if Something is Pasted in the Payment Terms Field
 //====================================================End Revision History================================================================================
 
 using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
+using Org.BouncyCastle.Asn1.Cmp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -653,15 +655,348 @@ namespace ERP.OMS.Management.Activities.UserControls
         {
             try
             {
+                //REV 1.0
+                string doctype = TermsConditionData.Split('|')[0];
+                if(doctype=="@")
+                {
+                    doctype = "";
+                }
+
+                string DeliveryDate = TermsConditionData.Split('|')[1];                
+                if (DeliveryDate != "@")
+                {
+                    string DD = DeliveryDate.Substring(0, 2);
+                    string MM = DeliveryDate.Substring(3, 2);
+                    string YYYY = DeliveryDate.Substring(6, 4);
+                    string Date = YYYY + '-' + MM + '-' + DD;
+
+                    DeliveryDate = Date;
+                }
+                if (DeliveryDate == "@")
+                {
+                    DeliveryDate =null;
+                }
+                string Delremarks=TermsConditionData.Split('|')[2];
+                if (Delremarks == "@")
+                {
+                    Delremarks = "";
+                }
+                string insuranceType = TermsConditionData.Split('|')[3];
+                if (insuranceType == "@")
+                {
+                    insuranceType = null;
+                }
+                string FreightCharges = TermsConditionData.Split('|')[4];
+                if (FreightCharges == "@")
+                {
+                    FreightCharges = null;
+                }
+                string FreightRemarks = TermsConditionData.Split('|')[5];
+                if (FreightRemarks == "@")
+                {
+                    FreightRemarks = "";
+                }
+                string PermitValue = TermsConditionData.Split('|')[6];
+                if (PermitValue == "@")
+                {
+                    PermitValue = "";
+                }
+                string Remarks = TermsConditionData.Split('|')[7];
+                if (Remarks == "@")
+                {
+                    Remarks = "";
+                }
+                string DelDetails = TermsConditionData.Split('|')[8];
+                if (DelDetails == "@")
+                {
+                    DelDetails = null;
+                }
+                string otherlocation = TermsConditionData.Split('|')[9];
+                if (otherlocation == "@")
+                {
+                    otherlocation = "";
+                }
+                string CertReq = TermsConditionData.Split('|')[10];
+                if (CertReq == "@")
+                {
+                    CertReq = null;
+                }
+                string trnsprtrname = TermsConditionData.Split('|')[11];
+                if (trnsprtrname == "@")
+                {
+                    trnsprtrname = null;
+                }
+                string Discntrcv = TermsConditionData.Split('|')[12];
+                if (Discntrcv == "@")
+                {
+                    Discntrcv = null;
+                }
+                string Discntrcvdtls = TermsConditionData.Split('|')[13];
+                if (Discntrcvdtls == "@")
+                {
+                    Discntrcvdtls = "";
+                }
+                string CommissionRcv = TermsConditionData.Split('|')[14];
+                if (CommissionRcv == "@")
+                {
+                    CommissionRcv = null;
+                }
+                string CommissionRcvdtls = TermsConditionData.Split('|')[15];
+                if (CommissionRcvdtls == "@")
+                {
+                    CommissionRcvdtls = "";
+                }
+                string TypeOfImport = TermsConditionData.Split('|')[16];
+                if (TypeOfImport == "@")
+                {
+                    TypeOfImport = null;
+                }
+                string PaymentTrmRemarks = TermsConditionData.Split('|')[17];
+                if (PaymentTrmRemarks == "@")
+                {
+                    PaymentTrmRemarks = "";
+                }
+                string IncoDVTerms = TermsConditionData.Split('|')[18];
+                if (IncoDVTerms == "@")
+                {
+                    IncoDVTerms = null;
+                }
+                string IncoDVTermsRemarks = TermsConditionData.Split('|')[19];
+                if (IncoDVTermsRemarks == "@")
+                {
+                    IncoDVTermsRemarks = "";
+                }
+                string ShippmentSchedule = TermsConditionData.Split('|')[20];
+                if (ShippmentSchedule == "@")
+                {
+                    ShippmentSchedule = "";
+                }
+                string PortOfShippment = TermsConditionData.Split('|')[21];
+                if (PortOfShippment == "@")
+                {
+                    PortOfShippment = "";
+                }
+                string PortOfDestination = TermsConditionData.Split('|')[22];
+                if (PortOfDestination == "@")
+                {
+                    PortOfDestination = "";
+                }
+                string PartialShippment = TermsConditionData.Split('|')[23];
+                if (PartialShippment == "@")
+                {
+                    PartialShippment = null;
+                }
+                string Transshipment = TermsConditionData.Split('|')[24];
+                if (Transshipment == "@")
+                {
+                    Transshipment = null;
+                }
+                string PackingSpec = TermsConditionData.Split('|')[25];
+                if (PackingSpec == "@")
+                {
+                    PackingSpec = "";
+                }
+                string ValidityOfOrderDate = TermsConditionData.Split('|')[26];
+                if (ValidityOfOrderDate != "@")
+                {
+                    string DD = ValidityOfOrderDate.Substring(0, 2);
+                    string MM = ValidityOfOrderDate.Substring(3, 2);
+                    string YYYY = ValidityOfOrderDate.Substring(6, 4);
+                    string Date = YYYY + '-' + MM + '-' + DD;
+                    ValidityOfOrderDate = Date;
+                }
+                if (ValidityOfOrderDate == "@")
+                {
+                    ValidityOfOrderDate =null;
+                }          
+               
+                
+                string ValidityOfOrderRemarks = TermsConditionData.Split('|')[27];
+                if (ValidityOfOrderRemarks == "@")
+                {
+                    ValidityOfOrderRemarks = "";
+                }
+                string CountryOfOrigin = TermsConditionData.Split('|')[28];
+                if (CountryOfOrigin == "@")
+                {
+                    CountryOfOrigin = null;
+                }
+                string FreeDetentionPeriod = TermsConditionData.Split('|')[29];
+                if (FreeDetentionPeriod == "@")
+                {
+                    FreeDetentionPeriod = "";
+                }
+                string FreeDetentionPeriodRemark = TermsConditionData.Split('|')[30];
+                if (FreeDetentionPeriodRemark == "@")
+                {
+                    FreeDetentionPeriodRemark = "";
+                }
+                decimal CommissionRate = 0;
+                string _CommissionRate = TermsConditionData.Split('|')[31];
+                if (_CommissionRate == "@")
+                {
+                    CommissionRate = 0;
+                }
+                string BENumber = TermsConditionData.Split('|')[32];
+                if (BENumber == "@")
+                {
+                    BENumber = "";
+                }
+                string BEDate = TermsConditionData.Split('|')[33];
+                if (BEDate != "@")
+                {
+                    string DD = BEDate.Substring(0, 2);
+                    string MM = BEDate.Substring(3, 2);
+                    string YYYY = BEDate.Substring(6, 4);
+                    string Date = YYYY + '-' + MM + '-' + DD;
+                    BEDate = Date;
+                }
+                if (BEDate == "@")
+                {
+                    BEDate = null;
+                }
+                decimal BEValue = 0;
+                string _BEValue = TermsConditionData.Split('|')[34];
+                if (_BEValue == "@")
+                {
+                    BEValue = 0;
+                }
+                string Bank_Id = TermsConditionData.Split('|')[35];
+                if (Bank_Id == "@")
+                {
+                    Bank_Id = "";
+                }
+                string Bank_Branch = TermsConditionData.Split('|')[36];
+                if (Bank_Branch == "@")
+                {
+                    Bank_Branch = "";
+                }
+                string Bank_Address = TermsConditionData.Split('|')[37];
+                if (Bank_Address == "@")
+                {
+                    Bank_Address = "";
+                }
+                string Bank_Landmark = TermsConditionData.Split('|')[38];
+                if (Bank_Landmark == "@")
+                {
+                    Bank_Landmark = "";
+                }
+                string Bank_Pin = TermsConditionData.Split('|')[39];
+                if (Bank_Pin == "@")
+                {
+                    Bank_Pin = "";
+                }
+                string Bank_AcNo = TermsConditionData.Split('|')[40];
+                if (Bank_AcNo == "@")
+                {
+                    Bank_AcNo = "";
+                }
+                string Bank_SwiftCode = TermsConditionData.Split('|')[41];
+                if (Bank_SwiftCode == "@")
+                {
+                    Bank_SwiftCode = "";
+                }
+                string Bank_RTGSCode = TermsConditionData.Split('|')[42];
+                if (Bank_RTGSCode == "@")
+                {
+                    Bank_RTGSCode = "";
+                }
+                string Bank_IFSCCode = TermsConditionData.Split('|')[43];
+                if (Bank_IFSCCode == "@")
+                {
+                    Bank_IFSCCode = "";
+                }
+                string Bank_Remarks = TermsConditionData.Split('|')[44];
+                if (Bank_Remarks == "@")
+                {
+                    Bank_Remarks = "";
+                }
+                string TC_PaymentTerms = TermsConditionData.Split('|')[45];
+                if (TC_PaymentTerms == "@")
+                {
+                    TC_PaymentTerms = "";
+                }
+                string Project = TermsConditionData.Split('|')[46];
+                if (Project == "@")
+                {
+                    Project = "";
+                }
+
+
+
+                DataSet dsInst = new DataSet();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("Prc_TermsConditions", con);                
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Action", "ADDEditTermsCondition");
+                cmd.Parameters.AddWithValue("@DeliveryDate", DeliveryDate);
+                cmd.Parameters.AddWithValue("@Delremarks", Delremarks);
+                cmd.Parameters.AddWithValue("@insuranceType", insuranceType);
+                cmd.Parameters.AddWithValue("@FreightCharges", FreightCharges);
+                cmd.Parameters.AddWithValue("@FreightRemarks", FreightRemarks);
+                cmd.Parameters.AddWithValue("@PermitValue", PermitValue);
+                cmd.Parameters.AddWithValue("@Remarks", Remarks);
+                cmd.Parameters.AddWithValue("@DelDetails", DelDetails);
+                cmd.Parameters.AddWithValue("@otherlocation", otherlocation);
+                cmd.Parameters.AddWithValue("@CertReq", CertReq);
+                cmd.Parameters.AddWithValue("@trnsprtrname", trnsprtrname);
+                cmd.Parameters.AddWithValue("@Discntrcv", Discntrcv);
+                cmd.Parameters.AddWithValue("@Discntrcvdtls", Discntrcvdtls);
+                cmd.Parameters.AddWithValue("@CommissionRcv", CommissionRcv);
+                cmd.Parameters.AddWithValue("@CommissionRcvdtls", CommissionRcvdtls);
+                cmd.Parameters.AddWithValue("@TypeOfImport", TypeOfImport);
+                cmd.Parameters.AddWithValue("@PaymentTrmRemarks", PaymentTrmRemarks);
+                cmd.Parameters.AddWithValue("@IncoDVTerms", IncoDVTerms);
+                cmd.Parameters.AddWithValue("@IncoDVTermsRemarks", IncoDVTermsRemarks);
+                cmd.Parameters.AddWithValue("@ShippmentSchedule", ShippmentSchedule);
+                cmd.Parameters.AddWithValue("@PortOfShippment", PortOfShippment);
+                cmd.Parameters.AddWithValue("@PortOfDestination", PortOfDestination);
+                cmd.Parameters.AddWithValue("@PartialShippment", PartialShippment);
+                cmd.Parameters.AddWithValue("@Transshipment", Transshipment);
+                cmd.Parameters.AddWithValue("@PackingSpec", PackingSpec);
+                cmd.Parameters.AddWithValue("@ValidityOfOrderDate", ValidityOfOrderDate);
+                cmd.Parameters.AddWithValue("@ValidityOfOrderRemarks", ValidityOfOrderRemarks);
+                cmd.Parameters.AddWithValue("@CountryOfOrigin", CountryOfOrigin);
+                cmd.Parameters.AddWithValue("@FreeDetentionPeriod", FreeDetentionPeriod);
+                cmd.Parameters.AddWithValue("@FreeDetentionPeriodRemark", FreeDetentionPeriodRemark);
+                cmd.Parameters.AddWithValue("@CommissionRate", CommissionRate);
+                cmd.Parameters.AddWithValue("@BENumber", BENumber);
+                cmd.Parameters.AddWithValue("@BEDate", BEDate);
+                cmd.Parameters.AddWithValue("@BEValue", BEValue);
+                cmd.Parameters.AddWithValue("@Bank_Id", Bank_Id);
+                cmd.Parameters.AddWithValue("@Bank_Branch", Bank_Branch);
+                cmd.Parameters.AddWithValue("@Bank_Address", Bank_Address);
+                cmd.Parameters.AddWithValue("@Bank_Landmark", Bank_Landmark);
+                cmd.Parameters.AddWithValue("@Bank_Pin", Bank_Pin);
+                cmd.Parameters.AddWithValue("@Bank_AcNo", Bank_AcNo);
+                cmd.Parameters.AddWithValue("@Bank_SwiftCode", Bank_SwiftCode);
+                cmd.Parameters.AddWithValue("@Bank_RTGSCode", Bank_RTGSCode);
+                cmd.Parameters.AddWithValue("@Bank_IFSCCode", Bank_IFSCCode);
+                cmd.Parameters.AddWithValue("@Bank_Remarks", Bank_Remarks);
+                cmd.Parameters.AddWithValue("@TC_PaymentTerms", TC_PaymentTerms);
+                cmd.Parameters.AddWithValue("@Project", Project);
+                cmd.Parameters.AddWithValue("@DocId", DocId);
+                cmd.Parameters.AddWithValue("@DocType", DocType);
+
+
+                SqlParameter output = new SqlParameter("@ReturnValue", SqlDbType.Int);
+                output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(output);
+
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter Adap = new SqlDataAdapter();
+                Adap.SelectCommand = cmd;
+                Adap.Fill(dsInst);
+                Int64 ReturnValue = Convert.ToInt64(output.Value);
+
+
                 ProcedureExecute proc = new ProcedureExecute("SP_TC_CRUD");
-                //Rev 1.0
-                //proc.AddVarcharPara("@TermsConditionData", 500, TermsConditionData);
-                proc.AddVarcharPara("@TermsConditionData", 4000, TermsConditionData);
-                //Rev 1.0 End
+                proc.AddVarcharPara("@TermsConditionData", 500, TermsConditionData);               
                 proc.AddVarcharPara("@DocId", 500, DocId);
                 proc.AddVarcharPara("@DocType", 500, DocType);
-                //DataSet dt = proc.GetDataSet();
                 int _Ret = proc.RunActionQuery();
+
+                //REV 1.0 END
             }
             catch (Exception ex) { }
         }
