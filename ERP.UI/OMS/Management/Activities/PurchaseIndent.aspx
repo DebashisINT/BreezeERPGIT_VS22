@@ -19,7 +19,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
      <script src="JS/SearchPopupDatatable.js"></script>
     <%--Use for set focus on UOM after press ok on UOM--%>
 
-    <script src="JS/PurchaseIndent.js?v=5.3"></script>
+    <script src="JS/PurchaseIndent.js?v=5.4"></script>
     <script>
         function PageLoad() {
             FinYearCheckOnPageLoad();
