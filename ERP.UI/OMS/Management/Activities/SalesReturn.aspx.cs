@@ -1,5 +1,6 @@
 ﻿#region//====================================================Revision History=========================================================================
-// 1.0  Priti   V2.0.37    02-03-2023    0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
+// 1.0   Priti     V2.0.37    02-03-2023      0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
+// 2.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
 #endregion//====================================================End Revision History=====================================================================
 
 
@@ -1654,6 +1655,31 @@ namespace ERP.OMS.Management.Activities
                                 //    }
                                 //}
                                 // End of Mantis Issue 24428
+
+                                // Rev 2.0
+                                DataRow[] MultiUoMresult;
+
+                                MultiUoMresult = dtb.Select("SrlNo ='" + strSrlNo + "' and UpdateRow ='True'");
+
+                                if (MultiUoMresult.Length > 0)
+                                {
+                                    if ((Convert.ToDecimal(MultiUoMresult[0]["Quantity"]) != Convert.ToDecimal(dr["Quantity"])) ||
+                                        (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["AltQuantity"]), 2) != Math.Round(Convert.ToDecimal(dr["Order_AltQuantity"]), 2)) ||
+                                        (Math.Round(Convert.ToDecimal(MultiUoMresult[0]["BaseRate"]), 2) != Math.Round(Convert.ToDecimal(dr["SalePrice"]), 2))
+                                        )
+                                    {
+                                        validate = "checkMultiUOMData_QtyMismatch";
+                                        grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    validate = "checkMultiUOMData_NotFound";
+                                    grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
+                                    break;
+                                }
+                                // End of Rev 2.0
                             }
                             else if (dtb.Rows.Count < 1)
                             {
@@ -1826,8 +1852,13 @@ namespace ERP.OMS.Management.Activities
                 }
 
                 //// ############# Added By : Samrat Roy -- 02/05/2017 -- To check Transporter Mandatory Control 
-                    
-                if (validate == "outrange" || validate == "duplicate" || validate == "checkWarehouse" || validate == "duplicateProduct" || validate == "nullAmount" || validate == "nullQuantity" || validate == "transporteMandatory" || validate == "checkAddress" || validate == "EmptyPlaceOfsupply" || validate == "checkMultiUOMData" || validate == "checkAcurateTaxAmount")
+                
+                // Rev 2.0 [validate == "checkMultiUOMData_QtyMismatch", "checkMultiUOMData_NotFound" added]    
+                if (validate == "outrange" || validate == "duplicate" || validate == "checkWarehouse" || validate == "duplicateProduct" 
+                    || validate == "nullAmount" || validate == "nullQuantity" || validate == "transporteMandatory" || validate == "checkAddress"
+                    || validate == "EmptyPlaceOfsupply" || validate == "checkMultiUOMData" || validate == "checkAcurateTaxAmount"
+                    || validate == "checkMultiUOMData_QtyMismatch" || validate == "checkMultiUOMData_NotFound"
+                    )
                 {
                     grid.JSProperties["cpSaveSuccessOrFail"] = validate;
                 }
