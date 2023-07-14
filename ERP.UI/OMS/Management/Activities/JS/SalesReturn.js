@@ -1,5 +1,6 @@
 ﻿//====================================================Revision History =========================================================================
-//1.0  Priti   V2.0.37    05 - 03 - 2023    0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
+//1.0   Priti     V2.0.37    05-03-2023      0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
+//2.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
 //====================================================End Revision History=====================================================================
 
 var strProAlt = '';
@@ -166,7 +167,27 @@ $(function () {
     });
 });
 
+// Rev 2.0
+$(function () {
+    $(".allownumericwithdecimal").on("keypress keyup blur", function (event) {
+        var patt = new RegExp(/[0-9]*[.]{1}[0-9]{4}/i);
+        var matchedString = $(this).val().match(patt);
+        if (matchedString) {
+            $(this).val(matchedString);
+        }
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+
+    });
+});
+// End of Rev 2.0
+
 function closeMultiUOM(s, e) {
+    // Rev 2.0
+    cbtn_SaveRecords_N.SetVisible(true);
+    cbtn_SaveRecords_p.SetVisible(true);
+    // End of Rev 2.0
     e.cancel = false;
     // cPopup_MultiUOM.Hide();
 }
@@ -230,6 +251,18 @@ function PopulateMultiUomAltQuantity() {
 function SaveMultiUOM() {
 
     //grid.GetEditor('ProductID').GetText().split("||@||")[3];
+
+    // Rev 2.0
+    document.getElementById('lblInfoMsg').innerHTML = "";
+
+    if ($("#UOMQuantity").val() != 0 || cAltUOMQuantity.GetValue() != 0) {
+        LoadingPanelMultiUOM.Show();
+        setTimeout(() => {
+            LoadingPanelMultiUOM.Hide();
+
+        }, 1000)
+    }
+    // End of Rev 2.0
 
     var qnty = $("#UOMQuantity").val();
 
@@ -377,6 +410,9 @@ function OnMultiUOMEndCallback(s, e) {
         // Rev Sanchita
         SalePriceTextChange(null, null);
         // End of Rev Sanchita
+        // Rev 2.0
+        cPopup_MultiUOM.Hide();  // closeMultiUOM() IS CALLED FROM WHERE SAVE BUTTONS AGAIN BECOMES VISIBLE
+        // End of Rev 2.0
      
     }
     if (cgrid_MultiUOM.cpAllDetails == "EditData") {
@@ -424,7 +460,10 @@ function FinalMultiUOM() {
         return;
     }
     else {
-        cPopup_MultiUOM.Hide();
+        // Rev 2.0
+        //cPopup_MultiUOM.Hide();
+        // End of Rev 2.0
+
         // Mantis Issue 24428 
         grid.batchEditApi.StartEdit(hdVisiableIndex.value);
         var SLNo = grid.GetEditor('SrlNo').GetValue();
@@ -820,11 +859,21 @@ document.onkeydown = function (e) {
     if (event.keyCode == 83 && event.altKey == true && getUrlVars().req != "V") {
         //  alert('kkk'); //run code for Alt + n -- ie, Save & New
         StopDefaultAction(e);
-        Save_ButtonClick();
+        // Rev 2.0
+        //Save_ButtonClick();
+        if (document.getElementById('btn_SaveRecords').style.display != 'none') {
+            Save_ButtonClick();
+        }
+        // End of Rev 2.0
     }
     else if (event.keyCode == 88 && event.altKey == true && getUrlVars().req != "V") { //run code for alt+X -- ie, Save & Exit!                
         StopDefaultAction(e);
-        SaveExit_ButtonClick();
+        // Rev 2.0
+        //SaveExit_ButtonClick();
+        if (document.getElementById('ASPxButton1').style.display != 'none') {
+            SaveExit_ButtonClick();
+        }
+        // End of Rev 2.0
     }
 
     else if (event.keyCode == 85 && event.altKey == true) { //run code for alt+U -- ie, Save & Exit!                 
@@ -867,19 +916,34 @@ document.onkeyup = function (e) {
             case 78:
                 StopDefaultAction(e);
                 if (getUrlVars().req != "V") {
-                    Save_ButtonClick();
+                    // Rev 2.0
+                    //Save_ButtonClick();
+                    if (document.getElementById('btn_SaveRecords').style.display != 'none') {
+                        Save_ButtonClick();
+                    }
+                    // End of Rev 2.0
                 }
                 break;
             case 88:
                 StopDefaultAction(e);
                 if (getUrlVars().req != "V") {
-                    SaveExit_ButtonClick();
+                    // Rev 2.0
+                    //SaveExit_ButtonClick();
+                    if (document.getElementById('ASPxButton1').style.display != 'none') {
+                        SaveExit_ButtonClick();
+                    }
+                    // End of Rev 2.0
                 }
                 break;
             case 120:
                 StopDefaultAction(e);
                 if (getUrlVars().req != "V") {
-                    SaveExit_ButtonClick();
+                    // Rev 2.0
+                    //SaveExit_ButtonClick();
+                    if (document.getElementById('ASPxButton1').style.display != 'none') {
+                        SaveExit_ButtonClick();
+                    }
+                    // End of Rev 2.0
                 }
                 break;
             case 84:
@@ -2045,6 +2109,10 @@ function PopulateGSTCSTVAT(e) {
 
         cddlVatGstCst.SetSelectedIndex(0);
         cbtn_SaveRecords.SetVisible(true);
+        // Rev 2.0
+        cbtn_SaveRecords_N.SetVisible(true);
+        cbtn_SaveRecords_p.SetVisible(true);
+        // End of Rev 2.0
         grid.GetEditor('ProductID').Focus();
         if (grid.GetVisibleRowsOnPage() == 1) {
             grid.batchEditApi.StartEdit(-1, 2);
@@ -2058,6 +2126,10 @@ function PopulateGSTCSTVAT(e) {
         cddlVatGstCst.PerformCallback('2');
         cddlVatGstCst.Focus();
         cbtn_SaveRecords.SetVisible(true);
+        // Rev 2.0
+        cbtn_SaveRecords_N.SetVisible(true);
+        cbtn_SaveRecords_p.SetVisible(true);
+        // End of Rev 2.0
     }
     else if (key == 3) {
 
@@ -2065,6 +2137,10 @@ function PopulateGSTCSTVAT(e) {
         cddlVatGstCst.SetSelectedIndex(0);
         cddlVatGstCst.SetEnabled(false);
         cbtn_SaveRecords.SetVisible(false);
+        // Rev 2.0
+        cbtn_SaveRecords_N.SetVisible(false);
+        cbtn_SaveRecords_p.SetVisible(false);
+        // End of Rev 2.0
         if (grid.GetVisibleRowsOnPage() == 1) {
             grid.batchEditApi.StartEdit(-1, 2);
         }
@@ -3636,6 +3712,11 @@ function OnCustomButtonClick(s, e) {
                     ccmbAltRate.SetValue(0)
                     ccmbSecondUOM.SetValue("")
                     // End of Mantis Issue 24428
+                    // Rev 2.0
+                    document.getElementById('lblInfoMsg').innerHTML = "";
+                    cbtn_SaveRecords_N.SetVisible(false);
+                    cbtn_SaveRecords_p.SetVisible(false);
+                    // End of Rev 2.0
                     cPopup_MultiUOM.Show();
                     cgrid_MultiUOM.cpDuplicateAltUOM = "";
                     // if ($("#hdnPageStatus").val() != "update") {
@@ -4678,6 +4759,7 @@ function closeWarehouse(s, e) {
     cGrdWarehouse.PerformCallback('WarehouseDelete');
     $('#abpl').popover('hide');//Subhabrata
 }
+
 
 function OnWarehouseEndCallback(s, e) {
     var Ptype = document.getElementById('hdfProductType').value;

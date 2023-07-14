@@ -2,6 +2,7 @@
  1.0   Priti     V2.0.37    05-03-2023      0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
  2.0   Pallab    V2.0.37    12-04-2023     	0025992: Add Sales Return module design modification & check in small device
  3.0   Pallab    V2.0.38    17-05-2023     	0026153: In Add Sales Return module, after select customer, module "cross button" is hiding, should be fix
+ 4.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
 ====================================================End Revision History=====================================================================
 --%>
 
@@ -474,6 +475,26 @@ function OnEndCallback(s, e) {
                 jAlert(msg);
                 OnAddNewClick();
             }
+            // Rev 4.0
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_QtyMismatch") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Please check Multi UOM details for SL No. not matching with outer grid " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData_NotFound") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Multi UOM details not given for SL No. " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            // End of Rev 4.0
             else if (grid.cpSaveSuccessOrFail == "checkAddress") {
                 LoadingPanel.Hide();
                 jAlert('Enter Billing Shipping address to save this document.');
@@ -2260,12 +2281,21 @@ display: none !important;
                                         <div class="" id="divSubmitButton" runat="server">
                                             <asp:Label ID="lbl_quotestatusmsg" runat="server" Text="" Font-Bold="true" ForeColor="Red" Font-Size="Medium"></asp:Label>
 
-                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                            <%--Rev 4.0--%>
+                                            <%--<dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                             </dxe:ASPxButton>
                                             <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
+                                            </dxe:ASPxButton>--%>
+
+                                            <dxe:ASPxButton ID="btn_SaveRecords" ClientInstanceName="cbtn_SaveRecords_N" runat="server" AutoPostBack="False" Text="Save & N&#818;ew" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                                <ClientSideEvents Click="function(s, e) {Save_ButtonClick();}" />
                                             </dxe:ASPxButton>
+                                            <dxe:ASPxButton ID="ASPxButton1" ClientInstanceName="cbtn_SaveRecords_p" runat="server" AutoPostBack="False" Text="Save & Ex&#818;it" CssClass="btn btn-success" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                                <ClientSideEvents Click="function(s, e) {SaveExit_ButtonClick();}" />
+                                            </dxe:ASPxButton>
+                                            <%--End of Rev 4.0--%>
 
                                             <dxe:ASPxButton ID="ASPxButton2" ClientInstanceName="cbtn_SaveRecords" runat="server" AutoPostBack="False" Text="U&#818;DF" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {if(OpenUdf()){ return false}}" />
@@ -3984,7 +4014,8 @@ display: none !important;
         </ContentStyle>
         <ContentCollection>
             <dxe:PopupControlContentControl runat="server">
-                <div class="Top clearfix">
+                <%--Rev 4.0 [ id="divMultiUOM" added ] --%>
+                <div class="Top clearfix" id="divMultiUOM">
 
 
 
@@ -4001,7 +4032,10 @@ display: none !important;
                                             <div>
                                                 <%--Rev Sanchita--%>
                                                 <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" />--%>
-                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
+                                                <%--Rev 4.0--%>
+                                                <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />--%>
+                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onfocusout="CalcBaseRate()" placeholder="0.0000" />
+                                                <%--End of Rev 4.0--%>
                                                 <%--End of Rev Sanchita--%>
                                             </div>
                                         </div>
@@ -4026,7 +4060,10 @@ display: none !important;
                                             <label>Base Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>
+                                            <%--Rev 4.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>--%>
+                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>
+                                            <%--End of Rev 4.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -4056,7 +4093,10 @@ display: none !important;
                                             <%-- <input type="text" id="AltUOMQuantity" style="text-align:right;"  maxlength="18" class="allownumericwithdecimal"/>--%>
                                             <dxe:ASPxTextBox ID="AltUOMQuantity" runat="server" ClientInstanceName="cAltUOMQuantity" DisplayFormatString="0.0000" MaskSettings-Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                    <%--Mantis Issue 24428--%>
-                                                <ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />
+                                                <%--Rev 4.0--%>
+                                                <%--<ClientSideEvents TextChanged="function(s,e) { CalcBaseQty();}" />--%>
+                                                <ClientSideEvents LostFocus="function(s,e) { CalcBaseQty();}" />
+                                                <%--End of Rev 4.0--%>
                                                 <%--End of Mantis Issue 24428--%>
                                             </dxe:ASPxTextBox>
                                         </div>
@@ -4069,9 +4109,14 @@ display: none !important;
                                             <label>Alt Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
+                                            <%--Rev 4.0--%>
+                                            <%--<dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
                                                 <ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />
+                                            </dxe:ASPxTextBox>--%>
+                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.00" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..99&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
+                                                <ClientSideEvents LostFocus="function(s,e) { CalcBaseRate();}" />
                                             </dxe:ASPxTextBox>
+                                            <%--End of Rev 4.0--%>
                                         </div>
                                     </div>
                                 </td>
@@ -4080,8 +4125,10 @@ display: none !important;
                                         <div>
                                             
                                         </div>
-                                        <div>
-                                            <label class="checkbox-inline mlableWh">
+                                        <%--Rev 4.0 [ class="mlableWh" added] --%>
+                                        <div class="mlableWh" >
+                                            <%--Rev 4.0 [ class="mlableWh" removed --%>
+                                            <label class="checkbox-inline ">
                                                 <input type="checkbox" id="chkUpdateRow"  />
                                                 <span style="margin: 0px 0; display: block">
                                                     <dxe:ASPxLabel ID="ASPxLabel18" runat="server" Text="Update Row">
@@ -4182,6 +4229,9 @@ display: none !important;
                             <dxe:ASPxButton ID="ASPxButton7" ClientInstanceName="cbtnfinalUomSave" Width="50px" runat="server" AutoPostBack="False" Text="Save" CssClass="btn btn-primary">
                                 <ClientSideEvents Click="function(s, e) {FinalMultiUOM();}" />
                             </dxe:ASPxButton>
+                            <%--Rev 4.0--%>
+                            <label id="lblInfoMsg" style="font-weight:bold; color:red; " > </label>
+                            <%--End of Rev 4.0--%>
                         </div>
                     </div>
                 </div>
@@ -4263,4 +4313,9 @@ display: none !important;
     <asp:HiddenField runat="server" ID="hdnpackingqty" />
     <asp:HiddenField runat="server" ID="hdnuomFactor" />
   <%--  Rev 1.0 End--%>
+    <%--Rev 4.0--%>
+    <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOM" runat="server" ClientInstanceName="LoadingPanelMultiUOM" ContainerElementID="divMultiUOM"
+        Modal="True">
+    </dxe:ASPxLoadingPanel>
+    <%--End of Rev 4.0--%>
 </asp:Content>
