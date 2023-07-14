@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer;
+﻿
+using BusinessLogicLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
@@ -459,6 +460,7 @@ namespace Manufacturing.Controllers
                             obj.BOMProductsID = Convert.ToInt64(item.BOMProductsID);
                             obj.Qty = Convert.ToDecimal(item.ProductQty);
                             obj.Amount = Convert.ToDecimal(item.Amount);
+                           
                             udtlist.Add(obj);
                         }
                     }

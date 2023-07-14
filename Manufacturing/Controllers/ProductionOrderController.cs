@@ -52,9 +52,9 @@ namespace Manufacturing.Controllers
             //Rev 1.0
             string IsConsiderProductPackagingQtyInProductionOrder = cSOrder.GetSystemSettingsResult("IsConsiderProductPackagingQtyInProductionOrder");
             //Rev 1.0 End
-            //Rev 1.0
+            //Rev 2.0
             string IsRateEditableinProductionOrder = cSOrder.GetSystemSettingsResult("IsRateEditableinProductionOrder");
-            //Rev 1.0 End
+            //Rev 2.0 End
 
             string ProjectSelectInEntryModule = cSOrder.GetSystemSettingsResult("ProjectSelectInEntryModule");        
             try
@@ -476,6 +476,9 @@ namespace Manufacturing.Controllers
                             obj.BOMProductionQty = Convert.ToDecimal(item.BOMProductionQty);
                             obj.sProduct_packageqty = Convert.ToDecimal(item.sProduct_packageqty);
                             //Rev 1.0 End
+                            //Rev 2.0
+                            obj.Price = Convert.ToDecimal(item.Price);
+                            //Rev 2.0 End
                             udtlist.Add(obj);
                         }
                     }
@@ -1255,16 +1258,16 @@ namespace Manufacturing.Controllers
             DataTable dt = objCRMSalesOrderDtlBL.GetValueForProductFifoValuation(Convert.ToInt32(Pro_Id),
                                                 Convert.ToDecimal(Qty), Valuationsign, Fromdate,
                                                 Fromdate, BranchId);
-            string ValuationAmount = "0.00";
+            Decimal ValuationAmount =0;
             if (dt != null)
             {
                 if (dt.Rows.Count > 0)
                 {
-                    ValuationAmount = Convert.ToString(dt.Rows[0]["VALUE"]);
+                    ValuationAmount = Convert.ToDecimal(dt.Rows[0]["VALUE"]);
                 }
             }
 
-            obj.ValuationAmount = ValuationAmount;
+            obj.ValuationAmount = Math.Round(ValuationAmount,2);
             return Json(obj);
         }
 
@@ -1277,7 +1280,7 @@ namespace Manufacturing.Controllers
     }
     public class ValuationAmountData
     {
-        public String ValuationAmount { get; set; }
+        public Decimal ValuationAmount { get; set; }
     }
     //Rev 2.0 End
 

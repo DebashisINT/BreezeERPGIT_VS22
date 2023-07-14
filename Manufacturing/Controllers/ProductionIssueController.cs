@@ -3,6 +3,7 @@
 //     2.0  Priti V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
 //     3.0  Priti V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
 //     4.0  Priti V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
+//     5.0  Priti V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
 //====================================================End Revision History=====================================================================*@
 
 using BusinessLogicLayer;
@@ -20,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services;
 using System.Web.UI.WebControls;
 using UtilityLayer;
 
@@ -74,6 +76,12 @@ namespace Manufacturing.Controllers
             //REV 1.0
             string IsMRPTaggingIssueForProduction = cSOrder.GetSystemSettingsResult("IsMRPTaggingIssueForProduction");
             //REV 1.0 End
+
+            //Rev 5.0
+            string IsRateEditableinProductionIssue = cSOrder.GetSystemSettingsResult("IsRateEditableinProductionIssue");
+            //Rev 5.0 End
+
+
             if (!String.IsNullOrEmpty(HierarchySelectInEntryModule))
             {
                 if (HierarchySelectInEntryModule.ToUpper().Trim() == "YES")
@@ -220,6 +228,10 @@ namespace Manufacturing.Controllers
             ViewBag.IsMRPMandatoryIssueforProduction = IsMRPMandatoryIssueforProduction;
             ViewBag.ConsiderExcessQty = IsConsiderExcessQtyIssueforProduction;
             //Rev 3.0 End
+
+            //Rev 5.0
+            ViewBag.IsRateEditableinProductionIssue = IsRateEditableinProductionIssue;
+            //Rev 5.0 End
             TempData["Count"] = 1;
             TempData.Keep();
 
@@ -2023,6 +2035,44 @@ namespace Manufacturing.Controllers
 
             return settings;
         }
-        
+
+        //Rev 5.0
+        [WebMethod]
+        public JsonResult GetStockValuation(string ProductId)
+        {
+            StockValuationData obj = new StockValuationData();
+            CRMSalesOrderDtlBL objCRMSalesOrderDtlBL = new CRMSalesOrderDtlBL();
+            DataTable dt = objCRMSalesOrderDtlBL.GetProductFifoValuation(Convert.ToInt32(ProductId));
+            string Stock_Valuation = "";
+            if (dt.Rows.Count > 0)
+            {
+                Stock_Valuation = Convert.ToString(dt.Rows[0]["Stockvaluation"]);
+            }
+            obj.StockValuation = Stock_Valuation;
+            return Json(obj);
+        }
+        [WebMethod]
+        public JsonResult GetStockValuationAmount(string Pro_Id, string Qty, string Valuationsign, string Fromdate, string BranchId)
+        {
+            ValuationAmountData obj = new ValuationAmountData();
+            CRMSalesOrderDtlBL objCRMSalesOrderDtlBL = new CRMSalesOrderDtlBL();
+            DataTable dt = objCRMSalesOrderDtlBL.GetValueForProductFifoValuation(Convert.ToInt32(Pro_Id),
+                                                Convert.ToDecimal(Qty), Valuationsign, Fromdate,
+                                                Fromdate, BranchId);
+            Decimal ValuationAmount = 0;
+            if (dt != null)
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    ValuationAmount = Convert.ToDecimal(dt.Rows[0]["VALUE"]);
+                }
+            }
+
+            obj.ValuationAmount = Math.Round(ValuationAmount, 2);
+            return Json(obj);
+        }
+
+        //Rev 5.0 End
+
     }
 }

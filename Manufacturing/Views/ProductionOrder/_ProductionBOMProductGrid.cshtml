@@ -147,10 +147,13 @@
         x.Width = System.Web.UI.WebControls.Unit.Pixel(140);
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
-        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;       
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<00..99>";
-       // x.ReadOnly = true;      
+        // x.ReadOnly = true;      
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
+
     });
 
     settings.Columns.Add(x =>

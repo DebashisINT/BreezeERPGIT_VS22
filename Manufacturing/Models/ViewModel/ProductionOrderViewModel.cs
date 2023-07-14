@@ -1,5 +1,7 @@
 ﻿//@*==================================================== Revision History =========================================================================
-//1.0  Priti V2.0.38    19-06-2023  0026367:In Production Order Qty:  1.A New field required in Production Order Module called 'BOMProductionQty'
+// 1.0  Priti  V2.0.38    19-06-2023  0026367:In Production Order Qty:  1.A New field required in Production Order Module called 'BOMProductionQty'
+// 2.0  Priti  V2.0.39    14-07-2023  0026384:Show valuation rate feature is required in Production Order module
+
 //====================================================End Revision History=====================================================================*@
 
 using Manufacturing.Models.ViewModel.BOMEntryModel;
@@ -102,15 +104,16 @@ namespace Manufacturing.Models.ViewModel
     public class udtProductionOrderDetails
     {
         public Int64 BOMProductsID { get; set; }
-
         public Decimal Qty { get; set; }
-
         public Decimal Amount { get; set; }
-
         //Rev 1.0
         public Decimal BOMProductionQty { get; set; }
         public Decimal sProduct_packageqty { get; set; }
         //Rev 1.0 End
+
+        //REV 2.0
+        public Decimal Price { get; set; }
+        //REV 2.0 End
     }
 
 

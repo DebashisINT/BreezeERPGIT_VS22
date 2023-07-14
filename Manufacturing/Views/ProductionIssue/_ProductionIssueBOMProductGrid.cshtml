@@ -57,46 +57,43 @@
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         x.ReadOnly = true;
-        //x.Settings.AllowSort = false;
+        //REV 2.0
+        DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
+        txtEditProperties.ClientSideEvents.GotFocus = "ProductGotFocus";
+        //REV 2.0 END
     });
     settings.Columns.Add(x =>
     {
         x.FieldName = "ProductDescription";
         x.Caption = "Description";
-        x.ReadOnly = true;
-        //x.VisibleIndex = 7;
+        x.ReadOnly = true;        
         x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        //x.Settings.AllowSort = false;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;       
     });
     settings.Columns.Add(x =>
     {
         x.FieldName = "DesignNo";
         x.Caption = "Drawing No.";
-        x.ReadOnly = true;
-        //x.VisibleIndex = 7;
+        x.ReadOnly = true;       
         x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        //x.Settings.AllowSort = false;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;       
     });
     settings.Columns.Add(x =>
     {
         x.FieldName = "ItemRevisionNo";
         x.Caption = "Drawing Rev.No.";
-        x.ReadOnly = true;
-        //x.VisibleIndex = 7;
+        x.ReadOnly = true;        
         x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        //x.Settings.AllowSort = false;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;       
     });
     settings.Columns.Add(x =>
     {
