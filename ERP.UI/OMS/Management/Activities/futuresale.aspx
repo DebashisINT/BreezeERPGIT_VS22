@@ -950,7 +950,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                     <EditFormSettings Visible="False" />
                                                                 </dxe:GridViewDataTextColumn>
                                                                  <%--Rev 2.0--%>
-                                                                <dxe:GridViewDataTextColumn FieldName="CITYNAME" VisibleIndex="20" Caption="City" Settings-AllowAutoFilterTextInputTimer="False">
+                                                                <dxe:GridViewDataTextColumn FieldName="CITYNAME" VisibleIndex="20" Caption="District" Settings-AllowAutoFilterTextInputTimer="False">
                                                                 </dxe:GridViewDataTextColumn>
 
                                                                 <dxe:GridViewDataTextColumn FieldName="STATENAME" VisibleIndex="21" Caption="State" Settings-AllowAutoFilterTextInputTimer="False">
