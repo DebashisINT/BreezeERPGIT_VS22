@@ -6,7 +6,7 @@
     5.0  Pallab  V2.0.38    31-05-2023  0026266: Issue for Production "Production Order No." dropdown issue fix
     6.0  Priti   V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
     7.0  Priti   V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
-
+    8.0  Priti   V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
     ====================================================End Revision History=====================================================================*@
 
 
@@ -308,7 +308,6 @@
 
     }
 </script>
-
 <script>
     //REV 1.0
     function MRPStartCallback(s, e) {
@@ -1264,7 +1263,7 @@
     }
     //Rev 7.0
      function DeleteWarehouseData() {
-        if (StockOfProduct.length > 0) {          
+        if (StockOfProduct.length > 0) {
             $.ajax({
                 type: "POST",
                 async: false,
@@ -1273,8 +1272,8 @@
                 success: function (response) {
                     var data = response;
                     if (data == "True") {
-                        StockOfProduct = [];                      
-                    }                    
+                        StockOfProduct = [];
+                    }
                     else {
                         jAlert("Please try again later!");
                     }
@@ -2645,6 +2644,76 @@
     }
 
 </script>
+<script>
+     //Rev 8.0
+    function GetServerDateFormat(today) {
+        if (today != "" && today != null) {
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+        }
+        else {
+            today = "";
+        }
+        return today;
+    }
+    function ProductGotFocus() {
+        gridProductionBOMProductList.batchEditApi.EndEdit();
+        gridProductionBOMProductList.batchEditApi.StartEdit();
+        var ProductName = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductName');
+        var ProductsID = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductId');
+        var ProductQty = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductQty');
+        var BankBranch = $("#ddlBankBranch").val();
+        var ProductOrderDate = GetServerDateFormat(Issue_Date_dt.GetValue());
+        var Amount = '';
+        var Rate = '';
+        if ('@ViewBag.IsRateEditableinProductionIssue' == "Yes") {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetStockValuation", "ProductionIssue")",
+                data: JSON.stringify({ ProductId: ProductsID }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    var ObjData = msg.StockValuation;
+                    if (ObjData.length > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("GetStockValuationAmount", "ProductionIssue")",
+                            data: JSON.stringify({ Pro_Id: ProductsID, Qty: ProductQty, Valuationsign: ObjData, Fromdate: ProductOrderDate, BranchId: BankBranch }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (msg1) {
+                                var ObjData1 = msg1.ValuationAmount;
+                                if (ObjData1!="") {
+                                    pageheaderContent.style.display = "block";
+                                    $("#divValuationRate").attr('style', 'display:block');
+                                    $("#divProductName").attr('style', 'display:block');
+                                    Amount = (ObjData1 * 1);
+                                    Rate = Amount / ProductQty;
+                                    document.getElementById('lblValuationRate').innerHTML = Rate;
+                                    document.getElementById('lblProductName').innerHTML = ProductName;
+                                }
+                            }
+
+                        });
+                    }
+                }
+
+            });
+        }
+    }
+     //Rev 8.0 End
+</script>
 
 @*<link href="~/Views/FGReceived/ProductionReceiptEntry.css" rel="stylesheet" />*@
 <link href="~/assests/css/ManufacturingCSS/ProductionReceiptEntry.css" rel="stylesheet" />
@@ -2653,6 +2722,42 @@
         <label>Issue for Production</label>
     </h3>
     <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("ProductionIssueList", "ProductionIssue")"><i class="fa fa-times"></i></a></div>
+    @*REV 8.0*@
+    <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images" style="display: none;" runat="server">
+        <div class="Top clearfix">
+            <ul>
+                <li>
+                    <div class="lblHolder" id="divProductName" style="display: none;" runat="server">
+                        <table>
+                            <tr>
+                                <td>Product Name</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblProductName" runat="server" Text="" CssClass="classout"></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <div class="lblHolder" id="divValuationRate" style="display: none;" runat="server">
+                        <table>
+                            <tr>
+                                <td>Valuation Rate</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblValuationRate" runat="server" Text="0.0" CssClass="classout"></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    @*REV 8.0 END*@
 </div>
 <input type="hidden" value="@Model.PartNo" id="hdnPartNo" />
 <input type="hidden" value="0" id="hdnSchemaId" />
@@ -2667,8 +2772,6 @@
 @Html.HiddenFor(x => x.Issue_SchemaID, new { @id = "hdnIssue_SchemaID" })
 @Html.HiddenFor(x => x.FinishedItemID)
 @Html.HiddenFor(x => x.WarehouseID)
-
-
 <input type="hidden" id="hdnProductionIssueListPage" value="@Url.Action("ProductionIssueList", "ProductionIssue")" />
 @Html.HiddenFor(x => x.Issue_Qty, new { @id = "hdnProductQty" })
 @*Rev 7.0*@
@@ -2703,8 +2806,6 @@
 @*REV 1.0*@
 <input type="hidden" value="@Model.MRP_ID" id="hdnMRP_ID" />
 <input type="hidden" value="@Model.ProductionIssueID" id="hdnProductionIssueID" />
-
-
 @*END REV 1.0*@
 <div class="boxBorder">
     <div class="styledBox">

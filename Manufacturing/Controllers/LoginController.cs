@@ -17,10 +17,10 @@ namespace Manufacturing.Controllers
         [HttpPost]
         public JsonResult login(string user_id,string password)
         {
-            Session["ErpConnection"] = @"Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=ADHUNIK;User ID=sa; Password=5dc57YITWh";
+            Session["ErpConnection"] = @"Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=AMIAMOFOODS;User ID=sa; Password=5dc57YITWh";
             Encryption epasswrd = new Encryption();
             string Encryptpass = epasswrd.Encrypt(password);
-            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine(@"Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=ADHUNIK;User ID=sa; Password=5dc57YITWh;pooling='true';Max Pool Size=200");
+            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine(@"Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=AMIAMOFOODS;User ID=sa; Password=5dc57YITWh;pooling='true';Max Pool Size=200");
 
            string  Validuser = oDBEngine.AuthenticateUser( user_id, Encryptpass).ToString();
 

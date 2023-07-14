@@ -1,7 +1,7 @@
 ﻿@*================================================== Revision History ===================================================================================================================
     Rev Number         DATE              VERSION          DEVELOPER           CHANGES
     1.0                23-06-2023        V2.0.38           Priti              0026367:In Production Order Qty:  1. A New field required in Production Order Module called 'BOMProductionQty'
-    2.0                29-06-2023        V2.0.39           Priti              0026384:Show valuation rate feature is required in Production Order module
+    2.0                29-06-2023        V2.0.39           Priti              0026425:Show valuation rate feature is required in Production Order module
     ====================================================== Revision History =================================================================================================================*@
 @using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
@@ -190,7 +190,7 @@
                             async: false,
                             success: function (msg1) {
                                 var ObjData1 = msg1.ValuationAmount;
-                                if (ObjData1.length > 0) {
+                                if (ObjData1!="") {
                                     pageheaderContent.style.display = "block";
                                     $("#divValuationRate").attr('style', 'display:block');
                                     $("#divProductName").attr('style', 'display:block');
@@ -1099,6 +1099,7 @@
     <h3 class="pull-left">
         <label>Production Order (Demand Order)</label>
     </h3>
+    @*REV 2.0*@
     <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images" style="display: none;" runat="server">
         <div class="Top clearfix">
             <ul>
@@ -1113,11 +1114,11 @@
                                     <asp:Label ID="lblProductName" runat="server" Text="" CssClass="classout"></asp:Label>
                                 </td>
                             </tr>
-                        </table>                        
+                        </table>
                     </div>
                 </li>
                 <li>
-                    <div class="lblHolder" id="divValuationRate" style="display: none;" runat="server">                       
+                    <div class="lblHolder" id="divValuationRate" style="display: none;" runat="server">
                         <table>
                             <tr>
                                 <td>Valuation Rate</td>
@@ -1130,9 +1131,10 @@
                         </table>
                     </div>
                 </li>
-            </ul>          
+            </ul>
         </div>
     </div>
+    @*REV 2.0 END*@
     <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("ProductionOrderList", "ProductionOrder")"><i class="fa fa-times"></i></a></div>
 </div>
 
