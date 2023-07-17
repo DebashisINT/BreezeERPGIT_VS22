@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                05-05-2023        2.0.37           Pallab              26042: Purchase Invoice Cum GRN module design modification & check in small device
+2.0                17-07-2023        2.0.39           Sanchita            Listing Views - Invoice Cum GRN. Mantis : 26587     
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseInvCumGRNList.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseInvCumGRNList" %>
@@ -14,6 +15,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <%--Filteration Section Start By Sam--%>
     <script src="JS/PurchaseInvoice.js?v=1.5"></script>
     <script type="text/javascript" src="../../CentralData/JSScript/GenericJScript.js"></script>
+     <%--Rev 2.0--%>
+    <script>
+        function CallbackPanelEndCall(s, e) {
+            cgrid.Refresh();
+        }
+
+    </script>
+    <%--End of Rev 2.0 --%>
     <script>
         function OnMoreInfoClick(keyValue) {
             var ActiveUser = '<%=Session["userid"]%>'
@@ -918,6 +927,15 @@ popup.Hide();
  
  <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+    <%--Rev 2.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--End of Rev 2.0--%>
 
 <%--       <asp:HiddenField ID="hdndataeditfrom" runat="server" />
 <asp:HiddenField ID="hdndataeditto" runat="server" />
