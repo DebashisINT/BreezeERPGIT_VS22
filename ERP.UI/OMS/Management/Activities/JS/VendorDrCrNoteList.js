@@ -1,4 +1,6 @@
-﻿
+﻿/**********************************************************************************************************************************
+ 1.0      Sanchita  V2.0.38   30-05-2023      ERP - Listing Views - Vendor Debit/Credit Note. refer: 26589  
+***********************************************************************************************************************************/
         function StopDefaultAction(e) {
             if (e.preventDefault) { e.preventDefault() }
             else { e.stop() };
@@ -85,7 +87,11 @@ function updateGridByDate() {
         $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
-        cGvJvSearch.Refresh();
+        // Rev 1.0
+        //cGvJvSearch.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
+        // End of Rev 1.0
     }
 }
 function gridRowclick(s, e) {
