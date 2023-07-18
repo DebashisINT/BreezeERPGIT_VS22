@@ -5323,4 +5323,37 @@
       <Column Name="OverheadCost" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.VendorDbCrNoteList" Member="VendorDbCrNoteLists">
+    <Type Name="VendorDbCrNoteList">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SlNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DCNote_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="NoteType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NoteDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DCNote_DocumentDate" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DCNote_BranchID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BranchName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="DCNote_FinYear" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="DCNote_CompanyID" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="NoteNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Currency" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="VendorName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_CGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_SGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_UTGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_IGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_taxable_amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UpdateOn" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Invoice_Number" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="InvoiceID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="InvoiceType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Editlock" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Deletelock" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
