@@ -1,5 +1,6 @@
 ﻿//================================================== Revision History =============================================
 //1.0    V2.0.39    Priti   28-04-2023  0025930:An error is appearing while making Rate Difference Entry Customer
+//2.0    V2.0.39   Priti   18-07-2023  0026168: IRN was not generated for the Sales return if there is same product multiple times
 //====================================================== Revision History =============================================
 using System;
 using System.Collections.Generic;
@@ -504,7 +505,10 @@ namespace BusinessLogicLayer
             if (!string.IsNullOrEmpty(strSalesReturnID) && !string.IsNullOrEmpty(comapanyid) && !string.IsNullOrEmpty(finyear))
             {
                 DataTable dt = new DataTable();
-                ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_AddEditNew");
+                //Rev 2.0
+                //ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_AddEditNew");
+                ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_AddEditNewAlt");
+                //Rev 2.0 End
                 proc.AddVarcharPara("@Action", 100, "DeleteSalesReturn");
                 proc.AddVarcharPara("@DeleteSalesReturnId", 100, strSalesReturnID);
                 proc.AddVarcharPara("@CompanyID", 100, comapanyid);
