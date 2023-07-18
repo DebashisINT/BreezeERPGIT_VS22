@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=======================================    
     1.0   Pallab    V2.0.38   20-04-2023      26044: Vendor Credit/Debit Note module design modification & check in small device
+    2.0   Sanchita  V2.0.38   30-05-2023      ERP - Listing Views - Vendor Debit/Credit Note. refer: 26589  
 =========================================================End Revision History=====================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorDrCrNoteList.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorDrCrNoteList" %>
@@ -17,6 +18,15 @@
         }
     </style>
     <script src="JS/VendorDrCrNoteList.js"></script>
+     <%--Rev 2.0--%>
+    <script>
+        function CallbackPanelEndCall(s, e) {
+            cGvJvSearch.Refresh();
+        }
+
+    </script>
+    <%--End of Rev 2.0 --%>
+
     <%--Rev 1.0--%>
     <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
     
@@ -349,5 +359,13 @@
  
  <asp:HiddenField ID="hdnLockFromDateReceiptdeleteDataFreeze" runat="server" />
     <asp:HiddenField ID="hdnLockToDateReceiptdeleteDataFreeze" runat="server" />
-
+    <%--Rev 2.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--End of Rev 2.0--%>
 </asp:Content>
