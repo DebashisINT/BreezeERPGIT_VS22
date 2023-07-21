@@ -1,6 +1,7 @@
 ﻿//================================================== Revision History =============================================
 //Rev Number         DATE              VERSION         DEVELOPER           CHANGES
-//1.0                12-06-2023        2.0.38          Priti            SALES RETURN MNUAL Save & New Button issue.
+//1.0                12-06-2023        V2.0.38          Priti            SALES RETURN MNUAL Save & New Button issue.
+//2.0                21-07-2023        V2.0.39          Priti            0026601: Manual Sale Return is getting duplicated after Saving using Alt+X
 //====================================================== Revision History =============================================
 
 var FocusValue = '0';
@@ -1108,12 +1109,22 @@ document.onkeydown = function (e) {
 
         //  alert('kkk');
         StopDefaultAction(e);
-        Save_ButtonClick();
+        //Rev 2.0
+        //Save_ButtonClick();
+        if (document.getElementById('btn_SaveRecords').style.display != 'none') {
+            Save_ButtonClick();
+        }
+        //Rev 2.0 End
     }
     else if (event.keyCode == 88 && event.altKey == true && getUrlVars().req != "V") { //run code for alt+X -- ie, Save & Exit!   
         // alert('kkk222');
         StopDefaultAction(e);
-        SaveExit_ButtonClick();
+        //Rev 2.0
+        //SaveExit_ButtonClick();
+        if (document.getElementById('ASPxButton2').style.display != 'none') {
+            SaveExit_ButtonClick();
+        }
+         //Rev 2.0 End
     }
 
     else if (event.keyCode == 85 && event.altKey == true) { //run code for alt+U -- ie, Save & Exit!   
@@ -1164,19 +1175,31 @@ document.onkeyup = function (e) {
             case 78:
                 StopDefaultAction(e);
                 if (getUrlVars().req != "V") {
-                    Save_ButtonClick();
+                    if (document.getElementById('btn_SaveRecords').style.display != 'none') {
+                        Save_ButtonClick();
+                    } 
                 }
                 break;
             case 88:
                 StopDefaultAction(e);
                 if (getUrlVars().req != "V") {
-                    SaveExit_ButtonClick();
+                    //Rev 2.0
+                    //SaveExit_ButtonClick();
+                    if (document.getElementById('ASPxButton2').style.display != 'none') {
+                        SaveExit_ButtonClick();
+                    }
+                    //Rev 2.0 End
                 }
                 break;
             case 120:
                 StopDefaultAction(e);
                 if (getUrlVars().req != "V") {
-                    SaveExit_ButtonClick();
+                    //Rev 2.0
+                    //SaveExit_ButtonClick();
+                    if (document.getElementById('ASPxButton2').style.display != 'none') {
+                        SaveExit_ButtonClick();
+                    }
+                    //Rev 2.0 End
                 }
                 break;
             case 84:
@@ -3096,6 +3119,9 @@ function cmbContactPersonEndCall(s, e) {
 function Save_ButtonClick() {
     grid.AddNewRow();
     LoadingPanel.Show();
+    //REV 2.0
+    cbtn_SaveRecords.SetVisible(false);
+    //REV 2.0 END
     flag = true;
     grid.batchEditApi.EndEdit();
     // Quote no validation Start
@@ -3313,7 +3339,9 @@ function SaveExit_ButtonClick() {
     // 
 
     grid.AddNewRow();
-
+    //REV 2.0
+    cbtn_SaveRecords_p.SetVisible(false);
+    //REV 2.0 END
     LoadingPanel.Show();
     flag = true;
     grid.batchEditApi.EndEdit();
@@ -3509,9 +3537,14 @@ function SaveExit_ButtonClick() {
         else {
             jAlert('Cannot Save. You must enter atleast one Product to save this entry.');
             LoadingPanel.Hide();
+            cbtn_SaveRecords_p.SetVisible(true);
         }
     }
-    else { LoadingPanel.Hide(); }
+    else
+    {
+        LoadingPanel.Hide();
+        cbtn_SaveRecords_p.SetVisible(true);
+    }
 }
 
 
