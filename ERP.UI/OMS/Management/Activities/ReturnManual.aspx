@@ -1035,10 +1035,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             $("#lblAmount").text(grid.cpToalAmountDEt);
                             LoadingPanel.Hide();
                             //REV 2.0 
-                            cbtn_SaveRecords_p.SetVisible(true);
-                            if (getUrlVars().req != "V") {
-                                cbtn_SaveRecords.SetVisible(true);
-                            }
+                            //cbtn_SaveRecords_p.SetVisible(true);
+                            //if (getUrlVars().req != "V") {
+                            //    cbtn_SaveRecords.SetVisible(true);
+                            //}
                             //REV 2.0 END
                             //cUploadConfirmation.Show();
                             $("#exampleModalSRM").modal("show");

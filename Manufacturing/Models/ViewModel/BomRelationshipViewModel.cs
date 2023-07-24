@@ -25,7 +25,9 @@ namespace Manufacturing.Models.ViewModel
         public String ModifyBy { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? ModifyDate { get; set; }
-            
+
+        public String ProductId { get; set; }
+        
     }
     public class ParentBOMList
     {

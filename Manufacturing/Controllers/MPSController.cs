@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿//================================================== Revision History =============================================
+//Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+//1.0                24-07-2023        2.0.39           Priti              0026599: Auto Selection of BOM is required in MPS Based on Settings
+//====================================================== Revision History =============================================
+using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -2353,15 +2357,20 @@ namespace Manufacturing.Controllers
                 {
                     Branch = Branchs;
                 }
+                String ProductID = model.ProductId;
+
                 List<MRPBOMList> modelParentBOM = new List<MRPBOMList>();
-                DataTable ParentBOMdt = objdata.GetParentBOM(Branch);
+                //Rev 1.0
+                //DataTable ParentBOMdt = objdata.GetParentBOM(Branch);
+                DataTable ParentBOMdt = objdata.GetParentBOM(Branch, ProductID);
+                //Rev 1.0 End
                 if (ParentBOMdt != null && ParentBOMdt.Rows.Count > 0)
                 {
                     modelParentBOM = APIHelperMethods.ToModelList<MRPBOMList>(ParentBOMdt);
                     ViewBag.ParentBOMID = ParentBOMID;
                 }
 
-                return PartialView("~/Views/MRP/_PartialParentBOM.cshtml", modelParentBOM);
+                return PartialView("~/Views/MPS/_PartialParentBOM.cshtml", modelParentBOM);
             }
             catch
             {

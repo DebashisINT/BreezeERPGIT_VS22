@@ -1,4 +1,8 @@
-﻿using DataAccessLayer;
+﻿//================================================== Revision History =============================================
+//Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+//1.0                24-07-2023        2.0.39           Priti              0026599: Auto Selection of BOM is required in MPS Based on Settings
+//====================================================== Revision History =============================================
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -179,13 +183,18 @@ namespace Manufacturing.Models
             ds = proc.GetTable();
             return ds;
         }
-
-        public DataTable GetParentBOM(string Branch)
-        {
+        //Rev 1.0
+        //public DataTable GetParentBOM(string Branch, string ProductID)
+        public DataTable GetParentBOM(string Branch, string ProductID)
+        //Rev 1.0 End
+        {            
             DataTable ds = new DataTable();
-            ProcedureExecute proc = new ProcedureExecute("Prc_MRPEntryDataGet");
+            ProcedureExecute proc = new ProcedureExecute("usp_MPSEntryDataGet");
             proc.AddVarcharPara("@ACTION", 100, "GetBOMList");
             proc.AddBigIntegerPara("@BRANCHID", Convert.ToInt32(Branch));
+            //Rev 1.0
+            proc.AddBigIntegerPara("@Product_ID", Convert.ToInt32(ProductID));
+            //Rev 1.0 End
             ds = proc.GetTable();
             return ds;
         }
