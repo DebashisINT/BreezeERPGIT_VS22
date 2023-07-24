@@ -184,7 +184,15 @@ namespace Manufacturing.Models
             return ds;
         }
         //Rev 1.0
-        //public DataTable GetParentBOM(string Branch, string ProductID)
+        public DataTable GetParentBOM(string Branch)
+        {
+            DataTable ds = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("usp_MPSEntryDataGet");
+            proc.AddVarcharPara("@ACTION", 100, "GetBOMList");
+            proc.AddBigIntegerPara("@BRANCHID", Convert.ToInt32(Branch));           
+            ds = proc.GetTable();
+            return ds;
+        }
         public DataTable GetParentBOM(string Branch, string ProductID)
         //Rev 1.0 End
         {            
