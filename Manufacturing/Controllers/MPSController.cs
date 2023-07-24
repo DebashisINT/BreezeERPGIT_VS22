@@ -50,27 +50,15 @@ namespace Manufacturing.Controllers
         {
             try
             {
-                
+                //Rev 1.0
+                string AutoLoadBOMINMPS = cSOrder.GetSystemSettingsResult("AutoLoadBOMINMPS");
+                //Rev 1.0 End
 
                 rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSessionMVC("/MPSList", "MPS");
                 string EntryType = Request.QueryString["ActionType"];
                 try
                 {
                     BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine(string.Empty);
-
-                    //string HierarchySelectInEntryModule = cSOrder.GetSystemSettingsResult("Show_Hierarchy");
-                    //if (!String.IsNullOrEmpty(HierarchySelectInEntryModule))
-                    //{
-                    //    if (HierarchySelectInEntryModule.ToUpper().Trim() == "YES")
-                    //    {
-                    //        ViewBag.Hierarchy = "1";
-                    //    }
-                    //    else if (HierarchySelectInEntryModule.ToUpper().Trim() == "NO")
-                    //    {
-                    //        ViewBag.Hierarchy = "0";
-                    //    }
-                    //}
-
                     rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSessionMVC("/Index", "MPS");
                     List<HierarchyList> objHierarchy = new List<HierarchyList>();
 
@@ -87,25 +75,9 @@ namespace Manufacturing.Controllers
                             list.Add(obj);
                         }
                     }
-                    objEstimate.UnitList = list;
-                   // TempData["ProdAddlDesc"] = null;
-                   // TempData["ResAddlDesc"] = null;
+                    objEstimate.UnitList = list;                  
                     TempData["ProductsDetails"] = null;
-                   // TempData["ResourceDetails"] = null;
-                    //DataTable hierarchydt = oDBEngine.GetDataTable("select 0 as ID ,'Select' as H_Name union select ID,H_Name from V_HIERARCHY");
-                    //if (hierarchydt != null && hierarchydt.Rows.Count > 0)
-                    //{
-                    //    HierarchyList obj = new HierarchyList();
-                    //    foreach (DataRow item in hierarchydt.Rows)
-                    //    {
-                    //        obj = new HierarchyList();
-                    //        obj.Hierarchy_id = Convert.ToString(item["ID"]);
-                    //        obj.Hierarchy_Name = Convert.ToString(item["H_Name"]);
-                    //        objHierarchy.Add(obj);
-                    //    }
-                    //}
-                    //objEstimate.Hierarchy_List = objHierarchy;
-
+                  
                     if (ActionType != "ADD")
                     {
                         if (DetailsID != null)
@@ -121,8 +93,7 @@ namespace Manufacturing.Controllers
 
 
                             TempData["DetailsID"] = DetailsID;
-                            objEstimate.DetailsID = Convert.ToString(TempData["DetailsID"]);
-                           // objEstimate.Approve = Convert.ToString(TempData["Approve"]);
+                            objEstimate.DetailsID = Convert.ToString(TempData["DetailsID"]);                          
                             ViewBag.View = Convert.ToString(TempData["View"]);
                             TempData.Keep();
 
@@ -134,13 +105,10 @@ namespace Manufacturing.Controllers
                                     DataTable dt = objData;
                                     foreach (DataRow row in dt.Rows)
                                     {
-                                        objEstimate.DetailsID = Convert.ToString(row["Details_ID"]);
-                                        //objEstimate.ProductionID = Convert.ToString(row["Production_ID"]);
+                                        objEstimate.DetailsID = Convert.ToString(row["Details_ID"]);                                     
                                         objEstimate.Estimate_SCHEMAID = Convert.ToString(row["MPS_SchemaID"]);
                                         objEstimate.EstimateNo = Convert.ToString(row["MPS_No"]);
-                                        objEstimate.EstimateDate = Convert.ToString(row["MPS_Date"]);
-                                       // objEstimate.RevisionNo = Convert.ToString(row["REV_No"]);
-                                       // objEstimate.RevisionDate = Convert.ToString(row["REV_Date"]);
+                                        objEstimate.EstimateDate = Convert.ToString(row["MPS_Date"]);                                     
                                         objEstimate.Unit = Convert.ToString(row["BRANCH_ID"]);                                    
 
                                         objEstimate.dtEstimateDate = Convert.ToDateTime(row["MPS_Date"]);
@@ -161,8 +129,7 @@ namespace Manufacturing.Controllers
                                         objEstimate.OrderNo = Convert.ToString(row["Order_Number"]);
 
                                         ViewBag.Customer_id = Convert.ToString(row["CUSTOMER_ID"]);
-                                        ViewBag.ContractNo = Convert.ToString("");
-                                        //ViewBag.ApproveStus = Convert.ToString(row["ApproveStus"]);
+                                        ViewBag.ContractNo = Convert.ToString("");                                       
                                         ViewBag.Unit = Convert.ToString(row["BRANCH_ID"]);
                                         ViewBag.EstDate = Convert.ToString(row["MPS_Date"]);
 
@@ -173,35 +140,22 @@ namespace Manufacturing.Controllers
                         }
                     }
                 }
-                catch { }
+                catch { }             
 
-                //ctxtRevisionDate.SetMinDate(new Date(cPLQuoteDate.GetDate().toDateString()))
-
-              //  objEstimate.RevisionDate = DateTime.Now.ToString();
-                objEstimate.EstimateDate = DateTime.Now.ToString();
-               // objEstimate.ApprovRevSettings = ApprovalRevisionRequireInEstimate;
-
-               // objEstimate.RevisionRequiredEveryAfterApproval = RevisionRequiredEveryAfterApproval;
+                objEstimate.EstimateDate = DateTime.Now.ToString();             
 
                 objEstimate.TaxID = "1";
                 TempData["Count"] = 1;
                 TempData.Keep();
-
                 ViewBag.CanView = rights.CanView;
                 ViewBag.CanAdd = rights.CanAdd;
                 ViewBag.CanEdit = rights.CanEdit;
                 ViewBag.CanDelete = rights.CanDelete;
                 ViewBag.CanCancel = rights.CanCancel;
-                ViewBag.CanApproved = rights.CanApproved;
-               // ViewBag.ProjectShow = ProjectSelectInEntryModule;
-                //ViewBag.ProjectMandatoryInEntry = ProjectMandatoryInEntry;
-               // ViewBag.CanAddUpdateDocuments = rights.CanAddUpdateDocuments;
-              //  ViewBag.EntryType = EntryType;
-                //if (ApprovalRevisionRequireInEstimate == "No")
-                //{
-                //    ViewBag.CanApproved = false;
-                //}
-              //  ViewBag.ApprovalRevisionRequire = ApprovalRevisionRequireInEstimate;
+                ViewBag.CanApproved = rights.CanApproved;               
+                //Rev 1.0
+                ViewBag.AutoLoadBOMINMPS = AutoLoadBOMINMPS;
+                //Rev 1.0 End
 
                 return View("~/Views/MPS/Index.cshtml", objEstimate);
 
@@ -2348,6 +2302,8 @@ namespace Manufacturing.Controllers
         {
             try
             {
+                string AutoLoadBOMINMPS = cSOrder.GetSystemSettingsResult("AutoLoadBOMINMPS");
+
                 String Branch = "";
                 if (model.Unit != null)
                 {
@@ -2358,11 +2314,18 @@ namespace Manufacturing.Controllers
                     Branch = Branchs;
                 }
                 String ProductID = model.ProductId;
-
-                List<MRPBOMList> modelParentBOM = new List<MRPBOMList>();
+                DataTable ParentBOMdt;
+                List <MRPBOMList> modelParentBOM = new List<MRPBOMList>();
                 //Rev 1.0
-                //DataTable ParentBOMdt = objdata.GetParentBOM(Branch);
-                DataTable ParentBOMdt = objdata.GetParentBOM(Branch, ProductID);
+                if(AutoLoadBOMINMPS=="No")
+                {
+                     ParentBOMdt = objdata.GetParentBOM(Branch);
+                }
+                else
+                {
+                     ParentBOMdt = objdata.GetParentBOM(Branch, ProductID);
+                }
+               
                 //Rev 1.0 End
                 if (ParentBOMdt != null && ParentBOMdt.Rows.Count > 0)
                 {

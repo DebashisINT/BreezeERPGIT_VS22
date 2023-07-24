@@ -2822,78 +2822,6 @@ function SetFocusDesc() {
     gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdProdNameIndex);
     gridEstimateResourcesList.batchEditApi.StartEdit(globalrowindex2, ResProductNameIndex);
 }
-
-
-
-
-function Scheme_ValueChange() {
-    var val = $('#ddlSchema option:selected').val();
-    var schemetypeValue = val;
-    var schemetype = schemetypeValue.toString().split('~')[1];
-    var schemelength = schemetypeValue.toString().split('~')[2];
-    var branchID = (schemetypeValue.toString().split('~')[3] != null) ? schemetypeValue.toString().split('~')[3] : "";
-    var SchemaID = schemetypeValue.toString().split('~')[0];
-    $('#hdnSchemaId').val(SchemaID);
-    var fromdate = (schemetypeValue.toString().split('~')[5] != null) ? schemetypeValue.toString().split('~')[5] : "";
-    var todate = (schemetypeValue.toString().split('~')[6] != null) ? schemetypeValue.toString().split('~')[6] : "";
-    var hdnDetailsID = $('#hdnDetailsID').val();
-    if (hdnDetailsID > 0 || hdnDetailsID == '') {
-        var dt = new Date();
-        document.getElementById("EstimateNo").maxLength = schemelength;
-        EstimateDate_dt.SetDate(dt);
-        if (dt < new Date(fromdate)) {
-            EstimateDate_dt.SetDate(new Date(fromdate));
-        }
-        if (dt > new Date(todate)) {
-            EstimateDate_dt.SetDate(new Date(todate));
-        }
-    }
-    EstimateDate_dt.SetMinDate(new Date(fromdate));
-    EstimateDate_dt.SetMaxDate(new Date(todate));
-    //EstimateDate_dt.focus();
-    //Rev 1.0
-    //if (branchID > 0) {
-    //    $('#ddlBankBranch').val(branchID);
-    //    ParentBOMGridLookup.GetGridView().Refresh();
-    //    ParentBOMGridLookup.GetGridView().Refresh();
-    //}
-     //Rev 1.0 End
-    if (schemetype == '0') {
-        $('#EstimateNo').removeAttr("disabled");
-        $('#EstimateNo').val('');
-
-        $('#EstimateNo').focus();
-    }
-    else if (schemetype == '1') {
-        $('#EstimateNo').attr("disabled", "disabled");
-        $('#EstimateNo').val('Auto');
-
-        //$('#EstimateNo').focus();
-
-    }
-    else if (schemetype == '2') {
-        $('#EstimateNo').attr("disabled", "disabled");
-        $('#EstimateNo').val('Datewise');
-
-        //$('#EstimateNo').focus();
-
-    }
-    else if (schemetype == 'n') {
-        $('#EstimateNo').attr("disabled", "disabled");
-        $('#EstimateNo').val('');
-
-        //$('#EstimateNo').focus();
-    }
-    else {
-        $('#EstimateNo').attr("disabled", "disabled");
-        $('#EstimateNo').val('');
-
-        //$('#EstimateNo').focus();
-
-    }
-
-}
-
 function SuffleRows() {
     for (var i = 0; i < 1000; i++) {
         if (gridEstimateProductEntryList.GetRow(i)) {
@@ -3531,7 +3459,7 @@ function EditData(values) {
 
                  //Rev 1.0
                 ParentBOMGridLookup.gridView.UnselectRows(1);
-                
+                ParentBOMGridLookup.GetGridView().Refresh();
 
                 setTimeout(function () {
                     var total = ParentBOMGridLookup.GetGridView().GetVisibleRowsOnPage();
