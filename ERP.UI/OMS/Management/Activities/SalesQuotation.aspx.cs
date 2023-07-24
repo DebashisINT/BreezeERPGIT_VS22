@@ -1,6 +1,7 @@
 ﻿/***************************************************************************************************************************************
  * Rev 1.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
  * Rev 2.0      Sanchita      V2.0.38       Tax amount is not calculating automatically while modifying PI/Quotation. Mantis : 26411
+ * Rev 3.0      Sanchita      V2.0.39       An error is appearing while making a quotation. Mantis: 26613  
  ***************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -534,6 +535,9 @@ namespace ERP.OMS.Management.Activities
                         Session["WarehouseData"] = GetQuotationWarehouseData();
                         Session["QuotationDetails"] = GetQuotationDataForCopy().Tables[0];
                         Session["MultiUOMData"] = GetMultiUOMData();
+                        // Rev 3.0
+                        Session["InlineRemarks"] = GetQuotationData().Tables[1];
+                        // End of Rev 3.0
                         //rev rajdip for running data on edit mode
                         DataTable Orderdt = GetQuotationData().Tables[0];
                         decimal TotalQty = 0;
