@@ -1,4 +1,7 @@
-﻿
+﻿//================================================== Revision History =============================================
+//Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+//1.0                24-07-2023        2.0.39           Priti              0026599: Auto Selection of BOM is required in MPS Based on Settings
+//====================================================== Revision History =============================================
 var ProdIndexAddl = 0;
 var ResIndexAddl = 0;
 var globalrowindex2 = 0;
@@ -1184,121 +1187,7 @@ function SetProduct(Id, Name, e) {
     }
 }
 
-function SetGridProduct(Id, Name, e) {
-    // debugger;
-    gridproductlist = 0;
-    var ProductID = Id;
-    var ProductName = Name;
 
-    if (ProductID != "") {
-
-        var slno = $("#hdnProdAddlDescSl").val();
-        //@*$.ajax({
-        //    type: "POST",
-        //    url: "@Url.Action("ProdAdditionalDesc", "Estimate")",
-        //    data: { AddlDesc: ' ', ProdAddlDescSl: slno, Command: "RemarksRemove" },
-        //    success: function (response) {
-        //        if (response != null) {
-        //            //jAlert(response.Message);
-        //            $("#txt_AddlDesc").val('');
-        //            $("#hdnProdAddlDescSl").val('');
-        //        }
-        //    }
-        //});*@
-        var data = ProductID.split('|');
-        ProductID = data[0];
-
-        //debugger;
-        //var Dis = gridEstimateProductEntryList.batchEditApi.GetColumnIndex('Discount');
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, Dis);
-        //gridEstimateProductEntryList.GetEditor('Discount').SetText("0.00");
-
-        //var amind = gridEstimateProductEntryList.batchEditApi.GetColumnIndex('Amount');
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, amind);
-        //gridEstimateProductEntryList.GetEditor('Amount').SetText("0.00");
-
-        //var Netamind = gridEstimateProductEntryList.batchEditApi.GetColumnIndex('NetAmount');
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, Netamind);
-        //gridEstimateProductEntryList.GetEditor('NetAmount').SetText("0.00");
-
-        //var HSN = gridEstimateProductEntryList.batchEditApi.GetColumnIndex('ProdHSN');
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, HSN);
-        //gridEstimateProductEntryList.GetEditor('ProdHSN').SetText(data[7]);
-
-        //var qtyindex = gridEstimateProductEntryList.batchEditApi.GetColumnIndex('ProductQty');
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, qtyindex);
-        //gridEstimateProductEntryList.GetEditor('ProductQty').SetText("0.00");
-
-        //var qtyindex = gridEstimateProductEntryList.batchEditApi.GetColumnIndex('BudgetedPrice');
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdBudgPricIndex);
-        //gridEstimateProductEntryList.GetEditor('BudgetedPrice').SetText("0.00");
-
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdProdIdIndex);
-        //gridEstimateProductEntryList.GetEditor('ProductId').SetText(ProductID);
-
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdChargesIndex);
-        //gridEstimateProductEntryList.GetEditor('Charges').SetText("0.00");
-
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdProdNameIndex);
-        //gridEstimateProductEntryList.GetEditor('ProductName').SetText(ProductName);
-        ////gridEstimateProductEntryList.GetDataRow(globalrowindex).children[1].innerHTML = ProductName;
-
-        ////$('#' + gridtxtbox + '_txtbox').val(ProductName);
-        //$("#ddl_AmountAre").prop('disabled', 'disabled');
-        //$('#GridProductlistModel').modal('hide');
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdProdDescIndex);
-        //gridEstimateProductEntryList.GetEditor('ProductDescription').SetText(data[6]);
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdProdUOMIndex);
-
-        //gridEstimateProductEntryList.GetEditor('ProductUOM').SetText(data[1]);
-        ////$('#' + gridtxtbox + '_txtDescription').val(data[2]);
-        ////$('#' + gridtxtbox + '_txtStockUOM').val(data[1]);
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdPriceIndex);
-        //gridEstimateProductEntryList.GetEditor('Price').SetText(data[3]);
-
-        ////gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, 16);
-        ////gridEstimateProductEntryList.GetEditor('ProductsWarehouseID').SetText(data[4]);
-
-        ////$('#' + gridtxtbox + '_txtPrice').val(data[3]);
-
-        ////gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, 6);
-        ////gridEstimateProductEntryList.GetEditor('Warehouse').SetText(data[5]);
-
-        ////gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdProdQtyIndex);
-
-        //gridEstimateProductEntryList.batchEditApi.StartEdit(globalrowindex, PrdProdDescIndex);
-
-
-        ////btnFinishedItem.SetText(ProductName);
-        ////document.getElementById('hdnProductID').value = Id;
-
-
-        $("#txtProductdescription").val(data[6]);
-        btnProduct.SetText(ProductName);
-        cProductQty.SetText("0.00");
-        $("#txt_ProdUOM").val(data[1]);
-        //$("#txt_ProdWarehouse").val("");
-        //$("#txt_ProdAmount").val("0.00");
-        cProductPrice.SetText(data[3]);
-        //$("#txt_ProdPrice").val(data[3]);
-        cProductAmount.SetText("0.00");
-        //$("#txt_ProdDiscount").val("0.00");
-      //  cProductDiscount.SetText("0.00");
-      //  $("#txt_ProdCharges").val("0.00");
-        //cProductAmount.SetText("0.00");
-        //$("#txt_ProdNetAmount").val("0.00");
-      //  cProductNetAmount.SetText("0.00");
-        //$("#txt_ProdBudgetedPrice").val("0.00");
-      //  cProductBudgetedPrice.SetText("0.00");
-      //  $("#ddl_AmountAre").prop('disabled', 'disabled');
-        $('#GridProductlistModel').modal('hide');
-        $("#hdnProdHSN").val(data[7]);
-        $("#hdnProdProductID").val(ProductID);
-       // GridWarehouselist();
-        $("#HdnUOMID").val(data[8]);
-       // $("#txt_AddlDescProd").focus();
-    }
-}
 
 function EstimateGridSetTotalAmount(s, e) {
     //debugger;
@@ -2962,13 +2851,13 @@ function Scheme_ValueChange() {
     EstimateDate_dt.SetMinDate(new Date(fromdate));
     EstimateDate_dt.SetMaxDate(new Date(todate));
     //EstimateDate_dt.focus();
-
-    if (branchID > 0) {
-        $('#ddlBankBranch').val(branchID);
-        ParentBOMGridLookup.GetGridView().Refresh();
-        ParentBOMGridLookup.GetGridView().Refresh();
-    }
-
+    //Rev 1.0
+    //if (branchID > 0) {
+    //    $('#ddlBankBranch').val(branchID);
+    //    ParentBOMGridLookup.GetGridView().Refresh();
+    //    ParentBOMGridLookup.GetGridView().Refresh();
+    //}
+     //Rev 1.0 End
     if (schemetype == '0') {
         $('#EstimateNo').removeAttr("disabled");
         $('#EstimateNo').val('');
@@ -3640,15 +3529,23 @@ function EditData(values) {
                 $("#GuiIDS").val(response.Guids),
                 $("#HdnUOMID").val(response.UOMID);
 
-                var total = ParentBOMGridLookup.GetGridView().GetVisibleRowsOnPage();
-                for (let i = 0; i < total; i++) {
-                    var rowkey = ParentBOMGridLookup.GetGridView().GetRowKey(i)
-                    //console.log("rowkey", rowkey)
-                    if (rowkey == response.BOMID) {
-                        //console.log("matched", i)
-                        ParentBOMGridLookup.GetGridView().SetFocusedRowIndex(i);
+                 //Rev 1.0
+                ParentBOMGridLookup.gridView.UnselectRows(1);
+                
+
+                setTimeout(function () {
+                    var total = ParentBOMGridLookup.GetGridView().GetVisibleRowsOnPage();
+                    for (let i = 0; i < total; i++) {
+                        var rowkey = ParentBOMGridLookup.GetGridView().GetRowKey(i)
+                        //console.log("rowkey", rowkey)
+                        if (rowkey == response.BOMID) {
+                            //console.log("matched", i)
+                            ParentBOMGridLookup.GetGridView().SetFocusedRowIndex(i);
+                        }
                     }
-                }
+                }, 1000);
+                //Rev 1.0 End
+                
                 }
         }
     });
@@ -3718,3 +3615,36 @@ function ResDeleteData(values) {
 }
 
 
+
+function SetGridProduct(Id, Name, e) {
+    // debugger;
+    gridproductlist = 0;
+    var ProductID = Id;
+    var ProductName = Name;
+
+    if (ProductID != "") {
+
+        var slno = $("#hdnProdAddlDescSl").val();
+        var data = ProductID.split('|');
+        ProductID = data[0];
+        $("#txtProductdescription").val(data[6]);
+        btnProduct.SetText(ProductName);
+        cProductQty.SetText("0.00");
+        $("#txt_ProdUOM").val(data[1]);
+        cProductPrice.SetText(data[3]);
+        cProductAmount.SetText("0.00");
+        $('#GridProductlistModel').modal('hide');
+        $("#hdnProdHSN").val(data[7]);
+        $("#hdnProdProductID").val(ProductID);
+        $("#HdnUOMID").val(data[8]);
+
+        //Rev 1.0
+
+        if (ProductID > 0) {
+            ParentBOMGridLookup.GetGridView().UnselectRows(1);
+            ParentBOMGridLookup.GetGridView().Refresh();
+            //ParentBOMGridLookup.GetGridView().Refresh();
+        }
+        //Rev 1.0 End
+    }
+}

@@ -167,6 +167,8 @@ namespace Manufacturing.Models.ViewModel
         public String BOMID { get; set; }
 
         public String BOMNO { get; set; }
+
+        public String ProductID { get; set; }
     }
     //public class BranchUnit
     //{

@@ -1,4 +1,9 @@
-﻿@model Manufacturing.Models.ViewModel.MPSViewModel
+﻿@*================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                24-07-2023        2.0.39           Priti              0026599: Auto Selection of BOM is required in MPS Based on Settings
+====================================================== Revision History =============================================*@
+
+@model Manufacturing.Models.ViewModel.MPSViewModel
 @using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
@@ -16,18 +21,20 @@
 <script src="~/Scripts/SearchPopupDatatable.js"></script>
 <link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
 <link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
-<script src="~/assests/js/MPS/MPS.js?v=2.1"></script>
+<script src="~/assests/js/MPS/MPS.js?v=2.3"></script>
 <script>
-    function BOMStartCallback(s, e) {
-
-        e.customArgs["BOMID"] = '@ViewBag.ParentBOMID';
-        if ('@ViewBag.Unit' != "") {
-            e.customArgs["Unit"] = '@ViewBag.Unit';
-        }
-        else {
-            e.customArgs["Unit"] = $("#ddlBankBranch").val();
-        }
+   function BOMStartCallback(s, e) {
+    e.customArgs["BOMID"] = '@ViewBag.ParentBOMID';
+    if ('@ViewBag.Unit' != "") {
+        e.customArgs["Unit"] = '@ViewBag.Unit';
     }
+    else {
+        e.customArgs["Unit"] = $("#ddlBankBranch").val();
+    }
+    //Rev 1.0
+    e.customArgs["ProductId"] = $("#hdnProdProductID").val();
+    //Rev 1.0 End
+}
     function datevalidateTo() {
 
         if (EstimateDate_dt.GetDate()) {
@@ -82,18 +89,10 @@
         ContractGridLookup.gridView.GetSelectedFieldValues("Details_ID", GetContractSelectedFieldValuesCallback);
     }
 
-    //function ProjectLookupValChange() {
-    //    ProjectGridLookup.GetGridView().Refresh();
-    //    //  ProjectGridLookup.GetGridView().Refresh();
-    //}
+
 
     function ProjectSelectionChanged(s, e) {
-        //  debugger;
-        // ProjectGridLookup.gridView.GetSelectedFieldValues("Proj_Id", GetProjectSelectedFieldValuesCallback);
-        // ProjectGridLookup.gridView.GetSelectedFieldValues("Hierarchy_ID", GetProjectSelectedFieldValuesCallback);
-        //var ProductName = ProjectGridLookup.gridView.batchEditApi.GetCellValue(e.visibleIndex, 'Hierarchy_ID');
-        //alert(ProductName);
-        //debugger;
+
 
         var ProjectId = (ProjectGridLookup.GetGridView().GetRowKey(ProjectGridLookup.GetGridView().GetFocusedRowIndex()));
         if (ProjectId != $("#hdnProjectgotfocusId").val()) {
@@ -132,7 +131,7 @@
 
     function ContractLookupValChange() {
         ContractGridLookup.GetGridView().Refresh();
-        //ContractGridLookup.GetGridView().Refresh();
+
     }
 
     function PopulateNumberingSchemeData() {
@@ -209,21 +208,21 @@
             }
         });
 
-     
+
         var hdnDetailsID = $('#hdnDetailsID').val();
         if (hdnDetailsID > 0) {
-           
+
             $('#EstimateNo').attr("disabled", "disabled");
-            $('#ddlSchema').attr("disabled", "disabled");           
-            $('#ddlBankBranch').attr("disabled", "disabled");           
-            //EstimateDate_dt.SetEnabled(false);           
-            EstimateDate_dt.SetDate(new Date('@ViewBag.EstDate'));        
+            $('#ddlSchema').attr("disabled", "disabled");
+            $('#ddlBankBranch').attr("disabled", "disabled");
+            //EstimateDate_dt.SetEnabled(false);
+            EstimateDate_dt.SetDate(new Date('@ViewBag.EstDate'));
 
             var EstimateProductsTotal = $('#hdnEstimateEntryProductsTotalAm').val();
             if (EstimateProductsTotal != "" && EstimateProductsTotal != undefined) {
                 $('#txtGridProductEntryTotalAmount').val(parseFloat(EstimateProductsTotal).toFixed(2));
             }
-           
+
             var hdnEstimateResourcesTotalAm = $('#hdnEstimateResourcesTotalAm').val();
             if (hdnEstimateResourcesTotalAm != "" && hdnEstimateResourcesTotalAm != undefined) {
                 $('#txtGridResourcesTotalAmount').val(parseFloat(hdnEstimateResourcesTotalAm).toFixed(2));
@@ -424,8 +423,8 @@
         if (ParentBOMId != null) {
             cpSelectedKeys = ParentBOMId;
             $('#hdnBOM_id').val(ParentBOMId);
-                 
-        }   
+
+        }
     }
 
     function btnAdd_ProductClick() {
@@ -472,24 +471,24 @@
             }
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("AddProduct", "MPS")",              
+                url: "@Url.Action("AddProduct", "MPS")",
                 data: "{prod:" + JSON.stringify(data) + "}",
                 async: true,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     if (response != null) {
-                        gridEstimateProductEntryList.Refresh();                           
+                        gridEstimateProductEntryList.Refresh();
 
                         btnProduct.SetValue(''),
                         $("#hdnProdProductID").val(''),
                         $("#txtProductdescription").val(''),
                         cProductQty.SetText("0.00"),
-                        $("#txt_ProdUOM").val(''),                       
+                        $("#txt_ProdUOM").val(''),
                         cProductPrice.SetText('0.00'),
                         cProductAmount.SetText('0.00'),
-                        $("#txt_AddlRemarks").val(''),                       
-                        $("#GuiIDS").val(''),                        
+                        $("#txt_AddlRemarks").val(''),
+                        $("#GuiIDS").val(''),
                         $("#ProductDetailsID").val(0);
                         ParentBOMGridLookup.gridView.UnselectRows(1);
                         gridEstimateProductEntryList.Refresh();
@@ -569,7 +568,7 @@
                 success: function (response) {
                     if (response != null) {
                         gridEstimateResourcesList.Refresh();
-                        
+
 
                         btnResProduct.SetValue(''),
                         $("#hdnResProductID").val(''),
@@ -626,7 +625,7 @@
         //    LoadingPanel.Hide();
         //    return false;
         //}
-       
+
         var strEstimateno = $('#EstimateNo').val();
         var EstimateDate = GetServerDateFormat(EstimateDate_dt.GetValue());
         var Unit = $('#ddlBankBranch option:selected').val();
@@ -645,8 +644,8 @@
         }
 
         if (hdnDetailsID > 0) {
-            DetailsID = hdnDetailsID;         
-          
+            DetailsID = hdnDetailsID;
+
         }
         var EstimateStartDatedt = "", EstimateEndDatedt = "", ActualsStartDatedt = "", ActualsEndDatedt = "";
         if (EstimateStartDate_dt.GetValue() != "")
@@ -668,7 +667,7 @@
             EstimateDate: EstimateDate,
             Unit: Unit,
             Estimate_SCHEMAID: SchemaID,
-            DetailsID: DetailsID,           
+            DetailsID: DetailsID,
             Customer_ID: CustomerId,
             ContractNo: ContractID,
             EstimateStartDate_dt: EstimateStartDatedt,
@@ -742,8 +741,8 @@
 
 
 
-                            
-                         
+
+
                                 jAlert('MPS Number : ' + GEstimateNo + ' saved successfully.', 'Alert!', function (r) {
                                     if (r) {
                                         if (savemode == "Exit") {
@@ -758,14 +757,14 @@
                                         }
                                     }
                                 });
-                           
+
                             LoadingPanel.Hide();
-                           
+
 
 
                         }
                         else {
-                           
+
                             DetailsID = 0;
                             savemode = "";
                             jAlert('Please try again later.');
@@ -1044,7 +1043,8 @@
 <style>
     #gridEstimateProductEntryList_DXStatus {
         display: none;
-    }    
+    }
+
     .dxlp-loadingImage {
         display: none;
     }
@@ -1135,12 +1135,12 @@
                     </div>
                 </div>
                 @*<div class=" col-sm-2">
-                    <label class="mtop10">Order </label>
-                    <div class="relative">
-                        @Html.Action("GetContractCode", "MPS", new { customer_id = ViewBag.Customer_id, Branchs = ViewBag.Unit })
+                        <label class="mtop10">Order </label>
+                        <div class="relative">
+                            @Html.Action("GetContractCode", "MPS", new { customer_id = ViewBag.Customer_id, Branchs = ViewBag.Unit })
 
-                    </div>
-                </div>*@
+                        </div>
+                    </div>*@
                 <div class=" col-sm-2">
                     <label class="mtop10">Order </label>
                     <div class="relative">
@@ -1176,7 +1176,7 @@
                             settings.Width = Unit.Percentage(100);
                          //   settings.Properties.ClientSideEvents.DateChanged = "datevalidateTo";
                             settings.Date = Convert.ToDateTime(Model.EstimateStartDate_dt);
-                           
+
                         }
                         ).GetHtml()
                         <span id="EEstimateDate_dt" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
@@ -1238,7 +1238,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="styledBox">
             <div class="row">
                 @*<hr />*@
@@ -1353,8 +1353,8 @@
                     </div>
                 </div>
             </div>
-           
-        </div>        
+
+        </div>
         <div class="row">
             <div class="col-md-12">
 
@@ -1459,8 +1459,6 @@
     </div>
 </div>
 <!-- Grid Product List-->
-
-
 <!-- Grid Order List -->
 <div class="modal fade" id="GridOrderlistModel" role="dialog">
     <div class="modal-dialog">
@@ -1476,7 +1474,7 @@
                         <tr class="HeaderStyle">
                             <th class="hide">id</th>
                             <th>Order No.</th>
-                            <th>Contract Date</th>                            
+                            <th>Contract Date</th>
                         </tr>
                     </table>
                 </div>
@@ -1488,10 +1486,6 @@
     </div>
 </div>
 <!-- Grid Product List-->
-
-
-
-
 <!-- Grid Warehouse List -->
 <div class="modal fade pmsModal w30" id="GridWarehouselistModel" role="dialog">
     <div class="modal-dialog">
@@ -1719,8 +1713,8 @@
 
 <script>
     $(document).ready(function () {
-        ParentBOMGridLookup.GetGridView().Refresh();
-        ParentBOMGridLookup.GetGridView().Refresh();
+        //ParentBOMGridLookup.GetGridView().Refresh();
+        //ParentBOMGridLookup.GetGridView().Refresh();
         var hdnDetailsID = $('#hdnDetailsID').val();
         if (hdnDetailsID == "") {
             $('#ddlSchema').focus();
