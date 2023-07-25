@@ -547,7 +547,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <dxe:ListEditItem Text="Sales Return" Value="SalesReturn"></dxe:ListEditItem>
                                               <dxe:ListEditItem Text="Purchase Return" Value="PurchaseReturn"></dxe:ListEditItem>
 
-                                            <dxe:ListEditItem Text="Sale Challan" Value="SaleChallan"></dxe:ListEditItem>
+                                            <%--Rev Sanchita--%>
+                                            <%--<dxe:ListEditItem Text="Sale Challan" Value="SaleChallan"></dxe:ListEditItem>--%>
+                                            <dxe:ListEditItem Text="Sale Challan" Value="SalesChallan"></dxe:ListEditItem>
+                                            <%--End of Rev Sanchita--%>
                                              <dxe:ListEditItem Text="Sale Return" Value="SaleReturn"></dxe:ListEditItem>
                                              <dxe:ListEditItem Text="Sale Invoice" Value="SalesInvoice"></dxe:ListEditItem>
                                             <dxe:ListEditItem Text="Transit Sale Invoice" Value="TransitSalesInvoice"></dxe:ListEditItem>

@@ -2,6 +2,8 @@
    1.0   Priti    V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
    2.0	 PRITI    V2.0.38	  03/04/2023	    0025289: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Challan
    3.0	 Pallab   V2.0.38	  06/04/2023	    0025855: Sales Challan module design modification
+   4.0   Sanchita V2.0.39     25-07-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+                                             Mantis : 26609   
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -1135,6 +1137,20 @@
             Width="100%" ClientInstanceName="cGrdOrder" OnCustomCallback="GrdOrder_CustomCallback" OnSummaryDisplayText="ShowGrid_SummaryDisplayText" Settings-VerticalScrollableHeight="250" Settings-VerticalScrollBarMode="Auto" Settings-HorizontalScrollBarMode="Visible">
             <SettingsSearchPanel Visible="true" Delay="5000" />
             <Columns>
+                <%--Rev 4.0--%>
+                <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="0" Width="40px" FixedStyle="Left">
+                    <DataItemTemplate>
+                        <img src="../../../assests/images/attachment.png" style='<%#Eval("IsAttachmentDoc")%>' />
+                        
+                    </DataItemTemplate>
+                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                    <CellStyle HorizontalAlign="Center"></CellStyle>
+
+                    <HeaderTemplate><span></span></HeaderTemplate>
+                    <EditFormSettings Visible="False"></EditFormSettings>
+                    <Settings AllowAutoFilterTextInputTimer="False"/>
+                </dxe:GridViewDataTextColumn>
+                <%--End of Rev 4.0--%>
                 <dxe:GridViewDataTextColumn Caption="Document No." FieldName="Challan_No"
                     VisibleIndex="0" Settings-ShowFilterRowMenu="True" Width="170px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
@@ -1314,7 +1330,7 @@
             <%-- --Rev Sayantani--%>
             <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
             <%-- <SettingsCookies Enabled="true" StorePaging="true" StoreColumnsVisiblePosition="false" />--%>
-            <SettingsCookies Enabled="true" StorePaging="true" Version="2.14" />
+            <SettingsCookies Enabled="true" StorePaging="true" Version="2.16" />
             <%-- -- End of Rev Sayantani --%>
             <SettingsContextMenu Enabled="true"></SettingsContextMenu>
             <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" RowClick="gridRowclick" />
