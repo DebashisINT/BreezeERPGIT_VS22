@@ -15,7 +15,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Filteration Section Start By Sam--%>
-    <script src="JS/PurchaseInvoice.js"></script>
+    <%--Rev 2.0 [all work will be done from PurchaseInvoicelist.js ]  --%>
+    <%--<script src="JS/PurchaseInvoice.js"></script>--%>
+    <%--End of Rev 2.0--%>
     <script type="text/javascript" src="../../CentralData/JSScript/GenericJScript.js"></script>
      <%--Rev 2.0--%>
     <script>
@@ -81,7 +83,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
         //End of Mantis Issue 25013
     </script>
-    <script src="JS/PurchaseInvoicelist.js?1.4"></script>
+    <script src="JS/PurchaseInvoicelist.js?1.5"></script>
     <link href="CSS/PurchaseInvoiceList.css" rel="stylesheet" />
 
     <%--Rev 1.0--%>
