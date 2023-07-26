@@ -52,7 +52,7 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     Label2.Visible = true;
-                    ShowGridList.Columns[5].Visible = true;
+                    ShowGridList.Columns[7].Visible = true;
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -60,7 +60,7 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     Label2.Visible = false;
-                    ShowGridList.Columns[5].Visible = false;
+                    ShowGridList.Columns[7].Visible = false;
                     hdnProjectSelection.Value = "0";
                 }
             }
