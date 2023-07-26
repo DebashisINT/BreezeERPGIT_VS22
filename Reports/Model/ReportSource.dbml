@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Tekfoods_25112022" Class="ReportSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=Tekfoods_25112022;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Tekfoods_25112022ConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EVAC_05072023" Class="ReportSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=EVAC_05072023;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="EVAC_05072023ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.v_ReportCustomer" Member="v_ReportCustomers">
     <Type Name="v_ReportCustomer">
       <Column Name="Nid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
@@ -4132,39 +4132,6 @@
       <Column Name="SERIALNUMBER" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.PENDING_SALEPURCHASE_ORDER_REPORT" Member="PENDING_SALEPURCHASE_ORDER_REPORTs">
-    <Type Name="PENDING_SALEPURCHASE_ORDER_REPORT">
-      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SLNO" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="TRANSACTION_TYPE" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="MODULETYPE" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="IMPORTPURCHASE" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="ORDER_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ORDER_BRANCHID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="BRANCH_DESCRIPTION" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="ORDER_NUMBER" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="ORDER_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="PARTYORDNO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="PARTYORDDATE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="CUSTVEND_ID" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="CUSTVEND_NAME" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="PROJ_NAME" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="ORDER_SALESMANID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SALESMAN_NAME" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="ORDERDETAILS_PRODUCTID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="SHORTNAME" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
-      <Column Name="ORDERDETAILS_PRODUCTDESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="SPRODUCTS_NAME" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="UOM_NAME" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="SALEPRICE" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="ACTUAL_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="MATURE_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="BALANCE_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="ACTUAL_VALUES" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="MATURE_VALUES" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="BALANCE_VALUES" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.PENDINGSALEPURCHASEORDERCOLUMNAR_REPORT" Member="PENDINGSALEPURCHASEORDERCOLUMNAR_REPORTs">
     <Type Name="PENDINGSALEPURCHASEORDERCOLUMNAR_REPORT">
       <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -4315,6 +4282,40 @@
       <Column Name="IN_QTY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="OUT_QTY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="BAL_QTY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PENDING_SALEPURCHASE_ORDER_REPORT" Member="PENDING_SALEPURCHASE_ORDER_REPORTs">
+    <Type Name="PENDING_SALEPURCHASE_ORDER_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SLNO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TRANSACTION_TYPE" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MODULETYPE" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="IMPORTPURCHASE" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="ORDER_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ORDER_BRANCHID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BRANCH_DESCRIPTION" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ORDER_NUMBER" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="ORDER_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PARTYORDNO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PARTYORDDATE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CUSTVEND_ID" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CUSTVEND_NAME" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PROJ_NAME" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ORDER_SALESMANID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SALESMAN_NAME" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ORDERDETAILS_PRODUCTID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SHORTNAME" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="ORDERDETAILS_PRODUCTDESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SPRODUCTS_NAME" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UOM_NAME" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="SALEPRICE" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ACTUAL_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="MATURE_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="BALANCE_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ACTUAL_VALUES" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="MATURE_VALUES" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="BALANCE_VALUES" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="CUSTVEND_CODE" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.PRC_PARTYWISEAGEINSUMGDET_REPORT" Method="PRC_PARTYWISEAGEINSUMGDET_REPORT" IsComposable="true">
