@@ -1,6 +1,8 @@
 <%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                27-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+2.0                25-07-2023        V2.0.39          Sanchita            Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+                                                                          Mantis : 26609  
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Document Types" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" Inherits="ERP.OMS.Management.Master.management_master_DocumentType" CodeBehind="DocumentType.aspx.cs" %>
@@ -547,10 +549,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <dxe:ListEditItem Text="Sales Return" Value="SalesReturn"></dxe:ListEditItem>
                                               <dxe:ListEditItem Text="Purchase Return" Value="PurchaseReturn"></dxe:ListEditItem>
 
-                                            <%--Rev Sanchita--%>
+                                            <%--Rev 2.0--%>
                                             <%--<dxe:ListEditItem Text="Sale Challan" Value="SaleChallan"></dxe:ListEditItem>--%>
                                             <dxe:ListEditItem Text="Sale Challan" Value="SalesChallan"></dxe:ListEditItem>
-                                            <%--End of Rev Sanchita--%>
+                                            <%--End of Rev 2.0--%>
                                              <dxe:ListEditItem Text="Sale Return" Value="SaleReturn"></dxe:ListEditItem>
                                              <dxe:ListEditItem Text="Sale Invoice" Value="SalesInvoice"></dxe:ListEditItem>
                                             <dxe:ListEditItem Text="Transit Sale Invoice" Value="TransitSalesInvoice"></dxe:ListEditItem>
