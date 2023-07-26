@@ -2,6 +2,8 @@
    1.0   Priti    V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
    2.0	 PRITI    V2.0.38	  03/04/2023	 0025291: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Invoice
    3.0	 Pallab   V2.0.38	  27/04/2023	 0025920: Sales Invoice module design modification 
+   4.0   Sanchita V2.0.39     25-07-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+                                             Mantis : 26609   
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoiceList" 
@@ -1185,6 +1187,20 @@
             Settings-VerticalScrollableHeight="250" Settings-VerticalScrollBarMode="Auto" Styles-SearchPanel-CssClass="searchBoxSmall">
             <SettingsSearchPanel Visible="True" Delay="5000" />
             <Columns>
+                <%--Rev 4.0--%>
+                <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="0" Width="40px" FixedStyle="Left">
+                    <DataItemTemplate>
+                        <img src="../../../assests/images/attachment.png" style='<%#Eval("IsAttachmentDoc")%>' />
+                        
+                    </DataItemTemplate>
+                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                    <CellStyle HorizontalAlign="Center"></CellStyle>
+
+                    <HeaderTemplate><span></span></HeaderTemplate>
+                    <EditFormSettings Visible="False"></EditFormSettings>
+                    <Settings AllowAutoFilterTextInputTimer="False"/>
+                </dxe:GridViewDataTextColumn>
+                <%--End of Rev 4.0--%>
                 <dxe:GridViewDataTextColumn FieldName="Invoice_Id" Visible="false" SortOrder="Descending" Width="0">
                     <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />

@@ -4238,53 +4238,6 @@
       <Column Name="RevNo" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.SalesInvoiceList" Member="SalesInvoiceLists">
-    <Type Name="SalesInvoiceList">
-      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="Invoice_Id" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="InvoiceNo" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="Invoice_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="TransDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CustomerName" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
-      <Column Name="BranchID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="InvoiceFor" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
-      <Column Name="GrossAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="ChargesAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="NetAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="AmountReceived" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="BalanceAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="ShippingBill_Number" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
-      <Column Name="ShippingBill_Date" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="ShippingBill_PortId" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="InvoiceAdd_countryId" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="AgeingDate" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SalesOrder_Number" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="SalesOrder_Date" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="SalesChallan_Number" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="SalesChallan_Date" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="EnteredByName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="ModifiedDate" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="ModifiedByName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="InvoiceType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="EWayBillNumber" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="EWayBillDate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="EWayBillValue" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PosState" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Remarks" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="Editlock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="Deletelock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="TCSLocck" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="IsIRN" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="IRN" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="AckNo" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="AckDt" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.SalesOrderEntityList" Member="SalesOrderEntityLists">
     <Type Name="SalesOrderEntityList">
       <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -5354,6 +5307,54 @@
       <Column Name="InvTransPorterName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Challan_FinYear" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="IsAttachmentDoc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SalesInvoiceList" Member="SalesInvoiceLists">
+    <Type Name="SalesInvoiceList">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Invoice_Id" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="InvoiceNo" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Invoice_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="TransDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CustomerName" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="BranchID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="InvoiceFor" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="GrossAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="ChargesAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="NetAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="AmountReceived" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="BalanceAmount" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="ShippingBill_Number" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="ShippingBill_Date" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ShippingBill_PortId" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="InvoiceAdd_countryId" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AgeingDate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SalesOrder_Number" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SalesOrder_Date" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SalesChallan_Number" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SalesChallan_Date" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnteredByName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ModifiedByName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="InvoiceType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EWayBillNumber" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="EWayBillDate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EWayBillValue" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PosState" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Editlock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Deletelock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="TCSLocck" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="IsIRN" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="IRN" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="AckNo" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="AckDt" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="IsAttachmentDoc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
