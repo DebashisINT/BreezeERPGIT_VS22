@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 13.875, 16.875" name="ReportSource">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 13.875, 16.75" name="ReportSource">
   <DataContextMoniker Name="/ReportSourceDataContext" />
   <nestedChildShapes>
     <classShape Id="a71552cb-04ca-494c-9f88-f147a1acf320" isExpanded="false" absoluteBounds="0.5, 1.125, 2, 0.45">
@@ -878,10 +878,10 @@
         <elementListCompartment Id="ef3468a9-726d-4e63-acad-5098826ffd32" absoluteBounds="5.015, 15.96, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b5302c9d-fc6b-4125-8cf9-7ce862134b4b" absoluteBounds="7.125, 10, 2.375, 6.5784326171875">
+    <classShape Id="592e29de-2bee-4ed9-9d8b-2f703004c5b5" absoluteBounds="7.25, 9.875, 2, 6.5784326171875">
       <DataClassMoniker Name="/ReportSourceDataContext/PENDING_SALEPURCHASE_ORDER_REPORT" />
       <nestedChildShapes>
-        <elementListCompartment Id="a3be408c-4404-4820-ae70-d7f3d6d30cf9" absoluteBounds="7.14, 10.46, 2.3449999999999998, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="9cafb6dc-c0e5-4aec-879a-1b1d3a26e3c8" absoluteBounds="7.265, 10.335, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

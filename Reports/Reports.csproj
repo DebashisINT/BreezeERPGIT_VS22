@@ -2259,7 +2259,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2924</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:2925/</IISUrl>
+          <IISUrl>http://localhost:2926/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
