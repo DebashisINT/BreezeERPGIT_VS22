@@ -2,6 +2,8 @@
  1.0   Priti    V2.0.36                   Change Approval Realted Dev Express Table Bind to HTML table 
  2.0   Pallab   V2.0.37    06-04-2023     25948: Sales Order module design modification
  3.0   Pallab   V2.0.38    11-05-2023     26100: sales order "Order waiting" button value batch design change
+ 4.0   Sanchita V2.0.39    25-07-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+                                          Mantis : 26609  
 ====================================================End Revision History=====================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -1321,6 +1323,20 @@
                 HorizontalScrollBarMode="Auto" Settings-VerticalScrollableHeight="250" Settings-VerticalScrollBarMode="Auto">
                 <SettingsSearchPanel Visible="True" Delay="5000" />
                 <Columns>
+                    <%--Rev 4.0--%>
+                    <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="0" Width="40px" FixedStyle="Left">
+                        <DataItemTemplate>
+                            <img src="../../../assests/images/attachment.png" style='<%#Eval("IsAttachmentDoc")%>' />
+                        
+                        </DataItemTemplate>
+                        <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                        <CellStyle HorizontalAlign="Center"></CellStyle>
+
+                        <HeaderTemplate><span></span></HeaderTemplate>
+                        <EditFormSettings Visible="False"></EditFormSettings>
+                        <Settings AllowAutoFilterTextInputTimer="False"/>
+                    </dxe:GridViewDataTextColumn>
+                    <%--End of Rev 4.0--%>
                     <dxe:GridViewDataTextColumn Caption="Document No." FieldName="OrderNo"
                         VisibleIndex="1" FixedStyle="Left" Width="140px" Settings-ShowFilterRowMenu="True">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
@@ -1691,7 +1707,7 @@
                 </Columns>
                 <%-- --Rev Sayantani--%>
                 <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
-                <SettingsCookies Enabled="true" StorePaging="true" StoreColumnsVisiblePosition="true" Version="3.3" />
+                <SettingsCookies Enabled="true" StorePaging="true" StoreColumnsVisiblePosition="true" Version="3.4" />
                 <%-- -- End of Rev Sayantani --%>
                 <SettingsContextMenu Enabled="true"></SettingsContextMenu>
                 <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" RowClick="gridRowclick" />
