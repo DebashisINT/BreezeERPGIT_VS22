@@ -1,8 +1,9 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History ===========================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                21-02-2023        2.0.36           Pallab              25575 : Report pages design modification
 2.0                26-04-2023        2.0.38           Pallab              25936: Purchase Order Register - Detail module zoom popup upper part visible issue fix
-====================================================== Revision History =============================================--%>
+3.0                27-07-2023        2.0.38           Debashis            UOM column is required in the Purchase Order register detail report.Refer: 0026048
+====================================================== Revision History ===========================================================================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseOrderRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.PurchaseOrderRegister_Details" %>
 
@@ -938,188 +939,193 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 
                                 <dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="PRODUCTDESC" Width="200px"
                                     VisibleIndex="14">
-                                </dxe:GridViewDataTextColumn>
+                                </dxe:GridViewDataTextColumn>                                
 
                                 <dxe:GridViewDataTextColumn FieldName="QTY" Caption="Qty" Width="70px" VisibleIndex="15">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn FieldName="COMMISSIONRCV" Caption="Comm. Receivable" Width="120px" VisibleIndex="16">
+                                <%--Rev 3.0 Mantis: 0026048--%>
+                                <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM" Width="100px" VisibleIndex="16">
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 3.0 Mantis: 0026048--%>
+
+                                 <dxe:GridViewDataTextColumn FieldName="COMMISSIONRCV" Caption="Comm. Receivable" Width="120px" VisibleIndex="17">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
-                                 <dxe:GridViewDataTextColumn FieldName="COMMISSIONRCVDTLS" Caption="Comm. Details" Width="110px" VisibleIndex="17">
+                                 <dxe:GridViewDataTextColumn FieldName="COMMISSIONRCVDTLS" Caption="Comm. Details" Width="110px" VisibleIndex="18">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
-                                  <dxe:GridViewDataTextColumn FieldName="COMMISSIONRATE" Caption="Comm. Rate" Width="110px" VisibleIndex="18">
+                                  <dxe:GridViewDataTextColumn FieldName="COMMISSIONRATE" Caption="Comm. Rate" Width="110px" VisibleIndex="19">
                                       <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
-                                 <dxe:GridViewDataTextColumn FieldName="DISCNTRCV" Caption="Disc. Receivable" Width="110px" VisibleIndex="19">
+                                 <dxe:GridViewDataTextColumn FieldName="DISCNTRCV" Caption="Disc. Receivable" Width="110px" VisibleIndex="20">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="DISCNTRCVDTLS" Caption="Disc. Details" Width="110px" VisibleIndex="20">
+                                <dxe:GridViewDataTextColumn FieldName="DISCNTRCVDTLS" Caption="Disc. Details" Width="110px" VisibleIndex="21">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Delivery Schedule/Date" Width="130px" FieldName="DELIVERYDATE" Settings-AllowAutoFilter="False" VisibleIndex="21">
+                                <dxe:GridViewDataTextColumn Caption="Delivery Schedule/Date" Width="130px" FieldName="DELIVERYDATE" Settings-AllowAutoFilter="False" VisibleIndex="22">
                                     <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="DELREMARKS" Caption="Delivery Remarks" Width="200px" VisibleIndex="22">
+                                <dxe:GridViewDataTextColumn FieldName="DELREMARKS" Caption="Delivery Remarks" Width="200px" VisibleIndex="23">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="INSURANCECOVERAGE" Caption="Insurance Coverage" Width="120px" VisibleIndex="23">
+                                <dxe:GridViewDataTextColumn FieldName="INSURANCECOVERAGE" Caption="Insurance Coverage" Width="120px" VisibleIndex="24">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="FREIGHTCHARGES" Caption="Freight Charge" Width="100px" VisibleIndex="24">
+                                <dxe:GridViewDataTextColumn FieldName="FREIGHTCHARGES" Caption="Freight Charge" Width="100px" VisibleIndex="25">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="FREIGHTREMARKS" Caption="Freight Remarks" Width="200px" VisibleIndex="25">
+                                <dxe:GridViewDataTextColumn FieldName="FREIGHTREMARKS" Caption="Freight Remarks" Width="200px" VisibleIndex="26">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PERMITVALUE" Caption="E-Permit/Way bill/Road Permit" Width="180px" VisibleIndex="26">
+                                <dxe:GridViewDataTextColumn FieldName="PERMITVALUE" Caption="E-Permit/Way bill/Road Permit" Width="180px" VisibleIndex="27">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="OTHREMARKS" Caption="Other Remarks" Width="200px" VisibleIndex="27">
+                                <dxe:GridViewDataTextColumn FieldName="OTHREMARKS" Caption="Other Remarks" Width="200px" VisibleIndex="28">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="CERTREQ" Caption="Test Certificate Required?" Width="150px" VisibleIndex="28">
+                                <dxe:GridViewDataTextColumn FieldName="CERTREQ" Caption="Test Certificate Required?" Width="150px" VisibleIndex="29">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="DELDETAILS" Caption="Delivery Details" Width="120px" VisibleIndex="29">
+                                <dxe:GridViewDataTextColumn FieldName="DELDETAILS" Caption="Delivery Details" Width="120px" VisibleIndex="30">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="TC_PAYMENTTERMS" Caption="Payment Terms" Width="120px" VisibleIndex="30">
+                                <dxe:GridViewDataTextColumn FieldName="TC_PAYMENTTERMS" Caption="Payment Terms" Width="120px" VisibleIndex="31">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="TRNSPRTRNAME" Caption="Transporter Name(General)" Width="180px" VisibleIndex="31">
+                                <dxe:GridViewDataTextColumn FieldName="TRNSPRTRNAME" Caption="Transporter Name(General)" Width="180px" VisibleIndex="32">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BANK_NAME" Caption="Bank Name" Width="180px" VisibleIndex="32">
+                                <dxe:GridViewDataTextColumn FieldName="BANK_NAME" Caption="Bank Name" Width="180px" VisibleIndex="33">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BANK_BRANCH" Caption="Bank Branch Name" Width="180px" VisibleIndex="33">
+                                <dxe:GridViewDataTextColumn FieldName="BANK_BRANCH" Caption="Bank Branch Name" Width="180px" VisibleIndex="34">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BANK_ADDRESS" Caption="Bank Branch Address" Width="180px" VisibleIndex="34">
+                                <dxe:GridViewDataTextColumn FieldName="BANK_ADDRESS" Caption="Bank Branch Address" Width="180px" VisibleIndex="35">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BANK_LANDMARK" Caption="Bank Branch Landmark" Width="180px" VisibleIndex="35">
+                                <dxe:GridViewDataTextColumn FieldName="BANK_LANDMARK" Caption="Bank Branch Landmark" Width="180px" VisibleIndex="36">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BANK_PIN" Caption="Bank Branch Pin" Width="110px" VisibleIndex="36">
+                                <dxe:GridViewDataTextColumn FieldName="BANK_PIN" Caption="Bank Branch Pin" Width="110px" VisibleIndex="37">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BANK_ACNO" Caption="Account Number" Width="120px" VisibleIndex="37">
+                                <dxe:GridViewDataTextColumn FieldName="BANK_ACNO" Caption="Account Number" Width="120px" VisibleIndex="38">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BANK_SWIFTCODE" Caption="SWIFT Code" Width="120px" VisibleIndex="38">
+                                <dxe:GridViewDataTextColumn FieldName="BANK_SWIFTCODE" Caption="SWIFT Code" Width="120px" VisibleIndex="39">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="RTGS" Caption="RTGS" Width="120px" VisibleIndex="39">
+                                <dxe:GridViewDataTextColumn FieldName="RTGS" Caption="RTGS" Width="120px" VisibleIndex="40">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="NEFT" Caption="NEFT" Width="120px" VisibleIndex="40">
+                                <dxe:GridViewDataTextColumn FieldName="NEFT" Caption="NEFT" Width="120px" VisibleIndex="41">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="IFSC" Caption="IFSC Code" Width="120px" VisibleIndex="41">
+                                <dxe:GridViewDataTextColumn FieldName="IFSC" Caption="IFSC Code" Width="120px" VisibleIndex="42">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BANK_REMARKS" Caption="Remarks" Width="180px" VisibleIndex="42">
+                                <dxe:GridViewDataTextColumn FieldName="BANK_REMARKS" Caption="Remarks" Width="180px" VisibleIndex="43">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn FieldName="TYPEOFIMPORT" Caption="Type of Import" Width="120px" VisibleIndex="43">
+                                 <dxe:GridViewDataTextColumn FieldName="TYPEOFIMPORT" Caption="Type of Import" Width="120px" VisibleIndex="44">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn FieldName="INCODVTERMS" Caption="Incoterms" Width="120px" VisibleIndex="44">
+                                 <dxe:GridViewDataTextColumn FieldName="INCODVTERMS" Caption="Incoterms" Width="120px" VisibleIndex="45">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn FieldName="PAYMENTTRMREMARKS" Caption="Payment Remarks" Width="120px" VisibleIndex="45">
+                                 <dxe:GridViewDataTextColumn FieldName="PAYMENTTRMREMARKS" Caption="Payment Remarks" Width="120px" VisibleIndex="46">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn FieldName="INCODVTERMSREMARKS" Caption="Incoterms Remarks" Width="120px" VisibleIndex="46">
+                                 <dxe:GridViewDataTextColumn FieldName="INCODVTERMSREMARKS" Caption="Incoterms Remarks" Width="120px" VisibleIndex="47">
                                      <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn FieldName="VALIDITYOFORDERDATE" Caption="Validity Date" Width="120px" VisibleIndex="47">
+                                 <dxe:GridViewDataTextColumn FieldName="VALIDITYOFORDERDATE" Caption="Validity Date" Width="120px" VisibleIndex="48">
                                      <HeaderStyle HorizontalAlign="Left" />
                                      <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="RATE" Caption="Rate" Width="90px" VisibleIndex="48">
+                                <dxe:GridViewDataTextColumn FieldName="RATE" Caption="Rate" Width="90px" VisibleIndex="49">
                                     <%--Rev Maynak 28-10-2019 0019874 --%>
                                     <%--<PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>--%>
                                     <%--End of Rev Maynak --%>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="GROSAMOUNT" Caption="Purchase Value" Width="90px" VisibleIndex="49">
+                                <dxe:GridViewDataTextColumn FieldName="GROSAMOUNT" Caption="Purchase Value" Width="90px" VisibleIndex="50">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="CGST_AMT" Caption="CGST" Width="90px" VisibleIndex="50">
+                                <dxe:GridViewDataTextColumn FieldName="CGST_AMT" Caption="CGST" Width="90px" VisibleIndex="51">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="SGST_AMT" Caption="SGST" Width="90px" VisibleIndex="51">
+                                <dxe:GridViewDataTextColumn FieldName="SGST_AMT" Caption="SGST" Width="90px" VisibleIndex="52">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="IGST_AMT" Caption="IGST" Width="90px" VisibleIndex="52">
+                                <dxe:GridViewDataTextColumn FieldName="IGST_AMT" Caption="IGST" Width="90px" VisibleIndex="53">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="UTGST_AMT" Caption="UTGST" Width="90px" VisibleIndex="53">
+                                <dxe:GridViewDataTextColumn FieldName="UTGST_AMT" Caption="UTGST" Width="90px" VisibleIndex="54">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="OTHER_AMT" Caption="Other Charges" Width="120px" VisibleIndex="54">
+                                <dxe:GridViewDataTextColumn FieldName="OTHER_AMT" Caption="Other Charges" Width="120px" VisibleIndex="55">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="TAX_MISC" Caption="Tax Misc." Width="110px" VisibleIndex="55">
+                                <dxe:GridViewDataTextColumn FieldName="TAX_MISC" Caption="Tax Misc." Width="110px" VisibleIndex="56">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="TOTALAMOUNT" Caption="Total Value" Width="110px" VisibleIndex="56">
+                                <dxe:GridViewDataTextColumn FieldName="TOTALAMOUNT" Caption="Total Value" Width="110px" VisibleIndex="57">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Created by" Width="160px" FieldName="CREATEDBY" VisibleIndex="57">
+                                <dxe:GridViewDataTextColumn Caption="Created by" Width="160px" FieldName="CREATEDBY" VisibleIndex="58">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                 </dxe:GridViewDataTextColumn>
 
