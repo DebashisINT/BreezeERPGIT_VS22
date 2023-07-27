@@ -28,6 +28,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <link href="CSS/SalesQuotaion.css?1.0.1" rel="stylesheet" />
     <script src="JS/SalesQuotation.js?v=2.40"></script>
     <%--Use for set focus on UOM after press ok on UOM--%>
+
     <script>
 
         $(function () {
@@ -457,6 +458,23 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
     <style>
         /*Rev 1.0*/
+
+        #Popup_MultiUOM_PW-1
+            {
+                /*position:fixed !important;*/
+                left: 18% !important;
+                top: 150px !important;
+            }
+
+       /* .dxpcLite_PlasticBlue .dxpc-mainDiv, .dxpcLite_PlasticBlue.dxpc-mainDiv, .dxdpLite_PlasticBlue .dxpc-mainDiv, .dxdpLite_PlasticBlue.dxpc-mainDiv
+        {
+                background-color: transparent !important;
+        }
+
+        .dxgvControl_PlasticBlue, .dxgvDisabled_PlasticBlue
+        {
+            background-color: transparent !important;
+        }*/
 
         select
         {
@@ -898,7 +916,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 top: 20% !important;
             }
 
-        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+       @media only screen and (max-width: 1380px) and (min-width: 1200px)
         {
             #Popup_MultiUOM_PW-1 , #Popup_Warehouse_PW-1 , #Popup_Taxes_PW-1 , #aspxTaxpopUp_PW-1 , #Popup_InlineRemarks_PW-1
             {
