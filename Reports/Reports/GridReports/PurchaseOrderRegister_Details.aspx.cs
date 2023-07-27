@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region ==========================Revision History===========================================================================================================
+//1.0   v2 .0.38    Debashis    27/07/2023  UOM column is required in the Purchase Order register detail report.Refer: 0026048
+#endregion =======================End of Revision History====================================================================================================
+
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -102,58 +106,59 @@ namespace Reports.Reports.GridReports
 
                 //    //End of Rev
                 //}
-                if (ShowTermsnCondition.Checked == false)
-                {
-                    ShowGrid.Columns[15].Visible = false;
-                    ShowGrid.Columns[16].Visible = false;
-                    ShowGrid.Columns[17].Visible = false;
-                    ShowGrid.Columns[18].Visible = false;
-                    ShowGrid.Columns[19].Visible = false;
-                    ShowGrid.Columns[20].Visible = false;
-                    ShowGrid.Columns[21].Visible = false;
-                    ShowGrid.Columns[22].Visible = false;
-                    ShowGrid.Columns[23].Visible = false;
-                    ShowGrid.Columns[24].Visible = false;
-                    ShowGrid.Columns[25].Visible = false;
-                    ShowGrid.Columns[26].Visible = false;
-                    ShowGrid.Columns[27].Visible = false;
-                    ShowGrid.Columns[28].Visible = false;
-                    ShowGrid.Columns[29].Visible = false;
-                    ShowGrid.Columns[30].Visible = false;
-                    ShowGrid.Columns[31].Visible = false;
-                    ShowGrid.Columns[32].Visible = false;
-                    ShowGrid.Columns[33].Visible = false;
-                    ShowGrid.Columns[34].Visible = false;
-                    ShowGrid.Columns[35].Visible = false;
-                    ShowGrid.Columns[36].Visible = false;
-                    ShowGrid.Columns[37].Visible = false;
-                    ShowGrid.Columns[38].Visible = false;
-                    ShowGrid.Columns[39].Visible = false;
-                    ShowGrid.Columns[40].Visible = false;
-                    ShowGrid.Columns[41].Visible = false;
-                }
+                //Rev 1.0 Mantis: 0026048
+                //if (ShowTermsnCondition.Checked == false)
+                //{
+                //    ShowGrid.Columns[15].Visible = false;
+                //    ShowGrid.Columns[16].Visible = false;
+                //    ShowGrid.Columns[17].Visible = false;
+                //    ShowGrid.Columns[18].Visible = false;
+                //    ShowGrid.Columns[19].Visible = false;
+                //    ShowGrid.Columns[20].Visible = false;
+                //    ShowGrid.Columns[21].Visible = false;
+                //    ShowGrid.Columns[22].Visible = false;
+                //    ShowGrid.Columns[23].Visible = false;
+                //    ShowGrid.Columns[24].Visible = false;
+                //    ShowGrid.Columns[25].Visible = false;
+                //    ShowGrid.Columns[26].Visible = false;
+                //    ShowGrid.Columns[27].Visible = false;
+                //    ShowGrid.Columns[28].Visible = false;
+                //    ShowGrid.Columns[29].Visible = false;
+                //    ShowGrid.Columns[30].Visible = false;
+                //    ShowGrid.Columns[31].Visible = false;
+                //    ShowGrid.Columns[32].Visible = false;
+                //    ShowGrid.Columns[33].Visible = false;
+                //    ShowGrid.Columns[34].Visible = false;
+                //    ShowGrid.Columns[35].Visible = false;
+                //    ShowGrid.Columns[36].Visible = false;
+                //    ShowGrid.Columns[37].Visible = false;
+                //    ShowGrid.Columns[38].Visible = false;
+                //    ShowGrid.Columns[39].Visible = false;
+                //    ShowGrid.Columns[40].Visible = false;
+                //    ShowGrid.Columns[41].Visible = false;
+                //}
 
-                if (ShowIPOTC.Checked == false)
-                {
-                    //ShowGrid.Columns[20].Visible = false;
-                    //ShowGrid.Columns[21].Visible = false;
-                    //ShowGrid.Columns[22].Visible = false;
-                    //ShowGrid.Columns[23].Visible = false;
-                    //ShowGrid.Columns[24].Visible = false;
-                    ShowGrid.Columns[42].Visible = false;
-                    ShowGrid.Columns[43].Visible = false;
-                    ShowGrid.Columns[44].Visible = false;
-                    ShowGrid.Columns[45].Visible = false;
-                    ShowGrid.Columns[46].Visible = false;
-                }
+                //if (ShowIPOTC.Checked == false)
+                //{
+                //    //ShowGrid.Columns[20].Visible = false;
+                //    //ShowGrid.Columns[21].Visible = false;
+                //    //ShowGrid.Columns[22].Visible = false;
+                //    //ShowGrid.Columns[23].Visible = false;
+                //    //ShowGrid.Columns[24].Visible = false;
+                //    ShowGrid.Columns[42].Visible = false;
+                //    ShowGrid.Columns[43].Visible = false;
+                //    ShowGrid.Columns[44].Visible = false;
+                //    ShowGrid.Columns[45].Visible = false;
+                //    ShowGrid.Columns[46].Visible = false;
+                //}
 
-                if (chkCreateBy.Checked == false)
-                {
-                    //ShowGrid.Columns[34].Visible = false;
-                    ShowGrid.Columns[56].Visible = false;
-                }
-                //End of Rev Debashis
-
+                //if (chkCreateBy.Checked == false)
+                //{
+                //    //ShowGrid.Columns[34].Visible = false;
+                //    ShowGrid.Columns[56].Visible = false;
+                //}
+                ////End of Rev Debashis
+                //End of Rev 1.0 Mantis: 0026048
             }
             else
             {
@@ -679,7 +684,34 @@ namespace Reports.Reports.GridReports
             //}
             if (ShowTermsnCondition.Checked == false)
             {
-                ShowGrid.Columns[15].Visible = false;
+                //Rev 1.0 Mantis: 0026048
+                //ShowGrid.Columns[15].Visible = false;
+                //ShowGrid.Columns[16].Visible = false;
+                //ShowGrid.Columns[17].Visible = false;
+                //ShowGrid.Columns[18].Visible = false;
+                //ShowGrid.Columns[19].Visible = false;
+                //ShowGrid.Columns[20].Visible = false;
+                //ShowGrid.Columns[21].Visible = false;
+                //ShowGrid.Columns[22].Visible = false;
+                //ShowGrid.Columns[23].Visible = false;
+                //ShowGrid.Columns[24].Visible = false;
+                //ShowGrid.Columns[25].Visible = false;
+                //ShowGrid.Columns[26].Visible = false;
+                //ShowGrid.Columns[27].Visible = false;
+                //ShowGrid.Columns[28].Visible = false;
+                //ShowGrid.Columns[29].Visible = false;
+                //ShowGrid.Columns[30].Visible = false;
+                //ShowGrid.Columns[31].Visible = false;
+                //ShowGrid.Columns[32].Visible = false;
+                //ShowGrid.Columns[33].Visible = false;
+                //ShowGrid.Columns[34].Visible = false;
+                //ShowGrid.Columns[35].Visible = false;
+                //ShowGrid.Columns[36].Visible = false;
+                //ShowGrid.Columns[37].Visible = false;
+                //ShowGrid.Columns[38].Visible = false;
+                //ShowGrid.Columns[39].Visible = false;
+                //ShowGrid.Columns[40].Visible = false;
+                //ShowGrid.Columns[41].Visible = false;
                 ShowGrid.Columns[16].Visible = false;
                 ShowGrid.Columns[17].Visible = false;
                 ShowGrid.Columns[18].Visible = false;
@@ -706,10 +738,39 @@ namespace Reports.Reports.GridReports
                 ShowGrid.Columns[39].Visible = false;
                 ShowGrid.Columns[40].Visible = false;
                 ShowGrid.Columns[41].Visible = false;
+                ShowGrid.Columns[42].Visible = false;
+                //End of Rev 1.0 Mantis: 0026048
             }
             else
             {
-                ShowGrid.Columns[15].Visible = true;
+                //Rev 1.0 Mantis: 0026048
+                //ShowGrid.Columns[15].Visible = true;
+                //ShowGrid.Columns[16].Visible = true;
+                //ShowGrid.Columns[17].Visible = true;
+                //ShowGrid.Columns[18].Visible = true;
+                //ShowGrid.Columns[19].Visible = true;
+                //ShowGrid.Columns[20].Visible = true;
+                //ShowGrid.Columns[21].Visible = true;
+                //ShowGrid.Columns[22].Visible = true;
+                //ShowGrid.Columns[23].Visible = true;
+                //ShowGrid.Columns[24].Visible = true;
+                //ShowGrid.Columns[25].Visible = true;
+                //ShowGrid.Columns[26].Visible = true;
+                //ShowGrid.Columns[27].Visible = true;
+                //ShowGrid.Columns[28].Visible = true;
+                //ShowGrid.Columns[29].Visible = true;
+                //ShowGrid.Columns[30].Visible = true;
+                //ShowGrid.Columns[31].Visible = true;
+                //ShowGrid.Columns[32].Visible = true;
+                //ShowGrid.Columns[33].Visible = true;
+                //ShowGrid.Columns[34].Visible = true;
+                //ShowGrid.Columns[35].Visible = true;
+                //ShowGrid.Columns[36].Visible = true;
+                //ShowGrid.Columns[37].Visible = true;
+                //ShowGrid.Columns[38].Visible = true;
+                //ShowGrid.Columns[39].Visible = true;
+                //ShowGrid.Columns[40].Visible = true;
+                //ShowGrid.Columns[41].Visible = true;
                 ShowGrid.Columns[16].Visible = true;
                 ShowGrid.Columns[17].Visible = true;
                 ShowGrid.Columns[18].Visible = true;
@@ -736,6 +797,8 @@ namespace Reports.Reports.GridReports
                 ShowGrid.Columns[39].Visible = true;
                 ShowGrid.Columns[40].Visible = true;
                 ShowGrid.Columns[41].Visible = true;
+                ShowGrid.Columns[42].Visible = true;
+                //End of Rev 1.0 Mantis: 0026048
             }
 
             if (ShowIPOTC.Checked == false)
@@ -745,11 +808,18 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[22].Visible = false;
                 //ShowGrid.Columns[23].Visible = false;
                 //ShowGrid.Columns[24].Visible = false;
-                ShowGrid.Columns[42].Visible = false;
+                //Rev 1.0 Mantis: 0026048
+                //ShowGrid.Columns[42].Visible = false;
+                //ShowGrid.Columns[43].Visible = false;
+                //ShowGrid.Columns[44].Visible = false;
+                //ShowGrid.Columns[45].Visible = false;
+                //ShowGrid.Columns[46].Visible = false;
                 ShowGrid.Columns[43].Visible = false;
                 ShowGrid.Columns[44].Visible = false;
                 ShowGrid.Columns[45].Visible = false;
                 ShowGrid.Columns[46].Visible = false;
+                ShowGrid.Columns[47].Visible = false;
+                //End of Rev 1.0 Mantis: 0026048
             }
             else
             {
@@ -758,22 +828,35 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[22].Visible = true;
                 //ShowGrid.Columns[23].Visible = true;
                 //ShowGrid.Columns[24].Visible = true;
-                ShowGrid.Columns[42].Visible = true;
+                //Rev 1.0 Mantis: 0026048
+                //ShowGrid.Columns[42].Visible = true;
+                //ShowGrid.Columns[43].Visible = true;
+                //ShowGrid.Columns[44].Visible = true;
+                //ShowGrid.Columns[45].Visible = true;
+                //ShowGrid.Columns[46].Visible = true;
                 ShowGrid.Columns[43].Visible = true;
                 ShowGrid.Columns[44].Visible = true;
                 ShowGrid.Columns[45].Visible = true;
                 ShowGrid.Columns[46].Visible = true;
+                ShowGrid.Columns[47].Visible = true;
+                //End of Rev 1.0 Mantis: 0026048
             }
 
             if (chkCreateBy.Checked == false)
             {
                 //ShowGrid.Columns[34].Visible = false;
-                ShowGrid.Columns[56].Visible = false;
+                //Rev 1.0 Mantis: 0026048
+                //ShowGrid.Columns[56].Visible = false;
+                ShowGrid.Columns[57].Visible = false;
+                //End of Rev 1.0 Mantis: 0026048
             }
             else
             {
                 //ShowGrid.Columns[34].Visible = true;
-                ShowGrid.Columns[56].Visible = true;
+                //Rev 1.0 Mantis: 0026048
+                //ShowGrid.Columns[56].Visible = true;
+                ShowGrid.Columns[57].Visible = true;
+                //End of Rev 1.0 Mantis: 0026048
             }
             //End of Rev Debashis
         }
