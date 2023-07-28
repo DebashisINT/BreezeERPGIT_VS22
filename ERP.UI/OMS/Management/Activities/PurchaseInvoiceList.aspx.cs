@@ -175,11 +175,11 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ProjectSelectInEntryModule == "Yes")
                 {
-                    GrdQuotation.Columns[8].Visible = true;
+                    GrdQuotation.Columns[9].Visible = true;
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
-                    GrdQuotation.Columns[8].Visible = false;
+                    GrdQuotation.Columns[9].Visible = false;
                 }
             }
 
