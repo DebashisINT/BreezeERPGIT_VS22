@@ -58,11 +58,11 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ProjectSelectInEntryModule == "Yes")
                 {
-                    Grid_PurchaseChallan.Columns[14].Visible = true;
+                    Grid_PurchaseChallan.Columns[15].Visible = true;
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
-                    Grid_PurchaseChallan.Columns[14].Visible = false;
+                    Grid_PurchaseChallan.Columns[15].Visible = false;
                 }
             }
             //End Rev Tanmoy
