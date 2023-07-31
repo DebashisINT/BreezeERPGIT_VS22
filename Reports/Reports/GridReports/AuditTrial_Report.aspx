@@ -1,7 +1,8 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History ==============================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                13-03-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                31-07-2023        2.0.38           Debashis            Audit Trial Report required for Journal & Cash/Bank.Refer: 0026621
+====================================================== Revision History ==============================================================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="AuditTrial_Report.aspx.cs" Inherits="Reports.Reports.GridReports.AuditTrial_Report" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -784,6 +785,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <asp:ListItem Value="CNV" Text="Credit Note Vendor"></asp:ListItem>
                         <asp:ListItem Value="CUSTR" Text="Customer Receipt"></asp:ListItem>
                         <asp:ListItem Value="VENDP" Text="Vendor Payment"></asp:ListItem>
+                        <%--Rev 2.0 Mantis: 0026621--%>
+                        <asp:ListItem Value="CB" Text="Cash/Bank"></asp:ListItem>
+                        <asp:ListItem Value="JV" Text="Journal"></asp:ListItem>
+                        <%--End of Rev 2.0 Mantis: 0026621--%>
                        <%-- REV SAYANTANI--%>
                        <%--<asp:ListItem Value="ESI" Text="Estimate"></asp:ListItem>--%>
                        <%-- END OF REV SAYANTANI--%>
