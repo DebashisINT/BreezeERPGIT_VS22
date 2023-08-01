@@ -7,6 +7,7 @@
 
 <%@ OutputCache Duration='5' VaryByParam="ID" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>
+
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc3" TagName="UOMConversionControl" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -14,7 +15,7 @@
     <script src="JS/SearchPopup.js"></script>
   <%--  <script src="../../Tax%20Details/Js/TaxDetailsItemlevel.js" type="text/javascript"></script>--%>
      <script src="../../Tax%20Details/Js/TaxDetailsItemlevelPurchase.js"></script>
-    <script src="JS/PReturn.js?v=1.0.0.35"></script>
+    <script src="JS/PReturn.js?v=2.0"></script>
     <style type="text/css">
         .inline {
             display: inline !important;
@@ -2124,6 +2125,7 @@
                                         <HeaderStyle BackColor="Blue" Font-Bold="True" ForeColor="White" />
                                     </dxe:ASPxPopupControl>
                                     <ucBS:BillingShippingControl runat="server" ID="BillingShippingControl" />
+                                    
                                     <asp:HiddenField runat="server" ID="hfTermsConditionDocType" Value="PR" />
                                 </dxe:ContentControl>
                             </ContentCollection>
