@@ -1,6 +1,7 @@
 ﻿//====================================================Revision History =========================================================================
 //1.0   Priti     V2.0.37    05-03-2023      0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
 //2.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
+//3.0   Priti     V2.0.39    02-08-2023      0026647:Alternate qty is calculating wrong in the Sales return
 //====================================================End Revision History=====================================================================
 
 var strProAlt = '';
@@ -3745,7 +3746,7 @@ function OnCustomButtonClick(s, e) {
         var ProductID = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
         var QuantityValue = (grid.GetEditor('Quantity').GetValue() != null) ? grid.GetEditor('Quantity').GetValue() : "0";
         var ComponentID = (grid.GetEditor('ComponentID').GetValue() != null) ? grid.GetEditor('ComponentID').GetValue() : "0";
-
+        var DetailsId = (grid.GetEditor('DetailsId').GetValue() != null) ? grid.GetEditor('DetailsId').GetValue() : "0";
         $("#spnCmbWarehouse").hide();
         $("#spnCmbBatch").hide();
         $("#spncheckComboBox").hide();
@@ -3912,12 +3913,14 @@ function OnCustomButtonClick(s, e) {
                     if (ComponentID != "" && ComponentID != null) {
                         $.ajax({
                             type: "POST",
-                            url: "Services/Master.asmx/GetMultiUOMDetails",
-                            data: JSON.stringify({ orderid: strProductID, action: 'SalesReturnPackingQty', module: 'SalesReturn', strKey: ComponentID }),
+                           /* Rev 3.0*/
+                            /*url: "Services/Master.asmx/GetMultiUOMDetails",*/
+                            url: "Services/Master.asmx/GetMultiUOMDetailsDataSR",
+                            /* Rev 3.0 End*/
+                            data: JSON.stringify({ orderid: strProductID, action: 'SalesReturnPackingQty', module: 'SalesReturn', strKey: ComponentID, ComponentDetailsID: DetailsId }),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-                            success: function (msg) {
-                                //gridPackingQty = msg.d;
+                            success: function (msg) {                                
                                 $('#hdnAltQty').val(msg.d);
                             }
                         });
@@ -4776,28 +4779,34 @@ function OnWarehouseEndCallback(s, e) {
         if (aarr) {
             var FilterSerial = $.grep(aarr, function (e) { return e.productid == strProAlt });
             if (FilterSerial.length > 0) {
-                ctxtQuantity.SetValue(FilterSerial[0].Quantity);
-                if ($("#hdnShowUOMConversionInEntry").val() == "1") {
-                    ctxtAltQuantity.SetValue(FilterSerial[0].packing);
-                    // Rev Mantis Issue 24089
-                   // ccmbSecondUOMWH.SetValue(FilterSerial[0].PackingSelectUom);
-                   ccmbSecondUOMWH.SetValue(FilterSerial[0].PackingUom);
-                    // End of Rev Mantis Issue 24089
+                if ($("#hdnPageStatus").val() != 'update') {
+                    ctxtQuantity.SetValue(FilterSerial[0].Quantity);
+                    if ($("#hdnShowUOMConversionInEntry").val() == "1") {
+                        ctxtAltQuantity.SetValue(FilterSerial[0].packing);
+                        // Rev Mantis Issue 24089
+                        // ccmbSecondUOMWH.SetValue(FilterSerial[0].PackingSelectUom);
+                        ccmbSecondUOMWH.SetValue(FilterSerial[0].PackingUom);
+                        // End of Rev Mantis Issue 24089
+                    }
                 }
             }
             else {
+                if ($("#hdnPageStatus").val() != 'update') {
+                    ctxtQuantity.SetValue(Qty);
+                    if ($("#hdnShowUOMConversionInEntry").val() == "1") {
+                        ctxtAltQuantity.SetValue(AltQty);
+                        ccmbSecondUOMWH.SetValue(AltQtyUom);
+                    }
+                }
+            }
+        }
+        else {
+            if ($("#hdnPageStatus").val() != 'update') {
                 ctxtQuantity.SetValue(Qty);
                 if ($("#hdnShowUOMConversionInEntry").val() == "1") {
                     ctxtAltQuantity.SetValue(AltQty);
                     ccmbSecondUOMWH.SetValue(AltQtyUom);
                 }
-            }
-        }
-        else {
-            ctxtQuantity.SetValue(Qty);
-            if ($("#hdnShowUOMConversionInEntry").val() == "1") {
-                ctxtAltQuantity.SetValue(AltQty);
-                ccmbSecondUOMWH.SetValue(AltQtyUom);
             }
         }
 
@@ -4861,23 +4870,29 @@ function OnWarehouseEndCallback(s, e) {
             if (aarr) {
                 var FilterSerial = $.grep(aarr, function (e) { return e.productid == strProAlt });
                 if (FilterSerial.length > 0) {
-                    ctxtQuantity.SetValue(FilterSerial[0].Quantity);
-                    ctxtAltQuantity.SetValue(FilterSerial[0].packing);
-                    // Rev Mantis Issue 24089
-                    //ccmbSecondUOMWH.SetValue(FilterSerial[0].PackingSelectUom);
-                    ccmbSecondUOMWH.SetValue(FilterSerial[0].PackingUom);
-                    // End of Rev Mantis Issue 24089
+                    if ($("#hdnPageStatus").val() != 'update') {
+                        ctxtQuantity.SetValue(FilterSerial[0].Quantity);
+                        ctxtAltQuantity.SetValue(FilterSerial[0].packing);
+                        // Rev Mantis Issue 24089
+                        //ccmbSecondUOMWH.SetValue(FilterSerial[0].PackingSelectUom);
+                        ccmbSecondUOMWH.SetValue(FilterSerial[0].PackingUom);
+                        // End of Rev Mantis Issue 24089
+                    }
                 }
                 else {
+                    if ($("#hdnPageStatus").val() != 'update') {
+                        ctxtQuantity.SetValue(Qty);
+                        ctxtAltQuantity.SetValue(AltQty);
+                        ccmbSecondUOMWH.SetValue(AltQtyUom);
+                    }
+                }
+            }
+            else {
+                if ($("#hdnPageStatus").val() != 'update') {
                     ctxtQuantity.SetValue(Qty);
                     ctxtAltQuantity.SetValue(AltQty);
                     ccmbSecondUOMWH.SetValue(AltQtyUom);
                 }
-            }
-            else {
-                ctxtQuantity.SetValue(Qty);
-                ctxtAltQuantity.SetValue(AltQty);
-                ccmbSecondUOMWH.SetValue(AltQtyUom);
             }
             if (Ptype == "W" || Ptype == "WB" || Ptype == "WS" || Ptype == "WBS") {
                 cCmbWarehouse.Focus();

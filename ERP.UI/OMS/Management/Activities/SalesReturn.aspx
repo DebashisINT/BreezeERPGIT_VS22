@@ -3,6 +3,8 @@
  2.0   Pallab    V2.0.37    12-04-2023     	0025992: Add Sales Return module design modification & check in small device
  3.0   Pallab    V2.0.38    17-05-2023     	0026153: In Add Sales Return module, after select customer, module "cross button" is hiding, should be fix
  4.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
+
+
 ====================================================End Revision History=====================================================================
 --%>
 
@@ -27,7 +29,7 @@
     <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
     <%--Rev end 2.0--%>
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
-    <script src="JS/SalesReturn.js?v=2.1"></script>
+    <script src="JS/SalesReturn.js?v=2.2"></script>
     <link href="CSS/SalesReturn.css" rel="stylesheet" />
     
     <%--Use for set focus on UOM after press ok on UOM--%>
