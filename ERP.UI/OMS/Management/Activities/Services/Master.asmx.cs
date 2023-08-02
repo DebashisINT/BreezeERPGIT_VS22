@@ -1,4 +1,7 @@
-﻿//1.0   Priti V2.0.36   06-02-2023    0025645: Branch Requisition - While Adding a Product, the Search is not working properly
+﻿#region//====================================================Revision History==============================================================
+//1.0   Priti V2.0.36   06-02-2023    0025645: Branch Requisition - While Adding a Product, the Search is not working properly
+//2.0   Priti V2.0.39    02-08-2023      0026647:Alternate qty is calculating wrong in the Sales return
+#endregion//====================================================End Revision History=====================================================================
 
 using BusinessLogicLayer;
 using DataAccessLayer;
@@ -4668,7 +4671,7 @@ namespace ERP.OMS.Management.Activities.Services
 
             return PackingQty;
         }
-
+        
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -4683,7 +4686,38 @@ namespace ERP.OMS.Management.Activities.Services
             ds = proc.GetDataSet();
             return ds;
         }
+        //Rev 2.0
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetMultiUOMDetailsDataSR(string orderid, string action, string module, string strKey, string ComponentDetailsID)
+        {
 
+            DataTable Orderdt = MultiUOMDetailsDataSR(orderid, action, module, strKey, ComponentDetailsID).Tables[0];
+            string PackingQty = "";
+            for (int i = 0; i < Orderdt.Rows.Count; i++)
+            {
+                PackingQty = Convert.ToString(Orderdt.Rows[i]["PackingQty"]);
+            }
+
+            return PackingQty;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public DataSet MultiUOMDetailsDataSR(string orderid, string action, string module, string strKey,string ComponentDetailsID)
+        {
+            DataSet ds = new DataSet();
+            ProcedureExecute proc = new ProcedureExecute("prc_MultiUOMDetails_Get");
+            proc.AddVarcharPara("@ACTION", 500, action);
+            proc.AddVarcharPara("@MODULE", 250, module);
+            proc.AddVarcharPara("@KEY", 500, strKey);
+            proc.AddBigIntegerPara("@ID", Convert.ToInt64(orderid));
+            proc.AddBigIntegerPara("@DetailsID", Convert.ToInt64(ComponentDetailsID)); 
+            ds = proc.GetDataSet();
+            return ds;
+        }
+        //Rev 2.0 End
+        
         #endregion
 
         #region Sales Rate Scheme
