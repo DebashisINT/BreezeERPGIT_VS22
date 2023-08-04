@@ -22,7 +22,7 @@ namespace ERP.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="EVAC_05072023")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="PK02122020")]
 	public partial class ERPDataClassesDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -1718,6 +1718,14 @@ namespace ERP.Models
 			get
 			{
 				return this.GetTable<PurchaseInvoiceList>();
+			}
+		}
+		
+		public System.Data.Linq.Table<VendorPaymentRecieptList> VendorPaymentRecieptLists
+		{
+			get
+			{
+				return this.GetTable<VendorPaymentRecieptList>();
 			}
 		}
 	}
@@ -85441,6 +85449,573 @@ namespace ERP.Models
 				if ((this._IsAttachmentDoc != value))
 				{
 					this._IsAttachmentDoc = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.VendorPaymentRecieptList")]
+	public partial class VendorPaymentRecieptList
+	{
+		
+		private System.Nullable<int> _USERID;
+		
+		private System.Nullable<int> _SEQ;
+		
+		private System.Nullable<int> _SlNo;
+		
+		private System.Nullable<long> _ReceiptPayment_ID;
+		
+		private string _CompanyID;
+		
+		private string _FinYear;
+		
+		private System.Nullable<int> _BranchID;
+		
+		private string _SrlNo;
+		
+		private string _ReceiptPayment_TransactionType;
+		
+		private string _ReceiptPayment_VoucherNumber;
+		
+		private string _branch_description;
+		
+		private System.Nullable<System.DateTime> _ReceiptPayment_TransactionDate;
+		
+		private System.Nullable<System.DateTime> _ReceiptPayment_TransactionDt;
+		
+		private string _ReceiptPayment_Currency;
+		
+		private string _Customer;
+		
+		private System.Nullable<decimal> _Amount;
+		
+		private string _CashBankID;
+		
+		private string _ReceiptPayment_CreateUser;
+		
+		private string _ReceiptPayment_ModifyUser;
+		
+		private string _ReceiptPayment_CreateDateTime;
+		
+		private System.Nullable<decimal> _VRPTax_Amount;
+		
+		private System.Nullable<decimal> _Total_CGST;
+		
+		private System.Nullable<decimal> _Total_SGST;
+		
+		private System.Nullable<decimal> _Total_IGST;
+		
+		private System.Nullable<decimal> _Total_UTGST;
+		
+		private string _ReceiptDetail_DocumentTypeID;
+		
+		private string _InstrumentType;
+		
+		private string _InstrumentNumber;
+		
+		private string _Proj_Name;
+		
+		private string _Editlock;
+		
+		private string _Deletelock;
+		
+		public VendorPaymentRecieptList()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="Int")]
+		public System.Nullable<int> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
+		public System.Nullable<int> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SlNo", DbType="Int")]
+		public System.Nullable<int> SlNo
+		{
+			get
+			{
+				return this._SlNo;
+			}
+			set
+			{
+				if ((this._SlNo != value))
+				{
+					this._SlNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_ID", DbType="BigInt")]
+		public System.Nullable<long> ReceiptPayment_ID
+		{
+			get
+			{
+				return this._ReceiptPayment_ID;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_ID != value))
+				{
+					this._ReceiptPayment_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="NVarChar(10)")]
+		public string CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					this._CompanyID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FinYear", DbType="NVarChar(10)")]
+		public string FinYear
+		{
+			get
+			{
+				return this._FinYear;
+			}
+			set
+			{
+				if ((this._FinYear != value))
+				{
+					this._FinYear = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="Int")]
+		public System.Nullable<int> BranchID
+		{
+			get
+			{
+				return this._BranchID;
+			}
+			set
+			{
+				if ((this._BranchID != value))
+				{
+					this._BranchID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SrlNo", DbType="NVarChar(50)")]
+		public string SrlNo
+		{
+			get
+			{
+				return this._SrlNo;
+			}
+			set
+			{
+				if ((this._SrlNo != value))
+				{
+					this._SrlNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_TransactionType", DbType="NVarChar(50)")]
+		public string ReceiptPayment_TransactionType
+		{
+			get
+			{
+				return this._ReceiptPayment_TransactionType;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_TransactionType != value))
+				{
+					this._ReceiptPayment_TransactionType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_VoucherNumber", DbType="NVarChar(50)")]
+		public string ReceiptPayment_VoucherNumber
+		{
+			get
+			{
+				return this._ReceiptPayment_VoucherNumber;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_VoucherNumber != value))
+				{
+					this._ReceiptPayment_VoucherNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_branch_description", DbType="NVarChar(200)")]
+		public string branch_description
+		{
+			get
+			{
+				return this._branch_description;
+			}
+			set
+			{
+				if ((this._branch_description != value))
+				{
+					this._branch_description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_TransactionDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ReceiptPayment_TransactionDate
+		{
+			get
+			{
+				return this._ReceiptPayment_TransactionDate;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_TransactionDate != value))
+				{
+					this._ReceiptPayment_TransactionDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_TransactionDt", DbType="Date")]
+		public System.Nullable<System.DateTime> ReceiptPayment_TransactionDt
+		{
+			get
+			{
+				return this._ReceiptPayment_TransactionDt;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_TransactionDt != value))
+				{
+					this._ReceiptPayment_TransactionDt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_Currency", DbType="NVarChar(20)")]
+		public string ReceiptPayment_Currency
+		{
+			get
+			{
+				return this._ReceiptPayment_Currency;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_Currency != value))
+				{
+					this._ReceiptPayment_Currency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer", DbType="NVarChar(500)")]
+		public string Customer
+		{
+			get
+			{
+				return this._Customer;
+			}
+			set
+			{
+				if ((this._Customer != value))
+				{
+					this._Customer = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this._Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBankID", DbType="NVarChar(100)")]
+		public string CashBankID
+		{
+			get
+			{
+				return this._CashBankID;
+			}
+			set
+			{
+				if ((this._CashBankID != value))
+				{
+					this._CashBankID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_CreateUser", DbType="NVarChar(50)")]
+		public string ReceiptPayment_CreateUser
+		{
+			get
+			{
+				return this._ReceiptPayment_CreateUser;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_CreateUser != value))
+				{
+					this._ReceiptPayment_CreateUser = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_ModifyUser", DbType="NVarChar(50)")]
+		public string ReceiptPayment_ModifyUser
+		{
+			get
+			{
+				return this._ReceiptPayment_ModifyUser;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_ModifyUser != value))
+				{
+					this._ReceiptPayment_ModifyUser = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptPayment_CreateDateTime", DbType="NVarChar(20)")]
+		public string ReceiptPayment_CreateDateTime
+		{
+			get
+			{
+				return this._ReceiptPayment_CreateDateTime;
+			}
+			set
+			{
+				if ((this._ReceiptPayment_CreateDateTime != value))
+				{
+					this._ReceiptPayment_CreateDateTime = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VRPTax_Amount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> VRPTax_Amount
+		{
+			get
+			{
+				return this._VRPTax_Amount;
+			}
+			set
+			{
+				if ((this._VRPTax_Amount != value))
+				{
+					this._VRPTax_Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total_CGST", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Total_CGST
+		{
+			get
+			{
+				return this._Total_CGST;
+			}
+			set
+			{
+				if ((this._Total_CGST != value))
+				{
+					this._Total_CGST = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total_SGST", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Total_SGST
+		{
+			get
+			{
+				return this._Total_SGST;
+			}
+			set
+			{
+				if ((this._Total_SGST != value))
+				{
+					this._Total_SGST = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total_IGST", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Total_IGST
+		{
+			get
+			{
+				return this._Total_IGST;
+			}
+			set
+			{
+				if ((this._Total_IGST != value))
+				{
+					this._Total_IGST = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total_UTGST", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Total_UTGST
+		{
+			get
+			{
+				return this._Total_UTGST;
+			}
+			set
+			{
+				if ((this._Total_UTGST != value))
+				{
+					this._Total_UTGST = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceiptDetail_DocumentTypeID", DbType="NVarChar(50)")]
+		public string ReceiptDetail_DocumentTypeID
+		{
+			get
+			{
+				return this._ReceiptDetail_DocumentTypeID;
+			}
+			set
+			{
+				if ((this._ReceiptDetail_DocumentTypeID != value))
+				{
+					this._ReceiptDetail_DocumentTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstrumentType", DbType="NVarChar(50)")]
+		public string InstrumentType
+		{
+			get
+			{
+				return this._InstrumentType;
+			}
+			set
+			{
+				if ((this._InstrumentType != value))
+				{
+					this._InstrumentType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstrumentNumber", DbType="NVarChar(50)")]
+		public string InstrumentNumber
+		{
+			get
+			{
+				return this._InstrumentNumber;
+			}
+			set
+			{
+				if ((this._InstrumentNumber != value))
+				{
+					this._InstrumentNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(200)")]
+		public string Proj_Name
+		{
+			get
+			{
+				return this._Proj_Name;
+			}
+			set
+			{
+				if ((this._Proj_Name != value))
+				{
+					this._Proj_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Editlock", DbType="NVarChar(50)")]
+		public string Editlock
+		{
+			get
+			{
+				return this._Editlock;
+			}
+			set
+			{
+				if ((this._Editlock != value))
+				{
+					this._Editlock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deletelock", DbType="NVarChar(50)")]
+		public string Deletelock
+		{
+			get
+			{
+				return this._Deletelock;
+			}
+			set
+			{
+				if ((this._Deletelock != value))
+				{
+					this._Deletelock = value;
 				}
 			}
 		}
