@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EVAC_05072023" Class="ERPDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK02122020" Class="ERPDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Table Name="dbo.v_FinanceReconciliationList" Member="v_FinanceReconciliationLists">
     <Type Name="v_FinanceReconciliationList">
       <Column Name="SrlNo" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
@@ -5359,6 +5359,41 @@
       <Column Name="Updated_By" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Updated_On" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="IsAttachmentDoc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VendorPaymentRecieptList" Member="VendorPaymentRecieptLists">
+    <Type Name="VendorPaymentRecieptList">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SlNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ReceiptPayment_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="FinYear" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="BranchID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SrlNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReceiptPayment_TransactionType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReceiptPayment_VoucherNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="branch_description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ReceiptPayment_TransactionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ReceiptPayment_TransactionDt" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ReceiptPayment_Currency" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="CashBankID" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ReceiptPayment_CreateUser" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReceiptPayment_ModifyUser" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReceiptPayment_CreateDateTime" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="VRPTax_Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_CGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_SGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_IGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total_UTGST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ReceiptDetail_DocumentTypeID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="InstrumentType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="InstrumentNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Editlock" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Deletelock" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

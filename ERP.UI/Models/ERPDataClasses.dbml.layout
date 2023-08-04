@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 32.625, 26.625" name="ERPDataClasses">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 32.625, 21.375" name="ERPDataClasses">
   <DataContextMoniker Name="/ERPDataClassesDataContext" />
   <nestedChildShapes>
     <classShape Id="42b8dce0-9bc6-4a34-82ff-c3e9bb571e8e" isExpanded="false" absoluteBounds="2.875, 7.875, 2, 0.45">
@@ -1238,7 +1238,7 @@
         <elementListCompartment Id="ab9b00c1-27a0-4aa9-ba75-2165cd568cbd" absoluteBounds="24.39, 2.835, 1.9700000000000002, 7.556844075520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="012fe336-1854-4c24-8316-7abf1c73363d" absoluteBounds="0.625, 19.75, 2, 6.5784326171875023">
+    <classShape Id="012fe336-1854-4c24-8316-7abf1c73363d" isExpanded="false" absoluteBounds="0.625, 19.75, 2, 0.45">
       <DataClassMoniker Name="/ERPDataClassesDataContext/PurchaseChallanList" />
       <nestedChildShapes>
         <elementListCompartment Id="d1cd5d5b-4ae3-4cd4-ad6e-dcca6df6b62c" absoluteBounds="0.64, 20.21, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
@@ -1248,6 +1248,12 @@
       <DataClassMoniker Name="/ERPDataClassesDataContext/PurchaseInvoiceList" />
       <nestedChildShapes>
         <elementListCompartment Id="11077bbe-336f-4e3c-ad1f-3891a7d3970e" absoluteBounds="8.015, 20.46, 1.9700000000000002, 9.0952555338541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a5cc9562-53fa-43ef-9150-4d7bedc920bd" isExpanded="false" absoluteBounds="3.125, 20.625, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/VendorPaymentRecieptList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="04d45744-6b75-4da5-b0ef-fa6d4999d5bd" absoluteBounds="3.14, 21.085, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
