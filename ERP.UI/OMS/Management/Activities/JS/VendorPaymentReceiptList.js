@@ -1,4 +1,7 @@
-﻿document.onkeydown = function (e) {
+﻿/*=======================================================Revision History =======================================
+ 1.0   Sanchita  V2.0.38   30 - 05 - 2023      ERP - Listing Page - Vendor Payment / Receipt.refer: 26660
+=========================================================End Revision History=====================================*/
+document.onkeydown = function (e) {
 
     if (event.keyCode == 80 && event.altKey == true) { //run code for Ctrl+S -- ie, Save & New  event.keyCode == 120 ||
         StopDefaultAction(e);
@@ -123,7 +126,11 @@ function updateGridByDate() {
         $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
-        CgvCustomerReceiptPayment.Refresh();
+        // Rev 1.0
+        //CgvCustomerReceiptPayment.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
+        // End of Rev 1.0
         $("#drdExport").val(0);
         //CgvCustomerReceiptPayment.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
     }

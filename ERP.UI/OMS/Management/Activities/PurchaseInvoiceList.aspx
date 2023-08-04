@@ -257,7 +257,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                    <%--Rev 2.0--%>
+                    <%--Rev 4.0--%>
                     <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="1" Width="40px" FixedStyle="Left">
                         <DataItemTemplate>
                             <img src="../../../assests/images/attachment.png" style='<%#Eval("IsAttachmentDoc")%>' />                        
@@ -269,7 +269,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <EditFormSettings Visible="False"></EditFormSettings>
                         <Settings AllowAutoFilterTextInputTimer="False"/>
                     </dxe:GridViewDataTextColumn>
-                    <%--End of Rev 2.0--%>
+                    <%--End of Rev 4.0--%>
                     <dxe:GridViewDataTextColumn Caption="Document No." FieldName="InvoiceNumber" VisibleIndex="2" Width="130px">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>

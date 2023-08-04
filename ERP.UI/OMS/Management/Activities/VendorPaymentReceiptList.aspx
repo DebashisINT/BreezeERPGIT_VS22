@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=======================================    
     1.0   Pallab    V2.0.38   20-04-2023      25867: Vendor Payment/Receipt module design modification
+    2.0   Sanchita  V2.0.38   30-05-2023      ERP - Listing Page - Vendor Payment / Receipt. refer: 26660  
 =========================================================End Revision History=====================================--%>
 
 <%@ Page Title="Vendor Payment Receipt" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorPaymentReceiptList.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorPaymentReceiptList" %>
@@ -18,6 +19,15 @@
          }
     </style>
     <script src="JS/VendorPaymentReceiptList.js"></script>
+
+     <%--Rev 2.0--%>
+    <script>
+        function CallbackPanelEndCall(s, e) {
+            CgvCustomerReceiptPayment.Refresh();
+        }
+
+    </script>
+    <%--End of Rev 2.0 --%>
 
     <%--Rev 1.0--%>
     <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
@@ -417,4 +427,13 @@
  <asp:HiddenField ID="hdnLockFromDateReceiptdeleteCon" runat="server" />
     <asp:HiddenField ID="hdnLockToDateReceiptdeleteCon" runat="server" />
 
+    <%--Rev 2.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--End of Rev 2.0--%>
 </asp:Content>
