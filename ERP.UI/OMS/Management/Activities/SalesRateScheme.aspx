@@ -1,6 +1,7 @@
 ﻿<%--========================================================== Revision History ============================================================================================
 1.0   Priti     V2.0.36   31-01-2023    0025507:An error message is appearing while modifying Sales rate scheme
 2.0   Pallab    V2.0.36   23-03-2023    0025733 : Master pages design modification
+3.0   Priti     V2.0.39   09-08-2023    0026685 : Sales Rate scheme is showing wrong entity after modifying the same.
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesRateScheme.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesRateScheme" %>
@@ -38,8 +39,7 @@
 
         /*Rev 2.0*/
 
-        select
-        {
+        select {
             height: 30px !important;
             border-radius: 4px;
             -webkit-appearance: none;
@@ -50,55 +50,48 @@
             padding-right: 22px !important;
         }
 
-        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue , .dxeTextBox_PlasticBlue
-        {
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue, .dxeTextBox_PlasticBlue {
             height: 30px;
             border-radius: 4px;
         }
 
-        .dxeButtonEditButton_PlasticBlue
-        {
+        .dxeButtonEditButton_PlasticBlue {
             background: #094e8c !important;
             border-radius: 4px !important;
             padding: 0 4px !important;
         }
 
-        #ASPxFromDate , #ASPxToDate , #ASPxASondate , #ASPxAsOnDate , #txtDOB , #txtAnniversary , #txtcstVdate , #txtLocalVdate ,
-        #txtCINVdate , #txtincorporateDate , #txtErpValidFrom , #txtErpValidUpto , #txtESICValidFrom , #txtESICValidUpto , #FormDate , #toDate
-        {
+        #ASPxFromDate, #ASPxToDate, #ASPxASondate, #ASPxAsOnDate, #txtDOB, #txtAnniversary, #txtcstVdate, #txtLocalVdate,
+        #txtCINVdate, #txtincorporateDate, #txtErpValidFrom, #txtErpValidUpto, #txtESICValidFrom, #txtESICValidUpto, #FormDate, #toDate {
             position: relative;
             z-index: 1;
             background: transparent;
         }
 
-        .dxeDisabled_PlasticBlue
-        {
+        .dxeDisabled_PlasticBlue {
             z-index: 0 !important;
         }
 
-        #ASPxFromDate_B-1 , #ASPxToDate_B-1 , #ASPxASondate_B-1 , #ASPxAsOnDate_B-1 , #txtDOB_B-1 , #txtAnniversary_B-1 , #txtcstVdate_B-1 ,
-        #txtLocalVdate_B-1 , #txtCINVdate_B-1 , #txtincorporateDate_B-1 , #txtErpValidFrom_B-1 , #txtErpValidUpto_B-1 , #txtESICValidFrom_B-1 ,
-        #txtESICValidUpto_B-1 , #FormDate_B-1 , #toDate_B-1
-        {
+        #ASPxFromDate_B-1, #ASPxToDate_B-1, #ASPxASondate_B-1, #ASPxAsOnDate_B-1, #txtDOB_B-1, #txtAnniversary_B-1, #txtcstVdate_B-1,
+        #txtLocalVdate_B-1, #txtCINVdate_B-1, #txtincorporateDate_B-1, #txtErpValidFrom_B-1, #txtErpValidUpto_B-1, #txtESICValidFrom_B-1,
+        #txtESICValidUpto_B-1, #FormDate_B-1, #toDate_B-1 {
             background: transparent !important;
             border: none;
             width: 30px;
             padding: 10px !important;
         }
 
-        #ASPxFromDate_B-1 #ASPxFromDate_B-1Img , #ASPxToDate_B-1 #ASPxToDate_B-1Img , #ASPxASondate_B-1 #ASPxASondate_B-1Img , #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img ,
-        #txtDOB_B-1 #txtDOB_B-1Img ,
-        #txtAnniversary_B-1 #txtAnniversary_B-1Img ,
-        #txtcstVdate_B-1 #txtcstVdate_B-1Img ,
-        #txtLocalVdate_B-1 #txtLocalVdate_B-1Img , #txtCINVdate_B-1 #txtCINVdate_B-1Img , #txtincorporateDate_B-1 #txtincorporateDate_B-1Img ,
-        #txtErpValidFrom_B-1 #txtErpValidFrom_B-1Img , #txtErpValidUpto_B-1 #txtErpValidUpto_B-1Img , #txtESICValidFrom_B-1 #txtESICValidFrom_B-1Img ,
-        #txtESICValidUpto_B-1 #txtESICValidUpto_B-1Img , #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img
-        {
-            display: none;
-        }
+            #ASPxFromDate_B-1 #ASPxFromDate_B-1Img, #ASPxToDate_B-1 #ASPxToDate_B-1Img, #ASPxASondate_B-1 #ASPxASondate_B-1Img, #ASPxAsOnDate_B-1 #ASPxAsOnDate_B-1Img,
+            #txtDOB_B-1 #txtDOB_B-1Img,
+            #txtAnniversary_B-1 #txtAnniversary_B-1Img,
+            #txtcstVdate_B-1 #txtcstVdate_B-1Img,
+            #txtLocalVdate_B-1 #txtLocalVdate_B-1Img, #txtCINVdate_B-1 #txtCINVdate_B-1Img, #txtincorporateDate_B-1 #txtincorporateDate_B-1Img,
+            #txtErpValidFrom_B-1 #txtErpValidFrom_B-1Img, #txtErpValidUpto_B-1 #txtErpValidUpto_B-1Img, #txtESICValidFrom_B-1 #txtESICValidFrom_B-1Img,
+            #txtESICValidUpto_B-1 #txtESICValidUpto_B-1Img, #FormDate_B-1 #FormDate_B-1Img, #toDate_B-1 #toDate_B-1Img {
+                display: none;
+            }
 
-        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue
-        {
+        .dxtcLite_PlasticBlue > .dxtc-stripContainer .dxtc-activeTab, .dxgvFooter_PlasticBlue {
             background: #1b5ea4 !important;
         }
 
@@ -107,14 +100,12 @@
             padding-right: 10px !important;
         }*/
 
-        .panel-group .panel
-        {
+        .panel-group .panel {
             box-shadow: 1px 1px 8px #1111113b;
             border-radius: 8px;
         }
 
-        .dxpLite_PlasticBlue .dxp-current
-        {
+        .dxpLite_PlasticBlue .dxp-current {
             background-color: #1b5ea4;
             padding: 3px 5px;
             border-radius: 2px;
@@ -126,61 +117,54 @@
         }
 
         .dxgvHeader_PlasticBlue {
-    background: #1b5ea4 !important;
-    color: #fff !important;
-}
-        #ShowGrid
-        {
+            background: #1b5ea4 !important;
+            color: #fff !important;
+        }
+
+        #ShowGrid {
             margin-top: 10px;
         }
 
-        .pt-25{
-                padding-top: 25px !important;
+        .pt-25 {
+            padding-top: 25px !important;
         }
 
-        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv
-        {
+        .dxgvEditFormDisplayRow_PlasticBlue td.dxgv, .dxgvDataRow_PlasticBlue td.dxgv, .dxgvDataRowAlt_PlasticBlue td.dxgv, .dxgvSelectedRow_PlasticBlue td.dxgv, .dxgvFocusedRow_PlasticBlue td.dxgv {
             padding: 6px 6px 6px !important;
         }
 
-        #lookupCardBank_DDD_PW-1
-        {
-                left: -182px !important;
-        }
-        .plhead a>i
-        {
-                top: 9px;
+        #lookupCardBank_DDD_PW-1 {
+            left: -182px !important;
         }
 
-        .clsTo
-        {
+        .plhead a > i {
+            top: 9px;
+        }
+
+        .clsTo {
             display: flex;
-    align-items: flex-start;
+            align-items: flex-start;
         }
 
-        input[type="radio"], input[type="checkbox"]
-        {
+        input[type="radio"], input[type="checkbox"] {
             margin-right: 5px;
         }
-        .dxeCalendarDay_PlasticBlue
-        {
-                padding: 6px 6px;
+
+        .dxeCalendarDay_PlasticBlue {
+            padding: 6px 6px;
         }
 
-        .modal-dialog
-        {
+        .modal-dialog {
             width: 50%;
         }
 
-        .modal-header
-        {
+        .modal-header {
             padding: 8px 4px 8px 10px;
             background: #094e8c !important;
         }
 
-        .TableMain100 #ShowGrid , .TableMain100 #ShowGridList , .TableMain100 #ShowGridRet , .TableMain100 #EmployeeGrid , .TableMain100 #GrdEmployee,
-        .TableMain100 #GrdHolidays , #cityGrid
-        {
+        .TableMain100 #ShowGrid, .TableMain100 #ShowGridList, .TableMain100 #ShowGridRet, .TableMain100 #EmployeeGrid, .TableMain100 #GrdEmployee,
+        .TableMain100 #GrdHolidays, #cityGrid {
             max-width: 98% !important;
         }
 
@@ -189,10 +173,9 @@
             width: 95% !important;
         }*/
 
-        .btn-info
-        {
-                background-color: #1da8d1 !important;
-                background-image: none;
+        .btn-info {
+            background-color: #1da8d1 !important;
+            background-image: none;
         }
 
         .for-cust-icon {
@@ -200,120 +183,101 @@
             z-index: 1;
         }
 
-        .dxeDisabled_PlasticBlue, .aspNetDisabled
-        {
+        .dxeDisabled_PlasticBlue, .aspNetDisabled {
             background: #f3f3f3 !important;
         }
 
-        .dxeButtonDisabled_PlasticBlue
-        {
+        .dxeButtonDisabled_PlasticBlue {
             background: #b5b5b5 !important;
             border-color: #b5b5b5 !important;
         }
 
-        #ddlValTech
-        {
+        #ddlValTech {
             width: 100% !important;
             margin-bottom: 0 !important;
         }
 
-        .dis-flex
-        {
+        .dis-flex {
             display: flex;
             align-items: baseline;
         }
 
-        input + label
-        {
+        input + label {
             line-height: 1;
-                margin-top: 7px;
+            margin-top: 7px;
         }
 
-        .dxtlHeader_PlasticBlue
-        {
+        .dxtlHeader_PlasticBlue {
             background: #094e8c !important;
         }
 
-        .dxeBase_PlasticBlue .dxichCellSys
-        {
+        .dxeBase_PlasticBlue .dxichCellSys {
             padding-top: 2px !important;
         }
 
-        .pBackDiv
-        {
+        .pBackDiv {
             border-radius: 10px;
             box-shadow: 1px 1px 10px #1111112e;
         }
-        .HeaderStyle th
-        {
+
+        .HeaderStyle th {
             padding: 5px;
         }
 
-        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer
-        {
+        .dxtcLite_PlasticBlue.dxtc-top > .dxtc-stripContainer {
             padding-top: 15px;
         }
 
-        .pt-2
-        {
+        .pt-2 {
             padding-top: 5px;
         }
-        .pt-10
-        {
+
+        .pt-10 {
             padding-top: 10px;
         }
 
-        .pt-15
-        {
+        .pt-15 {
             padding-top: 15px;
         }
 
-        .pb-10
-        {
+        .pb-10 {
             padding-bottom: 10px;
         }
 
         .pTop10 {
-    padding-top: 20px;
-}
-        .custom-padd
-        {
+            padding-top: 20px;
+        }
+
+        .custom-padd {
             padding-top: 4px;
-    padding-bottom: 10px;
+            padding-bottom: 10px;
         }
 
-        input + label
-        {
-                margin-right: 10px;
+        input + label {
+            margin-right: 10px;
         }
 
-        .btn
-        {
+        .btn {
             margin-bottom: 0;
         }
 
-        .pl-10
-        {
+        .pl-10 {
             padding-left: 10px;
         }
 
-        .col-md-3>label, .col-md-3>span
-        {
+        .col-md-3 > label, .col-md-3 > span {
             margin-top: 0 !important;
         }
 
-        .devCheck
-        {
+        .devCheck {
             margin-top: 5px;
         }
 
-        .mtc-5
-        {
+        .mtc-5 {
             margin-top: 5px;
         }
 
-        .mtc-10
-        {
+        .mtc-10 {
             margin-top: 10px;
         }
 
@@ -323,115 +287,97 @@
            z-index: 0;
         }*/
 
-        select
-        {
+        select {
             margin-bottom: 0;
         }
 
-        .form-control
-        {
+        .form-control {
             background-color: transparent;
             border-radius: 4px;
         }
 
         select.btn-radius {
-    padding: 4px 8px 6px 11px !important;
-}
-        .mt-30{
+            padding: 4px 8px 6px 11px !important;
+        }
+
+        .mt-30 {
             margin-top: 30px;
         }
 
-        .panel-title h3
-        {
+        .panel-title h3 {
             padding-top: 0;
             padding-bottom: 0;
         }
 
-        .btn-radius
-        {
+        .btn-radius {
             padding: 4px 11px !important;
             border-radius: 4px !important;
         }
 
-        .crossBtn
-        {
-             right: 30px;
-             top: 25px;
+        .crossBtn {
+            right: 30px;
+            top: 25px;
         }
 
-        .mb-10
-        {
+        .mb-10 {
             margin-bottom: 10px;
         }
 
-        .btn-cust
-        {
+        .btn-cust {
             background-color: #108b47 !important;
             color: #fff;
         }
 
-        .btn-cust:hover
-        {
-            background-color: #097439 !important;
-            color: #fff;
-        }
+            .btn-cust:hover {
+                background-color: #097439 !important;
+                color: #fff;
+            }
 
-        .gHesder
-        {
+        .gHesder {
             background: #1b5ca0 !important;
             color: #ffffff !important;
             padding: 6px 0 6px !important;
         }
 
-        .close
-        {
-             color: #fff;
-             opacity: .5;
-             font-weight: 400;
+        .close {
+            color: #fff;
+            opacity: .5;
+            font-weight: 400;
         }
 
-        .mt-27
-        {
+        .mt-27 {
             margin-top: 27px !important;
         }
 
-        .col-md-3
-        {
+        .col-md-3 {
             margin-top: 8px;
         }
 
-        #upldBigLogo , #upldSmallLogo
-        {
+        #upldBigLogo, #upldSmallLogo {
             width: 100%;
         }
 
-        #DivSetAsDefault
-        {
+        #DivSetAsDefault {
             margin-top: 25px;
         }
 
-        .dxeBase_PlasticBlue .dxichTextCellSys label
-        {
+        .dxeBase_PlasticBlue .dxichTextCellSys label {
             color: #fff !important;
         }
 
-        #actv-warh label
-        {
+        #actv-warh label {
             color: #111 !important;
         }
 
-        .btn.btn-xs
-        {
-                font-size: 14px !important;
+        .btn.btn-xs {
+            font-size: 14px !important;
         }
 
-        .dxeTextBoxSys, .dxeButtonEditSys
-        {
-                width: 100%;
+        .dxeTextBoxSys, .dxeButtonEditSys {
+            width: 100%;
         }
 
-        .simple-select::after
-        {
+        .simple-select::after {
             top: 34px;
             right: 13px;
         }
@@ -445,7 +391,7 @@
             opacity: 0.4 !important;
             color: #ffffff !important;
         }*/
-                /*.padTopbutton {
+        /*.padTopbutton {
             padding-top: 27px;
         }*/
         /*#lookup_project
@@ -455,12 +401,55 @@
         /*Rev end 2.0*/
     </style>
     <script>
+       /* Rev 3.0*/
+        function EntityValueChange(s, e) {
+            clookup_Entity.gridView.GetSelectedFieldValues("CNT_INTERNALID", GetSelectedFieldValuesCallback);
+        }
+        function GetSelectedFieldValuesCallback(values) {
+            try {
+                var _EntityIds = 0;
+                for (var i = 0; i < values.length; i++) {
+                    if (_EntityIds == 0) {
+                        _EntityIds = values[i];
+                    }
+                    else {
+                        _EntityIds = values[i] + ',' + _EntityIds;
+                    }
+                    $("#hdnCustId").val(_EntityIds);
+                }
+            } finally {
+
+            }
+        }
+        function ProductValueChange(s, e) {
+            clookup_Product.gridView.GetSelectedFieldValues("SPRODUCTSID", GetSelectedProductFieldValuesCallback);
+        } 
+        function GetSelectedProductFieldValuesCallback(values) {
+            try {
+                var _ProductIds = 0;
+                for (var i = 0; i < values.length; i++) {
+                    if (_ProductIds == 0) {
+                        _ProductIds = values[i];
+                    }
+                    else {
+                        _ProductIds = values[i] + ',' + _ProductIds;
+                    }
+                    $("#hdnProdId").val(_ProductIds);
+                }
+            } finally {
+
+            }
+        }
+
+
+        /* Rev 3.0 End*/
         //REV 1.0
         $(function () {
             cQuotationComponentPanel.PerformCallback('BINDEntity');
         });
         $(function () {
-            cQuotationComponentPanel.PerformCallback('BINDPRODUCT');
+            //cQuotationComponentPanel.PerformCallback('BINDPRODUCT');
+            cProductComponentPanel.PerformCallback('BINDPRODUCT');
         });
         //REV 1.0 END
         /***Short cut key handling***/
@@ -489,8 +478,8 @@
         function clookup_entity_GotFocus() {
             //clookup_Entity.gridView.Refresh();
             clookup_Entity.ShowDropDown();
-            
-            
+
+
         }
     </script>
     <script>
@@ -701,7 +690,7 @@
 
         var product = [];
         var Entity = [];
-        
+
         function SaveButtonClick(flag) {
             $("#MandatorysCustName").hide();
             $("#MandatorysProductName").hide();
@@ -745,10 +734,15 @@
                     return false;
                 }
                 else {
-                    $("#hdnCustId").val(clookup_Entity.gridView.GetSelectedKeysOnPage());
+                    /* Rev 3.0*/
+                   // $("#hdnCustId").val(clookup_Entity.gridView.GetSelectedKeysOnPage());
+                    /* Rev 3.0 End*/
                     // Mantis Issue 25020
                     //Entity = clookup_Entity.gridView.GetSelectedKeysOnPage();
-                    Entity = clookup_Entity.GetText().split(",");
+                    /* Rev 3.0*/
+                    //Entity = clookup_Entity.GetText().split(",");
+                    Entity = $("#hdnCustId").val().split(","); 
+                    /* Rev 3.0 End*/
                     // End of Mantis Issue 25020
                 }
             }
@@ -775,9 +769,12 @@
                 else {
                     // Mantis Issue 25020
                     //product = clookup_Product.gridView.GetSelectedKeysOnPage();
-                    product = clookup_Product.GetText().split(",");
+                   /* Rev 3.0*/
+                    //product = clookup_Product.GetText().split(",");
+                    product = $("#hdnProdId").val().split(",");
                     // End of Mantis Issue 25020
-                    $("#hdnProdId").val(clookup_Product.gridView.GetSelectedKeysOnPage());
+                    //$("#hdnProdId").val(clookup_Product.gridView.GetSelectedKeysOnPage());
+                    /* Rev 3.0 End*/
                 }
             }
             else {
@@ -910,6 +907,32 @@
                         async: false,
                         success: OnSuccess
                     });
+                    //Rev 3.0
+                    $.ajax({
+                        type: "POST",
+                        url: "/OMS/Management/Activities/SalesRateScheme.aspx/GetSaleRateLockProductList",
+                        data: JSON.stringify({ "SaleRateLockID": id }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        global: false,
+                        async: false,
+                        success: OnSuccessProduct
+                    });
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/OMS/Management/Activities/SalesRateScheme.aspx/GetSaleRateLockCustomersList",
+                        data: JSON.stringify({ "SaleRateLockID": id }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        global: false,
+                        async: false,
+                        success: OnSuccessCustomers
+                    });
+                    //Rev 3.0 End
                 }
             }
             if (e.buttonID == 'CustomBtnDelete') {
@@ -975,6 +998,7 @@
 
                 if (data.d[i].ProductID == "0") {
                     clookup_Product.SetEnabled(false);
+                   
                     document.getElementById("chkAllProduct").checked = true;
                 }
                 else {
@@ -983,7 +1007,7 @@
                     //    clookup_Product.SetValue(data.d[i].ProductsList[j].ProductID);
                     //}
                     //cgridProductRate.PerformCallback('Products');
-
+                    cProductComponentPanel.PerformCallback('Customers');
                     document.getElementById("chkAllProduct").checked = false;
                 }
 
@@ -1045,7 +1069,32 @@
             $("#lblheading").html("Modify Sales Rate Scheme");
             cbtnSaveRecords.SetText("Update");
         }
+       /* Rev 3.0*/
+        function OnSuccessCustomers(data) {           
+            for (var i = 0; i < data.d.length; i++) {   
 
+                if (document.getElementById('hdnCustId').value == "")
+                { 
+                    document.getElementById('hdnCustId').value = data.d[i].CustomerID;
+                }                
+                else {
+                    document.getElementById('hdnCustId').value = document.getElementById('hdnCustId').value+','+data.d[i].CustomerID;
+                }                       
+            }           
+        }
+
+        function OnSuccessProduct(data) {           
+            for (var i = 0; i < data.d.length; i++) {
+                if (document.getElementById('hdnProdId').value == "")
+                { 
+                    document.getElementById('hdnProdId').value = data.d[i].ProductID;
+                }
+                else {
+                    document.getElementById('hdnProdId').value = document.getElementById('hdnProdId').value + ',' + data.d[i].ProductID;
+                }
+            }            
+        }
+        /* Rev 3.0 End*/
         function OnAddButtonClick() {
             $("#divAddButton").hide();
             $("#entry").show();
@@ -1228,7 +1277,7 @@
         }
 
         function CloseGridQuotationLookup() {
-            $("#hdnCustId").val(clookup_Entity.gridView.GetSelectedKeysOnPage());
+            //$("#hdnCustId").val(clookup_Entity.gridView.GetSelectedKeysOnPage());
         }
 
         function DownLoadFormat() {
@@ -1305,97 +1354,97 @@
     <%--Rev 2.0: "outer-div-main" class add --%>
     <div class="outer-div-main">
         <div class="panel-heading">
-        <div class="panel-title clearfix">
-            <h3 class="pull-left">Sales Rate Scheme
+            <div class="panel-title clearfix">
+                <h3 class="pull-left">Sales Rate Scheme
                 <%--<label id="lblheading">Sales Rate Scheme</label>--%>
-            </h3>
+                </h3>
+            </div>
+            <div id="div1" runat="server" class="crossBtn" style="display: none; margin-left: 50px;"><a href="#" onclick="cancel()"><i class="fa fa-times"></i></a></div>
         </div>
-        <div id="div1" runat="server" class="crossBtn" style="display: none; margin-left: 50px;"><a href="#" onclick="cancel()"><i class="fa fa-times"></i></a></div>
-    </div>
         <div class="form_main">
-        <div id="TblSearch" class="rgth  full hide">
-            <div class="clearfix">
-                <div style="padding-right: 5px;">
-                    <span id="divAddButton">
-                        <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span><u>A</u>dd New</span> </a>
-                    </span>
+            <div id="TblSearch" class="rgth  full hide">
+                <div class="clearfix">
+                    <div style="padding-right: 5px;">
+                        <span id="divAddButton">
+                            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success btn-radius"><span><u>A</u>dd New</span> </a>
+                        </span>
+                    </div>
+
                 </div>
-
-            </div>
-        </div>
-        <div class="clear"></div>
-        <div id="entry">
-            <div class="col-md-2 lblmTop8 mb-10">
-                <label>Scheme Code <span class="red">*</span></label>
-                <dxe:ASPxTextBox ID="txtSchemeCode" ClientInstanceName="ctxtSchemeCode" runat="server" TabIndex="1" MaxLength="50">
-                </dxe:ASPxTextBox>
-                <span id="MandatorysSchemeCode" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
-                    title="Mandatory"></span>
-            </div>
-            <div class="col-md-2 lblmTop8 mb-10">
-                <label>Scheme Name <span class="red">*</span></label>
-                <dxe:ASPxTextBox ID="txtScheme" ClientInstanceName="ctxtScheme" runat="server" TabIndex="2" MaxLength="250">
-                </dxe:ASPxTextBox>
-                <span id="MandatorysScheme" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
-                    title="Mandatory"></span>
-            </div>
-            <div class="col-md-2 lblmTop8 mb-10 simple-select">
-                <label>Basis <span class="red">*</span></label>
-                <asp:DropDownList ID="ddlType" runat="server" CssClass="form-control" TabIndex="3" OnChange="ddlType_Change();">
-                    <asp:ListItem Value="0">Select</asp:ListItem>
-                    <asp:ListItem Value="1">On Fixed Rate</asp:ListItem>
-                    <asp:ListItem Value="2">On Min/Max Rate</asp:ListItem>
-                    <asp:ListItem Value="3">Dynamic Rate</asp:ListItem>
-                </asp:DropDownList>
-            </div>
-            <%--Rev 2.0: "simple-select" class add --%>
-            <div class="col-md-2 lblmTop8 simple-select">
-                <label>Method </label>
-                <asp:DropDownList ID="ddlBasis" runat="server" CssClass="form-control" TabIndex="3" OnChange="ddlBasis_Change();">
-                    <asp:ListItem Value="0">Select</asp:ListItem>
-                    <asp:ListItem Value="1">On MRP</asp:ListItem>
-                </asp:DropDownList>
-            </div>
-
-            <div class="col-md-2 lblmTop8">
-                <label>From Date <span class="red">*</span></label>
-                <dxe:ASPxDateEdit ID="Fromdt" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy HH:mm" ClientInstanceName="cFormDate"
-                    Width="100%" TabIndex="4" DisplayFormatString="dd-MM-yyyy HH:mm" UseMaskBehavior="True">
-                    <TimeSectionProperties Visible="true"></TimeSectionProperties>
-                    <ButtonStyle Width="13px">
-                    </ButtonStyle>
-                    <ClientSideEvents GotFocus="function(s,e){cFormDate.ShowDropDown();}" />
-                </dxe:ASPxDateEdit>
-                <span id="MandatorysFromdt" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
-                    title="Mandatory"></span>
-            </div>
-            <div class="col-md-2 lblmTop8">
-                <label>To Date <span class="red">*</span></label>
-                <dxe:ASPxDateEdit ID="ToDate" runat="server" EditFormat="DateTime" EditFormatString="dd-MM-yyyy HH:mm" ClientInstanceName="cToDate"
-                    Width="100%" TabIndex="5" DisplayFormatString="dd-MM-yyyy HH:mm" UseMaskBehavior="True">
-                    <TimeSectionProperties Visible="true"></TimeSectionProperties>
-                    <ButtonStyle Width="13px">
-                    </ButtonStyle>
-                    <ClientSideEvents GotFocus="function(s,e){cToDate.ShowDropDown();}" />
-                </dxe:ASPxDateEdit>
-                <span id="MandatorysTodt" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
-                    title="Mandatory"></span>
             </div>
             <div class="clear"></div>
-            <%-- <div style="background: #f5f4f3; padding: 17px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
+            <div id="entry">
+                <div class="col-md-2 lblmTop8 mb-10">
+                    <label>Scheme Code <span class="red">*</span></label>
+                    <dxe:ASPxTextBox ID="txtSchemeCode" ClientInstanceName="ctxtSchemeCode" runat="server" TabIndex="1" MaxLength="50">
+                    </dxe:ASPxTextBox>
+                    <span id="MandatorysSchemeCode" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
+                        title="Mandatory"></span>
+                </div>
+                <div class="col-md-2 lblmTop8 mb-10">
+                    <label>Scheme Name <span class="red">*</span></label>
+                    <dxe:ASPxTextBox ID="txtScheme" ClientInstanceName="ctxtScheme" runat="server" TabIndex="2" MaxLength="250">
+                    </dxe:ASPxTextBox>
+                    <span id="MandatorysScheme" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
+                        title="Mandatory"></span>
+                </div>
+                <div class="col-md-2 lblmTop8 mb-10 simple-select">
+                    <label>Basis <span class="red">*</span></label>
+                    <asp:DropDownList ID="ddlType" runat="server" CssClass="form-control" TabIndex="3" OnChange="ddlType_Change();">
+                        <asp:ListItem Value="0">Select</asp:ListItem>
+                        <asp:ListItem Value="1">On Fixed Rate</asp:ListItem>
+                        <asp:ListItem Value="2">On Min/Max Rate</asp:ListItem>
+                        <asp:ListItem Value="3">Dynamic Rate</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <%--Rev 2.0: "simple-select" class add --%>
+                <div class="col-md-2 lblmTop8 simple-select">
+                    <label>Method </label>
+                    <asp:DropDownList ID="ddlBasis" runat="server" CssClass="form-control" TabIndex="3" OnChange="ddlBasis_Change();">
+                        <asp:ListItem Value="0">Select</asp:ListItem>
+                        <asp:ListItem Value="1">On MRP</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-2 lblmTop8">
+                    <label>From Date <span class="red">*</span></label>
+                    <dxe:ASPxDateEdit ID="Fromdt" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy HH:mm" ClientInstanceName="cFormDate"
+                        Width="100%" TabIndex="4" DisplayFormatString="dd-MM-yyyy HH:mm" UseMaskBehavior="True">
+                        <TimeSectionProperties Visible="true"></TimeSectionProperties>
+                        <ButtonStyle Width="13px">
+                        </ButtonStyle>
+                        <ClientSideEvents GotFocus="function(s,e){cFormDate.ShowDropDown();}" />
+                    </dxe:ASPxDateEdit>
+                    <span id="MandatorysFromdt" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
+                        title="Mandatory"></span>
+                </div>
+                <div class="col-md-2 lblmTop8">
+                    <label>To Date <span class="red">*</span></label>
+                    <dxe:ASPxDateEdit ID="ToDate" runat="server" EditFormat="DateTime" EditFormatString="dd-MM-yyyy HH:mm" ClientInstanceName="cToDate"
+                        Width="100%" TabIndex="5" DisplayFormatString="dd-MM-yyyy HH:mm" UseMaskBehavior="True">
+                        <TimeSectionProperties Visible="true"></TimeSectionProperties>
+                        <ButtonStyle Width="13px">
+                        </ButtonStyle>
+                        <ClientSideEvents GotFocus="function(s,e){cToDate.ShowDropDown();}" />
+                    </dxe:ASPxDateEdit>
+                    <span id="MandatorysTodt" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
+                        title="Mandatory"></span>
+                </div>
+                <div class="clear"></div>
+                <%-- <div style="background: #f5f4f3; padding: 17px 0; margin-bottom: 0px; border-radius: 4px; border: 1px solid #ccc;" class="clearfix">
                  DataSourceID="EntityServerModeData" DataSourceID="EntityServerModeDataProduct"--%>
-            <dxe:ASPxCallbackPanel runat="server" ID="ComponentQuotationPanel" ClientInstanceName="cQuotationComponentPanel" OnCallback="ComponentQuotationPanel_Callback">
-                <PanelCollection>
-                    <dxe:PanelContent runat="server">
-                        <div class="col-md-2">
-                            <label>Entity  <span class="red">*</span></label>
-                            &nbsp;
+                <dxe:ASPxCallbackPanel runat="server" ID="ComponentQuotationPanel" ClientInstanceName="cQuotationComponentPanel" OnCallback="ComponentQuotationPanel_Callback">
+                    <PanelCollection>
+                        <dxe:PanelContent runat="server">
+                            <div class="col-md-2">
+                                <label>Entity  <span class="red">*</span></label>
+                                &nbsp;
                     <input type="checkbox" id="chkAll" onchange="AllCustCheck()" />
-                            All
-                    <dxe:ASPxGridLookup ID="lookup_Entity" runat="server" ClientInstanceName="clookup_Entity" 
-                        OnDataBinding="lookup_Entity_DataBinding"                       
-                        SelectionMode="Multiple" 
-                        KeyFieldName="CNT_INTERNALID" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}" 
+                                All
+                    <dxe:ASPxGridLookup ID="lookup_Entity" runat="server" ClientInstanceName="clookup_Entity"
+                        OnDataBinding="lookup_Entity_DataBinding"
+                        SelectionMode="Multiple"
+                        KeyFieldName="CNT_INTERNALID" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}"
                         AutoGenerateColumns="False" MultiTextSeparator=", ">
                         <Columns>
                             <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
@@ -1425,24 +1474,32 @@
                             <SettingsBehavior AllowFocusedRow="True" AllowSelectSingleRowOnly="false"></SettingsBehavior>
                             <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
                         </GridViewProperties>
-                       <%-- <ClientSideEvents GotFocus="clookup_entity_GotFocus" />--%>
+                        <ClientSideEvents GotFocus="function(s,e){clookup_Entity.ShowDropDown();}" />
+                        <%-- <ClientSideEvents GotFocus="clookup_entity_GotFocus" />--%>
                         <%--LostFocus="Project_LostFocus" ValueChanged="ProjectValueChange"--%>
-
+                        <ClientSideEvents ValueChanged="EntityValueChange" />
                         <ClearButton DisplayMode="Always">
                         </ClearButton>
                     </dxe:ASPxGridLookup>
-                          <%--  REV 1.0--%>
-                            <%--<dx:LinqServerModeDataSource ID="EntityServerModeData" runat="server" OnSelecting="EntityServerModeData_Selecting"
+                                <%--  REV 1.0--%>
+                                <%--<dx:LinqServerModeDataSource ID="EntityServerModeData" runat="server" OnSelecting="EntityServerModeData_Selecting"
                                 ContextTypeName="ERPDataClassesDataContext" TableName="v_SaleRateLock_customerDetails" />--%>
-                          <%--  REV 1.0 END--%>
-                        </div>
-                        <div class="col-md-2">
-                            <label>Product <span class="red">*</span></label>
-                            &nbsp;
+                                <%--  REV 1.0 END--%>
+                            </div>
+                        </dxe:PanelContent>
+                    </PanelCollection>
+                    <%--<ClientSideEvents EndCallback="componentEndCallBack" BeginCallback="BeginComponentCallback" />--%>
+                </dxe:ASPxCallbackPanel>
+                <dxe:ASPxCallbackPanel runat="server" ID="ProductComponentPanel" ClientInstanceName="cProductComponentPanel" OnCallback="ProductComponentPanel_Callback">
+                    <PanelCollection>
+                        <dxe:PanelContent runat="server">
+                            <div class="col-md-2">
+                                <label>Product <span class="red">*</span></label>
+                                &nbsp;
                     <input type="checkbox" id="chkAllProduct" onchange="AllProdCheck()" />
-                            All
+                                All
                   
-                    <dxe:ASPxGridLookup ID="lookup_Product" runat="server" ClientInstanceName="clookup_Product"  SelectionMode="Multiple"  OnDataBinding="lookup_Product_DataBinding"
+                    <dxe:ASPxGridLookup ID="lookup_Product" runat="server" ClientInstanceName="clookup_Product" SelectionMode="Multiple" OnDataBinding="lookup_Product_DataBinding"
                         KeyFieldName="SPRODUCTSID" Width="100%" CheckBoxRowSelect="true" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
                         <Columns>
                             <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
@@ -1470,206 +1527,206 @@
                             <SettingsBehavior AllowFocusedRow="True" AllowSelectSingleRowOnly="false"></SettingsBehavior>
                             <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
                         </GridViewProperties>
-                        <ClientSideEvents GotFocus="function(s,e){clookup_Product.ShowDropDown();}" />
+                        <ClientSideEvents GotFocus="function(s,e){clookup_Product.ShowDropDown();}" ValueChanged="ProductValueChange" />
                         <%--LostFocus="Project_LostFocus" ValueChanged="ProjectValueChange"--%>
 
                         <ClearButton DisplayMode="Always">
                         </ClearButton>
                     </dxe:ASPxGridLookup>
-                          <%--  REV 1.0--%>
-                          <%--  <dx:LinqServerModeDataSource ID="EntityServerModeDataProduct" runat="server" OnSelecting="EntityServerModeDataProduct_Selecting"
+                                <%--  REV 1.0--%>
+                                <%--  <dx:LinqServerModeDataSource ID="EntityServerModeDataProduct" runat="server" OnSelecting="EntityServerModeDataProduct_Selecting"
                                 ContextTypeName="ERPDataClassesDataContext" TableName="v_Product_SaleRateLock" />--%>
-                          <%--  REV 1.0 END--%>
-                        </div>
-                    </dxe:PanelContent>
-                </PanelCollection>
-                <%--<ClientSideEvents EndCallback="componentEndCallBack" BeginCallback="BeginComponentCallback" />--%>
-            </dxe:ASPxCallbackPanel>
+                                <%--  REV 1.0 END--%>
+                            </div>
+                        </dxe:PanelContent>
+                    </PanelCollection> 
+                     <ClientSideEvents EndCallback="ProductComponentEndCallBack"  />
+                </dxe:ASPxCallbackPanel>
 
-            <div class="col-md-2" id="DivSalesRate">
-                <label>Rate</label>
-                <dxe:ASPxTextBox ID="txtAmount" ClientInstanceName="ctxtAmount" runat="server" TabIndex="8">
-                    <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                    <ClientSideEvents LostFocus="PercentageCalculate" />
-                </dxe:ASPxTextBox>
-                <span id="MandatorysAmount" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
-                    title="Mandatory"></span>
-            </div>
+                <div class="col-md-2" id="DivSalesRate">
+                    <label>Rate</label>
+                    <dxe:ASPxTextBox ID="txtAmount" ClientInstanceName="ctxtAmount" runat="server" TabIndex="8">
+                        <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                        <ClientSideEvents LostFocus="PercentageCalculate" />
+                    </dxe:ASPxTextBox>
+                    <span id="MandatorysAmount" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
+                        title="Mandatory"></span>
+                </div>
 
-            <div class="col-md-2" id="DivMaxSalesRate">
-                <label>Max Rate</label>
-                <dxe:ASPxTextBox ID="txtMaxSalesRate" ClientInstanceName="ctxtMaxSalesRate" runat="server" TabIndex="9">
-                    <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                    <ClientSideEvents LostFocus="PercentageCalculate" />
-                </dxe:ASPxTextBox>
-                <span id="MandatorysMaxSalesRate" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;" title="Mandatory"></span>
-            </div>
-            <div class="col-md-2 hide" id="DivCalculatedOn">
-                <label>Calculated On </label>
-                <asp:DropDownList ID="ddlCalculatedOn" runat="server" CssClass="form-control" TabIndex="10">
-                    <asp:ListItem Value="0">Select</asp:ListItem>
-                    <asp:ListItem Value="1">Fixed Rate (All existing scheme)</asp:ListItem>
-                    <asp:ListItem Value="2">Min/Max Rate (All existing scheme)</asp:ListItem>
-                </asp:DropDownList>
-            </div>
-            <div class="col-md-2 hide" id="DivCalculatedBasis">
-                <label>Calculation Basis </label>
-                <asp:DropDownList ID="ddlCalculationBasis" runat="server" CssClass="form-control" TabIndex="11">
-                    <asp:ListItem Value="0">Select</asp:ListItem>
-                    <asp:ListItem Value="1">Markup % (+)</asp:ListItem>
-                    <asp:ListItem Value="2">Markup % (-)</asp:ListItem>
-                </asp:DropDownList>
-            </div>
-            <div class="col-md-2 hide" id="DivNumericValue">
-                <label>Margin %</label>
-                <dxe:ASPxTextBox ID="txtPercentage" ClientInstanceName="ctxtPercentage" runat="server">
-                    <MaskSettings Mask="&lt;0..99&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                </dxe:ASPxTextBox>
-            </div>
-            <div class="col-md-2">
-                <label>&nbsp;</label>
-                <div>
-                    <input type="checkbox" id="chkIsActive" />
-                    Is Active
+                <div class="col-md-2" id="DivMaxSalesRate">
+                    <label>Max Rate</label>
+                    <dxe:ASPxTextBox ID="txtMaxSalesRate" ClientInstanceName="ctxtMaxSalesRate" runat="server" TabIndex="9">
+                        <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                        <ClientSideEvents LostFocus="PercentageCalculate" />
+                    </dxe:ASPxTextBox>
+                    <span id="MandatorysMaxSalesRate" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;" title="Mandatory"></span>
+                </div>
+                <div class="col-md-2 hide" id="DivCalculatedOn">
+                    <label>Calculated On </label>
+                    <asp:DropDownList ID="ddlCalculatedOn" runat="server" CssClass="form-control" TabIndex="10">
+                        <asp:ListItem Value="0">Select</asp:ListItem>
+                        <asp:ListItem Value="1">Fixed Rate (All existing scheme)</asp:ListItem>
+                        <asp:ListItem Value="2">Min/Max Rate (All existing scheme)</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="col-md-2 hide" id="DivCalculatedBasis">
+                    <label>Calculation Basis </label>
+                    <asp:DropDownList ID="ddlCalculationBasis" runat="server" CssClass="form-control" TabIndex="11">
+                        <asp:ListItem Value="0">Select</asp:ListItem>
+                        <asp:ListItem Value="1">Markup % (+)</asp:ListItem>
+                        <asp:ListItem Value="2">Markup % (-)</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="col-md-2 hide" id="DivNumericValue">
+                    <label>Margin %</label>
+                    <dxe:ASPxTextBox ID="txtPercentage" ClientInstanceName="ctxtPercentage" runat="server">
+                        <MaskSettings Mask="&lt;0..99&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                    </dxe:ASPxTextBox>
+                </div>
+                <div class="col-md-2">
+                    <label>&nbsp;</label>
+                    <div>
+                        <input type="checkbox" id="chkIsActive" />
+                        Is Active
+                    </div>
+                </div>
+                <div class="col-md-2 hide">
+                    <label>Min Sale Price</label>
+                    <dxe:ASPxTextBox ID="txtMinSalePrice" ClientInstanceName="ctxtMinSalePrice" runat="server" ReadOnly="true">
+                        <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                    </dxe:ASPxTextBox>
+                </div>
+                <div class="col-md-2 hide">
+                    <label>Discount (%)</label>
+                    <dxe:ASPxSpinEdit ID="txtDiscount" ClientInstanceName="ctxtDiscount" runat="server" ShowOutOfRangeWarning="false" SpinButtons-ClientVisible="false"
+                        TabIndex="3" MaxValue="100" AllowMouseWheel="false" EditFormatString="0.00" DisplayFormatString="0.00" DecimalPlaces="2" NumberType="Float" MinValue="0.00">
+
+                        <%-- <MaskSettings Mask="&lt;0..999&gt;.&lt;00..99&gt;" AllowMouseWheel="false"  />--%>
+                        <ValidationSettings Display="None"></ValidationSettings>
+                        <ClientSideEvents LostFocus="AmountCalculate" />
+                    </dxe:ASPxSpinEdit>
+                    <span id="MandatorysDiscount" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -13px; top: 24px;"
+                        title="Mandatory"></span>
+                </div>
+
+                <div class="col-md-2 hide">
+                    <label>Fix Rate</label>
+                    <dxe:ASPxTextBox ID="txtFixRate" ClientInstanceName="ctxtFixRate" runat="server" TabIndex="5">
+                        <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                        <%--<ClientSideEvents LostFocus="PercentageCalculate" />--%>
+                    </dxe:ASPxTextBox>
+                    <span id="MandatorysFixRate" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
+                        title="Mandatory"></span>
+                </div>
+                <div class="clearfix"></div>
+
+                <%--</div>--%>
+                <%--<div class="clearfix"></div>--%>
+                <div style="padding: 15px 10px 10px 0px;">
+                    <dxe:ASPxButton ID="btnSaveRecords" TabIndex="10" ClientInstanceName="cbtnSaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave" CssClass="btn btn-success" UseSubmitBehavior="False">
+                        <ClientSideEvents Click="function(s, e) {SaveButtonClick('Insert');}" />
+                    </dxe:ASPxButton>
+                    <dxe:ASPxButton ID="btncancel" TabIndex="8" ClientInstanceName="cbtncancel" runat="server" AutoPostBack="False" Text="C&#818;ancel" CssClass="btn btn-primary" UseSubmitBehavior="False">
+                        <ClientSideEvents Click="function(s, e) {cancel();}" />
+                    </dxe:ASPxButton>
+
                 </div>
             </div>
-            <div class="col-md-2 hide">
-                <label>Min Sale Price</label>
-                <dxe:ASPxTextBox ID="txtMinSalePrice" ClientInstanceName="ctxtMinSalePrice" runat="server" ReadOnly="true">
-                    <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                </dxe:ASPxTextBox>
-            </div>
-            <div class="col-md-2 hide">
-                <label>Discount (%)</label>
-                <dxe:ASPxSpinEdit ID="txtDiscount" ClientInstanceName="ctxtDiscount" runat="server" ShowOutOfRangeWarning="false" SpinButtons-ClientVisible="false"
-                    TabIndex="3" MaxValue="100" AllowMouseWheel="false" EditFormatString="0.00" DisplayFormatString="0.00" DecimalPlaces="2" NumberType="Float" MinValue="0.00">
 
-                    <%-- <MaskSettings Mask="&lt;0..999&gt;.&lt;00..99&gt;" AllowMouseWheel="false"  />--%>
-                    <ValidationSettings Display="None"></ValidationSettings>
-                    <ClientSideEvents LostFocus="AmountCalculate" />
-                </dxe:ASPxSpinEdit>
-                <span id="MandatorysDiscount" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -13px; top: 24px;"
-                    title="Mandatory"></span>
+            <div id="view">
+
+                <dxe:ASPxGridView ID="gridProductRate" runat="server" AutoGenerateColumns="False" SettingsBehavior-AllowSort="true"
+                    ClientInstanceName="cgridProductRate" KeyFieldName="SaleRateLockID" Width="100%" Settings-HorizontalScrollBarMode="Auto"
+                    SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false"
+                    SettingsDataSecurity-AllowDelete="false" OnCustomCallback="gridProductRate_CustomCallback" DataSourceID="ProductRateServerModeDataSource">
+
+                    <%----%>
+                    <SettingsSearchPanel Visible="True" Delay="5000" />
+                    <ClientSideEvents CustomButtonClick="SaleRateCustomButtonClick" RowClick="gridRowclick" />
+                    <SettingsBehavior ConfirmDelete="True" />
+                    <Columns>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="SchemeCode" Caption="Scheme Code" Width="200px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="SchemeName" Caption="Scheme Name" Width="200px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="3" FieldName="RateType" Caption="Type" Width="150px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="ValidFrom" Caption="From Date" Width="150px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="ValidUpto" Caption="To Date" Width="150px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="6" FieldName="Entity" Caption="Entity" Width="200px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="7" FieldName="sProducts_Description" Caption="Product" Width="200px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="8" FieldName="DiscSalesPrice" Caption="Sales Rate" Width="100px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="9" FieldName="ActiveStatus" Caption="Is Active" Width="100px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewDataTextColumn VisibleIndex="9" FieldName="STATUS" Caption="Status" Width="100px">
+                            <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                            <Settings AllowAutoFilterTextInputTimer="False" />
+                        </dxe:GridViewDataTextColumn>
+
+                        <dxe:GridViewCommandColumn VisibleIndex="10" Width="130px" ButtonType="Image" Caption="Actions" HeaderStyle-HorizontalAlign="Center">
+                            <CustomButtons>
+                                <dxe:GridViewCommandColumnCustomButton ID="CustomBtnEdit" meta:resourcekey="GridViewCommandColumnCustomButtonResource1" Image-ToolTip="Edit" Styles-Style-CssClass="pad">
+                                    <Image Url="/assests/images/Edit.png"></Image>
+                                </dxe:GridViewCommandColumnCustomButton>
+                            </CustomButtons>
+                            <CustomButtons>
+                                <dxe:GridViewCommandColumnCustomButton ID="CustomBtnDelete" meta:resourcekey="GridViewCommandColumnCustomButtonResource1" Image-ToolTip="Delete" Styles-Style-CssClass="pad">
+                                    <Image Url="/assests/images/Delete.png" ToolTip="Delete"></Image>
+                                </dxe:GridViewCommandColumnCustomButton>
+                            </CustomButtons>
+                        </dxe:GridViewCommandColumn>
+
+                    </Columns>
+                    <SettingsContextMenu Enabled="true"></SettingsContextMenu>
+
+                    <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" ShowFilterRowMenu="true" HorizontalScrollBarMode="Visible" ShowFooter="true" />
+                    <SettingsPager NumericButtonCount="10" PageSize="10" ShowSeparators="True" Mode="ShowPager">
+                        <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,50,100,150,200" />
+                        <FirstPageButton Visible="True">
+                        </FirstPageButton>
+                        <LastPageButton Visible="True">
+                        </LastPageButton>
+                    </SettingsPager>
+                </dxe:ASPxGridView>
+                <dx:LinqServerModeDataSource ID="ProductRateServerModeDataSource" runat="server" OnSelecting="ProductRateServerModeDataSource_Selecting"
+                    ContextTypeName="ERPDataClassesDataContext" TableName="V_SalesRateScheme" />
             </div>
 
-            <div class="col-md-2 hide">
-                <label>Fix Rate</label>
-                <dxe:ASPxTextBox ID="txtFixRate" ClientInstanceName="ctxtFixRate" runat="server" TabIndex="5">
-                    <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                    <%--<ClientSideEvents LostFocus="PercentageCalculate" />--%>
-                </dxe:ASPxTextBox>
-                <span id="MandatorysFixRate" class="fa fa-exclamation-circle iconRed" style="color: red; position: absolute; display: none; right: -11px; top: 24px;"
-                    title="Mandatory"></span>
-            </div>
-            <div class="clearfix"></div>
-
-            <%--</div>--%>
-            <%--<div class="clearfix"></div>--%>
-            <div style="padding: 15px 10px 10px 0px;">
-                <dxe:ASPxButton ID="btnSaveRecords" TabIndex="10" ClientInstanceName="cbtnSaveRecords" runat="server" AutoPostBack="False" Text="S&#818;ave" CssClass="btn btn-success" UseSubmitBehavior="False">
-                    <ClientSideEvents Click="function(s, e) {SaveButtonClick('Insert');}" />
-                </dxe:ASPxButton>
-                <dxe:ASPxButton ID="btncancel" TabIndex="8" ClientInstanceName="cbtncancel" runat="server" AutoPostBack="False" Text="C&#818;ancel" CssClass="btn btn-primary" UseSubmitBehavior="False">
-                    <ClientSideEvents Click="function(s, e) {cancel();}" />
-                </dxe:ASPxButton>
-
-            </div>
         </div>
-
-        <div id="view">
-
-            <dxe:ASPxGridView ID="gridProductRate" runat="server" AutoGenerateColumns="False" SettingsBehavior-AllowSort="true"
-                ClientInstanceName="cgridProductRate" KeyFieldName="SaleRateLockID" Width="100%" Settings-HorizontalScrollBarMode="Auto"
-                SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false"
-                SettingsDataSecurity-AllowDelete="false" OnCustomCallback="gridProductRate_CustomCallback" DataSourceID="ProductRateServerModeDataSource">
-
-                <%----%>
-                <SettingsSearchPanel Visible="True" Delay="5000" />
-                <ClientSideEvents CustomButtonClick="SaleRateCustomButtonClick" RowClick="gridRowclick" />
-                <SettingsBehavior ConfirmDelete="True" />
-                <Columns>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="SchemeCode" Caption="Scheme Code" Width="200px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="SchemeName" Caption="Scheme Name" Width="200px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="3" FieldName="RateType" Caption="Type" Width="150px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="ValidFrom" Caption="From Date" Width="150px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="ValidUpto" Caption="To Date" Width="150px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="6" FieldName="Entity" Caption="Entity" Width="200px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="7" FieldName="sProducts_Description" Caption="Product" Width="200px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="8" FieldName="DiscSalesPrice" Caption="Sales Rate" Width="100px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="9" FieldName="ActiveStatus" Caption="Is Active" Width="100px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewDataTextColumn VisibleIndex="9" FieldName="STATUS" Caption="Status" Width="100px">
-                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                        <Settings AllowAutoFilterTextInputTimer="False" />
-                    </dxe:GridViewDataTextColumn>
-
-                    <dxe:GridViewCommandColumn VisibleIndex="10" Width="130px" ButtonType="Image" Caption="Actions" HeaderStyle-HorizontalAlign="Center">
-                        <CustomButtons>
-                            <dxe:GridViewCommandColumnCustomButton ID="CustomBtnEdit" meta:resourcekey="GridViewCommandColumnCustomButtonResource1" Image-ToolTip="Edit" Styles-Style-CssClass="pad">
-                                <Image Url="/assests/images/Edit.png"></Image>
-                            </dxe:GridViewCommandColumnCustomButton>
-                        </CustomButtons>
-                        <CustomButtons>
-                            <dxe:GridViewCommandColumnCustomButton ID="CustomBtnDelete" meta:resourcekey="GridViewCommandColumnCustomButtonResource1" Image-ToolTip="Delete" Styles-Style-CssClass="pad">
-                                <Image Url="/assests/images/Delete.png" ToolTip="Delete"></Image>
-                            </dxe:GridViewCommandColumnCustomButton>
-                        </CustomButtons>
-                    </dxe:GridViewCommandColumn>
-
-                </Columns>
-                <SettingsContextMenu Enabled="true"></SettingsContextMenu>
-
-                <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" ShowFilterRowMenu="true" HorizontalScrollBarMode="Visible" ShowFooter="true" />
-                <SettingsPager NumericButtonCount="10" PageSize="10" ShowSeparators="True" Mode="ShowPager">
-                    <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,50,100,150,200" />
-                    <FirstPageButton Visible="True">
-                    </FirstPageButton>
-                    <LastPageButton Visible="True">
-                    </LastPageButton>
-                </SettingsPager>
-            </dxe:ASPxGridView>
-            <dx:LinqServerModeDataSource ID="ProductRateServerModeDataSource" runat="server" OnSelecting="ProductRateServerModeDataSource_Selecting"
-                ContextTypeName="ERPDataClassesDataContext" TableName="V_SalesRateScheme" />
-        </div>
-
-    </div>
     </div>
 
 
