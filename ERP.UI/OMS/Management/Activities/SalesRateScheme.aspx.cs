@@ -1,5 +1,6 @@
 ﻿//========================================================== Revision History ============================================================================================
 //    1.0   Priti V2.0.36   31-01-2023    0025507:An error message is appearing while modifying Sales rate scheme
+//    2.0   Priti V2.0.39   09-08-2023    0026685 : Sales Rate scheme is showing wrong entity after modifying the same.
 //========================================== End Revision History =======================================================================================================
 
 
@@ -365,6 +366,61 @@ namespace ERP.OMS.Management.Activities
             return listSaleRateLock;
 
         }
+
+
+        //Rev 2.0
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+        public static List<Customers> GetSaleRateLockCustomersList(string SaleRateLockID)
+        {           
+            List<Customers> listCustomers = new List<Customers>();
+            if (HttpContext.Current.Session["userid"] != null)
+            {
+                // BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
+                BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+
+                ProcedureExecute proc = new ProcedureExecute("PRC_SaleRateScheme");
+                proc.AddVarcharPara("@Action", 50, "GetSaleRateLockDetails");
+                proc.AddVarcharPara("@SaleRateLockID", 10, SaleRateLockID);
+                DataSet dtSaleRateLock = proc.GetDataSet();              
+
+
+                listCustomers = (from DataRow dr in dtSaleRateLock.Tables[2].Rows
+                                 select new Customers()
+                                 {
+                                     CustomerID = dr["ENTITY_CODE"].ToString()
+                                 }).ToList();               
+
+            }
+
+            return listCustomers;
+
+        }
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+        public static List<Products> GetSaleRateLockProductList(string SaleRateLockID)
+        {          
+            List<Products> listProducts = new List<Products>();          
+            if (HttpContext.Current.Session["userid"] != null)
+            {                
+                BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+                ProcedureExecute proc = new ProcedureExecute("PRC_SaleRateScheme");
+                proc.AddVarcharPara("@Action", 50, "GetSaleRateLockDetails");
+                proc.AddVarcharPara("@SaleRateLockID", 10, SaleRateLockID);
+                DataSet dtSaleRateLock = proc.GetDataSet();
+
+                listProducts = (from DataRow dr in dtSaleRateLock.Tables[1].Rows
+                                select new Products()
+                                {
+                                    ProductID = Convert.ToString(dr["PRODUCT_ID"])
+                                }).ToList();
+
+            }
+            return listProducts;
+        }
+        //Rev 2.0 End
+
         //REV 1.0
         //protected void EntityServerModeDataProduct_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
         //{
@@ -686,18 +742,10 @@ namespace ERP.OMS.Management.Activities
                 proc.AddVarcharPara("@SaleRateLockID", 10, HiddenSaleRateLockID.Value);
                 DataSet dtSaleRateLock = proc.GetDataSet();
 
-
-
                 foreach (DataRow val in dtSaleRateLock.Tables[2].Rows)
                 {
-                    lookup_Entity.GridView.Selection.SelectRowByKey(Convert.ToString(val["ENTITY_CODE"]));
-                }
-
-                foreach (DataRow val in dtSaleRateLock.Tables[1].Rows)
-                {
-                    lookup_Product.GridView.Selection.SelectRowByKey(Convert.ToInt32(val["PRODUCT_ID"]));
-                }
-
+                    lookup_Entity.GridView.Selection.SelectRowByKey(Convert.ToString(val["ENTITY_CODE"]));                    
+                }               
             }
             //REV 1.0
             else if (strSplitCommand == "BINDEntity")
@@ -765,6 +813,44 @@ namespace ERP.OMS.Management.Activities
             if (Session["PRODUCTSDATA"] != null)
             {
                 lookup_Product.DataSource = (DataTable)Session["PRODUCTSDATA"];
+            }
+        }
+
+        protected void ProductComponentPanel_Callback(object sender, CallbackEventArgsBase e)
+        {
+            string strSplitCommand = e.Parameter.Split('~')[0];
+            if (strSplitCommand == "Customers")
+            {
+                ProcedureExecute proc = new ProcedureExecute("PRC_SaleRateScheme");
+                proc.AddVarcharPara("@Action", 50, "GetSaleRateLockDetails");
+                proc.AddVarcharPara("@SaleRateLockID", 10, HiddenSaleRateLockID.Value);
+                DataSet dtSaleRateLock = proc.GetDataSet();
+
+                foreach (DataRow val in dtSaleRateLock.Tables[1].Rows)
+                {
+                    lookup_Product.GridView.Selection.SelectRowByKey(Convert.ToInt32(val["PRODUCT_ID"]));                   
+                }
+
+                
+
+            }
+            else if (strSplitCommand == "BINDPRODUCT")
+            {
+                ProcedureExecute proc = new ProcedureExecute("PRC_SaleRateScheme");
+                proc.AddVarcharPara("@Action", 50, "BINDPRODUCTS");
+                DataTable dtProduct = proc.GetTable();
+                if (dtProduct.Rows.Count > 0)
+                {
+                    Session["PRODUCTSDATA"] = dtProduct;
+                    lookup_Product.DataSource = dtProduct;
+                    lookup_Product.DataBind();
+                }
+                else
+                {
+                    Session["PRODUCTSDATA"] = dtProduct;
+                    lookup_Product.DataSource = null;
+                    lookup_Product.DataBind();
+                }
             }
         }
         //REV 1.0 END

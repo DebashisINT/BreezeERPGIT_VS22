@@ -96,6 +96,15 @@ namespace ERP.OMS.Management.Activities
         protected global::DevExpress.Web.ASPxGridLookup lookup_Entity;
 
         /// <summary>
+        /// ProductComponentPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxCallbackPanel ProductComponentPanel;
+
+        /// <summary>
         /// lookup_Product control.
         /// </summary>
         /// <remarks>
