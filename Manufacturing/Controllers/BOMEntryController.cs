@@ -1,4 +1,7 @@
-﻿
+﻿//==================================================== Revision History =========================================================================
+//1.0  Priti V2.0.39    18-08-2023  0026720: Previous product has not been deleted in the Revised BOM.
+//====================================================End Revision History=====================================================================*@
+
 using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
@@ -619,9 +622,25 @@ namespace Manufacturing.Controllers
 
                             udtlist.Add(obj);
                         }
-                    }                  
+                    }
+                    //Rev 1.0
+                    foreach (var item in updateValues.DeleteKeys)
+                    {
+                        Int32 delId = Convert.ToInt32(item);                     
 
-                    if (udtlist.Count > 0)
+                        foreach (var item1 in udtlist.ToList())
+                        {
+                            Int32 delId1 = Convert.ToInt32(item1.SlNo);
+
+                            if(delId1== delId)
+                            {
+                                udtlist.Remove(item1);
+                            }                           
+                        }                        
+                    }
+                    //Rev 1.0 End
+
+                        if (udtlist.Count > 0)
                     {
                         SaveDataArea = 1;
                         //Rev work start 03.08.2022    mantise no:0025098 code retification
@@ -1162,7 +1181,12 @@ namespace Manufacturing.Controllers
                         }
                     }
 
-                    if (udtlist.Count > 0)
+                    foreach (var item in updateValues.DeleteKeys)
+                    { 
+
+                    }
+
+                        if (udtlist.Count > 0)
                     {
                         udtlist = udtlist.OrderBy(x => x.SlNo).ToList();
 
