@@ -151,6 +151,7 @@ namespace Manufacturing.Models.ViewModel.BOMEntryModel
 
     public class BOMProduct
     {
+        public String ActualSL { get; set; }
         public String SlNO { get; set; }
         public string JobWorkID { get; set; }
         public String BOMProductsID { get; set; }
@@ -470,6 +471,8 @@ namespace Manufacturing.Models.ViewModel.BOMEntryModel
 
         public string AltUom { get; set; }
         //End of rev Pratik
+
+        public String ActualSL { get; set; }
     }
 
 

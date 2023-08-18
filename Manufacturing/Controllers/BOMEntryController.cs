@@ -446,6 +446,10 @@ namespace Manufacturing.Controllers
                             bomproductdataobj.AltUom = Convert.ToString(row["AltUom"]);
                             bomproductdataobj.MultiUOMSelectionForManufacturing = cSOrder.GetSystemSettingsResult("MultiUOMSelectionForManufacturing");
                             //End of rev Pratik
+
+                            //Rev 1.0
+                            bomproductdataobj.ActualSL = Convert.ToString(row["SlNO"]);
+                            //Rev 1.0 End
                             bomproductdata.Add(bomproductdataobj);
 
                         }
@@ -592,7 +596,9 @@ namespace Manufacturing.Controllers
                             obj.AltQuantity = Convert.ToDecimal(item.AltQuantity);
                             obj.AltUom = (item.AltUom);
                             //End Rev Pratik
-
+                            //Rev 1.0
+                            obj.ActualSL = (item.ActualSL);
+                            //Rev 1.0 End
                             udtlist.Add(obj);
                         }
                     }
@@ -619,7 +625,9 @@ namespace Manufacturing.Controllers
                             obj.AltQuantity = Convert.ToDecimal(item.AltQuantity);
                             obj.AltUom = (item.AltUom);
                             //End Rev Pratik
-
+                            //Rev 1.0
+                            obj.ActualSL = "0";
+                            //Rev 1.0 End
                             udtlist.Add(obj);
                         }
                     }
@@ -630,7 +638,7 @@ namespace Manufacturing.Controllers
 
                         foreach (var item1 in udtlist.ToList())
                         {
-                            Int32 delId1 = Convert.ToInt32(item1.SlNo);
+                            Int32 delId1 = Convert.ToInt32(item1.ActualSL);
 
                             if(delId1== delId)
                             {
@@ -666,8 +674,8 @@ namespace Manufacturing.Controllers
                             obj1.AltUom = (item.AltUom);
                             //End Rev Pratik
                             //Rev work start 03.08.2022 mantise no:0025098 code retification
-                                obj1.SlNo = Convert.ToInt32(item.SlNo);
-                                //Rev work close 03.08.2022 mantise no:0025098 code retification
+                            obj1.SlNo = Convert.ToInt32(item.SlNo);
+                            //Rev work close 03.08.2022 mantise no:0025098 code retification
                             udt.Add(obj1);
                         }
 
