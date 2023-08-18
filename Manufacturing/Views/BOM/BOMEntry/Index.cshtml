@@ -1,6 +1,7 @@
 ﻿@*==========================================================Revision History ============================================================================================
-       1.0   Priti   V2.0.36   17-01-2023     	0025581: Page Navigation to be implemented in the Product Selection Window of BOM entry Module
-    ========================================== End Revision History =======================================================================================================*@
+ 1.0   Priti   V2.0.36   17-01-2023     	0025581: Page Navigation to be implemented in the Product Selection Window of BOM entry Module
+ 2.0   Priti   V2.0.39   18-08-2023         0026720: Previous product has not been deleted in the Revised BOM.
+========================================== End Revision History =======================================================================================================*@
 
 @using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
@@ -99,6 +100,9 @@
     var hasmsg = 0;
     var rowtime = 0;
     var rowtime2 = 0;
+    function gridclick(s, e) {
+        globalrowindex = e.visibleIndex;
+    }
     function btnPartNoList_Click(s, e) {
         PartNolist('', 'PartNo');
         setTimeout(function () { $("#txtPartNoCode").focus(); }, 500);
@@ -213,36 +217,24 @@
         var sl = 1;
         gridBOMProductEntryList.batchEditApi.EndEdit();
         for (var i = 0; i < 500; i++) {
-            if (gridBOMProductEntryList.GetRow(i) && i != edit) {
+            //if (gridBOMProductEntryList.GetRow(i) && i != edit) {
+                if (gridBOMProductEntryList.GetRow(i) ) {
                 var tr = gridBOMProductEntryList.GetRow(i);
                 if (tr.style.display != "none") {
-
                     gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
                     gridBOMProductEntryList.GetEditor('SlNO').SetText(sl);
-                    //if (grid.GetEditor('low').GetText() == "") {
-                    //    grid.GetEditor('low').SetText(0);
-                    //    grid.GetEditor('high').SetText(0);
-                    //    grid.GetEditor('value').SetText(0);
-                    //}
                     gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
                     sl = sl + 1;
                 }
             }
         }
-
         for (var i = -1; i > -500; i--) {
-            if (gridBOMProductEntryList.GetRow(i) && i != edit) {
-
+            /*if (gridBOMProductEntryList.GetRow(i) && i != edit) {*/
+            if (gridBOMProductEntryList.GetRow(i) ) {
                 var tr = gridBOMProductEntryList.GetRow(i);
                 if (tr.style.display != "none") {
-
                     gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
                     gridBOMProductEntryList.GetEditor('SlNO').SetText(sl);
-                    //if (grid.GetEditor('low').GetText() == "") {
-                    //    grid.GetEditor('low').SetText(0);
-                    //    grid.GetEditor('high').SetText(0);
-                    //    grid.GetEditor('value').SetText(0);
-                    //}
                     gridBOMProductEntryList.batchEditApi.StartEdit(i, 1);
                     sl = sl + 1;
                 }
@@ -256,14 +248,8 @@
             if (gridBOMResourcesList.GetRow(i) && i != edit) {
                 var tr = gridBOMResourcesList.GetRow(i);
                 if (tr.style.display != "none") {
-
                     gridBOMResourcesList.batchEditApi.StartEdit(i, 1);
-                    gridBOMResourcesList.GetEditor('SlNO').SetText(sl);
-                    //if (grid.GetEditor('low').GetText() == "") {
-                    //    grid.GetEditor('low').SetText(0);
-                    //    grid.GetEditor('high').SetText(0);
-                    //    grid.GetEditor('value').SetText(0);
-                    //}
+                    gridBOMResourcesList.GetEditor('SlNO').SetText(sl);                    
                     gridBOMResourcesList.batchEditApi.StartEdit(i, 1);
                     sl = sl + 1;
                 }
@@ -351,32 +337,25 @@
 
     }
 
-    function grid_CustomButtonClick() {
-        // if (e.buttonID == "DeleteProduct") {
+    function grid_CustomButtonClick(s) {
         var noofvisiblerows = gridBOMProductEntryList.GetVisibleRowsOnPage();
-
         if (noofvisiblerows != 1) {
-            gridBOMProductEntryList.DeleteRow(globalrowindex);
-
+            gridBOMProductEntryList.batchEditApi.StartEdit(s);
+            gridBOMProductEntryList.DeleteRow(s);
             if ($('#hdnDetailsID').val() == 0) {
-
                 resuffleSerial();
             }
             else {
-                DeleteRowProductGrid(globalrowindex);
+                DeleteRowProductGrid(s);
             }
-
             BOMGridSetTotalAmount();
-
         }
-        //}
-        //e.processOnServer = false;
     }
 
 
-    function BatchStartEditing(s, e) {
-        globalrowindex = e.visibleIndex;
-    }
+    //function BatchStartEditing(s, e) {
+    //    globalrowindex = e.visibleIndex;
+    //}
 
     function ResourceBatchStartEditing(s, e) {
         globalrowindex2 = e.visibleIndex;
@@ -676,16 +655,11 @@
         gridBOMProductEntryList.batchEditApi.StartEdit(globalrowindex, 7);
     }
 
-    var globalrowindex = 0;
+
     //rev Pratik
     //var globalrowindex3 = 0;
     //End of rev Pratik
-    function gridclick(s, e) {
-        globalrowindex = e.visibleIndex;
-        //rev Pratik
-        //globalrowindex3 = globalrowindex;
-        //End of rev Pratik
-    }
+
 
     function gridResourceclick(s, e) {
         globalrowindex2 = e.visibleIndex;
