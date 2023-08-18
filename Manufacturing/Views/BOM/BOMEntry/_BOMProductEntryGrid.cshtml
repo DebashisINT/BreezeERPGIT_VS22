@@ -7,7 +7,7 @@
 {
     settings.Name = "gridBOMProductEntryList";
     settings.CallbackRouteValues = new { Action = "GetBOMProductEntryList", Controller = "BOMEntry" };
-    settings.KeyFieldName = "SlNO";
+    settings.KeyFieldName = "ActualSL";
     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
     settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "BOMEntry", Action = "BatchEditingUpdateBOMProductEntry" };
 
@@ -446,7 +446,16 @@
         x.CellStyle.CssClass = "hide";
         x.HeaderStyle.CssClass = "hide";
     });
+    //Rev 1.0
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "ActualSL";
+        x.Caption = "";
+        x.CellStyle.CssClass = "hide";
+        x.HeaderStyle.CssClass = "hide";
 
+    });
+    //Rev 1.0 End
     settings.CustomJSProperties = (s, e) =>
     {
         if (ViewData["Success"] != null)
