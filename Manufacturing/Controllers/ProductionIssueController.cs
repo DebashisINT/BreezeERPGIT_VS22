@@ -1038,6 +1038,61 @@ namespace Manufacturing.Controllers
                     dtWarehouseFresh = (DataTable)Session["PIssue_WarehouseData"];
                 }
 
+
+                foreach (DataRow wtrow in dtWarehouse.Rows)
+                {
+                    string strMfgDate = Convert.ToString(wtrow["ViewMfgDate"]).Trim();
+                    string strExpiryDate = Convert.ToString(wtrow["ViewExpiryDate"]).Trim();
+
+                    if (strMfgDate != "")
+                    {
+                        string DD = strMfgDate.Substring(0, 2);
+                        string MM = strMfgDate.Substring(3, 2);
+                        string YYYY = strMfgDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        wtrow["ViewMfgDate"] = Date;
+                    }
+
+                    if (strExpiryDate != "")
+                    {
+                        string DD = strExpiryDate.Substring(0, 2);
+                        string MM = strExpiryDate.Substring(3, 2);
+                        string YYYY = strExpiryDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        wtrow["ViewExpiryDate"] = Date;
+                    }
+                }
+                dtWarehouse.AcceptChanges();
+                //foreach (DataRow wtrow in dtWarehouseFresh.Rows)
+                //{
+                //    string strMfgDate = Convert.ToString(wtrow["ViewMfgDate"]).Trim();
+                //    string strExpiryDate = Convert.ToString(wtrow["ViewExpiryDate"]).Trim();
+
+                //    if (strMfgDate != "")
+                //    {
+                //        string DD = strMfgDate.Substring(0, 2);
+                //        string MM = strMfgDate.Substring(3, 2);
+                //        string YYYY = strMfgDate.Substring(6, 4);
+                //        string Date = YYYY + '-' + MM + '-' + DD;
+
+                //        wtrow["ViewMfgDate"] = Date;
+                //    }
+
+                //    if (strExpiryDate != "")
+                //    {
+                //        string DD = strExpiryDate.Substring(0, 2);
+                //        string MM = strExpiryDate.Substring(3, 2);
+                //        string YYYY = strExpiryDate.Substring(6, 4);
+                //        string Date = YYYY + '-' + MM + '-' + DD;
+
+                //        wtrow["ViewExpiryDate"] = Date;
+                //    }
+                //}
+
+
+
                 //if (dtWarehouseFresh != null)
                 //{
                 //    if (dtWarehouseFresh.Rows.Count > 0)
@@ -1053,7 +1108,7 @@ namespace Manufacturing.Controllers
                 //    dtWarehouseFresh.AcceptChanges();
 
                 //}
-                
+
                 string DocType = "";
                 Int64 WorkOrderID = 0;
                 if (WorkOrderModuleSkipped == "No")
@@ -2073,6 +2128,60 @@ namespace Manufacturing.Controllers
         }
 
         //Rev 5.0 End
+
+        #region Wirehousewise Aviable Stock
+        [HttpPost]
+        public JsonResult getWarehousewisestock(string sl, string strProductID, string branch, string WarehouseID)
+        {
+            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+            string strBranch = Convert.ToString(branch);            
+            string cpstockVal = "0.00";
+            try
+            {
+                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableQuotationForWareHouseWiseStock(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','" + Convert.ToString(Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + ") as branchopenstock");
+
+                if (dt2.Rows.Count > 0)
+                {
+                    cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
+                }
+                else
+                {
+                    cpstockVal = "0.00";
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return Json(cpstockVal);
+        }
+        #endregion Wirehousewise Aviable Stock
+        #region Wirehousewise Batch Aviable Stock
+        [HttpPost]
+        public JsonResult getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID)
+        {
+            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+            string strBranch = Convert.ToString(branch);
+            string cpstockVal = "0.00";
+            try
+            {
+                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','" + Convert.ToString(Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
+                if (dt2.Rows.Count > 0)
+                {
+                    cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
+                }
+                else
+                {
+                    cpstockVal = "0.00";
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return Json(cpstockVal);           
+        }
+
+        #endregion Wirehousewise Batch Aviable Stock
+
 
     }
 }

@@ -124,51 +124,51 @@ namespace Manufacturing.Models
 
             proc.AddPara("@UDTPRODUCTIONORDER_DETAILS", dtBOM_PRODUCTS);
 
-            foreach (DataRow dr in dtWarehouse.Rows)
-            {
-                string _ViewMfgDate = Convert.ToString(dr["ViewMfgDate"]);
-                if (_ViewMfgDate != "")
-                {
-                    string ViewMfgDate = Convert.ToDateTime(_ViewMfgDate).ToString("yyyy-MM-dd");
+            //foreach (DataRow dr in dtWarehouse.Rows)
+            //{
+            //    string _ViewMfgDate = Convert.ToString(dr["ViewMfgDate"]);
+            //    if (_ViewMfgDate != "")
+            //    {
+            //        string ViewMfgDate = Convert.ToDateTime(_ViewMfgDate).ToString("yyyy-MM-dd");
 
-                    //DateTime ViewExpiryDate = Convert.ToDateTime(dr["ViewExpiryDate"]);
-
-
-                    //IFormatProvider culture = new CultureInfo("en-US", true);
-
-                    //string _ViewMfgDate = Convert.ToString(dr["ViewMfgDate"]);
-                    //DateTime dateVal4 = DateTime.ParseExact(_ViewMfgDate, "dd-MM-yyyy", culture);
-                    //string ViewMfgDate = dateVal4.ToString("yyyy-MM-dd");
+            //        //DateTime ViewExpiryDate = Convert.ToDateTime(dr["ViewExpiryDate"]);
 
 
-                    //string _ViewExpiryDate = Convert.ToString(dr["ViewExpiryDate"]);
-                    //DateTime dateVal5 = DateTime.ParseExact(_ViewExpiryDate, "dd-MM-yyyy", culture);
-                    //string ViewExpiryDate = dateVal5.ToString("yyyy-MM-dd");
+            //        //IFormatProvider culture = new CultureInfo("en-US", true);
+
+            //        //string _ViewMfgDate = Convert.ToString(dr["ViewMfgDate"]);
+            //        //DateTime dateVal4 = DateTime.ParseExact(_ViewMfgDate, "dd-MM-yyyy", culture);
+            //        //string ViewMfgDate = dateVal4.ToString("yyyy-MM-dd");
+
+
+            //        //string _ViewExpiryDate = Convert.ToString(dr["ViewExpiryDate"]);
+            //        //DateTime dateVal5 = DateTime.ParseExact(_ViewExpiryDate, "dd-MM-yyyy", culture);
+            //        //string ViewExpiryDate = dateVal5.ToString("yyyy-MM-dd");
 
 
 
-                    if (ViewMfgDate != null)
-                    {
-                        dr["ViewMfgDate"] = ViewMfgDate;
-                    }
+            //        if (ViewMfgDate != null)
+            //        {
+            //            dr["ViewMfgDate"] = ViewMfgDate;
+            //        }
                    
-                }
-                string _ViewExpiryDate = Convert.ToString(dr["ViewExpiryDate"]);
-                if (_ViewExpiryDate != "")
-                {
-                    string ViewExpiryDate = Convert.ToDateTime(_ViewExpiryDate).ToString("yyyy-MM-dd");
-                    if (ViewExpiryDate != null)
-                    {
-                        dr["ViewExpiryDate"] = ViewExpiryDate;
+            //    }
+            //    string _ViewExpiryDate = Convert.ToString(dr["ViewExpiryDate"]);
+            //    if (_ViewExpiryDate != "")
+            //    {
+            //        string ViewExpiryDate = Convert.ToDateTime(_ViewExpiryDate).ToString("yyyy-MM-dd");
+            //        if (ViewExpiryDate != null)
+            //        {
+            //            dr["ViewExpiryDate"] = ViewExpiryDate;
 
 
-                    }
-                }
+            //        }
+            //    }
 
 
 
-            }
-            dtWarehouse.AcceptChanges();
+            //}
+            //dtWarehouse.AcceptChanges();
 
             if (dtWarehouse.Rows.Count > 0)
             {

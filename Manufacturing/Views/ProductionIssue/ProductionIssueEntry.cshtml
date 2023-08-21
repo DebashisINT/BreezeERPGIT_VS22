@@ -1,4 +1,4 @@
-﻿@*====================================================Revision History=========================================================================
+﻿`@*====================================================Revision History=========================================================================
     1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
     2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
     3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
@@ -7,6 +7,7 @@
     6.0  Priti   V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
     7.0  Priti   V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
     8.0  Priti   V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
+    9.0  Priti   V2.0.39    16-08-2023  0026683: In the Warehouse details of Issue for Production, Available Qty tab required to check the stock.
     ====================================================End Revision History=====================================================================*@
 
 
@@ -1786,7 +1787,11 @@
 
 
     function ddlWarehouse_ValueChange() {
-        //var BankBranchID = $('#ddlBankBranch option:selected').val();
+
+        //Rev 9.0
+        var sl = gridProductionBOMProductList.GetEditor("SlNO").GetValue();
+        var branch = $('#ddlBankBranch option:selected').val();
+        //Rev 9.0 End
         var ProductsID = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductId');
         var WarehouseID = $('#WHddlWarehouse option:selected').val();
         $.ajax({
@@ -1800,14 +1805,39 @@
                     html = html + "<option value='" + response[i].BatchID + "'>" + response[i].BatchName + "</option>";
                 }
                 $('#ddlBatch').html(html);
-
-                //ddlWarehouse_ValueChange();
                 UpdateSerialNo();
+            }
+
+        });
+         //Rev 9.0
+            if (WarehouseID != null) {
+                getwirehousewiseaviablestock(sl, ProductsID, branch, WarehouseID)
+            }
+         //Rev 9.0 End
+    }
+     //Rev 9.0
+    function getwirehousewiseaviablestock(sl, strProductID, branch, WarehouseID) {
+        gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getWarehousewisestock", "ProductionIssue")",
+            data: JSON.stringify({ sl: sl, strProductID: strProductID, branch: branch, WarehouseID: WarehouseID }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+                cpstockVal = msg;
+                divpopupAvailableStock.style.display = "block";
+                $('#lblAvailableStock').text(cpstockVal);
+                cpstockVal = null;
+                //gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 5);
+                return false;
+
 
             }
         });
     }
-
+     //Rev 9.0 End
     function PopulateProductWareHouseDetailsData() {
         var BankBranchID = $('#ddlBankBranch option:selected').val();
         var ProductsID = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductId');
@@ -2205,6 +2235,11 @@
     }
 
     function UpdateSerialNo() {
+
+        //Rev 9.0
+        var sl = gridProductionBOMProductList.GetEditor("SlNO").GetValue();
+        var branch = $('#ddlBankBranch option:selected').val();
+        //Rev 9.0 End
         var productid = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'ProductId');
         var warehouse = $('#WHddlWarehouse').val();
         var Batch = $('#ddlBatch').val();
@@ -2226,7 +2261,11 @@
                 $('#hdfExpiryDate').val(ExpiryDate);
 
             }
-        });
+            });
+
+            //Rev 9.0
+            GetWirehouseBatchWiseAviableStock(sl, productid, branch, warehouse, Batch);
+            //Rev 9.0 End
     }
 
 
@@ -2245,7 +2284,28 @@
             }
         });
     }
+    //Rev 9.0
+    function GetWirehouseBatchWiseAviableStock(sl, productid, branch, warehouse, Batch) {
+        gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex);
 
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getWarehouseBatchwisestock", "ProductionIssue")",           
+            data: JSON.stringify({ sl: sl, strProductID: productid, branch: branch, WarehouseID: warehouse, BatchID: Batch }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+                cpstockVal = msg;
+                divpopupAvailableStock.style.display = "block";
+                $('#lblAvailableStock').text(cpstockVal);
+                cpstockVal = null;
+                //grid.batchEditApi.StartEdit(globalRowIndex, 5);
+                return false;
+            }
+        });
+    }
+    //Rev 9.0 End
     function UpdateText() {
         //var selectedItems = checkListBox.GetSelectedItems();
         //selectedChkValue = GetSelectedItemsText(selectedItems);
@@ -2694,13 +2754,18 @@
                             async: false,
                             success: function (msg1) {
                                 var ObjData1 = msg1.ValuationAmount;
-                                if (ObjData1!="") {
+                                $("#divValuationRate").attr('style', 'display:block');
+                                $("#divProductName").attr('style', 'display:block');
+                                if (ObjData1 != "0") {
                                     pageheaderContent.style.display = "block";
-                                    $("#divValuationRate").attr('style', 'display:block');
-                                    $("#divProductName").attr('style', 'display:block');
+
                                     Amount = (ObjData1 * 1);
                                     Rate = Amount / ProductQty;
-                                    document.getElementById('lblValuationRate').innerHTML = Rate;
+                                    document.getElementById('lblValuationRate').innerHTML = parseFloat(Rate).toFixed(2);
+                                    document.getElementById('lblProductName').innerHTML = ProductName;
+                                }
+                                else {
+                                    document.getElementById('lblValuationRate').innerHTML = "0";
                                     document.getElementById('lblProductName').innerHTML = ProductName;
                                 }
                             }
@@ -2723,7 +2788,7 @@
     </h3>
     <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("ProductionIssueList", "ProductionIssue")"><i class="fa fa-times"></i></a></div>
     @*REV 8.0*@
-    <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images" style="display: none;" runat="server">
+    <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images"  runat="server">
         <div class="Top clearfix">
             <ul>
                 <li>
