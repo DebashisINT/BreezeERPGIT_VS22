@@ -66,34 +66,34 @@
     {
         x.FieldName = "ProductDescription";
         x.Caption = "Description";
-        x.ReadOnly = true;        
+        x.ReadOnly = true;
         x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;       
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
     });
     settings.Columns.Add(x =>
     {
         x.FieldName = "DesignNo";
         x.Caption = "Drawing No.";
-        x.ReadOnly = true;       
+        x.ReadOnly = true;
         x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;       
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
     });
     settings.Columns.Add(x =>
     {
         x.FieldName = "ItemRevisionNo";
         x.Caption = "Drawing Rev.No.";
-        x.ReadOnly = true;        
+        x.ReadOnly = true;
         x.Width = System.Web.UI.WebControls.Unit.Pixel(250);
         x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
-        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;       
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
     });
     settings.Columns.Add(x =>
     {
@@ -105,7 +105,7 @@
         x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).MaskSettings.Mask = "<0..999999999>.<0000..9999>";
         DevExpress.Web.TextBoxProperties txtEditProperties = x.PropertiesEdit as DevExpress.Web.TextBoxProperties;
-        txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
+        //txtEditProperties.ClientSideEvents.LostFocus = "BOMGridSetAmount";
         x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
         (x.PropertiesEdit as DevExpress.Web.TextBoxProperties).Style.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
