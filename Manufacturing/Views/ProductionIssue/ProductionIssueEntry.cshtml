@@ -671,7 +671,7 @@
         var AvlStk = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'AvlStk');
         var NegStock = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'Product_NegativeStock');
         gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '1', '');
-        //gridProductionBOMProductList.GetEditor('StkMsg').SetText("1");
+       
         if (parseFloat(Qty) > parseFloat(AvlStk)) {
 
             if (NegStock.trim() == 'W') {
@@ -679,19 +679,16 @@
                     if (r == true) {
                         if (Price != "" && Qty != "") {
                             var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
-
                             gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 9);
                             gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
                             BOMGridSetTotalAmount("", "");
                         }
                     }
                     else {
-                        gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '0', '');
-                        //gridProductionBOMProductList.GetEditor('StkMsg').SetText("0");
+                        gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '0', '');                       
                         gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat("0.0000").toFixed(4));
                         Qty = "0.0000";
                         var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
-
                         gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 9);
                         gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
                         BOMGridSetTotalAmount("", "");
@@ -700,22 +697,18 @@
                 });
             }
             else if (NegStock.trim() == 'B') {
-                gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '0', '');
-                //gridProductionBOMProductList.GetEditor('StkMsg').SetText("0");
+                gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '0', '');                
                 jAlert('Product is going negative can not proceed');
                 gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 5);
                 gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat("0.0000").toFixed(4));
                 Qty = "0.0000";
                 var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
-
                 gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 9);
                 gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
                 BOMGridSetTotalAmount("", "");
             }
             else {
-
                 var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
-
                 gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 9);
                 gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
                 BOMGridSetTotalAmount("", "");
@@ -723,7 +716,6 @@
         }
         else {
             var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
-
             gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 9);
             gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
             BOMGridSetTotalAmount("", "");
@@ -1639,7 +1631,7 @@
                 }
             });
 
-            $('#lblProductName').text(ProductName);
+            $('#lblProductNameWH').text(ProductName);           
             $('#txt_SalesAmount').text(QuantityValue);
             $('#txt_SalesUOM').text(UOM);
             $('#txt_StockAmount').text(QuantityValue);
@@ -1928,6 +1920,10 @@
         var MfgDate = $('#hdfMfgDate').val();
         var ExpiryDate = $('#hdfExpiryDate').val();
 
+        //Rev 9.0
+        var AVAILsTOCK = $("#lblAvailableStock").text();
+        //Rev 9.0 End
+
         if (StockType == "W" || StockType == "WS" || StockType == "WBS" || StockType == "WB" || StockType == "WC" || StockType == "WSC") {
             if (WarehouseName == null || WarehouseName == "") {
                 $("#rfvWarehouse").css("display", "block");
@@ -1976,9 +1972,39 @@
                 }
             }
         }
+        
 
+       //Rev 9.0
+        if (parseFloat(Qty, 4) > parseFloat(AVAILsTOCK, 4)) {
+            jAlert("Entered Quantity is more than Available Stock ");
+            return;
+        }
+      
+
+        if (Batch != "") {
+            var totalProductQtyBatch = 0;
+            var BatchWiseQty = [
+                { Field: "Product_SrlNo", Values: ProductSrlNo },
+                { Field: "ProductID", Values: ProductID },
+                { Field: "WarehouseID", Values: WarehouseID },
+                { Field: "Batch", Values: Batch }
+            ];
+            var tempStockOfProductBatch = flexFilter(StockOfProduct, BatchWiseQty);
+            for (var i = 0; i < tempStockOfProductBatch.length; i++) {
+                var objprod = {};
+                objprod = tempStockOfProductBatch[i];
+                if (objprod.Quantity != "") {
+                    totalProductQtyBatch = totalProductQtyBatch + parseFloat(objprod.Quantity);
+                }
+            }
+            totalProductQtyBatch = (parseFloat(totalProductQtyBatch) + parseFloat(Qty));
+            if (parseFloat(totalProductQtyBatch, 4) > parseFloat(AVAILsTOCK, 4)) {
+                jAlert("Entered Quantity is more than Available Stock ");
+                return;
+            }
+        }
+        //Rev 9.0 End
         var totalProductQty = 0;
-
         var serialCriteria = [{ Field: "Product_SrlNo", Values: "" + (globalrowindex + 1) + "" }];
         var tempStockOfProduct = flexFilter(StockOfProduct, serialCriteria);
 
@@ -2016,6 +2042,10 @@
             jAlert("Product quantity balance excess!");
             return false;
         }
+
+
+       
+
     }
 
 
@@ -3145,7 +3175,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <asp:Label ID="lblProductName" runat="server"></asp:Label>
+                                                <asp:Label ID="lblProductNameWH" runat="server"></asp:Label>
                                             </td>
                                         </tr>
                                     </tbody>
