@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   09-05-2023      26061: Purchase Return module design modification & check in small device
+    2.0   Sanchita  V2.0.39   21-08-2023      26740 : Lsting Page - Purchase Return      
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PReturnList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.PReturnList" %>
@@ -27,6 +28,11 @@
     </style>
     <%--Subhra--%>
     <script>
+        // Rev 2.0
+        function CallbackPanelEndCall(s, e) {
+            cGrdPurchaseReturn.Refresh();
+        }
+        // End of Rev 2.0
         var ReturnId = 0;
         function onPrintJv(id) {
 
@@ -286,7 +292,10 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-                cGrdPurchaseReturn.Refresh();
+                // Rev 2.0
+                //cGrdPurchaseReturn.Refresh();
+                cCallbackPanel.PerformCallback("");
+                // End of Rev 2.0
                 //   cGrdPurchaseReturn.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
             }
         }
@@ -653,5 +662,15 @@
  
  <asp:HiddenField ID="hdnLockFromDatedeleteDatafreeze" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedeleteDatafreeze" runat="server" />
+
+    <%-- Rev 2.0 --%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%-- End of Rev 2.0 --%>
 
 </asp:Content>
