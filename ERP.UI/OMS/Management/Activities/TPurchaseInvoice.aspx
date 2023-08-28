@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   16-05-2023      26141: Add Transit Purchase Invoice module design modification & check in small device
+    2.0   Pallab    V2.0.42   28-08-2023      26770: Unable to view all the Items in the Grid of Transit Purchase beyond 10 Item
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Title="Transit Purchase Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -1736,6 +1737,7 @@
 
 
         function QuantityTextChange(s, e) {
+            
             var QuantityValue = (grid.GetEditor('Quantity').GetValue() != null) ? grid.GetEditor('Quantity').GetValue() : "0";
             if (parseFloat(QuantityValue) != parseFloat(ProductGetQuantity)) {
                 var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() : "";
@@ -6291,9 +6293,28 @@ else {
     </script>
     <%-- End of Rev Add TDS Tanmoy--%>>
     <%--Rev 1.0--%>
-    <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
-    
+    <%--Rev 2.0--%>
+    <%--<link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />--%>
+    <%--Rev end 2.0--%>
     <style>
+        /*Rev 2.0*/
+        .dxeDisabled_PlasticBlue {
+    background: #f3f3f3 !important;
+}
+        .dxeDisabled_PlasticBlue {
+    z-index: 0 !important;
+}
+        .dxeButtonEditButton_PlasticBlue {
+    background: #094e8c !important;
+    border-radius: 4px !important;
+    padding: 0 4px !important;
+}
+        .dxeButtonEditSys.dxeButtonEdit_PlasticBlue, .dxeTextBox_PlasticBlue {
+    height: 30px;
+    border-radius: 4px;
+    width: 100% !important;
+}
+/*Rev end 2.0*/
         select
         {
             z-index: 1;
@@ -7063,7 +7084,7 @@ else {
                                     <div style="clear: both;"></div>
                                     <div class="col-md-12">
 
-
+                                        <%--Rev 2.0: SettingsPager-Mode="ShowAllRecords" added--%>
                                         <dxe:ASPxGridView runat="server" OnBatchUpdate="grid_BatchUpdate" KeyFieldName="PurchaseInvoiceDetailID" ClientInstanceName="grid" ID="grid"
                                             Width="100%" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false"
                                             OnCellEditorInitialize="grid_CellEditorInitialize" OnHtmlRowPrepared="grid_HtmlRowPrepared"
