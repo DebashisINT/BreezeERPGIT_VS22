@@ -1,6 +1,7 @@
 ﻿@*====================================================Revision History=========================================================================
-1.0  Priti   V2.0.38    21-06-2023  0026372:Manufacturing > Stock Receipt Module, document shall not be saved with 'Fresh' 'Reject' Qty - Warehouse'.
-====================================================End Revision History=====================================================================*@
+    1.0  Priti   V2.0.38    21-06-2023  0026372:Manufacturing > Stock Receipt Module, document shall not be saved with 'Fresh' 'Reject' Qty - Warehouse'.
+    2.0	 Priti	 V2.0.39    28-08-2023  0026763:Reject Qty is not saving as per warehouse wise while doing Stock Receipt
+    ====================================================End Revision History=====================================================================*@
 
 @using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
@@ -1047,7 +1048,7 @@
                             $('#hdnStkMsg').val(0);
                         }
                         if (data[0] == "True") {
-                            $('#hdnStkMsg').val(1);                            
+                            $('#hdnStkMsg').val(1);
                             $('#WarehouseDetailsModal').modal('hide');
                         }
                         else {
@@ -1560,19 +1561,28 @@
                 url: "@Url.Action("setStockWarehouseTempDataList", "StockReceipt")",
                 data: { items: StockOfProduct },
                 success: function (response) {
-                    //var data = response;
-                    //if (data[1] == "False") {
-                    //    $('#hdnStkMsg').val(0);
-                    //    // gridProductionBOMProductList.batchEditApi.SetCellValue(tempindex, 'StkMsg', '0', '');
-                    //}
+                    var data = response;
+                    //Rev 2.0
+                    if (data== "True") {
+                        $('#hdnStkMsg').val(1);
+                        $('#WarehouseDetailsModal').modal('hide');
 
-                    //if (data[0] == "True") {
-                    //    $('#hdnStkMsg').val(1);
-                    //    $('#WarehouseDetailsModal').modal('hide');
-                    //}
-                    //else {
-                    //    jAlert("Please try again later!");
-                    //}
+                        var serialCriteria = [{ Field: "Product_SrlNo", Values: "" + ("0") + "" }];
+                        var tempStockOfProductFresh = flexFilter(StockOfProduct, serialCriteria);
+                        if (tempStockOfProductFresh.length > 0) {
+                            $('#hdnWarehouseDataFresh').val("1");
+                        }
+                        var serialCriteria1 = [{ Field: "Product_SrlNo", Values: "" + ("1") + "" }];
+                        var tempStockOfProductReject = flexFilter(StockOfProduct, serialCriteria1);
+                        if (tempStockOfProductReject.length > 0) {
+                            $('#hdnWarehouseDataReject').val("2");
+                        }
+
+                    }
+                    else {
+                        jAlert("Please try again later!");
+                    }
+                    //Rev 2.0 End
                 }
             });
 
@@ -2264,16 +2274,16 @@
         @if (Convert.ToInt16(ViewBag.IsView) == 0)
         {
 
-            <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveAndNew" onclick="StockReceiptSave('New');">
-                <div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div>
-                <span>Save and New</span>
+        <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveAndNew" onclick="StockReceiptSave('New');">
+            <div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div>
+            <span>Save and New</span>
 
 
-            </div>
-            <div class="inline-block addResourceBtn themeColor " onclick="StockReceiptSave('Exit');">
-                <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
-                <span>Save and Exit</span>
-            </div>
+        </div>
+        <div class="inline-block addResourceBtn themeColor " onclick="StockReceiptSave('Exit');">
+            <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
+            <span>Save and Exit</span>
+        </div>
         }
 
         @*<div class="inline-block pull-right">
