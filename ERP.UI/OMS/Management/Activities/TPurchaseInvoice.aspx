@@ -7069,7 +7069,7 @@ else {
                                             OnCellEditorInitialize="grid_CellEditorInitialize" OnHtmlRowPrepared="grid_HtmlRowPrepared"
                                             Settings-ShowFooter="false" OnCustomCallback="grid_CustomCallback" OnDataBinding="grid_DataBinding"
                                             OnRowInserting="Grid_RowInserting" OnRowUpdating="Grid_RowUpdating" OnRowDeleting="Grid_RowDeleting"
-                                            Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="150" RowHeight="2">
+                                            Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="150" RowHeight="2" SettingsPager-Mode="ShowAllRecords">
                                             <SettingsPager Visible="false"></SettingsPager>
 
                                             <Columns>
