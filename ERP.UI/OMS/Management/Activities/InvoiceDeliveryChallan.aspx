@@ -4,6 +4,7 @@
    3.0   Priti     V2.0.37    14-03-2023     0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
    4.0   Pallab    V2.0.37    07-04-2023     0025845: Add Sales Invoice Cum Challan module design modification
    5.0   Priti     V2.0.38    13-04-2023     0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
+   6.0   Pallab    V2.0.39    07-08-2023     0026689: Add Sales Invoice Cum Challan module all bootstrap modal outside click event disable
    ========================================= End Revision History =======================================================================================================--%>
 
 
@@ -4468,7 +4469,10 @@
     </dxe:ASPxLoadingPanel>
 
     <!--Customer Modal -->
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 6.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+    <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 6.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -4497,7 +4501,10 @@
     </div>
     <!--Customer Modal -->
     <!--Product Modal -->
-    <div class="modal fade" id="ProductModel" role="dialog">
+    <%--Rev 6.0--%>
+    <%--<div class="modal fade" id="ProductModel" role="dialog">--%>
+    <div class="modal fade" id="ProductModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 6.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -4547,7 +4554,10 @@
     </div>
     <!--Product Modal -->
     <%--SalesMan/Agent--%>
-    <div class="modal fade" id="SalesManModel" role="dialog">
+    <%--Rev 6.0--%>
+    <%--<div class="modal fade" id="SalesManModel" role="dialog">--%>
+    <div class="modal fade" id="SalesManModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 6.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -4866,7 +4876,10 @@
         </PanelCollection>
         <ClientSideEvents EndCallback="callback_InlineRemarks_EndCall" />
     </dxe:ASPxCallbackPanel>
-    <div id="tcsModal" class="modal fade" role="dialog">
+    <%--Rev 6.0--%>
+    <%--<div id="tcsModal" class="modal fade" role="dialog">--%>
+    <div id="tcsModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 6.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -4966,7 +4979,10 @@
 
         </div>
     </div>
-        <div id="tdsModal" class="modal fade" role="dialog">
+    <%--Rev 6.0--%>
+    <%--<div id="tdsModal" class="modal fade" role="dialog">--%>
+    <div id="tdsModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 6.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -5427,7 +5443,10 @@
  </div>
 
        <!--Schedule Modal -->
-    <div class="modal fade" id="ScheduleModel" role="dialog">
+    <%--Rev 6.0--%>
+    <%--<div class="modal fade" id="ScheduleModel" role="dialog">--%>
+    <div class="modal fade" id="ScheduleModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 6.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">

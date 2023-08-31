@@ -1,4 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorRateDiffAdjustmentInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorRateDiffAdjustmentInvoice" %>
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Pallab    V2.0.39   27-07-2023      0026627: Adjustment of Documents - Rate difference With Invoice module all bootstrap modal outside click event disable
+=========================================================End Revision History===================================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorRateDiffAdjustmentInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorRateDiffAdjustmentInvoice" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="JS/SearchPopup.js?v=0.01"></script>
@@ -324,7 +327,10 @@
     </div>
 
     <!--Vendor Modal -->
-    <div class="modal fade" id="VendModel" role="dialog">
+    <%--Rev 1.0--%>
+    <%--<div class="modal fade" id="VendModel" role="dialog">--%>
+    <div class="modal fade" id="VendModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 1.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -357,7 +363,10 @@
 
 
     <%--Advance Receipt Selection Model--%>
-     <div class="modal fade" id="AdvanceModel" role="dialog">
+    <%--Rev 1.0--%>
+     <%--<div class="modal fade" id="AdvanceModel" role="dialog">--%>
+     <div class="modal fade" id="AdvanceModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 1.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -391,7 +400,10 @@
 
 
      <%--Document Selection Model--%>
-     <div class="modal fade" id="DocumentModel" role="dialog">
+    <%--Rev 1.0--%>
+     <%--<div class="modal fade" id="DocumentModel" role="dialog">--%>
+     <div class="modal fade" id="DocumentModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 1.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->

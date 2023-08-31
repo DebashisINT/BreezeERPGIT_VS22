@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   11-05-2023      26097: Add Issue To Customer module design modification & check in small device
+    2.0   Pallab    V2.0.39   07-08-2023      26690: Add Issue To Customer module all bootstrap modal outside click event disable
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Language="C#" EnableViewStateMac="false" EnableEventValidation="false" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="IssueToCustomerReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.IssueToCustomerReturn" %>
@@ -7021,7 +7022,10 @@ function DateCheck() {
         <%-- <asp:SqlDataSource ID="CustomerDataSource" runat="server"  ConnectionString="<%$ ConnectionStrings:crmConnectionString %>"/>--%>
 
      <!--Customer Modal -->
-  <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 2.0--%>
+  <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+  <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -7050,7 +7054,10 @@ function DateCheck() {
   </div>
 
           <!--Product Modal -->
-    <div class="modal fade" id="ProductModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="ProductModel" role="dialog">--%>
+    <div class="modal fade" id="ProductModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -7087,7 +7094,10 @@ function DateCheck() {
 
 
      <!--Product Modal Dis-->
-    <div class="modal fade" id="ProductDisModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="ProductDisModel" role="dialog">--%>
+    <div class="modal fade" id="ProductDisModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">

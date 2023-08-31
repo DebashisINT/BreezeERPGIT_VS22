@@ -53,6 +53,11 @@ namespace NewCompany.Controllers
                 else
                 {
                     ViewBag.Validate = false;
+
+                    // Rev 1.0 new
+                    ViewBag.Src = oDBEngine.GetEventImage();
+                    // End of Rev 1.0 new
+
                     return View("~/Views/NewCompany/Login.cshtml");
                 }
             }

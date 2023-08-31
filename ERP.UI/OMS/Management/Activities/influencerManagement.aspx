@@ -1,5 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 1.0   Pallab    V2.0.38      23-05-2023          0026199: Influencer Opening module design modification & check in small device
+2.0   Pallab    V2.0.39      07-08-2023          0026686: Influencer Opening module all bootstrap modal outside click event disable
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="influencerManagement.aspx.cs" Inherits="ERP.OMS.Management.Activities.influencerManagement" %>
@@ -1484,8 +1485,10 @@
                             <asp:HiddenField ID="hiddenedit" runat="server" />
                         </div>
 
-
-                  <div class="modal fade pmsModal w80" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <%--Rev 2.0--%>
+      <%--<div class="modal fade pmsModal w80" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">--%>
+      <div class="modal fade pmsModal w80" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
         <div class="modal-dialog" role="document" style="width: 95%;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1694,7 +1697,10 @@
                 </div>
             </div>
         </div>
-    <div class="modal fade pmsModal w60" id="MainAccountModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade pmsModal w60" id="MainAccountModel" role="dialog">--%>
+    <div class="modal fade pmsModal w60" id="MainAccountModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -1723,7 +1729,10 @@
             </div>
         </div>
     </div>
-    <div class="modal fade pmsModal w60" id="MainAccountModeldr" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade pmsModal w60" id="MainAccountModeldr" role="dialog">--%>
+    <div class="modal fade pmsModal w60" id="MainAccountModeldr" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -1764,8 +1773,10 @@
 
 
     </div>
-
-                <div class="modal fade pmsModal w60" id="CustModel" role="dialog">
+    <%--Rev 2.0--%>
+     <%--<div class="modal fade pmsModal w60" id="CustModel" role="dialog">--%>
+     <div class="modal fade pmsModal w60" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
