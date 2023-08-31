@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   17-05-2023      0026156: Add Adjustment of Documents - Advance With Invoice module design modification & check in small device
+    2.0   Pallab    V2.0.39   28-07-2023      0026635: Add Adjustment of Documents - Advance With Invoice module all bootstrap modal outside click event disable
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerReceiptAdjustment.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerReceiptAdjustment" %>
@@ -554,7 +555,10 @@
     </div>
     </div>
     <!--Customer Modal -->
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+    <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -587,7 +591,10 @@
 
 
     <%--Advance Receipt Selection Model--%>
-    <div class="modal fade" id="AdvanceModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="AdvanceModel" role="dialog">--%>
+    <div class="modal fade" id="AdvanceModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -620,7 +627,10 @@
 
 
     <%--Document Selection Model--%>
-    <div class="modal fade" id="DocumentModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="DocumentModel" role="dialog">--%>
+    <div class="modal fade" id="DocumentModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->

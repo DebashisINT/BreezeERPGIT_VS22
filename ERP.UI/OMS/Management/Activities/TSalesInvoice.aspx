@@ -1,8 +1,8 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
-   1.0   Priti     V2.0.36     10-02-2023      0025664:Transaction Category is not updated if the customer is B2C Type
-   2.0   Pallab    V2.0.38     16-05-2023      0026143: Add Transit Sales Invoice module design modification & check in small device
-   3.0	 Priti     V2.0.38    15-06-2023       0026345:Transit Sales Invoice is generating duplicate Invoice
-
+   1.0   Priti     V2.0.36     10-02-2023       0025664: Transaction Category is not updated if the customer is B2C Type
+   2.0   Pallab    V2.0.38     16-05-2023       0026143: Add Transit Sales Invoice module design modification & check in small device
+   3.0	 Priti     V2.0.38     15-06-2023       0026345: Transit Sales Invoice is generating duplicate Invoice
+   4.0	 Pallab    V2.0.40     31-07-2023       0026645: Add Transit Sales Invoice module all bootstrap modal outside click event disable
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Transit Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
@@ -8351,7 +8351,10 @@ function fn_Edit(keyValue) {
     </dxe:ASPxLoadingPanel>
 
     <!--Customer Modal -->
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 4.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+    <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 4.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -8380,7 +8383,10 @@ function fn_Edit(keyValue) {
     </div>
     <!--Customer Modal -->
     <!--Product Modal -->
-    <div class="modal fade" id="ProductModel" role="dialog">
+    <%--Rev 4.0--%>
+    <%--<div class="modal fade" id="ProductModel" role="dialog">--%>
+    <div class="modal fade" id="ProductModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 4.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -8461,8 +8467,10 @@ function fn_Edit(keyValue) {
     <asp:HiddenField ID="tSalesInvoiceNumber" runat="server" />
 
 
-
-    <div id="tcsModal" class="modal fade" role="dialog">
+    <%--Rev 4.0--%>
+    <%--<div id="tcsModal" class="modal fade" role="dialog">--%>
+    <div id="tcsModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 4.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -8657,7 +8665,10 @@ function fn_Edit(keyValue) {
 
 
     <!-- Add TDS Model -->
-    <div id="tdsModal" class="modal fade" role="dialog">
+    <%--Rev 4.0--%>
+    <%--<div id="tdsModal" class="modal fade" role="dialog">--%>
+    <div id="tdsModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 4.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->

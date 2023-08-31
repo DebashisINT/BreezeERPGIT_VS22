@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                11-04-2023        2.0.37           Pallab              25982: Sale Rate Lock module design modification & check in small device
+2.0                04-08-2023        2.0.40           Pallab              26418: Sale Rate Lock module all bootstrap modal outside click event disable
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustSaleRateLock.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustSaleRateLock" %>
@@ -235,7 +236,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <asp:HiddenField ID="Hiddenvalidfrom" runat="server" />
     <asp:HiddenField ID="Hiddenvalidupto" runat="server" />
     <!--Customer Modal -->
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+    <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -266,7 +270,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         </div>
     </div>
     <!--Product Modal -->
-    <div class="modal fade" id="ProductModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="ProductModel" role="dialog">--%>
+    <div class="modal fade" id="ProductModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->

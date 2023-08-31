@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InfluencerPayment.aspx.cs" Inherits="ERP.OMS.Management.Activities.InfluencerPayment" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Pallab    V2.0.39      07-08-2023          0026687: Influencer Payment module all bootstrap modal outside click event disable
+====================================================== Revision History =============================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InfluencerPayment.aspx.cs" Inherits="ERP.OMS.Management.Activities.InfluencerPayment" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="JS/InfluencerPayment.js?v1.00.000.000.18"></script>
@@ -635,8 +639,10 @@
 
 
 
-
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 1.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+    <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 1.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -667,8 +673,10 @@
 
 
 
-
-    <div class="modal fade" id="DocModel" role="dialog">
+    <%--Rev 1.0--%>
+    <%--<div class="modal fade" id="DocModel" role="dialog">--%>
+    <div class="modal fade" id="DocModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 1.0--%>
         <div class="modal-dialog" style="height: 400px;">
 
             <!-- Modal content-->
@@ -697,8 +705,10 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="MainAccountModel" role="dialog">
+    <%--Rev 1.0--%>
+    <%--<div class="modal fade" id="MainAccountModel" role="dialog">--%>
+    <div class="modal fade" id="MainAccountModel" role="dialog" data-backdrop="static" data-keyboard="false">
+      <%--Rev end 1.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->

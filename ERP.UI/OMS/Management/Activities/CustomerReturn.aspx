@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                12-04-2023        2.0.37           Pallab              26008: Add Customer Return module design modification & check in small device
+2.0                04-08-2023        2.0.40           Pallab              26409: Add Customer Return module all bootstrap modal outside click event disable
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CustomerReturn.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" Inherits="ERP.OMS.Management.Activities.CustomerReturn" %>
@@ -3215,7 +3216,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <%-- <asp:SqlDataSource ID="CustomerDataSource" runat="server"  ConnectionString="<%$ ConnectionStrings:crmConnectionString %>"/>--%>
 
     <!--Customer Modal -->
-    <div class="modal fade" id="CustModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="CustModel" role="dialog">--%>
+    <div class="modal fade" id="CustModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -3248,7 +3252,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
     <!--Product Modal -->
-    <div class="modal fade" id="ProductModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="ProductModel" role="dialog">--%>
+    <div class="modal fade" id="ProductModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -3284,7 +3291,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
     <!--Product Modal Dis-->
-    <div class="modal fade" id="ProductDisModel" role="dialog">
+    <%--Rev 2.0--%>
+    <%--<div class="modal fade" id="ProductDisModel" role="dialog">--%>
+    <div class="modal fade" id="ProductDisModel" role="dialog" data-backdrop="static" data-keyboard="false">
+        <%--Rev end 2.0--%>
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
