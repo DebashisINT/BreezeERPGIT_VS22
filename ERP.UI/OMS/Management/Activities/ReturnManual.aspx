@@ -1,7 +1,8 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                03-05-2023        V2.0.38           Pallab              26010: Add Sale Return Manual module design modification & check in small device
-2.0                21-07-2023        V2.0.39          Priti            0026601: Manual Sale Return is getting duplicated after Saving using Alt+X
+2.0                21-07-2023        V2.0.39           Priti               0026601: Manual Sale Return is getting duplicated after Saving using Alt+X
+3.0                01-09-2023        V2.0.39           Priti               0026779: Unable to save Manual Sales Return due to error
 
 ====================================================== Revision History =============================================--%>
 
@@ -4288,8 +4289,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                 GetObjectID('hdnCustomerId').value = Id;
                 GetObjectID('hdfLookupCustomer').value = Id;
-
-
+                //Rev 3.0
+                LoadingPanel.Show();
+                //Rev 3.0 End
                 //Written By chinmoy for place of supply 
                 var OtherDetail = {};
                 OtherDetail.CustomerID = Id;
@@ -4302,12 +4304,24 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     async: false,
                     success: function (msg) {
                         StateCodeList = msg.d;
-                        if (StateCodeList[0].TransactionType != "") {
-                            $("#drdTransCategory").val(StateCodeList[0].TransactionType);
+                        //Rev 3.0
+                        if (StateCodeList.length != "0") {
+                        //Rev 3.0 End
+                            if (StateCodeList[0].TransactionType != "") {
+                                $("#drdTransCategory").val(StateCodeList[0].TransactionType);
+                                //Rev 3.0
+                                LoadingPanel.Hide();
+                                //Rev 3.0 End
+                            }
+                            //Rev 3.0
+                            else {
+                                jAlert('Please set Customer Transaction Category.');
+                            }                           
                         }
-                        //  $('#hdnPOSStateId').val(StateCodeList[0].id);
-                        //$('#hdnPOSStateCode').val(StateCodeList[0].StateCode);
-
+                        else {
+                            jAlert('Please set Customer Transaction Category.');
+                        }
+                         //Rev 3.0 End
                     },
                     error: function (msg) {
                         jAlert('Please try again later');
