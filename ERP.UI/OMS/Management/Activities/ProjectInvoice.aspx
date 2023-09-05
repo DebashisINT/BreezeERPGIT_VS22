@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoice" %>
+﻿<%--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER          CHANGES
+1.0                04-09-2023        V2.0.39           Priti              25216: Db_Cr mismatch in Project Purchase & Sales Invoice
+====================================================== Revision History =============================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoice" %>
 
 <%@ Register Src="~/OMS/Management/Activities/UserControls/Sales_BillingShipping.ascx" TagPrefix="ucBS" TagName="Sales_BillingShipping" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
@@ -2179,10 +2183,8 @@
 
         function OnEndCallback(s, e) {
 
-
             cbtn_SaveRecords.SetEnabled = true;
             //cbtn_SaveRecords_p.SetEnabled = true;
-
             var value = document.getElementById('hdnRefreshType').value;
             document.getElementById('hdnRefreshType').value = "";
 
@@ -2191,14 +2193,12 @@
                 $('#<%=HdUpdateMainGrid.ClientID %>').val('False');
                 grid.PerformCallback('DateChangeDisplay');
             }
-
             if (grid.cpComponent) {
                 if (grid.cpComponent == 'true') {
                     grid.cpComponent = null;
                     OnAddNewClick();
                 }
             }
-
             LoadingPanel.Hide();
             if (grid.cpinsert == 'UDFMandatory') {
                 OnAddNewClick();
@@ -2244,14 +2244,11 @@
                 jAlert('Billing Shipping is not yet loaded.Please wait.');
                 grid.cpSaveSuccessOrFail = '';
             }
-
             else if (grid.cpSaveSuccessOrFail == "BillingShippingNull") {
                 grid.cpSaveSuccessOrFail = null;
                 OnAddNewClick();
                 jAlert("Billing & Shipping is mandatory, please enter Billing & Shipping address and proceed");
             }
-
-
             else if (grid.cpSaveSuccessOrFail == "DueDateLess") {
                 OnAddNewClick();
                 grid.cpSaveSuccessOrFail = null;
@@ -2292,7 +2289,6 @@
                 jAlert('Proforma is tagged in Sale Order. So, Quantity of selected products cannot be less than Ordered Quantity.');
                 grid.cpSaveSuccessOrFail = '';
             }
-
             else if (grid.cpSaveSuccessOrFail == "EmptyProject") {
                 OnAddNewClick();
                 grid.cpSaveSuccessOrFail = null;
@@ -2323,15 +2319,12 @@
                 jAlert('Please fill Quantity');
                 grid.cpSaveSuccessOrFail = '';
             }
-
             else if (grid.cpSaveSuccessOrFail == "ExceedQuantity") {
                 OnAddNewClick();
                 grid.cpSaveSuccessOrFail = null;
                 jAlert('Tagged product quantity exceeded.Update The quantity and Try Again.');
                 grid.cpSaveSuccessOrFail = '';
             }
-
-
             else if (grid.cpSaveSuccessOrFail == "nullCredit") {
                 OnAddNewClick();
                 grid.cpSaveSuccessOrFail = null;
@@ -2363,15 +2356,31 @@
                 jAlert(msg);
                 grid.cpSaveSuccessOrFail = '';
             }
+            //Rev 1.0
+            else if (grid.cpReturnLedgerAmt == '-3') {
+                var dramt = 0;
+                var cramt = 0;
+                if (grid.cpDRAmt != null) {
+                    dramt = grid.cpDRAmt
+                }
+                if (grid.cpCRAmt != null) {
+                    cramt = grid.cpCRAmt
+                }                
+                grid.batchEditApi.StartEdit(0, 2);  
+                 //jAlert('Db toatl= ' + dramt + '.......Cr total= ' + cramt + ' Mismatch Detected.<br/>Cannot Save.');
+                jAlert('Mismatch detected in total of Debit & Credit Values.<br/>Cannot Save.');
+                grid.cpReturnLedgerAmt = null;
+                grid.cpDRAmt = null;
+                grid.cpCRAmt = null;
+                OnAddNewClick();
+            }
+            //Rev 1.0 End
             else {
                 var Quote_Number = grid.cpQuotationNo;
                 var Quote_ID = grid.cpQuotationID;
-
                 grid.cpQuotationNo = null;
                 grid.cpQuotationID = null;
-
                 var Quote_Msg = "Project Invoice No. '" + Quote_Number + "' saved.";
-
                 if (value == "E") {
                     if (grid.cpApproverStatus == "approve") {
                         window.parent.popup.Hide();
