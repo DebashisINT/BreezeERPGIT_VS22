@@ -1,4 +1,9 @@
-﻿using System;
+﻿#region//====================================================Revision History=========================================================================
+// 1.0   v2.0.39	Priti	05-09-2023	0026786:DB-CR mismatch in Project Sales Invoice
+#endregion//====================================================End Revision History=====================================================================
+
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -2231,11 +2236,15 @@ namespace ERP.OMS.Management.Activities
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = "QuantityorAmountnegative";
                     }
+                    //else if (strIsComplete == -3)
+                    //{
+                    //    grid.JSProperties["cpSaveSuccessOrFail"] = "-3";
+                    //}
                     else
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = "errorInsert";
                     }
-
+                    
                     #endregion Subhabrata Section End
                 }
             }
@@ -2526,14 +2535,7 @@ namespace ERP.OMS.Management.Activities
         {
             try
             {
-                // ASPxTextBox txtDriverName = (ASPxTextBox)VehicleDetailsControl.FindControl("txtDriverName");
-                //ASPxTextBox txtPhoneNo = (ASPxTextBox)VehicleDetailsControl.FindControl("txtPhoneNo");
-                // DropDownList ddl_VehicleNo = (DropDownList)VehicleDetailsControl.FindControl("ddl_VehicleNo");
-
-                //string DriverName = Convert.ToString(txtDriverName.Text);
-                //string PhoneNo = Convert.ToString(txtPhoneNo.Text);
-                //string VehicleNo = Convert.ToString(ddl_VehicleNo.SelectedValue);
-
+                
                 DataSet dsInst = new DataSet();
                 //    SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["DBConnectionDefault"]);
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
@@ -2550,40 +2552,29 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@InvoiceNo", strQuoteNo);
                 cmd.Parameters.AddWithValue("@InvoiceDate", strQuoteDate);
                 cmd.Parameters.AddWithValue("@BranchID", strBranch);
-
                 cmd.Parameters.AddWithValue("@CustomerID", strCustomer);
                 cmd.Parameters.AddWithValue("@ContactPerson", strContactName);
                 cmd.Parameters.AddWithValue("@Reference", Reference);
                 cmd.Parameters.AddWithValue("@PosForGst", PosForGst);
-
-
                 cmd.Parameters.AddWithValue("@RetRemarks", Remarks);
                 cmd.Parameters.AddWithValue("@GL", GL);
                 cmd.Parameters.AddWithValue("@RetPercentage", RetPercentage);
                 cmd.Parameters.AddWithValue("@RetAmount", RetAmount);
                 cmd.Parameters.AddWithValue("@dtDuedt", dtDuedate);
-
-
-
                 cmd.Parameters.AddWithValue("@Agents", strAgents);
-
                 cmd.Parameters.AddWithValue("@ComponenyType", strComponenyType);
                 cmd.Parameters.AddWithValue("@InvoiceComponent", strInvoiceComponent);
                 cmd.Parameters.AddWithValue("@InvoiceComponentDate", strInvoiceComponentDate);
                 cmd.Parameters.AddWithValue("@CashBank", strCashBank);
                 cmd.Parameters.AddWithValue("@DueDate", strDueDate);
-
                 cmd.Parameters.AddWithValue("@Currency", strCurrency);
                 cmd.Parameters.AddWithValue("@Rate", strRate);
                 cmd.Parameters.AddWithValue("@TaxType", strTaxType);
                 cmd.Parameters.AddWithValue("@TaxCode", "0");
-                cmd.Parameters.AddWithValue("@Remarks", Convert.ToString(txtRemarks.Text));
-                //cmd.Parameters.AddWithValue("@TaxCode", strTaxCode);
-
+                cmd.Parameters.AddWithValue("@Remarks", Convert.ToString(txtRemarks.Text));               
                 cmd.Parameters.AddWithValue("@CompanyID", Convert.ToString(Session["LastCompany"]));
                 cmd.Parameters.AddWithValue("@FinYear", Convert.ToString(Session["LastFinYear"]));
                 cmd.Parameters.AddWithValue("@UserID", Convert.ToString(Session["userid"]));
-
                 cmd.Parameters.AddWithValue("@ProductDetails", Productdt);
                 cmd.Parameters.AddWithValue("@TaxDetail", TaxDetailTable);
                 cmd.Parameters.AddWithValue("@WarehouseDetail", Warehousedt);
@@ -2592,37 +2583,45 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@invoicefor", "CL");
                 cmd.Parameters.AddWithValue("@Project_Id", ProjId);
                 cmd.Parameters.AddWithValue("@QuotationPackingDetails", QuotationPackingDetailsdt);
-                cmd.Parameters.AddWithValue("@udt_Addldesc", dtAddlDesc);
-
-                ////////////// TCS /////////////////////////////
+                cmd.Parameters.AddWithValue("@udt_Addldesc", dtAddlDesc);                
                 cmd.Parameters.AddWithValue("@TCScode", strTCScode);
                 cmd.Parameters.AddWithValue("@TCSappAmount", strTCSappl);
                 cmd.Parameters.AddWithValue("@TCSpercentage", strTCSpercentage);
-                cmd.Parameters.AddWithValue("@TCSamount", strTCSamout);
-                /////////////////////////////////////////////////////
-                cmd.Parameters.AddWithValue("@TransacCategory", TransacCategory);
-                //cmd.Parameters.AddWithValue("@VehicleNo", VehicleNo);
-                //cmd.Parameters.AddWithValue("@DriverName", DriverName);
-                //cmd.Parameters.AddWithValue("@PhoneNo", PhoneNo);
-
+                cmd.Parameters.AddWithValue("@TCSamount", strTCSamout);                
+                cmd.Parameters.AddWithValue("@TransacCategory", TransacCategory);               
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnInvoiceID", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnInvoiceNumber", SqlDbType.VarChar, 50);
-
+                //REV 1.0
+                cmd.Parameters.Add("@ReturnLedgerAmt", SqlDbType.VarChar, 50);
+                //REV 1.0 END
                 cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;
                 cmd.Parameters["@ReturnInvoiceID"].Direction = ParameterDirection.Output;
                 //Chinmoy Added Below Line
                 cmd.Parameters["@ReturnInvoiceNumber"].Direction = ParameterDirection.Output;
-
+                //REV 1.0
+                cmd.Parameters["@ReturnLedgerAmt"].Direction = ParameterDirection.Output;
+                //REV 1.0 END
                 cmd.CommandTimeout = 0;
                 SqlDataAdapter Adap = new SqlDataAdapter();
                 Adap.SelectCommand = cmd;
                 Adap.Fill(dsInst);
-
                 strIsComplete = Convert.ToInt32(cmd.Parameters["@ReturnValue"].Value.ToString());
                 strInvoiceID = Convert.ToInt32(cmd.Parameters["@ReturnInvoiceID"].Value.ToString());
                 //Chinmoy added below line
                 strInvoiceNumber = Convert.ToString(cmd.Parameters["@ReturnInvoiceNumber"].Value.ToString());
+                //REV 1.0 
+                string ReturnLedgerAmt = "";
+                if (strIsComplete == -3)
+                {
+                    ReturnLedgerAmt = Convert.ToString(cmd.Parameters["@ReturnLedgerAmt"].Value);
+                    grid.JSProperties["cpReturnLedgerAmt"] = strIsComplete;
+                    string[] ReturnLedgerAmtList = new string[] { };
+                    ReturnLedgerAmtList = ReturnLedgerAmt.Split('~');
+                    grid.JSProperties["cpDRAmt"] = Convert.ToString(ReturnLedgerAmtList[0]);
+                    grid.JSProperties["cpCRAmt"] = Convert.ToString(ReturnLedgerAmtList[1]);
+                }
+                //REV 1.0 END
                 if (strInvoiceID > 0)
                 {
                     //####### Coded By Samrat Roy For Custom Control Data Process #########
@@ -2633,11 +2632,7 @@ namespace ERP.OMS.Management.Activities
                     }
                 }
                 if (strInvoiceID > 0)
-                {
-                    //####### Coded By Sayan Dutta For Custom Control Data Process #########
-                    ////chinmoy comment for terms condition check start
-                    //if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
-                    //{
+                {                    
                     if (hdnProjectSOTC.Value == "1")
                     {
                         ProjectTermsConditionsControl.Save_ProjectTerms(Convert.ToString(strInvoiceID), "SI");
@@ -2646,8 +2641,6 @@ namespace ERP.OMS.Management.Activities
                     {
                         TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(strInvoiceID), "SI");
                     }
-
-
                     //}
                     //chinmoy comment for terms condition check End
                 }
@@ -2664,7 +2657,6 @@ namespace ERP.OMS.Management.Activities
                         }
                     }
                 }
-
                 cmd.Dispose();
                 con.Dispose();
             }

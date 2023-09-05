@@ -5295,25 +5295,18 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@CustomerID", strCustomer);
                 cmd.Parameters.AddWithValue("@ReverseMechanism", ReverseMechanism);
                 cmd.Parameters.AddWithValue("@ContactPerson", strContactName);
-
                 cmd.Parameters.AddWithValue("@Project_Id", ProjId);
-
-
-
                 cmd.Parameters.AddWithValue("@RetRemarks", Remarks);
                 cmd.Parameters.AddWithValue("@GL", GL);
                 cmd.Parameters.AddWithValue("@RetPercentage", RetPercentage);
                 cmd.Parameters.AddWithValue("@RetAmount", RetAmount);
                 cmd.Parameters.AddWithValue("@dtDuedt", dtDuedate);
-
-
                 ////////////// TCS /////////////////////////////
                 cmd.Parameters.AddWithValue("@TCScode", strTCScode);
                 cmd.Parameters.AddWithValue("@TCSappAmount", strTCSappl);
                 cmd.Parameters.AddWithValue("@TCSpercentage", strTCSpercentage);
                 cmd.Parameters.AddWithValue("@TCSamount", strTCSamout);
                 /////////////////////////////////////////////////////
-
                 // Mantis Issue 24274
                 ////////////// TDS /////////////////////////////
                 cmd.Parameters.AddWithValue("@TDScode", strTDScode);
@@ -5322,8 +5315,6 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@TDSamount", strTDSamout);
                 /////////////////////////////////////////////////////
                 // End of Mantis Issue 24274
-
-
                 cmd.Parameters.AddWithValue("@Reference", Reference);
                 cmd.Parameters.AddWithValue("@PosForGst", PosForGst);
                 cmd.Parameters.AddWithValue("@BranchID", strBranch);
@@ -5392,9 +5383,7 @@ namespace ERP.OMS.Management.Activities
                 }
                 cmd.Parameters.AddWithValue("@InventoryType", inventorytype);
                 cmd.Parameters.AddWithValue("@NonInvProductChargesDetail", NonInventoryDtl);
-
                 #endregion Non Inventory Section By Sam on !7052017
-
                 cmd.Parameters.AddWithValue("@PurchaseInvoiceTax", PurchaseInvoiceTaxdt);
                 cmd.Parameters.AddWithValue("@BillAddress", BillAddressdt);
                 cmd.Parameters.AddWithValue("@InvoiceCreatedFromDoc", InvoiceCreatedFromDoc);
@@ -5402,11 +5391,9 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@CashBank", CashBank);
                 cmd.Parameters.AddWithValue("@InvoiceFor", "DV");
                 cmd.Parameters.AddWithValue("@udt_Addldesc", dtAddlDesc);
-
                 //Nil Rate TDS add Tanmoy 02-12-2020
                 cmd.Parameters.AddWithValue("@NILRateTDS", NILRateTDS);
                 //Nil Rate TDS add Tanmoy 02-12-2020
-
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnPurchaseInvoiceID", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnLedgerAmt", SqlDbType.VarChar, 50);
