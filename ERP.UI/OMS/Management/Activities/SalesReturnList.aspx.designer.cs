@@ -114,6 +114,15 @@ namespace ERP.OMS.Management.Activities
         protected global::DevExpress.Web.ASPxGridViewExporter exporter;
 
         /// <summary>
+        /// VehicleDetailsControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ERP.OMS.Management.Activities.UserControls.VehicleDetailsControl VehicleDetailsControl;
+
+        /// <summary>
         /// ASPxPopupControl1 control.
         /// </summary>
         /// <remarks>

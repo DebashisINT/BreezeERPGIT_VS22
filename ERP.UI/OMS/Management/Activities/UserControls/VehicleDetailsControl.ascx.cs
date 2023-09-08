@@ -1,5 +1,6 @@
 ﻿//==================================================== Revision History ==================================================================================
 // 1.0  Priti  V2.0.39  08-09-2023   0026790:Action Button "Update Transporter" required in Transit Sales Invoice module
+// 2.0  Priti  V2.0.39  08-09-2023   0026793:Update Transporter Action Button required in Sales Return module
 //====================================================End Revision History================================================================================
 
 using BusinessLogicLayer;
@@ -61,11 +62,13 @@ namespace ERP.OMS.Management.Activities.UserControls
                     hdnNoteditablePenddelv.Value = "0";
                 }
             }
+            //Rev 1.0//2.0
             //Mantis Issue 25013
             //if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX")
-            if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/TSALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/PURCHASEINVOICELIST.ASPX")
+            if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESRETURNLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/TSALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/PURCHASEINVOICELIST.ASPX")
             //if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/PURCHASEINVOICELIST.ASPX")
             //End of Mantis Issue 25013
+            //Rev 1.0//2.0 End
             {
                 hdnApprovedsalesOrder.Value = "UpdateFromList";
             }

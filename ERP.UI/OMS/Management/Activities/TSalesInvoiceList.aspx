@@ -865,11 +865,11 @@
                                 <span class='ico ColorSeven'><i class='fa fa-print'></i></span><span class='hidden-xs'>Print</span>
                             </a><%} %>
                         <%--REV 4.0--%>
-                       <%-- <% if (rights.CanUpdateTransporter)
-                            { %>--%>
+                        <% if (rights.CanUpdateTransporter)
+                            { %>
                         <a href="javascript:void(0);" onclick="UpdateTransporter('<%# Container.KeyValue %>')" class="" title="" >
                             <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Update Transporter</span></a>
-                      <%--  <% } %>--%>
+                        <% } %>
                         <%--REV 4.0 END--%>
                         </div>
                     </DataItemTemplate>
