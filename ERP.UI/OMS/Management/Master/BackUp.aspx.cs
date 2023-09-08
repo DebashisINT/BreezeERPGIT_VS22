@@ -1,4 +1,8 @@
-﻿using System;
+﻿//==================================================== Revision History ==================================================================================
+// 1.0  Priti  V2.0.39  07-09-2023   0026800:Changed query for server name fetching through inline to procedure in Back up Module
+//====================================================End Revision History================================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,6 +13,9 @@ using System.Web.UI.WebControls;
 using System.IO.Compression;
 using System.IO;
 using System.Configuration;
+using DataAccessLayer;
+using EO.Web.Internal;
+using DevExpress.Web.ASPxHtmlEditor.Internal;
 
 namespace ERP.OMS.Management.Master
 {
@@ -26,13 +33,11 @@ namespace ERP.OMS.Management.Master
 
             if (TimeSpan.Compare(DateTime.Now.TimeOfDay, dateTime.TimeOfDay) != -1)
             {
-                if (Convert.ToString(Session["UserName"]).ToUpper() == "ADMIN")
+                if ((Convert.ToString(Session["UserName"]).ToUpper() == "ADMIN")|| (Convert.ToString(Session["UserName"]).ToUpper() == "MANAGER"))
                 {
                     if (!Page.IsPostBack)
                     {
-
                         System.IO.DirectoryInfo di = new DirectoryInfo(Server.MapPath("~/Backup"));
-
                         foreach (FileInfo file in di.GetFiles())
                         {
                             file.Delete();
@@ -41,20 +46,30 @@ namespace ERP.OMS.Management.Master
                         {
                             dir.Delete(true);
                         }
-
                         try
                         {
                             DataBaseClass dbc = new DataBaseClass();
                             // select *  from sys.servers getting server names that exist
-                            cmd = new SqlCommand("select *  from sys.servers", dbc.openconn());
-                            dr = cmd.ExecuteReader();
-
-                            while (dr.Read())
+                            //Rev 1.0
+                            //cmd = new SqlCommand("select *  from sys.servers", dbc.openconn());
+                            //dr = cmd.ExecuteReader();                            
+                            //while (dr.Read())
+                            //{
+                            //    ListItem lst = new ListItem(dr[1].ToString());
+                            //    cbservername.Items.Add(lst);
+                            //}
+                            //dr.Close();
+                           
+                            DataTable dt = GetSeverName();
+                            if (dt.Rows.Count > 0 && dt != null)
                             {
-                                ListItem lst = new ListItem(dr[1].ToString());
-                                cbservername.Items.Add(lst);
+                                cbservername.DataSource = dt;
+                                cbservername.DataTextField = "name";
+                                cbservername.DataValueField = "name";
+                                cbservername.DataBind();
+                               
                             }
-                            dr.Close();
+                            //Rev 1.0 End
                         }
                         catch (Exception ex)
                         {
@@ -75,6 +90,33 @@ namespace ERP.OMS.Management.Master
             }
         }
 
+      
+        public DataTable GetSeverName()
+        {
+            DataTable dt = new DataTable();
+            string output = string.Empty;
+            try
+            {
+                ProcedureExecute proc = new ProcedureExecute("PRC_BACKUP");
+                proc.AddVarcharPara("@Action", 100, "GetSeverName");
+                proc.AddVarcharPara("@is_success", 500, "", QueryParameterDirection.Output);
+                dt = proc.GetTable();
+                output = Convert.ToString(proc.GetParaValue("@is_success"));
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            if (output == "true")
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
         protected void Unnamed_Click(object sender, EventArgs e)
         {
             try
@@ -167,8 +209,9 @@ namespace ERP.OMS.Management.Master
                 Response.TransmitFile(Path.Combine(path, _dbname + DateTimes + ".ZIP")); //backup must be located in folder in your application folder, that folder named *backups*
                 Response.End();
 
-
-
+                //Rev 1.0
+                ScriptManager.RegisterStartupScript(this, GetType(), UniqueID, "onpageredirect('Backup Successfully.')", true);
+                //Rev 1.0 End
 
             }
             catch (Exception ex)

@@ -2,14 +2,16 @@
    1.0   Priti     V2.0.36     10-01-2023      0025324: Views to be converted to Procedures in the Listing Page of Transaction / Transit Sales/Purchase / Sales Invoice
    2.0   Priti     V2.0.36     17-02-2023      After Listing view upgradation delete data show in listing issue solved.
    3.0   Pallab    V2.0.38     16-05-2023      26142: Transit Sales Invoice module design modification & check in small device
+   4.0   Priti     V2.0.39     06-09-2023      0026790:Action Button "Update Transporter" required in Transit Sales Invoice module
 ========================================== End Revision History =======================================================================================================--%>
-
-
-<%@ Page Title="Transit Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
+<%@ Page Title="Transit Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"  EnableEventValidation="false"
     CodeBehind="TSalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.TSalesInvoiceList" %>
-
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
+<%--Rev 4.0--%>
+<%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
+<%--Rev 4.0 End--%>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Filteration Section Start By Sam--%>
     <script src="JS/TransitSalesInvoice.js?v1.1"></script>
@@ -17,6 +19,27 @@
     <%-- Filteration Section Start By Sam--%>
     <%--Code Added By Sandip For Approval Detail Section Start--%>
     <script>
+        /*  Rev 4.0*/
+        function UpdateTransporter(values) {
+            $("#hddnInvoiceID").val(values);
+            callTransporterControl(values, "TSI");
+            $("#exampleModal").modal('show');
+        }
+        function InsertTransporterControlDetails(data) {
+            var InvoiceID = $("#hddnInvoiceID").val();
+            $.ajax({
+                type: "POST",
+                url: "TSalesInvoiceList.aspx/InsertTransporterControlDetails",
+                data: "{'id':'" + InvoiceID + "','hfControlData':'" + data + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+
+                }
+            });
+        }
+        /*  Rev 4.0 End*/
         function OnEWayBillClick(id, VisibleIndex, EWayBillNumber, EWayBillDate, EWayBillValue, TransDate) {
 
             var ActiveEInvoice = $('#hdnActiveEInvoice').val();
@@ -841,6 +864,13 @@
                             <a href="javascript:void(0);" onclick="onPrintJv('<%# Container.KeyValue %>','<%#Eval("InvoiceDt") %>')" class="" title="">
                                 <span class='ico ColorSeven'><i class='fa fa-print'></i></span><span class='hidden-xs'>Print</span>
                             </a><%} %>
+                        <%--REV 4.0--%>
+                       <%-- <% if (rights.CanUpdateTransporter)
+                            { %>--%>
+                        <a href="javascript:void(0);" onclick="UpdateTransporter('<%# Container.KeyValue %>')" class="" title="" >
+                            <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Update Transporter</span></a>
+                      <%--  <% } %>--%>
+                        <%--REV 4.0 END--%>
                         </div>
                     </DataItemTemplate>
                     <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
@@ -880,7 +910,9 @@
         <dxe:ASPxGridViewExporter ID="exporter" GridViewID="GrdQuotation" runat="server" Landscape="true" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
         </dxe:ASPxGridViewExporter>
     </div>
-
+     <%--  REV 4.0--%>
+    <uc1:VehicleDetailsControl runat="server" ID="VehicleDetailsControl" />
+     <%--  REV 4.0 END--%>
   <%--  REV 1.0--%>
      <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
         <PanelCollection>
