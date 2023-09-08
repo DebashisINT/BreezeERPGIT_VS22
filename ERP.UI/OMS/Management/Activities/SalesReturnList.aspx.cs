@@ -1,5 +1,6 @@
 ﻿//====================================================Revision History=========================================================================
 // 1.0  Priti   V2.0.36  18-01-2023  0025311: Views to be converted to Procedures in the Listing Page of Transaction / Return-Sales / Sales Return
+// 2.0   Priti  V2.0.39  08-09-2023  0026793:Update Transporter Action Button required in Sales Return module
 //====================================================End Revision History=====================================================================
 
 
@@ -735,5 +736,15 @@ namespace ERP.OMS.Management.Activities
         }
 
         //END REV 1.0
+
+        //REV 2.0
+        [WebMethod]
+        public static string InsertTransporterControlDetails(long id, String hfControlData)
+        {
+            CommonBL objCommonBL = new CommonBL();
+            objCommonBL.InsertTransporterControlDetails(id, "SR", hfControlData, Convert.ToString(HttpContext.Current.Session["userid"]));
+            return "";
+        }
+        //REV 2.0 END
     }
 }
