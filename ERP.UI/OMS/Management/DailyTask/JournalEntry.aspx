@@ -1,7 +1,9 @@
 ﻿<%--=======================================================Revision History=========================================================================
     1.0 Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911
-    2.0 Priti    V2.0.36  02-02-2023     0025253: listing view upgradation required of Journals of Accounts & Finance
-    3.0 Pallab   V2.0.37  04-04-2023     0025830: Journal Voucher module design modification
+    2.0     Priti       V2.0.36  02-02-2023     0025253: listing view upgradation required of Journals of Accounts & Finance
+    3.0     Pallab      V2.0.37  04-04-2023     0025830: Journal Voucher module design modification
+    4.0     Sanchita    V2.0.43  08-02-2023     26801 : Entered On, Entered By, Modified On, Modified By column required
+                                                in the Journal Details list view 
 =========================================================End Revision History========================================================================--%>
 
 <%@ Page Title="Journal Entry" EnableEventValidation="false" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalEntry.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.JournalVoucherEntry" %>
@@ -6140,6 +6142,16 @@
                                             <dxe:GridViewDataTextColumn VisibleIndex="17" FieldName="ITC" Caption="ITC">
                                                 <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
                                             </dxe:GridViewDataTextColumn>
+                                            <%--Rev 4.0--%>
+                                            <dxe:GridViewDataTextColumn VisibleIndex="18" FieldName="EnteredOn" Caption="Entered On">
+                                            </dxe:GridViewDataTextColumn>
+                                            <dxe:GridViewDataTextColumn VisibleIndex="19" FieldName="EnteredBy" Caption="Entered By">
+                                            </dxe:GridViewDataTextColumn>
+                                            <dxe:GridViewDataTextColumn VisibleIndex="20" FieldName="ModifiedOn" Caption="Modified On">
+                                            </dxe:GridViewDataTextColumn>
+                                            <dxe:GridViewDataTextColumn VisibleIndex="21" FieldName="ModifiedBy" Caption="Modified By">
+                                            </dxe:GridViewDataTextColumn>
+                                            <%--End of Rev 4.0--%>
 
                                         </Columns>
                                         <Settings ShowFooter="true" ShowColumnHeaders="true" ShowFilterRow="true" ShowGroupFooter="VisibleIfExpanded" />
