@@ -1,6 +1,6 @@
 ﻿//====================================================Revision History=========================================================================
-// 1.0  Priti   V2.0.36    0025324: Views to be converted to Procedures in the Listing Page of Transaction / Transit Sales/Purchase / Sales Invoice
-
+// 1.0   Priti   V2.0.36                     0025324: Views to be converted to Procedures in the Listing Page of Transaction / Transit Sales/Purchase / Sales Invoice
+// 2.0   Priti   V2.0.39     06-09-2023      0026790:Action Button "Update Transporter" required in Transit Sales Invoice module
 //====================================================End Revision History=====================================================================
 
 
@@ -934,13 +934,13 @@ namespace ERP.OMS.Management.Activities
 
                 //e.QueryableSource = q;
 
-
                 ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
                 var q = from d in dc.TransitSBLists
-                        where d.USERID == userid
-                        orderby d.SEQ descending
+                        where d.SEQ == 0
                         select d;
                 e.QueryableSource = q;
+
+
                 //END REV 1.0
 
             }
@@ -1033,5 +1033,15 @@ namespace ERP.OMS.Management.Activities
             public String Vehicle_No { get; set; }
             public String Vehicle_type { get; set; }
         }
+
+        //REV 2.0
+        [WebMethod]
+        public static string InsertTransporterControlDetails(long id, String hfControlData)
+        {
+            CommonBL objCommonBL = new CommonBL();
+            objCommonBL.InsertTransporterControlDetails(id, "TSI", hfControlData, Convert.ToString(HttpContext.Current.Session["userid"]));
+            return "";
+        }
+        //REV 2.0 END
     }
 }

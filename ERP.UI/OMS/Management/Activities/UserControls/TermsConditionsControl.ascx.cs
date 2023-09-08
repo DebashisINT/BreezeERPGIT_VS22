@@ -990,11 +990,11 @@ namespace ERP.OMS.Management.Activities.UserControls
                 Int64 ReturnValue = Convert.ToInt64(output.Value);
 
 
-                ProcedureExecute proc = new ProcedureExecute("SP_TC_CRUD");
-                proc.AddVarcharPara("@TermsConditionData", 500, TermsConditionData);               
-                proc.AddVarcharPara("@DocId", 500, DocId);
-                proc.AddVarcharPara("@DocType", 500, DocType);
-                int _Ret = proc.RunActionQuery();
+                //ProcedureExecute proc = new ProcedureExecute("SP_TC_CRUD");
+                //proc.AddVarcharPara("@TermsConditionData", 500, TermsConditionData);               
+                //proc.AddVarcharPara("@DocId", 500, DocId);
+                //proc.AddVarcharPara("@DocType", 500, DocType);
+                //int _Ret = proc.RunActionQuery();
 
                 //REV 1.0 END
             }
