@@ -15,6 +15,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
         /*  Rev 3.0*/
+        $(document).ready(function () {
+            $("#btntransporter").hide();
+        });
+        
         function UpdateTransporter(values) {
             $("#hddnSalesReturnID").val(values);
             callTransporterControl(values, "SR");
