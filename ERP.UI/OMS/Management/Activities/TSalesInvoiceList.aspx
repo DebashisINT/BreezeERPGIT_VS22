@@ -601,6 +601,9 @@
                 }
 
             });
+            //REV 4.0
+            $("#btntransporter").hide();
+            //REV 4.0 END
         });
     </script>
     <link href="CSS/TSalesInvoiceList.css" rel="stylesheet" />
