@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region ==========================Revision History====================================================================================================
+//1.0   v2 .0.38    Debashis    11/09/2023      Party Invoice No and Party Invoice Date is required in the Party Ledger -All for Vendor & Transporter.
+//                                              Refer: 0026792
+#endregion =======================End Revision History================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -116,12 +120,12 @@ namespace Reports.Reports.GridReports
                 dtProjectSelection = oDBEngine.GetDataTable("select Variable_Value from Config_SystemSettings where Variable_Name='ReportsProjectSelection'");
                 hdnProjectSelectionInReport.Value = dtProjectSelection.Rows[0][0].ToString();
 
-                //Rev Debashis Mantis: 0026792
+                //Rev 1.0 Mantis: 0026792
                 //if (chkPostDet.Checked == false)
                 //{
                 //    ShowGrid.Columns[5].Visible = false;
                 //}
-                //End of Rev Debashis Mantis: 0026792
+                //End of Rev 1.0 Mantis: 0026792
             }
             else
             {
@@ -481,7 +485,7 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[5].Visible = true;
                 ShowGrid.Columns[6].Visible = true;
             }
-            //Rev Debashis Mantis: 0026792
+            //Rev 1.0 Mantis: 0026792
             if(ddlCriteria.SelectedValue=="DV" || ddlCriteria.SelectedValue=="TR")
             {
                 ShowGrid.Columns[8].Visible = true;
@@ -492,7 +496,7 @@ namespace Reports.Reports.GridReports
                 ShowGrid.Columns[8].Visible = false;
                 ShowGrid.Columns[9].Visible = false;
             }
-            //End of Rev Debashis Mantis: 0026792
+            //End of Rev 1.0 Mantis: 0026792
         }
         #endregion
 
