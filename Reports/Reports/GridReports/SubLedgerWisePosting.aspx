@@ -1,7 +1,9 @@
-﻿<%--====================================================== Revision History ============================================
+﻿<%--====================================================== Revision History ======================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                13-02-2023        2.0.36           Pallab              25575 : Report pages modification
-====================================================== Revision History ================================================--%>
+2.0                11-09-2023        2.0.38           Debashis            0026792 : Party Invoice No and Party Invoice Date is required in the 
+                                                                          Party Ledger -All for Vendor & Transporter
+====================================================== Revision History ==========================================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true"  MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="SubLedgerWisePosting.aspx.cs" Inherits="Reports.Reports.GridReports.SubLedgerWisePosting" %>
 
@@ -1101,10 +1103,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <dxe:GridViewDataTextColumn FieldName="Particulars" Caption="Particular" VisibleIndex="6" Width="120px" />
                                 <dxe:GridViewDataTextColumn FieldName="REC_PAYMODE" Caption="Rec/Pay Mode" VisibleIndex="7" Width="120px" />
                                 <dxe:GridViewDataTextColumn FieldName="Payee_Info" Caption="Payee/Party" VisibleIndex="8" Width="140px" />
-                                <%--Rev Debashis Mantis: 0026792--%>
+                                <%--Rev 2.0 Mantis: 0026792--%>
                                 <dxe:GridViewDataTextColumn FieldName="PARTYINVOICENO" Caption="Party Invoice No." VisibleIndex="9" Width="120px" HeaderStyle-CssClass="colDisable"/>
                                 <dxe:GridViewDataTextColumn FieldName="PARTYINVOICEDATE" Caption="Party Invoice Date" VisibleIndex="10" Width="120px" HeaderStyle-CssClass="colDisable"/>
-                                <%--End of Rev Debashis Mantis: 0026792--%>
+                                <%--End of Rev 2.0 Mantis: 0026792--%>
                                 <dxe:GridViewDataTextColumn FieldName="Header_Narration" Caption="Header Narration" VisibleIndex="11" Width="200px" />
 
                                 <dxe:GridViewDataTextColumn FieldName="OP_DEBIT" Caption="Opening Dr." Width="90px" VisibleIndex="12" PropertiesTextEdit-DisplayFormatString="0.00">
