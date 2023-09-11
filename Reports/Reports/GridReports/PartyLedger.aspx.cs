@@ -116,10 +116,12 @@ namespace Reports.Reports.GridReports
                 dtProjectSelection = oDBEngine.GetDataTable("select Variable_Value from Config_SystemSettings where Variable_Name='ReportsProjectSelection'");
                 hdnProjectSelectionInReport.Value = dtProjectSelection.Rows[0][0].ToString();
 
-                if (chkPostDet.Checked == false)
-                {
-                    ShowGrid.Columns[5].Visible = false;
-                }
+                //Rev Debashis Mantis: 0026792
+                //if (chkPostDet.Checked == false)
+                //{
+                //    ShowGrid.Columns[5].Visible = false;
+                //}
+                //End of Rev Debashis Mantis: 0026792
             }
             else
             {
@@ -479,6 +481,18 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[5].Visible = true;
                 ShowGrid.Columns[6].Visible = true;
             }
+            //Rev Debashis Mantis: 0026792
+            if(ddlCriteria.SelectedValue=="DV" || ddlCriteria.SelectedValue=="TR")
+            {
+                ShowGrid.Columns[8].Visible = true;
+                ShowGrid.Columns[9].Visible = true;
+            }
+            else
+            {
+                ShowGrid.Columns[8].Visible = false;
+                ShowGrid.Columns[9].Visible = false;
+            }
+            //End of Rev Debashis Mantis: 0026792
         }
         #endregion
 

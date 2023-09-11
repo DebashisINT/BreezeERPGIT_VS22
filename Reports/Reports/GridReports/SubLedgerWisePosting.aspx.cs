@@ -45,7 +45,7 @@ namespace Reports.Reports.GridReports
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/management/master/SubLedgerWisePosting.aspx");
+            rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/GridReports/SubLedgerWisePosting.aspx");
             DateTime dtFrom;
             DateTime dtTo;
             if (!IsPostBack)
