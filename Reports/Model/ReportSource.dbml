@@ -1351,31 +1351,6 @@
       <Column Name="AVG_SALES" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.SUBLEDGERPOSTING_REPORT" Member="SUBLEDGERPOSTING_REPORTs">
-    <Type Name="SUBLEDGERPOSTING_REPORT">
-      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="BRANCHID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="BRANCH_DESC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="CODE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="SUBLEDGER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="LEDG_DESC" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="TRAN_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="DOC_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="MODULE_TYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="DOCUMENT_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Particulars" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="REC_PAYMODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Payee_Info" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
-      <Column Name="Header_Narration" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
-      <Column Name="OP_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="OP_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="PR_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="PR_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="CL_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="CL_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.CASHBANKBOOKREGDET_REPORT" Member="CASHBANKBOOKREGDET_REPORTs">
     <Type Name="CASHBANKBOOKREGDET_REPORT">
       <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -2501,32 +2476,6 @@
       <Column Name="CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
       <Column Name="Closing_Balance" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Closebal_DBCR" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.PARTYLEDGERPOSTING_REPORT" Member="PARTYLEDGERPOSTING_REPORTs">
-    <Type Name="PARTYLEDGERPOSTING_REPORT">
-      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="BRANCHID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="BRANCH_DESC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="CODE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="SUBLEDGER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PROJ_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="PROJ_NAME" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="LEDG_DESC" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="TRAN_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="DOC_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="MODULE_TYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="DOCUMENT_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PARTICULARS" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="PAYEE_INFO" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
-      <Column Name="HEADER_NARRATION" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
-      <Column Name="OP_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="OP_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="PR_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="PR_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="CL_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="CL_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.ESTIMATEREGISTERSUMDET_REPORT" Member="ESTIMATEREGISTERSUMDET_REPORTs">
@@ -4317,6 +4266,61 @@
       <Column Name="PARTYORDNO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="PARTYORDDATE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="CREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PARTYLEDGERPOSTING_REPORT" Member="PARTYLEDGERPOSTING_REPORTs">
+    <Type Name="PARTYLEDGERPOSTING_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BRANCHID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCH_DESC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CODE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="SUBLEDGER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PROJ_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PROJ_NAME" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="LEDG_DESC" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TRAN_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="DOC_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MODULE_TYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="DOCUMENT_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PARTICULARS" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PAYEE_INFO" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
+      <Column Name="HEADER_NARRATION" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
+      <Column Name="PARTYINVOICENO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PARTYINVOICEDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="OP_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="OP_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="PR_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="PR_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="CL_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="CL_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SUBLEDGERPOSTING_REPORT" Member="SUBLEDGERPOSTING_REPORTs">
+    <Type Name="SUBLEDGERPOSTING_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BRANCHID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCH_DESC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CODE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="SUBLEDGER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="LEDG_DESC" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TRAN_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="DOC_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MODULE_TYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="DOCUMENT_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Particulars" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="REC_PAYMODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Payee_Info" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
+      <Column Name="Header_Narration" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
+      <Column Name="PARTYINVOICENO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PARTYINVOICEDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="OP_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="OP_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="PR_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="PR_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="CL_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="CL_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.PRC_PARTYWISEAGEINSUMGDET_REPORT" Method="PRC_PARTYWISEAGEINSUMGDET_REPORT" IsComposable="true">

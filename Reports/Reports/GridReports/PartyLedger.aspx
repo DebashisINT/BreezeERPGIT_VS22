@@ -1172,24 +1172,28 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <dxe:GridViewDataTextColumn FieldName="PARTICULARS" Caption="Particular" VisibleIndex="6" Width="120px" HeaderStyle-CssClass="colDisable"/>
                                 <dxe:GridViewDataTextColumn FieldName="LEDG_DESC" Caption="Ledger Description" Width="150px" VisibleIndex="7" HeaderStyle-CssClass="colDisable"/>
                                 <dxe:GridViewDataTextColumn FieldName="PAYEE_INFO" Caption="Payee/Party" VisibleIndex="8" Width="140px" HeaderStyle-CssClass="colDisable"/>
-                                <dxe:GridViewDataTextColumn FieldName="HEADER_NARRATION" Caption="Header Narration" VisibleIndex="9" Width="200px" HeaderStyle-CssClass="colDisable"/>
+                                <%--Rev Debashis Mantis: 0026792--%>
+                                <dxe:GridViewDataTextColumn FieldName="PARTYINVOICENO" Caption="Party Invoice No." VisibleIndex="9" Width="120px" HeaderStyle-CssClass="colDisable"/>
+                                <dxe:GridViewDataTextColumn FieldName="PARTYINVOICEDATE" Caption="Party Invoice Date" VisibleIndex="10" Width="120px" HeaderStyle-CssClass="colDisable"/>
+                                <%--End of Rev Debashis Mantis: 0026792--%>
+                                <dxe:GridViewDataTextColumn FieldName="HEADER_NARRATION" Caption="Header Narration" VisibleIndex="11" Width="200px" HeaderStyle-CssClass="colDisable"/>
 
-                                <dxe:GridViewDataTextColumn FieldName="OP_DEBIT" Caption="Opening Dr." Width="90px" VisibleIndex="10" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="OP_DEBIT" Caption="Opening Dr." Width="90px" VisibleIndex="12" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="OP_CREDIT" Caption="Opening Cr." Width="90px" VisibleIndex="11" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="OP_CREDIT" Caption="Opening Cr." Width="90px" VisibleIndex="13" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="PR_DEBIT" Caption="Period Dr." Width="90px" VisibleIndex="12" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="PR_DEBIT" Caption="Period Dr." Width="90px" VisibleIndex="14" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="PR_CREDIT" Caption="Period Cr." Width="90px" VisibleIndex="13" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="PR_CREDIT" Caption="Period Cr." Width="90px" VisibleIndex="15" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>                              
-                                <dxe:GridViewDataTextColumn FieldName="CL_DEBIT" Caption="Closing Dr." Width="90px" VisibleIndex="14" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="CL_DEBIT" Caption="Closing Dr." Width="90px" VisibleIndex="16" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>                              
-                                <dxe:GridViewDataTextColumn FieldName="CL_CREDIT" Caption="Closing Cr." Width="90px" VisibleIndex="15" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="CL_CREDIT" Caption="Closing Cr." Width="90px" VisibleIndex="17" PropertiesTextEdit-DisplayFormatString="0.00" HeaderStyle-CssClass="colDisable">
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>                              
                             </Columns>
