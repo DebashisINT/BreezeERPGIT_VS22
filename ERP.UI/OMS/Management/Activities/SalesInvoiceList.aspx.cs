@@ -1,4 +1,9 @@
-﻿using System;
+﻿//====================================================Revision History=====================================================
+//1.0   Priti  V2.0.39     12-09-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+//====================================================End Revision History=====================================================================
+
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -45,14 +50,17 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ProjectSelectInEntryModule == "Yes")
                 {
-                    GrdQuotation.Columns[10].Visible = true;
-
-
+                    //Rev 1.0
+                   // GrdQuotation.Columns[10].Visible = true;
+                    GrdQuotation.Columns[11].Visible = true;
+                    //Rev 1.0 End
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
-                    GrdQuotation.Columns[10].Visible = false;
-
+                    //Rev 1.0
+                   // GrdQuotation.Columns[10].Visible = false;
+                    GrdQuotation.Columns[11].Visible = false;
+                    //Rev 1.0 End
                 }
             }
             MasterSettings objmaster = new MasterSettings();
