@@ -1707,7 +1707,7 @@
                 </Columns>
                 <%-- --Rev Sayantani--%>
                 <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
-                <SettingsCookies Enabled="true" StorePaging="true" StoreColumnsVisiblePosition="true" Version="3.4" />
+                <SettingsCookies Enabled="true" StorePaging="true" StoreColumnsVisiblePosition="true" Version="3.6" />
                 <%-- -- End of Rev Sayantani --%>
                 <SettingsContextMenu Enabled="true"></SettingsContextMenu>
                 <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" RowClick="gridRowclick" />

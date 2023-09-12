@@ -1,6 +1,8 @@
 ﻿//====================================================Revision History=========================================================================
 // 1.0  Priti       V2.0.36                     Change Approval Realted Dev Express Table Bind to HTML table 
 // 2.0	Sanchita	V2.0.39		10/07/2023		Need to export Sales Order Amount column in the excel format. Refer: 26533
+// 3.0  Priti       V2.0.39     12-09-2023      Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+
 //====================================================End Revision History=====================================================================
 
 
@@ -59,12 +61,17 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ProjectSelectInEntryModule == "Yes")
                 {
-                    GrdOrder.Columns[4].Visible = true;                
-
+                    //Rev 3.0
+                   // GrdOrder.Columns[4].Visible = true;
+                    GrdOrder.Columns[5].Visible = true;
+                    //Rev 3.0 End
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
-                    GrdOrder.Columns[4].Visible = false;                   
+                    //Rev 3.0
+                   // GrdOrder.Columns[4].Visible = false;
+                    GrdOrder.Columns[5].Visible = false;
+                    //Rev 3.0 End
                 }
             }
 
