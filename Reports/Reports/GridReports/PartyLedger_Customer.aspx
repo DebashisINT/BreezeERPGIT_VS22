@@ -1,8 +1,9 @@
-﻿<%--================================================== Revision History ============================================
+﻿<%--================================================== Revision History ========================================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                20-02-2023        2.0.36           Pallab              25575 : Report pages design modification
 2.0                02-05-2023        2.0.38           Pallab              26000: Party Ledger - Customer module zoom popup upper part visible issue fix for small device
-====================================================== Revision History ================================================--%>
+3.0                15-09-2023        2.0.38           Debashis            0026804 : Opening Breakup required in Party Ledger
+====================================================== Revision History =======================================================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="PartyLedger_Customer.aspx.cs" Inherits="Reports.Reports.GridReports.PartyLedger_Customer" %>
 
@@ -349,61 +350,68 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         function OpenPOSDetails(Uniqueid, type, docno) {
             var url = '';
-            if (type == 'POS') {
-                url = '/OMS/Management/Activities/posSalesInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&Viemode=1';
+            <%--Rev 3.0 Mantis: 0026804--%>
+            if (type != 'OP') {
+            <%--End of Rev 3.0 Mantis: 0026804--%>
+                if (type == 'POS') {
+                    url = '/OMS/Management/Activities/posSalesInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&Viemode=1';
+                }
+                else if (type == 'SI') {
+                    url = '/OMS/Management/Activities/SalesInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
+                }
+                else if (type == 'PC') {
+                    url = '/OMS/Management/Activities/PurchaseChallan.aspx?key=' + Uniqueid + '&req=V&IsTagged=1&type=' + type;
+                }
+                else if (type == 'SR') {
+                    url = '/OMS/Management/Activities/SalesReturn.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
+                }
+                else if (type == 'SRM') {
+                    url = '/OMS/Management/Activities/ReturnManual.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
+                }
+                else if (type == 'SRN') {
+                    url = '/OMS/Management/Activities/ReturnNormal.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
+                }
+                else if (type == 'PI') {
+                    url = '/OMS/Management/Activities/PurchaseInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=PB';
+                }
+                else if (type == 'VP' || type == 'VR') {
+                    url = '/OMS/Management/Activities/VendorPaymentReceipt.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=VPR';
+                }
+                else if (type == 'PR') {
+                    url = '/OMS/Management/Activities/PReturn.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=PR';
+                }
+                else if (type == 'SC') {
+                    url = '/OMS/Management/Activities/CustomerReturn.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
+                }
+                else if (type == 'CP' || type == 'CR') {
+                    url = '/OMS/Management/Activities/CustomerReceiptPayment.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=CRP';
+                }
+                else if (type == 'JV') {
+                    url = '/OMS/Management/dailytask/JournalEntry.aspx?key=' + Uniqueid + '&IsTagged=1&req=' + docno;
+                }
+                else if (type == 'CBV') {
+                    url = '/OMS/Management/dailytask/CashBankEntry.aspx?key=' + Uniqueid + '&IsTagged=1&req=V';
+                }
+                else if (type == 'CNC' || type == 'DNC') {
+                    url = '/OMS/Management/Activities/CustomerNote.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=CDCN';
+                }
+                else if (type == 'CNV' || type == 'DNV') {
+                    url = '/OMS/Management/Activities/VendorDebitCreditNote.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=CDCN';
+                }
+                else if (type == 'TPB') {
+                    url = '/OMS/Management/Activities/TPurchaseInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
+                }
+                else if (type == 'TSI') {
+                    url = '/OMS/Management/Activities/TSalesInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
+                }
+                popupbudget.SetContentUrl(url);
+                popupbudget.Show();
+            <%--Rev 3.0 Mantis: 0026804--%>
             }
-            else if (type == 'SI') {
-                url = '/OMS/Management/Activities/SalesInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
+            else {
+                jAlert('You Can not Zoom in Opening Document.');
             }
-            else if (type == 'PC') {
-                url = '/OMS/Management/Activities/PurchaseChallan.aspx?key=' + Uniqueid + '&req=V&IsTagged=1&type=' + type;
-            }
-            else if (type == 'SR') {
-                url = '/OMS/Management/Activities/SalesReturn.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
-            }
-            else if (type == 'SRM') {
-                url = '/OMS/Management/Activities/ReturnManual.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
-            }
-            else if (type == 'SRN') {
-                url = '/OMS/Management/Activities/ReturnNormal.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
-            }
-            else if (type == 'PI') {
-                url = '/OMS/Management/Activities/PurchaseInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=PB';
-            }
-            else if (type == 'VP' || type == 'VR') {
-                url = '/OMS/Management/Activities/VendorPaymentReceipt.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=VPR';
-            }
-            else if (type == 'PR') {
-                url = '/OMS/Management/Activities/PReturn.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=PR';
-            }
-            else if (type == 'SC') {
-                url = '/OMS/Management/Activities/CustomerReturn.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
-            }
-            else if (type == 'CP' || type == 'CR') {
-                url = '/OMS/Management/Activities/CustomerReceiptPayment.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=CRP';
-            }
-            else if (type == 'JV') {
-                url = '/OMS/Management/dailytask/JournalEntry.aspx?key=' + Uniqueid + '&IsTagged=1&req=' + docno;
-            }
-            else if (type == 'CBV') {
-                url = '/OMS/Management/dailytask/CashBankEntry.aspx?key=' + Uniqueid + '&IsTagged=1&req=V';
-            }
-            else if (type == 'CNC' || type == 'DNC') {
-                url = '/OMS/Management/Activities/CustomerNote.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=CDCN';
-            }
-            else if (type == 'CNV' || type == 'DNV') {
-                url = '/OMS/Management/Activities/VendorDebitCreditNote.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=CDCN';
-            }
-            else if (type == 'TPB') {
-                url = '/OMS/Management/Activities/TPurchaseInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
-            }
-            else if (type == 'TSI') {
-                url = '/OMS/Management/Activities/TSalesInvoice.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
-            }
-
-            popupbudget.SetContentUrl(url);
-            popupbudget.Show();
-
+            <%--End of Rev 3.0 Mantis: 0026804--%>
         }
         function BudgetAfterHide(s, e) {
             popupbudget.Hide();
@@ -1006,8 +1014,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     <div id="ckpar" style="padding-top: 7px;">
                         <asp:CheckBox runat="server" ID="chkparty" Checked="false" Text="Search by Party Inv. Date" />
                     </div>
-                </div>
-            
+                </div>            
             <div class="clear"></div>
 
             <div class="col-md-2" style="padding-top: 1px;" id="divProj">
@@ -1066,6 +1073,18 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     <img id="3gridHistory_DXPEForm_efnew_DXEFL_DXEditor1112_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
                 <asp:HiddenField ID="hdnSelectedProjects" runat="server" />
             </div>
+            <%--Rev 3.0 Mantis: 0026804--%>
+            <div class="col-md-2">
+            <div style="color: #b5285f; font-weight: bold;" class="clsTo">
+                <div style="padding-top: 16px">
+                    <div style="padding-right: 1px; vertical-align: middle; padding-top: 6px">
+                        <asp:CheckBox ID="chkShowOPBreakUp" runat="server" Checked="false" />
+                        Show Opening Breakup
+                    </div>
+                </div>
+                </div>
+            </div>
+            <%--End of Rev 3.0 Mantis: 0026804--%>
 
             <div class="col-md-2" style="padding: 5; padding-top: 20px;">
                 <div>
@@ -1103,9 +1122,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <dxe:GridViewDataTextColumn FieldName="BRANCH_DESC" Caption="Unit" Width="150px" VisibleIndex="1" />
                                 <dxe:GridViewDataTextColumn FieldName="TRAN_DATE" Caption="Date" Width="90px" VisibleIndex="2" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy" />
                                 <dxe:GridViewDataTextColumn FieldName="PARTY" Caption="Customer" Width="170px" VisibleIndex="3" />
-                                <dxe:GridViewDataTextColumn FieldName="PROJ_NAME" Caption="Project Name" Width="200px" VisibleIndex="4" />
+                                <dxe:GridViewDataTextColumn FieldName="PROJ_NAME" Caption="Project Name" Width="180px" VisibleIndex="4" />
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="DOCUMENT_NO" Caption="Document No" Width="120px">
+                                <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="DOCUMENT_NO" Caption="Document No" Width="130px">
                                     <CellStyle HorizontalAlign="Left">
                                     </CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
@@ -1120,7 +1139,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 </dxe:GridViewDataTextColumn>
                                
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTICULARS" Caption="Particular" VisibleIndex="6" Width="120px" />
+                                <dxe:GridViewDataTextColumn FieldName="PARTICULARS" Caption="Particular" VisibleIndex="6" Width="150px" />
                                 <dxe:GridViewDataTextColumn FieldName="PAYEE_INFO" Caption="Payee/Party" VisibleIndex="7" Width="140px" />
                                 <dxe:GridViewDataTextColumn FieldName="HEADER_NARRATION" Caption="Header Narration" VisibleIndex="8" Width="200px" />
 

@@ -1,4 +1,7 @@
-﻿using DevExpress.Web;
+﻿#region ==========================Revision History====================================================================================================
+//1.0   v2 .0.38    Debashis    15/09/2023      Opening Breakup required in Party Ledger.Refer: 0026804
+#endregion =======================End Revision History================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -395,6 +398,9 @@ namespace Reports.Reports.GridReports
                 cmd.Parameters.AddWithValue("@PARTYID", SUBLEDGERIDS);
                 cmd.Parameters.AddWithValue("@PARTY_TYPE", "C");
                 cmd.Parameters.AddWithValue("@PROJECT_ID", PROJECT_ID);
+                //Rev 1.0 Mantis: 0026804
+                cmd.Parameters.AddWithValue("@SHOWOPBREAKUP", (chkShowOPBreakUp.Checked) ? "1" : "0");
+                //End of Rev 1.0 Mantis: 0026804
                 cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
 
                 cmd.CommandTimeout = 0;
