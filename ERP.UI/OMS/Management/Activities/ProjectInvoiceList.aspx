@@ -1,9 +1,41 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoiceList" %>
+﻿<%--**********************************************************************************************************************--
+ Rev 1.0      Sanchita    V2.0.39     18/09/2023      Update Transporter Action required in Project Mgmt../ Sales Invoice
+ *                                                      Mantis : 26806
+ **********************************************************************************************************************-- %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoiceList" EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
+<%--Rev 1.0--%>
+<%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
+<%--Rev 1.0 End--%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Code Added By Sandip For Approval Detail Section Start--%>
     <script>
+        /*  Rev 1.0 */
+        $(document).ready(function () {
+            $("#btntransporter").hide();
+        });
+
+        function UpdateTransporter(values) {
+            $("#hddnSalesInvoiceID").val(values);
+            callTransporterControl(values, "SI");
+            $("#exampleModal").modal('show');
+        }
+        function InsertTransporterControlDetails(data) {
+            var InvoiceID = $("#hddnSalesInvoiceID").val();
+            $.ajax({
+                type: "POST",
+                url: "ProjectInvoiceList.aspx/InsertTransporterControlDetails",
+                data: "{'id':'" + InvoiceID + "','hfControlData':'" + data + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+
+                }
+            });
+        }
+        /*  End of Rev 1.0 */
         function OnEWayBillClick(id, VisibleIndex, EWayBillNumber, EWayBillDate, EWayBillValue) {
             cGrdQuotation.SetFocusedRowIndex(VisibleIndex);
             //var EWayBillNumber = cgrid.GetRow(cgrid.GetFocusedRowIndex()).children[16].innerText;
@@ -863,7 +895,7 @@ else {
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-
+                
                 cGrdQuotation.Refresh();
                 //cGrdQuotation.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
             }
@@ -1302,6 +1334,13 @@ else {
                             <a href="javascript:void(0);" onclick="OnRetentionClick('<%# Container.KeyValue %>')" class="" title="">
                                 <span class='ico ColorThree'><i class='fa fa-cube'></i></span><span class='hidden-xs'>Retention</span></a>
                             <%} %>
+                            <%--Rev 1.0--%>
+                            <% if (rights.CanUpdateTransporter)
+                                { %>
+                                <a href="javascript:void(0);" onclick="UpdateTransporter('<%# Container.KeyValue %>')" class="" title="">
+                                <span class='ico editColor'><i class='fa fa-pencil'></i></span><span class='hidden-xs'>Update Transporter</span></a>
+                            <% } %>
+                            <%--End of Rev 1.0--%>
                         </div>
                     </DataItemTemplate>
                     <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
@@ -1346,6 +1385,10 @@ else {
         <dxe:ASPxGridViewExporter ID="exporter" GridViewID="GrdQuotation" runat="server" Landscape="false" PaperKind="A4" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
         </dxe:ASPxGridViewExporter>
     </div>
+
+     <%--  REV 1.0 --%>
+    <uc1:VehicleDetailsControl runat="server" ID="VehicleDetailsControl" />
+     <%--  End of REV 1.0 --%>
 
     <%--DEBASHIS--%>
     <div class="PopUpArea">
@@ -1674,6 +1717,9 @@ else {
         <asp:HiddenField ID="hfBranchID" runat="server" />
         <asp:HiddenField ID="hddnInvoiceID" runat="server" />
         <asp:HiddenField ID="ShipDetailsActiontype" runat="server" />
+        <%--Rev 1.0--%>
+        <asp:HiddenField ID="hddnSalesInvoiceID" runat="server" />
+        <%--End of Rev 1.0--%>
     </div>
     <dxe:ASPxPopupControl ID="Popup_EWayBill" runat="server" ClientInstanceName="cPopup_EWayBill"
         Width="400px" HeaderText="Update E-Way Bill" PopupHorizontalAlign="WindowCenter"

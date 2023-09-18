@@ -1,6 +1,7 @@
 ﻿//==================================================== Revision History ==================================================================================
-// 1.0  Priti  V2.0.39  08-09-2023   0026790:Action Button "Update Transporter" required in Transit Sales Invoice module
-// 2.0  Priti  V2.0.39  08-09-2023   0026793:Update Transporter Action Button required in Sales Return module
+// 1.0      Priti       V2.0.39     08-09-2023   0026790:Action Button "Update Transporter" required in Transit Sales Invoice module
+// 2.0      Priti       V2.0.39     08-09-2023   0026793:Update Transporter Action Button required in Sales Return module
+// 3.0      Sanchita    V2.0.39     18/09/2023   Update Transporter Action required in Project Mgmt../ Sales Invoice. Mantis : 26806
 //====================================================End Revision History================================================================================
 
 using BusinessLogicLayer;
@@ -65,7 +66,14 @@ namespace ERP.OMS.Management.Activities.UserControls
             //Rev 1.0//2.0
             //Mantis Issue 25013
             //if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX")
-            if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESRETURNLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/TSALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/PURCHASEINVOICELIST.ASPX")
+            // Rev 3.0
+            //if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESRETURNLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/TSALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/PURCHASEINVOICELIST.ASPX")
+            if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESRETURNLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/TSALESINVOICELIST.ASPX" 
+                || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" 
+                || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX" 
+                || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/PURCHASEINVOICELIST.ASPX" 
+                || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/PROJECTINVOICELIST.ASPX")
+                // End of Rev 3.0
             //if (Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/APPROVESALEASORDER.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESORDERENTITYLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/SALESINVOICELIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/INVOICEDELIVERYCHALLANLIST.ASPX" || Request.FilePath.ToUpper() == "/OMS/MANAGEMENT/ACTIVITIES/PURCHASEINVOICELIST.ASPX")
             //End of Mantis Issue 25013
             //Rev 1.0//2.0 End
@@ -753,6 +761,28 @@ namespace ERP.OMS.Management.Activities.UserControls
                     dtLRDate.Date = Convert.ToDateTime(dsControlDetails.Tables[0].Rows[0]["LRDate"].ToString());
                 }
             }
+            // Rev 3.0 [ resolved existing issue comming when called from listing page. The value of previous document got retained
+            else
+            {
+                txtFreight.Text = "0";
+                txtPoint.Text = "0";
+                txtLoading.Text = "0";
+                txtUnloading.Text = "0";
+                txtParking.Text = "0";
+                txtWeighment.Text = "0";
+                txtTollTax.Text = "0";
+                txtLrno.Text = "";
+                txtServiceTaxes.Text = "0";
+                txtDistanceDelvChallan.Text = "0";
+                drdVehType.SelectedValue ="R";
+
+                drdTransportMode.SelectedValue = "1";
+
+                txtTotalCharges.Text = "0";
+                vcCmbTrip.Value = "";
+                vcCmbFreightArea.Value = "0";
+            }
+            // End of Rev 3.0
         }
 
         public string GetControlValue(string controlID)

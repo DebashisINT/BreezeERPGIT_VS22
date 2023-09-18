@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*******************************************************************************************************************
+ * Rev 1.0      Sanchita    V2.0.39     18/09/2023      Update Transporter Action required in Project Mgmt../ Sales Invoice
+ *                                                      Mantis : 26806
+ *******************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -1048,6 +1052,16 @@ namespace ERP.OMS.Management.Activities
                 }
             }
         }
+
+        //REV 1.0
+        [WebMethod]
+        public static string InsertTransporterControlDetails(long id, String hfControlData)
+        {
+            CommonBL objCommonBL = new CommonBL();
+            objCommonBL.InsertTransporterControlDetails(id, "SI", hfControlData, Convert.ToString(HttpContext.Current.Session["userid"]));
+            return "";
+        }
+        //End of REV 1.0
     }
 
 
