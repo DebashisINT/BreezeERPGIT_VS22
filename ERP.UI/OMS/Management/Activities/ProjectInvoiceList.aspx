@@ -1,7 +1,7 @@
-﻿<%--**********************************************************************************************************************--
- Rev 1.0      Sanchita    V2.0.39     18/09/2023      Update Transporter Action required in Project Mgmt../ Sales Invoice
+﻿<%--**********************************************************************************************************************
+Rev 1.0      Sanchita    V2.0.39     18/09/2023      Update Transporter Action required in Project Mgmt../ Sales Invoice
  *                                                      Mantis : 26806
- **********************************************************************************************************************-- %>
+ **********************************************************************************************************************--%>
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoiceList" EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
