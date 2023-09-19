@@ -1,4 +1,7 @@
-﻿using DataAccessLayer;
+﻿//================================================== Revision History =============================================
+//1.0    V2.0.39    Priti   19-09-2023  0026824:Tax amount mismatch happened in the Rate Difference Customer Entry module
+//====================================================== Revision History =============================================
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -948,20 +951,12 @@ namespace ERP.OMS.Tax_Details.ClassFile
 
                     //#region CreateTempTaxTable
                     //DataTable TaxRecord = new DataTable();
-
                     //TaxRecord.Columns.Add("SlNo", typeof(System.Int32));
                     //TaxRecord.Columns.Add("TaxCode", typeof(System.String));
                     //TaxRecord.Columns.Add("AltTaxCode", typeof(System.String));
                     //TaxRecord.Columns.Add("Percentage", typeof(System.Decimal));
-                    //TaxRecord.Columns.Add("Amount", typeof(System.Decimal)); 
-
+                    //TaxRecord.Columns.Add("Amount", typeof(System.Decimal));
                     //#endregion
-
-
-
-
-
-
                     //decimal totalParcentage = 0;
                     //foreach (DataRow dr in taxDetail.Rows)
                     //{
@@ -983,19 +978,17 @@ namespace ERP.OMS.Tax_Details.ClassFile
                                 txRecordRow["TaxCode"] = taxexistingRow["Taxes_ID"];
                                 txRecordRow["AltTaxCode"] = "0";
                                 txRecordRow["Percentage"] = taxexistingRow["TaxRates_Rate"];
-                                txRecordRow["Amount"] = RoundUp(Convert.ToDouble(Convert.ToDecimal(productRow[AmountColumnName]) * (Convert.ToDecimal(taxexistingRow["TaxRates_Rate"]) / 100)), 2);
+                                //Rev 1.0
+                                txRecordRow["Amount"] = Math.Round(Convert.ToDouble(Convert.ToDecimal(productRow[AmountColumnName]) * (Convert.ToDecimal(taxexistingRow["TaxRates_Rate"]) / 100)), 2);
+                                //txRecordRow["Amount"] = RoundUp(Convert.ToDouble(Convert.ToDecimal(productRow[AmountColumnName]) * (Convert.ToDecimal(taxexistingRow["TaxRates_Rate"]) / 100)), 2);
+                                //Rev 1.0 End
                                 taxTable.Rows.Add(txRecordRow);
 
                             }
                         }
                     }
                 }
-
-
             }
-
-
-
             #region setRound of for GST
             //DataTable GSTTABLE = oDBEngine.GetDataTable("select TaxRates_ID,TaxTypeCode from Config_TaxRates config inner join Master_Taxes mast on config.TaxRates_TaxCode =mast.Taxes_ID where TaxTypeCode in ('IGST','CGST','SGST','UTGST')");
 
@@ -1008,16 +1001,9 @@ namespace ERP.OMS.Tax_Details.ClassFile
             //}
 
             #endregion
-
-
-
-
-
             foreach (DataRow productRow in productDetails.Rows)
             {
                 #region SetRounded of ledger
-
-
                 if (taxTable.Select("SlNo='" + productRow[SerialColumnName] + "'").Length > 0  )
                 {
                     DataTable filteredTable = taxTable.Select("SlNo='" + productRow[SerialColumnName] + "'").CopyToDataTable();
@@ -1039,9 +1025,6 @@ namespace ERP.OMS.Tax_Details.ClassFile
                         }
                     }
                 }
-
-
-
                 #endregion
             }
 

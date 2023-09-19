@@ -10,7 +10,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
-      <script src="../../Tax%20Details/Js/TaxDetailsItemlevel.js?var=1.2" type="text/javascript"></script>
+    <script src="../../Tax%20Details/Js/TaxDetailsItemlevel.js?var=1.2" type="text/javascript"></script>   
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <style type="text/css">
         .inline {
@@ -3395,7 +3395,6 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             var QuantityValue = (grid.GetEditor('Quantity').GetValue() != null) ? grid.GetEditor('Quantity').GetValue() : "0";
             var Saleprice = (grid.GetEditor('SalePrice').GetValue() != null) ? grid.GetEditor('SalePrice').GetValue() : "0";
 
-
             if (ProductSaleprice != parseFloat(Saleprice)) {
                 var ProductID = grid.GetEditor('ProductID').GetValue();
                 if (ProductID != null) {
@@ -3406,16 +3405,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     //var strRate = "1";
                     var strStkUOM = SpliteDetails[4];
                     //var strSalePrice = SpliteDetails[6];
-
                     var strProductID = SpliteDetails[0];
                     var strProductName = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
                     var ddlbranch = $("[id*=ddl_Branch]");
                     var strBranch = ddlbranch.find("option:selected").text();
-
                     if (strRate == 0) {
                         strRate = 1;
                     }
-
                     var StockQuantity = strMultiplier * QuantityValue;
                     var Discount = (grid.GetEditor('Discount').GetValue() != null) ? grid.GetEditor('Discount').GetValue() : "0";
 
