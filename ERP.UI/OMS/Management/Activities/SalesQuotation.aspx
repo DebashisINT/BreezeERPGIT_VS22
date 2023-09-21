@@ -26,7 +26,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
     <script src="JS/SearchPopupDatatable.js"></script>
     <link href="CSS/SalesQuotaion.css?1.0.1" rel="stylesheet" />
-    <script src="JS/SalesQuotation.js?v=2.40"></script>
+    <script src="JS/SalesQuotation.js?v=3.0"></script>
     <%--Use for set focus on UOM after press ok on UOM--%>
 
     <script>
