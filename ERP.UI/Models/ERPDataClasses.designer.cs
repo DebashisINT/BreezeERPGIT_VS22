@@ -1601,14 +1601,6 @@ namespace ERP.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<JOURNALENTRYLIST> JOURNALENTRYLISTs
-		{
-			get
-			{
-				return this.GetTable<JOURNALENTRYLIST>();
-			}
-		}
-		
 		public System.Data.Linq.Table<MANUALBRSLISTA> MANUALBRSLISTAs
 		{
 			get
@@ -1734,6 +1726,14 @@ namespace ERP.Models
 			get
 			{
 				return this.GetTable<PurchaseReturnList>();
+			}
+		}
+		
+		public System.Data.Linq.Table<JOURNALENTRYLIST> JOURNALENTRYLISTs
+		{
+			get
+			{
+				return this.GetTable<JOURNALENTRYLIST>();
 			}
 		}
 	}
@@ -77497,357 +77497,6 @@ namespace ERP.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.JOURNALENTRYLIST")]
-	public partial class JOURNALENTRYLIST
-	{
-		
-		private System.Nullable<int> _SEQ;
-		
-		private System.Nullable<long> _USERID;
-		
-		private System.Nullable<long> _JvID;
-		
-		private string _VoucherNumber;
-		
-		private string _BillNumber;
-		
-		private System.Nullable<System.DateTime> _TransactionDate;
-		
-		private System.Nullable<System.DateTime> _JournalVoucher_TransactionDate;
-		
-		private string _BranchNameCode;
-		
-		private string _Narration;
-		
-		private string _IBRef;
-		
-		private string _WhichTypeItem;
-		
-		private string _JournalVoucher_CreateUser;
-		
-		private string _JournalVoucher_ModifyUser;
-		
-		private System.Nullable<System.DateTime> _JournalVoucher_ModifyDateTime;
-		
-		private System.Nullable<long> _BranchID;
-		
-		private System.Nullable<bool> _IsTDS;
-		
-		private string _Proj_Name;
-		
-		private System.Nullable<int> _visible;
-		
-		private System.Nullable<int> _VISIBLE_RETENTION;
-		
-		public JOURNALENTRYLIST()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
-		public System.Nullable<int> SEQ
-		{
-			get
-			{
-				return this._SEQ;
-			}
-			set
-			{
-				if ((this._SEQ != value))
-				{
-					this._SEQ = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="BigInt")]
-		public System.Nullable<long> USERID
-		{
-			get
-			{
-				return this._USERID;
-			}
-			set
-			{
-				if ((this._USERID != value))
-				{
-					this._USERID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JvID", DbType="BigInt")]
-		public System.Nullable<long> JvID
-		{
-			get
-			{
-				return this._JvID;
-			}
-			set
-			{
-				if ((this._JvID != value))
-				{
-					this._JvID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VoucherNumber", DbType="VarChar(50)")]
-		public string VoucherNumber
-		{
-			get
-			{
-				return this._VoucherNumber;
-			}
-			set
-			{
-				if ((this._VoucherNumber != value))
-				{
-					this._VoucherNumber = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillNumber", DbType="VarChar(50)")]
-		public string BillNumber
-		{
-			get
-			{
-				return this._BillNumber;
-			}
-			set
-			{
-				if ((this._BillNumber != value))
-				{
-					this._BillNumber = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionDate", DbType="Date")]
-		public System.Nullable<System.DateTime> TransactionDate
-		{
-			get
-			{
-				return this._TransactionDate;
-			}
-			set
-			{
-				if ((this._TransactionDate != value))
-				{
-					this._TransactionDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JournalVoucher_TransactionDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> JournalVoucher_TransactionDate
-		{
-			get
-			{
-				return this._JournalVoucher_TransactionDate;
-			}
-			set
-			{
-				if ((this._JournalVoucher_TransactionDate != value))
-				{
-					this._JournalVoucher_TransactionDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchNameCode", DbType="VarChar(200)")]
-		public string BranchNameCode
-		{
-			get
-			{
-				return this._BranchNameCode;
-			}
-			set
-			{
-				if ((this._BranchNameCode != value))
-				{
-					this._BranchNameCode = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Narration", DbType="VarChar(500)")]
-		public string Narration
-		{
-			get
-			{
-				return this._Narration;
-			}
-			set
-			{
-				if ((this._Narration != value))
-				{
-					this._Narration = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IBRef", DbType="VarChar(100)")]
-		public string IBRef
-		{
-			get
-			{
-				return this._IBRef;
-			}
-			set
-			{
-				if ((this._IBRef != value))
-				{
-					this._IBRef = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WhichTypeItem", DbType="VarChar(50)")]
-		public string WhichTypeItem
-		{
-			get
-			{
-				return this._WhichTypeItem;
-			}
-			set
-			{
-				if ((this._WhichTypeItem != value))
-				{
-					this._WhichTypeItem = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JournalVoucher_CreateUser", DbType="VarChar(50)")]
-		public string JournalVoucher_CreateUser
-		{
-			get
-			{
-				return this._JournalVoucher_CreateUser;
-			}
-			set
-			{
-				if ((this._JournalVoucher_CreateUser != value))
-				{
-					this._JournalVoucher_CreateUser = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JournalVoucher_ModifyUser", DbType="VarChar(50)")]
-		public string JournalVoucher_ModifyUser
-		{
-			get
-			{
-				return this._JournalVoucher_ModifyUser;
-			}
-			set
-			{
-				if ((this._JournalVoucher_ModifyUser != value))
-				{
-					this._JournalVoucher_ModifyUser = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JournalVoucher_ModifyDateTime", DbType="DateTime")]
-		public System.Nullable<System.DateTime> JournalVoucher_ModifyDateTime
-		{
-			get
-			{
-				return this._JournalVoucher_ModifyDateTime;
-			}
-			set
-			{
-				if ((this._JournalVoucher_ModifyDateTime != value))
-				{
-					this._JournalVoucher_ModifyDateTime = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="BigInt")]
-		public System.Nullable<long> BranchID
-		{
-			get
-			{
-				return this._BranchID;
-			}
-			set
-			{
-				if ((this._BranchID != value))
-				{
-					this._BranchID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsTDS", DbType="Bit")]
-		public System.Nullable<bool> IsTDS
-		{
-			get
-			{
-				return this._IsTDS;
-			}
-			set
-			{
-				if ((this._IsTDS != value))
-				{
-					this._IsTDS = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(200)")]
-		public string Proj_Name
-		{
-			get
-			{
-				return this._Proj_Name;
-			}
-			set
-			{
-				if ((this._Proj_Name != value))
-				{
-					this._Proj_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_visible", DbType="Int")]
-		public System.Nullable<int> visible
-		{
-			get
-			{
-				return this._visible;
-			}
-			set
-			{
-				if ((this._visible != value))
-				{
-					this._visible = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VISIBLE_RETENTION", DbType="Int")]
-		public System.Nullable<int> VISIBLE_RETENTION
-		{
-			get
-			{
-				return this._VISIBLE_RETENTION;
-			}
-			set
-			{
-				if ((this._VISIBLE_RETENTION != value))
-				{
-					this._VISIBLE_RETENTION = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MANUALBRSLISTA")]
 	public partial class MANUALBRSLISTA
 	{
@@ -86436,6 +86085,393 @@ namespace ERP.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deletelock", DbType="NVarChar(50)")]
+		public string Deletelock
+		{
+			get
+			{
+				return this._Deletelock;
+			}
+			set
+			{
+				if ((this._Deletelock != value))
+				{
+					this._Deletelock = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.JOURNALENTRYLIST")]
+	public partial class JOURNALENTRYLIST
+	{
+		
+		private System.Nullable<int> _SEQ;
+		
+		private System.Nullable<long> _USERID;
+		
+		private System.Nullable<long> _JvID;
+		
+		private string _VoucherNumber;
+		
+		private string _BillNumber;
+		
+		private System.Nullable<System.DateTime> _TransactionDate;
+		
+		private System.Nullable<System.DateTime> _JournalVoucher_TransactionDate;
+		
+		private string _BranchNameCode;
+		
+		private string _Narration;
+		
+		private string _IBRef;
+		
+		private string _WhichTypeItem;
+		
+		private string _JournalVoucher_CreateUser;
+		
+		private string _JournalVoucher_ModifyUser;
+		
+		private System.Nullable<System.DateTime> _JournalVoucher_ModifyDateTime;
+		
+		private System.Nullable<long> _BranchID;
+		
+		private System.Nullable<bool> _IsTDS;
+		
+		private string _Proj_Name;
+		
+		private System.Nullable<int> _visible;
+		
+		private System.Nullable<int> _VISIBLE_RETENTION;
+		
+		private string _Editlock;
+		
+		private string _Deletelock;
+		
+		public JOURNALENTRYLIST()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
+		public System.Nullable<int> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="BigInt")]
+		public System.Nullable<long> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JvID", DbType="BigInt")]
+		public System.Nullable<long> JvID
+		{
+			get
+			{
+				return this._JvID;
+			}
+			set
+			{
+				if ((this._JvID != value))
+				{
+					this._JvID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VoucherNumber", DbType="VarChar(50)")]
+		public string VoucherNumber
+		{
+			get
+			{
+				return this._VoucherNumber;
+			}
+			set
+			{
+				if ((this._VoucherNumber != value))
+				{
+					this._VoucherNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillNumber", DbType="VarChar(50)")]
+		public string BillNumber
+		{
+			get
+			{
+				return this._BillNumber;
+			}
+			set
+			{
+				if ((this._BillNumber != value))
+				{
+					this._BillNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionDate", DbType="Date")]
+		public System.Nullable<System.DateTime> TransactionDate
+		{
+			get
+			{
+				return this._TransactionDate;
+			}
+			set
+			{
+				if ((this._TransactionDate != value))
+				{
+					this._TransactionDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JournalVoucher_TransactionDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> JournalVoucher_TransactionDate
+		{
+			get
+			{
+				return this._JournalVoucher_TransactionDate;
+			}
+			set
+			{
+				if ((this._JournalVoucher_TransactionDate != value))
+				{
+					this._JournalVoucher_TransactionDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchNameCode", DbType="VarChar(200)")]
+		public string BranchNameCode
+		{
+			get
+			{
+				return this._BranchNameCode;
+			}
+			set
+			{
+				if ((this._BranchNameCode != value))
+				{
+					this._BranchNameCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Narration", DbType="VarChar(500)")]
+		public string Narration
+		{
+			get
+			{
+				return this._Narration;
+			}
+			set
+			{
+				if ((this._Narration != value))
+				{
+					this._Narration = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IBRef", DbType="VarChar(100)")]
+		public string IBRef
+		{
+			get
+			{
+				return this._IBRef;
+			}
+			set
+			{
+				if ((this._IBRef != value))
+				{
+					this._IBRef = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WhichTypeItem", DbType="VarChar(50)")]
+		public string WhichTypeItem
+		{
+			get
+			{
+				return this._WhichTypeItem;
+			}
+			set
+			{
+				if ((this._WhichTypeItem != value))
+				{
+					this._WhichTypeItem = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JournalVoucher_CreateUser", DbType="VarChar(50)")]
+		public string JournalVoucher_CreateUser
+		{
+			get
+			{
+				return this._JournalVoucher_CreateUser;
+			}
+			set
+			{
+				if ((this._JournalVoucher_CreateUser != value))
+				{
+					this._JournalVoucher_CreateUser = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JournalVoucher_ModifyUser", DbType="VarChar(50)")]
+		public string JournalVoucher_ModifyUser
+		{
+			get
+			{
+				return this._JournalVoucher_ModifyUser;
+			}
+			set
+			{
+				if ((this._JournalVoucher_ModifyUser != value))
+				{
+					this._JournalVoucher_ModifyUser = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JournalVoucher_ModifyDateTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> JournalVoucher_ModifyDateTime
+		{
+			get
+			{
+				return this._JournalVoucher_ModifyDateTime;
+			}
+			set
+			{
+				if ((this._JournalVoucher_ModifyDateTime != value))
+				{
+					this._JournalVoucher_ModifyDateTime = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="BigInt")]
+		public System.Nullable<long> BranchID
+		{
+			get
+			{
+				return this._BranchID;
+			}
+			set
+			{
+				if ((this._BranchID != value))
+				{
+					this._BranchID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsTDS", DbType="Bit")]
+		public System.Nullable<bool> IsTDS
+		{
+			get
+			{
+				return this._IsTDS;
+			}
+			set
+			{
+				if ((this._IsTDS != value))
+				{
+					this._IsTDS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(200)")]
+		public string Proj_Name
+		{
+			get
+			{
+				return this._Proj_Name;
+			}
+			set
+			{
+				if ((this._Proj_Name != value))
+				{
+					this._Proj_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_visible", DbType="Int")]
+		public System.Nullable<int> visible
+		{
+			get
+			{
+				return this._visible;
+			}
+			set
+			{
+				if ((this._visible != value))
+				{
+					this._visible = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VISIBLE_RETENTION", DbType="Int")]
+		public System.Nullable<int> VISIBLE_RETENTION
+		{
+			get
+			{
+				return this._VISIBLE_RETENTION;
+			}
+			set
+			{
+				if ((this._VISIBLE_RETENTION != value))
+				{
+					this._VISIBLE_RETENTION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Editlock", DbType="VarChar(20)")]
+		public string Editlock
+		{
+			get
+			{
+				return this._Editlock;
+			}
+			set
+			{
+				if ((this._Editlock != value))
+				{
+					this._Editlock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deletelock", DbType="VarChar(20)")]
 		public string Deletelock
 		{
 			get

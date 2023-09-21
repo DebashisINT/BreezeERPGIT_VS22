@@ -4866,29 +4866,6 @@
       <Column Name="PlaceOfSupply" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.JOURNALENTRYLIST" Member="JOURNALENTRYLISTs">
-    <Type Name="JOURNALENTRYLIST">
-      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="JvID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="VoucherNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="BillNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="TransactionDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="JournalVoucher_TransactionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="BranchNameCode" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="Narration" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="IBRef" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="WhichTypeItem" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="JournalVoucher_CreateUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="JournalVoucher_ModifyUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="JournalVoucher_ModifyDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="BranchID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="IsTDS" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="visible" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="VISIBLE_RETENTION" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.MANUALBRSLISTA" Member="MANUALBRSLISTAs">
     <Type Name="MANUALBRSLISTA">
       <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -5421,6 +5398,31 @@
       <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="Editlock" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Deletelock" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.JOURNALENTRYLIST" Member="JOURNALENTRYLISTs">
+    <Type Name="JOURNALENTRYLIST">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="JvID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="VoucherNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BillNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TransactionDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="JournalVoucher_TransactionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BranchNameCode" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Narration" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="IBRef" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="WhichTypeItem" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="JournalVoucher_CreateUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="JournalVoucher_ModifyUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="JournalVoucher_ModifyDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BranchID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="IsTDS" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="visible" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VISIBLE_RETENTION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Editlock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Deletelock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
