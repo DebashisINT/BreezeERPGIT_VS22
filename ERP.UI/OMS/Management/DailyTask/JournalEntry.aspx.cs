@@ -1,5 +1,6 @@
 ﻿//========================================================== Revision History ============================================================================================
-//   1.0   Priti V2.0.36  02-02-2023  0025253: listing view upgradation required of Journals of Accounts & Finance
+//   1.0   Priti        V2.0.36     02-02-2023      0025253: listing view upgradation required of Journals of Accounts & Finance
+//   2.0   Sanchita     V2.0.43     21-09-2023      26831 : Data Freeze is not working properly for Journal    
 //========================================== End Revision History =======================================================================================================
 
 
@@ -172,7 +173,35 @@ namespace ERP.OMS.Management.DailyTask
                 }
             }
             //Tanmoy Hierarchy End
+            // Rev 2.0
+            DataTable dtposTime = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) DataFreeze_Fromdate,convert(varchar(10),Lock_Todate,105) DataFreeze_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Add' and Module_Id=53");
+            if (dtposTime != null && dtposTime.Rows.Count > 0)
+            {
+                hdnLockFromDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Todate"]);
+                hdnLockFromDateCon.Value = Convert.ToString(dtposTime.Rows[0]["DataFreeze_Fromdate"]);
+                hdnLockToDateCon.Value = Convert.ToString(dtposTime.Rows[0]["DataFreeze_Todate"]);
+            }
 
+            DataTable dtposTimeEdit = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Edit' and Module_Id=55");
+            DataTable dtposTimeDelete = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Delete' and Module_Id=55");
+            if (dtposTimeEdit != null && dtposTimeEdit.Rows.Count > 0)
+            {
+                hdnLockFromDateedit.Value = Convert.ToString(dtposTimeEdit.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDateedit.Value = Convert.ToString(dtposTimeEdit.Rows[0]["LockCon_Todate"]);
+                spnEditLock.Style.Add("Display", "block");
+                spnEditLock.InnerText = "DATA is Freezed between   " + hdnLockFromDateedit.Value + " to " + hdnLockToDateedit.Value + " for Edit. ";
+            }
+
+            if (dtposTimeDelete != null && dtposTimeDelete.Rows.Count > 0)
+            {
+                spnDeleteLock.Style.Add("Display", "block");
+                hdnLockFromDatedelete.Value = Convert.ToString(dtposTimeDelete.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDatedelete.Value = Convert.ToString(dtposTimeDelete.Rows[0]["LockCon_Todate"]);
+                spnDeleteLock.InnerText = spnEditLock.InnerText + "DATA is Freezed between   " + hdnLockFromDatedelete.Value + " to " + hdnLockToDatedelete.Value + "  for Delete.";
+                spnEditLock.InnerText = "";
+            }
+            // End of Rev 2.0
             if (HttpContext.Current.Session["userid"] != null)
             {
                 if (!IsPostBack)
@@ -2331,8 +2360,20 @@ namespace ERP.OMS.Management.DailyTask
             }
         }
 
-
-
+        // Rev 2.0
+        [WebMethod]
+        public static string GetAddLock(DateTime LockDate)
+        {
+            string rtrnvalue = "0";
+            ProcedureExecute proc = new ProcedureExecute("prc_JournalVoucherDetails");
+            proc.AddVarcharPara("@Action", 500, "GetAddLockForJournalStatus");
+            proc.AddDateTimePara("@TransactionDate", LockDate);
+            proc.AddVarcharPara("@ReturnValue", 200, "0", QueryParameterDirection.Output);
+            proc.RunActionQuery();
+            rtrnvalue = Convert.ToString(proc.GetParaValue("@ReturnValue"));
+            return rtrnvalue;
+        }
+        // End of Rev 2.0
 
         #endregion
 
