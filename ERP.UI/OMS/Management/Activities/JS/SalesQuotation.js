@@ -33,7 +33,7 @@
         };
     }
 })(window);
-
+var Pre_TotalAmt = "0";
 var isCtrl = false;
 //document.onkeyup = function (e) {
 //    if (event.keyCode == 17) {
@@ -2405,41 +2405,31 @@ function QuantityTextChange(s, e) {
         var strMultiplier = SpliteDetails[7];
         var strFactor = SpliteDetails[8];
         var strRate = (ctxt_Rate.GetValue() != null && ctxt_Rate.GetValue() != "0") ? ctxt_Rate.GetValue() : "1";
-
         var strProductID = SpliteDetails[0];
         var strProductName = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
         var ddlbranch = $("[id*=ddl_Branch]");
         var strBranch = ddlbranch.find("option:selected").text();
-
         //var strRate = "1";
         var strStkUOM = SpliteDetails[4];
-
-
         //chinmoy edited below code
         var strSalePrice = SpliteDetails[6];
-
         if (parseInt(strSalePrice) == parseInt(0)) {
             strSalePrice = grid.GetEditor('SalePrice').GetValue();
         }
-
         //End
         if (strRate == 0) {
             strRate = 1;
         }
-
         var StockQuantity = strMultiplier * QuantityValue;
         var Amount = QuantityValue * strFactor * (strSalePrice / strRate);
-
         $('#lblStkQty').text(StockQuantity);
         $('#lblStkUOM').text(strStkUOM);
         $('#lblProduct').text(strProductName);
         $('#lblbranchName').text(strBranch);
-
         var IsPackingActive = SpliteDetails[10];
         var Packing_Factor = SpliteDetails[11];
         var Packing_UOM = SpliteDetails[12];
         var PackingValue = (Packing_Factor * QuantityValue) + " " + Packing_UOM;
-
         if (IsPackingActive == "Y" && (parseFloat(Packing_Factor * QuantityValue) > 0)) {
             $('#lblPackingStk').text(PackingValue);
             divPacking.style.display = "block";
@@ -2449,10 +2439,8 @@ function QuantityTextChange(s, e) {
 
         //var tbStockQuantity = grid.GetEditor("StockQuantity");
         //tbStockQuantity.SetValue(StockQuantity);
-
         var tbAmount = grid.GetEditor("Amount");
         tbAmount.SetValue(Amount);
-
         var tbTotalAmount = grid.GetEditor("TotalAmount");
         tbTotalAmount.SetValue(Amount);
 
@@ -2757,7 +2745,7 @@ function DiscountTextChange(s, e) {
         var amountAfterDiscount = parseFloat(Amount) - ((parseFloat(Discount) * parseFloat(Amount)) / 100);
 
         var tbAmount = grid.GetEditor("Amount");
-        tbAmount.SetValue(amountAfterDiscount);
+        tbAmount.SetValue(DecimalRoundoff(amountAfterDiscount,2));
 
         var IsPackingActive = SpliteDetails[10];
         var Packing_Factor = SpliteDetails[11];
@@ -2772,7 +2760,7 @@ function DiscountTextChange(s, e) {
         }
 
         var tbTotalAmount = grid.GetEditor("TotalAmount");
-        tbTotalAmount.SetValue(amountAfterDiscount);
+        tbTotalAmount.SetValue(DecimalRoundoff(amountAfterDiscount,2));
         //Rev work start 06.07.2022 mantise no:25008
          var ShippingStateCode = $("#bsSCmbStateHF").val();
         //var ShippingStateCode = GeteShippingStateID();
@@ -3438,14 +3426,15 @@ function OnMultiUOMEndCallback(s, e) {
     // Mantis Issue 24428
     if (cgrid_MultiUOM.cpSetBaseQtyRateInGrid != null && cgrid_MultiUOM.cpSetBaseQtyRateInGrid == "1") {
         grid.batchEditApi.StartEdit(globalRowIndex, 6);
-
         var BaseQty = cgrid_MultiUOM.cpBaseQty;
         var BaseRate = cgrid_MultiUOM.cpBaseRate;
 
         grid.GetEditor("Quantity").SetValue(BaseQty);
         grid.GetEditor("SalePrice").SetValue(BaseRate);
-        grid.GetEditor("Amount").SetValue(BaseQty * BaseRate)
+        //grid.GetEditor("Amount").SetValue(BaseQty * BaseRate)
 
+        var Amount = BaseQty * BaseRate;
+        grid.GetEditor("Amount").SetValue(DecimalRoundoff(Amount, 2));
 
         grid.GetEditor("Order_AltQuantity").SetValue(cgrid_MultiUOM.cpAltQty);
         grid.GetEditor("Order_AltUOM").SetValue(cgrid_MultiUOM.cpAltUom);

@@ -3461,7 +3461,7 @@ function SalePriceTextChange(s, e) {
         if (ProductID != null) {
             var SpliteDetails = ProductID.split("||@||");
 
-            console.log(SpliteDetails);
+            //console.log(SpliteDetails);
             // Rev Sanchita 
             //if (parseFloat(s.GetValue()) < parseFloat(SpliteDetails[17])) {
             if (parseFloat(grid.GetEditor('SalePrice').GetValue()) < parseFloat(SpliteDetails[17])) {
@@ -3470,7 +3470,9 @@ function SalePriceTextChange(s, e) {
                     grid.batchEditApi.StartEdit(globalRowIndex, 10);
                     return;
                 });
-                s.SetValue(parseFloat(SpliteDetails[6]));
+               
+                grid.GetEditor("SalePrice").SetValue(parseFloat(SpliteDetails[6]));
+                //s.SetValue(parseFloat(SpliteDetails[6]));
                 return;
             }
 
@@ -3482,7 +3484,9 @@ function SalePriceTextChange(s, e) {
                     grid.batchEditApi.StartEdit(globalRowIndex, 10);
                     return;
                 });
-                s.SetValue(parseFloat(SpliteDetails[6]));
+                
+                grid.GetEditor("SalePrice").SetValue(parseFloat(SpliteDetails[6]));
+               // s.SetValue(parseFloat(SpliteDetails[6]));
                 return;
             }
 
@@ -3508,7 +3512,7 @@ function SalePriceTextChange(s, e) {
             var Discount = (grid.GetEditor('Discount').GetValue() != null) ? grid.GetEditor('Discount').GetValue() : "0";
 
             var Amount = QuantityValue * strFactor * (Saleprice / strRate);
-
+            
             var IsDiscountPercentage = document.getElementById('IsDiscountPercentage').value;
             var amountAfterDiscount = "0";
 
@@ -3822,8 +3826,8 @@ function DiscountTextChange(s, e) {
         grid.GetEditor('ProductID').Focus();
     }
 
-
-    if (parseFloat(Amount) != parseFloat(Pre_TotalAmt)) {
+    var AmountValue = DecimalRoundoff(Amount, 2)
+    if (parseFloat(AmountValue) != parseFloat(Pre_TotalAmt)) {
         // ctaxUpdatePanel.PerformCallback('DelProdbySl~' + grid.GetEditor("SrlNo").GetValue());
 
         var SrlNo = grid.GetEditor("SrlNo").GetValue();

@@ -257,7 +257,10 @@ function OnMultiUOMEndCallback(s,e)
 
         grid.GetEditor("Quantity").SetValue(BaseQty);
         grid.GetEditor("SalePrice").SetValue(BaseRate);
-        grid.GetEditor("Amount").SetValue(BaseQty*BaseRate);
+        //grid.GetEditor("Amount").SetValue(BaseQty*BaseRate);
+        var Amount = BaseQty * BaseRate;
+        grid.GetEditor("Amount").SetValue(DecimalRoundoff(Amount, 2));
+
         grid.GetEditor("TotalAmount").SetValue(BaseQty*BaseRate);
         // Mantis Issue 24425, 24428
         grid.GetEditor("Order_AltQuantity").SetValue(AltQuantity);
@@ -1819,8 +1822,7 @@ function SetEntityType(Id) {
 var globalNetAmount = 0;
 function SalePriceTextChange(s, e) {
     // 
-    //pageheaderContent.style.display = "block";
-            
+    //pageheaderContent.style.display = "block";            
     var QuantityValue = (grid.GetEditor('Quantity').GetValue() != null) ? grid.GetEditor('Quantity').GetValue() : "0";
     var Saleprice = (grid.GetEditor('SalePrice').GetValue() != null) ? grid.GetEditor('SalePrice').GetValue() : "0";
     var ProductID = grid.GetEditor('ProductID').GetText();
@@ -1830,17 +1832,16 @@ function SalePriceTextChange(s, e) {
     var strRate = (ctxtRate.GetValue() != null && ctxtRate.GetValue() != "0") ? ctxtRate.GetValue() : "1";
     //var strRate = "1";
     var strStkUOM = SpliteDetails[4];
-    //var strSalePrice = SpliteDetails[6];
-    
+    //var strSalePrice = SpliteDetails[6];   
 
     IsDiscountVal = $("#IsDiscountPercentage").val();
     if (strRate == 0) {
         strRate = 1;
     }
-
     var StockQuantity = strMultiplier * QuantityValue;
     var Discount = (grid.GetEditor('Discount').GetValue() != null) ? grid.GetEditor('Discount').GetValue() : "0";
     var Amount = QuantityValue * strFactor * (Saleprice / strRate);
+
     var ResultAmountAfterDiscount = "0";
     if (IsDiscountVal == "Y") {
         if (parseFloat(Discount) > 100) {
@@ -1851,16 +1852,11 @@ function SalePriceTextChange(s, e) {
         }
        // var amountAfterDiscount = parseFloat(Amount) + ((parseFloat(Discount) * parseFloat(Amount)) / 100); 
         amountAfterDiscount =DecimalRoundoff( parseFloat(Amount) + ((parseFloat(Discount) * parseFloat(Amount)) / 100),2);
-
     }
     else
     {
-        amountAfterDiscount = DecimalRoundoff(parseFloat(Amount) + parseFloat(Discount),2);
-        
-    }
- 
-   
-
+        amountAfterDiscount = DecimalRoundoff(parseFloat(Amount) + parseFloat(Discount),2);        
+    } 
 
     var tbAmount = grid.GetEditor("Amount");
     //tbAmount.SetValue(DecimalRoundoff(amountAfterDiscount));
@@ -1871,10 +1867,6 @@ function SalePriceTextChange(s, e) {
     var tbTotalAmount = grid.GetEditor("TotalAmount");
     //tbTotalAmount.SetValue(amountAfterDiscount);
     tbTotalAmount.SetValue(amountAfterDiscount + (TotaAmountRes * 1));
-
-
-
-
     //Debjyoti section GST
     var ShippingStateCode = $("#bsSCmbStateHF").val();
     var TaxType = "";
@@ -1900,8 +1892,9 @@ function SalePriceTextChange(s, e) {
             
     caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"),
        SpliteDetails[19], Amount, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val(), $("#hdnEntityType").val(), cPLSalesOrderDate.GetDate(), QuantityValue);
-    
-    if (parseFloat(Amount) != parseFloat(Pre_TotalAmt)) {        
+
+    var AmountValue = DecimalRoundoff(Amount, 2)
+    if (parseFloat(AmountValue) != parseFloat(Pre_TotalAmt)) {        
         var SrlNo = grid.GetEditor("SrlNo").GetValue();       
         var uniqueId=$("#uniqueId").val();
         $.ajax({
@@ -1910,12 +1903,8 @@ function SalePriceTextChange(s, e) {
             data: JSON.stringify({ SrlNo: SrlNo,uniqueId:uniqueId }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (msg) {               
-               // LoadingPanelSubmitButton.Hide();
-                
-                //document.getElementById('btn_SaveExit').style.display = 'block';
-                //document.getElementById('btn_SaveRecords').style.display = 'block';
-                
+            success: function (msg) {              
+              
                 if($("#hdnUpperApproveReject").val() == "")
                 {
                     if($("#hddnCustIdFromCRM").val() == "0")
@@ -3253,29 +3242,26 @@ function AfterSaveBillingShipiing(validate) {
 //End
 function GetPosForGstValue()
 {
-           
-    cddl_PosGstSalesOrder.ClearItems();
-    if(cddl_PosGstSalesOrder.GetItemCount()==0)
-    {
-        cddl_PosGstSalesOrder.AddItem(GetBillingStateName() + '[Billing]', "B");
-        cddl_PosGstSalesOrder.AddItem(GetShippingStateName() + '[Shipping]', "S");
-               
-    }
-            
-    else  if(cddl_PosGstSalesOrder.GetItemCount()>2)
-    {
+    if (gridquotationLookup.GetValue() == null) {
         cddl_PosGstSalesOrder.ClearItems();
-        //cddl_PosGstSalesOrder.RemoveItem(0);
-        //cddl_PosGstSalesOrder.RemoveItem(0);
-    }
+        if (cddl_PosGstSalesOrder.GetItemCount() == 0) {
+            cddl_PosGstSalesOrder.AddItem(GetBillingStateName() + '[Billing]', "B");
+            cddl_PosGstSalesOrder.AddItem(GetShippingStateName() + '[Shipping]', "S");
 
-    if(PosGstId=="" || PosGstId==null)
-    {
-        cddl_PosGstSalesOrder.SetValue("B");
-    }
-    else
-    {
-        cddl_PosGstSalesOrder.SetValue(PosGstId);
+        }
+
+        else if (cddl_PosGstSalesOrder.GetItemCount() > 2) {
+            cddl_PosGstSalesOrder.ClearItems();
+            //cddl_PosGstSalesOrder.RemoveItem(0);
+            //cddl_PosGstSalesOrder.RemoveItem(0);
+        }
+
+        if (PosGstId == "" || PosGstId == null) {
+            cddl_PosGstSalesOrder.SetValue("B");
+        }
+        else {
+            cddl_PosGstSalesOrder.SetValue(PosGstId);
+        }
     }
 }
 

@@ -1,11 +1,11 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History ============================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                05-05-2023        V2.0.37           Pallab              26038: Purchase Invoice module design modification & check in small device
 2.0                30-05-2023        V2.0.38           Sanchita            ERP - Listing Views - Purchase Invoice. refer: 26250  
 3.0                03-07-2023        V2.0.39           Pallab              Printing a different document while taking print from Purchase Invoice module. refer: 26494 
 4.0                28-07-2023        V2.0.39           Priti               26609:Attachment icon will be shown against the document number if there is any attachment - Sales Challan
 
-====================================================== Revision History =============================================--%>
+====================================================== Revision History ==========================================================================--%>
 
 <%@ Page Title="Purchase Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false"
     CodeBehind="Purchaseinvoicelist.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseInvoicelist" %>
