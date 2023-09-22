@@ -5,7 +5,6 @@
                                                     Refer: 25813
    Rev 3.0      Sanchita      V2.0.39   28/06/2023  Some of the issues are there in Sales Invoice regarding 
                                                     Multi UOM in EVAC - FOR ALL SALES ORDER. Refer: 26453
-
    Rev 4.0      Priti         V2.0.39   18/07/2023  Sales Ordedr product deletion issue solved
  **********************************************************************************************************/--%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderAdd.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
