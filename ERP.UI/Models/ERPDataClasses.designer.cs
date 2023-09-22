@@ -22,7 +22,7 @@ namespace ERP.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="PK02122020")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="BRZ_EVTUBE2324_18_09_2023")]
 	public partial class ERPDataClassesDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -1649,14 +1649,6 @@ namespace ERP.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<PurchaseIndentList> PurchaseIndentLists
-		{
-			get
-			{
-				return this.GetTable<PurchaseIndentList>();
-			}
-		}
-		
 		public System.Data.Linq.Table<PurchaseInvoiceCumGRNList> PurchaseInvoiceCumGRNLists
 		{
 			get
@@ -1734,6 +1726,14 @@ namespace ERP.Models
 			get
 			{
 				return this.GetTable<JOURNALENTRYLIST>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PurchaseIndentList> PurchaseIndentLists
+		{
+			get
+			{
+				return this.GetTable<PurchaseIndentList>();
 			}
 		}
 	}
@@ -79999,537 +79999,6 @@ namespace ERP.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PurchaseIndentList")]
-	public partial class PurchaseIndentList
-	{
-		
-		private System.Nullable<int> _USERID;
-		
-		private System.Nullable<int> _SEQ;
-		
-		private System.Nullable<int> _SlNo;
-		
-		private System.Nullable<long> _Indent_Id;
-		
-		private string _Indent_RequisitionNumber;
-		
-		private System.Nullable<System.DateTime> _Indent_RequisitionDate;
-		
-		private System.Nullable<System.DateTime> _Indent_RequisitionDateTimeFormat;
-		
-		private string _Indent_branch;
-		
-		private System.Nullable<decimal> _ValueInBaseCurrency;
-		
-		private System.Nullable<int> _Indent_BranchIdFor;
-		
-		private string _Indent_Purpose;
-		
-		private string _Indent_Company;
-		
-		private string _Indent_FinYear;
-		
-		private string _PurchaseOrder_Number;
-		
-		private string _PurchaseOrder_Date;
-		
-		private System.Nullable<int> _Requisition_Id;
-		
-		private string _EnteredBy;
-		
-		private string _UpdatedBy;
-		
-		private string _LastUpdateOn;
-		
-		private string _Proj_Name;
-		
-		private string _IndentLastEntryStaus;
-		
-		private System.Nullable<bool> _IndentLastEntry;
-		
-		private string _PurchaseIndent_ApproveStatus;
-		
-		private string _Indent_RevisionDate;
-		
-		private string _Indent_RevisionNo;
-		
-		private System.Nullable<bool> _Closed;
-		
-		private string _Status;
-		
-		private string _MRP;
-		
-		private string _Vendor_Name;
-		
-		public PurchaseIndentList()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="Int")]
-		public System.Nullable<int> USERID
-		{
-			get
-			{
-				return this._USERID;
-			}
-			set
-			{
-				if ((this._USERID != value))
-				{
-					this._USERID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
-		public System.Nullable<int> SEQ
-		{
-			get
-			{
-				return this._SEQ;
-			}
-			set
-			{
-				if ((this._SEQ != value))
-				{
-					this._SEQ = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SlNo", DbType="Int")]
-		public System.Nullable<int> SlNo
-		{
-			get
-			{
-				return this._SlNo;
-			}
-			set
-			{
-				if ((this._SlNo != value))
-				{
-					this._SlNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_Id", DbType="BigInt")]
-		public System.Nullable<long> Indent_Id
-		{
-			get
-			{
-				return this._Indent_Id;
-			}
-			set
-			{
-				if ((this._Indent_Id != value))
-				{
-					this._Indent_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RequisitionNumber", DbType="NVarChar(100)")]
-		public string Indent_RequisitionNumber
-		{
-			get
-			{
-				return this._Indent_RequisitionNumber;
-			}
-			set
-			{
-				if ((this._Indent_RequisitionNumber != value))
-				{
-					this._Indent_RequisitionNumber = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RequisitionDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Indent_RequisitionDate
-		{
-			get
-			{
-				return this._Indent_RequisitionDate;
-			}
-			set
-			{
-				if ((this._Indent_RequisitionDate != value))
-				{
-					this._Indent_RequisitionDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RequisitionDateTimeFormat", DbType="Date")]
-		public System.Nullable<System.DateTime> Indent_RequisitionDateTimeFormat
-		{
-			get
-			{
-				return this._Indent_RequisitionDateTimeFormat;
-			}
-			set
-			{
-				if ((this._Indent_RequisitionDateTimeFormat != value))
-				{
-					this._Indent_RequisitionDateTimeFormat = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_branch", DbType="VarChar(200)")]
-		public string Indent_branch
-		{
-			get
-			{
-				return this._Indent_branch;
-			}
-			set
-			{
-				if ((this._Indent_branch != value))
-				{
-					this._Indent_branch = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValueInBaseCurrency", DbType="Decimal(20,2)")]
-		public System.Nullable<decimal> ValueInBaseCurrency
-		{
-			get
-			{
-				return this._ValueInBaseCurrency;
-			}
-			set
-			{
-				if ((this._ValueInBaseCurrency != value))
-				{
-					this._ValueInBaseCurrency = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_BranchIdFor", DbType="Int")]
-		public System.Nullable<int> Indent_BranchIdFor
-		{
-			get
-			{
-				return this._Indent_BranchIdFor;
-			}
-			set
-			{
-				if ((this._Indent_BranchIdFor != value))
-				{
-					this._Indent_BranchIdFor = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_Purpose", DbType="NVarChar(1000)")]
-		public string Indent_Purpose
-		{
-			get
-			{
-				return this._Indent_Purpose;
-			}
-			set
-			{
-				if ((this._Indent_Purpose != value))
-				{
-					this._Indent_Purpose = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_Company", DbType="NVarChar(40)")]
-		public string Indent_Company
-		{
-			get
-			{
-				return this._Indent_Company;
-			}
-			set
-			{
-				if ((this._Indent_Company != value))
-				{
-					this._Indent_Company = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_FinYear", DbType="NVarChar(20)")]
-		public string Indent_FinYear
-		{
-			get
-			{
-				return this._Indent_FinYear;
-			}
-			set
-			{
-				if ((this._Indent_FinYear != value))
-				{
-					this._Indent_FinYear = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Number", DbType="NVarChar(100)")]
-		public string PurchaseOrder_Number
-		{
-			get
-			{
-				return this._PurchaseOrder_Number;
-			}
-			set
-			{
-				if ((this._PurchaseOrder_Number != value))
-				{
-					this._PurchaseOrder_Number = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Date", DbType="NVarChar(100)")]
-		public string PurchaseOrder_Date
-		{
-			get
-			{
-				return this._PurchaseOrder_Date;
-			}
-			set
-			{
-				if ((this._PurchaseOrder_Date != value))
-				{
-					this._PurchaseOrder_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Requisition_Id", DbType="Int")]
-		public System.Nullable<int> Requisition_Id
-		{
-			get
-			{
-				return this._Requisition_Id;
-			}
-			set
-			{
-				if ((this._Requisition_Id != value))
-				{
-					this._Requisition_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EnteredBy", DbType="VarChar(50)")]
-		public string EnteredBy
-		{
-			get
-			{
-				return this._EnteredBy;
-			}
-			set
-			{
-				if ((this._EnteredBy != value))
-				{
-					this._EnteredBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedBy", DbType="VarChar(50)")]
-		public string UpdatedBy
-		{
-			get
-			{
-				return this._UpdatedBy;
-			}
-			set
-			{
-				if ((this._UpdatedBy != value))
-				{
-					this._UpdatedBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdateOn", DbType="VarChar(50)")]
-		public string LastUpdateOn
-		{
-			get
-			{
-				return this._LastUpdateOn;
-			}
-			set
-			{
-				if ((this._LastUpdateOn != value))
-				{
-					this._LastUpdateOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(200)")]
-		public string Proj_Name
-		{
-			get
-			{
-				return this._Proj_Name;
-			}
-			set
-			{
-				if ((this._Proj_Name != value))
-				{
-					this._Proj_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndentLastEntryStaus", DbType="VarChar(200)")]
-		public string IndentLastEntryStaus
-		{
-			get
-			{
-				return this._IndentLastEntryStaus;
-			}
-			set
-			{
-				if ((this._IndentLastEntryStaus != value))
-				{
-					this._IndentLastEntryStaus = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndentLastEntry", DbType="Bit")]
-		public System.Nullable<bool> IndentLastEntry
-		{
-			get
-			{
-				return this._IndentLastEntry;
-			}
-			set
-			{
-				if ((this._IndentLastEntry != value))
-				{
-					this._IndentLastEntry = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseIndent_ApproveStatus", DbType="VarChar(100)")]
-		public string PurchaseIndent_ApproveStatus
-		{
-			get
-			{
-				return this._PurchaseIndent_ApproveStatus;
-			}
-			set
-			{
-				if ((this._PurchaseIndent_ApproveStatus != value))
-				{
-					this._PurchaseIndent_ApproveStatus = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RevisionDate", DbType="VarChar(100)")]
-		public string Indent_RevisionDate
-		{
-			get
-			{
-				return this._Indent_RevisionDate;
-			}
-			set
-			{
-				if ((this._Indent_RevisionDate != value))
-				{
-					this._Indent_RevisionDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RevisionNo", DbType="NVarChar(400)")]
-		public string Indent_RevisionNo
-		{
-			get
-			{
-				return this._Indent_RevisionNo;
-			}
-			set
-			{
-				if ((this._Indent_RevisionNo != value))
-				{
-					this._Indent_RevisionNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Closed", DbType="Bit")]
-		public System.Nullable<bool> Closed
-		{
-			get
-			{
-				return this._Closed;
-			}
-			set
-			{
-				if ((this._Closed != value))
-				{
-					this._Closed = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(100)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MRP", DbType="NVarChar(400)")]
-		public string MRP
-		{
-			get
-			{
-				return this._MRP;
-			}
-			set
-			{
-				if ((this._MRP != value))
-				{
-					this._MRP = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Vendor_Name", DbType="VarChar(300)")]
-		public string Vendor_Name
-		{
-			get
-			{
-				return this._Vendor_Name;
-			}
-			set
-			{
-				if ((this._Vendor_Name != value))
-				{
-					this._Vendor_Name = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PurchaseInvoiceCumGRNList")]
 	public partial class PurchaseInvoiceCumGRNList
 	{
@@ -86483,6 +85952,537 @@ namespace ERP.Models
 				if ((this._Deletelock != value))
 				{
 					this._Deletelock = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PurchaseIndentList")]
+	public partial class PurchaseIndentList
+	{
+		
+		private System.Nullable<int> _USERID;
+		
+		private System.Nullable<int> _SEQ;
+		
+		private System.Nullable<int> _SlNo;
+		
+		private System.Nullable<long> _Indent_Id;
+		
+		private string _Indent_RequisitionNumber;
+		
+		private System.Nullable<System.DateTime> _Indent_RequisitionDate;
+		
+		private System.Nullable<System.DateTime> _Indent_RequisitionDateTimeFormat;
+		
+		private string _Indent_branch;
+		
+		private System.Nullable<decimal> _ValueInBaseCurrency;
+		
+		private System.Nullable<int> _Indent_BranchIdFor;
+		
+		private string _Indent_Purpose;
+		
+		private string _Indent_Company;
+		
+		private string _Indent_FinYear;
+		
+		private string _PurchaseOrder_Number;
+		
+		private string _PurchaseOrder_Date;
+		
+		private System.Nullable<int> _Requisition_Id;
+		
+		private string _EnteredBy;
+		
+		private string _UpdatedBy;
+		
+		private string _LastUpdateOn;
+		
+		private string _Proj_Name;
+		
+		private string _IndentLastEntryStaus;
+		
+		private System.Nullable<bool> _IndentLastEntry;
+		
+		private string _PurchaseIndent_ApproveStatus;
+		
+		private System.Nullable<System.DateTime> _Indent_RevisionDate;
+		
+		private string _Indent_RevisionNo;
+		
+		private System.Nullable<bool> _Closed;
+		
+		private string _Status;
+		
+		private string _MRP;
+		
+		private string _Vendor_Name;
+		
+		public PurchaseIndentList()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="Int")]
+		public System.Nullable<int> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
+		public System.Nullable<int> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SlNo", DbType="Int")]
+		public System.Nullable<int> SlNo
+		{
+			get
+			{
+				return this._SlNo;
+			}
+			set
+			{
+				if ((this._SlNo != value))
+				{
+					this._SlNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_Id", DbType="BigInt")]
+		public System.Nullable<long> Indent_Id
+		{
+			get
+			{
+				return this._Indent_Id;
+			}
+			set
+			{
+				if ((this._Indent_Id != value))
+				{
+					this._Indent_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RequisitionNumber", DbType="NVarChar(100)")]
+		public string Indent_RequisitionNumber
+		{
+			get
+			{
+				return this._Indent_RequisitionNumber;
+			}
+			set
+			{
+				if ((this._Indent_RequisitionNumber != value))
+				{
+					this._Indent_RequisitionNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RequisitionDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Indent_RequisitionDate
+		{
+			get
+			{
+				return this._Indent_RequisitionDate;
+			}
+			set
+			{
+				if ((this._Indent_RequisitionDate != value))
+				{
+					this._Indent_RequisitionDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RequisitionDateTimeFormat", DbType="Date")]
+		public System.Nullable<System.DateTime> Indent_RequisitionDateTimeFormat
+		{
+			get
+			{
+				return this._Indent_RequisitionDateTimeFormat;
+			}
+			set
+			{
+				if ((this._Indent_RequisitionDateTimeFormat != value))
+				{
+					this._Indent_RequisitionDateTimeFormat = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_branch", DbType="VarChar(200)")]
+		public string Indent_branch
+		{
+			get
+			{
+				return this._Indent_branch;
+			}
+			set
+			{
+				if ((this._Indent_branch != value))
+				{
+					this._Indent_branch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValueInBaseCurrency", DbType="Decimal(20,2)")]
+		public System.Nullable<decimal> ValueInBaseCurrency
+		{
+			get
+			{
+				return this._ValueInBaseCurrency;
+			}
+			set
+			{
+				if ((this._ValueInBaseCurrency != value))
+				{
+					this._ValueInBaseCurrency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_BranchIdFor", DbType="Int")]
+		public System.Nullable<int> Indent_BranchIdFor
+		{
+			get
+			{
+				return this._Indent_BranchIdFor;
+			}
+			set
+			{
+				if ((this._Indent_BranchIdFor != value))
+				{
+					this._Indent_BranchIdFor = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_Purpose", DbType="NVarChar(1000)")]
+		public string Indent_Purpose
+		{
+			get
+			{
+				return this._Indent_Purpose;
+			}
+			set
+			{
+				if ((this._Indent_Purpose != value))
+				{
+					this._Indent_Purpose = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_Company", DbType="NVarChar(40)")]
+		public string Indent_Company
+		{
+			get
+			{
+				return this._Indent_Company;
+			}
+			set
+			{
+				if ((this._Indent_Company != value))
+				{
+					this._Indent_Company = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_FinYear", DbType="NVarChar(20)")]
+		public string Indent_FinYear
+		{
+			get
+			{
+				return this._Indent_FinYear;
+			}
+			set
+			{
+				if ((this._Indent_FinYear != value))
+				{
+					this._Indent_FinYear = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Number", DbType="NVarChar(100)")]
+		public string PurchaseOrder_Number
+		{
+			get
+			{
+				return this._PurchaseOrder_Number;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_Number != value))
+				{
+					this._PurchaseOrder_Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Date", DbType="NVarChar(100)")]
+		public string PurchaseOrder_Date
+		{
+			get
+			{
+				return this._PurchaseOrder_Date;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_Date != value))
+				{
+					this._PurchaseOrder_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Requisition_Id", DbType="Int")]
+		public System.Nullable<int> Requisition_Id
+		{
+			get
+			{
+				return this._Requisition_Id;
+			}
+			set
+			{
+				if ((this._Requisition_Id != value))
+				{
+					this._Requisition_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EnteredBy", DbType="VarChar(50)")]
+		public string EnteredBy
+		{
+			get
+			{
+				return this._EnteredBy;
+			}
+			set
+			{
+				if ((this._EnteredBy != value))
+				{
+					this._EnteredBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedBy", DbType="VarChar(50)")]
+		public string UpdatedBy
+		{
+			get
+			{
+				return this._UpdatedBy;
+			}
+			set
+			{
+				if ((this._UpdatedBy != value))
+				{
+					this._UpdatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdateOn", DbType="VarChar(50)")]
+		public string LastUpdateOn
+		{
+			get
+			{
+				return this._LastUpdateOn;
+			}
+			set
+			{
+				if ((this._LastUpdateOn != value))
+				{
+					this._LastUpdateOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(200)")]
+		public string Proj_Name
+		{
+			get
+			{
+				return this._Proj_Name;
+			}
+			set
+			{
+				if ((this._Proj_Name != value))
+				{
+					this._Proj_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndentLastEntryStaus", DbType="VarChar(200)")]
+		public string IndentLastEntryStaus
+		{
+			get
+			{
+				return this._IndentLastEntryStaus;
+			}
+			set
+			{
+				if ((this._IndentLastEntryStaus != value))
+				{
+					this._IndentLastEntryStaus = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndentLastEntry", DbType="Bit")]
+		public System.Nullable<bool> IndentLastEntry
+		{
+			get
+			{
+				return this._IndentLastEntry;
+			}
+			set
+			{
+				if ((this._IndentLastEntry != value))
+				{
+					this._IndentLastEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseIndent_ApproveStatus", DbType="VarChar(100)")]
+		public string PurchaseIndent_ApproveStatus
+		{
+			get
+			{
+				return this._PurchaseIndent_ApproveStatus;
+			}
+			set
+			{
+				if ((this._PurchaseIndent_ApproveStatus != value))
+				{
+					this._PurchaseIndent_ApproveStatus = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RevisionDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Indent_RevisionDate
+		{
+			get
+			{
+				return this._Indent_RevisionDate;
+			}
+			set
+			{
+				if ((this._Indent_RevisionDate != value))
+				{
+					this._Indent_RevisionDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RevisionNo", DbType="NVarChar(400)")]
+		public string Indent_RevisionNo
+		{
+			get
+			{
+				return this._Indent_RevisionNo;
+			}
+			set
+			{
+				if ((this._Indent_RevisionNo != value))
+				{
+					this._Indent_RevisionNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Closed", DbType="Bit")]
+		public System.Nullable<bool> Closed
+		{
+			get
+			{
+				return this._Closed;
+			}
+			set
+			{
+				if ((this._Closed != value))
+				{
+					this._Closed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(100)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MRP", DbType="NVarChar(400)")]
+		public string MRP
+		{
+			get
+			{
+				return this._MRP;
+			}
+			set
+			{
+				if ((this._MRP != value))
+				{
+					this._MRP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Vendor_Name", DbType="VarChar(300)")]
+		public string Vendor_Name
+		{
+			get
+			{
+				return this._Vendor_Name;
+			}
+			set
+			{
+				if ((this._Vendor_Name != value))
+				{
+					this._Vendor_Name = value;
 				}
 			}
 		}
