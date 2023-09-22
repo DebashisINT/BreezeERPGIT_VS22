@@ -28,7 +28,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <%--  <script src="JS/SearchPopup.js"></script>--%>
     <script src="JS/ProductStockIN.js?v00000.007"></script>
-    <script src="JS/PurchaseChallan.js?v=9.1"></script>
+    <script src="JS/PurchaseChallan.js?v=9.2"></script>
     <link href="CSS/PurchaseChallan.css" rel="stylesheet" />
 
     <%--Use for set focus on UOM after press ok on UOM--%>
