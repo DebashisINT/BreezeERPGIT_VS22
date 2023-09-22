@@ -1,6 +1,6 @@
-﻿
-//==========================================================Revision History ============================================================================================
+﻿//==========================================================Revision History ============================================================================================
 // 1.0   Priti   V2.0.38   11-04-2023     0025797:Cannot enter duplicate batch in Same warehouse, for the same product with same batch number
+// 2.0   Priti   V2.0.39   22-09-2023     0026844:Stock In Happening in different Warehouse even if the Branch selection in different
 
 //========================================== End Revision History =======================================================================================================
 
@@ -342,6 +342,9 @@ function BindWarehouse(){
         dataType: "json",
         success: function (r) {
             var ddlWarehouse = $("[id*=ddlWarehouse]");
+            //Rev 2.0
+            ddlWarehouse.removeData();
+             //Rev 2.0 End
             $.each(r.d, function () {
                 ddlWarehouse.append($("<option></option>").val(this['Value']).html(this['Text']));
             });
