@@ -1,7 +1,8 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0   v2.0.37	Priti	27-03-2023	0025690:Alt Qty is not updating as per the main qty while entering Purchase GRN
 // 2.0   v2.0.37	Priti	27-03-2023	0025723:There is multiple rows inserted in warehouse tables while making stock batch wise in same warehouse in Purchase GRN
-
+// 3.0   V2.0.39    Sanchita    22-09-2023      GST is showing Zero in the TAX Window whereas GST in the Grid calculated. Mantis: 26843
+//                                              Session["MultiUOMData"] has been renamed to Session["MultiUOMDataGRN"]
 #endregion//====================================================End Revision History=====================================================================
 
 using BusinessLogicLayer;
@@ -228,7 +229,7 @@ namespace ERP.OMS.Management.Activities
                     //End
                     string branchHierchy = Convert.ToString(HttpContext.Current.Session["userbranchHierarchy"]);
                     Session["TaxChargeRecord"] = null;
-                    Session["MultiUOMData"] = null;
+                    Session["MultiUOMDataGRN"] = null;
                     Session["InlineRemarks"] = null;
                     Task PopulateStockTrialDataTask = new Task(() => GetAllDropDownDetailForPurchaseChallan(branchHierchy));
                     PopulateStockTrialDataTask.RunSynchronously();
@@ -320,7 +321,7 @@ namespace ERP.OMS.Management.Activities
 
                         Fill_GRNDetails(Details_dt);
                         CalculateGRNAmount(Calculate_dt);
-                        Session["MultiUOMData"] = GetMultiUOMData();
+                        Session["MultiUOMDataGRN"] = GetMultiUOMData();
                         grid.DataSource = GetPurchaseChallanGrid(Transaction_dt);
                         grid.DataBind();
 
@@ -1470,7 +1471,7 @@ namespace ERP.OMS.Management.Activities
 
         protected void MultiUOM_DataBinding(object sender, EventArgs e)
         {
-            //DataTable dt = (DataTable)Session["MultiUOMData"];
+            //DataTable dt = (DataTable)Session["MultiUOMDataGRN"];
             //if(dt !=null && dt.Rows.Count >0 )
             //{
             //    DataView dvData = new DataView(dt);
@@ -1500,9 +1501,9 @@ namespace ERP.OMS.Management.Activities
 
                 DataTable MultiUOMData = new DataTable();
 
-                if (Session["MultiUOMData"] != null)
+                if (Session["MultiUOMDataGRN"] != null)
                 {
-                    MultiUOMData = (DataTable)Session["MultiUOMData"];
+                    MultiUOMData = (DataTable)Session["MultiUOMDataGRN"];
                 }
                 else
                 {
@@ -1579,7 +1580,7 @@ namespace ERP.OMS.Management.Activities
                 string UpdateRow = Convert.ToString(e.Parameters.Split('~')[12]);
                 // End of Mantis Issue 24429
 
-                DataTable allMultidataDetails = (DataTable)Session["MultiUOMData"];
+                DataTable allMultidataDetails = (DataTable)Session["MultiUOMDataGRN"];
 
 
                 DataRow[] MultiUoMresult;
@@ -1622,10 +1623,10 @@ namespace ERP.OMS.Management.Activities
 
                 if (Validcheck != "DuplicateUOM")
                 {
-                    if (Session["MultiUOMData"] != null)
+                    if (Session["MultiUOMDataGRN"] != null)
                     {
 
-                        MultiUOMSaveData = (DataTable)Session["MultiUOMData"];
+                        MultiUOMSaveData = (DataTable)Session["MultiUOMDataGRN"];
 
                     }
                     else
@@ -1669,7 +1670,7 @@ namespace ERP.OMS.Management.Activities
                     //End of Mantis Issue 24429
 
                     MultiUOMSaveData.AcceptChanges();
-                    Session["MultiUOMData"] = MultiUOMSaveData;
+                    Session["MultiUOMDataGRN"] = MultiUOMSaveData;
 
                     if (MultiUOMSaveData != null && MultiUOMSaveData.Rows.Count > 0)
                     {
@@ -1692,7 +1693,7 @@ namespace ERP.OMS.Management.Activities
                     else
                     {
                         //MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId);
-                        //Session["MultiUOMData"] = MultiUOMSaveData;
+                        //Session["MultiUOMDataGRN"] = MultiUOMSaveData;
                         grid_MultiUOM.DataSource = MultiUOMSaveData.DefaultView;
                         grid_MultiUOM.DataBind();
                     }
@@ -1706,7 +1707,7 @@ namespace ERP.OMS.Management.Activities
                 string AltUOMKeyqnty = AltUOMKeyValuewithqnty.Split('|')[1];
 
                 string SrlNo = Convert.ToString(e.Parameters.Split('~')[1]);
-                DataTable dt = (DataTable)Session["MultiUOMData"];
+                DataTable dt = (DataTable)Session["MultiUOMDataGRN"];
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -1732,7 +1733,7 @@ namespace ERP.OMS.Management.Activities
                     grid_MultiUOM.JSProperties["cpUpdatedrow"] = UpdateRow;
                     grid_MultiUOM.JSProperties["cpuomid"] = AltUOMKeyValue;
                 }
-                Session["MultiUOMData"] = dt;
+                Session["MultiUOMDataGRN"] = dt;
             }
 
 
@@ -1751,7 +1752,7 @@ namespace ERP.OMS.Management.Activities
               
                 DataTable MultiUOMSaveData = new DataTable();
 
-                DataTable dt = (DataTable)Session["MultiUOMData"];
+                DataTable dt = (DataTable)Session["MultiUOMDataGRN"];
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -1810,11 +1811,11 @@ namespace ERP.OMS.Management.Activities
                     dt.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow, muid);
                 }
                 
-                Session["MultiUOMData"] = dt;
-                MultiUOMSaveData = (DataTable)Session["MultiUOMData"];
+                Session["MultiUOMDataGRN"] = dt;
+                MultiUOMSaveData = (DataTable)Session["MultiUOMDataGRN"];
 
                 MultiUOMSaveData.AcceptChanges();
-                Session["MultiUOMData"] = MultiUOMSaveData;
+                Session["MultiUOMDataGRN"] = MultiUOMSaveData;
 
                 if (MultiUOMSaveData != null && MultiUOMSaveData.Rows.Count > 0)
                 {
@@ -1839,7 +1840,7 @@ namespace ERP.OMS.Management.Activities
                 string DetailsId = Convert.ToString(e.Parameters.Split('~')[3]);
 
                 DataRow[] MultiUoMresult;
-                DataTable dt = (DataTable)Session["MultiUOMData"];
+                DataTable dt = (DataTable)Session["MultiUOMDataGRN"];
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -1869,7 +1870,7 @@ namespace ERP.OMS.Management.Activities
                         }
                     }
                 }
-                Session["MultiUOMData"] = dt;
+                Session["MultiUOMDataGRN"] = dt;
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     DataView dvData = new DataView(dt);
@@ -1896,7 +1897,7 @@ namespace ERP.OMS.Management.Activities
             else if (SpltCmmd == "CheckMultiUOmDetailsQuantity")
             {
                 string SrlNo = Convert.ToString(e.Parameters.Split('~')[1]);
-                DataTable dt = (DataTable)Session["MultiUOMData"];
+                DataTable dt = (DataTable)Session["MultiUOMDataGRN"];
                 string detailsId = Convert.ToString(e.Parameters.Split('~')[2]);
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -1914,17 +1915,17 @@ namespace ERP.OMS.Management.Activities
                         item.Table.Rows.Remove(item);
                     }
                 }
-                Session["MultiUOMData"] = dt;
+                Session["MultiUOMDataGRN"] = dt;
             }
             // Mantis Issue 24429
             else if (SpltCmmd == "SetBaseQtyRateInGrid")
             {
                 DataTable dt = new DataTable();
 
-                if (Session["MultiUOMData"] != null)
+                if (Session["MultiUOMDataGRN"] != null)
                 {
                     string SrlNo = Convert.ToString(e.Parameters.Split('~')[1]);
-                    dt = (DataTable)HttpContext.Current.Session["MultiUOMData"];
+                    dt = (DataTable)HttpContext.Current.Session["MultiUOMDataGRN"];
                     DataRow[] MultiUoMresult = dt.Select("SrlNo ='" + SrlNo + "' and UpdateRow ='True'");
 
                     Int64 SelNo = Convert.ToInt64(MultiUoMresult[0]["SrlNo"]);
@@ -2380,9 +2381,9 @@ namespace ERP.OMS.Management.Activities
                 //datatable for MultiUOm start chinmoy 14-01-2020
                 DataTable MultiUOMDetails = new DataTable();
 
-                if (Session["MultiUOMData"] != null)
+                if (Session["MultiUOMDataGRN"] != null)
                 {
-                    DataTable MultiUOM = (DataTable)Session["MultiUOMData"];
+                    DataTable MultiUOM = (DataTable)Session["MultiUOMDataGRN"];
                     // Mantis Issue 24429
                     //MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "DetailsId");
                     MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "DetailsId", "BaseRate", "AltRate", "UpdateRow");
@@ -2660,7 +2661,7 @@ namespace ERP.OMS.Management.Activities
 
 
 
-                            if (Session["MultiUOMData"] != null)
+                            if (Session["MultiUOMDataGRN"] != null)
                             {
                                 if (strUOMQuantity != null)
                                 {
@@ -2672,7 +2673,7 @@ namespace ERP.OMS.Management.Activities
                                     }
                                 }
                             }
-                            else if (Session["MultiUOMData"] == null)
+                            else if (Session["MultiUOMDataGRN"] == null)
                             {
                                 validate = "checkMultiUOMData";
                                 grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
@@ -3022,7 +3023,7 @@ namespace ERP.OMS.Management.Activities
                     DataTable MultiUOM = new DataTable();
                     MultiUOM = GetSelectedMultiUOMList(QuoComponent, QuoId);
 
-                    Session["MultiUOMData"] = MultiUOM;
+                    Session["MultiUOMDataGRN"] = MultiUOM;
                     DataTable Transaction_dt = dt_QuotationDetails.Tables[0];
                     DataTable ProductTax_dt = dt_QuotationDetails.Tables[1];
                     DataTable Warehouse_dt = dt_QuotationDetails.Tables[2];
@@ -3272,9 +3273,9 @@ namespace ERP.OMS.Management.Activities
             decimal sum = 0;
             string UomDetailsid = "";
             DataTable MultiUOMData = new DataTable();
-            if (Session["MultiUOMData"] != null)
+            if (Session["MultiUOMDataGRN"] != null)
             {
-                MultiUOMData = (DataTable)Session["MultiUOMData"];
+                MultiUOMData = (DataTable)Session["MultiUOMDataGRN"];
                 for (int i = 0; i < MultiUOMData.Rows.Count; i++)
                 {
                     DataRow dr = MultiUOMData.Rows[i];
@@ -3885,6 +3886,14 @@ namespace ERP.OMS.Management.Activities
                             }
                         }
 
+                        // Rev 3.0
+                        if (Convert.ToDecimal(dr["TaxRates_Rate"]) != 0)
+                        {
+                            obj.TaxField = Convert.ToString(dr["TaxRates_Rate"]);
+                            obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+                        }
+                        // End of Rev 3.0
+
                         DataRow[] filtronexsisting1 = TaxRecord.Select("TaxCode='" + obj.Taxes_ID + "' and SlNo='" + Convert.ToString(slNo) + "'");
                         if (filtronexsisting1.Length > 0)
                         {
@@ -4323,11 +4332,11 @@ namespace ERP.OMS.Management.Activities
 
             DataTable dt = new DataTable();
             int SLVal = 0;
-            if (HttpContext.Current.Session["MultiUOMData"] != null)
+            if (HttpContext.Current.Session["MultiUOMDataGRN"] != null)
             {
                 // Mantis Issue 24429
                 //DataRow[] MultiUoMresult;
-                //dt = (DataTable)HttpContext.Current.Session["MultiUOMData"];
+                //dt = (DataTable)HttpContext.Current.Session["MultiUOMDataGRN"];
                 //if (val == "1")
                 //{
                 //    MultiUoMresult = dt.Select("DetailsId ='" + SLNo + "'");
