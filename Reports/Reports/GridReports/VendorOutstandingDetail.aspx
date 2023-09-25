@@ -459,7 +459,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         .calendar-icon {
             position: absolute;
             bottom: 7px;
-            right: 20px;
+            right: 15px;
             z-index: 0;
             cursor: pointer;
         }
@@ -506,7 +506,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -730,6 +730,17 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             max-width: 100% !important;
         }*/
         /*Rev end 1.0*/
+
+        .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12
+        {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+        .w-100px
+        {
+            width: 100%;
+        }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -916,6 +927,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     </asp:DropDownList>
                 </div>
             </div>
+
+            
+
+            <%--<div class="clear"></div>--%>
+
             <div class="col-md-3 col-lg-2">
                 <span style="display: inline-block;"><dxe:ASPxLabel ID="lbl_Vendor" style="color: #b5285f;" runat="server" Text="Vendor/Transporter:">
                 </dxe:ASPxLabel></span>                        
@@ -930,27 +946,25 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     <img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>--%>
             </div>
             <%--<asp:CheckBox runat="server" ID="chkallvend" Checked="false" Text="All Vendor" ClientInstanceName="Cchkallvend"/>--%>
-            <div class="col-md-2 col-lg-1" style="padding:0;padding-top: 30px;">                
+            <div class="col-md-2 col-lg-1" style="padding:0;padding-top: 26px;">                
                 <dxe:ASPxCheckBox ID="chkallvend" runat="server" Checked="false" Text="All Vendors" ClientInstanceName="Cchkallvend">
                     <ClientSideEvents CheckedChanged="CheckConsAllVend" />
                 </dxe:ASPxCheckBox> 
             </div>
-            <div class="col-md-2 col-lg-1" style="padding:0;padding-top: 30px;">
+            
+            <%--<div class="col-md-2 col-lg-2" style="padding-top: 33px;">
+                <asp:CheckBox runat="server" ID="chkduedate" Checked="false" Text="Show Due Date" />
+            </div>--%>
+            
+
+            <div class="col-md-2 col-lg-2" style="padding:0;padding-top: 26px;">
                 <dxe:ASPxCheckBox ID="chkalltransporter" runat="server" Checked="false" Text="All Transporters" ClientInstanceName="Cchkalltransporter">
                     <ClientSideEvents CheckedChanged="CheckConsAllTransporter" />
                 </dxe:ASPxCheckBox> 
              </div>
-            <%--<div class="col-md-2 col-lg-2" style="padding-top: 33px;">
-                <asp:CheckBox runat="server" ID="chkduedate" Checked="false" Text="Show Due Date" />
-            </div>--%>
             <div class="clear"></div>
-            
-           <%-- <div class="col-md-2 col-lg-2" style="padding-top: 18px;">
-                <asp:CheckBox runat="server" ID="chkprintdays" Checked="false" Text="Show Days" />
-            </div>--%>
 
-            <div class="col-md-12">
-                <div class="col-md-2 marginTop8" style="padding:0;padding-top: 1px; width:205px;margin-right: 15px;" id="divProj">
+            <div class="col-md-2 marginTop8" style="padding-top: 1px;" id="divProj">
                 <div style="color: #b5285f; /*font-weight: bold;*/" class="clsTo">
                     <asp:Label ID="lblProj" runat="Server" Text="Project : " CssClass="mylabel1"></asp:Label>
                 </div>
@@ -1006,27 +1020,84 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     <img id="3gridHistory_DXPEForm_efnew_DXEFL_DXEditor1112_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
                 <asp:HiddenField ID="hdnSelectedProjects" runat="server" />
             </div>
-                <div class="col-md-10 marginTop8 divPad"  style="padding-top: 20px; padding-left:0;">
-                <table class="paddingTbl">
+            
+           <%-- <div class="col-md-2 col-lg-2" style="padding-top: 18px;">
+                <asp:CheckBox runat="server" ID="chkprintdays" Checked="false" Text="Show Days" />
+            </div>--%>
+
+            <%--<div class="col-md-2 col-lg-2" style="padding:0;padding-top: 26px;">
+                <dxe:ASPxCheckBox runat="server" ID="ASPxCheckBox1" Checked="false" Text="Show Due Date">
+                    </dxe:ASPxCheckBox>
+            </div>
+
+            <div class="col-md-2 col-lg-2" style="padding:0;padding-top: 26px;">
+                <dxe:ASPxCheckBox runat="server" ID="ASPxCheckBox2" Checked="false" Text="Show Days">
+                    </dxe:ASPxCheckBox>
+            </div>
+
+            <div class="col-md-2 col-lg-2" style="padding:0;padding-top: 26px;">
+                <dxe:ASPxCheckBox runat="server" ID="ASPxCheckBox3" Checked="false" Text="Include Cash/Bank">
+                    </dxe:ASPxCheckBox>
+            </div>
+
+            <div class="col-md-2 col-lg-2" style="padding:0;padding-top: 26px;">
+                <dxe:ASPxCheckBox runat="server" ID="ASPxCheckBox4" Checked="false" Text="Include Journal">
+                    </dxe:ASPxCheckBox>
+            </div>
+
+            <div class="col-md-2 col-lg-2" style="padding:0;padding-top: 26px;">
+                <dxe:ASPxCheckBox runat="server" ID="ASPxCheckBox5" Checked="false" Text="Exclude Debit/Credit Note">
+                    </dxe:ASPxCheckBox>
+            </div>
+
+            <div class="col-md-2 col-lg-2" style="padding:0;padding-top: 26px;">
+                <dxe:ASPxCheckBox runat="server" ID="ASPxCheckBox6" Checked="false" Text="Retention">
+                    </dxe:ASPxCheckBox>
+            </div>--%>
+
+            <div class="col-md-9">
+                
+                <div class=" marginTop8 divPad"  style="padding-top: 20px; padding-left:0;">
+                <table class="paddingTbl w-100px">
                 <tr>
                     <%--<td><asp:CheckBox runat="server" ID="chkduedate" Checked="false" Text="Show Due Date" /></td>
                     <td><asp:CheckBox runat="server" ID="chkprintdays" Checked="false" Text="Show Days" /></td>
                     <td><asp:CheckBox runat="server" ID="chkcb" Checked="false" Text="Include Cash/Bank" /></td>
                     <td><asp:CheckBox runat="server" ID="chkjv" Checked="false" Text="Include Journal" /></td>
                     <td><asp:CheckBox runat="server" ID="chkdncn" Checked="false" Text="Exclude Debit/Credit Note" /></td>--%>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkduedate" Checked="false" Text="Show Due Date">
-                    </dxe:ASPxCheckBox></td>
+                    <td>
+                        <dxe:ASPxCheckBox runat="server" ID="chkduedate" Checked="false" Text="Show Due Date">
+                    </dxe:ASPxCheckBox>
+
+                    </td>
+
                     <td><dxe:ASPxCheckBox runat="server" ID="chkprintdays" Checked="false" Text="Show Days">
                     </dxe:ASPxCheckBox></td>
+
                     <td><dxe:ASPxCheckBox runat="server" ID="chkcb" Checked="false" Text="Include Cash/Bank">
                     </dxe:ASPxCheckBox></td>
+
                     <td><dxe:ASPxCheckBox runat="server" ID="chkjv" Checked="false" Text="Include Journal">
                     </dxe:ASPxCheckBox></td>
+
                     <td><dxe:ASPxCheckBox runat="server" ID="chkdncn" Checked="false" Text="Exclude Debit/Credit Note">
                     </dxe:ASPxCheckBox></td>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkRetention" Checked="false" Text="Retention">
+                        <td><dxe:ASPxCheckBox runat="server" ID="chkRetention" Checked="false" Text="Retention">
                     </dxe:ASPxCheckBox></td>
-                    <td >
+
+                    
+                </tr>
+                    
+            </table>
+              </div>
+          </div>
+                <div class="clear"></div>
+            <div class="col-md-12 marginTop8 divPad"  style="padding-top: 20px; padding-left:10px;">
+                <%--<table class="paddingTbl">
+                    <tr>
+                        
+
+                    <td >--%>
                     <button id="btnShow" class="btn btn-success" type="button" onclick="btn_ShowRecordsClick(this);">Show</button>
                     <% if (rights.CanExport)
                         { %> 
@@ -1042,11 +1113,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <asp:ListItem Value="3">CSV</asp:ListItem>
                             </asp:DropDownList>
                         <% } %>
-                    </td>
-                </tr>
-            </table>
-              </div>
+                    <%--</td>
+                    </tr>
+                </table>--%>
             </div>
+
+            <%--</div>--%>
             
              
            <%-- <div class="col-md-2" style="padding:0;padding-top: 27px;">

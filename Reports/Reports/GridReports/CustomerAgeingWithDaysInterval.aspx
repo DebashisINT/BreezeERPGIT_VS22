@@ -868,7 +868,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <%--Rev end 1.0--%>
             </div>
 
-           <div class="col-md-1">
+           <div class="col-md-2">
                 <label style="color: #b5285f; font-weight: bold;">
                     <dxe:ASPxLabel ID="lbl_NoofDays" runat="server" Text="No. of Days : " Width="120px">
                     </dxe:ASPxLabel>
@@ -879,7 +879,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                  </dxe:ASPxTextBox>
             </div>
             
-           <div class="col-md-1">
+           <div class="col-md-2">
                 <label style="color: #b5285f; font-weight: bold;">
                     <dxe:ASPxLabel ID="ASPxLabel1" runat="server" Text="Days Interval : " Width="120px">
                     </dxe:ASPxLabel>
@@ -888,6 +888,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                      <MaskSettings Mask="<0..999>" AllowMouseWheel="false" />
                  </dxe:ASPxTextBox>
             </div>
+
+            
+            
+            <div class="clear"></div>
 
             <div class="col-md-2 col-lg-2 ">
                 <span style=" display: inline-block;">
@@ -903,13 +907,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <span id="MandatorysCustomer" style="display: none" class="validclass">
                     <img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
             </div>
-            <div class="col-md-1" style="padding:0;padding-top: 25px;">
+            <div class="col-md-1" style="padding:0;padding-top: 25px; width: 150px;">
                 <dxe:ASPxCheckBox ID="chkallcust" runat="server" Checked="false" Text="All Customers" ClientInstanceName="Cchkallcust">
                     <ClientSideEvents CheckedChanged="CheckConsAllCust" />
                 </dxe:ASPxCheckBox> 
             </div>
-            
-            <div class="clear"></div>
+
             <div class="col-md-2 pl-10 pt-15">
                 <dxe:ASPxCheckBox ID="chkcb" runat="server" Checked="false" Text="Include Cash/Bank"></dxe:ASPxCheckBox>
             </div>

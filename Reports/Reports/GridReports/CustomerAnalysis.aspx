@@ -481,7 +481,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -915,13 +915,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <span id="MandatorysCustomer" style="display: none" class="validclass">
                     <img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
             </div>
-            <div class="col-md-2 col-lg-1" style="padding:0;padding-top: 33px;">
+            <div class="col-md-2 col-lg-1" style="padding:0;padding-top: 30px; width: 110px;">
                 <%--<asp:CheckBox runat="server" ID="chkallcust" Checked="false" Text="All Customer" />--%>
                 <dxe:ASPxCheckBox runat="server" ID="chkallcust" Checked="false" Text="All Customer" ClientInstanceName="Cchkallcust">
                      <ClientSideEvents CheckedChanged="CheckAllCust" />
                 </dxe:ASPxCheckBox>
             </div>
-            <div class="col-md-2 col-lg-2" style="padding-top: 33px;">
+            <div class="col-md-2 col-lg-2" style="padding-top: 30px; width: 155px;">
                 <%--<asp:CheckBox runat="server" ID="chkduedate" Checked="false" Text="Show Due Date" />--%>
                 <dxe:ASPxCheckBox runat="server" ID="chkduedate" Checked="false" Text="Show Due Date">
                 </dxe:ASPxCheckBox>
@@ -1003,10 +1003,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     </dxe:ASPxCheckBox></td>
                     <td><dxe:ASPxCheckBox runat="server" ID="chkdncn" Checked="false" Text="Exclude Debit/Credit Note">
                     </dxe:ASPxCheckBox></td>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkSoNoDt" Checked="false" Text="Show Order No & Date">
-                    </dxe:ASPxCheckBox></td>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkPartyOrdNoDt" Checked="false" Text="Show Party Order No & Date">
-                    </dxe:ASPxCheckBox></td>                    
+                                       
                 </tr>
             </table>
             </div>
@@ -1014,6 +1011,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <div class="col-md-10">
                 <table class="paddingTbl marginTop10">
                     <tr>
+                        <td><dxe:ASPxCheckBox runat="server" ID="chkSoNoDt" Checked="false" Text="Show Order No & Date">
+                    </dxe:ASPxCheckBox></td>
+                    <td><dxe:ASPxCheckBox runat="server" ID="chkPartyOrdNoDt" Checked="false" Text="Show Party Order No & Date">
+                    </dxe:ASPxCheckBox></td> 
                         <td >
                             <button id="btnShow" class="btn btn-success" type="button" onclick="btn_ShowRecordsClick(this);">Show</button>
                         <% if (rights.CanExport)

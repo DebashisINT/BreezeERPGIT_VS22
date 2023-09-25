@@ -486,7 +486,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -918,20 +918,20 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <span id="MandatorysCustomer" style="display: none" class="validclass">
                     <img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
             </div>
-            <div class="col-md-1" style="padding: 0; padding-top: 21px;">
+            <div class="col-md-1" style="padding: 0; padding-top: 21px; width: 115px;">
                 <%--<asp:CheckBox runat="server" ID="chkallcust" Checked="false" Text="All Customer" />--%>
                 <dxe:ASPxCheckBox runat="server" ID="chkallcust" Checked="false" Text="All Customer" ClientInstanceName="Cchkallcust">
                      <ClientSideEvents CheckedChanged="CheckAllCust" />
                 </dxe:ASPxCheckBox>
             </div>
-            <div class="col-md-2" style="padding:0;padding-top: 21px;">
+            <div class="col-md-2" style="padding:0;padding-top: 21px; width: 150px;">
                 <%--<asp:CheckBox runat="server" ID="chkcb" Checked="false" Text="Include Cash/Bank" />--%>
                 <td><dxe:ASPxCheckBox runat="server" ID="chkcb" Checked="false" Text="Include Cash/Bank">
                     </dxe:ASPxCheckBox></td>
             </div>
             <div class="clear"></div>
             <div class="col-md-12">
-            <div class="col-md-2 lblmTop8" style="padding:0;padding-top: 1px; width:205px;margin-right: 15px;" id="divProj">
+            <div class="col-md-2 lblmTop8" style="padding-left:0;padding-top: 1px;" id="divProj">
                 <div style="color: #b5285f; /*font-weight: bold;*/" class="clsTo">
                     <asp:Label ID="lblProj" runat="Server" Text="Project : " CssClass="mylabel1"></asp:Label>
                 </div>
@@ -987,7 +987,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     <img id="3gridHistory_DXPEForm_efnew_DXEFL_DXEditor1112_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
                 <asp:HiddenField ID="hdnSelectedProjects" runat="server" />
             </div>
-            <div class="col-md-10 marginTop8 divPad" style="padding-top: 20px; padding-left:0;">
+            <div class="col-md-9 marginTop8 divPad" style="padding-top: 20px; padding-left:0;">
                 <table class="paddingTbl">
                 <tr>
                     <%--<td><asp:CheckBox runat="server" ID="chkjv" Checked="false" Text="Include Journal" /></td>

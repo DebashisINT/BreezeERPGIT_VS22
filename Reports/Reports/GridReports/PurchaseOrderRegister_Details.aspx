@@ -379,7 +379,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -790,17 +790,19 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
                 <%--Rev end 1.0--%>
             </div>
-           <div class="col-md-2" style="margin-top:23px">
+           <div class="col-md-3" style="margin-top:23px">
              <%--<asp:CheckBox runat="server" ID="chkShowTermsnCondition" Checked="false" Text="Show Terms & Condition" />--%>
             <dxe:ASPxCheckBox runat="server" ID="ShowTermsnCondition" Checked="false" Text="Show Terms & Condition">
             </dxe:ASPxCheckBox>
             </div>
+            
+             <div class="clear"></div>
             <div class="col-md-2" style="margin-top:23px">
              <dxe:ASPxCheckBox runat="server" ID="ConsIPO" Checked="false" Text="Consider Import Purchase" >
                  <ClientSideEvents CheckedChanged="CheckConsIPO" />
              </dxe:ASPxCheckBox>
             </div>
-             <div class="clear"></div>
+
             <div class="col-md-3" style="margin-top:23px">
                 <dxe:ASPxCheckBox runat="server" ID="ShowIPOTC" Checked="false" ClientEnabled="false" Text="Show Import Purchase - Terms & Condition" ClientInstanceName="CShowIPOTC">
                 </dxe:ASPxCheckBox>
@@ -838,13 +840,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </table>
             </div>
 
-            <div class="col-md-2">
+            <%--<div class="col-md-2">
                 <label style="margin-bottom: 0">&nbsp</label>
                 <div class="">
                     
-                    <%-- <% } %>--%>
+                    
                 </div>
-            </div>
+            </div>--%>
         </div>
         <table class="TableMain100">
             <tr>

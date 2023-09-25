@@ -459,7 +459,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -676,6 +676,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             position: fixed !important;
             top: 10% !important;
             left: 10% !important;
+        }
+
+        #ddlbranchHO
+        {
+            padding-right: 24px !important;
         }
 
         @media only screen and (max-width: 1450px) and (min-width: 1300px)
