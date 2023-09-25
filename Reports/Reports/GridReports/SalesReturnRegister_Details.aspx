@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                22-02-2023        2.0.36           Pallab              25575 : Report pages design modification
+2.0                21-09-2023        2.0.39           Pallab              26839: Sales Return Register-Details module zoom popup position issue and after click invoice column console error fix
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesReturnRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.SalesReturnRegister_Details" %>
@@ -179,6 +180,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
 
         function OpenPOSDetails(invoice, type) {
+           /*Rev 2.0*/
+            var url = '';
+            /*Rev end 2.0*/
            if (type == 'SI') {
                url = '/OMS/Management/Activities/SalesReturn.aspx?key=' + invoice + '&IsTagged=1&req=V&type=' + type;
             }
@@ -190,8 +194,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             }
             else if (type == 'USR') {
                 url = '/OMS/Management/Activities/UndeliveryReturn.aspx?key=' + invoice + '&IsTagged=1&req=V&type=' + type;
-            }
-
+           }
+           /*Rev 2.0*/
+           else if (type == 'RDEC') {
+               url = '/OMS/Management/Activities/RateDifferenceEntryCustomer.aspx?key=' + invoice + '&req=V&type=' + type;
+           }
+           /*Rev end 2.0*/
             popupdetails.SetContentUrl(url);
             popupdetails.Show();
         }
@@ -372,7 +380,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {
@@ -586,6 +594,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             max-width: 100% !important;
         }*/
         /*Rev end 1.0*/
+
+        #ASPXPopupControl2_PW-1
+        {
+            top: 150px !important;
+            position: fixed !important;
+        }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {

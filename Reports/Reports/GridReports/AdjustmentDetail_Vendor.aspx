@@ -1,7 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                21-02-2023        2.0.36           Pallab              25575 : Report pages design modification
-2.0                26-04-2023        2.0.38           Pallab              25937: Adjustment Listing - Vendors module zoom popup upper part visible issue fix
+2.0                26-04-2023        2.0.38           Pallab              25937 : Adjustment Listing - Vendors module zoom popup upper part visible issue fix
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="AdjustmentDetail_Vendor.aspx.cs" Inherits="Reports.Reports.GridReports.AdjustmentDetail_Vendor" %>
@@ -410,7 +410,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
         .simple-select {

@@ -336,6 +336,11 @@
         .plhead a.collapsed .fa-minus-circle{
             display:none;
         }
+
+        .mb-10
+        {
+            margin-bottom: 10px !important;
+        }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -410,7 +415,7 @@
           </div>
         </div>
     </div>
-    <div class="form_main">
+    <div class="form_main mb-10">
         <asp:HiddenField runat="server" ID="hdndaily" />
         <asp:HiddenField runat="server" ID="hdtid" />
         <div class="row">

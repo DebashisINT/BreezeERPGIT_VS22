@@ -157,8 +157,8 @@
         }
         .simple-select::after
         {
-            top: 7px;
-            right: -2px;
+            top: 26px;
+            right: 13px;
         }
         .checkbox label
         {
@@ -167,6 +167,26 @@
         .checkbox-group label:before
         {
             top: 1px;
+        }
+
+        #ASPxFromDate, #ASPxToDate
+        {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        #ASPxFromDate_B-1, #ASPxToDate_B-1
+        {
+            background: transparent !important;
+            border: none;
+            width: 30px;
+            padding: 10px !important;
+        }
+
+        #ASPxFromDate_B-1Img, #ASPxToDate_B-1Img
+        {
+            display: none;
         }
     </style>
     <%--Rev end 1.0--%>
@@ -265,7 +285,7 @@
                 <%--Rev end 1.0--%>
                 </div>
             </div>
-            <div class="col-md-2" style="padding:0;padding-top: 12px;">
+            <div class="col-md-2" style="padding:0;padding-top: 20px;">
             <table>
                 <tr>
                     <td  style="padding-left:15px;">

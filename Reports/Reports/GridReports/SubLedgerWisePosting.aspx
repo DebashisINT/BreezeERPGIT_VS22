@@ -803,6 +803,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 max-width: 97%  !important;
         }
         /*Rev end 1.0*/
+
+        .aaadv table
+        {
+            max-width: 100% !important;
+        }
+
+        @media only screen and (max-width: 1380px) and (min-width: 1300px)
+        {
+            #ASPXPopupControl2_PW-1
+            {
+                width: 1250px !important;
+            }
+        }
+
+        
     </style>
     <script type="text/javascript">
         $(document).ready(function () {

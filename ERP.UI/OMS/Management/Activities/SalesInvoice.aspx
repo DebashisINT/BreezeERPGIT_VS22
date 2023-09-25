@@ -274,6 +274,12 @@
         }
         /*End of Mantis Issue 24428*/
 
+        #lookup_quotation_DDD_PW-1
+        {
+            left: -12% !important;
+            right: 50px !important;
+        }
+
     </style>
 
     <script>
@@ -1038,6 +1044,10 @@ $(document).ready(function () {
                 input[type="radio"], input[type="checkbox"] {
                     margin-right: 0px;
                 }
+                #lookup_quotation_DDD_PW-1
+                {
+                    left: -60% !important;
+                }
             }
             /*Rev 5.0: for parameter alignment issue fix*/
             .mlableWh
@@ -1396,33 +1406,33 @@ $(document).ready(function () {
                                                                 OnDataBinding="lookup_quotation_DataBinding"
                                                                 KeyFieldName="ComponentID" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" MultiTextSeparator=", ">
                                                                 <Columns>
-                                                                    <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="60" Caption=" " />
-                                                                    <dxe:GridViewDataColumn FieldName="ComponentNumber" Visible="true" VisibleIndex="1" Caption="Number" Width="180" Settings-AutoFilterCondition="Contains">
+                                                                    <dxe:GridViewCommandColumn ShowSelectCheckbox="True" VisibleIndex="0" Width="40" Caption=" " />
+                                                                    <dxe:GridViewDataColumn FieldName="ComponentNumber" Visible="true" VisibleIndex="1" Caption="Number" Width="140" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
                                                                     <dxe:GridViewDataColumn FieldName="ComponentDate" Visible="true" VisibleIndex="2" Caption="Date" Width="100" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
-                                                                    <dxe:GridViewDataColumn FieldName="CustomerName" Visible="true" VisibleIndex="3" Caption="Customer Name" Width="150" Settings-AutoFilterCondition="Contains">
+                                                                    <dxe:GridViewDataColumn FieldName="CustomerName" Visible="true" VisibleIndex="3" Caption="Customer Name" Width="140" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
 
                                                                     <dxe:GridViewDataColumn FieldName="RevNo" Visible="true" VisibleIndex="4" Caption="Revision No." Width="100" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
-                                                                    <dxe:GridViewDataColumn FieldName="RevDate" Visible="true" VisibleIndex="5" Caption="Revision Date" Width="80" Settings-AutoFilterCondition="Contains">
+                                                                    <dxe:GridViewDataColumn FieldName="RevDate" Visible="true" VisibleIndex="5" Caption="Revision Date" Width="90" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
-                                                                    <dxe:GridViewDataColumn FieldName="ReferenceName" Visible="true" VisibleIndex="6" Caption="Reference" Width="150" Settings-AutoFilterCondition="Contains">
+                                                                    <dxe:GridViewDataColumn FieldName="ReferenceName" Visible="true" VisibleIndex="6" Caption="Reference" Width="100" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
-                                                                    <dxe:GridViewDataColumn FieldName="BranchName" Visible="true" VisibleIndex="7" Caption="Unit" Width="150" Settings-AutoFilterCondition="Contains">
+                                                                    <dxe:GridViewDataColumn FieldName="BranchName" Visible="true" VisibleIndex="7" Caption="Unit" Width="140" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
-                                                                    <dxe:GridViewDataColumn FieldName="Order_OANumber" Visible="true" VisibleIndex="8" Caption="Party Order No." Width="150" Settings-AutoFilterCondition="Contains">
+                                                                    <dxe:GridViewDataColumn FieldName="Order_OANumber" Visible="true" VisibleIndex="8" Caption="Party Order No." Width="130" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
-                                                                    <dxe:GridViewDataColumn FieldName="Order_OADate" Visible="true" VisibleIndex="9" Caption="Party Order Date" Width="150" Settings-AutoFilterCondition="Contains">
+                                                                    <dxe:GridViewDataColumn FieldName="Order_OADate" Visible="true" VisibleIndex="9" Caption="Party Order Date" Width="140" Settings-AutoFilterCondition="Contains">
                                                                         <Settings AutoFilterCondition="Contains" />
                                                                     </dxe:GridViewDataColumn>
                                                                 </Columns>
