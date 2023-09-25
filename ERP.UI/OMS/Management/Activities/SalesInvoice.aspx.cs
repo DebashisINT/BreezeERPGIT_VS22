@@ -1,7 +1,8 @@
 ﻿/******************************************************************************************************************************************************************************
- * Rev 1.0      Sanchita      V2.0.37       Tolerance feature required in Sales Order Module Refer: 25223   -- WORK REVERTED *                                          
- * Rev 2.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
- * Rev 3.0      Priti         V2.0.39       Sales Invoice calculated on field is showing wrong value for GST calculation. Mantis : 0026479   
+ * Rev 1.0      Sanchita      V2.0.37               Tolerance feature required in Sales Order Module Refer: 25223   -- WORK REVERTED *                                          
+ * Rev 2.0      Sanchita      V2.0.38               Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
+ * Rev 3.0      Priti         V2.0.39               Sales Invoice calculated on field is showing wrong value for GST calculation. Mantis : 0026479   
+ * Rev 4.0      Priti         V2.0.39   25-09-2023  The Shipping Contact Person & Shipping Phone is not carried forward from Sales Order to Sales Invoice
  ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -11421,7 +11422,12 @@ namespace ERP.OMS.Management.Activities
                               Distance = Convert.ToDecimal(dr["Distance"]),
                               GSTIN = Convert.ToString(dr["GSTIN"]),
                               Landmark = Convert.ToString(dr["Landmark"]),
-                              PosForGst = Convert.ToString(dr["PosForGst"])
+                              PosForGst = Convert.ToString(dr["PosForGst"]),
+
+                              //REV 4.0
+                              ContactName = Convert.ToString(dr["ContactName"]),
+                              Phone = Convert.ToString(dr["Phone"])
+                              //REV 4.0 END
 
                           }).ToList();
                 return Detail;
@@ -11865,6 +11871,10 @@ namespace ERP.OMS.Management.Activities
         public Int64 ProjectId { get; set; }
         public string ProjectCode { get; set; }
 
+        //REV 4.0
+        public string ContactName { get; set; }
+        public string Phone { get; set; }
+        //REV 4.0 END
     }
     //Mantis Issue 24881
     public class EInvGSTNDEtails

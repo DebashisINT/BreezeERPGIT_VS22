@@ -703,6 +703,10 @@ function PopulateBillingShippingAddress(ReturnDetails) {
         GetPosForGstValue();
         cddl_PosGst.SetValue(BillingDetails[0].PosForGst);
         // clookup_Project.gridView.SelectItemsByKey(BillingDetails[0].ProjectCode);
+        //REV 4.0
+        ctxtConPerson.SetText(BillingDetails[0].ContactName);
+        $('#Salesbillingphone').val(BillingDetails[0].Phone);
+        //REV 4.0 END
     }
     else {
         ctxtAddress1.SetText('');
@@ -727,6 +731,10 @@ function PopulateBillingShippingAddress(ReturnDetails) {
         //chinmoy commeneted
         // GetPosForGstValue();
         // cddl_PosGst.SetText('');
+        //REV 4.0
+        ctxtConPerson.SetText("");
+        $('#Salesbillingphone').val("");
+        //REV 4.0 END
     }
 
     //Shipping Address Details
@@ -762,6 +770,11 @@ function PopulateBillingShippingAddress(ReturnDetails) {
         GetPosForGstValue();
         cddl_PosGst.SetValue(ShippingDetails[0].PosForGst);
         //clookup_Project.gridView.SelectItemsByKey(ShippingDetails[0].ProjectCode);
+
+        //REV 4.0
+        ctxtShipConPerson.SetText(ShippingDetails[0].ContactName);
+        ctxtShipPhone.SetText(ShippingDetails[0].Phone);
+        //REV 4.0 END
     }
     else {
         ctxtsAddress1.SetText('');
@@ -788,6 +801,11 @@ function PopulateBillingShippingAddress(ReturnDetails) {
         //chinmoy commented
         // GetPosForGstValue();
         // cddl_PosGst.SetText('');
+
+        //REV 4.0
+        ctxtShipConPerson.SetText('');
+        ctxtShipPhone.SetText('');
+        //REV 4.0 END
 
     }
 
