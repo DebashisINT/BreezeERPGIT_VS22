@@ -357,7 +357,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <ClientSideEvents EndCallback="OnEndCallback" RowClick="gridRowclick" />
                 <SettingsBehavior ConfirmDelete="True" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
                 <SettingsContextMenu Enabled="true"></SettingsContextMenu>
-                <SettingsCookies Enabled="true" StorePaging="true" Version="4.0" />
+                <SettingsCookies Enabled="true" StorePaging="true" Version="5.0" />
                 <Styles>
                     <Header SortingImageSpacing="5px" ImageSpacing="5px"></Header>
                     <FocusedRow HorizontalAlign="Left" VerticalAlign="Top" CssClass="gridselectrow"></FocusedRow>

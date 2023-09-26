@@ -79,16 +79,26 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ApproveSettingsSalesOrder == "Yes")
                 {
-                    GrdOrder.Columns[17].Visible = true;
+                    // Rev 3.0
+                    //GrdOrder.Columns[17].Visible = true;
+                    //GrdOrder.Columns[18].Visible = true;
+                    //GrdOrder.Columns[19].Visible = true;
                     GrdOrder.Columns[18].Visible = true;
                     GrdOrder.Columns[19].Visible = true;
+                    GrdOrder.Columns[20].Visible = true;
+                    // End of Rev 3.0
                     isApprove = true;
                 }
                 else if (ApproveSettingsSalesOrder.ToUpper().Trim() == "NO")
                 {
-                    GrdOrder.Columns[17].Visible = false;
+                    // Rev 3.0
+                    //GrdOrder.Columns[17].Visible = false;
+                    //GrdOrder.Columns[18].Visible = false;
+                    //GrdOrder.Columns[19].Visible = false;
                     GrdOrder.Columns[18].Visible = false;
                     GrdOrder.Columns[19].Visible = false;
+                    GrdOrder.Columns[20].Visible = false;
+                    // End of Rev 3.0
                     isApprove = false;
 
                 }
