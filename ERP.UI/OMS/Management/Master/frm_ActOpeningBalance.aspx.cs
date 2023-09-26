@@ -1,5 +1,7 @@
 //================================================== Revision History ==========================================================================
 //1.0  15-05-2023    V2.0.38    Priti  25893 : Import Module Required for Importing Ledger/Subledger Opening
+//2.0  25-09-2023    V2.0.39    Priti   0026836 :Opening Account module required the following columns (Log). Entered By, Entered On, Updated By, Updated On.
+
 //====================================================== Revision History ======================================================================
 
 using System;
@@ -26,6 +28,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System.Text.RegularExpressions;
 using System.Web.Services.Description;
 using System.IO;
+using DocumentFormat.OpenXml.Office.Word;
 //Rev 1.0 End
 namespace ERP.OMS.Management.Master
 {
@@ -96,6 +99,12 @@ namespace ERP.OMS.Management.Master
             OpeningDt.Columns.Add("DebitAmount", typeof(System.Decimal));
             OpeningDt.Columns.Add("CreditAmount", typeof(System.Decimal));
             OpeningDt.Columns.Add("currency", typeof(System.Decimal));
+            //REv 2.0 
+            OpeningDt.Columns.Add("CreateUser", typeof(System.String));
+            OpeningDt.Columns.Add("CreateDate", typeof(System.String));
+            OpeningDt.Columns.Add("ModifyUser", typeof(System.String));
+            OpeningDt.Columns.Add("ModifyDate", typeof(System.String));
+            //REv 2.0  End
             Session["OpeningDatatable"] = OpeningDt;
         }
 
@@ -162,6 +171,14 @@ namespace ERP.OMS.Management.Master
                         newRow["DebitAmount"] = 0.0;
                         newRow["CreditAmount"] = strOpeningDr;
                     }
+                    //Rev 2.0
+                    newRow["CreateUser"] = string.Empty;
+                    newRow["CreateDate"] = string.Empty;
+                    newRow["ModifyUser"] = string.Empty;
+                    newRow["ModifyDate"] = string.Empty;
+                    //Rev 2.0 end
+
+
                     OpeningDt.Rows.Add(newRow);
                 }
 
@@ -264,6 +281,24 @@ namespace ERP.OMS.Management.Master
             finalDt.Columns.Remove("Account");
             finalDt.Columns.Remove("SubAccount");
             finalDt.Columns.Remove("DrCr");
+            //Rev 1.0
+            if (finalDt.Columns.Contains("CreateUser"))
+            {
+                finalDt.Columns.Remove("CreateUser");
+            }
+            if (finalDt.Columns.Contains("CreateDate"))
+            {
+                finalDt.Columns.Remove("CreateDate");
+            }
+            if (finalDt.Columns.Contains("ModifyUser"))
+            {
+                finalDt.Columns.Remove("ModifyUser");
+            }
+            if (finalDt.Columns.Contains("ModifyDate"))
+            {
+                finalDt.Columns.Remove("ModifyDate");
+            }
+            //Rev 1.0 End
             OpeningBalanceBl opb = new OpeningBalanceBl();
             opb.UpdateOpeningBalance(finalDt);
             Session["OpeningDatatable"] = OpeningDt;
@@ -759,7 +794,7 @@ namespace ERP.OMS.Management.Master
                                 string FinYear = Convert.ToString(Session["LastFinYear"]);
 
 
-                                DataSet dt2 = InsertConsolidatedVendorDataFromExcel(Unit_Name, Account, SubAccount, BalanceAmount, DR_CR, CompanyID, FinYear);
+                                DataSet dt2 = InsertDataFromExcel(Unit_Name, Account, SubAccount, BalanceAmount, DR_CR, CompanyID, FinYear);
 
                                 if (dt2 != null && dt2.Tables[0].Rows.Count > 0)
                                 {
@@ -774,13 +809,13 @@ namespace ERP.OMS.Management.Master
                                     string description = Convert.ToString(dt2.Tables[0].Rows[0]["MSG"]);
                                     string CustInternal_Id = Convert.ToString(dt2.Tables[0].Rows[0]["CustInternal_Id"]);
 
-                                    int loginsert = InsertConsolidatedVendorImportLog(Account, SubAccount, Unit_Name, loopcounter, UserId, Session["FileName"].ToString(), description, "Failed", CustInternal_Id);
+                                    int loginsert = InsertImportLog(Account, SubAccount, Unit_Name, loopcounter, UserId, Session["FileName"].ToString(), description, "Failed", CustInternal_Id);
                                 }
                                 else
                                 {
                                     string description = Convert.ToString(dt2.Tables[0].Rows[0]["MSG"]);
                                     string CustInternal_Id = Convert.ToString(dt2.Tables[0].Rows[0]["CustInternal_Id"]);
-                                    int loginsert = InsertConsolidatedVendorImportLog(Account, SubAccount, Unit_Name, loopcounter, UserId, Session["FileName"].ToString(), description, "Success", CustInternal_Id);
+                                    int loginsert = InsertImportLog(Account, SubAccount, Unit_Name, loopcounter, UserId, Session["FileName"].ToString(), description, "Success", CustInternal_Id);
                                 }
 
                             }
@@ -789,7 +824,7 @@ namespace ERP.OMS.Management.Master
                                 Success = false;
                                 HasLog = false;
                                 // string description = Convert.ToString(dt2.Tables[0].Rows[0]["MSG"]);
-                                int loginsert = InsertConsolidatedVendorImportLog(Account, SubAccount, Unit_Name, loopcounter, "", Session["FileName"].ToString(), ex.Message.ToString(), "Failed", "");
+                                int loginsert = InsertImportLog(Account, SubAccount, Unit_Name, loopcounter, "", Session["FileName"].ToString(), ex.Message.ToString(), "Failed", "");
                             }
 
                         }
@@ -803,7 +838,7 @@ namespace ERP.OMS.Management.Master
             }
             return HasLog;
         }
-        public DataSet InsertConsolidatedVendorDataFromExcel(string Unit_Name, string Account, string SubAccount, string BalanceAmount, string DR_CR, string CompanyID, string FinYear)
+        public DataSet InsertDataFromExcel(string Unit_Name, string Account, string SubAccount, string BalanceAmount, string DR_CR, string CompanyID, string FinYear)
         {
             DataSet ds = new DataSet();
             ProcedureExecute proc = new ProcedureExecute("PRC_OPENINGENTRIESIMPORTFROMEXCEL");
@@ -815,10 +850,13 @@ namespace ERP.OMS.Management.Master
             proc.AddVarcharPara("@DR_CR", 20, DR_CR);
             proc.AddVarcharPara("@CompanyID", 100, CompanyID);
             proc.AddVarcharPara("@FinYear", 100, FinYear);
+            //Rev 2.0
+            proc.AddPara("@CreatedBy", Convert.ToString(System.Web.HttpContext.Current.Session["userid"]));
+            //Rev 2.0 End
             ds = proc.GetDataSet();
             return ds;
         }
-        public int InsertConsolidatedVendorImportLog(string Account, string SubAccount,string Unit_Name , int loopnumber, string userid, string filename, string description, string status, string CUSTOMERID)
+        public int InsertImportLog(string Account, string SubAccount,string Unit_Name , int loopnumber, string userid, string filename, string description, string status, string CUSTOMERID)
         {
             int i;
             ProcedureExecute proc = new ProcedureExecute("PRC_OPENINGENTRIESIMPORTLOG");

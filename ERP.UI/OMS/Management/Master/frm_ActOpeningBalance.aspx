@@ -1101,6 +1101,36 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         </PropertiesTextEdit>
                     </dxe:GridViewDataTextColumn>
 
+                     <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="CreateUser" 
+                        VisibleIndex="0">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+
+                    <dxe:GridViewDataTextColumn Caption="Entered On" FieldName="CreateDate" 
+                        VisibleIndex="0">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                     <dxe:GridViewDataTextColumn Caption="Updated By" FieldName="ModifyUser" 
+                        VisibleIndex="0">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Updated On" FieldName="ModifyDate" 
+                        VisibleIndex="0">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+
                     <dxe:GridViewDataTextColumn ReadOnly="True" Width="0" CellStyle-HorizontalAlign="Center">
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <HeaderStyle HorizontalAlign="Center" />
