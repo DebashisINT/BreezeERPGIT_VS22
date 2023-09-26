@@ -3,6 +3,8 @@
  *                                                  Refer: 25223  -- WORK REVERTED
  * Rev 2.0      Sanchita      V2.0.39   28/06/2023  Some of the issues are there in Sales Invoice regarding 
                                                     Multi UOM in EVAC - FOR ALL SALES ORDER. Refer: 26453
+ * Rev 3.0      Sanchita      V2.0.39   26/09/2023  The calculated on field is calculating wrong amount in Sales Invoice 
+ *                                                  when Price Inclusive of GST selected. Mantis: 26860
  **********************************************************************************************************/
 using System;
 using System.Configuration;
@@ -6975,19 +6977,25 @@ namespace ERP.OMS.Management.Activities
                         #endregion
 
                         //Debjyoti 09032017
-                        if (Convert.ToString(ddl_AmountAre.Value) == "2")
-                        {
-                            if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
-                            {
-                                if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
-                                {
-                                    decimal finalCalCulatedOn = 0;
-                                    decimal backProcessRate = (1 + (totalParcentage / 100));
-                                    finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
-                                    obj.calCulatedOn = Math.Round(finalCalCulatedOn, 2);
-                                }
-                            }
-                        }
+                        // Rev 3.0
+                        // [ case for cddl_AmountAre.GetValue() == "2" already been taken care of in function taxAmtButnClick(s, e)
+                        //  fired from click event of Charges button. HdProdGrossAmt.Value already updated by the Price Exclusive value.
+                        //  No longer needed to update calCulatedOn in the below block ]
+                        
+                        //if (Convert.ToString(ddl_AmountAre.Value) == "2")
+                        //{
+                        //    if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
+                        //    {
+                        //        if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
+                        //        {
+                        //            decimal finalCalCulatedOn = 0;
+                        //            decimal backProcessRate = (1 + (totalParcentage / 100));
+                        //            finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
+                        //            obj.calCulatedOn = Math.Round(finalCalCulatedOn, 2);
+                        //        }
+                        //    }
+                        //}
+                        // End of Rev 3.0
 
                         if (Convert.ToString(dr["TaxCalculateMethods"]) == "A")
                         {

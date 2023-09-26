@@ -3,6 +3,8 @@
  * Rev 2.0      Sanchita      V2.0.38               Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
  * Rev 3.0      Priti         V2.0.39               Sales Invoice calculated on field is showing wrong value for GST calculation. Mantis : 0026479   
  * Rev 4.0      Priti         V2.0.39   25-09-2023  The Shipping Contact Person & Shipping Phone is not carried forward from Sales Order to Sales Invoice
+ * Rev 5.0      Sanchita      V2.0.39   26/09/2023  The calculated on field is calculating wrong amount in Sales Invoice 
+ *                                                  when Price Inclusive of GST selected. Mantis: 26860
  ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -9535,19 +9537,25 @@ namespace ERP.OMS.Management.Activities
                         #endregion
 
                         //Debjyoti 09032017
-                        if (Convert.ToString(ddl_AmountAre.Value) == "2")
-                        {
-                            if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
-                            {
-                                if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
-                                {
-                                    decimal finalCalCulatedOn = 0;
-                                    decimal backProcessRate = (1 + (totalParcentage / 100));
-                                    finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
-                                    obj.calCulatedOn = finalCalCulatedOn;
-                                }
-                            }
-                        }
+                        // Rev 5.0
+                        // [ case for cddl_AmountAre.GetValue() == "2" already been taken care of in function taxAmtButnClick(s, e)
+                        //  fired from click event of Charges button. HdProdGrossAmt.Value already updated by the Price Exclusive value.
+                        //  No longer needed to update calCulatedOn in the below block ]
+                        
+                        //if (Convert.ToString(ddl_AmountAre.Value) == "2")
+                        //{
+                        //    if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
+                        //    {
+                        //        if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
+                        //        {
+                        //            decimal finalCalCulatedOn = 0;
+                        //            decimal backProcessRate = (1 + (totalParcentage / 100));
+                        //            finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
+                        //            obj.calCulatedOn = finalCalCulatedOn;
+                        //        }
+                        //    }
+                        //}
+                        // End of Rev 5.0
 
                         if (Convert.ToString(dr["TaxCalculateMethods"]) == "A")
                         {
