@@ -1,8 +1,9 @@
 ﻿//====================================================Revision History=========================================================================
 // 1.0  Priti       V2.0.36     10-02-2023   0025665:Product Scheme rate was not captured automatically while making Sales Order
 // 2.0  Priti       V2.0.37     27-02-2023   0025693:Add&New button becomes active in Sales Order in the View Mode
-// 3.0  Sanchita    V2.0.39     28-06-2023   Some of the issues are there in Sales Invoice regarding 
+// 3.0  Sanchita    V2.0.39     28-06-2023   Some of the issues are there in Sales Invoice regarding
 //                                           Multi UOM in EVAC - FOR ALL SALES ORDER.Refer: 26453
+// 4.0  Priti       V2.0.39     26-09-2023   0026847:Sales Order is generating the document number as "Auto" if using copy feature
 //====================================================End Revision History=====================================================================
 
 $(function () {
@@ -4071,6 +4072,13 @@ function Save_ButtonClick() {
     //var noofvisiblerows = grid.GetVisibleRowsOnPage(); // all newly created rows have -ve index -1 , -2 etc
     //var tbQuotation = grid.GetEditor("SrlNo");
     //tbQuotation.SetValue(noofvisiblerows);
+    //Rev 4.0
+    if (getUrlVars().type == "COPY") {
+        $("#hdnApproveStatus").val(0);
+        ctxtRevisionNo.SetValue("");
+        ctxtRevisionDate.Clear();
+    }
+    //Rev 4.0 End
     grid.batchEditApi.EndEdit();
     var flag = true;
     LoadingPanel.Show();
@@ -4696,7 +4704,13 @@ function SaveExit_ButtonClick() {
     //var noofvisiblerows = grid.GetVisibleRowsOnPage(); // all newly created rows have -ve index -1 , -2 etc
     //var tbQuotation = grid.GetEditor("SrlNo");
     //tbQuotation.SetValue(noofvisiblerows);
-
+    //Rev 4.0
+    if (getUrlVars().type == "COPY") {
+        $("#hdnApproveStatus").val(0);
+        ctxtRevisionNo.SetValue("");
+        ctxtRevisionDate.Clear();
+    }
+    //Rev 4.0 End
     var flag = true;
     //alert(1);
     var IsProductwithtaggedDoc=false;
@@ -7971,3 +7985,4 @@ $(document).ready(function () {
     
     }
 });
+
