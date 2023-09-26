@@ -22,6 +22,11 @@
                 jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
             }
         }
+        function SetTDSLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= tDateTDS.GetDate()) && (tDateTDS.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+            }
+        }
         // End of Rev 5.0
         function componentEndCallBack(s, e) {
             // clookup_GRNOverhead.gridView.Refresh();
@@ -4256,8 +4261,8 @@
         }
 
         // Rev 5.0
-        function AddContraLockStatus() {
-            var LockDate = tDate.GetDate();
+        function AddContraLockStatus(LockDate) {
+            //var LockDate = tDate.GetDate();
             $.ajax({
                 type: "POST",
                 url: "JournalEntry.aspx/GetAddLock",
@@ -4284,7 +4289,7 @@
             var ProjectCode = clookup_Project.GetText();
 
             // Rev 5.0
-            AddContraLockStatus();
+            AddContraLockStatus(tDate.GetDate());
             // End of Rev 5.0
 
             if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
@@ -4317,7 +4322,7 @@
             // Rev 5.0
             else if ($("#hdnValAfterLock").val() == "-9") {
                 jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
-s            }
+            }
             // End of Rev 5.0
             else {
                 grid.batchEditApi.EndEdit();
@@ -4366,7 +4371,9 @@ s            }
                 return false;
             }
 
-
+            // Rev 5.0
+            AddContraLockStatus(tDateTDS.GetDate());
+            // End of Rev 5.0
 
             if (cbtnSaveRecordsTDS.IsVisible() == true) {
                 ValidGrid = true;
@@ -4400,6 +4407,11 @@ s            }
         else if (chkTDSJournal.GetChecked() && (ccmbtds.GetValue() == 0 || ccmbtds.GetValue() == null || ccmbtds.GetValue() == "")) {
             jAlert('You must select TDS Section as TDS checkbox tick.');
         }
+        // Rev 5.0
+        else if ($("#hdnValAfterLock").val() == "-9") {
+            jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        }
+        // End of Rev 5.0
         else {
             gridTDS.batchEditApi.EndEdit();
 
@@ -4441,7 +4453,7 @@ s            }
 
             var ProjectCode = clookup_Project.GetText();
             // Rev 5.0
-            AddContraLockStatus();
+            AddContraLockStatus(tDate.GetDate());
             // End of Rev 5.0
 
             if ($("#hdnProjectSelectInEntryModule").val() == "1" && $("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
@@ -4516,6 +4528,10 @@ s            }
                 return false;
             }
 
+            // Rev 5.0
+            AddContraLockStatus(tDateTDS.GetDate());
+            // End of Rev 5.0
+
             if (cbtn_SaveRecordsTDS.IsVisible() == true) {
                 var val = document.getElementById("CmbSchemeTDS").value;
                 var Branchval = $("#ddlBranchTDS").val();
@@ -4544,6 +4560,11 @@ s            }
         else if (chkTDSJournal.GetChecked() && (ccmbtds.GetValue() == 0 || ccmbtds.GetValue() == null || ccmbtds.GetValue() == "")) {
             jAlert('You must select TDS Section as TDS checkbox tick.');
         }
+        // Rev 5.0
+        else if ($("#hdnValAfterLock").val() == "-9") {
+            jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        }
+        // End of Rev 5.0
         else {
             gridTDS.batchEditApi.EndEdit();
 
@@ -6270,6 +6291,7 @@ s            }
                 <div class="col-md-3">
                     <label style="">Posting Date</label>
                     <div>
+                        <%--Rev 5.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ]--%>
                         <dxe:ASPxDateEdit ID="tDate" runat="server" EditFormat="Custom" ClientInstanceName="tDate"
                             UseMaskBehavior="True" Width="100%" meta:resourcekey="tDateResource1">
                             <ClientSideEvents DateChanged="function(s,e){DateChange()}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" />
@@ -6687,9 +6709,10 @@ s            }
                     <div class="col-md-3">
                         <label style="">Posting Date</label>
                         <div>
+                            <%--Rev 5.0 [ LostFocus="function(s, e) { SetTDSLostFocusonDemand(e)}" added ]--%>
                             <dxe:ASPxDateEdit ID="tDateTDS" runat="server" EditFormat="Custom" ClientInstanceName="tDateTDS" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
                                 UseMaskBehavior="True" Width="100%" meta:resourcekey="tDateResource1">
-                                <ClientSideEvents DateChanged="function(s,e){TDSDateChange()}" />
+                                <ClientSideEvents DateChanged="function(s,e){TDSDateChange()}" LostFocus="function(s, e) { SetTDSLostFocusonDemand(e)}" />
                             </dxe:ASPxDateEdit>
                         </div>
                     </div>
