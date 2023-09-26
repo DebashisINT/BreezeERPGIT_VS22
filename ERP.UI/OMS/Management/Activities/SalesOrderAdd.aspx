@@ -26,7 +26,7 @@
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <link href="CSS/salesorderAdd.css" rel="stylesheet" />
-    <script src="JS/SalesOrderAdd.js?v=6.3"></script>
+    <script src="JS/SalesOrderAdd.js?v=6.5"></script>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelNew.js?v=2.1" type="text/javascript"></script>
 
     <%--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>    --%>
