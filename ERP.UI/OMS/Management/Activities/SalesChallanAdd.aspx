@@ -3,6 +3,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                06-04-2023        2.0.37           Pallab              25918: Add Sales Challan module design modification
 2.0                05-07-2023        2.0.39           Sanchita            Multi UOM EVAC Issues status modulewise - Sales Challan. 
                                                                           Refer: 26515
+3.0                27/09/2023        2.0.39           Sanchita            In Sales Challan made from Sales Invoice and in charges 
+                                                                          window when tab is pressed from Percentage column, the total 
+                                                                          Charges at the button getting rounded off. Mantis :26866
+4.0                27/09/2023        2.0.39           Sanchita            In Sales Challan made from Sales Invoice with Price Inclusive of GST, after tagging get loaded in Sales Challan, 
+                                                                          the value of "Amount are" still showing "Price Exclusive". Mantis:26867
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanAdd.aspx.cs"
@@ -3272,7 +3277,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         GlobalCurTaxAmt = parseFloat(cgridTax.GetEditor("Amount").GetValue());
                         cgridTax.GetEditor("Amount").SetValue(parseFloat(ProdAmt * s.GetText()) / 100);
 
-                        ctxtTaxTotAmt.SetValue(Math.round(parseFloat(ctxtTaxTotAmt.GetValue()) + (parseFloat(ProdAmt * parseFloat(s.GetText())) / 100) - GlobalCurTaxAmt));
+                        // Rev 3.0
+                        //ctxtTaxTotAmt.SetValue(Math.round(parseFloat(ctxtTaxTotAmt.GetValue()) + (parseFloat(ProdAmt * parseFloat(s.GetText())) / 100) - GlobalCurTaxAmt));
+                        ctxtTaxTotAmt.SetValue(DecimalRoundoff((parseFloat(ctxtTaxTotAmt.GetValue()) + (parseFloat(ProdAmt * parseFloat(s.GetText())) / 100) - GlobalCurTaxAmt), 2));
+                        // End of Rev 3.0
                         GlobalCurTaxAmt = 0;
                     }
                     else {
@@ -3280,7 +3288,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         GlobalCurTaxAmt = parseFloat(cgridTax.GetEditor("Amount").GetValue());
                         cgridTax.GetEditor("Amount").SetValue((parseFloat(ProdAmt * s.GetText()) / 100) * -1);
 
-                        ctxtTaxTotAmt.SetValue(Math.round(parseFloat(ctxtTaxTotAmt.GetValue()) + ((parseFloat(ProdAmt * parseFloat(s.GetText())) / 100) * -1) - (GlobalCurTaxAmt * -1)));
+                        // Rev 3.0
+                        //ctxtTaxTotAmt.SetValue(Math.round(parseFloat(ctxtTaxTotAmt.GetValue()) + ((parseFloat(ProdAmt * parseFloat(s.GetText())) / 100) * -1) - (GlobalCurTaxAmt * -1)));
+                        ctxtTaxTotAmt.SetValue(DecimalRoundoff((parseFloat(ctxtTaxTotAmt.GetValue()) + ((parseFloat(ProdAmt * parseFloat(s.GetText())) / 100) * -1) - (GlobalCurTaxAmt * -1)),2));
+                        // End of Rev 3.0
                         GlobalCurTaxAmt = 0;
                     }
 
@@ -7808,6 +7819,13 @@ function ProjectValueChange(s, e) {
                         //ctxtEwayBillNO.SetText(EwayBillNumber);
                         //ctxtEWayBillNO.SetEnabled(false);
                         //ctxtEWayBillNO.Focus();
+                        // Rev 4.0
+                        var TaxOption = currentString.split('~')[7];
+                        if (TaxOption != '') {
+                            cddl_AmountAre.SetValue(TaxOption);
+                            PopulateGSTCSTVAT();
+                        }
+                        // End of Rev 4.0
 
                     }
 
