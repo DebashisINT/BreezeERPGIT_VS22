@@ -1110,7 +1110,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     </dxe:GridViewDataTextColumn>
 
                     <dxe:GridViewDataTextColumn Caption="Entered On" FieldName="CreateDate" 
-                        VisibleIndex="0">
+                        VisibleIndex="0" PropertiesDateEdit-DisplayFormatString="dd/MM/yyyy">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
@@ -1124,7 +1124,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Updated On" FieldName="ModifyDate" 
-                        VisibleIndex="0">
+                        VisibleIndex="0" PropertiesDateEdit-DisplayFormatString="dd/MM/yyyy">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
