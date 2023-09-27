@@ -1,5 +1,7 @@
 ﻿/****************************************************************************************************************
  * Rev 1.0      Sanchita      V2.0.39       Multi UOM EVAC Issues status modulewise - Sales Challan. Mantis : 26515  
+ * Rev 2.0      Sanchita      V2.0.39       In Sales Challan made from Sales Invoice with Price Inclusive of GST, after tagging get loaded in Sales Challan, 
+                                            the value of "Amount are" still showing "Price Exclusive". Mantis:26867
  *****************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -4717,9 +4719,15 @@ namespace ERP.OMS.Management.Activities
             string ResultString = "";
             if (dt.Rows.Count > 0)
             {
+                // Rev 2.0
+                //ResultString = Convert.ToString(dt.Rows[0]["Order_Reference"]) + "~" + Convert.ToString(dt.Rows[0]["Order_SalesmanId"]) + "~" + Convert.ToString(dt.Rows[0]["Currency_Id"]) +
+                //    "~" + Convert.ToString(dt.Rows[0]["Name"]) + "~" + Convert.ToString(dt.Rows[0]["CreditDays"]) + "~" + Convert.ToString(dt.Rows[0]["Due_Date"]+"~"+
+                //    Convert.ToString(dt.Rows[0]["EWayBillNumber"]));
+
                 ResultString = Convert.ToString(dt.Rows[0]["Order_Reference"]) + "~" + Convert.ToString(dt.Rows[0]["Order_SalesmanId"]) + "~" + Convert.ToString(dt.Rows[0]["Currency_Id"]) +
-                    "~" + Convert.ToString(dt.Rows[0]["Name"]) + "~" + Convert.ToString(dt.Rows[0]["CreditDays"]) + "~" + Convert.ToString(dt.Rows[0]["Due_Date"]+"~"+
-                    Convert.ToString(dt.Rows[0]["EWayBillNumber"]));
+                    "~" + Convert.ToString(dt.Rows[0]["Name"]) + "~" + Convert.ToString(dt.Rows[0]["CreditDays"]) + "~" + Convert.ToString(dt.Rows[0]["Due_Date"] + "~" +
+                    Convert.ToString(dt.Rows[0]["EWayBillNumber"]) + "~" + Convert.ToString(dt.Rows[0]["Tax_Option"]));
+                // End of Rev 2.0
             }
 
             return ResultString;
