@@ -1,7 +1,8 @@
 ﻿@*====================================================Revision History=========================================================================
-    1.0  Priti   V2.0.38    21-06-2023  0026372:Manufacturing > Stock Receipt Module, document shall not be saved with 'Fresh' 'Reject' Qty - Warehouse'.
-    2.0	 Priti	 V2.0.39    28-08-2023  0026763:Reject Qty is not saving as per warehouse wise while doing Stock Receipt
-    ====================================================End Revision History=====================================================================*@
+        1.0  Priti   V2.0.38    21-06-2023  0026372:Manufacturing > Stock Receipt Module, document shall not be saved with 'Fresh' 'Reject' Qty - Warehouse'.
+        2.0	 Priti	 V2.0.39    28-08-2023  0026763:Reject Qty is not saving as per warehouse wise while doing Stock Receipt
+        3.0  Priti   V2.0.39    28-08-2023  0026870:Warehouse related table is updated with current date while making manufacturing Stock Receipt
+====================================================End Revision History=====================================================================*@
 
 @using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
@@ -1401,15 +1402,29 @@
 
     function Scheme_ValueChange() {
         var val = $('#ddlSchema option:selected').val();
-        var schemetypeValue = val;
+        var schemetypeValue = val;        
         var schemetype = schemetypeValue.toString().split('~')[1];
         var schemelength = schemetypeValue.toString().split('~')[2];
         var branchID = (schemetypeValue.toString().split('~')[3] != null) ? schemetypeValue.toString().split('~')[3] : "";
         var SchemaID = schemetypeValue.toString().split('~')[0];
         $('#hdnSchemaId').val(SchemaID);
         $('#ddlBankBranch').val(branchID);
-        // var fromdate = (schemetypeValue.toString().split('~')[4] != null) ? schemetypeValue.toString().split('~')[4] : "";
-        //var todate = (schemetypeValue.toString().split('~')[5] != null) ? schemetypeValue.toString().split('~')[5] : "";
+
+        //REV 3.0
+        var fromdate = (schemetypeValue.toString().split('~')[5] != null) ? schemetypeValue.toString().split('~')[5] : "";
+        var todate = (schemetypeValue.toString().split('~')[6] != null) ? schemetypeValue.toString().split('~')[6] : "";
+        var dt = new Date();
+        SR_Date_dt.SetDate(dt);
+        if (dt < new Date(fromdate)) {
+            SR_Date_dt.SetDate(new Date(fromdate));
+        }
+        if (dt > new Date(todate)) {
+            SR_Date_dt.SetDate(new Date(todate));
+        }
+        SR_Date_dt.SetMinDate(new Date(fromdate));
+        SR_Date_dt.SetMaxDate(new Date(todate));
+        //REV 3.0 END
+
         document.getElementById("StockReceipt_No").maxLength = schemelength;
         if (schemetype == '0') {
             $('#StockReceipt_No').removeAttr("disabled");
@@ -1776,8 +1791,8 @@
         }
         //Rev 1.0
         var hdnWarehouseDataFresh = $('#hdnWarehouseDataFresh').val();
-        if ($('#FreshQuantity').val() != "0") {
-            if (hdnWarehouseDataFresh == "0") {
+        if (parseFloat($('#FreshQuantity').val() )!= 0) {
+            if (parseFloat(hdnWarehouseDataFresh) == 0) {
                 jAlert("Please Enter Fresh Warehouse !");
                 isprocess = 0;
             }
@@ -1785,8 +1800,8 @@
 
 
         var hdnWarehouseDataReject = $('#hdnWarehouseDataReject').val();
-        if ($('#RejectedQuantity').val() != "0") {
-            if (hdnWarehouseDataReject == "0") {
+        if (parseFloat($('#RejectedQuantity').val()) != 0) {
+            if (parseFloat(hdnWarehouseDataReject) == 0){
                 jAlert("Please Enter Reject Warehouse !");
                 isprocess = 0;
             }
@@ -2038,9 +2053,9 @@
                                          settings.Properties.DisplayFormatString = "dd-MM-yyyy";
                                          settings.Properties.EditFormatString = "dd-MM-yyyy";
                                          settings.Width = Unit.Percentage(100);
-                                         settings.Date = DateTime.Now;
+                                         //settings.Date = DateTime.Now;
                                          settings.Date = Convert.ToDateTime(@Model.dtStockReceiptDate);
-                                         settings.Properties.ClientSideEvents.Init = "SetDefaultDate";
+                                         //settings.Properties.ClientSideEvents.Init = "SetDefaultDate";
 
                                      }
                             ).GetHtml()
@@ -2274,16 +2289,16 @@
         @if (Convert.ToInt16(ViewBag.IsView) == 0)
         {
 
-        <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveAndNew" onclick="StockReceiptSave('New');">
-            <div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div>
-            <span>Save and New</span>
+            <div class="inline-block addResourceBtn themeColor mRight5" id="btnSaveAndNew" onclick="StockReceiptSave('New');">
+                <div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div>
+                <span>Save and New</span>
 
 
-        </div>
-        <div class="inline-block addResourceBtn themeColor " onclick="StockReceiptSave('Exit');">
-            <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
-            <span>Save and Exit</span>
-        </div>
+            </div>
+            <div class="inline-block addResourceBtn themeColor " onclick="StockReceiptSave('Exit');">
+                <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
+                <span>Save and Exit</span>
+            </div>
         }
 
         @*<div class="inline-block pull-right">
