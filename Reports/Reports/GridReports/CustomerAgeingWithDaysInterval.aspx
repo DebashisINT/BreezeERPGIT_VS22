@@ -1,7 +1,8 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History =========================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                01-03-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                28-09-2023        2.0.38           Debashis            0026845 : From & To date required in Customer Ageing with Days Interval.
+====================================================== Revision History =========================================================================================--%>
 
 <%@ Page Language="C#" EnableViewState="false"  MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerAgeingWithDaysInterval.aspx.cs" Inherits="Reports.Reports.GridReports.CustomerAgeingWithDaysInterval" %>
 
@@ -231,8 +232,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 }
                 var ToDate = (cxdeAsOnDate.GetValue() != null) ? cxdeAsOnDate.GetValue() : "";
 
-                ToDate = GetDateFormat(ToDate);
-                document.getElementById('<%=DateRange.ClientID %>').innerHTML = "As On: " + ToDate;
+              ToDate = GetDateFormat(ToDate);
+              document.getElementById('<%=DateRange.ClientID %>').innerHTML = "As On: " + ToDate;
             }
         }
         //Rev Subhra 24-12-2018  0017670
@@ -315,6 +316,23 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             gridbranchLookup.HideDropDown();
             gridbranchLookup.Focus();
         }
+
+        //Rev 2.0 Mantis: 0026845
+        function ShowHideAllDate() {
+            if (document.getElementById('radAsDate').checked) {
+                //var dvPassport = document.getElementById("dvPassport");
+                //    dvPassport.style.display = chkYes.checked ? "block" : "none";
+                document.getElementById("dv_AsOnDate").style.display = "block";
+                document.getElementById("dv_FromDate").style.display = "none";
+                document.getElementById("dv_ToDate").style.display = "none";
+            }
+            else if (document.getElementById('radPeriod').checked) {
+                document.getElementById("dv_AsOnDate").style.display = "none";
+                document.getElementById("dv_FromDate").style.display = "block";
+                document.getElementById("dv_ToDate").style.display = "block";
+            }
+        }
+        //End of Rev 2.0 Mantis: 0026845
 
     </script>
      <style>
@@ -854,10 +872,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <asp:HiddenField ID="hdnSelectedBranches" runat="server" />
             </div>
 
-            <div class="col-md-2 col-lg-2">
-                <label style="color: #b5285f; font-weight: bold;" class="clsFrom">
-                    <asp:Label ID="lblFromDate" runat="Server" Text="As On Date : " CssClass="mylabel1"></asp:Label>
+            <%--Rev 2.0 Mantis: 0026845--%>
+            <%--<div class="col-md-2 col-lg-2">--%>
+            <%--<label style="color: #b5285f; font-weight: bold;" class="clsFrom">
+                <asp:Label ID="lblFromDate" runat="Server" Text="As On Date : " CssClass="mylabel1"></asp:Label>
+            </label>--%>
+            <div class="col-md-2" style="padding-top: 23px;color: #141414; font-weight: bold;" >
+                    <asp:RadioButton ID="radAsDate" runat="server" Text="As On Date" Checked="True" GroupName="a1" onclick="ShowHideAllDate()" />
+                    <asp:RadioButton ID="radPeriod" runat="server" Text="Period" GroupName="a1" onclick="ShowHideAllDate()" />
+            </div>
+
+            <div id="dv_AsOnDate" class="col-md-2 col-lg-2">
+                <label style="color: #b5285f; font-weight: bold;" class="clsAsOnDt">
+                    <asp:Label ID="lblAsOnDate" runat="Server" Text="As On Date : " CssClass="mylabel1"></asp:Label>
                 </label>
+            <%--End of Rev 2.0 Mantis: 0026845--%>
                 <dxe:ASPxDateEdit ID="ASPxAsOnDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
                     UseMaskBehavior="True" Width="100%" ClientInstanceName="cxdeAsOnDate">
                     <buttonstyle width="13px">
@@ -867,6 +896,34 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
                 <%--Rev end 1.0--%>
             </div>
+
+            <%--Rev 2.0 Mantis: 0026845--%>
+            <div id="dv_FromDate" class="col-md-2 col-lg-2">
+                <label style="color: #b5285f; font-weight: bold;" class="clsFromDt">
+                    <asp:Label ID="lblFromDate" runat="Server" Text="From Date : " CssClass="mylabel1"></asp:Label>
+                </label>
+                <dxe:ASPxDateEdit ID="ASPxFromDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
+                    UseMaskBehavior="True" Width="100%" ClientInstanceName="cxdeFromDate">
+                    <buttonstyle width="13px">
+                    </buttonstyle>
+                </dxe:ASPxDateEdit>
+                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+            </div>
+
+            <div id="dv_ToDate" class="col-md-2 col-lg-2">
+                <label style="color: #b5285f; font-weight: bold;" class="clsToDt">
+                    <asp:Label ID="lblToDate" runat="Server" Text="To Date : " CssClass="mylabel1"></asp:Label>
+                </label>
+                <dxe:ASPxDateEdit ID="ASPxToDate" runat="server" EditFormat="custom" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy"
+                    UseMaskBehavior="True" Width="100%" ClientInstanceName="cxdeToDate">
+                    <buttonstyle width="13px">
+                    </buttonstyle>
+                </dxe:ASPxDateEdit>
+                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+            </div>
+
+            <div class="clear"></div>
+            <%--End of Rev 2.0 Mantis: 0026845--%>
 
            <div class="col-md-2">
                 <label style="color: #b5285f; font-weight: bold;">
@@ -888,11 +945,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                      <MaskSettings Mask="<0..999>" AllowMouseWheel="false" />
                  </dxe:ASPxTextBox>
             </div>
-
             
-            
-            <div class="clear"></div>
-
+            <%--Rev 2.0 Mantis: 0026845--%>
+            <%--<div class="clear"></div>--%>
+            <%--End of Rev 2.0 Mantis: 0026845--%>
             <div class="col-md-2 col-lg-2 ">
                 <span style=" display: inline-block;">
                     <dxe:ASPxLabel ID="lbl_Customer" style="color: #b5285f;" runat="server" Text="Customer :">
@@ -913,12 +969,15 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 </dxe:ASPxCheckBox> 
             </div>
 
-            <div class="col-md-2 pl-10 pt-15">
+            <div class="col-md-2 pl-10 pt-15" style="padding:0;padding-top: 25px; width: 150px;">
                 <dxe:ASPxCheckBox ID="chkcb" runat="server" Checked="false" Text="Include Cash/Bank"></dxe:ASPxCheckBox>
             </div>
-            <div class="col-md-2 pl-10 pt-15">    
+            <div class="col-md-2 pl-10 pt-15" style="padding:0;padding-top: 25px; width: 150px;">    
                 <dxe:ASPxCheckBox ID="chkjv" runat="server" Checked="false" Text="Include Journal"></dxe:ASPxCheckBox>
             </div>
+            <%--Rev 2.0 Mantis: 0026845--%>
+            <div class="clear"></div>
+            <%--End of Rev 2.0 Mantis: 0026845--%>
             <div class="col-md-2 pl-10 pt-15">
                 <dxe:ASPxCheckBox ID="chkdncn" runat="server" Checked="false" Text="Exclude Debit/Credit Note"></dxe:ASPxCheckBox>
             </div>

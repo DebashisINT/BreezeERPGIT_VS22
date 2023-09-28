@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region ==========================Revision History====================================================================================================
+//1.0   v2 .0.38    Debashis    28/09/2023      From & To date required in Customer Ageing with Days Interval.
+//                                              Refer: 0026845
+#endregion =======================End Revision History================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -590,7 +594,15 @@ namespace Reports.Reports.GridReports
 
                 cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
                 cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                //Rev 1.0 Mantis: 0026845
+                cmd.Parameters.AddWithValue("@ISASONDATE", "0");
+                cmd.Parameters.AddWithValue("@ISPERIOD", "0");
+                //End of Rev 1.0 Mantis: 0026845
                 cmd.Parameters.AddWithValue("@ASONDATE", ASONDATE);
+                //Rev 1.0 Mantis: 0026845
+                cmd.Parameters.AddWithValue("@FROMDATE", "");
+                cmd.Parameters.AddWithValue("@TODATE", "");
+                //End of Rev 1.0 Mantis: 0026845
                 cmd.Parameters.AddWithValue("@ALLPARTY", (chkallvend.Checked) ? "1" : "0");
                 cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
                 cmd.Parameters.AddWithValue("@PARTY_CODE", hdnVendorId.Value);

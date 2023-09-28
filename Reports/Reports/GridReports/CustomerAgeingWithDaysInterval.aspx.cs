@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region ==========================Revision History====================================================================================================
+//1.0   v2 .0.38    Debashis    28/09/2023      From & To date required in Customer Ageing with Days Interval.
+//                                              Refer: 0026845
+#endregion =======================End Revision History================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -183,6 +187,10 @@ namespace Reports.Reports.GridReports
                 dtFrom = DateTime.Now;
                 dtTo = DateTime.Now;
                 ASPxAsOnDate.Value = DateTime.Now;
+                //Rev 1.0 Mantis: 0026845
+                ASPxFromDate.Value = DateTime.Now;
+                ASPxToDate.Value = DateTime.Now;
+                //End of Rev 1.0 Mantis: 0026845
                 Date_finyearwise(Convert.ToString(Session["LastFinYear"]));
                 //chkallcust.Attributes.Add("OnClick", "CustAll('allcust')");
                 //Rev Subhra 24-12-2018   0017670
@@ -197,6 +205,7 @@ namespace Reports.Reports.GridReports
             else
             {
                 dtFrom = Convert.ToDateTime(ASPxAsOnDate.Date);
+
 
                 if (ShowGridCustAgeingWithDaysInterval.Columns["DOC_NO"] == null)
                 {
@@ -300,7 +309,7 @@ namespace Reports.Reports.GridReports
 
             }
         }
-
+        
         public void Date_finyearwise(string Finyear)
         {
             CommonBL cbl = new CommonBL();
@@ -312,6 +321,14 @@ namespace Reports.Reports.GridReports
                 ASPxAsOnDate.MaxDate = Convert.ToDateTime((tcbl.Rows[0]["FinYear_EndDate"]));
                 ASPxAsOnDate.MinDate = Convert.ToDateTime((tcbl.Rows[0]["FinYear_StartDate"]));
 
+                //Rev 1.0 Mantis: 0026845
+                ASPxFromDate.MaxDate = Convert.ToDateTime((tcbl.Rows[0]["FinYear_EndDate"]));
+                ASPxFromDate.MinDate = Convert.ToDateTime((tcbl.Rows[0]["FinYear_StartDate"]));
+
+                ASPxToDate.MaxDate = Convert.ToDateTime((tcbl.Rows[0]["FinYear_EndDate"]));
+                ASPxToDate.MinDate = Convert.ToDateTime((tcbl.Rows[0]["FinYear_StartDate"]));
+                //End of Rev 1.0 Mantis: 0026845
+
                 DateTime MaximumDate = Convert.ToDateTime((tcbl.Rows[0]["FinYear_EndDate"]));
                 DateTime MinimumDate = Convert.ToDateTime((tcbl.Rows[0]["FinYear_StartDate"]));
 
@@ -321,14 +338,22 @@ namespace Reports.Reports.GridReports
                 if (TodayDate > FinYearEndDate)
                 {
                     ASPxAsOnDate.Date = FinYearEndDate;
+                    //Rev 1.0 Mantis: 0026845
+                    ASPxToDate.Date = FinYearEndDate;
+                    ASPxFromDate.Date = MinimumDate;
+                    //End of Rev 1.0 Mantis: 0026845
                 }
                 else
                 {
                     ASPxAsOnDate.Date = TodayDate;
+                    //Rev 1.0 Mantis: 0026845
+                    ASPxToDate.Date = TodayDate;
+                    ASPxFromDate.Date = MinimumDate;
+                    //End of Rev 1.0 Mantis: 0026845
                 }
             }
-
         }
+        
         #region Export
 
 
@@ -526,10 +551,24 @@ namespace Reports.Reports.GridReports
             string COMPANYID = Convert.ToString(HttpContext.Current.Session["LastCompany"]);
             string Finyear = Convert.ToString(HttpContext.Current.Session["LastFinYear"]);
 
-            DateTime dtFrom;
 
-            dtFrom = Convert.ToDateTime(ASPxAsOnDate.Date);
-            string ASONDATE = dtFrom.ToString("yyyy-MM-dd");
+            //Rev 1.0 Mantis: 0026845
+            //DateTime dtFrom;
+            //dtFrom = Convert.ToDateTime(ASPxAsOnDate.Date);
+            //string ASONDATE = dtFrom.ToString("yyyy-MM-dd");
+            DateTime dtPeriodFrom;
+            DateTime dtTo;
+            DateTime dtAsOn;
+
+            dtPeriodFrom = Convert.ToDateTime(ASPxFromDate.Date);
+            dtTo = Convert.ToDateTime(ASPxToDate.Date);
+            dtAsOn = Convert.ToDateTime(ASPxAsOnDate.Date);
+
+            string FROMDATE = dtPeriodFrom.ToString("yyyy-MM-dd");
+            string TODATE = dtTo.ToString("yyyy-MM-dd");
+            string ASONDATE = dtAsOn.ToString("yyyy-MM-dd");
+            //End of Rev 1.0 Mantis: 0026845
+
             string BRANCH_ID = "";
 
             string BranchComponent = "";
@@ -568,11 +607,17 @@ namespace Reports.Reports.GridReports
 
             //End of Rev
 
-            Task PopulateStockTrialDataTask = new Task(() => GetCustAgeingWithDaysIntrvldata(ASONDATE, BRANCH_ID, ALLPARTY, CBVOUCHER, JVOUCHER, DNCNNOTE));
+            //Rev 1.0 Mantis: 0026845
+            //Task PopulateStockTrialDataTask = new Task(() => GetCustAgeingWithDaysIntrvldata(ASONDATE, BRANCH_ID, ALLPARTY, CBVOUCHER, JVOUCHER, DNCNNOTE));
+            Task PopulateStockTrialDataTask = new Task(() => GetCustAgeingWithDaysIntrvldata(ASONDATE, FROMDATE,TODATE,BRANCH_ID, ALLPARTY, CBVOUCHER, JVOUCHER, DNCNNOTE));
+            //End of Rev 1.0 Mantis: 0026845
             PopulateStockTrialDataTask.RunSynchronously();
             ShowGridCustAgeingWithDaysInterval.ExpandAll();
         }
-        public void GetCustAgeingWithDaysIntrvldata(string ASONDATE, string BRANCH_ID, string ALLPARTY, string CBVOUCHER, string JVOUCHER, string DNCNNOTE)
+        //Rev 1.0 Mantis: 0026845
+        //public void GetCustAgeingWithDaysIntrvldata(string ASONDATE, string BRANCH_ID, string ALLPARTY, string CBVOUCHER, string JVOUCHER, string DNCNNOTE)
+        public void GetCustAgeingWithDaysIntrvldata(string ASONDATE, string FROMDATE,string TODATE,string BRANCH_ID, string ALLPARTY, string CBVOUCHER, string JVOUCHER, string DNCNNOTE)
+        //End of Rev 1.0 Mantis: 0026845
         {
             try
             {
@@ -583,7 +628,15 @@ namespace Reports.Reports.GridReports
 
                 cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
                 cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                //Rev 1.0 Mantis: 0026845
+                cmd.Parameters.AddWithValue("@ISASONDATE", (radAsDate.Checked) ? "1" : "0");
+                cmd.Parameters.AddWithValue("@ISPERIOD", (radPeriod.Checked) ? "1" : "0");
+                //End of Rev 1.0 Mantis: 0026845
                 cmd.Parameters.AddWithValue("@ASONDATE", ASONDATE);
+                //Rev 1.0 Mantis: 0026845
+                cmd.Parameters.AddWithValue("@FROMDATE", FROMDATE);
+                cmd.Parameters.AddWithValue("@TODATE", TODATE);
+                //End of Rev 1.0 Mantis: 0026845
                 cmd.Parameters.AddWithValue("@ALLPARTY", ALLPARTY);
                 cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
                 cmd.Parameters.AddWithValue("@PARTY_CODE", hdnCustomerId.Value);
