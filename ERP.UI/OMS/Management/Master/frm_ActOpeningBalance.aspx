@@ -1109,13 +1109,17 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
 
-                    <dxe:GridViewDataTextColumn Caption="Entered On" FieldName="CreateDate" 
+                    
+                     <dxe:GridViewDataDateColumn Caption="Entered On" FieldName="CreateDate" 
                         VisibleIndex="0" PropertiesDateEdit-DisplayFormatString="dd/MM/yyyy">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <Settings AutoFilterCondition="Contains" />
-                    </dxe:GridViewDataTextColumn>
+                    </dxe:GridViewDataDateColumn>
+
+
+
                      <dxe:GridViewDataTextColumn Caption="Updated By" FieldName="ModifyUser" 
                         VisibleIndex="0">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
@@ -1123,13 +1127,15 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn Caption="Updated On" FieldName="ModifyDate" 
+
+                    <dxe:GridViewDataDateColumn Caption="Updated On" FieldName="ModifyDate" 
                         VisibleIndex="0" PropertiesDateEdit-DisplayFormatString="dd/MM/yyyy">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <Settings AutoFilterCondition="Contains" />
-                    </dxe:GridViewDataTextColumn>
+                    </dxe:GridViewDataDateColumn>
+                   
 
                     <dxe:GridViewDataTextColumn ReadOnly="True" Width="0" CellStyle-HorizontalAlign="Center">
                         <Settings AllowAutoFilterTextInputTimer="False" />
