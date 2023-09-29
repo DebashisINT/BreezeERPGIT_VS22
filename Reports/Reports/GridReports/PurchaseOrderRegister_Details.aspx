@@ -314,6 +314,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             z-index: 1;
             background-color: transparent;
             padding-left: 10px !important;
+            padding-right: 24px !important;
         }
 
         .dxeButtonEditSys.dxeButtonEdit_PlasticBlue
