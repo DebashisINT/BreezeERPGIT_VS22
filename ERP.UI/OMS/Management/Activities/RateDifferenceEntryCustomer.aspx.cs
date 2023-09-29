@@ -1,5 +1,6 @@
 ﻿//================================================== Revision History =============================================
 //1.0    V2.0.39    Priti   28-04-2023  0025930:An error is appearing while making Rate Difference Entry Customer
+//2.0    V2.0.39    Priti   29-09-2023  0026875:Rate Difference Entry Customer Numbering Schema generated method change from RegexMatch to Procedure
 //====================================================== Revision History =============================================
 using System;
 using System.Configuration;
@@ -947,7 +948,9 @@ namespace ERP.OMS.Management.Activities
         {
             DataTable Quotationdt = new DataTable();
             string IsDeleteFrom = Convert.ToString(hdfIsDelete.Value);
-
+            //Rev 2.0
+            string SchemeID = "";
+            //Rev 2.0 end
             string validate = "";
             grid.JSProperties["cpQuotationNo"] = "";
             grid.JSProperties["cpSaveSuccessOrFail"] = "";
@@ -1374,7 +1377,10 @@ namespace ERP.OMS.Management.Activities
                 if (ActionType == "Add")
                 {
                     string[] SchemeList = strSchemeType.Split(new string[] { "~" }, StringSplitOptions.None);
-                    validate = checkNMakeJVCode(strInvoiceNo, Convert.ToInt32(SchemeList[0]));
+                    //Rev 2.0
+                    SchemeID = Convert.ToString(SchemeList[0]);
+                    //validate = checkNMakeJVCode(strInvoiceNo, Convert.ToInt32(SchemeList[0]));
+                    //Rev 2.0 End
                 }
                 if (tempBillAddress != null && tempBillAddress.Rows.Count == 0)
                 {
@@ -1531,7 +1537,9 @@ namespace ERP.OMS.Management.Activities
                 }
                 else
                 {
-                    grid.JSProperties["cpQuotationNo"] = UniqueQuotation;
+                    //Rev 10.0
+                    //grid.JSProperties["cpQuotationNo"] = UniqueQuotation;
+                    //Rev 10.0 End
 
                     #region To Show By Default Cursor after SAVE AND NEW
                     if (Convert.ToString(Session["RDEC_ActionType"]) == "Add") // session has been removed from quotation list page working good
@@ -1591,16 +1599,25 @@ namespace ERP.OMS.Management.Activities
                     GSTtaxDetails gstTaxDetailstax = new GSTtaxDetails();
                     TaxDetailTable = gstTaxDetailstax.SetTaxTableDataWithProductSerialRoundOff(ref tempQuotation, "SrlNo", "ProductID", "Amount", "TaxAmount", TaxDetailTable, "S", dt_PLQuote.Date.ToString("yyyy-MM-dd"), strBranch, ShippingStateValuefortax, strTaxTypesTax);
 
-
+                    //Rev 2.0
+                    UniqueQuotation = strInvoiceNo;
+                    string strReturnNumber = "";
+                    //Rev 2.0 end
                     ModifySalesReturn(MainInvoiceID, strSchemeType, UniqueQuotation, strInvoiceDate, strCustomer, strContactName,
                                     Reference, strBranch, strAgents, strCurrency, strRate, strTaxType, strTaxCode,
                                     InvoiceComponent, strComponenyType, InvoiceComponentDate, strCashBank, strDueDate,
                                     tempQuotation, TaxDetailTable, tempWarehousedt, tempTaxDetailsdt, tempBillAddress,
-                                    approveStatus, ActionType, ref strIsComplete, ref strQuoteID, ReasonforReturn, Proj_Id, drdTransCategory.SelectedValue);
+                                    approveStatus, ActionType, ref strIsComplete, ref strQuoteID, ReasonforReturn, Proj_Id, drdTransCategory.SelectedValue
+                                    //Rev 2.0
+                                    ,SchemeID, ref strReturnNumber
+                                    //Rev 2.0 End
+                                    );
 
 
                     grid.JSProperties["cpRateDiffCustID"] = strQuoteID;
-
+                    //Rev 2.0 
+                    grid.JSProperties["cpQuotationNo"] = strReturnNumber;
+                    //Rev 2.0 End
                     //####### Coded By Samrat Roy For Custom Control Data Process #########
 
                     if (!string.IsNullOrEmpty(hfControlData.Value))
@@ -3664,10 +3681,14 @@ namespace ERP.OMS.Management.Activities
 
         }
         public void ModifySalesReturn(string QuotationID, string strSchemeType, string strQuoteNo, string strQuoteDate, string strCustomer, string strContactName,
-                                    string Reference, string strBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode,
-                                    string strInvoiceComponent, string strComponenyType, string strInvoiceComponentDate, string strCashBank, string strDueDate,
-                                    DataTable Productdt, DataTable TaxDetailTable, DataTable Warehousedt, DataTable SalesReturnTaxdt, DataTable BillAddressdt, string approveStatus, string ActionType,
-                                    ref int strIsComplete, ref int strInvoiceID, string ReasonforReturn, Int64 Proj_Id, string drdTransCategory)
+            string Reference, string strBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode,
+            string strInvoiceComponent, string strComponenyType, string strInvoiceComponentDate, string strCashBank, string strDueDate,
+            DataTable Productdt, DataTable TaxDetailTable, DataTable Warehousedt, DataTable SalesReturnTaxdt, DataTable BillAddressdt, string approveStatus, string ActionType,
+            ref int strIsComplete, ref int strInvoiceID, string ReasonforReturn, Int64 Proj_Id, string drdTransCategory
+            //Rev 2.0
+            ,string strSchemeID, ref string strReturnNumber
+            //Rev 2.0 End
+            )
         {
             try
             {
@@ -3722,9 +3743,6 @@ namespace ERP.OMS.Management.Activities
                 }
 
                 cmd.Parameters.AddWithValue("@IsClosed", isSRClosed);
-
-
-
                 if (String.IsNullOrEmpty(strInvoiceComponentDate))
                 { cmd.Parameters.AddWithValue("@InvoiceComponentDate", strInvoiceComponentDate); }
                 else
@@ -3766,6 +3784,7 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@DriverName", DriverName);
                 cmd.Parameters.AddWithValue("@PhoneNo", PhoneNo);
 
+               
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnSalesReturnID", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@isEinvoice", SqlDbType.VarChar, 50);
@@ -3775,6 +3794,12 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters["@ReturnSalesReturnID"].Direction = ParameterDirection.Output;
                 cmd.Parameters["@isEinvoice"].Direction = ParameterDirection.Output;
 
+                //Rev 2.0
+                cmd.Parameters.AddWithValue("@SchemeID", strSchemeID);
+                cmd.Parameters.Add("@ReturnRDECNumber", SqlDbType.VarChar, 50);
+                cmd.Parameters["@ReturnRDECNumber"].Direction = ParameterDirection.Output;
+                //Rev 2.0 End
+
                 cmd.CommandTimeout = 0;
                 SqlDataAdapter Adap = new SqlDataAdapter();
                 Adap.SelectCommand = cmd;
@@ -3782,6 +3807,9 @@ namespace ERP.OMS.Management.Activities
 
                 strIsComplete = Convert.ToInt32(cmd.Parameters["@ReturnValue"].Value.ToString());
                 strInvoiceID = Convert.ToInt32(cmd.Parameters["@ReturnSalesReturnID"].Value.ToString());
+                //Rev 2.0
+                strReturnNumber = Convert.ToString(cmd.Parameters["@ReturnRDECNumber"].Value.ToString());
+                //Rev 2.0 End
                 grid.JSProperties["cpisEinvoice"] = Convert.ToString(cmd.Parameters["@isEinvoice"].Value.ToString());
                 cmd.Dispose();
                 con.Dispose();
