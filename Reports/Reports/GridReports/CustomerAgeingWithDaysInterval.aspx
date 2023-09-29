@@ -102,7 +102,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 $("#hdnSelectedBranches").val('');
                 cBranchComponentPanel.PerformCallback('BindComponentGrid' + '~' + $("#ddlbranchHO").val());
             })
-
+            //Rev 2.0 Mantis: 0026845
+            document.getElementById("dv_FromDate").style.display = "none";
+            document.getElementById("dv_ToDate").style.display = "none";
+            //End of Rev 2.0 Mantis: 0026845
         })
 
     </script>
@@ -320,8 +323,6 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         //Rev 2.0 Mantis: 0026845
         function ShowHideAllDate() {
             if (document.getElementById('radAsDate').checked) {
-                //var dvPassport = document.getElementById("dvPassport");
-                //    dvPassport.style.display = chkYes.checked ? "block" : "none";
                 document.getElementById("dv_AsOnDate").style.display = "block";
                 document.getElementById("dv_FromDate").style.display = "none";
                 document.getElementById("dv_ToDate").style.display = "none";
