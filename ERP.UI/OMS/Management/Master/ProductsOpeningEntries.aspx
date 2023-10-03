@@ -103,7 +103,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
 
         table.scroll tbody {
-            height: 250px;
+            /*height: 250px;*/
+            height: 180px;
             overflow-y: auto;
             overflow-x: hidden;
         }
