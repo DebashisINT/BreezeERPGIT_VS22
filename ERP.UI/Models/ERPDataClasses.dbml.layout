@@ -824,12 +824,6 @@
         <elementListCompartment Id="3a7151f3-a1fa-486d-a5b4-8ece1b64725a" absoluteBounds="8.265, 13.085, 1.9700000000000002, 8.1337483723958321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="e4425df9-5399-474a-b09b-3d25b6277018" isExpanded="false" absoluteBounds="19.125, 2.625, 2, 0.45">
-      <DataClassMoniker Name="/ERPDataClassesDataContext/v_ProjectOrderEntityList" />
-      <nestedChildShapes>
-        <elementListCompartment Id="0b82f60f-f513-432e-b5be-e1ac94a96878" absoluteBounds="19.14, 3.085, 1.9700000000000002, 9.2875569661458321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="af8a2a76-2fa5-4496-8e42-083a2e444219" isExpanded="false" absoluteBounds="5.25, 17.375, 2, 0.45">
       <DataClassMoniker Name="/ERPDataClassesDataContext/V_SCHEDULELIST" />
       <nestedChildShapes>
@@ -1260,6 +1254,12 @@
       <DataClassMoniker Name="/ERPDataClassesDataContext/PurchaseIndentList" />
       <nestedChildShapes>
         <elementListCompartment Id="ba84d9f6-6c76-4b0c-b4e8-be0e949e44f3" absoluteBounds="5.515, 19.335, 1.9700000000000002, 5.826131184895833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="18839805-00db-4d43-a8b5-1f59045f033f" isExpanded="false" absoluteBounds="19.375, 2.625, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/v_ProjectOrderEntityList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e0306023-2015-4c7e-ba95-5c25e43570c0" absoluteBounds="19.39, 3.085, 1.9700000000000002, 9.6721598307291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

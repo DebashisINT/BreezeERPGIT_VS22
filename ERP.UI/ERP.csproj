@@ -1119,6 +1119,7 @@
     </Compile>
     <Compile Include="OMS\Management\Activities\UserControls\uctrlOtherCondition.ascx.cs">
       <DependentUpon>uctrlOtherCondition.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OMS\Management\Activities\UserControls\uctrlOtherCondition.ascx.designer.cs">
       <DependentUpon>uctrlOtherCondition.ascx</DependentUpon>

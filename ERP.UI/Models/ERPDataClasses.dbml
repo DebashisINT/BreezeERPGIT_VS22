@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BRZ_EVTUBE2324_18_09_2023" Class="ERPDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EVAC_05072023" Class="ERPDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Table Name="dbo.v_FinanceReconciliationList" Member="v_FinanceReconciliationLists">
     <Type Name="v_FinanceReconciliationList">
       <Column Name="SrlNo" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
@@ -3153,57 +3153,6 @@
       <Column Name="IsAttachmentDoc" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.v_ProjectOrderEntityList" Member="v_ProjectOrderEntityLists">
-    <Type Name="v_ProjectOrderEntityList">
-      <Column Name="SlNo" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="Order_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Order_Date" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Order_CheckDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="OrderNo" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
-      <Column Name="CustomerName" Type="System.String" DbType="VarChar(253) NOT NULL" CanBeNull="false" />
-      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="BasicAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="Order_Expiry" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="LastModifiedOn" Type="System.String" DbType="VarChar(26)" CanBeNull="true" />
-      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="BranchName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="ChallanNo" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Challan_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreatedFrom" Type="System.String" DbType="VarChar(14)" CanBeNull="true" />
-      <Column Name="VehicleNos" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="VehicleOutDateTime" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
-      <Column Name="MultipleStatusV" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="SingleStatusV" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Order_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="Order_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="Order_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="InvoiceNo" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="InvoiceDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="MultipleStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="SingleStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="InvoiceBalanceAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="InvoiceNetAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="InvoiceAmountReceived" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsClosed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Doc_status" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
-      <Column Name="Transit_Invoice" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="BalQty" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PosState" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="ProjectValidFrom" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="ProjectValidUpto" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="isLastEntry" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Project_ApproveStatus" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
-      <Column Name="RevDate" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="RevNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="LastEntryValue" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsAttachmentDoc" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.V_SCHEDULELIST" Member="V_SCHEDULELISTs">
     <Type Name="V_SCHEDULELIST">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
@@ -5423,6 +5372,59 @@
       <Column Name="Status" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="MRP" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
       <Column Name="Vendor_Name" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_ProjectOrderEntityList" Member="v_ProjectOrderEntityLists">
+    <Type Name="v_ProjectOrderEntityList">
+      <Column Name="SlNo" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Order_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Order_Date" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Order_CheckDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OrderNo" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerName" Type="System.String" DbType="VarChar(253) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="BasicAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Order_Expiry" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="EnteredBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LastModifiedOn" Type="System.String" DbType="VarChar(26)" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BranchName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ChallanNo" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Challan_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedFrom" Type="System.String" DbType="VarChar(14)" CanBeNull="true" />
+      <Column Name="VehicleNos" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="VehicleOutDateTime" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
+      <Column Name="MultipleStatusV" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="SingleStatusV" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Order_CompanyID" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Order_FinYear" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Order_BranchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InvoiceNo" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="InvoiceDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="MultipleStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="SingleStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="InvoiceBalanceAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="InvoiceNetAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="InvoiceAmountReceived" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsClosed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Doc_status" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
+      <Column Name="Transit_Invoice" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="BalQty" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PosState" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectValidFrom" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectValidUpto" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="isLastEntry" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Project_ApproveStatus" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
+      <Column Name="RevDate" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="RevNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LastEntryValue" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsAttachmentDoc" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Editlock" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Deletelock" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>
