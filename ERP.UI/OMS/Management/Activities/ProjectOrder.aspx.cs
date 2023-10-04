@@ -1,4 +1,7 @@
-﻿using BusinessLogicLayer;
+﻿/*************************************************************************************************************************************************
+ *  Rev 1.0     Sanchita    V2.0.40     28-09-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/
+using BusinessLogicLayer;
 using BusinessLogicLayer.EmailDetails;
 using ClsDropDownlistNameSpace;
 using DataAccessLayer;
@@ -253,6 +256,18 @@ namespace ERP.OMS.Management.Activities
                 }
             }
             //Tanmoy Hierarchy End
+
+            // Rev Sanchita
+            DataTable dtposTime = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) Data_Fromdate,convert(varchar(10),Lock_Todate,105) Data_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Add' and Module_Id=61");
+
+            if (dtposTime != null && dtposTime.Rows.Count > 0)
+            {
+                hdnLockFromDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Todate"]);
+                hdnDatafrom.Value = Convert.ToString(dtposTime.Rows[0]["Data_Fromdate"]);
+                hdnDatato.Value = Convert.ToString(dtposTime.Rows[0]["Data_Todate"]);
+            }
+            // End of Rev Sanchita
 
             string RevisionRequiredEveryAfterApproval = ComBL.GetSystemSettingsResult("RevisionRequiredEveryAfterApproval");
             hdnRevisionRequiredEveryAfterApproval.Value = RevisionRequiredEveryAfterApproval;
@@ -3610,6 +3625,15 @@ namespace ERP.OMS.Management.Activities
                                 {
                                     grid.JSProperties["cpIsDocIdExists"] = "NotExistsDocId";
                                 }
+                                // Rev 1.0
+                                else if (id == -9)
+                                {
+                                    DataTable dtLock = new DataTable();
+                                    dtLock = GetAddLockStatus();
+                                    grid.JSProperties["cpSaveSuccessOrFail"] = "AddLock";
+                                    grid.JSProperties["cpAddLockStatus"] = (Convert.ToString(dtLock.Rows[0]["Lock_Fromdate"]) + " to " + Convert.ToString(dtLock.Rows[0]["Lock_Todate"]));
+                                }
+                                // End of Rev 1.0
                                 else if (id == -20)
                                 {
                                     grid.JSProperties["cpDormantCustomer"] = "DormantCustomer";
@@ -4083,6 +4107,19 @@ namespace ERP.OMS.Management.Activities
 
         //    return listBank;
         //}
+
+        // Rev 1.0
+        public DataTable GetAddLockStatus()
+        {
+            DataTable dt = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("prc_ProjectOrder");
+            proc.AddVarcharPara("@Action", 500, "GetAddLockForPInvoice");
+
+            dt = proc.GetTable();
+            return dt;
+
+        }
+        // End of Rev 1.0
 
         public int ModifySalesOrder(string OrderID, string strSchemeType, string strOrderNo, string strOrderDate, string strOrderExpiry, string strCustomer, string strContactName, Int64 ProjId,
                                     string Reference, string strBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode, DataTable salesOrderdt, DataTable addrDesc,

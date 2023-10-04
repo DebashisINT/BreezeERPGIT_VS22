@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="projectOrderList.aspx.cs" Inherits="ERP.OMS.Management.Activities.projectOrderList" %>
+﻿<%--/*************************************************************************************************************************************************
+ *  Rev 1.0     Sanchita    V2.0.40     28-09-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="projectOrderList.aspx.cs" Inherits="ERP.OMS.Management.Activities.projectOrderList" %>
 
 
 
@@ -1114,6 +1118,10 @@
             <%--Sandip Section for Approval Section in Design End --%>
         </div>
     </div>
+    <%--Rev 1.0--%>
+    <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <%--End of Rev 1.0--%>
     <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdOrder" runat="server" KeyFieldName="SlNo" AutoGenerateColumns="False" DataSourceID="EntityServerModeDataSource" SettingsDataSecurity-AllowEdit="false"
             SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false" OnSummaryDisplayText="Grid_SalesOrder_SummaryDisplayText"
@@ -1482,11 +1490,12 @@
                                    { 
                                 %>
 
-                                <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" style='<%#Eval("isLastEntry")%>' title="">
+                                <%--Rev 1.0 [style='<%#Eval("Editlock")%>' and <%#Eval("Deletelock")%> added for Edit and Delete respectively ] --%>
+                                <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" style='<%#Eval("isLastEntry")%>; <%#Eval("Editlock")%>' title="">
                                     <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Modify</span></a>  <% } %>
                                 <% if (rights.CanDelete)
                                    { %>
-                                <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" style='<%#Eval("isLastEntry")%>' title="">
+                                <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Order_Id")%>',<%# Container.VisibleIndex %>)" class="" style='<%#Eval("isLastEntry")%>; <%#Eval("Deletelock")%>' title="">
                                     <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>
                                 <% } %>
 
@@ -2244,6 +2253,13 @@ popup.Hide();
         <asp:HiddenField ID="hddnKeyValue" runat="server" />
         <asp:HiddenField ID="hddnCancelCloseFlag" runat="server" />
          <asp:HiddenField ID="hdnIsMultiuserApprovalRequired" runat="server" />
+        <%--Rev Sanchita--%>
+        <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
+
+        <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+        <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+        <%--End of Rev Sanchita--%>
     </div>
      <dxe:ASPxPopupControl ID="PopupProductwiseClose" runat="server" ClientInstanceName="cPopupProductwiseClose"
         Width="900px" HeaderText="Product wise - Close" PopupHorizontalAlign="WindowCenter" HeaderStyle-CssClass="wht"

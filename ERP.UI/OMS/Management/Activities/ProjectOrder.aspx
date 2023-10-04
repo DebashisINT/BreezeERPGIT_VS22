@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="ProjectOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectOrder" %>
+﻿<%--/*************************************************************************************************************************************************
+ *  Rev 1.0     Sanchita    V2.0.40     28-09-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="ProjectOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectOrder" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -114,7 +118,22 @@
     <%--Use for set focus on UOM after press ok on UOM--%>
     <script type="text/javascript">
         var canCallBack = true;
-        var TaggingCall=false;
+        var TaggingCall = false;
+
+        // Rev 1.0
+        function SetLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= cPLSalesOrderDate.GetDate()) && (cPLSalesOrderDate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                jAlert("DATA is Freezed between  " + $("#hdnDatafrom").val() + " to " + $("#hdnDatato").val());
+            }
+            //var VendorId = $("#hdnCustomerId").val();
+            //var startDate = new Date();
+            //startDate = cPLQuoteDate.GetDate().format('yyyy-MM-dd');
+            //cPanelGRNOverheadCost.PerformCallback('BindOverheadCostGrid' + '~' + startDate);
+            //clookup_GRNOverhead.gridView.Refresh();
+
+        }
+        // End of Rev 1.0
+
         //Subhabrata
         function CustomerButnClick(s, e) {
             $('#CustModel').modal('show');
@@ -3509,6 +3528,13 @@
                 grid.cpSaveSuccessOrFail = null;
                 jAlert('Can Not Add More Quotation Number as Quotation Scheme Exausted.<br />Update The Scheme and Try Again');
             }
+            // Rev 1.0
+            else if (grid.cpSaveSuccessOrFail == "AddLock") {
+                LoadingPanel.Hide();
+                jAlert('DATA is Freezed between ' + grid.cpAddLockStatus);
+                OnAddNewClick();
+            }
+            // End of Rev 1.0
             else if (grid.cpSaveSuccessOrFail == "transporteMandatory") {
                 OnAddNewClick();
                 jAlert("Transporter is set as Mandatory. Please enter values.", "Alert", function () { $("#exampleModal").modal('show'); });
@@ -8276,11 +8302,12 @@ function fn_Edit(keyValue) {
                                                 </dxe:ASPxLabel>
                                                 <span style="color: red">*</span>
                                             </label>
+                                            <%--Rev 1.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ] --%>
                                             <dxe:ASPxDateEdit ID="dt_PLSales" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cPLSalesOrderDate" Width="100%">
                                                 <ButtonStyle Width="13px">
                                                 </ButtonStyle>
                                                 <ClientSideEvents DateChanged="DateCheck" />
-                                                <ClientSideEvents GotFocus="function(s,e){cPLSalesOrderDate.ShowDropDown();}" />
+                                                <ClientSideEvents GotFocus="function(s,e){cPLSalesOrderDate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" />
                                             </dxe:ASPxDateEdit>
 
                                             <span id="MandatorySlDate" style="display: none" class="validclass">
@@ -10300,6 +10327,14 @@ function fn_Edit(keyValue) {
                 <asp:HiddenField ID="hdnRevisionRequiredEveryAfterApproval" runat="server" />
                 <asp:HiddenField runat="server" ID="hdnisFirstApprove" />
                  <asp:HiddenField ID="hdnIsfromApproval" runat="server" />
+                <%--Rev 1.0--%>
+                <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+                <asp:HiddenField ID="hdnLockToDate" runat="server" />
+                <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+                <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+                <asp:HiddenField ID="hdnDatafrom" runat="server" />
+                <asp:HiddenField ID="hdnDatato" runat="server" />
+                <%--End of Rev 1.0--%>
             </div>
             <%--End Sudip--%>
 
