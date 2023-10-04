@@ -1,5 +1,8 @@
 ﻿//==================================================== Revision History ==================================================================================
-// 1.0  Priti  V2.0.39  13-07-2023   0026528:Project Purchase Order Terms & Condition are becoming Blank if Something is Pasted in the Payment Terms Field
+// 1.0      Priti       V2.0.39     13-07-2023      0026528:Project Purchase Order Terms & Condition are becoming Blank if Something is Pasted in the Payment Terms Field
+// 2.0      Sanchita    V2.0.40     04-10-2023      Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
+//                                                  New button "Other Condiion" to show instead of "Terms & Condition" Button 
+//                                                  if the settings "Show Other Condition" is set as "Yes". Mantis: 0026868
 //====================================================End Revision History================================================================================
 
 using BusinessLogicLayer;
@@ -44,19 +47,17 @@ namespace ERP.OMS.Management.Activities.UserControls
 
                     txt_BEValue.Attributes.Add("onkeypress", "return isNumeric(event)");
                     string Variable_Name = string.Empty;
-                    // Rev Sanchita
-                    //string Variable_Name_Other = string.Empty;
+                    // Rev 2.0
                     string Called_From = string.Empty;
-                    // End of Rev Sanchita
+                    // End of Rev 2.0
 
                     if (Request.QueryString["type"] != null && Convert.ToString(Request.QueryString["type"]) != "")
                     {
                         string Type = Convert.ToString(Request.QueryString["type"]);
                         Variable_Name = "Show_TC_" + Type;
-                        // Rev Sanchita
-                        //Variable_Name_Other = "Show_OC_" + Type;
+                        // Rev 2.0
                         Called_From = Type;
-                        // End of Rev Sanchita
+                        // End of Rev 2.0
                     }
                     else
                     {
@@ -65,15 +66,14 @@ namespace ERP.OMS.Management.Activities.UserControls
                             HiddenField ctl = (HiddenField)this.Parent.FindControl("hfTermsConditionDocType");
                             string DocType = ctl.Value;
                             Variable_Name = "Show_TC_" + DocType;
-                            // Rev Sanchita
-                            //Variable_Name_Other = "Show_OC_" + DocType;
+                            // Rev 2.0
                             Called_From = DocType;
-                            // End of Rev Sanchita
+                            // End of Rev 2.0
                         }
                         catch (Exception ex) { Variable_Name = "Show_TC_SO"; }
                     }
 
-                    // Rev Sanchita
+                    // Rev 2.0
                     DataTable DTOth = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
 
                     if ((Called_From == "SINQ" || Called_From == "QO" || Called_From == "SO" || Called_From == "SC" 
@@ -84,7 +84,7 @@ namespace ERP.OMS.Management.Activities.UserControls
                     }
                     else
                     {
-                        // End of Rev Sanchita
+                        // End of Rev 2.0
                         DataTable DT = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='" + Variable_Name + "' AND IsActive=1");
 
                         if (DT != null && DT.Rows.Count > 0)
@@ -100,9 +100,9 @@ namespace ERP.OMS.Management.Activities.UserControls
                                 this.Visible = false;
                             }
                         }
-                        // Rev Sanchita
+                        // Rev 2.0
                     }
-                    // End of Rev Sanchita
+                    // End of Rev 2.0
                     #endregion
                     #region Show & Hide purchase module specefic field
                     HiddenField hidden_DocType = (HiddenField)this.Parent.FindControl("hfTermsConditionDocType");
