@@ -1,5 +1,8 @@
 ﻿/***************************************************************************************************************************************
- * Rev 1.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
+ * Rev 1.0      Sanchita      V2.0.38                  Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
+ * Rev 2.0      Sanchita      V2.0.40    04-10-2023    0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
+                                                       New button "Other Condiion" to show instead of "Terms & Condition" Button 
+                                                       if the settings "Show Other Condition" is set as "Yes"
  ***************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -2228,27 +2231,39 @@ namespace ERP.OMS.Management.Activities
 
                 //################# Added By : Sayan Dutta -- 10/07/2017 -- To check TC Mandatory Control
                 //#region TC
-                DataTable DT_TC = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='TC_SINQMandatory' AND IsActive=1");
-                if (DT_TC != null && DT_TC.Rows.Count > 0)
+                // Rev 2.0
+                DataTable DT_TCOth = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
+                if (DT_TCOth != null && DT_TCOth.Rows.Count > 0 && Convert.ToString(DT_TCOth.Rows[0]["Variable_Value"]).Trim() == "Yes")
                 {
-                    string IsMandatory = Convert.ToString(DT_TC.Rows[0]["Variable_Value"]).Trim();
-
-                    //  objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
-
-                    objEngine = new BusinessLogicLayer.DBEngine();
-
-                    DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_TC_SINQ' AND IsActive=1");
-                    if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
+                    // Do nothing
+                }
+                else
+                {
+                    // End of Rev 2.0
+                    DataTable DT_TC = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='TC_SINQMandatory' AND IsActive=1");
+                    if (DT_TC != null && DT_TC.Rows.Count > 0)
                     {
-                        if (IsMandatory == "Yes")
+                        string IsMandatory = Convert.ToString(DT_TC.Rows[0]["Variable_Value"]).Trim();
+
+                        //  objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
+
+                        objEngine = new BusinessLogicLayer.DBEngine();
+
+                        DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_TC_SINQ' AND IsActive=1");
+                        if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
                         {
-                            if (TermsConditionsControl.GetControlValue("dtDeliveryDate") == "" || TermsConditionsControl.GetControlValue("dtDeliveryDate") == "@")
+                            if (IsMandatory == "Yes")
                             {
-                                validate = "TCMandatory";
+                                if (TermsConditionsControl.GetControlValue("dtDeliveryDate") == "" || TermsConditionsControl.GetControlValue("dtDeliveryDate") == "@")
+                                {
+                                    validate = "TCMandatory";
+                                }
                             }
                         }
                     }
+                    // Rev 2.0
                 }
+                // End of Rev 2.0
                 //#endregion
                 //################# Added By : Sayan Dutta -- 10/07/2017 -- To check TC Mandatory Control
 
@@ -2847,10 +2862,25 @@ namespace ERP.OMS.Management.Activities
                 if (strQuoteID > 0)
                 {
                     //####### Coded By Sayan Dutta  For Custom Control Data Process #########
-                    if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
+                    // Rev 2.0
+                    DataTable DT_TCOth = oDBEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
+                    if (DT_TCOth != null && DT_TCOth.Rows.Count > 0 && Convert.ToString(DT_TCOth.Rows[0]["Variable_Value"]).Trim() == "Yes")
                     {
-                        TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(strQuoteID), "SINQ");
+                        if (!string.IsNullOrEmpty(hfOtherConditionData.Value))
+                        {
+                            uctrlOtherCondition.SaveOC(hfOtherConditionData.Value, Convert.ToString(strQuoteID), "SINQ");
+                        }
                     }
+                    else
+                    {
+                        // End of Rev 2.0
+                        if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
+                        {
+                            TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(strQuoteID), "SINQ");
+                        }
+                        // Rev 2.0
+                    }
+                    // End of Rev 2.0
                 }
 
 

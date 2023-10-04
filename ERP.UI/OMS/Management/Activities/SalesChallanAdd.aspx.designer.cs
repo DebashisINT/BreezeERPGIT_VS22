@@ -1032,6 +1032,15 @@ namespace ERP.OMS.Management.Activities
         protected global::ERP.OMS.Management.Activities.UserControls.UOMConversion UOMConversionControl;
 
         /// <summary>
+        /// uctrlOtherCondition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ERP.OMS.Management.Activities.UserControls.WebUserControl1 uctrlOtherCondition;
+
+        /// <summary>
         /// hfTermsConditionData control.
         /// </summary>
         /// <remarks>
@@ -1066,6 +1075,24 @@ namespace ERP.OMS.Management.Activities
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfOtherTermsConditionDocType;
+
+        /// <summary>
+        /// hfOtherConditionData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfOtherConditionData;
+
+        /// <summary>
+        /// hfOtherConditionDocType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfOtherConditionDocType;
 
         /// <summary>
         /// Sales_BillingShipping control.

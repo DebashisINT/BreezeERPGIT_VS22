@@ -1,9 +1,13 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                05-04-2023        2.0.37           Pallab              25848: Add Proforma Invoice/Quotation module design modification
-2.0                21-06-2023        2.0.38           Sanchita            Some of the issues are there in Sales Invoice regarding 
+2.0                21-06-2023        2.0.38           4.0            Some of the issues are there in Sales Invoice regarding 
                                                                           Multi UOM in EVAC - FOR ALL SALES MODULES. Refer : 26403
 3.0                16-06-2023        V2.0.38          Pallab              "Multi UOM Details" popup parameter alignment issue fix . Mantis : 26331
+4.0                28-09-2023        V2.0.40          Sanchita            Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP   
+                                                                          New button "Other Condiion" to show instead of "Terms & Condition" Button 
+                                                                          if the settings "Show Other Condition" is set as "Yes"  
+                                                                          Mantis: 26868
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Sales Quotation" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesQuotation.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesQuotation" %>
@@ -12,6 +16,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/TermsConditionsControl.ascx" TagPrefix="uc2" TagName="TermsConditionsControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc3" TagName="UOMConversionControl" %>
+<%--Rev 4.0--%>
+<%@ Register Src="~/OMS/Management/Activities/UserControls/uctrlOtherCondition.ascx" TagPrefix="uc4" TagName="uctrlOtherCondition" %>
+<%--End of Rev 4.0--%>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -142,9 +149,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
                                 callTransporterControl(quote_Id[0], $("#rdl_Salesquotation").find(":checked").val());
                             }
-                            if ($("#btn_TermsCondition").is(":visible")) {
-                                callTCControl(quote_Id, 'QO');
+                            // Rev 4.0
+                            //if ($("#btn_TermsCondition").is(":visible")) {
+                            //    callTCControl(quote_Id, 'QO');
+                            //}
+
+                            if ($("#btn_OtherCondition").is(":visible")) {
+                                callOCControl(quote_Id, 'SINQ');
                             }
+                            else {
+                                if ($("#btn_TermsCondition").is(":visible")) {
+                                    callTCControl(quote_Id, 'SINQ');
+                                }
+                            }
+                            // End of Rev 4.0
+                            
 
                             if (quote_Id.length > 0) {
                                 BindOrderProjectdata(quote_Id[0], $("#rdl_Salesquotation").find(":checked").val());
@@ -2070,12 +2089,19 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                                             <uc2:TermsConditionsControl runat="server" ID="TermsConditionsControl" />
                                             <uc3:UOMConversionControl runat="server" ID="UOMConversionControl" />
+                                            <%--Rev 4.0--%>
+                                            <uc4:uctrlOtherCondition runat="server" ID="uctrlOtherCondition" />
+                                            <%--End of Rev 4.0--%>
                                             <asp:HiddenField runat="server" ID="hfTermsConditionData" />
                                             <asp:HiddenField runat="server" ID="hfTermsConditionDocType" Value="QO" />
                                             <asp:HiddenField runat="server" ID="hdBasketId" />
                                             <asp:HiddenField runat="server" ID="sessionBranch" />
                                             <asp:HiddenField ID="HiddenField1" runat="server" />
                                             <asp:HiddenField ID="hdnUomqnty" runat="server" />
+                                            <%--Rev 4.0--%>
+                                            <asp:HiddenField runat="server" ID="hfOtherConditionData" />
+                                            <asp:HiddenField runat="server" ID="hfOtherConditionDocType" Value="QO" />
+                                            <%--End of Rev 4.0--%>
                                             <%--<asp:HiddenField ID="hdnCustomerId" runat="server" />--%>
                                             <%-- onclick=""--%>
                                             <%--<a href="javascript:void(0);" id="btnAddNew" runat="server" class="btn btn-primary"><span>[A]ttachment(s)</span></a>--%>

@@ -1,7 +1,10 @@
 ﻿/****************************************************************************************************************
- * Rev 1.0      Sanchita      V2.0.39       Multi UOM EVAC Issues status modulewise - Sales Challan. Mantis : 26515  
- * Rev 2.0      Sanchita      V2.0.39       In Sales Challan made from Sales Invoice with Price Inclusive of GST, after tagging get loaded in Sales Challan, 
-                                            the value of "Amount are" still showing "Price Exclusive". Mantis:26867
+ * Rev 1.0      Sanchita      V2.0.39               Multi UOM EVAC Issues status modulewise - Sales Challan. Mantis : 26515  
+ * Rev 2.0      Sanchita      V2.0.39               In Sales Challan made from Sales Invoice with Price Inclusive of GST, after tagging get loaded in Sales Challan, 
+                                                    the value of "Amount are" still showing "Price Exclusive". Mantis:26867
+ * Rev 3.0      Sanchita      V2.0.40   04-10-2023  Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
+                                                    New button "Other Condiion" to show instead of "Terms & Condition" Button 
+                                                    if the settings "Show Other Condition" is set as "Yes". Mantis: 0026868
  *****************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -3570,29 +3573,41 @@ namespace ERP.OMS.Management.Activities
                 //Data: 01-06-2017 Author: Sayan Dutta
                 //Details:To check T&C Mandatory Control
                 #region TC
-                DataTable DT_TC = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='TC_SCMandatory' AND IsActive=1");
-                if (DT_TC != null && DT_TC.Rows.Count > 0)
+                // Rev 3.0
+                DataTable DT_TCOth = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
+                if (DT_TCOth != null && DT_TCOth.Rows.Count > 0 && Convert.ToString(DT_TCOth.Rows[0]["Variable_Value"]).Trim() == "Yes")
                 {
-                    string IsMandatory = Convert.ToString(DT_TC.Rows[0]["Variable_Value"]).Trim();
-
-                  //  objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
-                    objEngine = new BusinessLogicLayer.DBEngine();
-
-
-                    DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_TC_SC' AND IsActive=1");
-                    if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
-                    {
-                        if (IsMandatory == "Yes")
-                        {
-                            if (TermsConditionsControl.GetControlValue("dtDeliveryDate") == "" || TermsConditionsControl.GetControlValue("dtDeliveryDate") == "@")
-                            {
-                                acbpCrpUdf.JSProperties["cpTC"] = "false";
-                            }
-                            else { acbpCrpUdf.JSProperties["cpTC"] = "true"; }
-                        }
-                    }
-                    else { acbpCrpUdf.JSProperties["cpTC"] = "true"; }
+                    // Do nothing
                 }
+                else
+                {
+                    // End of Rev 3.0
+                    DataTable DT_TC = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='TC_SCMandatory' AND IsActive=1");
+                    if (DT_TC != null && DT_TC.Rows.Count > 0)
+                    {
+                        string IsMandatory = Convert.ToString(DT_TC.Rows[0]["Variable_Value"]).Trim();
+
+                      //  objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
+                        objEngine = new BusinessLogicLayer.DBEngine();
+
+
+                        DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_TC_SC' AND IsActive=1");
+                        if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
+                        {
+                            if (IsMandatory == "Yes")
+                            {
+                                if (TermsConditionsControl.GetControlValue("dtDeliveryDate") == "" || TermsConditionsControl.GetControlValue("dtDeliveryDate") == "@")
+                                {
+                                    acbpCrpUdf.JSProperties["cpTC"] = "false";
+                                }
+                                else { acbpCrpUdf.JSProperties["cpTC"] = "true"; }
+                            }
+                        }
+                        else { acbpCrpUdf.JSProperties["cpTC"] = "true"; }
+                    }
+                    // Rev 3.0
+                }
+                // End of Rev 3.0
                 #endregion
                 //----------End-------------------------
 
@@ -3628,29 +3643,41 @@ namespace ERP.OMS.Management.Activities
                 //Data: 31-05-2017 Author: Sayan Dutta
                 //Details:To check T&C Mandatory Control
                 #region TC
-                DataTable DT_TC = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='TC_SCMandatory' AND IsActive=1");
-                if (DT_TC != null && DT_TC.Rows.Count > 0)
+                // Rev 3.0
+                DataTable DT_TCOth = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
+                if (DT_TCOth != null && DT_TCOth.Rows.Count > 0 && Convert.ToString(DT_TCOth.Rows[0]["Variable_Value"]).Trim() == "Yes")
                 {
-                    string IsMandatory = Convert.ToString(DT_TC.Rows[0]["Variable_Value"]).Trim();
-
-                   // objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
-
-                    objEngine = new BusinessLogicLayer.DBEngine();
-
-                    DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_TC_SC' AND IsActive=1");
-                    if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
-                    {
-                        if (IsMandatory == "Yes")
-                        {
-                            if (TermsConditionsControl.GetControlValue("dtDeliveryDate") == "" || TermsConditionsControl.GetControlValue("dtDeliveryDate") == "@")
-                            {
-                                acbpCrpUdf.JSProperties["cpTC"] = "false";
-                            }
-                            else { acbpCrpUdf.JSProperties["cpTC"] = "true"; }
-                        }
-                    }
-                    else { acbpCrpUdf.JSProperties["cpTC"] = "true"; }
+                    // Do nothing
                 }
+                else
+                {
+                    // End of Rev 3.0
+                    DataTable DT_TC = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='TC_SCMandatory' AND IsActive=1");
+                    if (DT_TC != null && DT_TC.Rows.Count > 0)
+                    {
+                        string IsMandatory = Convert.ToString(DT_TC.Rows[0]["Variable_Value"]).Trim();
+
+                       // objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
+
+                        objEngine = new BusinessLogicLayer.DBEngine();
+
+                        DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_TC_SC' AND IsActive=1");
+                        if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
+                        {
+                            if (IsMandatory == "Yes")
+                            {
+                                if (TermsConditionsControl.GetControlValue("dtDeliveryDate") == "" || TermsConditionsControl.GetControlValue("dtDeliveryDate") == "@")
+                                {
+                                    acbpCrpUdf.JSProperties["cpTC"] = "false";
+                                }
+                                else { acbpCrpUdf.JSProperties["cpTC"] = "true"; }
+                            }
+                        }
+                        else { acbpCrpUdf.JSProperties["cpTC"] = "true"; }
+                    }
+                    // Rev 3.0
+                }
+                // End of Rev 3.0
                 #endregion
                 //----------End-------------------------
 
@@ -4864,10 +4891,25 @@ namespace ERP.OMS.Management.Activities
                 if (idFromString > 0)   
                 {
                     //####### Coded By Sayan Dutta For Custom Control Data Process #########
-                    if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
+                    // Rev Sanchita
+                    DataTable DT_TCOth = oDBEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
+                    if (DT_TCOth != null && DT_TCOth.Rows.Count > 0 && Convert.ToString(DT_TCOth.Rows[0]["Variable_Value"]).Trim() == "Yes")
                     {
-                        TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(idFromString), "SC");
+                        if (!string.IsNullOrEmpty(hfOtherConditionData.Value))
+                        {
+                            uctrlOtherCondition.SaveOC(hfOtherConditionData.Value, Convert.ToString(idFromString), "SC");
+                        }
                     }
+                    else
+                    {
+                        // End of Rev Sanchita
+                        if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
+                        {
+                            TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(idFromString), "SC");
+                        }
+                        // Rev Sanchita
+                    }
+                    // End of Rev Sanchita
 
                     if (!string.IsNullOrEmpty(hfOtherTermsConditionData.Value))
                     {

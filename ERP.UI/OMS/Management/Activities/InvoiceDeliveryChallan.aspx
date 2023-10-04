@@ -5,6 +5,9 @@
    4.0   Pallab    V2.0.37    07-04-2023     0025845: Add Sales Invoice Cum Challan module design modification
    5.0   Priti     V2.0.38    13-04-2023     0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
    6.0   Pallab    V2.0.39    07-08-2023     0026689: Add Sales Invoice Cum Challan module all bootstrap modal outside click event disable
+   7.0   Sanchita  V2.0.40    04-10-2023     0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
+                                                       New button "Other Condiion" to show instead of "Terms & Condition" Button 
+                                                       if the settings "Show Other Condition" is set as "Yes"
    ========================================= End Revision History =======================================================================================================--%>
 
 
@@ -17,6 +20,9 @@
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc3" TagName="UOMConversionControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/OtherTermsAndCondition.ascx" TagPrefix="ucOTC" TagName="OtherTermsAndCondition" %>
+<%--Rev 7.0--%>
+<%@ Register Src="~/OMS/Management/Activities/UserControls/uctrlOtherCondition.ascx" TagPrefix="uc4" TagName="uctrlOtherCondition" %>
+<%--End of Rev 7.0--%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
@@ -638,12 +644,22 @@
                         callTransporterControl(parseInt($("#hdnTaggedSalesOrderId").val()), $("#rdl_SaleInvoice").find(":checked").val());
                     }
 
-                    if ($("#btn_TermsCondition").is(":visible")) {
+                    // Rev 7.0
+                    if ($("#btn_OtherCondition").is(":visible")) {
                         if (parseInt($("#hdnTaggedSalesOrderId").val()) > 0) {
-                            callTCControl(parseInt($("#hdnTaggedSalesOrderId").val()), $("#rdl_SaleInvoice").find(":checked").val());
+                            callOCControl(parseInt($("#hdnTaggedSalesOrderId").val()), $("#rdl_SaleInvoice").find(":checked").val());
                         }
                     }
-
+                    else {
+                        // End of Rev 7.0
+                        if ($("#btn_TermsCondition").is(":visible")) {
+                            if (parseInt($("#hdnTaggedSalesOrderId").val()) > 0) {
+                                callTCControl(parseInt($("#hdnTaggedSalesOrderId").val()), $("#rdl_SaleInvoice").find(":checked").val());
+                            }
+                        }
+                    // Rev 7.0
+                    }
+                    // End of Rev 7.0
                 }
                 var todaydate = new Date();
                 cdtVehicleOutDate.SetDate(todaydate);
@@ -1272,11 +1288,23 @@
                     BindOrderProjectdata(quote_Id[0], $("#rdl_SaleInvoice").find(":checked").val());
                 }
             }
-            if ($("#btn_TermsCondition").is(":visible")) {
+            // Rev 7.0
+            if ($("#btn_OtherCondition").is(":visible")) {
                 if (quote_Id.length > 0) {
-                    callTCControl(quote_Id[0], $("#rdl_SaleInvoice").find(":checked").val());
+                    callOCControl(quote_Id[0], $("#rdl_SaleInvoice").find(":checked").val());
                 }
             }
+            else {
+                // End of Rev 7.0
+                if ($("#btn_TermsCondition").is(":visible")) {
+                    if (quote_Id.length > 0) {
+                        callTCControl(quote_Id[0], $("#rdl_SaleInvoice").find(":checked").val());
+                    }
+                }
+                // Rev 7.0
+            }
+            // End of Rev 7.0
+
             if ($("#btn_OtherTermsCondition").is(":visible")) {
                 if (quote_Id.length > 0) {
                     callOTCControl(quote_Id[0], $("#rdl_SaleInvoice").find(":checked").val());
@@ -2953,6 +2981,9 @@
                                             <uc2:TermsConditionsControl runat="server" ID="TermsConditionsControl" />
                                              <ucOTC:OtherTermsAndCondition runat="server" ID="OtherTermsAndCondition" />
                                             <uc1:VehicleDetailsControl runat="server" ID="VehicleDetailsControl" />
+                                            <%--Rev 7.0--%>
+                                            <uc4:uctrlOtherCondition runat="server" ID="uctrlOtherCondition" />
+                                            <%--End of Rev 7.0--%>
                                             <span id="spnBillDespatch" runat="server">
                                            <dxe:ASPxButton ID="btn_BillDespatch" ClientInstanceName="cbtn_BillDespatch" runat="server" AutoPostBack="False" Text="Bill from/Despatch from" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                 <ClientSideEvents Click="function(s, e) {Save_BillDespatch();}" />
@@ -2972,6 +3003,10 @@
 
                                             <asp:HiddenField runat="server" ID="hfOtherTermsConditionData" />
                                             <asp:HiddenField runat="server" ID="hfOtherTermsConditionDocType" Value="SI" />
+                                             <%--Rev 7.0--%>
+                                            <asp:HiddenField runat="server" ID="hfOtherConditionData" />
+                                            <asp:HiddenField runat="server" ID="hfOtherConditionDocType" Value="SI" />
+                                            <%--End of Rev 7.0--%>
                                             <%-- onclick=""--%>
                                             <%--<a href="javascript:void(0);" id="btnAddNew" runat="server" class="btn btn-primary"><span>[A]ttachment(s)</span></a>--%>
                                             <%--<dxe:ASPxButton ID="ASPxButton4" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="[A]ttachment(s)" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">

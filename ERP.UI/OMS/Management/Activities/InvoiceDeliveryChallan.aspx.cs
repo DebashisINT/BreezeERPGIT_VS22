@@ -1,8 +1,10 @@
 ﻿#region//====================================================Revision History=========================================================================
-// 1.0  Priti   V2.0.37    02-03-2023    25711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
-// 2.0  Priti   V2.0.37    30-03-2023    0025764: The Bill from/Dispatch From Button to be made available in the Edit Mode of Sales - Invoice Cum Challan
-// 3.0  Priti   V2.0.38    13-06-2023    0026328: Mfg Date & Exp Date is showing wrong while making Invoice cum challan
-
+// 1.0  Priti       V2.0.37    02-03-2023    25711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
+// 2.0  Priti       V2.0.37    30-03-2023    0025764: The Bill from/Dispatch From Button to be made available in the Edit Mode of Sales - Invoice Cum Challan
+// 3.0  Priti       V2.0.38    13-06-2023    0026328: Mfg Date & Exp Date is showing wrong while making Invoice cum challan
+// 4.0  Sanchita    V2.0.40    04-10-2023    0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
+//                                                     New button "Other Condiion" to show instead of "Terms & Condition" Button 
+//                                                     if the settings "Show Other Condition" is set as "Yes"
 #endregion//====================================================End Revision History=====================================================================
 
 using System;
@@ -3410,30 +3412,40 @@ namespace ERP.OMS.Management.Activities
                 //Data: 31-05-2017 Author: Sayan Dutta
                 //Details:To check T&C Mandatory Control
                 #region TC
-
-                if (ddlInventory.SelectedValue != "N" && ddlInventory.SelectedValue != "S")
+                // Rev 4.0
+                DataTable DT_TCOth = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
+                if (DT_TCOth != null && DT_TCOth.Rows.Count > 0 && Convert.ToString(DT_TCOth.Rows[0]["Variable_Value"]).Trim() == "Yes")
                 {
-                    DataTable DT_TC = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='TC_InvDelvChallanMandatory' AND IsActive=1");
-                    if (DT_TC != null && DT_TC.Rows.Count > 0)
+                    // Do nothing
+                }
+                else
+                {
+                    // End of Rev 4.0
+                    if (ddlInventory.SelectedValue != "N" && ddlInventory.SelectedValue != "S")
                     {
-                        string IsMandatory = Convert.ToString(DT_TC.Rows[0]["Variable_Value"]).Trim();
-                        // objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
-                        objEngine = new BusinessLogicLayer.DBEngine();
-
-                        DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_TC_InvDelvChallan' AND IsActive=1");
-                        if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
+                        DataTable DT_TC = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='TC_InvDelvChallanMandatory' AND IsActive=1");
+                        if (DT_TC != null && DT_TC.Rows.Count > 0)
                         {
-                            if (IsMandatory == "Yes")
+                            string IsMandatory = Convert.ToString(DT_TC.Rows[0]["Variable_Value"]).Trim();
+                            // objEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);
+                            objEngine = new BusinessLogicLayer.DBEngine();
+
+                            DataTable DTVisible = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_TC_InvDelvChallan' AND IsActive=1");
+                            if (Convert.ToString(DTVisible.Rows[0]["Variable_Value"]).Trim() == "Yes")
                             {
-                                if (TermsConditionsControl.GetControlValue("dtDeliveryDate") == "" || TermsConditionsControl.GetControlValue("dtDeliveryDate") == "@")
+                                if (IsMandatory == "Yes")
                                 {
-                                    validate = "TCMandatory";
+                                    if (TermsConditionsControl.GetControlValue("dtDeliveryDate") == "" || TermsConditionsControl.GetControlValue("dtDeliveryDate") == "@")
+                                    {
+                                        validate = "TCMandatory";
+                                    }
                                 }
                             }
                         }
                     }
+                    // Rev 4.0
                 }
-
+                // End of Rev 4.0
                 #endregion
                 //----------End-------------------------
 
@@ -5894,20 +5906,51 @@ namespace ERP.OMS.Management.Activities
                 if (strInvoiceID > 0)
                 {
                     //####### Coded By Sayan Dutta For Custom Control Data Process #########
-                    if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
+                    // Rev 4.0
+                    DataTable DT_TCOth = oDBEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
+                    if (DT_TCOth != null && DT_TCOth.Rows.Count > 0 && Convert.ToString(DT_TCOth.Rows[0]["Variable_Value"]).Trim() == "Yes")
                     {
-                        TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(strInvoiceID), "SI");
+                        if (!string.IsNullOrEmpty(hfOtherConditionData.Value))
+                        {
+                            uctrlOtherCondition.SaveOC(hfOtherConditionData.Value, Convert.ToString(strInvoiceID), "SI");
+                        }
                     }
+                    else
+                    {
+                        // End of Rev 4.0
+                        if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
+                        {
+                            TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(strInvoiceID), "SI");
+                        }
+                        // Rev 4.0
+                    }
+                    // End of Rev 4.0
+
                     if (!string.IsNullOrEmpty(hfOtherTermsConditionData.Value))
                     {
                         OtherTermsAndCondition.SaveTC(hfOtherTermsConditionData.Value, Convert.ToString(strInvoiceID), "SI", "AddEdit");
                     }
                     if (UniqueChallanOutput > 0)
                     {
-                        if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
+                        // Rev 4.0
+                        if (DT_TCOth != null && DT_TCOth.Rows.Count > 0 && Convert.ToString(DT_TCOth.Rows[0]["Variable_Value"]).Trim() == "Yes")
                         {
-                            TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(UniqueChallanOutput), "SC");
+                            if (!string.IsNullOrEmpty(hfOtherConditionData.Value))
+                            {
+                                uctrlOtherCondition.SaveOC(hfOtherConditionData.Value, Convert.ToString(UniqueChallanOutput), "SC");
+                            }
                         }
+                        else
+                        {
+                            // End of Rev 4.0
+                            if (!string.IsNullOrEmpty(hfTermsConditionData.Value))
+                            {
+                                TermsConditionsControl.SaveTC(hfTermsConditionData.Value, Convert.ToString(UniqueChallanOutput), "SC");
+                            }
+                            // Rev 4.0
+                        }
+                        // End of Rev 4.0
+
                         if (!string.IsNullOrEmpty(hfOtherTermsConditionData.Value))
                         {
                             OtherTermsAndCondition.SaveTC(hfOtherTermsConditionData.Value, Convert.ToString(UniqueChallanOutput), "SC", "AddEdit");

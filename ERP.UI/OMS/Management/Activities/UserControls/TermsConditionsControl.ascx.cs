@@ -44,10 +44,19 @@ namespace ERP.OMS.Management.Activities.UserControls
 
                     txt_BEValue.Attributes.Add("onkeypress", "return isNumeric(event)");
                     string Variable_Name = string.Empty;
+                    // Rev Sanchita
+                    //string Variable_Name_Other = string.Empty;
+                    string Called_From = string.Empty;
+                    // End of Rev Sanchita
+
                     if (Request.QueryString["type"] != null && Convert.ToString(Request.QueryString["type"]) != "")
                     {
                         string Type = Convert.ToString(Request.QueryString["type"]);
                         Variable_Name = "Show_TC_" + Type;
+                        // Rev Sanchita
+                        //Variable_Name_Other = "Show_OC_" + Type;
+                        Called_From = Type;
+                        // End of Rev Sanchita
                     }
                     else
                     {
@@ -56,25 +65,44 @@ namespace ERP.OMS.Management.Activities.UserControls
                             HiddenField ctl = (HiddenField)this.Parent.FindControl("hfTermsConditionDocType");
                             string DocType = ctl.Value;
                             Variable_Name = "Show_TC_" + DocType;
+                            // Rev Sanchita
+                            //Variable_Name_Other = "Show_OC_" + DocType;
+                            Called_From = DocType;
+                            // End of Rev Sanchita
                         }
                         catch (Exception ex) { Variable_Name = "Show_TC_SO"; }
                     }
 
-                    DataTable DT = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='" + Variable_Name + "' AND IsActive=1");
+                    // Rev Sanchita
+                    DataTable DTOth = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
 
-                    if (DT != null && DT.Rows.Count > 0)
+                    if ((Called_From == "SINQ" || Called_From == "QO" || Called_From == "SO" || Called_From == "SC" 
+                    || Called_From == "SI") 
+                        && DTOth != null && DTOth.Rows.Count > 0 && Convert.ToString(DTOth.Rows[0]["Variable_Value"]).Trim()=="Yes" )
                     {
-                        string IsVisible = Convert.ToString(DT.Rows[0]["Variable_Value"]).Trim();
-
-                        if (IsVisible == "Yes")
-                        {
-                            this.Visible = true;
-                        }
-                        else
-                        {
-                            this.Visible = false;
-                        }
+                        this.Visible = false;
                     }
+                    else
+                    {
+                        // End of Rev Sanchita
+                        DataTable DT = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='" + Variable_Name + "' AND IsActive=1");
+
+                        if (DT != null && DT.Rows.Count > 0)
+                        {
+                            string IsVisible = Convert.ToString(DT.Rows[0]["Variable_Value"]).Trim();
+
+                            if (IsVisible == "Yes")
+                            {
+                                this.Visible = true;
+                            }
+                            else
+                            {
+                                this.Visible = false;
+                            }
+                        }
+                        // Rev Sanchita
+                    }
+                    // End of Rev Sanchita
                     #endregion
                     #region Show & Hide purchase module specefic field
                     HiddenField hidden_DocType = (HiddenField)this.Parent.FindControl("hfTermsConditionDocType");

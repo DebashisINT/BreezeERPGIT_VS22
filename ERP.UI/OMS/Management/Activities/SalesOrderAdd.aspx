@@ -6,6 +6,9 @@
    Rev 3.0      Sanchita      V2.0.39   28/06/2023  Some of the issues are there in Sales Invoice regarding 
                                                     Multi UOM in EVAC - FOR ALL SALES ORDER. Refer: 26453
    Rev 4.0      Priti         V2.0.39   18/07/2023  Sales Ordedr product deletion issue solved
+   Rev 5.0      Sanchita      V2.0.40   04/10/2023  0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
+                                                    New button "Other Condiion" to show instead of "Terms & Condition" Button 
+                                                    if the settings "Show Other Condition" is set as "Yes"
  **********************************************************************************************************/--%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderAdd.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
     Inherits="ERP.OMS.Management.Activities.SalesOrderAdd" EnableEventValidation="false" %>
@@ -17,6 +20,9 @@
 <%@ Register Src="~/OMS/Management/Activities/UserControls/Sales_BillingShipping.ascx" TagPrefix="ucBS" TagName="Sales_BillingShipping" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc3" TagName="UOMConversionControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/OtherTermsAndCondition.ascx" TagPrefix="ucOTC" TagName="OtherTermsAndCondition" %>
+<%--Rev 5.0--%>
+<%@ Register Src="~/OMS/Management/Activities/UserControls/uctrlOtherCondition.ascx" TagPrefix="uc4" TagName="uctrlOtherCondition" %>
+<%--End of Rev 5.0--%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -733,7 +739,9 @@ function PerformCallToGridBind() {
             //#### added by Samrat Roy for Transporter Control #############
             //#### added by Samrat Roy for Transporter Control #############
             var quote_Id = gridquotationLookup.gridView.GetSelectedKeysOnPage();
-            if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
+            // Rev 5.0
+            //if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
+                // End of Rev 5.0
                 var type = "";
 
                 if ($("#rdl_Salesquotation").find(":checked").val() == "QN") {
@@ -743,7 +751,9 @@ function PerformCallToGridBind() {
                     type = "SINQ";
                 }
                 callTransporterControl(quote_Id[0], type);
-            }
+            // Rev 5.0
+            //}
+            // End of Rev 5.0
             ///// #### End : Samrat Roy for Transporter Control : End #############
             //grid.Refresh();
             clookup_Project.SetEnabled(false);
@@ -753,9 +763,21 @@ function PerformCallToGridBind() {
 
 
             //#### added by Sayan Dutta for TC Control #############
-            if ($("#btn_TermsCondition").is(":visible")) {
-                callTCControl(quote_Id, 'QO');
+            // Rev 5.0
+            //if ($("#btn_TermsCondition").is(":visible")) {
+            //    callTCControl(quote_Id, 'QO');
+            //}
+
+            if ($("#btn_OtherCondition").is(":visible")) {
+                callOCControl(quote_Id, type);
             }
+            else {
+                if ($("#btn_TermsCondition").is(":visible")) {
+                    callTCControl(quote_Id, type);
+                }
+            }
+            // End of Rev 5.0
+            
             return false;
         }
         else {
@@ -2395,10 +2417,18 @@ function PerformCallToGridBind() {
                                             <asp:HiddenField runat="server" ID="hdBasketId" />
 
                                             <uc3:UOMConversionControl runat="server" ID="UOMConversionControl" />
+
+                                            <%--Rev 5.0--%>
+                                            <uc4:uctrlOtherCondition runat="server" ID="uctrlOtherCondition" />
+                                            <%--End of Rev 5.0--%>
                                             
                                             <asp:HiddenField runat="server" ID="hfOtherTermsConditionData" />
                                             <asp:HiddenField runat="server" ID="hfOtherTermsConditionDocType" Value="SO" />
                                             
+                                            <%--Rev 5.0--%>
+                                            <asp:HiddenField runat="server" ID="hfOtherConditionData" />
+                                            <asp:HiddenField runat="server" ID="hfOtherConditionDocType" Value="SO" />
+                                            <%--End of Rev 5.0--%>
 
                                             <%-- onclick=""--%>
 
