@@ -1117,6 +1117,12 @@
     <Compile Include="OMS\Management\Activities\UserControls\StockMultiLevelWareHouse.ascx.designer.cs">
       <DependentUpon>StockMultiLevelWareHouse.ascx</DependentUpon>
     </Compile>
+    <Compile Include="OMS\Management\Activities\UserControls\uctrlOtherCondition.ascx.cs">
+      <DependentUpon>uctrlOtherCondition.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OMS\Management\Activities\UserControls\uctrlOtherCondition.ascx.designer.cs">
+      <DependentUpon>uctrlOtherCondition.ascx</DependentUpon>
+    </Compile>
     <Compile Include="OMS\Management\Activities\UserControls\UOMConversion.ascx.cs">
       <DependentUpon>UOMConversion.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -11940,6 +11946,7 @@
     <Content Include="OMS\Management\Activities\UserControls\TermsConditionsControl.ascx" />
     <Content Include="OMS\Management\Activities\UserControls\ucImportPurchase_BillOfEntry.ascx" />
     <Content Include="OMS\Management\Activities\UserControls\ucPaymentDetails.ascx" />
+    <Content Include="OMS\Management\Activities\UserControls\uctrlOtherCondition.ascx" />
     <Content Include="OMS\Management\Activities\UserControls\ucVehicleDriverControl.ascx" />
     <Content Include="OMS\Management\Activities\UserControls\UOMConversion.ascx" />
     <Content Include="OMS\Management\Activities\UserControls\VehicleDetailsControl.ascx" />
