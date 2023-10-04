@@ -2253,13 +2253,13 @@ popup.Hide();
         <asp:HiddenField ID="hddnKeyValue" runat="server" />
         <asp:HiddenField ID="hddnCancelCloseFlag" runat="server" />
          <asp:HiddenField ID="hdnIsMultiuserApprovalRequired" runat="server" />
-        <%--Rev Sanchita--%>
+        <%--Rev 1.0--%>
         <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
         <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
 
         <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
         <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
-        <%--End of Rev Sanchita--%>
+        <%--End of Rev 1.0--%>
     </div>
      <dxe:ASPxPopupControl ID="PopupProductwiseClose" runat="server" ClientInstanceName="cPopupProductwiseClose"
         Width="900px" HeaderText="Product wise - Close" PopupHorizontalAlign="WindowCenter" HeaderStyle-CssClass="wht"

@@ -257,7 +257,7 @@ namespace ERP.OMS.Management.Activities
             }
             //Tanmoy Hierarchy End
 
-            // Rev Sanchita
+            // Rev 1.0
             DataTable dtposTime = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) Data_Fromdate,convert(varchar(10),Lock_Todate,105) Data_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Add' and Module_Id=61");
 
             if (dtposTime != null && dtposTime.Rows.Count > 0)
@@ -267,7 +267,7 @@ namespace ERP.OMS.Management.Activities
                 hdnDatafrom.Value = Convert.ToString(dtposTime.Rows[0]["Data_Fromdate"]);
                 hdnDatato.Value = Convert.ToString(dtposTime.Rows[0]["Data_Todate"]);
             }
-            // End of Rev Sanchita
+            // End of Rev 1.0
 
             string RevisionRequiredEveryAfterApproval = ComBL.GetSystemSettingsResult("RevisionRequiredEveryAfterApproval");
             hdnRevisionRequiredEveryAfterApproval.Value = RevisionRequiredEveryAfterApproval;
@@ -2507,6 +2507,9 @@ namespace ERP.OMS.Management.Activities
 
             grid.JSProperties["cpProductSrlIDCheck"] = "";
             grid.JSProperties["cpSalesOrderNo"] = "";
+            // Rev 1.0
+            grid.JSProperties["cpSaveSuccessOrFail"] = "";
+            // End of Rev 1.0
             if (Convert.ToString(Session["ActionType"]) == "Add")
             {
                 if (!reCat.isAllMandetoryDone((DataTable)Session["UdfDataOnAdd"], "SO"))
