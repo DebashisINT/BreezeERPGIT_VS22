@@ -8,6 +8,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                           Charges at the button getting rounded off. Mantis :26866
 4.0                27/09/2023        2.0.39           Sanchita            In Sales Challan made from Sales Invoice with Price Inclusive of GST, after tagging get loaded in Sales Challan, 
                                                                           the value of "Amount are" still showing "Price Exclusive". Mantis:26867
+5.0                28-09-2023        V2.0.40          Sanchita            Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP   
+                                                                          New button "Other Condiion" to show instead of "Terms & Condition" Button 
+                                                                          if the settings "Show Other Condition" is set as "Yes"  
+                                                                          Mantis: 26868
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanAdd.aspx.cs"
@@ -22,6 +26,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 <%--<%@ Register Src="~/OMS/Management/Activities/UserControls/ucVehicleDriverControl.ascx" TagPrefix="uc1" TagName="ucVehicleDriverControl" %>--%>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/TermsConditionsControl.ascx" TagPrefix="uc2" TagName="TermsConditionsControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc3" TagName="UOMConversionControl" %>
+<%--Rev 5.0--%>
+<%@ Register Src="~/OMS/Management/Activities/UserControls/uctrlOtherCondition.ascx" TagPrefix="uc4" TagName="uctrlOtherCondition" %>
+<%--End of Rev 5.0--%>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -3764,9 +3772,18 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     $("#<%=ddl_Branch.ClientID%>").val(BranchIdPending);
                     $("#<%=ddl_Branch.ClientID%>").prop("disabled", true);
                     //  BSDocTagging(BillValue, 'SI');
-                    if ($("#btn_TermsCondition").is(":visible")) {
-                        callTCControl(BillValue, 'SI');
+                    // Rev 5.0
+                    if ($("#btn_OtherCondition").is(":visible")) {
+                        callOCControl(BillValue, 'SI');
                     }
+                    else {
+                        // End of Rev 5.0
+                        if ($("#btn_TermsCondition").is(":visible")) {
+                            callTCControl(BillValue, 'SI');
+                        }
+                         // Rev 5.0
+                    }
+                    // End of Rev 5.0
                 }
             }
 
@@ -7856,9 +7873,19 @@ function ProjectValueChange(s, e) {
                 //#### End : Samrat Roy for Transporter Control : End #############
 
                 //#### added by Sayan Dutta for TC Control #############
-                if ($("#btn_TermsCondition").is(":visible")) {
-                    callTCControl(quote_Id[0], $("#rdl_SaleInvoice").find(":checked").val());
+                // Rev 5.0
+                if ($("#btn_OtherCondition").is(":visible")) {
+                    callOCControl(quote_Id[0], $("#rdl_SaleInvoice").find(":checked").val());
                 }
+                else {
+                    // End of Rev 5.0
+                    if ($("#btn_TermsCondition").is(":visible")) {
+                        callTCControl(quote_Id[0], $("#rdl_SaleInvoice").find(":checked").val());
+                    }
+                    // Rev 5.0
+                }
+                // End of Rev 5.0
+                
                 //#### End : added by Sayan Dutta for TC Control : End #############
                 if ($("#btn_OtherTermsCondition").is(":visible")) {
                     if (quote_Id.length > 0) {
@@ -10019,12 +10046,20 @@ function ProjectValueChange(s, e) {
                                         <uc2:TermsConditionsControl runat="server" ID="TermsConditionsControl" />
                                         <ucOTC:OtherTermsAndCondition runat="server" ID="OtherTermsAndCondition" />
                                         <uc3:UOMConversionControl runat="server" ID="UOMConversionControl" />
+                                        <%--Rev 5.0--%>
+                                        <uc4:uctrlOtherCondition runat="server" ID="uctrlOtherCondition" />
+                                        <%--End of Rev 5.0--%>
                                         <asp:HiddenField runat="server" ID="hfTermsConditionData" />
                                         <asp:HiddenField runat="server" ID="hfTermsConditionDocType" Value="SC" />
 
 
                                         <asp:HiddenField runat="server" ID="hfOtherTermsConditionData" />
                                         <asp:HiddenField runat="server" ID="hfOtherTermsConditionDocType" Value="SC" />
+
+                                        <%--Rev 5.0--%>
+                                        <asp:HiddenField runat="server" ID="hfOtherConditionData" />
+                                        <asp:HiddenField runat="server" ID="hfOtherConditionDocType" Value="SC" />
+                                        <%--End of Rev 5.0--%>
                                     </div>
                                 </div>
                             </dxe:ContentControl>

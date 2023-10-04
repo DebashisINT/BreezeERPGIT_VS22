@@ -3,7 +3,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                05-04-2023        2.0.37           Pallab              25846: Add Sales Inquiry module design modification
 2.0                21-06-2023        2.0.38           Sanchita            Some of the issues are there in Sales Invoice regarding 
                                                                           Multi UOM in EVAC - FOR ALL SALES MODULES. Refer : 26403
-3.0   Pallab     V2.0.38     16-06-2023     "Multi UOM Details" popup parameter alignment issue fix . Mantis : 26331
+3.0   Pallab        V2.0.38    16-06-2023     "Multi UOM Details" popup parameter alignment issue fix . Mantis : 26331
+4.0                04-10-2023        2.0.40         Sanchita             0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
+                                                                          New button "Other Condiion" to show instead of "Terms & Condition" Button 
+                                                                          if the settings "Show Other Condition" is set as "Yes"
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInquiryAdd.aspx.cs" EnableEventValidation="false" Inherits="ERP.OMS.Management.Activities.SalesInquiryAdd" %>
@@ -15,6 +18,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/TermsConditionsControl.ascx" TagPrefix="uc2" TagName="TermsConditionsControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc3" TagName="UOMConversionControl" %>
+<%--Rev 4.0--%>
+<%@ Register Src="~/OMS/Management/Activities/UserControls/uctrlOtherCondition.ascx" TagPrefix="uc4" TagName="uctrlOtherCondition" %>
+<%--End of Rev 4.0--%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -2106,6 +2112,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                                             <uc2:TermsConditionsControl runat="server" ID="TermsConditionsControl" />
                                             <uc3:UOMConversionControl runat="server" ID="UOMConversionControl" />
+                                            <%--Rev 4.0--%>
+                                            <uc4:uctrlOtherCondition runat="server" ID="uctrlOtherCondition" />
+                                            <%--End of Rev 4.0--%>
+
                                             <asp:HiddenField runat="server" ID="hfTermsConditionData" />
                                             <asp:HiddenField runat="server" ID="hfTermsConditionDocType" Value="SINQ" />
                                             <asp:HiddenField runat="server" ID="hdBasketId" />
@@ -2113,6 +2123,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <asp:HiddenField ID="HiddenField1" runat="server" />
                                             <asp:HiddenField ID="hdnUomqnty" runat="server" />
                                                <asp:HiddenField ID="hdProductID" runat="server" />
+                                            <%--Rev 4.0--%>
+                                            <asp:HiddenField runat="server" ID="hfOtherConditionData" />
+                                            <asp:HiddenField runat="server" ID="hfOtherConditionDocType" Value="SINQ" />
+                                            <%--End of Rev 4.0--%>
                                             <%--<asp:HiddenField ID="hdnCustomerId" runat="server" />--%>
                                             <%-- onclick=""--%>
                                             <%--<a href="javascript:void(0);" id="btnAddNew" runat="server" class="btn btn-primary"><span>[A]ttachment(s)</span></a>--%>
