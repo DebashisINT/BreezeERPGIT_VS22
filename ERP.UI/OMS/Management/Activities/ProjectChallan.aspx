@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectChallan.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectChallan" %>
+﻿<%--=======================================================Revision History=========================================================================
+ 1.0     Priti    V2.0.40  04-10-2023     	0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+=========================================================End Revision History========================================================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectChallan.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectChallan" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -92,6 +96,13 @@
     </style>
     <%--Use for set focus on UOM after press ok on UOM--%>
     <script>
+        // Rev 1.0
+        function SetLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= dt_PLSales.GetDate()) && (dt_PLSales.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+            }
+        }        
+        // End of Rev 1.0
         var taxSchemeUpdatedDate = '<%=Convert.ToString(Cache["SchemeMaxDate"])%>';
         $(function () {
             $('#UOMModal').on('hide.bs.modal', function () {
@@ -3789,9 +3800,33 @@
 
             }
         }
+        // Rev 1.0
+        function AddContraLockStatus(LockDate) {           
+            $.ajax({
+                type: "POST",
+                url: "ProjectChallan.aspx/GetAddLock",
+                data: JSON.stringify({ LockDate: LockDate }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    var currentRate = msg.d;
+                    if (currentRate != null && currentRate == "-9") {
+                        $("#hdnValAfterLock").val("-9");
+                    }
+                    else {
+                        $("#hdnValAfterLock").val("1");
+                    }
 
+                }
+            });
+        }
+        // End of Rev 1.0
         function Save_ButtonClick() {
 
+            // Rev 1.0
+            AddContraLockStatus(tDate.GetDate());
+            // End of Rev 1.0
             var flag = true;
             LoadingPanel.Show();
             $('#<%=hfControlData.ClientID %>').val($('#hfControlSaveData').val());
@@ -3853,6 +3888,11 @@
             }
             else { $('#MandatorySlOrderNo').attr('style', 'display:none'); }
 
+            // Rev 1.0
+            if ($("#hdnValAfterLock").val() == "-9") {
+                jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+            }
+            // End of Rev 1.0
 
             if (flag) {
 
@@ -3955,6 +3995,10 @@
 
         function SaveExit_ButtonClick() {
             //debugger;
+
+            // Rev 1.0
+            AddContraLockStatus(tDate.GetDate());
+            // End of Rev 1.0
             var flag = true;
             LoadingPanel.Show();
             $('#<%=hfControlData.ClientID %>').val($('#hfControlSaveData').val());
@@ -3980,6 +4024,12 @@
             else {
                 $('#MandatorysCustomer').attr('style', 'display:none');
             }
+            // Rev 1.0
+            if ($("#hdnValAfterLock").val() == "-9") {
+                jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+                return false;
+            }
+            // End of Rev 1.0
 
             var ProjectCode = clookup_Project.GetText();
             if ($("#hdnProjectMandatory").val() == "1" && ProjectCode == "") {
@@ -6271,10 +6321,11 @@ function clookup_Project_LostFocus() {
                                             </dxe:ASPxLabel>
                                             <span style="color: red">*</span>
                                         </label>
+                                        <%--Rev 1.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ]--%>
                                         <dxe:ASPxDateEdit ID="dt_PLSales" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cPLSalesChallanDate" TabIndex="3" Width="100%">
                                             <ButtonStyle Width="13px">
                                             </ButtonStyle>
-                                            <ClientSideEvents DateChanged="function(s, e) {DateCheck();}" />
+                                            <ClientSideEvents DateChanged="function(s, e) {DateCheck();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}"  />
 
                                             <ClientSideEvents GotFocus="function(s,e){cPLSalesChallanDate.ShowDropDown();}" />
                                         </dxe:ASPxDateEdit>
@@ -8425,5 +8476,17 @@ function clookup_Project_LostFocus() {
     <asp:HiddenField runat="server" ID="hdnisOverideConvertion" /> 
     <asp:HiddenField runat="server" ID="ProductMinPrice" /> 
      <asp:HiddenField runat="server" ID="ProductMaxPrice" />
+    <%--Rev 1.0--%>
+    <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+    <asp:HiddenField ID="hdnLockToDate" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+    <asp:HiddenField ID="hdnValAfterLock" runat="server" />
+    <asp:HiddenField ID="hdnValAfterLockMSG" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateedit" runat="server" /> 
+    <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+    <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+    <%--End of Rev 1.0--%>
 </asp:Content>
 

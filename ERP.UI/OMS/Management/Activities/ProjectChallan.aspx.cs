@@ -1,4 +1,8 @@
-﻿using System;
+﻿//========================================================== Revision History ============================================================================================
+//1.0  Priti V2.0.40  04-10-2023  0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+//========================================== End Revision History =======================================================================================================
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -172,6 +176,33 @@ namespace ERP.OMS.Management.Activities
                 }
             }
             //Tanmoy Hierarchy End
+            // Rev 1.0
+            DataTable dtposTime = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) DataFreeze_Fromdate,convert(varchar(10),Lock_Todate,105) DataFreeze_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Add' and Module_Id=62");
+            if (dtposTime != null && dtposTime.Rows.Count > 0)
+            {
+                hdnLockFromDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Todate"]);
+                hdnLockFromDateCon.Value = Convert.ToString(dtposTime.Rows[0]["DataFreeze_Fromdate"]);
+                hdnLockToDateCon.Value = Convert.ToString(dtposTime.Rows[0]["DataFreeze_Todate"]);
+            }
+
+            DataTable dtposTimeEdit = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Edit' and Module_Id=62");
+            DataTable dtposTimeDelete = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Delete' and Module_Id=62");
+            if (dtposTimeEdit != null && dtposTimeEdit.Rows.Count > 0)
+            {
+                hdnLockFromDateedit.Value = Convert.ToString(dtposTimeEdit.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDateedit.Value = Convert.ToString(dtposTimeEdit.Rows[0]["LockCon_Todate"]);             
+               
+            }
+
+            if (dtposTimeDelete != null && dtposTimeDelete.Rows.Count > 0)
+            {               
+                hdnLockFromDatedelete.Value = Convert.ToString(dtposTimeDelete.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDatedelete.Value = Convert.ToString(dtposTimeDelete.Rows[0]["LockCon_Todate"]);
+              
+            }
+            // End of Rev 1.0
+
 
             if (!IsPostBack)
             {
@@ -796,7 +827,20 @@ namespace ERP.OMS.Management.Activities
         }
 
         //kaushik 24-2-2017
-
+        // Rev 1.0
+        [WebMethod]
+        public static string GetAddLock(DateTime LockDate)
+        {
+            string rtrnvalue = "0";
+            ProcedureExecute proc = new ProcedureExecute("prc_GetChallanInvoiceDetails");
+            proc.AddVarcharPara("@Action", 500, "GetAddLockForSalesChallanStatus");
+            proc.AddDateTimePara("@TransactionDate", LockDate);
+            proc.AddVarcharPara("@ReturnValue", 200, "0", QueryParameterDirection.Output);
+            proc.RunActionQuery();
+            rtrnvalue = Convert.ToString(proc.GetParaValue("@ReturnValue"));
+            return rtrnvalue;
+        }
+        // End of Rev 2.0
         public void GetSalesOrderSchemaLength()
         {
             DataTable Dt = new DataTable();
