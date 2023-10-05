@@ -220,10 +220,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     background: #42b39e !important;
 }
 
-        #ddlInventory
+        #ddlInventory, #ddlWarehouse
         {
                 -webkit-appearance: auto;
         }
+
+
 
     </style>
     <%--Rev end 1.0--%>

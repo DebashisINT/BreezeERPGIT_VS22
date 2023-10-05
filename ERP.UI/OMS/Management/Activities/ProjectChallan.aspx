@@ -3891,6 +3891,7 @@
             // Rev 1.0
             if ($("#hdnValAfterLock").val() == "-9") {
                 jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+                flag = false;
             }
             // End of Rev 1.0
 
@@ -4027,7 +4028,7 @@
             // Rev 1.0
             if ($("#hdnValAfterLock").val() == "-9") {
                 jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
-                return false;
+                flag = false;
             }
             // End of Rev 1.0
 

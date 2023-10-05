@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectPurchaseOrderList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseOrderList" %>
-
-
+﻿<%--/*************************************************************************************************************************************************
+ *  Rev 1.0     Priti    V2.0.40     05-10-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectPurchaseOrderList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseOrderList" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../Activities/CSS/SearchPopup.css" rel="stylesheet" />
     <%--Code Added By Sandip For Approval Detail Section Start--%>
@@ -1019,6 +1019,10 @@
             </dxe:ASPxButton>
         </div>
     </div>
+    <%--Rev 1.0--%>
+    <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <%--End of Rev 1.0--%>
     <div class="GridViewArea relative">
         <%--Settings-HorizontalScrollBarMode="Auto" --%>
         <div class="makeFullscreen ">
@@ -1249,7 +1253,7 @@
                                 <% } %>
                                 <% if (rights.CanEdit)
                                    { %>
-                                <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>','<%# Container.VisibleIndex %>')" class="" style='<%#Eval("POLastEntry")%>' title="">
+                                <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>','<%# Container.VisibleIndex %>')" class="" style='<%#Eval("POLastEntry")%>; <%#Eval("Editlock")%>'' title="">
                                     <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>
                                 <% } %>
 
@@ -1262,7 +1266,7 @@
 
                                 <% if (rights.CanDelete)
                                    { %>
-                                <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>','<%# Container.VisibleIndex %>')" class="" style='<%#Eval("POLastEntry")%>' title="">
+                                <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>','<%# Container.VisibleIndex %>')" class="" style='<%#Eval("POLastEntry")%> ; <%#Eval("Deletelock")%>' title="">
                                     <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>
                                 <% } %>
 
@@ -1620,8 +1624,14 @@
         <asp:HiddenField ID="hfToDate" runat="server" />
         <asp:HiddenField ID="hfBranchID" runat="server" />
         <asp:HiddenField ID="hfIsBarcode" runat="server" />
+        <asp:HiddenField ID="hdnIsMultiuserApprovalRequired" runat="server" />
 
-         <asp:HiddenField ID="hdnIsMultiuserApprovalRequired" runat="server" />
+         <%--Rev 1.0--%>
+        <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+        <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+        <%--End of Rev 1.0--%>
     </div>
 
     <div>
