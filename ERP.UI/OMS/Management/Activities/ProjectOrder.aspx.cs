@@ -4116,7 +4116,7 @@ namespace ERP.OMS.Management.Activities
         {
             DataTable dt = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("prc_ProjectOrder");
-            proc.AddVarcharPara("@Action", 500, "GetAddLockForPInvoice");
+            proc.AddVarcharPara("@Action", 500, "GetAddLockForProjectSalesOrder");
 
             dt = proc.GetTable();
             return dt;
