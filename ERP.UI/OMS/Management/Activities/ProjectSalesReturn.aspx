@@ -1,4 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectSalesReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectSalesReturn" %>
+﻿<%--/*************************************************************************************************************************************************
+ *  Rev 1.0     Sanchita    V2.0.40     28-09-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectSalesReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectSalesReturn" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -87,6 +90,14 @@
     </style>
     <%--Use for set focus on UOM after press ok on UOM--%>
     <script>
+        // Rev 1.0
+        function SetLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= tstartdate.GetDate()) && (tstartdate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                jAlert("DATA is Freezed between  " + $("#hdnDatafrom").val() + " to " + $("#hdnDatato").val());
+            }
+        }
+        // End of Rev 1.0
+
         var taxSchemeUpdatedDate = '<%=Convert.ToString(Cache["SchemeMaxDate"])%>';
         $(function () {
             $('#UOMModal').on('hide.bs.modal', function () {
@@ -2624,6 +2635,14 @@
                 jAlert('Can Not Add More Sales Invoice Number as Sales Invoice Scheme Exausted.<br />Update The Scheme and Try Again');
                 OnAddNewClick();
             }
+            // Rev 1.0
+            else if (grid.cpSaveSuccessOrFail == "AddLock") {
+                LoadingPanel.Hide();
+                OnAddNewClick();
+                jAlert('DATA is Freezed between ' + grid.cpAddLockStatus);
+                grid.cpSaveSuccessOrFail = null;
+            }
+            // End of Rev 1.0
             else if (grid.cpSaveSuccessOrFail == "transporteMandatory") {
                 LoadingPanel.Hide();
                 OnAddNewClick();
@@ -5674,9 +5693,10 @@ function AutoCalculateMandateOnChange(element) {
                                             <div class="col-md-2">
 
                                                 <asp:Label ID="lbl_SaleInvoiceDt" runat="server" Text="Posting Date"></asp:Label>
+                                                <%--Rev 1.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ] --%>
                                                 <dxe:ASPxDateEdit ID="dt_PLQuote" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="tstartdate" TabIndex="3" Width="100%">
                                                     <ClientSideEvents DateChanged="DateCheck" Init="dateInit" />
-                                                    <ClientSideEvents GotFocus="function(s,e){tstartdate.ShowDropDown();}"></ClientSideEvents>
+                                                    <ClientSideEvents GotFocus="function(s,e){tstartdate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" ></ClientSideEvents>
                                                     <ButtonStyle Width="13px">
                                                     </ButtonStyle>
                                                 </dxe:ASPxDateEdit>
@@ -7110,6 +7130,14 @@ function AutoCalculateMandateOnChange(element) {
                 <asp:HiddenField runat="server" ID="hdAddOrEdit" />
                 <asp:HiddenField runat="server" ID="hdnQty" />
                 <asp:HiddenField runat="server" ID="hdnEntityType" />
+                <%--Rev 1.0--%>
+                <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+                <asp:HiddenField ID="hdnLockToDate" runat="server" />
+                <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+                <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+                <asp:HiddenField ID="hdnDatafrom" runat="server" />
+                <asp:HiddenField ID="hdnDatato" runat="server" />
+                <%--End of Rev 1.0--%>
             </div>
 
             <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">

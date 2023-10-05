@@ -125,12 +125,6 @@
             if ((new Date($("#hdnLockFromDate").val()) <= cPLSalesOrderDate.GetDate()) && (cPLSalesOrderDate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
                 jAlert("DATA is Freezed between  " + $("#hdnDatafrom").val() + " to " + $("#hdnDatato").val());
             }
-            //var VendorId = $("#hdnCustomerId").val();
-            //var startDate = new Date();
-            //startDate = cPLQuoteDate.GetDate().format('yyyy-MM-dd');
-            //cPanelGRNOverheadCost.PerformCallback('BindOverheadCostGrid' + '~' + startDate);
-            //clookup_GRNOverhead.gridView.Refresh();
-
         }
         // End of Rev 1.0
 
@@ -3530,9 +3524,11 @@
             }
             // Rev 1.0
             else if (grid.cpSaveSuccessOrFail == "AddLock") {
-                LoadingPanel.Hide();
-                jAlert('DATA is Freezed between ' + grid.cpAddLockStatus);
                 OnAddNewClick();
+                jAlert('DATA is Freezed between ' + grid.cpAddLockStatus);
+                grid.batchEditApi.StartEdit(0, 2);
+                grid.cpSaveSuccessOrFail = null;
+                LoadingPanel.Hide();
             }
             // End of Rev 1.0
             else if (grid.cpSaveSuccessOrFail == "transporteMandatory") {

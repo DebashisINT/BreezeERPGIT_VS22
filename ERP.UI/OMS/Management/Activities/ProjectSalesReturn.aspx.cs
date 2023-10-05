@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*************************************************************************************************************************************************
+ *  Rev 1.0     Sanchita    V2.0.40     28-09-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -22,6 +25,7 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using ERP.OMS.Tax_Details.ClassFile;
 using ERP.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 
 namespace ERP.OMS.Management.Activities
@@ -214,6 +218,18 @@ namespace ERP.OMS.Management.Activities
                     lblProject.Visible = false;
                 }
             }
+
+            // Rev 1.0
+            DataTable dtposTime = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) Data_Fromdate,convert(varchar(10),Lock_Todate,105) Data_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Add' and Module_Id=63");
+
+            if (dtposTime != null && dtposTime.Rows.Count > 0)
+            {
+                hdnLockFromDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Todate"]);
+                hdnDatafrom.Value = Convert.ToString(dtposTime.Rows[0]["Data_Fromdate"]);
+                hdnDatato.Value = Convert.ToString(dtposTime.Rows[0]["Data_Todate"]);
+            }
+            // End of Rev 1.0
 
             if (!IsPostBack)
             {
@@ -1597,6 +1613,15 @@ namespace ERP.OMS.Management.Activities
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = "ProjectError";
                     }
+                    // Rev 1.0
+                    else if (strIsComplete == -9)
+                    {
+                        DataTable dtLock = new DataTable();
+                        dtLock = GetAddLockStatus();
+                        grid.JSProperties["cpSaveSuccessOrFail"] = "AddLock";
+                        grid.JSProperties["cpAddLockStatus"] = (Convert.ToString(dtLock.Rows[0]["Lock_Fromdate"]) + " to " + Convert.ToString(dtLock.Rows[0]["Lock_Todate"]));
+                    }
+                    // End of Rev 1.0
                     else
                     {
                         grid.JSProperties["cpSaveSuccessOrFail"] = "errorInsert";
@@ -1852,6 +1877,18 @@ namespace ERP.OMS.Management.Activities
             }
 
         }
+        // Rev 1.0
+        public DataTable GetAddLockStatus()
+        {
+            DataTable dt = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("prc_ProjectSalesReturn_AddEditNew");
+            proc.AddVarcharPara("@Action", 500, "GetAddLockForProjectSalesReturn");
+
+            dt = proc.GetTable();
+            return dt;
+
+        }
+        // End of Rev 1.0
         public void ModifySalesReturn(string QuotationID, string strSchemeType, string strQuoteNo, string strQuoteDate, string strCustomer, string strContactName, Int64 ProjId,
                                     string Reference, string PosForGst, string strBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode,
                                     string strInvoiceComponent, string strInvoiceComponentDate, string strCashBank, string strDueDate,
@@ -4062,7 +4099,7 @@ namespace ERP.OMS.Management.Activities
                 {
                     int branchindex = 0;
                     int cnt = 0;
-                    foreach (ListItem li in ddl_Branch.Items)
+                    foreach (System.Web.UI.WebControls.ListItem li in ddl_Branch.Items)
                     {
                         if (li.Value == Convert.ToString(Session["userbranchID"]))
                         {
@@ -4095,7 +4132,7 @@ namespace ERP.OMS.Management.Activities
                 ddl_SalesAgent.DataSource = dst.Tables[2];
                 ddl_SalesAgent.DataBind();
             }
-            ddl_SalesAgent.Items.Insert(0, new ListItem("Select", "0"));
+            ddl_SalesAgent.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select", "0"));
             #endregion Saleman DropDown End
 
             #region Currency Drop Down Start
@@ -4116,7 +4153,7 @@ namespace ERP.OMS.Management.Activities
                     string[] ActCurrency = new string[] { };
                     string currency = Convert.ToString(HttpContext.Current.Session["LocalCurrency"]);
                     ActCurrency = currency.Split('~');
-                    foreach (ListItem li in ddl_Currency.Items)
+                    foreach (System.Web.UI.WebControls.ListItem li in ddl_Currency.Items)
                     {
                         if (li.Value == Convert.ToString(ActCurrency[0]))
                         {
@@ -4130,7 +4167,7 @@ namespace ERP.OMS.Management.Activities
                         }
                     }
                 }
-                ddl_Currency.Items.Insert(0, new ListItem("Select", "0"));
+                ddl_Currency.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select", "0"));
                 if (no == 1)
                 {
                     ddl_Currency.SelectedIndex = currencyindex;
