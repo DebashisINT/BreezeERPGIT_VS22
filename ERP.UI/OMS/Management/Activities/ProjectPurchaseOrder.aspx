@@ -1,12 +1,10 @@
 ﻿<%-- ***********************************************************************************************************************************
-    Rev 1.0     Sanchita     08/03/2023      V2.0.37     The Qty in the Grid becomes zero once the Addl Desc is added or edited in 
-                                                        Project Purchase Order. refer: 25713
+    Rev 1.0     Sanchita     08/03/2023      V2.0.37     The Qty in the Grid becomes zero once the Addl Desc is added or edited in  Project Purchase Order. refer: 25713
+    Rev 2.0     Priti        05-10-2023      V2.0.40     Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+                                                   
 ****************************************************************************************************************************************** --%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPurchaseOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseOrder" %>
-
-
-
 <%--<%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>--%>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/Purchase_BillingShipping.ascx" TagPrefix="ucBS" TagName="Purchase_BillingShipping" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
@@ -134,6 +132,13 @@
     </style>
     <%--Use for set focus on UOM after press ok on UOM--%>
     <script>
+        // Rev 2.0
+        function SetLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= cPLQuoteDate.GetDate()) && (cPLQuoteDate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                jAlert("DATA is Freezed between  " + $("#hdnDatafrom").val() + " to " + $("#hdnDatato").val());
+            }         
+        }
+        // End of Rev 2.0
         var taxSchemeUpdatedDate = '<%=Convert.ToString(Cache["SchemeMaxDate"])%>';
         $(function () {
             $('#UOMModal').on('hide.bs.modal', function () {
@@ -3024,7 +3029,7 @@
                 grid.batchEditApi.StartEdit(0, 2);
                 jAlert('Can Not Add More Purchase Order Number as Purchase Order Scheme Exausted.<br />Update The Scheme and Try Again');
                 //OnAddNewClick();
-            }
+            }            
             else if (grid.cpSaveSuccessOrFail == "duplicate") {
                 grid.cpSaveSuccessOrFail=null;
                 grid.batchEditApi.StartEdit(0, 2);
@@ -3654,11 +3659,35 @@ function OnCustomButtonClick(s, e) {
 
         }
     }
+    // Rev 2.0
+    function AddContraLockStatus(LockDate) {
+        $.ajax({
+            type: "POST",
+            url: "ProjectPurchaseOrder.aspx/GetAddLock",
+            data: JSON.stringify({ LockDate: LockDate }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+                var currentRate = msg.d;
+                if (currentRate != null && currentRate == "-9") {
+                    $("#hdnValAfterLock").val("-9");
+                }
+                else {
+                    $("#hdnValAfterLock").val("1");
+                }
 
+            }
+        });
+    }
+    // End of Rev 2.0
     function Save_ButtonClick() {
         LoadingPanel.Show();
         flag = true;
 
+        // Rev 2.0
+        AddContraLockStatus(cPLQuoteDate.GetDate());
+        // End of Rev 2.0
 
         var ProjectCode = clookup_Project.GetText();
         if ( $("#hdnProjectMandatory").val()=="1" && ProjectCode == "") {
@@ -3771,6 +3800,16 @@ function OnCustomButtonClick(s, e) {
             $("#MandatoryDueDate").show();
             return false;
         }
+        // Rev 2.0
+        if ($("#hdnValAfterLock").val() == "-9") {
+            jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+            LoadingPanel.Hide();
+            flag = false;
+            return false;
+        }
+        // End of Rev 2.0
+
+
         var IsType = "";
         var frontRow = 0;
         var backRow = -1;
@@ -3892,7 +3931,9 @@ function OnCustomButtonClick(s, e) {
 function SaveExit_ButtonClick() {
     LoadingPanel.Show();
     flag = true;
-
+    // Rev 2.0
+    AddContraLockStatus(cPLQuoteDate.GetDate());
+    // End of Rev 2.0
 
     var ProjectCode = clookup_Project.GetText();
     if ( $("#hdnProjectMandatory").val()=="1" && ProjectCode == "") {
@@ -4004,6 +4045,15 @@ function SaveExit_ButtonClick() {
         $("#MandatoryDueDate").show();
         return false;
     }
+
+    // Rev 2.0
+    if ($("#hdnValAfterLock").val() == "-9") {
+        jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        LoadingPanel.Hide();
+        flag = false;
+        return false;
+    }
+    // End of Rev 2.0
     var IsType = "";
     var frontRow = 0;
     var backRow = -1;
@@ -6048,11 +6098,12 @@ function cmbContactPersonEndCall(s, e) {
                                         <dxe:ASPxLabel ID="ASPxLabel2" runat="server" Text="Posting Date">
                                         </dxe:ASPxLabel>
                                         <span style="color: red;">*</span>
+                                        <%--Rev 2.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ] --%>
                                         <dxe:ASPxDateEdit ID="dt_PLQuote" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy"
                                             ClientInstanceName="cPLQuoteDate" Width="100%" UseMaskBehavior="True">
                                             <ButtonStyle Width="13px">
                                             </ButtonStyle>
-                                            <ClientSideEvents DateChanged="function(s, e) { TDateChange(e)}" GotFocus="function(s,e){cPLQuoteDate.ShowDropDown();}" />
+                                            <ClientSideEvents DateChanged="function(s, e) { TDateChange(e)}" GotFocus="function(s,e){cPLQuoteDate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" />
                                         </dxe:ASPxDateEdit>
                                         <span id="MandatoryDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                     </div>
@@ -7677,12 +7728,21 @@ function cmbContactPersonEndCall(s, e) {
             <asp:HiddenField ID="hdnProjectApproval" runat="server" />
             <asp:HiddenField ID="hdnApproveStatus" runat="server" />
             <asp:HiddenField runat="server" ID="hdnEditOrderId" />
-
-
             <asp:HiddenField ID="hdnRevisionRequiredEveryAfterApproval" runat="server" />
             <asp:HiddenField runat="server" ID="hdnisFirstApprove" />
-
             <asp:HiddenField ID="hdnIsfromApproval" runat="server" />
+
+            <%--Rev 2.0--%>
+            <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+            <asp:HiddenField ID="hdnLockToDate" runat="server" />
+            <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+            <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+            <asp:HiddenField ID="hdnDatafrom" runat="server" />
+            <asp:HiddenField ID="hdnDatato" runat="server" />
+            <asp:HiddenField ID="hdnValAfterLock" runat="server" />
+            <%--End of Rev 2.0--%>
+
+
 
             <%--for Project  --%>
         </div>
@@ -7842,16 +7902,10 @@ function cmbContactPersonEndCall(s, e) {
                 <asp:Parameter Name="City" Type="string" />
             </SelectParameters>
         </asp:SqlDataSource>
-
-
-
-
     </div>
     <dxe:ASPxLoadingPanel ID="LoadingPanel" runat="server" ClientInstanceName="LoadingPanel"
         Modal="True">
     </dxe:ASPxLoadingPanel>
-
-
     <asp:HiddenField runat="server" ID="hdnConvertionOverideVisible" />
     <asp:HiddenField runat="server" ID="hdnShowUOMConversionInEntry" />
     <dxe:ASPxPopupControl ID="DirectAddCustPopup" runat="server"
@@ -7863,8 +7917,6 @@ function cmbContactPersonEndCall(s, e) {
             </dxe:PopupControlContentControl>
         </ContentCollection>
     </dxe:ASPxPopupControl>
-
-
     <dxe:ASPxCallbackPanel runat="server" ID="callback_InlineRemarks" ClientInstanceName="ccallback_InlineRemarks" OnCallback="callback_InlineRemarks_Callback">
         <PanelCollection>
             <dxe:PanelContent runat="server">

@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*************************************************************************************************************************************************
+ *  Rev 1.0     Priti    V2.0.40     05-10-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -308,7 +312,16 @@ namespace ERP.OMS.Management.Activities
 
             string RevisionRequiredEveryAfterApproval = cbl.GetSystemSettingsResult("RevisionRequiredEveryAfterApproval");
             hdnRevisionRequiredEveryAfterApproval.Value = RevisionRequiredEveryAfterApproval;
-
+            // Rev 1.0
+            DataTable dtposTime = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) Data_Fromdate,convert(varchar(10),Lock_Todate,105) Data_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Add' and Module_Id=64");
+            if (dtposTime != null && dtposTime.Rows.Count > 0)
+            {
+                hdnLockFromDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Todate"]);
+                hdnDatafrom.Value = Convert.ToString(dtposTime.Rows[0]["Data_Fromdate"]);
+                hdnDatato.Value = Convert.ToString(dtposTime.Rows[0]["Data_Todate"]);
+            }
+            // End of Rev 1.0
             if (!IsPostBack)
             {
 
@@ -9103,5 +9116,20 @@ namespace ERP.OMS.Management.Activities
             }
         }
         //Tanmoy Hierarchy End
+
+        // Rev 1.0
+        [WebMethod]
+        public static string GetAddLock(DateTime LockDate)
+        {
+            string rtrnvalue = "0";
+            ProcedureExecute proc = new ProcedureExecute("prc__Project_PurchaseOrderDetailsList");
+            proc.AddVarcharPara("@Action", 500, "GetAddLockForProjectPurchaseOrderStatus");
+            proc.AddDateTimePara("@TransactionDate", LockDate);
+            proc.AddVarcharPara("@ReturnValue", 200, "0", QueryParameterDirection.Output);
+            proc.RunActionQuery();
+            rtrnvalue = Convert.ToString(proc.GetParaValue("@ReturnValue"));
+            return rtrnvalue;
+        }
+        // End of Rev 1.0
     }
 }
