@@ -33,7 +33,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
     <script src="JS/SearchPopupDatatable.js"></script>
     <link href="CSS/SalesQuotaion.css?1.0.1" rel="stylesheet" />
-    <script src="JS/SalesQuotation.js?v=3.0"></script>
+    <script src="JS/SalesQuotation.js?v=3.1"></script>
     <%--Use for set focus on UOM after press ok on UOM--%>
 
     <script>
@@ -295,9 +295,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     else {
                         // alert("hello");
                         $('#MandatoryEDate').attr('style', 'display:none');
-                        //if (startDate > endDate) 
-                        if (tstartdate.GetText() > tenddate.GetText()) {
-
+                        if (startDate > endDate) {                   
+                        //if (tstartdate.GetText() > tenddate.GetText()) {
+                       
                             //alert(startDate);
                             //alert(endDate);
                             flag = false;
