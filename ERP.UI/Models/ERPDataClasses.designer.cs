@@ -497,19 +497,19 @@ namespace ERP.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<v_ProjectPurchaseChallanList> v_ProjectPurchaseChallanLists
+		{
+			get
+			{
+				return this.GetTable<v_ProjectPurchaseChallanList>();
+			}
+		}
+		
 		public System.Data.Linq.Table<v_PPBList> v_PPBLists
 		{
 			get
 			{
 				return this.GetTable<v_PPBList>();
-			}
-		}
-		
-		public System.Data.Linq.Table<v_ProjectPurchaseReturnList> v_ProjectPurchaseReturnLists
-		{
-			get
-			{
-				return this.GetTable<v_ProjectPurchaseReturnList>();
 			}
 		}
 		
@@ -1729,11 +1729,11 @@ namespace ERP.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<v_ProjectPurchaseChallanList> v_ProjectPurchaseChallanLists
+		public System.Data.Linq.Table<v_ProjectPurchaseReturnList> v_ProjectPurchaseReturnLists
 		{
 			get
 			{
-				return this.GetTable<v_ProjectPurchaseChallanList>();
+				return this.GetTable<v_ProjectPurchaseReturnList>();
 			}
 		}
 	}
@@ -20815,6 +20815,483 @@ namespace ERP.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_ProjectPurchaseChallanList")]
+	public partial class v_ProjectPurchaseChallanList
+	{
+		
+		private System.Nullable<System.DateTime> _Challan_Date;
+		
+		private string _TransDate;
+		
+		private long _PurchaseChallan_Id;
+		
+		private string _PurchaseChallan_Number;
+		
+		private string _CustomerName;
+		
+		private System.Nullable<decimal> _Amount;
+		
+		private string _challan_Expiry;
+		
+		private string _Statuss;
+		
+		private string _EWayBillNumber;
+		
+		private string _EWayBillDate;
+		
+		private decimal _EWayBillValue;
+		
+		private string _PurchaseOrder_Number;
+		
+		private string _PurchaseOrder_Date;
+		
+		private string _PurchaseInvoice_Number;
+		
+		private string _PurchaseInvoice_Date;
+		
+		private string _PartyInvoiceNo;
+		
+		private System.Nullable<System.DateTime> _PartyInvoiceDate;
+		
+		private System.Nullable<int> _BranchID;
+		
+		private string _Doc_Type;
+		
+		private string _Entity_Type;
+		
+		private string _PosState;
+		
+		private string _Proj_Name;
+		
+		private string _Entered_By;
+		
+		private System.Nullable<System.DateTime> _Entered_On;
+		
+		private string _Updated_By;
+		
+		private System.Nullable<System.DateTime> _Updated_On;
+		
+		public v_ProjectPurchaseChallanList()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Challan_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Challan_Date
+		{
+			get
+			{
+				return this._Challan_Date;
+			}
+			set
+			{
+				if ((this._Challan_Date != value))
+				{
+					this._Challan_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransDate", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string TransDate
+		{
+			get
+			{
+				return this._TransDate;
+			}
+			set
+			{
+				if ((this._TransDate != value))
+				{
+					this._TransDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseChallan_Id", DbType="BigInt NOT NULL")]
+		public long PurchaseChallan_Id
+		{
+			get
+			{
+				return this._PurchaseChallan_Id;
+			}
+			set
+			{
+				if ((this._PurchaseChallan_Id != value))
+				{
+					this._PurchaseChallan_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseChallan_Number", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string PurchaseChallan_Number
+		{
+			get
+			{
+				return this._PurchaseChallan_Number;
+			}
+			set
+			{
+				if ((this._PurchaseChallan_Number != value))
+				{
+					this._PurchaseChallan_Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="VarChar(250)")]
+		public string CustomerName
+		{
+			get
+			{
+				return this._CustomerName;
+			}
+			set
+			{
+				if ((this._CustomerName != value))
+				{
+					this._CustomerName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this._Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_challan_Expiry", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string challan_Expiry
+		{
+			get
+			{
+				return this._challan_Expiry;
+			}
+			set
+			{
+				if ((this._challan_Expiry != value))
+				{
+					this._challan_Expiry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Statuss", DbType="VarChar(8) NOT NULL", CanBeNull=false)]
+		public string Statuss
+		{
+			get
+			{
+				return this._Statuss;
+			}
+			set
+			{
+				if ((this._Statuss != value))
+				{
+					this._Statuss = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWayBillNumber", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string EWayBillNumber
+		{
+			get
+			{
+				return this._EWayBillNumber;
+			}
+			set
+			{
+				if ((this._EWayBillNumber != value))
+				{
+					this._EWayBillNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWayBillDate", DbType="VarChar(10)")]
+		public string EWayBillDate
+		{
+			get
+			{
+				return this._EWayBillDate;
+			}
+			set
+			{
+				if ((this._EWayBillDate != value))
+				{
+					this._EWayBillDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWayBillValue", DbType="Decimal(18,2) NOT NULL")]
+		public decimal EWayBillValue
+		{
+			get
+			{
+				return this._EWayBillValue;
+			}
+			set
+			{
+				if ((this._EWayBillValue != value))
+				{
+					this._EWayBillValue = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Number", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PurchaseOrder_Number
+		{
+			get
+			{
+				return this._PurchaseOrder_Number;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_Number != value))
+				{
+					this._PurchaseOrder_Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Date", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PurchaseOrder_Date
+		{
+			get
+			{
+				return this._PurchaseOrder_Date;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_Date != value))
+				{
+					this._PurchaseOrder_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseInvoice_Number", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PurchaseInvoice_Number
+		{
+			get
+			{
+				return this._PurchaseInvoice_Number;
+			}
+			set
+			{
+				if ((this._PurchaseInvoice_Number != value))
+				{
+					this._PurchaseInvoice_Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseInvoice_Date", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PurchaseInvoice_Date
+		{
+			get
+			{
+				return this._PurchaseInvoice_Date;
+			}
+			set
+			{
+				if ((this._PurchaseInvoice_Date != value))
+				{
+					this._PurchaseInvoice_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartyInvoiceNo", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string PartyInvoiceNo
+		{
+			get
+			{
+				return this._PartyInvoiceNo;
+			}
+			set
+			{
+				if ((this._PartyInvoiceNo != value))
+				{
+					this._PartyInvoiceNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartyInvoiceDate", DbType="SmallDateTime")]
+		public System.Nullable<System.DateTime> PartyInvoiceDate
+		{
+			get
+			{
+				return this._PartyInvoiceDate;
+			}
+			set
+			{
+				if ((this._PartyInvoiceDate != value))
+				{
+					this._PartyInvoiceDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="Int")]
+		public System.Nullable<int> BranchID
+		{
+			get
+			{
+				return this._BranchID;
+			}
+			set
+			{
+				if ((this._BranchID != value))
+				{
+					this._BranchID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Doc_Type", DbType="NVarChar(2) NOT NULL", CanBeNull=false)]
+		public string Doc_Type
+		{
+			get
+			{
+				return this._Doc_Type;
+			}
+			set
+			{
+				if ((this._Doc_Type != value))
+				{
+					this._Doc_Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Entity_Type", DbType="VarChar(2)")]
+		public string Entity_Type
+		{
+			get
+			{
+				return this._Entity_Type;
+			}
+			set
+			{
+				if ((this._Entity_Type != value))
+				{
+					this._Entity_Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PosState", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string PosState
+		{
+			get
+			{
+				return this._PosState;
+			}
+			set
+			{
+				if ((this._PosState != value))
+				{
+					this._PosState = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(100)")]
+		public string Proj_Name
+		{
+			get
+			{
+				return this._Proj_Name;
+			}
+			set
+			{
+				if ((this._Proj_Name != value))
+				{
+					this._Proj_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Entered_By", DbType="VarChar(50)")]
+		public string Entered_By
+		{
+			get
+			{
+				return this._Entered_By;
+			}
+			set
+			{
+				if ((this._Entered_By != value))
+				{
+					this._Entered_By = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Entered_On", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Entered_On
+		{
+			get
+			{
+				return this._Entered_On;
+			}
+			set
+			{
+				if ((this._Entered_On != value))
+				{
+					this._Entered_On = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Updated_By", DbType="VarChar(50)")]
+		public string Updated_By
+		{
+			get
+			{
+				return this._Updated_By;
+			}
+			set
+			{
+				if ((this._Updated_By != value))
+				{
+					this._Updated_By = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Updated_On", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Updated_On
+		{
+			get
+			{
+				return this._Updated_On;
+			}
+			set
+			{
+				if ((this._Updated_On != value))
+				{
+					this._Updated_On = value;
+				}
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_PPBList")]
 	public partial class v_PPBList
 	{
@@ -21305,339 +21782,6 @@ namespace ERP.Models
 				if ((this._ISCLOSED != value))
 				{
 					this._ISCLOSED = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_ProjectPurchaseReturnList")]
-	public partial class v_ProjectPurchaseReturnList
-	{
-		
-		private System.Nullable<long> _SrlNo;
-		
-		private long _Return_Id;
-		
-		private string _SalesReturnNo;
-		
-		private System.Nullable<System.DateTime> _Return_Date;
-		
-		private System.Nullable<System.DateTime> _Rn_Date;
-		
-		private string _CustomerName;
-		
-		private System.Nullable<decimal> _Amount;
-		
-		private string _Quote_Expiry;
-		
-		private string _Status;
-		
-		private string _PurchaseInvoice;
-		
-		private string _Branch;
-		
-		private System.Nullable<int> _BranchID;
-		
-		private string _Return_FinYear;
-		
-		private string _Return_CompanyID;
-		
-		private string _EWayBillNumber;
-		
-		private string _EWayBillDate;
-		
-		private decimal _EWayBillValue;
-		
-		private string _Proj_Name;
-		
-		public v_ProjectPurchaseReturnList()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SrlNo", DbType="BigInt")]
-		public System.Nullable<long> SrlNo
-		{
-			get
-			{
-				return this._SrlNo;
-			}
-			set
-			{
-				if ((this._SrlNo != value))
-				{
-					this._SrlNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_Id", DbType="BigInt NOT NULL")]
-		public long Return_Id
-		{
-			get
-			{
-				return this._Return_Id;
-			}
-			set
-			{
-				if ((this._Return_Id != value))
-				{
-					this._Return_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SalesReturnNo", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
-		public string SalesReturnNo
-		{
-			get
-			{
-				return this._SalesReturnNo;
-			}
-			set
-			{
-				if ((this._SalesReturnNo != value))
-				{
-					this._SalesReturnNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_Date", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Return_Date
-		{
-			get
-			{
-				return this._Return_Date;
-			}
-			set
-			{
-				if ((this._Return_Date != value))
-				{
-					this._Return_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rn_Date", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Rn_Date
-		{
-			get
-			{
-				return this._Rn_Date;
-			}
-			set
-			{
-				if ((this._Rn_Date != value))
-				{
-					this._Rn_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="VarChar(252) NOT NULL", CanBeNull=false)]
-		public string CustomerName
-		{
-			get
-			{
-				return this._CustomerName;
-			}
-			set
-			{
-				if ((this._CustomerName != value))
-				{
-					this._CustomerName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this._Amount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quote_Expiry", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string Quote_Expiry
-		{
-			get
-			{
-				return this._Quote_Expiry;
-			}
-			set
-			{
-				if ((this._Quote_Expiry != value))
-				{
-					this._Quote_Expiry = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(20)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseInvoice", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string PurchaseInvoice
-		{
-			get
-			{
-				return this._PurchaseInvoice;
-			}
-			set
-			{
-				if ((this._PurchaseInvoice != value))
-				{
-					this._PurchaseInvoice = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Branch", DbType="VarChar(200)")]
-		public string Branch
-		{
-			get
-			{
-				return this._Branch;
-			}
-			set
-			{
-				if ((this._Branch != value))
-				{
-					this._Branch = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="Int")]
-		public System.Nullable<int> BranchID
-		{
-			get
-			{
-				return this._BranchID;
-			}
-			set
-			{
-				if ((this._BranchID != value))
-				{
-					this._BranchID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_FinYear", DbType="Char(10)")]
-		public string Return_FinYear
-		{
-			get
-			{
-				return this._Return_FinYear;
-			}
-			set
-			{
-				if ((this._Return_FinYear != value))
-				{
-					this._Return_FinYear = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_CompanyID", DbType="Char(10)")]
-		public string Return_CompanyID
-		{
-			get
-			{
-				return this._Return_CompanyID;
-			}
-			set
-			{
-				if ((this._Return_CompanyID != value))
-				{
-					this._Return_CompanyID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWayBillNumber", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string EWayBillNumber
-		{
-			get
-			{
-				return this._EWayBillNumber;
-			}
-			set
-			{
-				if ((this._EWayBillNumber != value))
-				{
-					this._EWayBillNumber = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWayBillDate", DbType="VarChar(10)")]
-		public string EWayBillDate
-		{
-			get
-			{
-				return this._EWayBillDate;
-			}
-			set
-			{
-				if ((this._EWayBillDate != value))
-				{
-					this._EWayBillDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWayBillValue", DbType="Decimal(18,2) NOT NULL")]
-		public decimal EWayBillValue
-		{
-			get
-			{
-				return this._EWayBillValue;
-			}
-			set
-			{
-				if ((this._EWayBillValue != value))
-				{
-					this._EWayBillValue = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string Proj_Name
-		{
-			get
-			{
-				return this._Proj_Name;
-			}
-			set
-			{
-				if ((this._Proj_Name != value))
-				{
-					this._Proj_Name = value;
 				}
 			}
 		}
@@ -86155,25 +86299,37 @@ namespace ERP.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_ProjectPurchaseChallanList")]
-	public partial class v_ProjectPurchaseChallanList
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_ProjectPurchaseReturnList")]
+	public partial class v_ProjectPurchaseReturnList
 	{
 		
-		private System.Nullable<System.DateTime> _Challan_Date;
+		private System.Nullable<long> _SrlNo;
 		
-		private string _TransDate;
+		private long _Return_Id;
 		
-		private long _PurchaseChallan_Id;
+		private string _SalesReturnNo;
 		
-		private string _PurchaseChallan_Number;
+		private System.Nullable<System.DateTime> _Return_Date;
+		
+		private System.Nullable<System.DateTime> _Rn_Date;
 		
 		private string _CustomerName;
 		
 		private System.Nullable<decimal> _Amount;
 		
-		private string _CHALLAN_EXPIRY;
+		private string _Quote_Expiry;
 		
-		private string _Statuss;
+		private string _Status;
+		
+		private string _PurchaseInvoice;
+		
+		private string _Branch;
+		
+		private System.Nullable<int> _BranchID;
+		
+		private string _Return_FinYear;
+		
+		private string _Return_CompanyID;
 		
 		private string _EWayBillNumber;
 		
@@ -86181,109 +86337,97 @@ namespace ERP.Models
 		
 		private decimal _EWayBillValue;
 		
-		private string _PurchaseOrder_Number;
-		
-		private string _PurchaseOrder_Date;
-		
-		private string _PurchaseInvoice_Number;
-		
-		private string _PurchaseInvoice_Date;
-		
-		private string _PartyInvoiceNo;
-		
-		private System.Nullable<System.DateTime> _PartyInvoiceDate;
-		
-		private System.Nullable<int> _BranchID;
-		
-		private string _Doc_Type;
-		
-		private string _Entity_Type;
-		
-		private string _PosState;
-		
 		private string _Proj_Name;
-		
-		private string _Entered_By;
-		
-		private System.Nullable<System.DateTime> _Entered_On;
-		
-		private string _Updated_By;
-		
-		private System.Nullable<System.DateTime> _Updated_On;
 		
 		private string _Editlock;
 		
 		private string _Deletelock;
 		
-		public v_ProjectPurchaseChallanList()
+		public v_ProjectPurchaseReturnList()
 		{
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Challan_Date", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Challan_Date
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SrlNo", DbType="BigInt")]
+		public System.Nullable<long> SrlNo
 		{
 			get
 			{
-				return this._Challan_Date;
+				return this._SrlNo;
 			}
 			set
 			{
-				if ((this._Challan_Date != value))
+				if ((this._SrlNo != value))
 				{
-					this._Challan_Date = value;
+					this._SrlNo = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransDate", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string TransDate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_Id", DbType="BigInt NOT NULL")]
+		public long Return_Id
 		{
 			get
 			{
-				return this._TransDate;
+				return this._Return_Id;
 			}
 			set
 			{
-				if ((this._TransDate != value))
+				if ((this._Return_Id != value))
 				{
-					this._TransDate = value;
+					this._Return_Id = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseChallan_Id", DbType="BigInt NOT NULL")]
-		public long PurchaseChallan_Id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SalesReturnNo", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
+		public string SalesReturnNo
 		{
 			get
 			{
-				return this._PurchaseChallan_Id;
+				return this._SalesReturnNo;
 			}
 			set
 			{
-				if ((this._PurchaseChallan_Id != value))
+				if ((this._SalesReturnNo != value))
 				{
-					this._PurchaseChallan_Id = value;
+					this._SalesReturnNo = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseChallan_Number", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string PurchaseChallan_Number
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Return_Date
 		{
 			get
 			{
-				return this._PurchaseChallan_Number;
+				return this._Return_Date;
 			}
 			set
 			{
-				if ((this._PurchaseChallan_Number != value))
+				if ((this._Return_Date != value))
 				{
-					this._PurchaseChallan_Number = value;
+					this._Return_Date = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="VarChar(250)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rn_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Rn_Date
+		{
+			get
+			{
+				return this._Rn_Date;
+			}
+			set
+			{
+				if ((this._Rn_Date != value))
+				{
+					this._Rn_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="VarChar(252) NOT NULL", CanBeNull=false)]
 		public string CustomerName
 		{
 			get
@@ -86315,34 +86459,114 @@ namespace ERP.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHALLAN_EXPIRY", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string CHALLAN_EXPIRY
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quote_Expiry", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string Quote_Expiry
 		{
 			get
 			{
-				return this._CHALLAN_EXPIRY;
+				return this._Quote_Expiry;
 			}
 			set
 			{
-				if ((this._CHALLAN_EXPIRY != value))
+				if ((this._Quote_Expiry != value))
 				{
-					this._CHALLAN_EXPIRY = value;
+					this._Quote_Expiry = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Statuss", DbType="VarChar(8) NOT NULL", CanBeNull=false)]
-		public string Statuss
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(20)")]
+		public string Status
 		{
 			get
 			{
-				return this._Statuss;
+				return this._Status;
 			}
 			set
 			{
-				if ((this._Statuss != value))
+				if ((this._Status != value))
 				{
-					this._Statuss = value;
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseInvoice", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PurchaseInvoice
+		{
+			get
+			{
+				return this._PurchaseInvoice;
+			}
+			set
+			{
+				if ((this._PurchaseInvoice != value))
+				{
+					this._PurchaseInvoice = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Branch", DbType="VarChar(200)")]
+		public string Branch
+		{
+			get
+			{
+				return this._Branch;
+			}
+			set
+			{
+				if ((this._Branch != value))
+				{
+					this._Branch = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="Int")]
+		public System.Nullable<int> BranchID
+		{
+			get
+			{
+				return this._BranchID;
+			}
+			set
+			{
+				if ((this._BranchID != value))
+				{
+					this._BranchID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_FinYear", DbType="Char(10)")]
+		public string Return_FinYear
+		{
+			get
+			{
+				return this._Return_FinYear;
+			}
+			set
+			{
+				if ((this._Return_FinYear != value))
+				{
+					this._Return_FinYear = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_CompanyID", DbType="Char(10)")]
+		public string Return_CompanyID
+		{
+			get
+			{
+				return this._Return_CompanyID;
+			}
+			set
+			{
+				if ((this._Return_CompanyID != value))
+				{
+					this._Return_CompanyID = value;
 				}
 			}
 		}
@@ -86395,167 +86619,7 @@ namespace ERP.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Number", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string PurchaseOrder_Number
-		{
-			get
-			{
-				return this._PurchaseOrder_Number;
-			}
-			set
-			{
-				if ((this._PurchaseOrder_Number != value))
-				{
-					this._PurchaseOrder_Number = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Date", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string PurchaseOrder_Date
-		{
-			get
-			{
-				return this._PurchaseOrder_Date;
-			}
-			set
-			{
-				if ((this._PurchaseOrder_Date != value))
-				{
-					this._PurchaseOrder_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseInvoice_Number", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string PurchaseInvoice_Number
-		{
-			get
-			{
-				return this._PurchaseInvoice_Number;
-			}
-			set
-			{
-				if ((this._PurchaseInvoice_Number != value))
-				{
-					this._PurchaseInvoice_Number = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseInvoice_Date", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string PurchaseInvoice_Date
-		{
-			get
-			{
-				return this._PurchaseInvoice_Date;
-			}
-			set
-			{
-				if ((this._PurchaseInvoice_Date != value))
-				{
-					this._PurchaseInvoice_Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartyInvoiceNo", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
-		public string PartyInvoiceNo
-		{
-			get
-			{
-				return this._PartyInvoiceNo;
-			}
-			set
-			{
-				if ((this._PartyInvoiceNo != value))
-				{
-					this._PartyInvoiceNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartyInvoiceDate", DbType="SmallDateTime")]
-		public System.Nullable<System.DateTime> PartyInvoiceDate
-		{
-			get
-			{
-				return this._PartyInvoiceDate;
-			}
-			set
-			{
-				if ((this._PartyInvoiceDate != value))
-				{
-					this._PartyInvoiceDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchID", DbType="Int")]
-		public System.Nullable<int> BranchID
-		{
-			get
-			{
-				return this._BranchID;
-			}
-			set
-			{
-				if ((this._BranchID != value))
-				{
-					this._BranchID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Doc_Type", DbType="NVarChar(2) NOT NULL", CanBeNull=false)]
-		public string Doc_Type
-		{
-			get
-			{
-				return this._Doc_Type;
-			}
-			set
-			{
-				if ((this._Doc_Type != value))
-				{
-					this._Doc_Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Entity_Type", DbType="VarChar(2)")]
-		public string Entity_Type
-		{
-			get
-			{
-				return this._Entity_Type;
-			}
-			set
-			{
-				if ((this._Entity_Type != value))
-				{
-					this._Entity_Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PosState", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string PosState
-		{
-			get
-			{
-				return this._PosState;
-			}
-			set
-			{
-				if ((this._PosState != value))
-				{
-					this._PosState = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string Proj_Name
 		{
 			get
@@ -86567,70 +86631,6 @@ namespace ERP.Models
 				if ((this._Proj_Name != value))
 				{
 					this._Proj_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Entered_By", DbType="VarChar(50)")]
-		public string Entered_By
-		{
-			get
-			{
-				return this._Entered_By;
-			}
-			set
-			{
-				if ((this._Entered_By != value))
-				{
-					this._Entered_By = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Entered_On", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Entered_On
-		{
-			get
-			{
-				return this._Entered_On;
-			}
-			set
-			{
-				if ((this._Entered_On != value))
-				{
-					this._Entered_On = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Updated_By", DbType="VarChar(50)")]
-		public string Updated_By
-		{
-			get
-			{
-				return this._Updated_By;
-			}
-			set
-			{
-				if ((this._Updated_By != value))
-				{
-					this._Updated_By = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Updated_On", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Updated_On
-		{
-			get
-			{
-				return this._Updated_On;
-			}
-			set
-			{
-				if ((this._Updated_On != value))
-				{
-					this._Updated_On = value;
 				}
 			}
 		}

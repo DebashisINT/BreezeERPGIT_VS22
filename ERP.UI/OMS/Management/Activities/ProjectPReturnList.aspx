@@ -1,5 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectPReturnList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPReturnList" %>
+﻿<%--=======================================================Revision History=========================================================================
+ 1.0     Priti    V2.0.40  04-10-2023     	0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+=========================================================End Revision History========================================================================--%>
 
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectPReturnList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPReturnList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -287,8 +290,8 @@
                 //   cGrdPurchaseReturn.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
             }
         }
-        </script>
-    </asp:Content>
+    </script>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="panel-heading">
         <div class="panel-title">
@@ -298,11 +301,11 @@
     <div class="form_main">
         <div class="clearfix">
             <% if (rights.CanAdd)
-               { %>
+                { %>
             <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-primary"><span><u>A</u>dd New</span> </a><%} %>
 
             <% if (rights.CanExport)
-               { %>
+                { %>
             <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-sm btn-primary" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
                 <asp:ListItem Value="0">Export to</asp:ListItem>
                 <asp:ListItem Value="1">PDF</asp:ListItem>
@@ -347,6 +350,10 @@
     </div>
     <%--  SettingsCookies-Enabled="true" SettingsCookies-StorePaging="true" SettingsCookies-StoreFiltering="true" 
             SettingsCookies-StoreGroupingAndSorting="true" --%>
+    <%--Rev 1.0--%>
+    <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <%--End of Rev 1.0--%>
     <div class="GridViewArea">
         <dxe:ASPxGridView ID="GrdPurchaseReturn" runat="server" KeyFieldName="SrlNo" AutoGenerateColumns="False"
             Width="100%" ClientInstanceName="cGrdPurchaseReturn" OnCustomCallback="GrdPurchaseReturn_CustomCallback"
@@ -355,7 +362,7 @@
 
             <SettingsSearchPanel Visible="True" Delay="5000" />
             <Columns>
-               <%--  <dxe:GridViewDataTextColumn Caption="Return_Id" FieldName="Return_Id"  Width="0" > 
+                <%--  <dxe:GridViewDataTextColumn Caption="Return_Id" FieldName="Return_Id"  Width="0" > 
                       <EditFormSettings Visible="False"></EditFormSettings>                  
                 </dxe:GridViewDataTextColumn>--%>
                 <dxe:GridViewDataTextColumn Caption="Document Number" FieldName="SalesReturnNo" SortOrder="Descending"
@@ -365,9 +372,9 @@
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="Return_Date" Caption="Posting Date" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy" >
+                <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="Return_Date" Caption="Posting Date" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
                     <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False"  />
+                    <Settings AllowAutoFilterTextInputTimer="False" />
                     <EditFormSettings Visible="True"></EditFormSettings>
                 </dxe:GridViewDataTextColumn>
 
@@ -401,11 +408,11 @@
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                  <dxe:GridViewDataTextColumn Caption="Project Name" FieldName="Proj_Name"
+                <dxe:GridViewDataTextColumn Caption="Project Name" FieldName="Proj_Name"
                     VisibleIndex="5" Width="250px" Settings-ShowFilterRowMenu="True" Settings-AllowAutoFilter="True">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
-                     <Settings AllowAutoFilterTextInputTimer="True" />
+                    <Settings AllowAutoFilterTextInputTimer="True" />
                 </dxe:GridViewDataTextColumn>
                 <dxe:GridViewDataTextColumn Caption="E-Way Bill No." FieldName="EWayBillNumber" VisibleIndex="6" Width="100px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
@@ -417,17 +424,23 @@
                 <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="7" Width="15%">
                     <DataItemTemplate>
                         <% if (rights.CanView)
-                           { %>
+                            { %>
                         <a href="javascript:void(0);" onclick="OnViewClick('<%#Eval("Return_Id")%>')" class="pad" title="View">
                             <img src="../../../assests/images/doc.png" /></a>
                         <% } %>
                         <% if (rights.CanEdit)
-                           { %>
-                        <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Return_Id")%>')" class="pad" title="Edit">
+                            { %>
+                        <%--  REV 1.0--%>
+                        <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Return_Id")%>')" class="pad" title="Edit" style='<%#Eval("Editlock")%>'>
+                            <%-- <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Return_Id")%>')" class="pad" title="Edit">--%>
+                            <%--REV 1.0 End--%>
                             <img src="../../../assests/images/info.png" /></a><%} %>
                         <% if (rights.CanDelete)
-                           { %>
-                        <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Return_Id")%>')" class="pad" title="Delete">
+                            { %>
+                        <%--  REV 1.0--%>
+                        <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Return_Id")%>')" class="pad" title="Delete" style='<%#Eval("Deletelock")%>'>
+                            <%-- <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Return_Id")%>')" class="pad" title="Delete">--%>
+                            <%--REV 1.0 End--%>
                             <img src="../../../assests/images/Delete.png" /></a><%} %>
                         <%-- <a href="javascript:void(0);" onclick="OnClickCopy('<%# Container.KeyValue %>')" class="pad" title="Copy ">
                             <i class="fa fa-copy"></i></a>--%>
@@ -436,14 +449,14 @@
                         <a href="javascript:void(0);" onclick="OnClickStatus('<%# Container.KeyValue %>')" class="pad" title="Status">
                             <img src="../../../assests/images/verified.png" /></a><%} %>--%>
                         <% if (rights.CanView)
-                           { %>
+                            { %>
                         <a href="javascript:void(0);" onclick="OnclickViewAttachment('<%#Eval("Return_Id")%>')" class="pad" title="View Attachment">
                             <img src="../../../assests/images/attachment.png" />
                         </a><%} %>
                         <a href="javascript:void(0);" onclick="OnEWayBillClick('<%#Eval("Return_Id")%>','<%#Eval("EWayBillNumber") %>','<%#Eval("EWayBillDate") %>','<%#Eval("EWayBillValue") %>')" class="pad" title="Update E-Way Bill">
                             <img src="../../../assests/images/bill.png" />
                             <% if (rights.CanPrint)
-                               { %>
+                                { %>
                             <a href="javascript:void(0);" onclick="onPrintJv('<%#Eval("Return_Id")%>')" class="pad" title="print">
                                 <img src="../../../assests/images/Print.png" />
                             </a><%} %>
@@ -455,7 +468,7 @@
                     <EditFormSettings Visible="False"></EditFormSettings>
                 </dxe:GridViewDataTextColumn>
             </Columns>
-             <SettingsCookies Enabled="true" StorePaging="true" Version="2.0" />
+            <SettingsCookies Enabled="true" StorePaging="true" Version="2.0" />
             <SettingsContextMenu Enabled="true"></SettingsContextMenu>
             <ClientSideEvents EndCallback="OnEndCallback" />
             <%--<SettingsPager NumericButtonCount="20" PageSize="10" ShowSeparators="True" Mode="ShowPager">
@@ -526,6 +539,18 @@
         <asp:HiddenField ID="hfToDate" runat="server" />
         <asp:HiddenField ID="hfBranchID" runat="server" />
         <asp:HiddenField ID="hddnReturnID" runat="server" />
+        <%--Rev 1.0--%>
+        <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+        <asp:HiddenField ID="hdnLockToDate" runat="server" />
+        <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+        <%--    <asp:HiddenField ID="hdnValAfterLock" runat="server" />
+    <asp:HiddenField ID="hdnValAfterLockMSG" runat="server" />--%>
+        <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+        <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+        <%--End of Rev 1.0--%>
     </div>
     <dxe:ASPxPopupControl ID="Popup_EWayBill" runat="server" ClientInstanceName="cPopup_EWayBill"
         Width="400px" HeaderText="Update E-Way Bill" PopupHorizontalAlign="WindowCenter"
