@@ -1,6 +1,7 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0   v2.0.37	Priti	13-03-2023	0025686:Eway Bill Cancel not working for Transit Sales Invoice & Credit Note
 // 2.0   v2.0.38	Priti	18-04-2023	0025725:If an Eway Bill or IRN is cancelled from the Portal directly need to update the ERP tables accordingly next time the Document is
+// 3.0   v2.0.40	Priti	10-10-2023	0026890:Error generating IRN
 
 #endregion//====================================================End Revision History=====================================================================
 
@@ -3677,12 +3678,20 @@ namespace ERP.OMS.Management
                                             {
                                                 foreach (infolog item1 in err.error.args.irp_error.info)
                                                 {
-                                                    objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + item1.InfoDesc.AckNo + "',AckDt='" + item1.InfoDesc.AckDt + "',Irn='" + item1.InfoDesc.Irn + "' where invoice_id='" + id.ToString() + "'");
-
-                                                }
+                                                    //REV 3.0
+                                                    if (item1.InfoDesc!=null)
+                                                    {
+                                                        objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + item1.InfoDesc.AckNo + "',AckDt='" + item1.InfoDesc.AckDt + "',Irn='" + item1.InfoDesc.Irn + "' where invoice_id='" + id.ToString() + "'");
+                                                    }
+                                                    else
+                                                    {
+                                                        objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + item1.Desc.AckNo + "',AckDt='" + item1.Desc.AckDt + "',Irn='" + item1.Desc.Irn + "' where invoice_id='" + id.ToString() + "'");
+                                                    }
+                                                    //REV 3.0 END
                                             }
-                                           
-                                            IRNsuccess = IRNsuccess + "," + objInvoice.DocDtls.No;
+                                        }
+                                            success = success + "," + objInvoice.DocDtls.No;
+                                        
                                         }
                                         else
                                         {

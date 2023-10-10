@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿#region//====================================================Revision History=========================================================================
+// 1.0   v2.0.40	Priti	10-10-2023	0026890:Error generating IRN
+#endregion//====================================================End Revision History=====================================================================
+
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -681,8 +685,7 @@ namespace ERP.Models
     public class irpError
     {
         public List<errorlog> details { get; set; }
-        public string data { get; set; }
-
+        public string data { get; set; }        
         public List<infolog> info { get; set; }      
         public additionalDetailslog additionalDetails { get; set; }
     }
@@ -704,11 +707,22 @@ namespace ERP.Models
     public class infolog
     {
         public string InfCd { get; set; }
-        public string Desc { get; set; }   
-      
+
+        //REV 1.0
+        //public string Desc { get; set; }   
+        public InfologDesc Desc { get; set; }
+        //REV 1.0
         public InfoDesclog InfoDesc { get; set; }
     }
+    //REV 1.0
+    public class InfologDesc
+    {
+        public string AckNo { get; set; }
+        public string AckDt { get; set; }
+        public string Irn { get; set; }
 
+    }
+    //REV 1.0 END
     public class InfoDesclog
     {
         public string AckNo { get; set; }
