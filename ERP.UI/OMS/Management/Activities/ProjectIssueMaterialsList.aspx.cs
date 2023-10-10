@@ -1,4 +1,9 @@
-﻿using BusinessLogicLayer;
+﻿//========================================================== Revision History ============================================================================================
+//   1.0   Priti     V2.0.40     09-10-2023      0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+//========================================== End Revision History =======================================================================================================
+
+
+using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using EntityLayer.CommonELS;
@@ -28,6 +33,36 @@ namespace ERP.OMS.Management.Activities
         protected void Page_Load(object sender, EventArgs e)
         {
             rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/management/Activities/ProjectIssueMaterialsList.aspx");
+            // Rev 1.0
+            DataTable dtposTime = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) DataFreeze_Fromdate,convert(varchar(10),Lock_Todate,105) DataFreeze_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Add' and Module_Id=67");
+            if (dtposTime != null && dtposTime.Rows.Count > 0)
+            {
+                hdnLockFromDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Todate"]);
+                hdnLockFromDateCon.Value = Convert.ToString(dtposTime.Rows[0]["DataFreeze_Fromdate"]);
+                hdnLockToDateCon.Value = Convert.ToString(dtposTime.Rows[0]["DataFreeze_Todate"]);
+            }
+
+            DataTable dtposTimeEdit = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Edit' and Module_Id=67");
+            DataTable dtposTimeDelete = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Delete' and Module_Id=67");
+            if (dtposTimeEdit != null && dtposTimeEdit.Rows.Count > 0)
+            {
+                hdnLockFromDateedit.Value = Convert.ToString(dtposTimeEdit.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDateedit.Value = Convert.ToString(dtposTimeEdit.Rows[0]["LockCon_Todate"]);
+                spnEditLock.Style.Add("Display", "block");
+                spnEditLock.InnerText = "DATA is Freezed between   " + hdnLockFromDateedit.Value + " to " + hdnLockToDateedit.Value + " for Edit. ";
+            }
+
+            if (dtposTimeDelete != null && dtposTimeDelete.Rows.Count > 0)
+            {
+                spnDeleteLock.Style.Add("Display", "block");
+                hdnLockFromDatedelete.Value = Convert.ToString(dtposTimeDelete.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDatedelete.Value = Convert.ToString(dtposTimeDelete.Rows[0]["LockCon_Todate"]);
+                spnDeleteLock.InnerText = spnEditLock.InnerText + "DATA is Freezed between   " + hdnLockFromDatedelete.Value + " to " + hdnLockToDatedelete.Value + "  for Delete.";
+                spnEditLock.InnerText = "";
+            }
+            // End of Rev 1.0
+
             if (!IsPostBack)
             {
 

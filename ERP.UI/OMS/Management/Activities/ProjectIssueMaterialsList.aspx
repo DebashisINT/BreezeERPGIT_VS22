@@ -1,4 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectIssueMaterialsList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectIssueMaterialsList" %>
+﻿<%--=======================================================Revision History=========================================================================
+ 1.0     Priti    V2.0.40  09-10-2023     	0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+=========================================================End Revision History========================================================================--%>
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectIssueMaterialsList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectIssueMaterialsList" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -503,6 +508,10 @@
 
         </div>
     </div>
+     <%--Rev 1.0--%>
+    <div id="spnEditLock" runat="server" style="display:none; color:red;text-align:center"></div>
+    <div id="spnDeleteLock" runat="server" style="display:none; color:red;text-align:center"></div>
+    <%--End of Rev 1.0--%>
     <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdOrder" runat="server" KeyFieldName="SlNo" AutoGenerateColumns="False"
             DataSourceID="EntityServerModeDataSource" SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false"
@@ -615,12 +624,12 @@
                         <% } %>
                         <% if (rights.CanEdit)
                            { %>
-                        <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Issue_Id") %>')" class="" title="">
+                        <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Issue_Id") %>')" class="" title="" style='<%#Eval("Editlock")%>'>
 
                             <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a>  <% } %>
                         <% if (rights.CanDelete)
                            { %>
-                        <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Issue_Id") %>')" class="" title="">
+                        <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Issue_Id") %>')" class="" title="" style='<%#Eval("Deletelock")%>'>
                             <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a>
                         <% } %>
                         <a href="javascript:void(0);" onclick="OnClickCopy('<%#Eval("Issue_Id") %>')" class="" title=" " style="display: none">
@@ -856,6 +865,18 @@
         <asp:HiddenField ID="hfToDate" runat="server" />
         <asp:HiddenField ID="hfBranchID" runat="server" />
         <asp:HiddenField ID="hddnChallanID" runat="server" />
+        <%--Rev 1.0--%>
+    <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+    <asp:HiddenField ID="hdnLockToDate" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+<%--    <asp:HiddenField ID="hdnValAfterLock" runat="server" />
+    <asp:HiddenField ID="hdnValAfterLockMSG" runat="server" />--%>
+    <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateedit" runat="server" /> 
+    <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+    <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+    <%--End of Rev 1.0--%>
     </div>
     <dxe:ASPxPopupControl ID="Popup_EWayBill" runat="server" ClientInstanceName="cPopup_EWayBill"
         Width="400px" HeaderText="Update E-Way Bill" PopupHorizontalAlign="WindowCenter"

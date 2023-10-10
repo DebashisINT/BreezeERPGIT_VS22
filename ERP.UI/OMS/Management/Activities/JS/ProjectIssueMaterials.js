@@ -1,4 +1,9 @@
-﻿$(function () {
+﻿//=======================================================Revision History =========================================================================
+//1.0     Priti    V2.0.40  09-10-2023     	0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+//=========================================================End Revision History========================================================================--%>
+
+
+$(function () {
     $('#UOMModal').on('hide.bs.modal', function () {
         grid.batchEditApi.StartEdit(globalRowIndex, 6);
     });
@@ -2417,11 +2422,40 @@ function SetArrForUOM() {
 
     }
 }
+// Rev 1.0
+function AddContraLockStatus(LockDate) {
+    $.ajax({
+        type: "POST",
+        url: "ProjectIssueMaterials.aspx/GetAddLock",
+        data: JSON.stringify({ LockDate: LockDate }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+            var currentRate = msg.d;
+            if (currentRate != null && currentRate == "-9") {
+                $("#hdnValAfterLock").val("-9");
+            }
+            else {
+                $("#hdnValAfterLock").val("1");
+            }
 
+        }
+    });
+}
+        // End of Rev 1.0
 function Save_ButtonClick() {
 
     var flag = true;
     LoadingPanel.Show();
+    // Rev 1.0
+    AddContraLockStatus(cPLSalesChallanDate.GetDate());
+    if ($("#hdnValAfterLock").val() == "-9") {
+        jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        LoadingPanel.Hide();
+        flag = false;
+    }
+    // End of Rev 1.0
     $('#hfControlData').val($('#hfControlSaveData').val());
     var OrderNo = ctxt_SlChallanNo.GetText();
     var slsdate = cPLSalesChallanDate.GetValue();
@@ -2567,6 +2601,14 @@ function SaveExit_ButtonClick() {
     //debugger;
     var flag = true;
     LoadingPanel.Show();
+    // Rev 1.0
+    AddContraLockStatus(cPLSalesChallanDate.GetDate());
+    if ($("#hdnValAfterLock").val() == "-9") {
+        jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        LoadingPanel.Hide();
+        flag = false;
+    }
+    // End of Rev 1.0
     $('#hfControlData').val($('#hfControlSaveData').val());
     $("#hddnSaveOrExitButton").val('Save_Exit');
 
