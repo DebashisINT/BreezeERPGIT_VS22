@@ -3,7 +3,9 @@
  * Rev 2.0      Sanchita      V2.0.38                   Tax amount is not calculating automatically while modifying PI/Quotation. Mantis : 26411 
  * Rev 3.0      Sanchita      V2.0.40    06-10-2023     New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                         Mantis : 26871  
-**********************************************************************************************************/
+ * Rev 3.0      Priti         V2.0.40       0026881: The Expiry Date of the Proforma/Quotation is not accepting any date within the Month but taking the Last Date of any Month whiln
+
+ **********************************************************************************************************/
 (function (global) {
     if (typeof (global) === "undefined") {
         throw new Error("window is undefined");
@@ -2037,8 +2039,11 @@ function Approve_ButtonClick() {
     }
     else {
         $('#MandatoryEDate').attr('style', 'display:none');
-        //if (startDate > endDate) {	
-        if (tstartdate.GetText() > tenddate.GetText()) {
+        //Rev 3.0
+       // if (startDate > endDate) {
+        /* if (tstartdate.GetText() > tenddate.GetText()) {*/
+        if (startDate > endDate) {
+        //Rev 3.0 End
             flag = false;
             $('#MandatoryEgSDate').attr('style', 'display:block');
         }

@@ -840,7 +840,7 @@ namespace ERP.OMS.Management.Activities
             rtrnvalue = Convert.ToString(proc.GetParaValue("@ReturnValue"));
             return rtrnvalue;
         }
-        // End of Rev 2.0
+        // End of Rev 1.0
         public void GetSalesOrderSchemaLength()
         {
             DataTable Dt = new DataTable();
