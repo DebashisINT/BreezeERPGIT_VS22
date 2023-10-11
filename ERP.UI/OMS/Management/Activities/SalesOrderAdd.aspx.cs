@@ -8,6 +8,8 @@
  * Rev 4.0      Sanchita      V2.0.40   04-10-2023  0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
                                                     New button "Other Condiion" to show instead of "Terms & Condition" Button 
                                                     if the settings "Show Other Condition" is set as "Yes"
+ * Rev 5.0      Sanchita      V2.0.40   06-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+                                                    Mantis : 26871
  **********************************************************************************************************/
 using System;
 using System.Configuration;
@@ -312,6 +314,41 @@ namespace ERP.OMS.Management.Activities
             //    }
             //}
             // End of Rev Sanchita
+
+            // Rev 5.0
+            string ShowRFQ = ComBL.GetSystemSettingsResult("ShowRFQ");
+            if (!String.IsNullOrEmpty(ShowRFQ))
+            {
+                if (ShowRFQ.ToUpper().Trim() == "YES")
+                {
+                    hdnShowRFQ.Value = "1";
+                    divRFQNumber.Style.Add("display", "block");
+                    divRFQDate.Style.Add("display", "block");
+                }
+                else if (ShowRFQ.ToUpper().Trim() == "NO")
+                {
+                    hdnShowRFQ.Value = "0";
+                    divRFQNumber.Style.Add("display", "none");
+                    divRFQDate.Style.Add("display", "none");
+
+                }
+            }
+
+            string ShowProject = ComBL.GetSystemSettingsResult("ShowProject");
+            if (!String.IsNullOrEmpty(ShowProject))
+            {
+                if (ShowProject.ToUpper().Trim() == "YES")
+                {
+                    hdnShowProject.Value = "1";
+                    divProjectSite.Style.Add("display", "block");
+                }
+                else if (ShowProject.ToUpper().Trim() == "NO")
+                {
+                    hdnShowProject.Value = "0";
+                    divProjectSite.Style.Add("display", "none");
+                }
+            }
+            // End of Rev 5.0
 
             if (!IsPostBack)
             {
@@ -2088,6 +2125,58 @@ namespace ERP.OMS.Management.Activities
             return null;
 
         }
+
+        // Rev 5.0
+        [WebMethod]
+        public static String GetRFQHeaderReference(string KeyVal, string type)
+        {
+            SlaesActivitiesBL objSlaesActivitiesBL = new SlaesActivitiesBL();
+            string strRFQNumber = "";
+            string strRFQDate = "";
+            string strProjectSite = "";
+            string ResultString = "";
+
+            DataTable dt_Head = new DataTable();
+            if (type == "QN")
+            {
+                dt_Head = objSlaesActivitiesBL.GetQuotationDate(KeyVal);
+            }
+            else
+            {
+                ProcedureExecute proc = new ProcedureExecute("Prc_GetQuotationDetails");
+                proc.AddVarcharPara("@Quote_Number", 100, KeyVal);
+                proc.AddVarcharPara("@Mode", 100, "GetSalesInquiryDate");
+                dt_Head = proc.GetTable();
+            }
+
+            if (dt_Head != null && dt_Head.Rows.Count > 0)
+            {
+                if (type == "QN")
+                {
+                    strRFQNumber = Convert.ToString(dt_Head.Rows[0]["Quote_RFQNumber"]);
+                    if (!string.IsNullOrEmpty(Convert.ToString(dt_Head.Rows[0]["Quot_RFQDate"])))
+                    {
+                        strRFQDate = Convert.ToString(dt_Head.Rows[0]["Quot_RFQDate"]);
+                    }
+                    strProjectSite = Convert.ToString(dt_Head.Rows[0]["Quote_ProjectSite"]);
+                }
+                else
+                {
+                    strRFQNumber = Convert.ToString(dt_Head.Rows[0]["Inquiry_RFQNumber"]);
+                    if (!string.IsNullOrEmpty(Convert.ToString(dt_Head.Rows[0]["Inq_RFQDate"])))
+                    {
+                        strRFQDate = Convert.ToString(dt_Head.Rows[0]["Inq_RFQDate"]);
+                    }
+                    strProjectSite = Convert.ToString(dt_Head.Rows[0]["Inquiry_ProjectSite"]);
+                }
+
+               
+                ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite);
+            }
+
+            return ResultString;
+        }
+        // End of Rev 5.0
         public class RateList
         {
             public string Order_Number { get; set; }
@@ -3628,6 +3717,21 @@ namespace ERP.OMS.Management.Activities
                     //string strQtyTolerance = Convert.ToString(txtQtyTolerance.Text);
                     // End of Rev 1.0
 
+                    // Rev 5.0
+                    string strRFQNumber = "";
+                    string strRFQDate = null;
+                    string strProjectSite = "";
+                    if (hdnShowRFQ.Value == "1")
+                    {
+                        strRFQNumber = Convert.ToString(txtRFQNumber.Text);
+                        strRFQDate = Convert.ToString(dtRFQDate.Date);
+                    }
+                    if (hdnShowProject.Value == "1")
+                    {
+                        strProjectSite = Convert.ToString(txtProjectSite.Text);
+                    }
+                    // End of Rev 5.0
+
                     // Mantis Issue 24913 
                     if (!string.IsNullOrEmpty(Request.QueryString["SalId"]) && string.IsNullOrEmpty(Convert.ToString(hdnSalesManAgentId.Value)) )
                     { 
@@ -4525,10 +4629,12 @@ namespace ERP.OMS.Management.Activities
                             //                  Reference, strBranch, strAgents, strCurrency, strRate, strTaxType, strTaxCode, tempSalesOrderdt, addrDesc, TaxDetailTable, ActionType, OANumber, OADate, "0", QuotationDate, QuoComponent, tempWarehousedt, tempBillAddress, tempTaxDetailsdt, approveStatus
                             //                  , creditdays, strDueDate, IsInvenotry, IsFromCRM, PosForGst, SchemeList[0], duplicatedt2, ddlInventory.SelectedValue, MultiUOMDetails, Doctype, projectValidFrom, projectValidUpto, ApproveRejectstatus, AppRejRemarks, RevisionDate, RevisionNo
                             //                  , Segment1, Segment2, Segment3, Segment4, Segment5, strQtyTolerance));
+                            // Rev 5.0 [,strRFQNumber, strRFQDate, strProjectSite added]
                             int id = (ModifySalesOrder(MainOrderID, strSchemeType, UniqueQuotation, strQuoteDate, strQuoteExpiry, strCustomer, strContactName, ProjId,
                                               Reference, strBranch, strAgents, strCurrency, strRate, strTaxType, strTaxCode, tempSalesOrderdt, addrDesc, TaxDetailTable, ActionType, OANumber, OADate, "0", QuotationDate, QuoComponent, tempWarehousedt, tempBillAddress, tempTaxDetailsdt, approveStatus
                                               , creditdays, strDueDate, IsInvenotry, IsFromCRM, PosForGst, SchemeList[0], duplicatedt2, ddlInventory.SelectedValue, MultiUOMDetails, Doctype, projectValidFrom, projectValidUpto, ApproveRejectstatus, AppRejRemarks, RevisionDate, RevisionNo
-                                              , Segment1, Segment2, Segment3, Segment4, Segment5));
+                                              , Segment1, Segment2, Segment3, Segment4, Segment5
+                                              , strRFQNumber, strRFQDate, strProjectSite));
                             if (id <= 0)
                             {
                                 if (id == -1)
@@ -4926,11 +5032,13 @@ namespace ERP.OMS.Management.Activities
         //                            DataTable TaxDetailTable, string ActionType, string OANumber, string OADate, string QuotationNumber, string QuotationDate, string QuotationIdList, DataTable Warehousedt, DataTable BillAddressdt, DataTable QuotationTaxdt, string approveStatus,
         //                            string CreditDays, string strDueDate, int IsInventory, int IsFromCRM, string PosForGst, string SchemaID, DataTable PackingDetailsdt, string Entry_type, DataTable MultiUOMDetails, string Doctype, string projectValidFrom, string projectValidUpto, int ApproveRejectstatus, string AppRejRemarks, string RevisionDate, string RevisionNo
         //    , string Segment1, string Segment2, string Segment3, string Segment4, string Segment5, string strQtyTolerance)
+        // Rev 5.0 [,strRFQNumber, strRFQDate, strProjectSite added]
         public int ModifySalesOrder(string OrderID, string strSchemeType, string strOrderNo, string strOrderDate, string strOrderExpiry, string strCustomer, string strContactName, Int64 ProjId,
                                     string Reference, string strBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode, DataTable salesOrderdt, DataTable addrDesc,
                                     DataTable TaxDetailTable, string ActionType, string OANumber, string OADate, string QuotationNumber, string QuotationDate, string QuotationIdList, DataTable Warehousedt, DataTable BillAddressdt, DataTable QuotationTaxdt, string approveStatus,
                                     string CreditDays, string strDueDate, int IsInventory, int IsFromCRM, string PosForGst, string SchemaID, DataTable PackingDetailsdt, string Entry_type, DataTable MultiUOMDetails, string Doctype, string projectValidFrom, string projectValidUpto, int ApproveRejectstatus, string AppRejRemarks, string RevisionDate, string RevisionNo
-            , string Segment1, string Segment2, string Segment3, string Segment4, string Segment5)
+            , string Segment1, string Segment2, string Segment3, string Segment4, string Segment5
+            , string strRFQNumber, string strRFQDate, string strProjectSite)
         {
             try
             {
@@ -5094,6 +5202,14 @@ namespace ERP.OMS.Management.Activities
                 //    cmd.Parameters.AddWithValue("@QtyTolerance", Convert.ToDecimal(strQtyTolerance));
                 //}
                 // End of Rev 1.0
+                // Rev 5.0
+                cmd.Parameters.AddWithValue("@RFQNumber", strRFQNumber);
+                if (strRFQDate != "1/1/0001 12:00:00 AM")
+                {
+                    cmd.Parameters.AddWithValue("@RFQDate", strRFQDate);
+                }
+                cmd.Parameters.AddWithValue("@ProjectSite", strProjectSite);
+                // End of Rev 5.0
 
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;
@@ -8848,6 +8964,15 @@ namespace ERP.OMS.Management.Activities
                 string IsInvenotry = Convert.ToString(OrderEditdt.Rows[0]["IsInventory"]);
                 string CustomerName = Convert.ToString(OrderEditdt.Rows[0]["CustomerName"]);
 
+                // Rev 5.0
+                txtRFQNumber.Text = Convert.ToString(OrderEditdt.Rows[0]["Order_RFQNumber"]);
+                if (!string.IsNullOrEmpty(Convert.ToString(OrderEditdt.Rows[0]["Order_RFQDate"])))
+                {
+                    dtRFQDate.Date = Convert.ToDateTime(OrderEditdt.Rows[0]["Order_RFQDate"]);
+                }
+                txtProjectSite.Text = Convert.ToString(OrderEditdt.Rows[0]["Order_ProjectSite"]);
+                // End of Rev 5.0
+
                 ddl_PosGstSalesOrder.DataSource = OrderEdit.Tables[3];
                 ddl_PosGstSalesOrder.ValueField = "ID";
                 ddl_PosGstSalesOrder.TextField = "Name";
@@ -9400,6 +9525,14 @@ namespace ERP.OMS.Management.Activities
                 //string strQtyTolerance = Convert.ToString(OrderEditdt.Rows[0]["Order_QtyTolerancePerc"]);
                 //txtQtyTolerance.Text = strQtyTolerance;
                 // End of Rev 1.0
+                // Rev 5.0
+                txtRFQNumber.Text = Convert.ToString(OrderEditdt.Rows[0]["Order_RFQNumber"]);
+                if (!string.IsNullOrEmpty(Convert.ToString(OrderEditdt.Rows[0]["Order_RFQDate"])))
+                {
+                    dtRFQDate.Date = Convert.ToDateTime(OrderEditdt.Rows[0]["Order_RFQDate"]);
+                }
+                txtProjectSite.Text = Convert.ToString(OrderEditdt.Rows[0]["Order_ProjectSite"]);
+                // End of Rev 5.0
 
             }
 
@@ -9608,7 +9741,6 @@ namespace ERP.OMS.Management.Activities
                     {
 
                         dt_Quotation.Text = Convert.ToString(quotationdate);
-
 
                     }
                 }

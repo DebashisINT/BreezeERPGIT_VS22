@@ -591,6 +591,87 @@ namespace ERP.OMS.Management.Activities
         protected global::DevExpress.Web.ASPxComboBox ddl_PosGst;
 
         /// <summary>
+        /// divRFQNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRFQNumber;
+
+        /// <summary>
+        /// lblRFQNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxLabel lblRFQNumber;
+
+        /// <summary>
+        /// txtRFQNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTextBox txtRFQNumber;
+
+        /// <summary>
+        /// divRFQDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRFQDate;
+
+        /// <summary>
+        /// lblRFQDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxLabel lblRFQDate;
+
+        /// <summary>
+        /// dtRFQDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxDateEdit dtRFQDate;
+
+        /// <summary>
+        /// divProjectSite control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProjectSite;
+
+        /// <summary>
+        /// lblProjectSite control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxLabel lblProjectSite;
+
+        /// <summary>
+        /// txtProjectSite control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTextBox txtProjectSite;
+
+        /// <summary>
         /// lblVatGstCst control.
         /// </summary>
         /// <remarks>
@@ -1023,15 +1104,6 @@ namespace ERP.OMS.Management.Activities
         protected global::ERP.OMS.Management.Activities.UserControls.OtherTermsAndCondition OtherTermsAndCondition;
 
         /// <summary>
-        /// UOMConversionControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::ERP.OMS.Management.Activities.UserControls.UOMConversion UOMConversionControl;
-
-        /// <summary>
         /// uctrlOtherCondition control.
         /// </summary>
         /// <remarks>
@@ -1039,6 +1111,15 @@ namespace ERP.OMS.Management.Activities
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::ERP.OMS.Management.Activities.UserControls.WebUserControl1 uctrlOtherCondition;
+
+        /// <summary>
+        /// UOMConversionControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ERP.OMS.Management.Activities.UserControls.UOMConversion UOMConversionControl;
 
         /// <summary>
         /// hfTermsConditionData control.
@@ -1093,6 +1174,24 @@ namespace ERP.OMS.Management.Activities
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfOtherConditionDocType;
+
+        /// <summary>
+        /// hdnShowRFQ control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnShowRFQ;
+
+        /// <summary>
+        /// hdnShowProject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnShowProject;
 
         /// <summary>
         /// Sales_BillingShipping control.

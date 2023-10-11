@@ -1,6 +1,8 @@
 ﻿/*********************************************************************************************************
- * Rev 1.0      Sanchita      V2.0.38       Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
- * Rev 2.0      Sanchita      V2.0.38       Tax amount is not calculating automatically while modifying PI/Quotation. Mantis : 26411   
+ * Rev 1.0      Sanchita      V2.0.38                   Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
+ * Rev 2.0      Sanchita      V2.0.38                   Tax amount is not calculating automatically while modifying PI/Quotation. Mantis : 26411 
+ * Rev 3.0      Sanchita      V2.0.40    06-10-2023     New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+                                                        Mantis : 26871  
 **********************************************************************************************************/
 (function (global) {
     if (typeof (global) === "undefined") {
@@ -5482,6 +5484,34 @@ function QuotationNumberChanged() {
                 if (arr.length == 1) {
                     cComponentDatePanel.PerformCallback('BindQuotationDate' + '~' + quote_Id);
 
+                    // Rev 3.0
+                    var type = "SINQ"
+                    var Key = quote_Id.split(',')[0];
+                    $.ajax({
+                        type: "POST",
+                        url: "SalesQuotation.aspx/GetRFQHeaderReference",
+                        data: JSON.stringify({ KeyVal: Key, type: type }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (msg) {
+
+                            var currentString = msg.d;
+                            
+                            var RFQNumber = currentString.split('~')[0];
+                            var RFQDate = currentString.split('~')[1];
+                            var ProjectSite = currentString.split('~')[2];
+
+                            ctxtRFQNumber.SetText(RFQNumber);
+                            if (RFQDate != "") {
+                                cdtRFQDate.SetDate(new Date(RFQDate));
+                            }
+                            ctxtProjectSite.SetText(ProjectSite);
+                            
+                        }
+
+                    });
+                    // End of Rev 3.0
 
                 }
                 else {

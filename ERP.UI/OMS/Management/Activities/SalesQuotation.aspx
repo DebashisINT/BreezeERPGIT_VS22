@@ -8,6 +8,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                           New button "Other Condiion" to show instead of "Terms & Condition" Button 
                                                                           if the settings "Show Other Condition" is set as "Yes"  
                                                                           Mantis: 26868
+5.0                06-10-2023       V2.0.40            Sanchita           New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+                                                                          Mantis : 26871
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Sales Quotation" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesQuotation.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesQuotation" %>
@@ -1416,7 +1418,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                                         </div>
 
-                                        <div class="col-md-2">
+                                       <div class="col-md-2">
                                             <label>
                                                 <dxe:ASPxLabel ID="lbl_Quotation_Date" runat="server" Text="Inquiry Date" Width="120px">
                                                 </dxe:ASPxLabel>
@@ -1555,7 +1557,35 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 <ClientSideEvents GotFocus="function(s,e){ctxtRevisionDate.ShowDropDown();}" />	
                                             </dxe:ASPxDateEdit>	
                                         </div>	
-                                        	
+                                        <%--Rev 5.0--%>	
+                                        <div style="clear: both;"></div>
+                                        <div class="col-md-3" id="divRFQNumber" runat="server">
+                                            <dxe:ASPxLabel ID="lblRFQNumber" runat="server" Text="RFQ Number">
+                                            </dxe:ASPxLabel>
+                                            <dxe:ASPxTextBox ID="txtRFQNumber" runat="server" ClientInstanceName="ctxtRFQNumber" Width="100%" PropertiesTextEdit-MaxLength="500" >
+                                            </dxe:ASPxTextBox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3 lblmTop8" id="divRFQDate" runat="server" >
+                                                    <dxe:ASPxLabel ID="lblRFQDate" runat="server" Text="RFQ Date">
+                                                    </dxe:ASPxLabel>
+                                                    <dxe:ASPxDateEdit ID="dtRFQDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtRFQDate" Width="100%">
+                                                        <ButtonStyle Width="13px">
+                                                        </ButtonStyle>
+
+                                                        <ClientSideEvents GotFocus="function(s,e){cdtRFQDate.ShowDropDown();}" />
+                                                    </dxe:ASPxDateEdit>
+                                                </div>
+                                                <div class="col-md-9 lblmTop8" id="divProjectSite" runat="server">
+                                                    <dxe:ASPxLabel ID="lblProjectSite" runat="server" Text="Project/Site">
+                                                    </dxe:ASPxLabel>
+                                                    <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500">
+                                                    </dxe:ASPxTextBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%--End of Rev 5.0--%>
                                         <div style="clear: both;"></div>	
                                         <div class="col-md-6">	
                                             <asp:Label ID="lblRearks" runat="server" Text="Remarks"></asp:Label>	
@@ -2088,10 +2118,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <asp:HiddenField ID="hfControlData" runat="server" />
 
                                             <uc2:TermsConditionsControl runat="server" ID="TermsConditionsControl" />
-                                            <uc3:UOMConversionControl runat="server" ID="UOMConversionControl" />
-                                            <%--Rev 4.0--%>
+                                             <%--Rev 4.0--%>
                                             <uc4:uctrlOtherCondition runat="server" ID="uctrlOtherCondition" />
                                             <%--End of Rev 4.0--%>
+                                            <uc3:UOMConversionControl runat="server" ID="UOMConversionControl" />
                                             <asp:HiddenField runat="server" ID="hfTermsConditionData" />
                                             <asp:HiddenField runat="server" ID="hfTermsConditionDocType" Value="QO" />
                                             <asp:HiddenField runat="server" ID="hdBasketId" />
@@ -2102,6 +2132,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                             <asp:HiddenField runat="server" ID="hfOtherConditionData" />
                                             <asp:HiddenField runat="server" ID="hfOtherConditionDocType" Value="QO" />
                                             <%--End of Rev 4.0--%>
+                                            <%--Rev 5.0--%>
+                                            <asp:HiddenField runat="server" ID="hdnShowRFQ" />
+                                            <asp:HiddenField runat="server" ID="hdnShowProject" />
+                                            <%--End of Rev 5.0--%>
                                             <%--<asp:HiddenField ID="hdnCustomerId" runat="server" />--%>
                                             <%-- onclick=""--%>
                                             <%--<a href="javascript:void(0);" id="btnAddNew" runat="server" class="btn btn-primary"><span>[A]ttachment(s)</span></a>--%>
