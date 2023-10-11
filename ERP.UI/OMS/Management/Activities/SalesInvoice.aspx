@@ -8,6 +8,8 @@
                                                New button "Other Condiion" to show instead of "Terms & Condition" Button 
                                                if the settings "Show Other Condition" is set as "Yes"  
                                                Mantis: 26868
+   7.0   Sanchita   V2.0.40     06-10-2023     New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+                                               Mantis : 26871
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoice" %>
@@ -1584,6 +1586,35 @@ $(document).ready(function () {
                                                 <span id="Mandatorytaxcode" style="display: none" class="validclass">
                                                     <img id="1gridHistory_DXPEForm_efnew_DXEFL_DXEditor2_EI" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory"></span>
                                             </div>
+                                            <%--Rev 7.0--%>	
+                                            <div style="clear: both;"></div>
+                                            <div class="col-md-3" id="divRFQNumber" runat="server">
+                                                <dxe:ASPxLabel ID="lblRFQNumber" runat="server" Text="RFQ Number">
+                                                </dxe:ASPxLabel>
+                                                <dxe:ASPxTextBox ID="txtRFQNumber" runat="server" ClientInstanceName="ctxtRFQNumber" Width="100%" PropertiesTextEdit-MaxLength="500" >
+                                                </dxe:ASPxTextBox>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-3 lblmTop8" id="divRFQDate" runat="server" >
+                                                        <dxe:ASPxLabel ID="lblRFQDate" runat="server" Text="RFQ Date">
+                                                        </dxe:ASPxLabel>
+                                                        <dxe:ASPxDateEdit ID="dtRFQDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtRFQDate" Width="100%">
+                                                            <ButtonStyle Width="13px">
+                                                            </ButtonStyle>
+
+                                                            <ClientSideEvents GotFocus="function(s,e){cdtRFQDate.ShowDropDown();}" />
+                                                        </dxe:ASPxDateEdit>
+                                                    </div>
+                                                    <div class="col-md-9 lblmTop8" id="divProjectSite" runat="server">
+                                                        <dxe:ASPxLabel ID="lblProjectSite" runat="server" Text="Project/Site">
+                                                        </dxe:ASPxLabel>
+                                                        <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500">
+                                                        </dxe:ASPxTextBox>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%--End of Rev 7.0--%>
                                             <div style="clear: both;"></div>
                                             <div class="col-md-4">
                                                 <dxe:ASPxLabel ID="ASPxLabel8" runat="server" Text="Remarks">
@@ -2180,11 +2211,11 @@ $(document).ready(function () {
 
 
                                             <uc2:TermsConditionsControl runat="server" ID="TermsConditionsControl" />
-
-                                            <ucOTC:OtherTermsAndCondition runat="server" ID="OtherTermsAndCondition" />
                                             <%--Rev 6.0--%>
                                             <uc4:uctrlOtherCondition runat="server" ID="uctrlOtherCondition" />
                                             <%--End of Rev 6.0--%>
+                                            <ucOTC:OtherTermsAndCondition runat="server" ID="OtherTermsAndCondition" />
+                                            
                                             <span id="spnBillDespatch" runat="server">
                                                 <dxe:ASPxButton ID="btn_BillDespatch" ClientInstanceName="cbtn_BillDespatch" runat="server" AutoPostBack="False" Text="Bill from/Despatch from" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                     <ClientSideEvents Click="function(s, e) {Save_BillDespatch();}" />
@@ -2204,6 +2235,10 @@ $(document).ready(function () {
                                             <asp:HiddenField runat="server" ID="hfOtherConditionData" />
                                             <asp:HiddenField runat="server" ID="hfOtherConditionDocType" Value="SI" />
                                             <%--End of Rev 6.0--%>
+                                            <%--Rev 7.0--%>
+                                            <asp:HiddenField runat="server" ID="hdnShowRFQ" />
+                                            <asp:HiddenField runat="server" ID="hdnShowProject" />
+                                            <%--End of Rev 7.0--%>
                                             <%-- onclick=""--%>
                                             <%--<a href="javascript:void(0);" id="btnAddNew" runat="server" class="btn btn-primary"><span>[A]ttachment(s)</span></a>--%>
                                             <%--<dxe:ASPxButton ID="ASPxButton4" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="[A]ttachment(s)" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">

@@ -9,6 +9,8 @@
    Rev 5.0      Sanchita      V2.0.40   04/10/2023  0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
                                                     New button "Other Condiion" to show instead of "Terms & Condition" Button 
                                                     if the settings "Show Other Condition" is set as "Yes"
+   Rev 6.0      Sanchita      V2.0.40   06-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+                                                    Mantis : 26871
  **********************************************************************************************************/--%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderAdd.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
     Inherits="ERP.OMS.Management.Activities.SalesOrderAdd" EnableEventValidation="false" %>
@@ -1728,6 +1730,36 @@ function PerformCallToGridBind() {
 
                                         </div>
 
+                                        <%--Rev 6.0--%>
+                                        <div style="clear: both;"></div>
+                                        <div class="col-md-3" id="divRFQNumber" runat="server">
+                                            <dxe:ASPxLabel ID="lblRFQNumber" runat="server" Text="RFQ Number">
+                                            </dxe:ASPxLabel>
+                                            <dxe:ASPxTextBox ID="txtRFQNumber" runat="server" ClientInstanceName="ctxtRFQNumber" Width="100%" PropertiesTextEdit-MaxLength="500" >
+                                            </dxe:ASPxTextBox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3 lblmTop8" id="divRFQDate" runat="server" >
+                                                    <dxe:ASPxLabel ID="lblRFQDate" runat="server" Text="RFQ Date">
+                                                    </dxe:ASPxLabel>
+                                                    <dxe:ASPxDateEdit ID="dtRFQDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtRFQDate" Width="100%">
+                                                        <ButtonStyle Width="13px">
+                                                        </ButtonStyle>
+
+                                                        <ClientSideEvents GotFocus="function(s,e){cdtRFQDate.ShowDropDown();}" />
+                                                    </dxe:ASPxDateEdit>
+                                                </div>
+                                                <div class="col-md-9 lblmTop8" id="divProjectSite" runat="server">
+                                                    <dxe:ASPxLabel ID="lblProjectSite" runat="server" Text="Project/Site">
+                                                    </dxe:ASPxLabel>
+                                                    <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500">
+                                                    </dxe:ASPxTextBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%--End of Rev 6.0--%>
+
                                         <div class="clear"></div>
                                         <div class="col-md-2">
                                             <label class="checkbox-inline" style="margin-top: 30px;">
@@ -2415,12 +2447,11 @@ function PerformCallToGridBind() {
                                             <asp:HiddenField runat="server" ID="hfTermsConditionData" />
                                             <asp:HiddenField runat="server" ID="hfTermsConditionDocType" Value="SO" />
                                             <asp:HiddenField runat="server" ID="hdBasketId" />
-
-                                            <uc3:UOMConversionControl runat="server" ID="UOMConversionControl" />
-
                                             <%--Rev 5.0--%>
                                             <uc4:uctrlOtherCondition runat="server" ID="uctrlOtherCondition" />
                                             <%--End of Rev 5.0--%>
+                                            <uc3:UOMConversionControl runat="server" ID="UOMConversionControl" />
+
                                             
                                             <asp:HiddenField runat="server" ID="hfOtherTermsConditionData" />
                                             <asp:HiddenField runat="server" ID="hfOtherTermsConditionDocType" Value="SO" />
@@ -2434,6 +2465,10 @@ function PerformCallToGridBind() {
 
 
                                             <asp:HiddenField ID="hfControlData" runat="server" />
+                                            <%--Rev 6.0--%>
+                                            <asp:HiddenField runat="server" ID="hdnShowRFQ" />
+                                            <asp:HiddenField runat="server" ID="hdnShowProject" />
+                                            <%--End of Rev 6.0--%>
 
 
                                             <%--<dxe:ASPxButton ID="ASPxButton4" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="[A]ttachment(s)" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">

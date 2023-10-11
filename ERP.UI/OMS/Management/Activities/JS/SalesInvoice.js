@@ -4,7 +4,8 @@
  * Rev 2.0      Sanchita      V2.0.38                    Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
  * Rev 3.0      Priti         V2.0.39                    The place of Supply should be intact in the Sales Order is being tagged with an Invoice. Mantis :0026820
  * Rev 4.0      Priti         V2.0.39     15-09-2023     Product wise  MultiUOM calculated Amount check.Mantis : 0026821
-
+ * Rev 5.0      Sanchita      V2.0.40     06-10-2023     New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+                                                         Mantis : 26871
   ******************************************************************************************************************************/
 
 $(document).ready(function () {
@@ -6291,6 +6292,34 @@ function QuotationNumberChanged() {
             else {
                 if (arr.length == 1) {
                     cComponentDatePanel.PerformCallback('BindComponentDate' + '~' + quote_Id + '~' + type);
+
+                    // Rev 5.0
+                    var Key = quote_Id.split(',')[0];
+                    $.ajax({
+                        type: "POST",
+                        url: "SalesInvoice.aspx/GetRFQHeaderReference",
+                        data: JSON.stringify({ KeyVal: Key, type: type }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (msg) {
+
+                            var currentString = msg.d;
+
+                            var RFQNumber = currentString.split('~')[0];
+                            var RFQDate = currentString.split('~')[1];
+                            var ProjectSite = currentString.split('~')[2];
+
+                            ctxtRFQNumber.SetText(RFQNumber);
+                            if (RFQDate != "") {
+                                cdtRFQDate.SetDate(new Date(RFQDate));
+                            }
+                            ctxtProjectSite.SetText(ProjectSite);
+
+                        }
+
+                    });
+                    // End of Rev 5.0
                 }
                 else {
                     ctxt_InvoiceDate.SetText('');
