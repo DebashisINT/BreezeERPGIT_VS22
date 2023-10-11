@@ -1,10 +1,9 @@
 ﻿/*********************************************************************************************************
  * Rev 1.0      Sanchita      V2.0.38                   Base Rate is not recalculated when the Multi UOM is Changed. Mantis : 26320, 26357, 26361   
  * Rev 2.0      Sanchita      V2.0.38                   Tax amount is not calculating automatically while modifying PI/Quotation. Mantis : 26411 
- * Rev 3.0      Sanchita      V2.0.40    06-10-2023     New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
-                                                        Mantis : 26871  
- * Rev 3.0      Priti         V2.0.40       0026881: The Expiry Date of the Proforma/Quotation is not accepting any date within the Month but taking the Last Date of any Month whiln
-
+ * Rev 3.0      Priti         V2.0.40                   0026881: The Expiry Date of the Proforma/Quotation is not accepting any date within the Month but taking the Last Date of any Month whiln
+ * Rev 4.0      Sanchita      V2.0.40       06-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+                                                        Mantis : 26871 
  **********************************************************************************************************/
 (function (global) {
     if (typeof (global) === "undefined") {
@@ -5489,7 +5488,7 @@ function QuotationNumberChanged() {
                 if (arr.length == 1) {
                     cComponentDatePanel.PerformCallback('BindQuotationDate' + '~' + quote_Id);
 
-                    // Rev 3.0
+                    // Rev 4.0
                     var type = "SINQ"
                     var Key = quote_Id.split(',')[0];
                     $.ajax({
@@ -5516,7 +5515,7 @@ function QuotationNumberChanged() {
                         }
 
                     });
-                    // End of Rev 3.0
+                    // End of Rev 4.0
 
                 }
                 else {
