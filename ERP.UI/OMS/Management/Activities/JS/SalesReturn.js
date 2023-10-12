@@ -2,6 +2,7 @@
 //1.0   Priti     V2.0.37    05-03-2023      0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
 //2.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
 //3.0   Priti     V2.0.39    02-08-2023      0026647:Alternate qty is calculating wrong in the Sales return
+//4.0   Sanchita  V2.0.40    06-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project / Site. Mantis: 26871
 //====================================================End Revision History=====================================================================
 
 var strProAlt = '';
@@ -763,6 +764,35 @@ function QuotationNumberChanged() {
             else {
                 if (arr.length == 1) {
                     cComponentDatePanel.PerformCallback('BindComponentDate' + '~' + quote_Id);
+
+                    // Rev 4.0
+                    var type = "SI";
+                    var Key = quote_Id.split(',')[0];
+                    $.ajax({
+                        type: "POST",
+                        url: "SalesReturn.aspx/GetRFQHeaderReference",
+                        data: JSON.stringify({ KeyVal: Key, type: type }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (msg) {
+
+                            var currentString = msg.d;
+
+                            var RFQNumber = currentString.split('~')[0];
+                            var RFQDate = currentString.split('~')[1];
+                            var ProjectSite = currentString.split('~')[2];
+
+                            ctxtRFQNumber.SetText(RFQNumber);
+                            if (RFQDate != "") {
+                                cdtRFQDate.SetDate(new Date(RFQDate));
+                            }
+                            ctxtProjectSite.SetText(ProjectSite);
+
+                        }
+
+                    });
+                    // End of Rev 4.0
                 }
                 else {
                     $('#txt_InvoiceDate').val('');

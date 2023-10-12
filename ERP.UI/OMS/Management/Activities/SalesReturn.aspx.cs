@@ -1,6 +1,8 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0   Priti     V2.0.37    02-03-2023      0025706: Mfg Date & Exp date & Alt Qty is not showing in modify mode of Sales return
 // 2.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
+// 3.0   Sanchita  V2.0.40    06-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+//                                            Mantis : 26871
 #endregion//====================================================End Revision History=====================================================================
 
 
@@ -268,7 +270,40 @@ namespace ERP.OMS.Management.Activities
                 }
             }
 
+            // Rev 3.0
+            string ShowRFQ = ComBL.GetSystemSettingsResult("ShowRFQ");
+            if (!String.IsNullOrEmpty(ShowRFQ))
+            {
+                if (ShowRFQ.ToUpper().Trim() == "YES")
+                {
+                    hdnShowRFQ.Value = "1";
+                    divRFQNumber.Style.Add("display", "block");
+                    divRFQDate.Style.Add("display", "block");
+                }
+                else if (ShowRFQ.ToUpper().Trim() == "NO")
+                {
+                    hdnShowRFQ.Value = "0";
+                    divRFQNumber.Style.Add("display", "none");
+                    divRFQDate.Style.Add("display", "none");
 
+                }
+            }
+
+            string ShowProject = ComBL.GetSystemSettingsResult("ShowProject");
+            if (!String.IsNullOrEmpty(ShowProject))
+            {
+                if (ShowProject.ToUpper().Trim() == "YES")
+                {
+                    hdnShowProject.Value = "1";
+                    divProjectSite.Style.Add("display", "block");
+                }
+                else if (ShowProject.ToUpper().Trim() == "NO")
+                {
+                    hdnShowProject.Value = "0";
+                    divProjectSite.Style.Add("display", "none");
+                }
+            }
+            // End of Rev 3.0
 
             if (!IsPostBack)
             {
@@ -651,6 +686,15 @@ namespace ERP.OMS.Management.Activities
                 ddl_Currency.SelectedValue = Currency_Id;
                 txt_Rate.Value = Currency_Conversion_Rate;
                 txt_Rate.Text = Currency_Conversion_Rate;
+                // Rev 3.0
+                txtRFQNumber.Text = Convert.ToString(QuotationEditdt.Rows[0]["Invoice_RFQNumber"]);
+                if (!string.IsNullOrEmpty(Convert.ToString(QuotationEditdt.Rows[0]["Invoice_RFQDate"])))
+                {
+                    dtRFQDate.Date = Convert.ToDateTime(QuotationEditdt.Rows[0]["Invoice_RFQDate"]);
+                }
+                txtProjectSite.Text = Convert.ToString(QuotationEditdt.Rows[0]["Invoice_ProjectSite"]);
+                // End of Rev 3.0
+
                 if (Tax_Option != "0") ddl_AmountAre.Value = Tax_Option;
                 if (Tax_Code != "0")
                 {
@@ -1368,7 +1412,20 @@ namespace ERP.OMS.Management.Activities
                 string[] ActCurrency = currency.Split('~');
                 int BaseCurrencyId = Convert.ToInt32(ActCurrency[0]);
                 int ConvertedCurrencyId = Convert.ToInt32(strCurrency);
-
+                // Rev 3.0
+                string strRFQNumber = "";
+                string strRFQDate = null;
+                string strProjectSite = "";
+                if (hdnShowRFQ.Value == "1")
+                {
+                    strRFQNumber = Convert.ToString(txtRFQNumber.Text);
+                    strRFQDate = Convert.ToString(dtRFQDate.Date);
+                }
+                if (hdnShowProject.Value == "1")
+                {
+                    strProjectSite = Convert.ToString(txtProjectSite.Text);
+                }
+                // End of Rev 3.0
 
                 DataTable tempQuotation = Quotationdt.Copy();
                 foreach (DataRow dr in tempQuotation.Rows)
@@ -1969,11 +2026,13 @@ namespace ERP.OMS.Management.Activities
                     //                tempQuotation, TaxDetailTable, tempWarehousedt, tempTaxDetailsdt, tempBillAddress,
                     //                approveStatus, ActionType, ref strIsComplete, ref strQuoteID, ReasonforReturn, duplicatedt2, MultiUOMDetails);
 
+                    // Rev 3.0 [,strRFQNumber, strRFQDate, strProjectSite added]
                     ModifySalesReturn(MainInvoiceID, strSchemeType, SchemaID, txt_PLQuoteNo.Text, strInvoiceDate, strCustomer, strContactName, ProjId,
                                     Reference, PosForGst, strBranch, strAgents, strCurrency, strRate, strTaxType, strTaxCode,
                                     InvoiceComponent, InvoiceComponentDate, strCashBank, strDueDate,
                                     tempQuotation, TaxDetailTable, tempWarehousedt, tempTaxDetailsdt, tempBillAddress,
-                                    approveStatus, ActionType, ref strIsComplete, ref strQuoteID, ReasonforReturn, duplicatedt2, MultiUOMDetails, dtAddlDesc, drdTransCategory.SelectedValue);
+                                    approveStatus, ActionType, ref strIsComplete, ref strQuoteID, ReasonforReturn, duplicatedt2, MultiUOMDetails, dtAddlDesc, drdTransCategory.SelectedValue
+                                    , strRFQNumber, strRFQDate, strProjectSite);
 
 
                     //####### Coded By Samrat Roy For Custom Control Data Process #########
@@ -4580,11 +4639,13 @@ namespace ERP.OMS.Management.Activities
         //                            string strInvoiceComponent, string strInvoiceComponentDate, string strCashBank, string strDueDate,
         //                            DataTable Productdt, DataTable TaxDetailTable, DataTable Warehousedt, DataTable SalesReturnTaxdt, DataTable BillAddressdt, string approveStatus, string ActionType,
         //                            ref int strIsComplete, ref int strInvoiceID, string ReasonforReturn, DataTable PackingDetailsdt, DataTable MultiUOMDetails)
+        // Rev 3.0 [,strRFQNumber, strRFQDate, strProjectSite added]
         public void ModifySalesReturn(string QuotationID, string strSchemeType, string SchemeId, string Adjustment_No, string strQuoteDate, string strCustomer, string strContactName, Int64 ProjId,
                                     string Reference, string PosForGst, string strBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode,
                                     string strInvoiceComponent, string strInvoiceComponentDate, string strCashBank, string strDueDate,
                                     DataTable Productdt, DataTable TaxDetailTable, DataTable Warehousedt, DataTable SalesReturnTaxdt, DataTable BillAddressdt, string approveStatus, string ActionType,
-                                    ref int strIsComplete, ref int strInvoiceID, string ReasonforReturn, DataTable PackingDetailsdt, DataTable MultiUOMDetails, DataTable dtAddlDesc,string drdTransCategory)
+                                    ref int strIsComplete, ref int strInvoiceID, string ReasonforReturn, DataTable PackingDetailsdt, DataTable MultiUOMDetails, DataTable dtAddlDesc,string drdTransCategory
+                                    ,string strRFQNumber, string strRFQDate, string strProjectSite)
         {
             try
             {
@@ -4679,6 +4740,14 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnSalesReturnID", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@isEinvoice", SqlDbType.VarChar, 50);
+                // Rev 3.0
+                cmd.Parameters.AddWithValue("@RFQNumber", strRFQNumber);
+                if (strRFQDate != "1/1/0001 12:00:00 AM")
+                {
+                    cmd.Parameters.AddWithValue("@RFQDate", strRFQDate);
+                }
+                cmd.Parameters.AddWithValue("@ProjectSite", strProjectSite);
+                // End of Rev 3.0
 
                 cmd.Parameters.AddWithValue("@IsManual", 0);
                 cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;
@@ -7536,6 +7605,15 @@ namespace ERP.OMS.Management.Activities
                 ddl_Currency.SelectedValue = Currency_Id;
                 txt_Rate.Value = Currency_Conversion_Rate;
                 txt_Rate.Text = Currency_Conversion_Rate;
+                // Rev 3.0
+                txtRFQNumber.Text = Convert.ToString(SalesReturnEditdt.Rows[0]["Return_RFQNumber"]);
+                if (!string.IsNullOrEmpty(Convert.ToString(SalesReturnEditdt.Rows[0]["Return_RFQDate"])))
+                {
+                    dtRFQDate.Date = Convert.ToDateTime(SalesReturnEditdt.Rows[0]["Return_RFQDate"]);
+                }
+                txtProjectSite.Text = Convert.ToString(SalesReturnEditdt.Rows[0]["Return_ProjectSite"]);
+                // End of Rev 3.0
+
                 if (Tax_Option != "0") ddl_AmountAre.Value = Tax_Option;
                 if (Tax_Code != "0")
                 {
@@ -10493,6 +10571,34 @@ namespace ERP.OMS.Management.Activities
             return listCotact;
         }
 
+        // Rev 3.0
+        [WebMethod]
+        public static String GetRFQHeaderReference(string KeyVal, string type)
+        {
+            SalesReturnBL objSalesRetBL = new SalesReturnBL();
+            string strRFQNumber = "";
+            string strRFQDate = "";
+            string strProjectSite = "";
+            string ResultString = "";
+
+            DataTable dt_Head = objSalesRetBL.GetInvoiceDate(KeyVal);
+
+            if (dt_Head != null && dt_Head.Rows.Count > 0)
+            {
+                strRFQNumber = Convert.ToString(dt_Head.Rows[0]["Invoice_RFQNumber"]);
+                if (!string.IsNullOrEmpty(Convert.ToString(dt_Head.Rows[0]["Inv_RFQDate"])))
+                {
+                    strRFQDate = Convert.ToString(dt_Head.Rows[0]["Inv_RFQDate"]);
+                }
+                strProjectSite = Convert.ToString(dt_Head.Rows[0]["Invoice_ProjectSite"]);
+
+
+                ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite);
+            }
+
+            return ResultString;
+        }
+        // End of Rev 3.0
 
         public class ddlContactPerson
         {
