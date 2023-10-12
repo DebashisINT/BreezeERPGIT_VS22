@@ -3,8 +3,7 @@
  2.0   Pallab    V2.0.37    12-04-2023     	0025992: Add Sales Return module design modification & check in small device
  3.0   Pallab    V2.0.38    17-05-2023     	0026153: In Add Sales Return module, after select customer, module "cross button" is hiding, should be fix
  4.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
-
-
+ 5.0   Sanchita  V2.0.40    06-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site. Mantis : 26871
 ====================================================End Revision History=====================================================================
 --%>
 
@@ -1619,7 +1618,35 @@ display: none !important;
                                                     <ClientSideEvents LostFocus="function(s, e) { SetFocusonDemand(e)}" GotFocus="function(s,e){cddl_AmountAre.ShowDropDown();}" />
                                                 </dxe:ASPxComboBox>
                                             </div>
+                                            <%--Rev 5.0--%>	
+                                            <div style="clear: both;"></div>
+                                            <div class="col-md-3" id="divRFQNumber" runat="server">
+                                                <dxe:ASPxLabel ID="lblRFQNumber" runat="server" Text="RFQ Number">
+                                                </dxe:ASPxLabel>
+                                                <dxe:ASPxTextBox ID="txtRFQNumber" runat="server" ClientInstanceName="ctxtRFQNumber" Width="100%" PropertiesTextEdit-MaxLength="500" >
+                                                </dxe:ASPxTextBox>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-3 lblmTop8" id="divRFQDate" runat="server" >
+                                                        <dxe:ASPxLabel ID="lblRFQDate" runat="server" Text="RFQ Date">
+                                                        </dxe:ASPxLabel>
+                                                        <dxe:ASPxDateEdit ID="dtRFQDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtRFQDate" Width="100%">
+                                                            <ButtonStyle Width="13px">
+                                                            </ButtonStyle>
 
+                                                            <ClientSideEvents GotFocus="function(s,e){cdtRFQDate.ShowDropDown();}" />
+                                                        </dxe:ASPxDateEdit>
+                                                    </div>
+                                                    <div class="col-md-9 lblmTop8" id="divProjectSite" runat="server">
+                                                        <dxe:ASPxLabel ID="lblProjectSite" runat="server" Text="Project/Site">
+                                                        </dxe:ASPxLabel>
+                                                        <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500">
+                                                        </dxe:ASPxTextBox>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%--End of Rev 5.0--%>
                                             <div class="clear"></div>
                                             <div class="col-md-6 pt-10">
                                                 <asp:Label ID="ASPxLabel4" runat="server" Text="Reason For Return"></asp:Label>
@@ -3053,6 +3080,10 @@ display: none !important;
                 <%-- Surojit 20-05-2019 --%>
                 <asp:HiddenField runat="server" ID="hdnPostingDateDisable" />
                 <%-- Surojit 20-05-2019 --%>
+                <%--Rev 5.0--%>
+                <asp:HiddenField runat="server" ID="hdnShowRFQ" />
+                <asp:HiddenField runat="server" ID="hdnShowProject" />
+                <%--End of Rev 5.0--%>
             </div>
 
             <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
