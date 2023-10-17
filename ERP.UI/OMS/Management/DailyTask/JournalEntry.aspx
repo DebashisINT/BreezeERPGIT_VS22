@@ -2,9 +2,9 @@
     1.0 Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911
     2.0     Priti       V2.0.36  02-02-2023     0025253: listing view upgradation required of Journals of Accounts & Finance
     3.0     Pallab      V2.0.37  04-04-2023     0025830: Journal Voucher module design modification
-    4.0     Sanchita    V2.0.43  08-02-2023     26801 : Entered On, Entered By, Modified On, Modified By column required
+    4.0     Sanchita    V2.0.40  08-02-2023     26801 : Entered On, Entered By, Modified On, Modified By column required
                                                 in the Journal Details list view 
-    5.0     Sanchita    V2.0.43  21-09-2023     26831 : Data Freeze is not working properly for Journal   
+    5.0     Sanchita    V2.0.40  21-09-2023     26831 : Data Freeze is not working properly for Journal   
 =========================================================End Revision History========================================================================--%>
 
 <%@ Page Title="Journal Entry" EnableEventValidation="false" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalEntry.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.JournalVoucherEntry" %>
