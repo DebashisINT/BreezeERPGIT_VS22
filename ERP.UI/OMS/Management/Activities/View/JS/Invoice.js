@@ -1,4 +1,8 @@
-﻿var warehousrdet
+﻿//*********************************************************************************************************
+//  Rev 1.0      Sanchita      V2.0.40   17-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project / Site
+//                                                       Mantis: 26871
+// **********************************************************************************************************
+var warehousrdet
 var Details;
 var Txdel;
 var OldUnitDetailsValue;
@@ -499,6 +503,24 @@ function InvoiceDetails(InvoiceId)
 
                     document.getElementById("lblmainqty").innerHTML = headerDet.total_main_qty;
                     document.getElementById("lblaltqty").innerHTML = headerDet.total_alt_qty;
+
+                    // Rev 1.0
+                    if (headerDet.ShowRFQ == "Yes") {
+                        document.getElementById("lblRFQNumber").innerHTML = headerDet.RFQNumber;
+                        document.getElementById("lblRFQDate").innerHTML = headerDet.RFQDate;
+                    }
+                    else {
+                        $('#tdFRQNo').css('display', 'none')
+                        $('#tdFRQDt').css('display', 'none')
+                    }
+
+                    if (headerDet.ShowProjectSite == "Yes") {
+                        document.getElementById("lblProjectSite").innerHTML = headerDet.ProjectSite;
+                    }
+                    else {
+                        $('#tdProjSitedet').css('display', 'none')
+                    }
+                    // End of Rev 1.0
 
                     $('#txtAreaBillAddress').text(headerDet.BillingAddress);
                     $('#txtAreaShipAddress').text(headerDet.ShippingAddress);

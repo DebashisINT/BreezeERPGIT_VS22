@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿<!--*********************************************************************************************************
+Rev 1.0      Sanchita      V2.0.40   17-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
+                                                 Mantis : 26871
+**********************************************************************************************************-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
@@ -16,16 +20,19 @@
     <link href="../../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         .scrollPop .modal-body {
-            max-height:70vh;
-            overflow-y:auto;
-        } 
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
         .lblInputType {
             display: block;
             padding: 5px;
             border: 1px solid #e2e2e2;
             background: #f7f7f7;
             min-height: 32px;
-        } .modal-backdrop {
+        }
+
+        .modal-backdrop {
             z-index: auto !important;
         }
 
@@ -78,23 +85,26 @@
 
         .stTble td > label {
             font-weight: bold;
-           
         }
 
         #Producttr:hover {
             background-color: yellowgreen;
         }
+
         .stTble {
-            font-size:12px;
+            font-size: 12px;
         }
+
         .dynamicPopupTbl > tbody > tr > th {
             background: #566fbd;
             color: #fff;
             border: 1px solid #566fbd;
         }
+
         .dynamicPopupTbl > tbody > tr > th, .dynamicPopupTbl > tbody > tr > td {
-            padding:4px 8px;
+            padding: 4px 8px;
         }
+
         .modal.w80 .modal-dialog {
             width: 90% !important;
         }
@@ -225,8 +235,31 @@
                 </td>
 
             </tr>
+            <!--Rev 1.0-->
+            <tr>
+                <td id="tdFRQNo">
+                    <label><b>RFQ Number</b></label>
+                    <div>
+                        <label id="lblRFQNumber"></label>
+                    </div>
+                </td>
+                <td id="tdFRQDt">
+                    <label><b>RFQ Date</b></label>
+                    <div>
+                        <label id="lblRFQDate"></label>
+                    </div>
+                </td>
+                <td id="tdProjSitedet" colspan="2">
+                    <label><b>Project/Site</b></label>
+                    <div>
+                        <label id="lblProjectSite"></label>
+                    </div>
+                </td>
+            </tr>
+            <!--End of Rev 1.0-->
         </table>
     </div>
+
     <div id="divFinanceDetails" class="col-md-12">
         <table class="table table-bordered stTble">
             <tr>
@@ -322,12 +355,12 @@
         </table>
     </div>
 
-     
 
 
 
 
-    
+
+
     <div class="col-md-12">
         <table id="tblPosProductDetails" width="100%" border="1" class="table table-bordered stTble">
             <tr>
@@ -357,10 +390,10 @@
                 <td><b>Net Amt.</b></td>
                 <td><b>View Stock</b></td>
             </tr>
-            
+
         </table>
     </div>
-     
+
     <div class="clearfix">
         <div id="divOldUnitDetails" class="col-md-6">
             <label>Product Details</label>
@@ -387,19 +420,19 @@
 
                 </tr>
             </table>
-        </div>  
+        </div>
     </div>
 
     <div class="clearfix">
-        
+
         <div id="divPaymentDetails" class="col-md-12" style="padding-top:10px">
 
-            
+
             <div class="clearfix">
                 <label class="pull-left">Payment Details</label>
                 <label id="lblAmount" style="padding-left:10px;padding-right: 32px; font-size: 16px; " class="pull-right"></label>
 
-         </div>
+            </div>
 
 
 
@@ -461,7 +494,7 @@
         <button type="button" class="btn btn-primary" onclick="OpenSetTransporter();">Transporter</button>
         <button type="button" class="btn btn-primary" onclick="OpenSetTermsCondition();">Terms and condition</button>
         <button type="button" class="btn btn-primary" onclick="OpenSetTCS();">TCS  </button>
-       
+
     </div>
 
     <div class="modal fade" role="dialog" id="PosTaxModel">
@@ -555,7 +588,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Transporter</h4>
@@ -565,11 +598,11 @@
                         <div class="col-md-6">
                             <label>Transporter Name</label>
                             <div><label id="lblTrasnsporterName" class="lblInputType"></label></div>
-                        </div>  
+                        </div>
                         <div class="col-md-6">
                             <label>Final Transporter</label>
                             <div><label id="lblFinalTransporter" class="lblInputType"></label></div>
-                        </div> 
+                        </div>
                         <div class="col-md-6">
                             <label>Transporter Type</label>
                             <div><label id="lblTransporterType" class="lblInputType"></label></div>
@@ -681,9 +714,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="modal fade scrollPop" role="dialog" id="TermsConditionsModelPopup">
         <div class="modal-dialog">
@@ -776,14 +809,14 @@
                             <label>Remarks</label>
                             <div><label id="lblTermsRemarks" class="lblInputType"></label></div>
                         </div>
-                       <!--Rev work start 09.08.2022 mantise no:0025110: A Text Input field required in the Terms & Condition of the entry Module as "Project"-->
+                        <!--Rev work start 09.08.2022 mantise no:0025110: A Text Input field required in the Terms & Condition of the entry Module as "Project"-->
                         <div class="col-md-6">
                             <label>Project</label>
                             <div><label id="lblProject" class="lblInputType"></label></div>
-                           <!-- Rev work close 09.08.2022 mantise no:0025110: A Text Input field required in the Terms & Condition of the entry Module as "Project"-->
+                            <!-- Rev work close 09.08.2022 mantise no:0025110: A Text Input field required in the Terms & Condition of the entry Module as "Project"-->
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

@@ -1,4 +1,8 @@
-﻿using DataAccessLayer;
+﻿//*********************************************************************************************************
+//  Rev 1.0      Sanchita      V2.0.40   17-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project / Site
+//                                                       Mantis: 26871
+// **********************************************************************************************************
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -92,6 +96,13 @@ namespace ERP.OMS.Management.Activities.View.Services
 
                                  BillingfromAddress = Convert.ToString(dr["BILLfromADDRESS"]),
                                  ShippingFromAddress = Convert.ToString(dr["DespatchFromADDRESS"])
+                                 // Rev 1.0
+                                 ,RFQNumber = Convert.ToString(dr["RFQNumber"]),
+                                 RFQDate = Convert.ToString(dr["RFQDate"]),
+                                 ProjectSite = Convert.ToString(dr["ProjectSite"]),
+                                 ShowRFQ = Convert.ToString(dr["ShowRFQ"]),
+                                 ShowProjectSite = Convert.ToString(dr["ShowProjectSite"])
+                                 // End of Rev 1.0
 
 
 
@@ -720,6 +731,15 @@ namespace ERP.OMS.Management.Activities.View.Services
 
         public string BillingfromAddress { get; set; }
         public string ShippingFromAddress { get; set; }
+        
+        // Rev 1.0
+        public string RFQNumber { get; set; }
+        public string RFQDate { get; set; }
+        public string ProjectSite { get; set; }
+        public string ShowRFQ { get; set; }
+        public string ShowProjectSite { get; set; }
+
+        // End of Rev 1.0
 
     }
 
