@@ -87,7 +87,7 @@
             var data = BuildString();
             $("#hfOtherConditionData").val(data);
         }
-        function calcelbuttonclick() {
+        function cancelOCbuttonclick() {
             OtherConditionmodalShowHide(0);
             //clearTermsCondition();
         }
@@ -293,7 +293,7 @@
                                             <ClientSideEvents Click="function(s, e) {SaveOtherConditionData();}" />
                                         </dxe:ASPxButton>
                                         <dxe:ASPxButton ID="btnOCcancel" ClientInstanceName="cbtnOCcancel" runat="server" AutoPostBack="False" Text="Cancel&#818;" CssClass="btn btn-danger" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
-                                            <ClientSideEvents Click="function(s, e) {calcelOCbuttonclick();}" />
+                                            <ClientSideEvents Click="function(s, e) {cancelOCbuttonclick();}" />
                                         </dxe:ASPxButton>
                                     </div>
 
