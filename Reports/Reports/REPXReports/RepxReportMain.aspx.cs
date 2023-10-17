@@ -516,7 +516,7 @@ namespace Reports.Reports.REPXReports
                     //mantise issue:0025139
                     || RptModuleType == "SalesInquiry"
                     //End of mantise issue:0025139
-                    || RptModuleType == "JOURNALVOUCHER" || RptModuleType == "ManufacturingBOM"
+                    || RptModuleType == "JOURNALVOUCHER" || RptModuleType == "ManufacturingBOM" || RptModuleType == "Purchase_Return"
                     )
                 //if (ConfigurationManager.AppSettings["IsActiveDesignMode"] != null)
                 {
