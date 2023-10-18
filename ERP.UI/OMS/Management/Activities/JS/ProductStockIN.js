@@ -1,6 +1,7 @@
 ﻿//====================================================Revision History=========================================================================
 // 1.0   v4.0.37	Priti	04-03-2023	0025690:Alt Qty is not updating as per the main qty while entering Purchase GRN  and
 //                                      0025652:Alternate qty is not calculating while making Warehouse wise Stock In entry
+//2.0    V2.0.40    Priti   17-10-2023  0026920:Unable to Edit and add Item Serial no. from Stock Details Screen in GRN (GRN/GO/0619/2223)
 //====================================================End Revision History=====================================================================
 
 var StockOfProduct = [];
@@ -1176,10 +1177,18 @@ function SetUOMConversionArray(WarehouseID) {
 //Common file so method declare here
 
 function saveStockDataPC(StockType, ProductSrlNo, ProductID, UOM, WarehouseID, WarehouseName, Batch, Qty, MfgDate, ExprieyDate, Serial, Rate, AltQty, AltUOM, AltUOMName){
+    //Rev 1.0
+    //var criteria = [
+    //                { Field: "Product_SrlNo", Values: ProductSrlNo },
+    //                { Field: "WarehouseID", Values: WarehouseID },
+    //                { Field: "Batch", Values: Batch }
+    //];
+    //Rev 1.0 End
     var criteria = [
-                    { Field: "Product_SrlNo", Values: ProductSrlNo },
-                    { Field: "WarehouseID", Values: WarehouseID },
-                    { Field: "Batch", Values: Batch }
+        { Field: "Product_SrlNo", Values: ProductSrlNo },
+        { Field: "WarehouseID", Values: WarehouseID },
+        { Field: "Batch", Values: Batch },
+        { Field: "SerialNo", Values: Serial }
     ];
     var filteredJson = flexFilter(StockOfProduct, criteria);
 

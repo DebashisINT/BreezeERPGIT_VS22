@@ -1,4 +1,9 @@
-﻿@using System.Web.UI.WebControls
+﻿@*==========================================================Revision History ============================================================================================
+     1.0   Priti   V2.0.40   18-10-2023    0026928: Numbering Scheme is not showing in the Project Mgmt. - Estimate Screen
+========================================== End Revision History =======================================================================================================*@
+
+
+@using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
 
@@ -188,7 +193,9 @@
     $(document).ready(function () {
         // LoadingPanel.Show();
         //debugger;
-
+        //Rev 1.0
+        PopulateNumberingSchemeData();
+        //Rev 1.0 End
         $("body").bind("keydown", function (event) {
             if ('@ViewBag.View' != "View") {
                 if (hdnApprove != "Approve") {

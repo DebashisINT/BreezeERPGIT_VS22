@@ -27,7 +27,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     </script>
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <%--  <script src="JS/SearchPopup.js"></script>--%>
-    <script src="JS/ProductStockIN.js?v00000.007"></script>
+    <script src="JS/ProductStockIN.js?v=1.0"></script>
 
     <script src="JS/PurchaseChallan.js?v=9.2"></script>
 
@@ -1892,7 +1892,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     </div>
                                     <div class="Left_Content" style="">
                                        <%-- onchange="BatchNoUniqueCheck()"--%>
-                                        <input type="text" id="txtBatch" placeholder="Batch" onchange="BatchNoUniqueCheck()" />
+                                        <input type="text" id="txtBatch" placeholder="Batch"  />
                                         <span id="rfvBatch" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
                                     </div>
                                 </div>
