@@ -1,6 +1,7 @@
 ﻿<!--*********************************************************************************************************
 Rev 1.0      Sanchita      V2.0.40   17-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                  Mantis : 26871
+Rev 2.0      Sanchita      V2.0.40   18-10-2023  Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
 **********************************************************************************************************-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -108,6 +109,14 @@ Rev 1.0      Sanchita      V2.0.40   17-10-2023  New Fields required in Sales Qu
         .modal.w80 .modal-dialog {
             width: 90% !important;
         }
+
+        /*rev 2.0*/
+        @media screen and (min-width: 768px) {
+            #OtherConditionseModal .modal-dialog {
+                min-width: 685px !important;
+            }
+        }
+        /*End of rev 2.0*/
     </style>
 </head>
 <body>
@@ -492,7 +501,10 @@ Rev 1.0      Sanchita      V2.0.40   17-10-2023  New Fields required in Sales Qu
 
     <div class="col-md-12">
         <button type="button" class="btn btn-primary" onclick="OpenSetTransporter();">Transporter</button>
-        <button type="button" class="btn btn-primary" onclick="OpenSetTermsCondition();">Terms and condition</button>
+        <button type="button" id="btnTermsCondition" class="btn btn-primary" onclick="OpenSetTermsCondition();">Terms and condition</button>
+        <!--Rev 2.0 [ id=btnTermsCondition added for Terms and Condition button ]-->
+        <button type="button" id="btnOtherCondition" class="btn btn-primary" onclick="OpenSetOtherCondition();">Other Condition</button>
+        <!--End of Rev 2.0-->
         <button type="button" class="btn btn-primary" onclick="OpenSetTCS();">TCS  </button>
 
     </div>
@@ -883,6 +895,98 @@ Rev 1.0      Sanchita      V2.0.40   17-10-2023  New Fields required in Sales Qu
             </div>
         </div>
     </div>
+
+    <!--Rev 2.0-->
+    <div class="modal fade scrollPop" role="dialog" id="OtherConditionseModal">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Other Conditions</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Price Basis</label>
+                            <div><label id="lblPriceBasis" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Loading Charges</label>
+                            <div><label id="lblLoadingCharges" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Detention Charges</label>
+                            <div><label id="lblDetentionCharges" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Delivery Period</label>
+                            <div><label id="lblDeliveryPeriod" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Inspection</label>
+                            <div><label id="lblInspection" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Payment Terms</label>
+                            <div><label id="lblPaymentTermsOther" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Offer Valid Upto</label>
+                            <div><label id="lblOfferValidUpto" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Quantity Tol</label>
+                            <div><label id="lblQuantityTol" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Dimensional Tol</label>
+                            <div><label id="lblDimensionalTol" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Thickness Tol</label>
+                            <div><label id="lblThicknessTol" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Warranty</label>
+                            <div><label id="lblWarranty" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Deviation</label>
+                            <div><label id="lblDeviation" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>LD Clause</label>
+                            <div><label id="lblLDClause" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Interest Clause</label>
+                            <div><label id="lblInterestClause" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Price Escalation Clause</label>
+                            <div><label id="lblPriceEscalationClause" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Internal Coating</label>
+                            <div><label id="lblInternalCoating" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>External Coating</label>
+                            <div><label id="lblExternalCoating" class="lblInputType"></label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Special Note</label>
+                            <div><label id="lblSpecialNote" class="lblInputType"></label></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of Rev 2.0-->
 
     <input type="hidden" id="hdnInvoiceId" />
 

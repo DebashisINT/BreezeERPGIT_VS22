@@ -1,6 +1,7 @@
 ﻿//*********************************************************************************************************
 //  Rev 1.0      Sanchita      V2.0.40   17-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project / Site
 //                                                       Mantis: 26871
+//  Rev 2.0      Sanchita      V2.0.40   18-10-2023  Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
 // **********************************************************************************************************
 using DataAccessLayer;
 using System;
@@ -565,7 +566,89 @@ namespace ERP.OMS.Management.Activities.View.Services
             return null;
         }
 
+        // Rev 2.0
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public object GetInvoiceOtherDetails(Int64 InvoiceId)
+        {
+            InvoiceOtherConditionDetails SlInv = new InvoiceOtherConditionDetails();
 
+            if (HttpContext.Current.Session["userid"] != null)
+            {
+                DataTable DT = new DataTable();
+                ProcedureExecute proc = new ProcedureExecute("PRC_OtherConditionAddEdit");
+                proc.AddVarcharPara("@Action", 500, "GetTOCTagDetail");
+                proc.AddVarcharPara("@DocId", 500, Convert.ToString(InvoiceId));
+                proc.AddVarcharPara("@DocType", 500, "SI");
+                DT = proc.GetTable();
+
+                if (DT != null && DT.Rows.Count > 0)
+                {
+
+                    SlInv.strPriceBasis = Convert.ToString(DT.Rows[0]["PriceBasis"]);
+                    SlInv.strLoadingCharges = Convert.ToString(DT.Rows[0]["LoadingCharges"]);
+                    SlInv.strDetentionCharges = Convert.ToString(DT.Rows[0]["DetentionCharges"]);
+                    SlInv.strDeliveryPeriod = Convert.ToString(DT.Rows[0]["DeliveryPeriod"]);
+                    SlInv.strInspection = Convert.ToString(DT.Rows[0]["Inspection"]);
+                    SlInv.strPaymentTermsOther = Convert.ToString(DT.Rows[0]["PaymentTerms"]);
+                    SlInv.OfferValidUpto = Convert.ToString(DT.Rows[0]["dtOfferValidUpto"]);
+                    SlInv.strQuantityTol = Convert.ToString(DT.Rows[0]["QuantityTol"]);
+                    SlInv.strDimensionalTol = Convert.ToString(DT.Rows[0]["DimensionalTol"]);
+                    SlInv.strThicknessTol = Convert.ToString(DT.Rows[0]["ThicknessTol"]);
+                    SlInv.strWarranty = Convert.ToString(DT.Rows[0]["Warranty"]);
+                    SlInv.strDeviation = Convert.ToString(DT.Rows[0]["Deviation"]);
+                    SlInv.strLDClause = Convert.ToString(DT.Rows[0]["LDClause"]);
+                    SlInv.strInterestClause = Convert.ToString(DT.Rows[0]["InterestClause"]);
+                    SlInv.strPriceEscalationClause = Convert.ToString(DT.Rows[0]["PriceEscalationClause"]);
+                    SlInv.strInternalCoating = Convert.ToString(DT.Rows[0]["InternalCoating"]);
+                    SlInv.strExternalCoating = Convert.ToString(DT.Rows[0]["ExternalCoating"]);
+                    SlInv.strSpecialNote = Convert.ToString(DT.Rows[0]["SpecialNote"]);
+
+                }
+                else
+                {
+                    SlInv.strPriceBasis = "";
+                    SlInv.strLoadingCharges = "";
+                    SlInv.strDetentionCharges = "";
+                    SlInv.strDeliveryPeriod = "";
+                    SlInv.strInspection = "";
+                    SlInv.strPaymentTermsOther = "";
+                    SlInv.OfferValidUpto = "";
+                    SlInv.strQuantityTol = "";
+                    SlInv.strDimensionalTol = "";
+                    SlInv.strThicknessTol = "";
+                    SlInv.strWarranty = "";
+                    SlInv.strDeviation = "";
+                    SlInv.strLDClause = "";
+                    SlInv.strInterestClause = "";
+                    SlInv.strPriceEscalationClause = "";
+                    SlInv.strInternalCoating = "";
+                    SlInv.strExternalCoating = "";
+                    SlInv.strSpecialNote = "";
+                }
+
+            }
+            return SlInv;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetSystemSettings_OtherCondition(Int64 InvoiceId)
+        {
+            BusinessLogicLayer.DBEngine objEngine = new BusinessLogicLayer.DBEngine();
+
+            string IsVisible = "No";
+
+            DataTable DT = objEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Show_Other_Condition' AND IsActive=1");
+
+            if (DT != null && DT.Rows.Count > 0)
+            {
+                IsVisible = Convert.ToString(DT.Rows[0]["Variable_Value"]).Trim();
+            }
+
+            return IsVisible;
+        }
+        // End of Rev 2.0
 
     }
 
@@ -885,5 +968,29 @@ namespace ERP.OMS.Management.Activities.View.Services
         public Int64 MultiUOMSR { get; set; }
     }
     // End of Mantis Issue 25129
+
+    // Rev 2.0
+    public class InvoiceOtherConditionDetails
+    {
+        public string strPriceBasis {get;set; }
+        public string strLoadingCharges { get; set; }
+        public string strDetentionCharges { get; set; }
+        public string strDeliveryPeriod { get; set; }
+        public string strInspection { get; set; }
+        public string strPaymentTermsOther { get; set; }
+        public string OfferValidUpto { get; set; }
+        public string strQuantityTol { get; set; }
+        public string strDimensionalTol { get; set; }
+        public string strThicknessTol { get; set; }
+        public string strWarranty { get; set; }
+        public string strDeviation { get; set; }
+        public string strLDClause { get; set; }
+        public string strInterestClause { get; set; }
+        public string strPriceEscalationClause { get; set; }
+        public string strInternalCoating { get; set; }
+        public string strExternalCoating { get; set; }
+        public string strSpecialNote { get; set; }
+    }
+    // End of Rev 2.0
 
 }
