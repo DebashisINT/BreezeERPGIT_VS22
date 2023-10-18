@@ -1,6 +1,7 @@
 ﻿//*********************************************************************************************************
 //  Rev 1.0      Sanchita      V2.0.40   17-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project / Site
 //                                                       Mantis: 26871
+//  Rev 2.0      Sanchita      V2.0.40   18-10-2023  Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
 // **********************************************************************************************************
 var warehousrdet
 var Details;
@@ -23,11 +24,44 @@ $(document).ready(function () {
         InvoiceDetails(UrlArray[1]);
         $("#hdnInvoiceId").val(UrlArray[1]);
     }
-    
+    // Rev 2.0
+    ShowHideOtherCondition();
+    // End of Rev 2.0
 
 });
 var AnotherDetails = {};
 var Termsdetails = {};
+// Rev 2.0
+var OtherConditiondetails = {};
+
+function ShowHideOtherCondition() {
+    debugger;
+    OtherConditiondetails.InvoiceId = $("#hdnInvoiceId").val();
+    var DetailsInvoiceId = $("#hdnInvoiceId").val();
+    if (DetailsInvoiceId != null && DetailsInvoiceId != "" && DetailsInvoiceId != undefined) {
+        $.ajax({
+            type: "POST",
+            url: "Services/ViewService.asmx/GetSystemSettings_OtherCondition",
+            data: JSON.stringify(OtherConditiondetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+                var OtherCondition = msg.d;
+
+                if (OtherCondition == "Yes") {
+                    btnTermsCondition.style.display = 'none';
+                }
+                else {
+                    btnOtherCondition.style.display = 'none';
+                }
+            }
+        });
+
+    }
+}
+
+// End of Rev 2.0
 function OpenSetTermsCondition()
 {
     $('#TermsConditionsModelPopup').modal('show');
@@ -129,14 +163,14 @@ function OpenSetTransporter()
 {
     $('#TransporterModelPopup').modal('show');
    
-    AnotherDetails.InvoiceId = $("#hdnInvoiceId").val();
+    otherDetails.InvoiceId = $("#hdnInvoiceId").val();
     var DetailsInvoiceId = $("#hdnInvoiceId").val();
     if (DetailsInvoiceId != null && DetailsInvoiceId != "" && DetailsInvoiceId!=undefined)
         {
         $.ajax({
             type: "POST",
             url: "Services/ViewService.asmx/GetInvoiceTYransporterDetails",
-            data: JSON.stringify(AnotherDetails),
+            data: JSON.stringify(otherDetails),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async:false,
@@ -623,3 +657,86 @@ function DetailsRowClick(id) {
  htmlScript += ' </table>';
  document.getElementById('PosTaxTable1').innerHTML = htmlScript;
 }
+
+// Rev 2.0
+function OpenSetOtherCondition() {
+    $('#OtherConditionseModal').modal('show');
+
+    OtherConditiondetails.InvoiceId = $("#hdnInvoiceId").val();
+    var DetailsInvoiceId = $("#hdnInvoiceId").val();
+    if (DetailsInvoiceId != null && DetailsInvoiceId != "" && DetailsInvoiceId != undefined) {
+        $.ajax({
+            type: "POST",
+            url: "Services/ViewService.asmx/GetInvoiceOtherDetails",
+            data: JSON.stringify(OtherConditiondetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (msg) {
+                var OtherConditions = msg.d;
+                if (OtherConditions != null) {
+                    $("#lblPriceBasis").text(OtherConditions.strPriceBasis);
+                    $("#lblLoadingCharges").text(OtherConditions.strLoadingCharges);
+                    $("#lblDetentionCharges").text(OtherConditions.strDetentionCharges);
+                    $("#lblDeliveryPeriod").text(OtherConditions.strDeliveryPeriod);
+                    $("#lblInspection").text(OtherConditions.strInspection);
+                    $("#lblPaymentTermsOther").text(OtherConditions.strPaymentTermsOther);
+                    $("#lblOfferValidUpto").text(OtherConditions.OfferValidUpto);
+                    $("#lblQuantityTol").text(OtherConditions.strQuantityTol);
+                    $("#lblDimensionalTol").text(OtherConditions.strDimensionalTol);
+                    $("#lblThicknessTol").text(OtherConditions.strThicknessTol);
+                    $("#lblWarranty").text(OtherConditions.strWarranty);
+                    $("#lblDeviation").text(OtherConditions.strDeviation);
+                    $("#lblLDClause").text(OtherConditions.strLDClause);
+                    $("#lblInterestClause").text(OtherConditions.strInterestClause);
+                    $("#lblPriceEscalationClause").text(OtherConditions.strPriceEscalationClause);
+                    $("#lblInternalCoating").text(OtherConditions.strInternalCoating);
+                    $("#lblExternalCoating").text(OtherConditions.strExternalCoating);
+                    $("#lblSpecialNote").text(OtherConditions.strSpecialNote);
+                   
+                }
+                else {
+                    $("#lblPriceBasis").text('');
+                    $("#lblLoadingCharges").text('');
+                    $("#lblDetentionCharges").text('');
+                    $("#lblDeliveryPeriod").text('');
+                    $("#lblInspection").text('');
+                    $("#lblPaymentTermsOther").text('');
+                    $("#lblOfferValidUpto").text('');
+                    $("#lblQuantityTol").text('');
+                    $("#lblDimensionalTol").text('');
+                    $("#lblThicknessTol").text('');
+                    $("#lblWarranty").text('');
+                    $("#lblDeviation").text('');
+                    $("#lblLDClause").text('');
+                    $("#lblInterestClause").text('');
+                    $("#lblPriceEscalationClause").text('');
+                    $("#lblInternalCoating").text('');
+                    $("#lblExternalCoating").text('');
+                    $("#lblSpecialNote").text('');
+                }
+            }
+        });
+    }
+    else {
+        $("#lblPriceBasis").text('');
+        $("#lblLoadingCharges").text('');
+        $("#lblDetentionCharges").text('');
+        $("#lblDeliveryPeriod").text('');
+        $("#lblInspection").text('');
+        $("#lblPaymentTermsOther").text('');
+        $("#lblOfferValidUpto").text('');
+        $("#lblQuantityTol").text('');
+        $("#lblDimensionalTol").text('');
+        $("#lblThicknessTol").text('');
+        $("#lblWarranty").text('');
+        $("#lblDeviation").text('');
+        $("#lblLDClause").text('');
+        $("#lblInterestClause").text('');
+        $("#lblPriceEscalationClause").text('');
+        $("#lblInternalCoating").text('');
+        $("#lblExternalCoating").text('');
+        $("#lblSpecialNote").text('');
+    }
+}
+// End of Rev 2.0
