@@ -1177,19 +1177,20 @@ function SetUOMConversionArray(WarehouseID) {
 //Common file so method declare here
 
 function saveStockDataPC(StockType, ProductSrlNo, ProductID, UOM, WarehouseID, WarehouseName, Batch, Qty, MfgDate, ExprieyDate, Serial, Rate, AltQty, AltUOM, AltUOMName){
-    //Rev 1.0
+    //Rev 2.0
     //var criteria = [
     //                { Field: "Product_SrlNo", Values: ProductSrlNo },
     //                { Field: "WarehouseID", Values: WarehouseID },
     //                { Field: "Batch", Values: Batch }
     //];
-    //Rev 1.0 End
+    
     var criteria = [
         { Field: "Product_SrlNo", Values: ProductSrlNo },
         { Field: "WarehouseID", Values: WarehouseID },
         { Field: "Batch", Values: Batch },
         { Field: "SerialNo", Values: Serial }
     ];
+    //Rev 1.0 End
     var filteredJson = flexFilter(StockOfProduct, criteria);
 
     if (filteredJson.length == 0) {
@@ -1400,8 +1401,10 @@ function removeRow(ID) {
             whId=filteredJson[0].WarehouseID;
         var _DeleteLoopID = parseInt(getMax(filteredJson, "LoopID"));
         var _DeleteQuantity = parseFloat(getMax(filteredJson, "Quantity"));
-        var _Quantity=_DeleteQuantity-1;    
-
+        //Rev 2.0
+        /* var _Quantity=_DeleteQuantity-1; */       
+        var _Quantity = _DeleteQuantity; 
+         //Rev 2.0 End
         if(_SalesQuantity==""){
             criteria = [
                 { Field: "LoopID", Values: _DeleteLoopID }
