@@ -1,4 +1,9 @@
-﻿(function (global) {
+﻿/*********************************************************************************************************
+Rev 1.0      Sanchita      V2.0.40   19-10-2023     Coordinator data not showing in the following screen while linking Quotation / Inquiry Entries
+                                                    Mantis: 26924
+**********************************************************************************************************/
+
+(function (global) {
     if (typeof (global) === "undefined") {
         throw new Error("window is undefined");
     }
@@ -5274,6 +5279,7 @@ function selectValue() {
     TaggingCall = true;
     if (key != null && key != '' && type != "") {
         cQuotationComponentPanel.PerformCallback('BindQuotationGrid' + '~' + key + '~' + startDate + '~' + '%');
+
     }
 
 
@@ -5304,7 +5310,29 @@ function QuotationNumberChanged() {
                 if (arr.length == 1) {
                     cComponentDatePanel.PerformCallback('BindQuotationDate' + '~' + quote_Id);
 
+                    // Rev 1.0
+                    var type = ($("[id$='rdl_Salesquotation']").find(":checked").val() != null) ? $("[id$='rdl_Salesquotation']").find(":checked").val() : "";
+                    var Key = quote_Id.split(',')[0];
+                    $.ajax({
+                        type: "POST",
+                        url: "EstimateCostSheet.aspx/GetRFQHeaderReference",
+                        data: JSON.stringify({ KeyVal: Key, type: type }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (msg) {
 
+                            var currentString = msg.d;
+
+                            var Quote_SalesmanId = currentString.split('~')[0];
+                            var Quote_SalesmanName = currentString.split('~')[1];
+
+                            $("#hdnSalesManAgentId").val(Quote_SalesmanId);
+                            ctxtSalesManAgent.SetText(Quote_SalesmanName);
+
+                        }
+                    });
+                    // End of Rev 1.0
                 }
                 else {
                     cPLQADate.SetText('');

@@ -1,4 +1,9 @@
-﻿using System;
+﻿/******************************************************************************************************************************************************************************
+*Rev 1.0      Sanchita      V2.0.40     19-10-2023     Coordinator data not showing in the following screen while linking Quotation/Inquiry Entries
+                                                       Mantis : 26924
+* ***************************************************************************************************************************************************************************/
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -6370,6 +6375,35 @@ namespace ERP.OMS.Management.Activities
             //return packing_quantity + '~' + sProduct_quantity;
             return RateLists;
         }
+
+        //  Rev 1.0
+        [WebMethod]
+        public static String GetRFQHeaderReference(string KeyVal, string type)
+        {
+            SlaesActivitiesBL objSlaesActivitiesBL = new SlaesActivitiesBL();
+            string strSalesmanId = "";
+            string strSalesmanName = "";
+            string ResultString = "";
+
+            DataTable dt_Head = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("Prc_GetQuotationDetails");
+            proc.AddVarcharPara("@Quote_Number", 100, KeyVal);
+            proc.AddVarcharPara("@Mode", 100, "GetInquiryDate");
+            dt_Head = proc.GetTable();
+
+            if (dt_Head != null && dt_Head.Rows.Count > 0)
+            {
+                strSalesmanId = Convert.ToString(dt_Head.Rows[0]["SalesmanId"]);
+                strSalesmanName = Convert.ToString(dt_Head.Rows[0]["SalesmanName"]);
+
+
+                ResultString = Convert.ToString(strSalesmanId + "~" + strSalesmanName);
+            }
+
+            return ResultString;
+        }
+        // End of Rev 1.0
+
         public void GetQuantityBaseOnProduct(string strProductSrlNo, ref decimal WarehouseQty)
         {
             decimal sum = 0;
