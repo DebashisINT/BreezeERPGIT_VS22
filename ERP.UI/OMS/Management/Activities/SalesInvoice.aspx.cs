@@ -10,6 +10,8 @@
                                                     if the settings "Show Other Condition" is set as "Yes". Mantis: 0026868
 * Rev 7.0      Sanchita      V2.0.40   06-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                     Mantis : 26871
+* Rev 8.0      Sanchita      V2.0.40     19-10-2023     Coordinator data not showing in the following screen while linking Quotation/Inquiry Entries
+                                                         Mantis : 26924
  ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -1148,6 +1150,10 @@ namespace ERP.OMS.Management.Activities
             string strRFQDate = "";
             string strProjectSite = "";
             string ResultString = "";
+            // Rev 8.0
+            string strSalesmanId = "";
+            string strSalesmanName = "";
+            // End of Rev 8.0
 
             DataTable dt_Head = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesInvoice_Details");
@@ -1185,9 +1191,15 @@ namespace ERP.OMS.Management.Activities
                     }
                     strProjectSite = Convert.ToString(dt_Head.Rows[0]["Challan_ProjectSite"]);
                 }
+                // Rev 8.0
+                strSalesmanId = Convert.ToString(dt_Head.Rows[0]["SalesmanId"]);
+                strSalesmanName = Convert.ToString(dt_Head.Rows[0]["SalesmanName"]);
+                // End of Rev 8.0
 
-
-                ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite);
+                // Rev 8.0
+                //ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite);
+                ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite + "~" + strSalesmanId + "~" + strSalesmanName);
+                // End of Rev 8.0
             }
 
             return ResultString;

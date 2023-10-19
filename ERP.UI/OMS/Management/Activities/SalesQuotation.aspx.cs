@@ -7,6 +7,8 @@
                                                     if the settings "Show Other Condition" is set as "Yes". Mantis: 0026868
  * Rev 5.0      Sanchita      V2.0.40   06-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                     Mantis : 26871
+ * Rev 6.0      Sanchita      V2.0.40   19-10-2023  Coordinator data not showing in the following screen while linking Quotation / Inquiry Entries
+                                                    Mantis: 26924
  ***************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -6430,6 +6432,10 @@ namespace ERP.OMS.Management.Activities
             string strRFQDate = "";
             string strProjectSite = "";
             string ResultString = "";
+            // Rev 6.0
+            string strSalesmanId = "";
+            string strSalesmanName = "";
+            // End of Rev 6.0
 
             DataTable dt_Head = objSlaesActivitiesBL.GetInquiryDate(KeyVal);
             if (dt_Head != null && dt_Head.Rows.Count > 0)
@@ -6438,7 +6444,13 @@ namespace ERP.OMS.Management.Activities
                 strRFQDate = Convert.ToString(dt_Head.Rows[0]["Inq_RFQDate"]);
                 strProjectSite = Convert.ToString(dt_Head.Rows[0]["Inquiry_ProjectSite"]);
 
-                ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite);
+                // Rev 6.0
+                //ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite);
+                strSalesmanId = Convert.ToString(dt_Head.Rows[0]["SalesmanId"]);
+                strSalesmanName = Convert.ToString(dt_Head.Rows[0]["SalesmanName"]);
+
+                ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite+ "~" + strSalesmanId + "~" + strSalesmanName);
+                // End of Rev 6.0
             }
 
             return ResultString;

@@ -6,6 +6,8 @@
  * Rev 4.0      Priti         V2.0.39     15-09-2023     Product wise  MultiUOM calculated Amount check.Mantis : 0026821
  * Rev 5.0      Sanchita      V2.0.40     06-10-2023     New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                          Mantis : 26871
+ * Rev 6.0      Sanchita      V2.0.40     19-10-2023     Coordinator data not showing in the following screen while linking Quotation/Inquiry Entries
+                                                         Mantis : 26924
   ******************************************************************************************************************************/
 
 $(document).ready(function () {
@@ -463,10 +465,10 @@ function SaveMultiUOM() {
             ccmbSecondUOM.SetValue("");
             cgrid_MultiUOM.cpAllDetails = "";
             cbtnMUltiUOM.SetText("Add");
-            // Rev Sanchita
+            // Rev sanchita
             $("#chkUpdateRow").prop('checked', false);
             $("#chkUpdateRow").removeAttr("checked");
-            // End of Rev Sanchita
+            // End of Rev sanchita
         }
         else {
             cgrid_MultiUOM.PerformCallback('SaveDisplay~' + srlNo + '~' + qnty + '~' + UomName + '~' + AltUomName + '~' + AltQnty + '~' + UomId + '~' + AltUomId + '~' + ProductID + '~' + DetailsId + '~' + BaseRate + '~' + AltRate + '~' + UpdateRow);
@@ -6309,6 +6311,13 @@ function QuotationNumberChanged() {
                             var RFQNumber = currentString.split('~')[0];
                             var RFQDate = currentString.split('~')[1];
                             var ProjectSite = currentString.split('~')[2];
+                            // Rev 6.0
+                            var Quote_SalesmanId = currentString.split('~')[3];
+                            var Quote_SalesmanName = currentString.split('~')[4];
+                           
+                            $("#hdnSalesManAgentId").val(Quote_SalesmanId);
+                            ctxtSalesManAgent.SetText(Quote_SalesmanName);
+                             // End of Rev 6.0
 
                             ctxtRFQNumber.SetText(RFQNumber);
                             if (RFQDate != "") {

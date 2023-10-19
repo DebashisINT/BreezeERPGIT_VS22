@@ -4,6 +4,8 @@
  * Rev 3.0      Priti         V2.0.40                   0026881: The Expiry Date of the Proforma/Quotation is not accepting any date within the Month but taking the Last Date of any Month whiln
  * Rev 4.0      Sanchita      V2.0.40       06-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                         Mantis : 26871 
+ * Rev 5.0      Sanchita      V2.0.40       19-10-2023  Coordinator data not showing in the following screen while linking Quotation / Inquiry Entries
+                                                        Mantis: 26924
  **********************************************************************************************************/
 (function (global) {
     if (typeof (global) === "undefined") {
@@ -5511,6 +5513,14 @@ function QuotationNumberChanged() {
                                 cdtRFQDate.SetDate(new Date(RFQDate));
                             }
                             ctxtProjectSite.SetText(ProjectSite);
+
+                            // Rev 5.0
+                            var Quote_SalesmanId = currentString.split('~')[3];
+                            var Quote_SalesmanName = currentString.split('~')[4];
+
+                            $("#hdnSalesManAgentId").val(Quote_SalesmanId);
+                            ctxtSalesManAgent.SetText(Quote_SalesmanName);
+                            // End of Rev 5.0
                             
                         }
 
