@@ -719,6 +719,18 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             max-width: 100% !important;
         }*/
         /*Rev end 1.0*/
+
+        .custom-position
+        {
+            display: inline-block;
+    float: left;
+        }
+
+        .mt-20
+        {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -928,7 +940,45 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </div>
             <div class="clear"></div>
 
-            <div class="col-md-2 lblmTop8" style="" id="divProj">
+            
+
+            <div class="col-md-12">
+                <table class="paddingTbl marginTop10">
+                <tr>
+                   <%-- <td><asp:CheckBox runat="server" ID="chkprintdays" Checked="false" Text="Show Days" /></td>
+                    <td><asp:CheckBox runat="server" ID="chksalesman" Checked="false" Text="Show Salesman" /></td>
+                    <td> <asp:CheckBox runat="server" ID="chkcb" Checked="false" Text="Include Cash/Bank" /></td>
+                    <td><asp:CheckBox runat="server" ID="chkjv" Checked="false" Text="Include Journal" /></td>
+                    <td><asp:CheckBox runat="server" ID="chkdncn" Checked="false" Text="Exclude Debit/Credit Note" /></td>--%>
+                    <td><dxe:ASPxCheckBox runat="server" ID="chkprintdays" Checked="false" Text="Show Days">
+                    </dxe:ASPxCheckBox></td>
+                    <td><dxe:ASPxCheckBox runat="server" ID="chksalesman" Checked="false" Text="Show Salesman">
+                    </dxe:ASPxCheckBox></td>
+                    <td><dxe:ASPxCheckBox runat="server" ID="chkcb" Checked="false" Text="Include Cash/Bank">
+                    </dxe:ASPxCheckBox></td>
+                    <td><dxe:ASPxCheckBox runat="server" ID="chkjv" Checked="false" Text="Include Journal">
+                    </dxe:ASPxCheckBox></td>
+                    <td><dxe:ASPxCheckBox runat="server" ID="chkdncn" Checked="false" Text="Exclude Debit/Credit Note">
+                    </dxe:ASPxCheckBox></td>
+
+                    <td><dxe:ASPxCheckBox runat="server" ID="chkSoNoDt" Checked="false" Text="Show Order No & Date">
+                    </dxe:ASPxCheckBox></td>
+                    
+                                       
+                </tr>
+            </table>
+            </div>
+            <div class="clear"></div>
+            <div class="col-md-12  mt-20">
+                <table class="paddingTbl marginTop10 custom-position">
+                    <tr>
+                         <td><dxe:ASPxCheckBox runat="server" ID="chkPartyOrdNoDt" Checked="false" Text="Show Party Order No & Date">
+                    </dxe:ASPxCheckBox></td>
+                        
+                    </tr>
+                </table>
+
+                <div class="col-md-2 lblmTop8" style="" id="divProj">
                 <div style="color: #b5285f; /*font-weight: bold;*/" class="clsTo">
                     <asp:Label ID="lblProj" runat="Server" Text="Project : " CssClass="mylabel1"></asp:Label>
                 </div>
@@ -985,36 +1035,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <asp:HiddenField ID="hdnSelectedProjects" runat="server" />
             </div>
 
-            <div class="col-md-10">
-                <table class="paddingTbl marginTop10">
-                <tr>
-                   <%-- <td><asp:CheckBox runat="server" ID="chkprintdays" Checked="false" Text="Show Days" /></td>
-                    <td><asp:CheckBox runat="server" ID="chksalesman" Checked="false" Text="Show Salesman" /></td>
-                    <td> <asp:CheckBox runat="server" ID="chkcb" Checked="false" Text="Include Cash/Bank" /></td>
-                    <td><asp:CheckBox runat="server" ID="chkjv" Checked="false" Text="Include Journal" /></td>
-                    <td><asp:CheckBox runat="server" ID="chkdncn" Checked="false" Text="Exclude Debit/Credit Note" /></td>--%>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkprintdays" Checked="false" Text="Show Days">
-                    </dxe:ASPxCheckBox></td>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chksalesman" Checked="false" Text="Show Salesman">
-                    </dxe:ASPxCheckBox></td>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkcb" Checked="false" Text="Include Cash/Bank">
-                    </dxe:ASPxCheckBox></td>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkjv" Checked="false" Text="Include Journal">
-                    </dxe:ASPxCheckBox></td>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkdncn" Checked="false" Text="Exclude Debit/Credit Note">
-                    </dxe:ASPxCheckBox></td>
-                                       
-                </tr>
-            </table>
-            </div>
-            <div class="clear"></div>
-            <div class="col-md-10">
-                <table class="paddingTbl marginTop10">
+                <table class="paddingTbl marginTop10  custom-position">
                     <tr>
-                        <td><dxe:ASPxCheckBox runat="server" ID="chkSoNoDt" Checked="false" Text="Show Order No & Date">
-                    </dxe:ASPxCheckBox></td>
-                    <td><dxe:ASPxCheckBox runat="server" ID="chkPartyOrdNoDt" Checked="false" Text="Show Party Order No & Date">
-                    </dxe:ASPxCheckBox></td> 
                         <td >
                             <button id="btnShow" class="btn btn-success" type="button" onclick="btn_ShowRecordsClick(this);">Show</button>
                         <% if (rights.CanExport)
@@ -1034,15 +1056,16 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     </td>
                     </tr>
                 </table>
+                <div class="clear"></div>
             </div>
 
             <div class="clear"></div>
             
-            <div class="col-md-2">
+            <%--<div class="col-md-2">
                 <label style="margin-bottom: 0">&nbsp</label>
                 <div class="">
                 </div>
-            </div>
+            </div>--%>
         </div>
         <table class="TableMain100">
             <tr>
