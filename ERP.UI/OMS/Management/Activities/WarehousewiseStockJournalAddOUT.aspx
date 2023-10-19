@@ -201,6 +201,7 @@
             vertical-align: top;
         }
         /*End of Mantis Issue 24428*/
+        
     </style>
     <script>
 
@@ -761,7 +762,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2" id="DivType" runat="server">
+                    <div class="col-md-2 simple-select" id="DivType" runat="server">
                         <label class="darkLabel mTop5">Type<span class="red">*</span></label>
                         <div>
                             <asp:DropDownList ID="ddlType" runat="server" Width="100%">
