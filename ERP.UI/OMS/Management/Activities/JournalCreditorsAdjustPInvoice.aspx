@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 1.0   Pallab    V2.0.38      22-05-2023          0026195: Add Adjustment of Documents - Journal with Purchase Invoice module design modification & check in small device
 2.0   Pallab    V2.0.39      27-07-2023          0026625: Add Adjustment of Documents - Journal with Purchase Invoice module all bootstrap modal outside click event disable
+3.0   Priti     V2.0.40      19-10-2023          0026911:Party Invoice No and Party Invoice Date required in the Document Search Window of the Grid for Adjustment of Documents - Journal 
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalCreditorsAdjustPInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.JournalCreditorsAdjustPInvoice" %>
@@ -9,7 +10,7 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="JS/SearchPopup.js?v=0.02"></script>
     <link href="CSS/CustomerReceiptAdjustment.css" rel="stylesheet" />
-    <script src="JS/JournalCreditorsAdjustmentInvoice.js?v=2.2"></script>
+    <script src="JS/JournalCreditorsAdjustmentInvoice.js?v=2.4"></script>
     <%--Rev 1.0--%>
     <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
     
@@ -639,9 +640,13 @@
                                 <th class="hide">id</th>
                                 <th>Document Number</th>
                                 <th>Document Date</th>
-                                <th>Document Type</th>
+                                <th>Document Type</th>                               
                                 <th>Document Amount</th>
                                 <th>Balance Amount</th>
+                                <%--Rev 3.0--%>
+                                <th>Party Invoice No</th>
+                                <th>Party Invoice Date</th>
+                              <%--  Rev 3.0 End--%>
 
                             </tr>
                         </table>
