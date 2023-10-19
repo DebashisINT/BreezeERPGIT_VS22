@@ -1,4 +1,7 @@
-﻿using BusinessLogicLayer;
+﻿/**************************************************************************************************************************
+* Rev 1.0       Priti      V2.0.40      19-10-2023     0026911:Party Invoice No and Party Invoice Date required in the Document Search Window of the Grid for Adjustment of Documents - Journal 
+* ************************************************************************************************************************/
+using BusinessLogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -138,7 +141,7 @@ namespace ERP.OMS.Management.Activities.Services
             public string HIERARCHY_NAME { get; set; }
 
         }
-        public class documentList
+        public class Journa_ldocumentList
         {
             public string uniqueid { get; set; }
             public string doctype { get; set; }
@@ -148,6 +151,24 @@ namespace ERP.OMS.Management.Activities.Services
             public decimal unPdAmt { get; set; }
             public string docDate { get; set; }
             public string cur { get; set; }
+
+            //Rev 1.0
+            public string PartyInvoiceNo { get; set; }
+            public string PartyInvoiceDate { get; set; }
+            //Rev 1.0 End
+
+        }
+        public class documentList
+        {
+            public string uniqueid { get; set; }
+            public string doctype { get; set; }
+            public Int32 id { get; set; }
+            public string No { get; set; }
+            public decimal actAmt { get; set; }
+            public decimal unPdAmt { get; set; }
+            public string docDate { get; set; }
+            public string cur { get; set; }         
+
         }
         public class JournaldocumentList
         {
@@ -349,11 +370,14 @@ namespace ERP.OMS.Management.Activities.Services
         public object GetPurchaseInvoiceDocumentList(string Mode, string ReceiptId, string customerId, string TransDate, string AdjId, string BranchId,
             string AdvType, string ProjectId)
         {
-            List<documentList> documentList = new List<CustomerReceiptAdjustment.documentList>();
+            //Rev 1.0
+            //List<documentList> documentList = new List<CustomerReceiptAdjustment.documentList>();
+            List<Journa_ldocumentList> documentList = new List<CustomerReceiptAdjustment.Journa_ldocumentList>();
+            //Rev 1.0 End
             CustomerReceiptAdjustmentBl blLayer = new CustomerReceiptAdjustmentBl();
             DataTable DocumentList = blLayer.GetPurchaseInvoiceDocumentList(Mode, ReceiptId, customerId, TransDate, AdjId, BranchId, AdvType, ProjectId);
             documentList = (from DataRow dr in DocumentList.Rows
-                            select new documentList()
+                            select new Journa_ldocumentList()
                             {
                                 id = Convert.ToInt32(dr["id"]),
                                 doctype = Convert.ToString(dr["doctype"]),
@@ -362,8 +386,11 @@ namespace ERP.OMS.Management.Activities.Services
                                 unPdAmt = Convert.ToDecimal(dr["unPdAmt"]),
                                 uniqueid = Convert.ToString(dr["uniqueid"]),
                                 docDate = Convert.ToString(dr["invDate"]),
-                                cur = Convert.ToString(dr["cur"])
-
+                                cur = Convert.ToString(dr["cur"]),
+                                //Rev 1.0
+                                PartyInvoiceNo = Convert.ToString(dr["PartyInvoiceNo"]),
+                                PartyInvoiceDate = Convert.ToString(dr["PartyInvoiceDate"])
+                                //Rev 1.0 ENd
 
                             }).ToList();
             return documentList;
