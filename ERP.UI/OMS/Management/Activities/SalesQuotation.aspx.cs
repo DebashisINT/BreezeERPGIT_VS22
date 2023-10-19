@@ -9,6 +9,8 @@
                                                     Mantis : 26871
  * Rev 6.0      Sanchita      V2.0.40   19-10-2023  Coordinator data not showing in the following screen while linking Quotation / Inquiry Entries
                                                     Mantis: 26924
+* Rev 7.0       Priti         V2.0.40   19-10-2023  Edit and Save a Quotation updating the Revision Date
+                                                    Mantis: 0026936
  ***************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -939,8 +941,10 @@ namespace ERP.OMS.Management.Activities
                 }
                 else
                 {
-                    txtRevisionDate.Date = Convert.ToDateTime(Quote_Date);
-                    txtRevisionDate.MinDate = Convert.ToDateTime(Convert.ToDateTime(Quote_Date).ToShortDateString());
+                    //Rev 7.0
+                    //txtRevisionDate.Date = Convert.ToDateTime(Quote_Date);
+                    //txtRevisionDate.MinDate = Convert.ToDateTime(Convert.ToDateTime(Quote_Date).ToShortDateString());
+                    //Rev 7.0 End
                 }
 
 
