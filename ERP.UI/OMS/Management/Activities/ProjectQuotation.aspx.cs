@@ -1,4 +1,7 @@
-﻿using System;
+﻿/******************************************************************************************************************
+ * 1.0   V2.0.40    20-10-2023      Sanchita     Duplicate Document Number in Project Quotation/Proposal. Mantis: 26929
+ * ******************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -1539,7 +1542,9 @@ namespace ERP.OMS.Management.Activities
         {
             DataTable Quotationdt = new DataTable();
             string IsDeleteFrom = Convert.ToString(hdfIsDelete.Value);
-
+            // Rev 1.0
+            string SchemeID = "";
+            // End of Rev 1.0
 
             DataTable AdditionalDetails = new DataTable();
 
@@ -1969,9 +1974,11 @@ namespace ERP.OMS.Management.Activities
                 if (ActionType == "Add")
                 {
                     string[] SchemeList = strSchemeType.Split(new string[] { "~" }, StringSplitOptions.None);
-                    validate = checkNMakeJVCode(strQuoteNo, Convert.ToInt32(SchemeList[0]));
+                    // Rev 1.0
+                    //validate = checkNMakeJVCode(strQuoteNo, Convert.ToInt32(SchemeList[0]));
+                    SchemeID = Convert.ToString(SchemeList[0]);
+                    // End of Rev 1.0
                 }
-
 
 
 
@@ -2308,10 +2315,17 @@ namespace ERP.OMS.Management.Activities
                     DataTable addrDesc = new DataTable();
                     addrDesc = (DataTable)Session["InlineRemarks"];
                     string Docdate = Convert.ToString(dt_Quotation.Text);
+                    // Rev 1.0
+                    string strQuoteNumber = "";
+                    // End of Rev 1.0
 
+                    // Rev 1.0 [parameter "SchemeID" and "ref strInvoiceNumber" added]
                     ModifyQuatation(MainQuotationID, strSchemeType, UniqueQuotation, strQuoteDate, strQuoteExpiry, strCustomer, strContactName,ProjId,Docdate,
                                     Reference, strBranch, strAgents, strCurrency, strRate, strTaxType, strTaxCode, tempQuotation, addrDesc, TaxDetailTable,
-                                    tempWarehousedt, tempTaxDetailsdt, tempBillAddress, approveStatus, ActionType, ref strIsComplete, ref strQuoteID, strIsInventory, duplicatedt2, MultiUOMDetails);
+                                    tempWarehousedt, tempTaxDetailsdt, tempBillAddress, approveStatus, ActionType,
+                                    SchemeID,
+                                    ref strIsComplete, ref strQuoteID, strIsInventory, duplicatedt2, MultiUOMDetails
+                                    , ref strQuoteNumber);
 
 
                     if (strIsComplete == 1)
@@ -2356,7 +2370,13 @@ namespace ERP.OMS.Management.Activities
                         dt_EmailConfig = objemployeebal.GetEmailAccountConfigDetails("", 1); // Checked fetch datatatable of email setup with action 1 param
                         Dt_LevelUser = objemployeebal.GetAllLevelUsers("1", 12);
 
-                        ActivityName = UniqueQuotation;
+                        // Rev 1.0
+                        //ActivityName = UniqueQuotation;
+
+                        ActivityName = strQuoteNumber;
+                        grid.JSProperties["cpQuotationNo"] = strQuoteNumber;
+                        // End of Rev 1.0
+
 
                         if (Dt_LevelUser != null && string.IsNullOrEmpty(approveStatus))
                         {
@@ -2732,10 +2752,14 @@ namespace ERP.OMS.Management.Activities
                 grid.JSProperties["cpLoadAddressFromQuote"] = QuoCom;
             }
         }
+
+        // Rev 1.0 [ parameter "string strSchemeID" added ]
         public void ModifyQuatation(string QuotationID, string strSchemeType, string strQuoteNo, string strQuoteDate, string strQuoteExpiry, string strCustomer, string strContactName,Int64 ProjId,string Docdate,
                                     string Reference, string strBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode, DataTable Quotationdt,DataTable addrDesc,
                                     DataTable TaxDetailTable, DataTable Warehousedt, DataTable QuotationTaxdt, DataTable BillAddressdt, string approveStatus, string ActionType,
-                                    ref int strIsComplete, ref int strQuoteID, string strIsInventory, DataTable QuotationPackingDetailsdt, DataTable MultiUOMDetails)
+                                    string strSchemeID,
+                                    ref int strIsComplete, ref int strQuoteID, string strIsInventory, DataTable QuotationPackingDetailsdt, DataTable MultiUOMDetails
+                                    , ref string strQuoteNumber)
         {
             try
             {
@@ -2794,10 +2818,17 @@ namespace ERP.OMS.Management.Activities
 
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnQuoteID", SqlDbType.VarChar, 50);
+                // Rev 1.0
+                cmd.Parameters.AddWithValue("@SchemeID", strSchemeID);
+                cmd.Parameters.Add("@ReturnQuoteNumber", SqlDbType.VarChar, 50);
+                // End of Rev 1.0
 
 
                 cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;
                 cmd.Parameters["@ReturnQuoteID"].Direction = ParameterDirection.Output;
+                // Rev 1.0
+                cmd.Parameters["@ReturnQuoteNumber"].Direction = ParameterDirection.Output;
+                // End of Rev 1.0
 
                 cmd.CommandTimeout = 0;
                 SqlDataAdapter Adap = new SqlDataAdapter();
@@ -2806,6 +2837,10 @@ namespace ERP.OMS.Management.Activities
 
                 strIsComplete = Convert.ToInt32(cmd.Parameters["@ReturnValue"].Value.ToString());
                 strQuoteID = Convert.ToInt32(cmd.Parameters["@ReturnQuoteID"].Value.ToString());
+                // Rev 1.0
+                strQuoteNumber = Convert.ToString(cmd.Parameters["@ReturnQuoteNumber"].Value.ToString());
+                // End of Rev 1.0
+
                 if (strQuoteID > 0)
                 {
                     //####### Coded By Samrat Roy For Custom Control Data Process #########
