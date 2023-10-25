@@ -707,9 +707,15 @@ function OnEndCallback(s, e) {
         var AmountWithTaxValue = strRunnging.split("~")[3].toString();
         var TotalAmt = strRunnging.split("~")[4].toString();
         var SalesmanVal = strRunnging.split("~")[5].toString();
-        document.getElementById('ddl_SalesAgent').value = SalesmanVal;
         $("#hdnTaggedDoctype").val(strRunnging.split("~")[6].toString());
-        $("#hdncpSalesmanid").val(SalesmanVal);
+        // Rev 5.0
+        //document.getElementById('ddl_SalesAgent').value = SalesmanVal;
+        //$("#hdncpSalesmanid").val(SalesmanVal);
+        if (document.getElementById('ddl_SalesAgent').value == 0) {
+            document.getElementById('ddl_SalesAgent').value = SalesmanVal;
+            $("#hdncpSalesmanid").val(SalesmanVal);
+        }
+        // End of Rev 5.0
         Salesmanvalold = SalesmanVal;
         //var TotalAmt = 0;
         cbnrLblTotalQty.SetText(TotalQty);

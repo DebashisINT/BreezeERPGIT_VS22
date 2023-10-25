@@ -1498,7 +1498,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                         </dxe:ASPxLabel>
 
                                                     </label>
-                                                    <dxe:ASPxDateEdit ID="dtProjValidFrom" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtProjValidFrom" Width="100%">
+                                                    <dxe:ASPxDateEdit ID="dtProjValidFrom" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtProjValidFrom" Width="100%" TabIndex="14">
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
                                                         <ClientSideEvents DateChanged="ValidfromCheck" />
@@ -1515,7 +1515,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                         </dxe:ASPxLabel>
 
                                                     </label>
-                                                    <dxe:ASPxDateEdit ID="dtProjValidUpto" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtProjValidUpto" Width="100%">
+                                                    <dxe:ASPxDateEdit ID="dtProjValidUpto" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtProjValidUpto" Width="100%" TabIndex="15">
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
 
@@ -1531,7 +1531,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                         <div class="col-md-3" id="divRFQNumber" runat="server">
                                             <dxe:ASPxLabel ID="lblRFQNumber" runat="server" Text="RFQ Number">
                                             </dxe:ASPxLabel>
-                                            <dxe:ASPxTextBox ID="txtRFQNumber" runat="server" ClientInstanceName="ctxtRFQNumber" Width="100%" PropertiesTextEdit-MaxLength="500" >
+                                            <dxe:ASPxTextBox ID="txtRFQNumber" runat="server" ClientInstanceName="ctxtRFQNumber" Width="100%" PropertiesTextEdit-MaxLength="500" TabIndex="16" >
                                             </dxe:ASPxTextBox>
                                         </div>
                                         <div class="col-md-6">
@@ -1539,7 +1539,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 <div class="col-md-3 lblmTop8" id="divRFQDate" runat="server" >
                                                     <dxe:ASPxLabel ID="lblRFQDate" runat="server" Text="RFQ Date">
                                                     </dxe:ASPxLabel>
-                                                    <dxe:ASPxDateEdit ID="dtRFQDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtRFQDate" Width="100%">
+                                                    <dxe:ASPxDateEdit ID="dtRFQDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtRFQDate" Width="100%" TabIndex="17">
                                                         <ButtonStyle Width="13px">
                                                         </ButtonStyle>
 
@@ -1549,7 +1549,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 <div class="col-md-9 lblmTop8" id="divProjectSite" runat="server">
                                                     <dxe:ASPxLabel ID="lblProjectSite" runat="server" Text="Project/Site">
                                                     </dxe:ASPxLabel>
-                                                    <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500">
+                                                    <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500" TabIndex="18">
                                                     </dxe:ASPxTextBox>
                                                 </div>
                                             </div>
@@ -1562,7 +1562,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 </dxe:ASPxLabel>
 
                                             </label>
-                                            <dxe:ASPxTextBox ID="txtRevisionNo" runat="server" Width="100%" MaxLength="50" ClientInstanceName="ctxtRevisionNo">
+                                            <dxe:ASPxTextBox ID="txtRevisionNo" runat="server" Width="100%" MaxLength="50" ClientInstanceName="ctxtRevisionNo" TabIndex="19">
                                                 <%-- <ClientSideEvents LostFocus="Revision_LostFocus" />--%>
                                             </dxe:ASPxTextBox>
                                         </div>
@@ -1572,7 +1572,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 </dxe:ASPxLabel>
 
                                             </label>
-                                            <dxe:ASPxDateEdit ID="txtRevisionDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="ctxtRevisionDate" Width="100%">
+                                            <dxe:ASPxDateEdit ID="txtRevisionDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="ctxtRevisionDate" Width="100%" TabIndex="20">
                                                 <ButtonStyle Width="13px">
                                                 </ButtonStyle>
 
@@ -1582,7 +1582,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                         <div class="col-md-2 lblmTop8">
                                             <label id="lblProject" runat="server">Project</label>
                                             <dxe:ASPxGridLookup ID="lookup_Project" runat="server" ClientInstanceName="clookup_Project" DataSourceID="EntityServerModeDataSalesOrder"
-                                                KeyFieldName="Proj_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False">
+                                                KeyFieldName="Proj_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" TabIndex="21">
 
                                                 <Columns>
 
@@ -1639,7 +1639,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                         <div class="col-md-6">
                                             <asp:Label ID="lblRearks" runat="server" Text="Remarks"></asp:Label>
 
-                                            <asp:TextBox ID="txtProjRemarks" runat="server" TabIndex="16" Width="100%" TextMode="MultiLine" Rows="3" Columns="10" Height="50px">
+                                            <asp:TextBox ID="txtProjRemarks" runat="server" TabIndex="22" Width="100%" TextMode="MultiLine" Rows="3" Columns="10" Height="50px">
                                                     
                                             </asp:TextBox>
 
@@ -1649,7 +1649,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                         <div class="col-md-6" id="dvAppRejRemarks" style="display: none" runat="server">
                                             <asp:Label ID="lblAppRejRemarks" runat="server" Text="Approve/Reject Remarks"></asp:Label>
 
-                                            <asp:TextBox ID="txtAppRejRemarks" runat="server" TabIndex="16" Width="100%" TextMode="MultiLine" Rows="2" Columns="8" Height="50px"></asp:TextBox>
+                                            <asp:TextBox ID="txtAppRejRemarks" runat="server" TabIndex="23" Width="100%" TextMode="MultiLine" Rows="2" Columns="8" Height="50px"></asp:TextBox>
 
                                         </div>
                                         <div style="clear: both;"></div>
