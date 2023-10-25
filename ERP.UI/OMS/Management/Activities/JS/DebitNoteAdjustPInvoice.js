@@ -1,4 +1,7 @@
-﻿/*****************
+﻿///================================================== Revision History =============================================
+//1.0   Priti     V2.0.40      25-10-2023    0026916:Party Invoice No and Party Invoice Date required in the Document Search Window of the Grid for the module Adjustment of Document
+//====================================================== Revision History =============================================
+/*****************
 Global variable*/
 
 var ReceiptList = [];
@@ -379,9 +382,31 @@ function gridDocumentNewkeydown(e) {
                     obj.uniqueid = receiptdetails[i]["uniqueid"];
                     obj.unPdAmt = receiptdetails[i]["unPdAmt"];
                     obj.cur = receiptdetails[i]["cur"];
+                    //Rev 1.0
+                    obj.PartyInvoiceNo = receiptdetails[i]["PartyInvoiceNo"];
+                    obj.PartyInvoiceDate = receiptdetails[i]["PartyInvoiceDate"];
+                    //Rev 1.0 End
+                    newobj.push(obj);
+                }
+
+                //Rev 1.0
+                var PartyInvoiceNo = receiptdetails[i]["PartyInvoiceNo"];
+                if (PartyInvoiceNo.toUpperCase().includes(SearchObj.toUpperCase())) {
+
+                    obj.id = receiptdetails[i]["id"];
+                    obj.No = receiptdetails[i]["No"];
+                    obj.docDate = receiptdetails[i]["docDate"];
+                    obj.doctype = receiptdetails[i]["doctype"];
+                    obj.actAmt = receiptdetails[i]["actAmt"];
+                    obj.uniqueid = receiptdetails[i]["uniqueid"];
+                    obj.unPdAmt = receiptdetails[i]["unPdAmt"];
+                    obj.cur = receiptdetails[i]["cur"];
+                    obj.PartyInvoiceNo = receiptdetails[i]["PartyInvoiceNo"];
+                    obj.PartyInvoiceDate = receiptdetails[i]["PartyInvoiceDate"];
 
                     newobj.push(obj);
                 }
+                //Rev 1.0 End
             }
             document.getElementById('DocNoDocTbl').innerHTML = "";
             document.getElementById('DocNoDocTbl').innerHTML = MakeTableFromArray(newobj, "SetDoc", "DocumentIndex");
@@ -404,9 +429,10 @@ function MakeTableFromArray(myObj, onSelect, UniqueIndex) {
     mycallonServerObj = myObj;
     var txt = '';
     var count = 0;
-
-    txt = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'><th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Document Amount</th><th>Balance Amount</th></tr>";
-
+     //Rev 1.0
+    //txt = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'><th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Document Amount</th><th>Balance Amount</th></tr>";
+    txt = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'><th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Document Amount</th><th>Balance Amount</th><th>Party Invoice No</th><th>Party Invoice Date</th></tr>";
+    //Rev 1.0 End
 
     for (x in myObj) {
         txt += "<tr onclick='RowclickDoc(event," + onSelect + ")'>";
@@ -441,9 +467,10 @@ function gridDocNobuttonClick() {
         $('#DocumentModel').modal('show');
 
 
-
-        var htmlScript = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'>  <th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Document Amount</th><th>Balance Amount</th></tr>";
-
+        //Rev 1.0
+        //var htmlScript = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'>  <th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Document Amount</th><th>Balance Amount</th></tr>";
+        var htmlScript = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'>  <th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Document Amount</th><th>Balance Amount</th><th>Party Invoice No</th><th>Party Invoice Date</th></tr>";
+        //Rev 1.0 End
         //for (var rp = 0; rp < tempDocumentList.length; rp++) {
         //    htmlScript += "<tr> <td><input readonly onclick=DocuementClick('" + tempDocumentList[rp].uniqueid + "') type='text' style='background-color: #3399520a;'DocumentIndex=" + rp + " onfocus='DocumentGetFocus(event)'  onblur='DocumentlostFocus(event)' onkeydown=DocumnetSelected(event,'" + tempDocumentList[rp].uniqueid + "') width='100%' readonly value='" + tempDocumentList[rp].No + "'/></td><td  onclick=DocuementClick('" + tempDocumentList[rp].uniqueid + "')>" + tempDocumentList[rp].docDate + "</td><td onclick=DocuementClick('" + tempDocumentList[rp].uniqueid + "')>" + tempDocumentList[rp].doctype + "</td><td onclick=DocuementClick('" + tempDocumentList[rp].uniqueid + "')>" + GetTwodecimalValue(tempDocumentList[rp].actAmt) + "</td><td onclick=DocuementClick('" + tempDocumentList[rp].uniqueid + "')>" + GetTwodecimalValue(tempDocumentList[rp].unPdAmt) + "</td></tr>";
         //}
@@ -462,6 +489,10 @@ function gridDocNobuttonClick() {
             obj.uniqueid = tempDocumentList[i]["uniqueid"];
             obj.unPdAmt = tempDocumentList[i]["unPdAmt"];
             obj.cur = tempDocumentList[i]["cur"];
+            //Rev 1.0
+            obj.PartyInvoiceNo = tempDocumentList[i]["PartyInvoiceNo"];
+            obj.PartyInvoiceDate = tempDocumentList[i]["PartyInvoiceDate"];
+            //Rev 1.0 End
             newobj.push(obj);
         }
 
