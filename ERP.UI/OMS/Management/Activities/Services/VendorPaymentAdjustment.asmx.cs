@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿/********************************************************************************************************
+ * 1.0   V2.0.40     Sanchita    25-10-2023      26915: Party Invoice Date required in the Document Search window of the Invoice for the module 
+ *                                               Adjustment of Documents - Advance With Invoice
+ * *******************************************************************************************************/
+using BusinessLogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -67,7 +71,9 @@ namespace ERP.OMS.Management.Activities.Services
                                 docDate = Convert.ToString(dr["invDate"]),
                                 cur = Convert.ToString(dr["cur"]),
                                 PartyInvoiceNo = Convert.ToString(dr["PartyInvoiceNo"])
-
+                                // Rev Rev 1.0
+                                ,PartyInvoiceDate = Convert.ToString(dr["PartyInvoiceDate"])
+                                // End of Rev Rev 1.0
 
                             }).ToList();
             return documentList;
@@ -190,6 +196,9 @@ namespace ERP.OMS.Management.Activities.Services
             public string docDate { get; set; }
             public string cur { get; set; }
             public string PartyInvoiceNo { get; set; }
+            // Rev Rev 1.0
+            public string PartyInvoiceDate { get; set; }
+            // End of Rev Rev 1.0
 
         }
 
