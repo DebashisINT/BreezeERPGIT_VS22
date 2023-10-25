@@ -2,6 +2,8 @@
 1.0   Pallab    V2.0.38      18-05-2023    0026169: Add Adjustment of Documents - Advance With Invoice module design modification & check in small device
 2.0   Priti     v2.0.39	 	 27-06-2023	   0026412: Auto calculation of Adjusted amount during Adjustment of Document Entries-Advance with Invoice for Vendor
 3.0   Pallab    V2.0.39      28-07-2023    0026633: Add Adjustment of Documents - Advance With Invoice module all bootstrap modal outside click event disable
+4.0   Sanchita  V2.0.40      25-10-2023    26915: Party Invoice Date required in the Document Search window of the Invoice for the module 
+                                           Adjustment of Documents - Advance With Invoice
 ====================================================== Revision History ================================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorPaymentAdjustment.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorPaymentAdjustment" %>
@@ -645,6 +647,9 @@
                                 <th>Document Date</th>
                                 <th>Document Type</th>
                                 <th>Party Invoice number</th>
+                                <%--Rev 4.0--%>
+                                <th>Party Invoice Date</th>
+                                <%--End of Rev 4.0--%>
                                 <th>Document Amount</th>
                                 <th>Balance Amount</th>
 
