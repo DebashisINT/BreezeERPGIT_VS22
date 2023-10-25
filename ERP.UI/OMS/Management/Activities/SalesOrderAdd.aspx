@@ -1662,7 +1662,8 @@ function PerformCallToGridBind() {
                                             </dxe:ASPxComboBox>
 
                                         </div>
-                                        <div class="col-md-2 lblmTop8" id="divposGst">
+                                        <%--<div class="col-md-2 lblmTop8" id="divposGst">--%>
+                                        <div class="col-md-2" id="divposGst">
                                             <dxe:ASPxLabel ID="lbl_PosForGst" runat="server" Text="Place Of Supply [GST]">
                                             </dxe:ASPxLabel>
                                             <span style="color: red">*</span>
@@ -1750,7 +1751,8 @@ function PerformCallToGridBind() {
                                                         <ClientSideEvents GotFocus="function(s,e){cdtRFQDate.ShowDropDown();}" />
                                                     </dxe:ASPxDateEdit>
                                                 </div>
-                                                <div class="col-md-9 lblmTop8" id="divProjectSite" runat="server">
+                                                <%--<div class="col-md-9 lblmTop8" id="divProjectSite" runat="server">--%>
+                                                <div class="col-md-9" id="divProjectSite" runat="server">
                                                     <dxe:ASPxLabel ID="lblProjectSite" runat="server" Text="Project/Site">
                                                     </dxe:ASPxLabel>
                                                     <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500">
