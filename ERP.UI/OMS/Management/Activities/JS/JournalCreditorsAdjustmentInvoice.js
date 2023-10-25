@@ -346,7 +346,7 @@ function gridDocumentNewkeydown(e) {
                     //Rev 1.0 End
                     newobj.push(obj);
                 }
-
+                //Rev 1.0
                 var PartyInvoiceNo = receiptdetails[i]["PartyInvoiceNo"];
                 if (PartyInvoiceNo.toUpperCase().includes(SearchObj.toUpperCase())) {
 
@@ -357,13 +357,13 @@ function gridDocumentNewkeydown(e) {
                     obj.actAmt = receiptdetails[i]["actAmt"];
                     obj.uniqueid = receiptdetails[i]["uniqueid"];
                     obj.unPdAmt = receiptdetails[i]["unPdAmt"];
-                    obj.cur = receiptdetails[i]["cur"];
-                    //Rev 1.0
+                    obj.cur = receiptdetails[i]["cur"];                    
                     obj.PartyInvoiceNo = receiptdetails[i]["PartyInvoiceNo"];
                     obj.PartyInvoiceDate = receiptdetails[i]["PartyInvoiceDate"];
-                    //Rev 1.0 End
+                    
                     newobj.push(obj);
                 }
+                //Rev 1.0 End
             }
             document.getElementById('DocNoDocTbl').innerHTML = "";
             document.getElementById('DocNoDocTbl').innerHTML = MakeTableFromArray(newobj, "SetDoc", "DocumentIndex");

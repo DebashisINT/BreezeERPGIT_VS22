@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.39   27-07-2023      0026624: Modify Adjustment of Documents - Debit Note / Purchase Return with Purchase Invoice module all bootstrap modal outside click
+    2.0   Priti     V2.0.40   25-10-2023      0026916:Party Invoice No and Party Invoice Date required in the Document Search Window of the Grid for the module Adjustment of Document
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="DebitNoteAdjustPInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.DebitNoteAdjustPInvoice" %>
@@ -8,7 +9,7 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="JS/SearchPopup.js?v=0.02"></script>
     <link href="CSS/CustomerReceiptAdjustment.css" rel="stylesheet" />
-    <script src="JS/DebitNoteAdjustPInvoice.js?v=3.0"></script>
+    <script src="JS/DebitNoteAdjustPInvoice.js?v=3.1"></script>
 
 
 </asp:Content>
@@ -444,7 +445,10 @@
                                 <th>Document Type</th>
                                 <th>Document Amount</th>
                                 <th>Balance Amount</th>
-
+                                 <%--Rev 2.0--%>
+                                <th>Party Invoice No</th>
+                                <th>Party Invoice Date</th>
+                              <%--  Rev 2.0 End--%>
                             </tr>
                         </table>
                     </div>
