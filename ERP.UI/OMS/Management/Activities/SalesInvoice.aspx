@@ -1591,7 +1591,7 @@ $(document).ready(function () {
                                             <div class="col-md-3" id="divRFQNumber" runat="server">
                                                 <dxe:ASPxLabel ID="lblRFQNumber" runat="server" Text="RFQ Number">
                                                 </dxe:ASPxLabel>
-                                                <dxe:ASPxTextBox ID="txtRFQNumber" runat="server" ClientInstanceName="ctxtRFQNumber" Width="100%" PropertiesTextEdit-MaxLength="500" >
+                                                <dxe:ASPxTextBox ID="txtRFQNumber" runat="server" ClientInstanceName="ctxtRFQNumber" Width="100%" PropertiesTextEdit-MaxLength="500" TabIndex="17" >
                                                 </dxe:ASPxTextBox>
                                             </div>
                                             <div class="col-md-6">
@@ -1599,7 +1599,7 @@ $(document).ready(function () {
                                                     <div class="col-md-3 lblmTop8" id="divRFQDate" runat="server" >
                                                         <dxe:ASPxLabel ID="lblRFQDate" runat="server" Text="RFQ Date">
                                                         </dxe:ASPxLabel>
-                                                        <dxe:ASPxDateEdit ID="dtRFQDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtRFQDate" Width="100%">
+                                                        <dxe:ASPxDateEdit ID="dtRFQDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" DisplayFormatString="dd-MM-yyyy" UseMaskBehavior="True" ClientInstanceName="cdtRFQDate" Width="100%" TabIndex="18">
                                                             <ButtonStyle Width="13px">
                                                             </ButtonStyle>
 
@@ -1609,7 +1609,7 @@ $(document).ready(function () {
                                                     <div class="col-md-9 lblmTop8" id="divProjectSite" runat="server">
                                                         <dxe:ASPxLabel ID="lblProjectSite" runat="server" Text="Project/Site">
                                                         </dxe:ASPxLabel>
-                                                        <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500">
+                                                        <dxe:ASPxTextBox ID="txtProjectSite" runat="server" ClientInstanceName="ctxtProjectSite" Width="100%" PropertiesTextEdit-MaxLength="500" TabIndex="19">
                                                         </dxe:ASPxTextBox>
                                                     </div>
                                                 </div>
@@ -1619,13 +1619,13 @@ $(document).ready(function () {
                                             <div class="col-md-4">
                                                 <dxe:ASPxLabel ID="ASPxLabel8" runat="server" Text="Remarks">
                                                 </dxe:ASPxLabel>
-                                                <asp:TextBox ID="txtRemarks" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtRemarks" runat="server" TabIndex="20"></asp:TextBox>
                                             </div>
                                             <div class="col-md-2" id="divposGst">
                                                 <dxe:ASPxLabel ID="lbl_PosForGst" runat="server" Text="Place Of Supply [GST]">
                                                 </dxe:ASPxLabel>
                                                 <span style="color: red">*</span>
-                                                <dxe:ASPxComboBox ID="ddl_PosGst" runat="server" ValueType="System.String" Width="100%" ClientInstanceName="cddl_PosGst" TabIndex="18">
+                                                <dxe:ASPxComboBox ID="ddl_PosGst" runat="server" ValueType="System.String" Width="100%" ClientInstanceName="cddl_PosGst" TabIndex="21">
                                                     <ClientSideEvents SelectedIndexChanged="function(s, e) { PopulatePosGst(e)}" />
                                                 </dxe:ASPxComboBox>
                                             </div>
@@ -1633,7 +1633,7 @@ $(document).ready(function () {
                                             <div class="col-md-2">
                                                 <dxe:ASPxLabel ID="ASPxLabel13" runat="server" Text="Transaction Category">
                                                 </dxe:ASPxLabel>
-                                                <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" Enabled="false">
+                                                <asp:DropDownList ID="drdTransCategory" runat="server" Width="100%" Enabled="false" TabIndex="22">
                                                     <asp:ListItem Selected="True" Text="Select" Value="0"></asp:ListItem>
                                                     <asp:ListItem Text="B2B" Value="B2B" />
                                                     <asp:ListItem Text="B2C" Value="B2C" /><%--Rev 1.0--%>
@@ -1647,7 +1647,7 @@ $(document).ready(function () {
 
                                             <div id="divMail" class="col-md-2" style="padding-top: 19px; display: none">
                                                 <label class="checkbox-inline">
-                                                    <asp:CheckBox ID="chkSendMail" runat="server"></asp:CheckBox>
+                                                    <asp:CheckBox ID="chkSendMail" runat="server" TabIndex="23"></asp:CheckBox>
                                                     <span style="margin: 0px 0; display: block">
                                                         <dxe:ASPxLabel ID="ASPxLabel9" runat="server" Text="Send Email">
                                                         </dxe:ASPxLabel>
@@ -1659,7 +1659,7 @@ $(document).ready(function () {
                                                 </dxe:ASPxLabel>
                                                 <%-- <label id="lblProject" runat="server">Project</label>--%>
                                                 <dxe:ASPxGridLookup ID="lookup_Project" runat="server" ClientInstanceName="clookup_Project" DataSourceID="EntityServerModeDataSalesInvoice"
-                                                    KeyFieldName="Proj_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False">
+                                                    KeyFieldName="Proj_Id" Width="100%" TextFormatString="{0}" AutoGenerateColumns="False" TabIndex="24">
                                                     <Columns>
                                                         <dxe:GridViewDataColumn FieldName="Proj_Code" Visible="true" VisibleIndex="1" Caption="Project Code" Settings-AutoFilterCondition="Contains" Width="200px">
                                                             <Settings AutoFilterCondition="Contains" />
@@ -1697,7 +1697,7 @@ $(document).ready(function () {
                                             <div class="col-md-4">
                                                 <dxe:ASPxLabel ID="lblHierarchy" runat="server" Text="Hierarchy">
                                                 </dxe:ASPxLabel>
-                                                <asp:DropDownList ID="ddlHierarchy" runat="server" Width="100%" Enabled="false">
+                                                <asp:DropDownList ID="ddlHierarchy" runat="server" Width="100%" Enabled="false" TabIndex="25">
                                                 </asp:DropDownList>
                                             </div>
                                             <div style="clear: both;"></div>
@@ -1705,7 +1705,7 @@ $(document).ready(function () {
                                                 <%-- <dxe:ASPxLabel ID="lblReverseCharge" runat="server" Text="Reverse Charge">
                                                 </dxe:ASPxLabel>--%>
 
-                                                <asp:CheckBox ID="CB_ReverseCharge" runat="server" Text="Reverse Charge" TextAlign="Right" Checked="false"></asp:CheckBox>
+                                                <asp:CheckBox ID="CB_ReverseCharge" runat="server" Text="Reverse Charge" TextAlign="Right" Checked="false" TabIndex="26"></asp:CheckBox>
                                             </div>
 
                                         </div>

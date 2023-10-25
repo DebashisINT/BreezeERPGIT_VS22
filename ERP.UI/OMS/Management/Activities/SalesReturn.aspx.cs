@@ -3,6 +3,8 @@
 // 2.0   Sanchita  V2.0.39    14-07-2023      Multi UOM EVAC Issues status modulewise - Sales Return. Mantis : 26524
 // 3.0   Sanchita  V2.0.40    06-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
 //                                            Mantis : 26871
+// 4.0   Sanchita  V2.0.40    19-10-2023      Coordinator data not showing in the following screen while linking Quotation/Inquiry Entries
+//                                            Mantis : 26924
 #endregion//====================================================End Revision History=====================================================================
 
 
@@ -10580,6 +10582,10 @@ namespace ERP.OMS.Management.Activities
             string strRFQDate = "";
             string strProjectSite = "";
             string ResultString = "";
+            // Rev 4.0
+            string strSalesmanId = "";
+            string strSalesmanName = "";
+            // End of Rev 4.0
 
             DataTable dt_Head = objSalesRetBL.GetInvoiceDate(KeyVal);
 
@@ -10591,9 +10597,15 @@ namespace ERP.OMS.Management.Activities
                     strRFQDate = Convert.ToString(dt_Head.Rows[0]["Inv_RFQDate"]);
                 }
                 strProjectSite = Convert.ToString(dt_Head.Rows[0]["Invoice_ProjectSite"]);
+                // Rev 4.0
+                strSalesmanId = Convert.ToString(dt_Head.Rows[0]["SalesmanId"]);
+                strSalesmanName = Convert.ToString(dt_Head.Rows[0]["SalesmanName"]);
+                // End of Rev 4.0
 
-
-                ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite);
+                // Rev 4.0
+                //ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite);
+                ResultString = Convert.ToString(strRFQNumber + "~" + strRFQDate + "~" + strProjectSite + "~" + strSalesmanId + "~" + strSalesmanName);
+                // End of Rev 4.0
             }
 
             return ResultString;
