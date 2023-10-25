@@ -672,10 +672,16 @@ function MakeTableFromArray(myObj, onSelect, UniqueIndex) {
         for (key in myObj[0]) {
 
             if (PropertyCount == 0)
-                txt += " <td class='hide'>" + myObj[x]["id"] + "</td>";            
-            else if (PropertyCount == 6)
+                txt += " <td class='hide'>" + myObj[x]["id"] + "</td>";    
+                // Rev 2.0
+            //else if (PropertyCount == 6)
+            else if (PropertyCount == 7)
+            // End of Rev 2.0
                 txt += " <td class='hide'>" + myObj[x]["uniqueid"] + "</td>";
-            else if (PropertyCount == 8)
+                // Rev 2.0
+            //else if (PropertyCount == 8)
+            else if (PropertyCount == 9)
+            // End of Rev 2.0
                 txt += " <td class='hide'>" + myObj[x]["cur"] + "</td>";
             else
                 txt += " <td style='width:220px'><input onclick='PopupTextClickDoc(event," + onSelect + ")' type='text' style='background-color: #3399520a;'" + UniqueIndex + "='" + count + "'onfocus='DocumentGetFocus(event)'  onblur='DocumentlostFocus(event)' onkeydown=DocumnetSelected(event,'" + UniqueIndex.toString() + "',event.target) width='100%'  readonly  />" + myObj[x][key] + "</td>";
