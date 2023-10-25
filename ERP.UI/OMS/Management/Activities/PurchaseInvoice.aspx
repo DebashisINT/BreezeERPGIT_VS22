@@ -1,6 +1,8 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                05-05-2023        2.0.37           Pallab              26040: Add Purchase Invoice module design modification & check in small device
+1.0                05-05-2023        V2.0.37           Pallab              26040: Add Purchase Invoice module design modification & check in small device
+2.0                25-10-2023        V2.0.40           Priti               0026898:Global level round off is not coming while tagging GRN into the Invoice. 
+                                                 
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Purchase Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false"
@@ -1209,8 +1211,14 @@ else if (pageStatus == "delete") {
         ctxt_Charges.SetValue(SUM_ChargesAmount);
         cOtherTaxAmtval.SetValue(SUM_ChargesAmount);
         cInvValue.SetValue(SUM_TotalAmount);
-        cTotalAmt.SetValue(SUM_TotalAmount);
+       
         cTotalQty.SetValue(SUM_ProductQuantity);
+
+         //Rev 2.0
+       // cTotalAmt.SetValue(SUM_TotalAmount);
+        var SUM_Total_Amount = RunningSpliteDetails[7];
+        cTotalAmt.SetValue(SUM_Total_Amount);
+        //Rev 2.0 End
     }
 }
 function ddl_Currency_Rate_Change() {
