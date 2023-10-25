@@ -2,6 +2,8 @@
  * Rev 1.0   Sanchita   V2.0.39     22-09-2023      GST is showing Zero in the TAX Window whereas GST in the Grid calculated. 
  *                                                  Mantis: 26843
  *                                                  Session["MultiUOMData"] has been renamed to Session["MultiUOMDataPI"]
+ * Rev 2.0   Priti      V2.0.40     25-10-2023      Global level round off is not coming while tagging GRN into the Invoice. 
+ *                                                  Mantis: 0026898
  * *****************************************************************************************/
 using System;
 using System.Configuration;
@@ -4515,6 +4517,8 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
 
                         grid.DataSource = GetPurchaseInvoice(dst.Tables[0]);
                         grid.DataBind();
+
+                       
                     }
                     if (dst.Tables[1] != null && dst.Tables[1].Rows.Count > 0)
                     {
@@ -4651,10 +4655,28 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
             return ChargesAmount;
         }
         //End of MAntis Issue 24806
+
+        protected decimal ClculatedTotalCharge(List<Taxes> taxChargeDataSource)
+        {
+            decimal totalCharges = 0;
+            foreach (Taxes txObj in taxChargeDataSource)
+            {
+                if (Convert.ToString(txObj.TaxName).Contains("(+)"))
+                {
+                    totalCharges += Convert.ToDecimal(txObj.Amount);
+                }
+                else
+                {
+                    totalCharges -= Convert.ToDecimal(txObj.Amount);
+                }
+            }
+            totalCharges += Convert.ToDecimal(txtGstCstVatCharge.Text);
+            return totalCharges;
+        }
         public string CalculateOrderAmount(DataTable PurchaseOrderdt)
         {
-            decimal SUM_Amount = 0, SUM_TotalAmount = 0, SUM_TaxAmount = 0, SUM_ChargesAmount = 0, SUM_ProductQuantity = 0;
-
+            decimal SUM_Amount = 0, SUM_TotalAmount = 0, SUM_TaxAmount = 0, SUM_ChargesAmount = 0, SUM_ProductQuantity = 0,
+            SUM_Total_Amount = 0;
             if (PurchaseOrderdt != null && PurchaseOrderdt.Rows.Count > 0)
             {
                 foreach (DataRow rrow in PurchaseOrderdt.Rows)
@@ -4673,7 +4695,11 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
             //Mantis Issue 24806
             SUM_ChargesAmount = Convert.ToDecimal(CalculateOtherAmount());
             //End of Mantis Issue 24806
-            return Convert.ToString(SUM_ChargesAmount + "~" + SUM_Amount + "~" + SUM_ChargesAmount + "~" + SUM_TaxAmount + "~" + SUM_TotalAmount + "~" + SUM_TotalAmount + "~" + SUM_ProductQuantity);
+            //Rev 2.0
+            SUM_Total_Amount = SUM_TotalAmount + Convert.ToDecimal(SUM_ChargesAmount);
+            return Convert.ToString(SUM_ChargesAmount + "~" + SUM_Amount + "~" + SUM_ChargesAmount + "~" + SUM_TaxAmount + "~" + SUM_TotalAmount + "~" + SUM_TotalAmount + "~" + SUM_ProductQuantity+"~"+ SUM_Total_Amount);
+            //return Convert.ToString(SUM_ChargesAmount + "~" + SUM_Amount + "~" + SUM_ChargesAmount + "~" + SUM_TaxAmount + "~" + SUM_TotalAmount + "~" + SUM_TotalAmount + "~" + SUM_ProductQuantity);
+            //Rev 2.0
         }
         public IEnumerable GetSalesOrderInfo(DataTable SalesOrderdt1, string Order_Id)
         {
@@ -11215,6 +11241,9 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
                     gridTax.DataSource = taxChargeDataSource;
                     gridTax.DataBind();
                     gridTax.JSProperties["cpJsonChargeData"] = createJsonForChargesTax(TaxDetailsdt);
+                    //Rev 2.0
+                    gridTax.JSProperties["cpTotalCharges"] = ClculatedTotalCharge(taxChargeDataSource);
+                    //Rev 2.0 End
                 }
             }
             else if (strSplitCommand == "SaveGst")
