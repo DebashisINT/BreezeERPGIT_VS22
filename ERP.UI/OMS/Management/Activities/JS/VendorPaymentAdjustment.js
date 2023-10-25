@@ -1,5 +1,7 @@
 ﻿//====================================================Revision History =========================================================================
-//1.0   v2.0.39	 Priti	27-06-2023	0026412: Auto calculation of Adjusted amount during Adjustment of Document Entries-Advance with Invoice for Vendor
+//1.0   v2.0.39	    Priti	    27-06-2023	    0026412: Auto calculation of Adjusted amount during Adjustment of Document Entries-Advance with Invoice for Vendor
+//2.0   V2.0.40     Sanchita    25-10-2023      26915: Party Invoice Date required in the Document Search window of the Invoice for the module 
+//                                              Adjustment of Documents - Advance With Invoice
 //====================================================End Revision History=====================================================================
 /*****************
 Global variable*/
@@ -570,7 +572,10 @@ function gridDocNobuttonClick() {
         $('#DocumentModel').modal('show');
 
         var newobj = [];
-        var htmlScript = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'>  <th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Party Invoice Number</th><th>Document Amount</th><th>Balance Amount</th></tr>";
+        // Rev rev 2.0 [ <th>Party Invoice Number</th> added ]
+        //var htmlScript = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'>  <th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Party Invoice Number</th><th>Document Amount</th><th>Balance Amount</th></tr>";
+        var htmlScript = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'>  <th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Party Invoice Number</th><th>Party Invoice Date</th><th>Document Amount</th><th>Balance Amount</th></tr>";
+        // End of Rev rev 2.0
        
         htmlScript += ' </table>';
         document.getElementById('DocNoDocTbl').innerHTML = htmlScript;
@@ -583,6 +588,9 @@ function gridDocNobuttonClick() {
             obj.docDate = tempDocumentList[i]["docDate"];
             obj.doctype = tempDocumentList[i]["doctype"];
             obj.PartyInvoiceNo = tempDocumentList[i]["PartyInvoiceNo"];
+            // Rev rev 2.0
+            obj.PartyInvoiceDate = tempDocumentList[i]["PartyInvoiceDate"];
+            // End of Rev rev 2.0
             obj.actAmt = tempDocumentList[i]["actAmt"];
             obj.uniqueid = tempDocumentList[i]["uniqueid"];
             obj.unPdAmt = tempDocumentList[i]["unPdAmt"];
@@ -605,13 +613,21 @@ function gridDocumentNewkeydown(e) {
 
                 var obj = {};
                 var NewCode = receiptdetails[i]["No"];
-                if (NewCode.toUpperCase().includes(SearchObj.toUpperCase())) {
+                // Rev rev 2.0
+                //if (NewCode.toUpperCase().includes(SearchObj.toUpperCase())) {
+                var PartyInvoiceNo = receiptdetails[i]["PartyInvoiceNo"];
+                
+                if (NewCode.toUpperCase().includes(SearchObj.toUpperCase()) || PartyInvoiceNo.toUpperCase().includes(SearchObj.toUpperCase())) {
+                    // End of Rev rev 2.0
                     
                     obj.id = receiptdetails[i]["id"];
                     obj.No = receiptdetails[i]["No"];
                     obj.docDate = receiptdetails[i]["docDate"];
                     obj.doctype = receiptdetails[i]["doctype"];
                     obj.PartyInvoiceNo = receiptdetails[i]["PartyInvoiceNo"];
+                    // Rev rev 2.0
+                    obj.PartyInvoiceDate = receiptdetails[i]["PartyInvoiceDate"];
+                    // End of Rev rev 2.0
                     obj.actAmt = receiptdetails[i]["actAmt"];
                     obj.uniqueid = receiptdetails[i]["uniqueid"];
                     obj.unPdAmt = receiptdetails[i]["unPdAmt"];
@@ -643,7 +659,10 @@ function MakeTableFromArray(myObj, onSelect, UniqueIndex) {
     var txt = '';
     var count = 0;
 
-    txt = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'><th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Party Invoice Number</th><th>Document Amount</th><th>Balance Amount</th></tr>";
+    // Rev rev 2.0 [ </th><th>Party Invoice Number</th> added ]
+    //txt = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'><th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Party Invoice Number</th><th>Document Amount</th><th>Balance Amount</th></tr>";
+    txt = "<table class='dynamicPopupTbl' border='1' width='100%'> <tr class='HeaderStyle'><th>Document Number</th> <th>Document Date</th> <th>Document Type</th><th>Party Invoice Number</th></th><th>Party Invoice Date</th><th>Document Amount</th><th>Balance Amount</th></tr>";
+    // End of Rev rev 2.0
 
 
     for (x in myObj) {
