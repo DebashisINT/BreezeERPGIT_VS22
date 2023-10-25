@@ -1,7 +1,9 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                05-04-2023        2.0.37           Pallab              25915: Add Estimate/Cost Sheet module design modification
-2.0                04-08-2023        2.0.40           Pallab              26676: Add Estimate/Cost Sheet module all bootstrap modal outside click event disable
+1.0                05-04-2023        V2.0.37           Pallab              25915: Add Estimate/Cost Sheet module design modification
+2.0                04-08-2023        V2.0.40           Pallab              26676: Add Estimate/Cost Sheet module all bootstrap modal outside click event disable
+3.0                25-10-2023        V2.0.40           Pallab              	0026940: Save & New option is not working in Estimate / Cost Sheet Screen (Sales) 
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Estimate Cost Sheet" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EstimateCostSheet.aspx.cs" Inherits="ERP.OMS.Management.Activities.EstimateCostSheet" %>
@@ -264,37 +266,42 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                     // Quote Date validation Start
                     var sdate = tstartdate.GetValue();
-                    var edate = tenddate.GetValue();
+                    //Rev 3.0
+                    // var edate = tenddate.GetValue();
+                    //var endDate = new Date(edate);
+                    //Rev 3.0  End
 
                     var startDate = new Date(sdate);
-                    var endDate = new Date(edate);
+                   
                     if (sdate == null || sdate == "") {
                         flag = false;
                         $('#MandatorysDate').attr('style', 'display:block');
                     }
                     else {
                         $('#MandatorysDate').attr('style', 'display:none');
-                    }
-                    if (edate == null || sdate == "") {
-                        flag = false;
-                        $('#MandatoryEDate').attr('style', 'display:block');
-                    }
-                    else {
-                        // alert("hello");
-                        $('#MandatoryEDate').attr('style', 'display:none');
-                        //if (startDate > endDate) 
-                        if (tstartdate.GetText() > tenddate.GetText()) {
+                     }
+                    //Rev 3.0
+                    //if (edate == null || sdate == "") {
+                    //    flag = false;
+                    //    $('#MandatoryEDate').attr('style', 'display:block');
+                    //}
+                    //else {
+                    //    // alert("hello");
+                    //    $('#MandatoryEDate').attr('style', 'display:none');
+                    //    //if (startDate > endDate)
+                    //    if (tstartdate.GetText() > tenddate.GetText()) {
 
-                            //alert(startDate);
-                            //alert(endDate);
-                            flag = false;
-                            $('#MandatoryEgSDate').attr('style', 'display:block');
-                        }
-                        else {
-                            $('#MandatoryEgSDate').attr('style', 'display:none');
-                        }
-                    }
+                    //        //alert(startDate);
+                    //        //alert(endDate);
+                    //        flag = false;
+                    //        $('#MandatoryEgSDate').attr('style', 'display:block');
+                    //    }
+                    //    else {
+                    //        $('#MandatoryEgSDate').attr('style', 'display:none');
+                    //    }
+                    //}
                     // Quote Date validation End
+                    //Rev 3.0  End
 
                     // Quote Customer validation Start
                     var customerId = GetObjectID('hdnCustomerId').value
