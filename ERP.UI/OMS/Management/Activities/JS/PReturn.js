@@ -1,5 +1,6 @@
 ﻿//=======================================================Revision History =====================================================
-//    1.0   Priti    V2.0.39   01-08-2023      0026641: Tax amount is not calculating for the Purchase Return for partial qty
+//    1.0   Priti       V2.0.39     01-08-2023      0026641: Tax amount is not calculating for the Purchase Return for partial qty
+//    2.0   rev 2.0    V2.0.40     06-10-2023      0026946: Base Quantity does not converting according to the Alt. Quantity in Purchase Return entry screen
 //=========================================================End Revision History===================================================
 
 
@@ -3362,6 +3363,9 @@ function AutoPopulateMultiUOM() {
         data: JSON.stringify({ ProductID: ProductID }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        // Rev 2.0
+        async: false,
+        // End of Rev 2.0
         success: function (msg) {
 
             if (msg.d.length != 0) {
@@ -3777,7 +3781,9 @@ function CalcBaseQty() {
     //var PackingSaleUOM = Productdetails.split("||@||")[20];  // Alternate UOM selected from Product Master (tbl_master_product_packingDetails.packing_saleUOM)
 
     var Productdetails = (grid.GetEditor('ProductID').GetText() != null) ? grid.GetEditor('ProductID').GetText() : "0";
-    var Productdetails = (InsgridBatch.GetEditor('gvColProduct').GetText() != null) ? InsgridBatch.GetEditor('gvColProduct').GetText() : "0";
+    // Rev 2.0
+    //var Productdetails = (InsgridBatch.GetEditor('gvColProduct').GetText() != null) ? InsgridBatch.GetEditor('gvColProduct').GetText() : "0";
+    // End of Rev 2.0
     var ProductID = Productdetails.split("||@||")[0];
     var PackingQtyAlt = 0;
     var PackingQty = 0;
@@ -3786,10 +3792,16 @@ function CalcBaseQty() {
 
     $.ajax({
         type: "POST",
-        url: "PurchaseIndent.aspx/AutoPopulateAltQuantity",
+        // Rev 2.0
+        //url: "PurchaseIndent.aspx/AutoPopulateAltQuantity",
+        url: "PReturn.aspx/AutoPopulateAltQuantity",
+        // End of Rev 2.0
         data: JSON.stringify({ ProductID: ProductID }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        // Rev 2.0
+        async: false,
+        // End of Rev 2.0
         success: function (msg) {
 
             if (msg.d.length != 0) {
