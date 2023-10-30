@@ -1,6 +1,8 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                22-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+1.0                22-03-2023        V2.0.36           Pallab              25733 : Master pages design modification
+2.0                30-10-2023        V2.0.40           Priti               0026948 : In Accounts Head creation screen "Asset Type" will be mandatory and Default selection value will be "Blank".
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="MainAccountAddEdit.aspx.cs" Inherits="ERP.OMS.Management.Master.MainAccountAddEdit" %>
@@ -583,7 +585,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }*/
         /*Rev end 1.0*/
     </style>
-    <script src="Js/MainAccountAddEdit.js?v=2.0"></script>
+    <script src="Js/MainAccountAddEdit.js?v=2.1"></script>
 
     <script>
         $(document).ready(function () {
@@ -772,6 +774,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <dxe:ASPxComboBox ID="drp_asset_type" runat="server" Width="100%" ValueType="System.String" class="form-control" SelectedIndex="0" EnableIncrementalFiltering="true" ClientInstanceName="cdrpassettype">
                                     <ClientSideEvents SelectedIndexChanged="getasset_type" />
                                     <Items>
+                                        <%--Rev 2.0--%>
+                                        <dxe:ListEditItem Text="Select" Value="0" />
+                                        <%--Rev 2.0 End--%>
                                         <dxe:ListEditItem Text="Bank" Value="Bank" />
                                         <dxe:ListEditItem Text="Cash" Value="Cash" />
 
@@ -780,7 +785,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     </Items>
                                 </dxe:ASPxComboBox>
                                 <span id="spn_asset_type" style="display: none;" class="errorField">
-                                    <img id="mandetorydelivery" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory" />
+                                    <img id="mandetoryAssetType" class="dxEditors_edtError_PlasticBlue" src="/DXR.axd?r=1_36-tyKfc" title="Mandatory" />
                                 </span>
                             </div>
                         </div>

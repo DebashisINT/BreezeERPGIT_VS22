@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿//================================================== Revision History ====================================================
+//Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+//1.0                30-10-2023        V2.0.40           Priti              0026948 : In Accounts Head creation screen Asset Type will be mandatory and Default selection value will be Blank.
+//====================================================== Revision History =============================================
+
+$(document).ready(function () {
 
             if ((cdrp_asset_type.GetValue() == "Asset") || (cdrp_asset_type.GetValue() == "Liability"))
             {
@@ -796,7 +801,10 @@ function submitvalidate(s, e) {
         $("#spn_acnt_type").hide();
     }
     if (acnt_type == "Asset") {
-        if (asset_type == "" || asset_type == null) {
+        //Rev 1.0
+       // if (asset_type == "" || asset_type == null) {
+        //Rev 1.0 End
+        if (asset_type == "0" || asset_type == null) {
             $("#spn_asset_type").show();
             x = false;
         }
