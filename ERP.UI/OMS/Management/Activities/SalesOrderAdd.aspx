@@ -742,20 +742,30 @@ function PerformCallToGridBind() {
             //#### added by Samrat Roy for Transporter Control #############
             var quote_Id = gridquotationLookup.gridView.GetSelectedKeysOnPage();
             // Rev 5.0
-            //if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
-                // End of Rev 5.0
-                var type = "";
+            var type = "";
 
-                if ($("#rdl_Salesquotation").find(":checked").val() == "QN") {
-                    type = "QO";
-                }
-                else {
-                    type = "SINQ";
-                }
-                callTransporterControl(quote_Id[0], type);
-            // Rev 5.0
-            //}
+            if ($("#rdl_Salesquotation").find(":checked").val() == "QN") {
+                type = "QO";
+            }
+            else {
+                type = "SINQ";
+            }
             // End of Rev 5.0
+
+            if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
+                
+                // Rev 5.0
+                //var type = "";
+
+                //if ($("#rdl_Salesquotation").find(":checked").val() == "QN") {
+                //    type = "QO";
+                //}
+                //else {
+                //    type = "SINQ";
+                //}
+                // End of Rev 5.0
+                callTransporterControl(quote_Id[0], type);
+            }
             ///// #### End : Samrat Roy for Transporter Control : End #############
             //grid.Refresh();
             clookup_Project.SetEnabled(false);
