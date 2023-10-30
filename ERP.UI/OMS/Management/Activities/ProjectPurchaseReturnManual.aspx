@@ -1,10 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectPurchaseReturnManual.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseReturnManual" %>
-
-
+﻿<%--=======================================================Revision History=========================================================================
+ 1.0     Priti    V2.0.40  26-10-2023     	0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+=========================================================End Revision History========================================================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectPurchaseReturnManual.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseReturnManual" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
-
-
 <%@ Register Src="~/OMS/Management/Activities/UserControls/BillingShippingControl.ascx" TagPrefix="ucBS" TagName="BillingShippingControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/VehicleDetailsControl.ascx" TagPrefix="uc1" TagName="VehicleDetailsControl" %>
 <%@ Register Src="~/OMS/Management/Activities/UserControls/UOMConversion.ascx" TagPrefix="uc3" TagName="UOMConversionControl" %>
@@ -90,13 +89,35 @@
             text-transform: none !important;
         }
     </style>
-
-
-
-
-
     <script type="text/javascript">
+        // Rev 1.0
+        function SetLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= tstartdate.GetDate()) && (tstartdate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                tstartdate.SetDate(null);
+                jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+            }
+        }        
+        function AddContraLockStatus(LockDate) {
+            $.ajax({
+                type: "POST",
+                url: "ProjectPurchaseReturnManual.aspx/GetAddLock",
+                data: JSON.stringify({ LockDate: LockDate }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    var currentRate = msg.d;
+                    if (currentRate != null && currentRate == "-9") {
+                        $("#hdnValAfterLock").val("-9");
+                    }
+                    else {
+                        $("#hdnValAfterLock").val("1");
+                    }
 
+                }
+            });
+        }
+        // End of Rev 1.0
         function ChkDataDigitCount(e) {
             var data = $(e).val();
             $(e).val(parseFloat(data).toFixed(4));
@@ -2636,6 +2657,14 @@ function Save_ButtonClick() {
     LoadingPanel.Show();
     flag = true;
     grid.batchEditApi.EndEdit();
+    // Rev 1.0
+    AddContraLockStatus(tstartdate.GetDate());
+    if ($("#hdnValAfterLock").val() == "-9") {
+        jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        LoadingPanel.Hide();
+        flag = false;
+    }
+    // End of Rev 1.0
     // Quote no validation Start
     //var QuoteNo = ctxt_PLQuoteNo.GetText();
     var QuoteNo = $('#<%=txt_PLQuoteNo.ClientID %>').val();
@@ -5641,9 +5670,10 @@ function fn_Edit(keyValue) {
                                                 <asp:Label ID="lbl_SaleInvoiceDt" runat="server" Text="Posting Date"></asp:Label>
                                                 <%--    <dxe:ASPxLabel ID="lbl_SaleInvoiceDt" runat="server" Text="Date">
                                                 </dxe:ASPxLabel>--%>
+                                                  <%--Rev 1.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ]--%>
                                                 <dxe:ASPxDateEdit ID="dt_PLQuote" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="tstartdate" TabIndex="3" Width="100%">
 
-                                                    <ClientSideEvents DateChanged="function(s, e) {DateCheck();}" />
+                                                    <ClientSideEvents DateChanged="function(s, e) {DateCheck();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}"/>
                                                     <ClientSideEvents GotFocus="function(s,e){tstartdate.ShowDropDown();}"></ClientSideEvents>
                                                     <ButtonStyle Width="13px">
                                                     </ButtonStyle>
@@ -8122,5 +8152,18 @@ function fn_Edit(keyValue) {
        <asp:HiddenField runat="server" ID="hdnpackingqty" />  
      <asp:HiddenField runat="server" ID="hdnuomFactor" /> 
     <asp:HiddenField runat="server" ID="hdnisOverideConvertion" /> 
+
+     <%--Rev 1.0--%>
+    <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+    <asp:HiddenField ID="hdnLockToDate" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+    <asp:HiddenField ID="hdnValAfterLock" runat="server" />
+    <asp:HiddenField ID="hdnValAfterLockMSG" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateedit" runat="server" /> 
+    <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+    <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+    <%--End of Rev 1.0--%>
 </asp:Content>
 

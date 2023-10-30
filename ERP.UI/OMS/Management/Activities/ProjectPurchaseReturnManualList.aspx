@@ -1,6 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectPurchaseReturnManualList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseReturnManualList" %>
-
-
+﻿<%--=======================================================Revision History=========================================================================
+ 1.0     Priti    V2.0.40  26-10-2023     	0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+=========================================================End Revision History========================================================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectPurchaseReturnManualList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseReturnManualList" %>
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -340,6 +341,10 @@
             </table>
         </div>
     </div>
+    <%--Rev 1.0--%>
+    <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <%--End of Rev 1.0--%>
     <div class="GridViewArea">
         <dxe:ASPxGridView ID="GrdPurchaseReturn" runat="server" KeyFieldName="SrlNo" AutoGenerateColumns="False"
             Width="100%" ClientInstanceName="cGrdPurchaseReturn" OnCustomCallback="GrdPurchaseReturn_CustomCallback" SettingsBehavior-AllowFocusedRow="true"
@@ -401,12 +406,18 @@
                         <% } %>
                         <% if (rights.CanEdit)
                            { %>
-                        <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Return_Id")%>')" class="pad" title="Edit">
+                         <%--  REV 1.0--%>
+                     <%--   <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Return_Id")%>')" class="pad" title="Edit">--%>                           
+                        <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%#Eval("Return_Id")%>')" class="pad" title="Edit" style='<%#Eval("Editlock")%>'>
                             <img src="../../../assests/images/info.png" /></a><%} %>
+                         <%--  REV 1.0 END--%>
                         <% if (rights.CanDelete)
                            { %>
-                        <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Return_Id")%>')" class="pad" title="Delete">
+                        <%--  REV 1.0--%>
+                        <%--<a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Return_Id")%>')" class="pad" title="Delete">--%>
+                        <a href="javascript:void(0);" onclick="OnClickDelete('<%#Eval("Return_Id")%>')" class="pad" title="Delete" style='<%#Eval("Deletelock")%>'>
                             <img src="../../../assests/images/Delete.png" /></a><%} %>
+                        <%--  REV 1.0 END--%>
                         <%-- <a href="javascript:void(0);" onclick="OnClickCopy('<%# Container.KeyValue %>')" class="pad" title="Copy ">
                             <i class="fa fa-copy"></i></a>--%>
                         <%--   <% if (rights.CanEdit)
@@ -565,5 +576,16 @@
 
 
     </dxe:ASPxPopupControl>
+
+        <%--Rev 1.0--%>
+        <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+        <asp:HiddenField ID="hdnLockToDate" runat="server" />
+        <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateCon" runat="server" />        
+        <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+        <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+        <%--End of Rev 1.0--%>
 </asp:Content>
 
