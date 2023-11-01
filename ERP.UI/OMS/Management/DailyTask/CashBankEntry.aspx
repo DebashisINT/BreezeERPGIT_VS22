@@ -1332,7 +1332,7 @@ $('#<%=hdnBranchId.ClientID %>').val(defaultbranch);
                                                                 </div>
                                                                 <div class="col-md-2" id="divInstrumentNo" style="">
                                                                     <%--Rev 3.0 [ <span style="color: red">*</span>  added] --%>
-                                                                    <label id="" style="">Instrument No<span style="color: red">*</span></label>
+                                                                    <label id="" style="">Instrument No <span style="color: red">*</span></label>
                                                                     <div id="">
                                                                         <dxe:ASPxTextBox runat="server" ID="txtInstNobth" ClientInstanceName="ctxtInstNobth" Width="100%" MaxLength="30" CssClass="pull-left">
                                                                         </dxe:ASPxTextBox>
