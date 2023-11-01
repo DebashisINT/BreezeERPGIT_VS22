@@ -2,6 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                04-04-2023        2.0.37           Pallab              25882: Cash/Bank Voucher Add module design modification
 2.0                11-05-2023        2.0.38           Sanchita            In the TDS Challan module(Cash/Bank) the FY 23-24 is missing. Refer: 26091     
+3.0                01-11-2023       V2.0.41           Sanchita            26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Cash/Bank Voucher" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" Inherits="ERP.OMS.Management.DailyTask.management_DailyTask_CashBankEntry" CodeBehind="CashBankEntry.aspx.cs" %>
@@ -1330,7 +1331,8 @@ $('#<%=hdnBranchId.ClientID %>').val(defaultbranch);
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2" id="divInstrumentNo" style="">
-                                                                    <label id="" style="">Instrument No</label>
+                                                                    <%--Rev 3.0 [<span style="color: red">*</span> added] --%>
+                                                                    <label id="" style="">Instrument No <span style="color: red">*</span></label>
                                                                     <div id="">
                                                                         <dxe:ASPxTextBox runat="server" ID="txtInstNobth" ClientInstanceName="ctxtInstNobth" Width="100%" MaxLength="30" CssClass="pull-left">
                                                                         </dxe:ASPxTextBox>
