@@ -1,5 +1,6 @@
 ﻿//====================================================Revision History =========================================================================
-//1.0   V2.0.39 	Priti	26-04-2023	0025931: Error while selecting Project Code while making Cash/Bank entry
+//1.0   V2.0.39 	Priti	    26-04-2023	    0025931: Error while selecting Project Code while making Cash/Bank entry
+//2.0   V2.0.41     Sanchita    01-11-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
 //====================================================End Revision History=====================================================================
 
 var ISdatatable = 0;
@@ -2905,6 +2906,14 @@ function SaveButtonClick() {
             return false;
         }
     }
+    // Rev 2.0
+    else if (InstrumentType != "NA" && InstrumentType != "CH") {
+        if (InstrumentNo == null || InstrumentNo == "") {
+            $("#MandatoryInstNo").show();
+            return false;
+        }
+    }
+    // End of Rev 2.0
     if (PaidToYesNO == "Yes" && VoucherType == "P") {
         var strPaidTo = ctxtPaidTo.GetText().trim();
         if (strPaidTo == "") {
@@ -3148,6 +3157,14 @@ function SaveButtonClickNew() {
             return false;
         }
     }
+    // Rev 2.0
+    else if (InstrumentType != "NA" && InstrumentType != "CH" ) {
+        if (InstrumentNo == null || InstrumentNo == "") {
+            $("#MandatoryInstNo").show();
+            return false;
+        }
+    }
+    // End of Rev 2.0
     if (PaidToYesNO == "Yes" && VoucherType == "P") {
         var strPaidTo = ctxtPaidTo.GetText().trim();
         if (strPaidTo == "") {
