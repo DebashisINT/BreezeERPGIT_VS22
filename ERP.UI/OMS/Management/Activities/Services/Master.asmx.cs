@@ -1,6 +1,7 @@
 ﻿#region//====================================================Revision History==============================================================
-//1.0   Priti V2.0.36   06-02-2023    0025645: Branch Requisition - While Adding a Product, the Search is not working properly
+//1.0   Priti V2.0.36    06-02-2023      0025645: Branch Requisition - While Adding a Product, the Search is not working properly
 //2.0   Priti V2.0.39    02-08-2023      0026647:Alternate qty is calculating wrong in the Sales return
+//3.0   Priti V2.0.40    30-10-2023      0026899:While Making Vendor Payment entry the Selection of the Transporter will be restricted if the Main Account is blank in the Transporter Master
 #endregion//====================================================End Revision History=====================================================================
 
 using BusinessLogicLayer;
@@ -2202,15 +2203,27 @@ namespace ERP.OMS.Management.Activities.Services
                 string strQuery = "";
                 if (type == "DV")
                 {
+                    //Rev 3.0
+                    //strQuery = @"Select top 250  * From (Select cnt_internalid,IsNull(cnt_shortName,'NA') as uniquename,IsNull(cnt_firstName,'')+IsNull(cnt_middleName,'')+IsNull(cnt_lastName,'') as Name,
+                    //                'Vendor' as Type
+                    //                From tbl_master_contact Where cnt_contactType ='DV'  and cnt_contactStatus<>3
+                    //                union
+                    //                Select cnt_internalid,IsNull(cnt_UCC,'NA') as uniquename,IsNull(cnt_firstName,'')+IsNull(cnt_middleName,'')+IsNull(cnt_lastName,'') as Name,
+                    //                'Transpoter' as Type
+                    //                From tbl_master_contact Where cnt_contactType='TR' and Statustype<>'D'
+                    //              ) as tbl " +
+                    //               " Where uniquename like '%" + SearchKey + "%' or Name like '%" + SearchKey + "%'";
+
                     strQuery = @"Select top 250  * From (Select cnt_internalid,IsNull(cnt_shortName,'NA') as uniquename,IsNull(cnt_firstName,'')+IsNull(cnt_middleName,'')+IsNull(cnt_lastName,'') as Name,
                                     'Vendor' as Type
                                     From tbl_master_contact Where cnt_contactType ='DV'  and cnt_contactStatus<>3
                                     union
                                     Select cnt_internalid,IsNull(cnt_UCC,'NA') as uniquename,IsNull(cnt_firstName,'')+IsNull(cnt_middleName,'')+IsNull(cnt_lastName,'') as Name,
                                     'Transpoter' as Type
-                                    From tbl_master_contact Where cnt_contactType='TR' and Statustype<>'D'
+                                    From tbl_master_contact Where cnt_contactType='TR' and Statustype<>'D' and isnull(cnt_mainAccount,'')<>''
                                   ) as tbl " +
                                    " Where uniquename like '%" + SearchKey + "%' or Name like '%" + SearchKey + "%'";
+                    //Rev 3.0 End
                 }
                 else
                 {
