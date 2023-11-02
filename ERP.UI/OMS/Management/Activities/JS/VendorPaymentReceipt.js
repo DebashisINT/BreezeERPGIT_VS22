@@ -1,4 +1,6 @@
-﻿
+﻿//====================================================Revision History =========================================================================
+//1.0   V2.0.41     Sanchita    01-11-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
+//====================================================End Revision History=====================================================================
 
 function SetLostFocusonDemand(e) {
 
@@ -802,6 +804,17 @@ function SaveButtonClickNew() {
         return false;
     }
 
+    // Rev 1.0
+    var InstrumentType = cComboInstrumentTypee.GetValue();
+    if (InstrumentType != "NA" && InstrumentType != "CH") {
+        if (ctxtInstNobth.GetText() == null || ctxtInstNobth.GetText() == "") {
+            cLoadingPanelCRP.Hide();
+            $("#MandatoryInstNo").show();
+            return false;
+        }
+    }
+    // End of Rev 1.0
+
     //Code added by Sudip
     grid.batchEditApi.EndEdit();
     var gridCount = grid.GetVisibleRowsOnPage();
@@ -1008,13 +1021,23 @@ function SaveButtonClick() {
         $("#MandatoryCashBank").show();
         return false;
     }
-
     var VoucherAmount = ctxtVoucherAmount.GetValue();
     if (parseFloat(VoucherAmount) == 0) {
         jAlert("Voucher amount must be greater then ZERO.");
         cLoadingPanelCRP.Hide();
         return false;
     }
+    // Rev 1.0
+    var InstrumentType = cComboInstrumentTypee.GetValue();
+    if (InstrumentType != "NA" && InstrumentType != "CH") {
+        if (ctxtInstNobth.GetText() == null || ctxtInstNobth.GetText() == "") {
+            cLoadingPanelCRP.Hide();
+            $("#MandatoryInstNo").show();
+            return false;
+        }
+    }
+    // End of Rev 1.0
+
     //Code added by Sudip
     grid.batchEditApi.EndEdit();
     var gridCount = grid.GetVisibleRowsOnPage();
@@ -1690,6 +1713,10 @@ function rbtnType_SelectedIndexChanged() {
 //............Rate.........................
 function InstrumentTypeSelectedIndexChanged() {
     $("#MandatoryInstrumentType").hide();
+    // Rev 1.0
+    $("#MandatoryInstNo").hide();
+    // End of Rev 1.0
+
     var InstType = cComboInstrumentTypee.GetValue();
 
     if (InstType == "CH") {

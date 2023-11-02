@@ -1,5 +1,6 @@
 <%--=======================================================Revision History=========================================================    
     1.0   Pallab    V2.0.38   20-04-2023      25868: Add Vendor Payment/Receipt module design modification
+    2.0   Sanchita  V2.0.41   01-11-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
 =========================================================End Revision History=======================================================--%>
 
 <%@ Page Title="VendorPaymentReceipt" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorPaymentReceipt.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorPaymentReceipt" %>
@@ -638,10 +639,14 @@ function Currency_Rate() {
                                         </div>
                                         <div class="clear"></div>
                                         <div class="col-md-3" id="divInstrumentNo" style="" runat="server">
-                                            <label id="" style="">Instrument No</label>
+                                           <%--Rev 2.0 [ <span style="color: red">*</span>  added] --%>
+                                            <label id="" style="">Instrument No <span style="color: red">*</span></label>
                                             <div id="">
                                                 <dxe:ASPxTextBox runat="server" ID="txtInstNobth" ClientInstanceName="ctxtInstNobth" Width="100%" MaxLength="30">
                                                 </dxe:ASPxTextBox>
+                                                <%--Rev 2.0--%>
+                                                <span id="MandatoryInstNo" class="iconInstNo pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                                                <%--End of Rev 2.0--%>
                                             </div>
                                         </div>
                                         <div class="col-md-3" id="tdIDateDiv" style="" runat="server">

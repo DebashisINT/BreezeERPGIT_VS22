@@ -2,6 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                28-04-2023        2.0.37           Pallab              25967: Add Customer Receipt module design modification & check in small device
 2.0                20-06-2023        2.0.38           Pallab              26399: Add Customer Receipt module all bootstrap modal outside click event disable
+3.0                01-11-2023        V2.0.41          Sanchita            26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerReceipt.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerReceipt" %>
@@ -1101,10 +1102,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                 </div>
 
                                                 <div class="col-md-2 lblmTop8" id="divInstrumentNo" style="" runat="server">
-                                                    <label id="" style="">Instrument No</label>
+                                                    <%--Rev 3.0 [ <span style="color: red">*</span>  added] --%>
+                                                    <label id="" style="">Instrument No <span style="color: red">*</span></label>
                                                     <div id="">
                                                         <dxe:ASPxTextBox runat="server" ID="txtInstNobth" ClientInstanceName="ctxtInstNobth" Width="100%" MaxLength="30">
                                                         </dxe:ASPxTextBox>
+                                                        <%--Rev 3.0--%>
+                                                        <span id="MandatoryInstNo" class="iconInstNo pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                                                        <%--End of Rev 3.0--%>
                                                     </div>
                                                 </div>
                                                 <div class="clear"></div>
