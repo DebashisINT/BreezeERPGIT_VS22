@@ -1,4 +1,8 @@
-﻿var CanCallback = true;
+﻿//====================================================Revision History =========================================================================
+//1.0   V2.0.41     Sanchita    01-11-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
+//====================================================End Revision History=====================================================================
+
+var CanCallback = true;
 var ReceiptObj = [];
 var ReceiptObjTax = [];
 var DocObj = {};
@@ -789,6 +793,10 @@ function CashBank_SelectedIndexChanged() {
 
 function InstrumentTypeSelectedIndexChanged() {
     $("#MandatoryInstrumentType").hide();
+    // Rev 1.0
+    $("#MandatoryInstNo").hide();
+    // End of Rev 1.0
+
     var InstType = cComboInstrumentTypee.GetValue();
 
     if (InstType == "CH") {
@@ -2561,7 +2569,19 @@ function validation() {
 
 
     }
-
+    // Rev 1.0
+    var InstrumentType = cComboInstrumentTypee.GetValue();
+    if (InstrumentType != "NA" && InstrumentType != "CH") {
+        if (ctxtInstNobth.GetText() == null || ctxtInstNobth.GetText() == "") {
+            cLoadingPanelCRP.Hide();
+            $("#MandatoryInstNo").show();
+            return false;
+        }
+        else {
+            $("#MandatoryInstNo").hide();
+        }
+    }
+    // End of Rev 1.0
     if (VoucherAmount == "0.00") {
 
         jAlert("Voucher amount must be greater then ZERO.");
