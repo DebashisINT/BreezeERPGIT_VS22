@@ -710,14 +710,25 @@ function SetDoc(id, Name, e) {
        
         grid.batchEditApi.StartEdit(globalRowindex, 8);  
         var No  = e.parentElement.cells[1].innerText;
-        var doctype = e.parentElement.cells[3].innerText;
-        var actAmt = e.parentElement.cells[5].innerText;
-        var unPdAmt = e.parentElement.cells[7].innerText;
-        var Uniqueid = e.parentElement.cells[6].innerText;
-        var cur = e.parentElement.cells[8].innerText;
+    var doctype = e.parentElement.cells[3].innerText;
+        //Rev 2.0 --Rework V2.0.41
+        //var actAmt = e.parentElement.cells[5].innerText;
+        //var unPdAmt = e.parentElement.cells[7].innerText;
+        //var Uniqueid = e.parentElement.cells[6].innerText;
+        //var cur = e.parentElement.cells[8].innerText;
+        var actAmt = e.parentElement.cells[6].innerText;
+        var unPdAmt = e.parentElement.cells[8].innerText;
+        var Uniqueid = e.parentElement.cells[7].innerText;
+        var cur = e.parentElement.cells[9].innerText;
+        //Rev 2.0 --Rework V2.0.41
+
         var PartyInvoiceNo = e.parentElement.cells[4].innerText;
         //obj.PartyInvoiceNo = tempDocumentList[i]["PartyInvoiceNo"];
-       
+
+
+
+
+
         grid.GetEditor("DocNo").SetText(No);
         grid.GetEditor("DocAmt").SetValue(actAmt);
         grid.GetEditor("OsAmt").SetValue(unPdAmt);
