@@ -1,0 +1,118 @@
+﻿
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridWCList";
+
+    settings.CallbackRouteValues = new { Action = "GetWorkCenterList", Controller = "ManufacturingProcessMaster" };
+
+    settings.KeyFieldName = "WorkCenterID";
+    //settings.ClientSideEvents.EndCallback = "OnWCListEndCallback";
+    //settings.ClientSideEvents.BeginCallback = "OnWCListBeginCallback";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "BOMEntry", Action = "GetBOMEntryList" };
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+    settings.Settings.VerticalScrollableHeight = 230;
+
+    settings.Settings.HorizontalScrollBarMode = DevExpress.Web.ScrollBarMode.Auto;
+    settings.SettingsBehavior.ColumnResizeMode = DevExpress.Web.ColumnResizeMode.Control;
+    settings.SettingsContextMenu.FooterMenuItemVisibility.SummaryCount = true;
+    settings.SettingsSearchPanel.Visible = true;
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.SettingsContextMenu.EnableColumnMenu = DevExpress.Utils.DefaultBoolean.True;
+
+    settings.Settings.ShowFooter = true;
+
+
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
+    settings.Settings.ShowFilterRowMenu = true;
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "WorkCenterCode";
+        x.Caption = "Code";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "WorkCenterDescription";
+        x.Caption = "Description";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "Remarks";
+        x.Caption = "Remarks";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.FieldName = "BranchName";
+        x.Caption = "Branch";
+        //x.VisibleIndex = 1;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.ColumnType = DevExpress.Web.Mvc.MVCxGridViewColumnType.TextBox;
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+        x.FixedStyle = GridViewColumnFixedStyle.Left;
+    });
+
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "Actions";
+        //x.VisibleIndex = 16;
+        x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        x.SetDataItemTemplateContent(c =>
+        {
+             string EnqRights = "";
+            if (ViewBag.CanView)
+            {
+                EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"ViewWCData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "WorkCenterID")) + "')\"><img src='/assests/images/doc.png' title='Edit' class='mright8' /> </a>";
+            }
+            if (ViewBag.CanEdit)
+            {
+                EnqRights = EnqRights + "&nbsp;" +
+                    "<a style='cursor:pointer' onclick=\"OpenWCData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "WorkCenterID")) + "')\"><img src='/assests/images/edit.png' title='Edit' class='mright8' /> </a>";
+            }
+            if (ViewBag.CanDelete)
+            {
+                EnqRights = EnqRights + "&nbsp;" +
+                    "<a style='cursor:pointer; ' onclick=\"RemoveWCData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "WorkCenterID")) + "')\"> <img src='/assests/images/delete.png' title='Delete' class='mright8' /> </a>";
+            }
+            ViewContext.Writer.Write(EnqRights);
+        });
+
+
+    });
+
+
+
+}).Bind(Model).GetHtml()
+
+
+

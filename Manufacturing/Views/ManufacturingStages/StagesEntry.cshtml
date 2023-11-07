@@ -1,0 +1,686 @@
+﻿@using System.Web.UI.WebControls
+@model Manufacturing.Models.ViewModel.ManufacturingStagesViewModel
+
+
+@{
+    ViewBag.Title = "Stages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/assests/pluggins/choosen/choosen.min.js"></script>
+<link href="~/assests/pluggins/choosen/choosen.min.css" rel="stylesheet" />
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<script src="~/Scripts/SearchPopup.js"></script>
+<style>
+    .customerno {
+        right: -17px;
+        top: 3px;
+    }
+    .workOverlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        background: rgba(0, 0, 0, 0.71);
+        z-index: 45;
+    }
+    .form-box {
+        z-index: 101;
+        background: #fff;
+        position:relative;
+    }
+    .btn-workClose {
+        width: 29px;
+        height: 29px;
+        display: inline-block;
+        border: 1px solid #ff8080;
+        color: #ff8080;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 27px;
+        margin-top: -2p;
+    }
+    .btn-workClose:hover {
+        background: #ff8080;
+        color:#fff;
+    }
+    .gridTable {
+        width:100%;
+        border:1px solid #ccc;
+    }
+        .gridTable > tbody > tr > td, .gridTable > thead > tr > th {
+            padding:8px 10px;
+        }
+        .gridTable > thead > tr > th {
+            background: #54749d;
+            color: #fff;
+            border-top: 1px solid #49668c;
+        }
+    .gridTable > tbody > tr > td {
+       border-bottom:1px solid #ccc
+    }
+        .gridTable > tbody > tr > td:not(:last-child) {
+            border-right:1px solid #ccc;
+        }
+        .gridTable > thead > tr > th:not(:last-child) {
+            border-right: 1px solid #49668c;
+
+        }
+</style>
+
+<script>
+
+    function WCEntrySave(mode) {
+
+        var workcenterid = $('#WorkCenterID').val();
+        var workcentercode = $('#WorkCenterCode').val();
+        var workcenterdescription = $('#WorkCenterDescription').val();
+        var remarks = $('#Remarks').val();
+
+        var Address1 = $('#WorkCenterAddress1').val();
+        var Address2 = $('#WorkCenterAddress2').val();
+        var Address3 = $('#WorkCenterAddress3').val();
+        var Landmark = $('#WorkCenterLandmark').val();
+
+        var Pin = $('#WorkCenterPin').val();
+        var Branch = $('#ddl_Branch').val();
+        var City = $('#WorkCenterCity').val();
+        var countryid = $('#WorkCenterCountry').val();
+        var Stateid = $('#WorkCenterState').val();
+
+        if (Pin == '' || Pin=="0") {
+            $('#EPin').show();
+        }
+        else {
+            $('#EPin').hide();
+        }
+
+        if (workcentercode == '') {
+            $('#EWorkCenterCode').show();
+        }
+        else {
+            $('#EWorkCenterCode').hide();
+        }
+
+        if (workcenterdescription == '') {
+            $('#EWorkCenterDescription').show();
+        }
+        else {
+            $('#EWorkCenterDescription').hide();
+        }
+
+        if (countryid == '' || countryid == null) {
+            $('#ECountry').show();
+        }
+        else {
+            $('#ECountry').hide();
+        }
+
+        if (Stateid == '' || Stateid == null) {
+            $('#EState').show();
+        }
+        else {
+            $('#EState').hide();
+        }
+
+        if (workcentercode != "" && workcenterdescription != "" && countryid != "" && Stateid != "") {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("WorkCenterInsertUpdate", "ManufacturingStages")",
+                data: {
+                    WorkCenterID: workcenterid, WorkCenterCode: workcentercode, WorkCenterDescription: workcenterdescription, Remarks: remarks, WorkCenterAddress1: Address1, WorkCenterAddress2: Address2,
+                    WorkCenterAddress3: Address3, WorkCenterLandmark: Landmark, WorkCenterCountry: countryid, WorkCenterState: Stateid, WorkCenterCity: City, WorkCenterPin: Pin, WorkCenterBranch: Branch
+                },
+                success: function (response) {
+
+                    if (response.Success) {
+                        jAlert('Work center saved successfully.', 'Alert!', function (r) {
+                            if (r) {
+                                if (mode == "Exit") {
+                                    setTimeout(function () {
+                                        var url = $('#hdnWCListPage').val();
+                                        window.location.href = url;
+                                    }, 500);
+                                }
+                                else {
+                                    $('#WorkCenterID').val(0);
+                                    $('#WorkCenterCode').val('');
+                                    $('#WorkCenterDescription').val('');
+                                    $('#Remarks').val('');
+
+                                    $('#WorkCenterAddress1').val('');
+                                    $('#WorkCenterAddress2').val('');
+                                    $('#WorkCenterAddress3').val('');
+                                    $('#WorkCenterLandmark').val('');
+                                    $('#lstCountry').val($("#lstCountry option:first").val());
+                                    $('#ddl_Branch').val($("#ddl_Branch option:first").val());
+                                    onCountryChange();
+                                    //$('#lstPin').val();
+                                    //$('#ddl_Branch').val();
+                                    //$('#lstCity').val();
+                                    //$('#lstCountry').val();
+                                    //$('#lstState').val();
+                                    $('#WorkCenterCode').focus();
+                                }
+                            }
+
+                        });
+                    }
+                    else if (response.Message != "") {
+                        jAlert(response.Message + "!");
+                    }
+                    else {
+                        jAlert("Please try again later!");
+                    }
+                }
+            });
+        }
+
+    }
+
+    function populateBranch() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetWorkCenterBranch", "ManufacturingStages")",
+            success: function (response) {
+                if (response.length > 0) {
+                    var html = "";
+                    var WorkCenterBranch = $('#WorkCenterBranch').val();
+                    for (var i = 0; i < response.length; i++) {
+                        html = html + "<option value='" + response[i].branch_id + "'>" + response[i].branch_description + "</option>";
+                    }
+
+                    $('#ddl_Branch').html(html);
+                    if (WorkCenterBranch != "" && WorkCenterBranch != null) {
+                        setBranch(WorkCenterBranch);
+                    }
+                }
+                $('#ddl_Branch').trigger("chosen:updated");
+            }
+        });
+    }
+
+    function setBranch(obj) {
+        if (obj) {
+            var lstbrch = document.getElementById("ddl_Branch");
+
+            for (var i = 0; i < lstbrch.options.length; i++) {
+                if (lstbrch.options[i].value == obj) {
+                    lstbrch.options[i].selected = true;
+                }
+            }
+            $('#ddl_Branch').trigger("chosen:updated");
+
+        }
+    }
+
+    function populateCountry() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetWorkCenterCountry", "ManufacturingStages")",
+            success: function (response) {
+                if (response.length > 0) {
+                    var html = "";
+                    for (var i = 0; i < response.length; i++) {
+                        html = html + "<option value='" + response[i].Code + "'>" + response[i].Name + "</option>";
+                    }
+                    $('#lstCountry').html(html);
+                }
+                $('#lstCountry').trigger("chosen:updated");
+                $('#WorkCenterCountry').val($('#lstCountry').val());
+                onCountryChange();
+            }
+        });
+    }
+
+    function onCountryChange() {
+
+        var CountryId = "";
+        if ($('#WorkCenterCountry').val() != '' && $('#WorkCenterCountry').val() != null) {
+            CountryId = $('#WorkCenterCountry').val();
+        } else {
+            return;
+        }
+        var lState = $('select[id$=lstState]');
+        var lCity = $('select[id$=lstCity]');
+        var lArea = $('select[id$=lstArea]');
+        var lPin = $('select[id$=lstPin]');
+        lState.empty();
+        lCity.empty();
+        lArea.empty();
+        lPin.empty();
+        $('#lstCity').trigger("chosen:updated");
+        $('#lstArea').trigger("chosen:updated");
+        $('#lstPin').trigger("chosen:updated");
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetWorkCenterStates", "ManufacturingStages")",//"BranchAddEdit.aspx/GetStates",
+            data: { CountryCode: CountryId },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (msg) {
+                var list = msg;
+                var listItems = [];
+                if (list.length > 0) {
+
+                    for (var i = 0; i < list.length; i++) {
+                        var id = '';
+                        var name = '';
+                        id = list[i].split('|')[1];
+                        name = list[i].split('|')[0];
+
+                        listItems.push('<option value="' +
+                        id + '">' + name
+                        + '</option>');
+                    }
+
+                    $(lState).append(listItems.join(''));
+
+                    $('#lstState').fadeIn();
+                    $('#lstState').trigger("chosen:updated");
+                    onStateChange();
+                    if ($('#WorkCenterState').val() != "" && $('#WorkCenterState').val() != null) {
+                        var stateVal = $('#WorkCenterState').val();
+                        // document.getElementById('lstState').value = "";
+                        setState(stateVal);
+                    }
+                }
+                else {
+                    $('#lstState').fadeIn();
+                    $('#lstState').trigger("chosen:updated");
+                }
+            }
+        });
+    }
+
+    function setState(obj) {
+        if (obj) {
+            var lstStae = document.getElementById("lstState");
+
+            for (var i = 0; i < lstStae.options.length; i++) {
+                if (lstStae.options[i].value == obj) {
+                    lstStae.options[i].selected = true;
+                }
+            }
+            $('#lstState').trigger("chosen:updated");
+            onStateChange();
+        }
+    }
+
+    function setCity(obj) {
+        if (obj) {
+            var lstCity = document.getElementById("lstCity");
+
+            for (var i = 0; i < lstCity.options.length; i++) {
+                if (lstCity.options[i].value == obj) {
+                    lstCity.options[i].selected = true;
+                }
+            }
+            $('#lstCity').trigger("chosen:updated");
+            onCityChange();
+        }
+    }
+
+    //function setArea(obj) {
+    //    if (obj) {
+    //        var lstArea = document.getElementById("lstArea");
+
+    //        for (var i = 0; i < lstArea.options.length; i++) {
+    //            if (lstArea.options[i].value == obj) {
+    //                lstArea.options[i].selected = true;
+    //            }
+    //        }
+    //        $('#lstArea').trigger("chosen:updated");
+
+    //    }
+
+    //}
+
+    function setPin(obj) {
+        if (obj) {
+            var lstPin = document.getElementById("lstPin");
+
+            for (var i = 0; i < lstPin.options.length; i++) {
+                if (lstPin.options[i].value == obj) {
+                    lstPin.options[i].selected = true;
+                }
+            }
+            $('#lstPin').trigger("chosen:updated");
+
+        }
+    }
+
+    //function setWarehouse(obj) {
+    //    if (obj) {
+    //        var ddl_ParentWarehouse = document.getElementById("ddl_ParentWarehouse");
+    //        for (var i = 0; i < ddl_ParentWarehouse.options.length; i++) {
+    //            if (ddl_ParentWarehouse.options[i].value == obj) {
+    //                ddl_ParentWarehouse.options[i].selected = true;
+    //            }
+    //        }
+    //        $('#ddl_ParentWarehouse').trigger("chosen:updated");
+    //    }
+    //}
+
+    function onCityChange() {
+        getPinList();
+    }
+
+    function onStateChange() {
+        var StateId = "";
+        if (document.getElementById('lstState').value) {
+            StateId = document.getElementById('lstState').value;
+        }
+        else {
+            return;
+        }
+        var lCity = $('select[id$=lstCity]');
+        var lArea = $('select[id$=lstArea]');
+        var lPin = $('select[id$=lstPin]');
+        lArea.empty();
+        lCity.empty();
+        lPin.empty();
+        $('#lstArea').trigger("chosen:updated");
+        $('#lstPin').trigger("chosen:updated");
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetWorkCenterCities", "ManufacturingStages")",//"BranchAddEdit.aspx/GetCities",
+            data: { StateCode: StateId },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (msg) {
+                var list = msg;
+                var listItems = [];
+                if (list.length > 0) {
+
+                    for (var i = 0; i < list.length; i++) {
+                        var id = '';
+                        var name = '';
+                        id = list[i].split('|')[1];
+                        name = list[i].split('|')[0];
+
+                        listItems.push('<option value="' +
+                        id + '">' + name
+                        + '</option>');
+                    }
+
+                    $(lCity).append(listItems.join(''));
+
+                    $('#lstCity').fadeIn();
+                    $('#lstCity').trigger("chosen:updated");
+                    onCityChange();
+                    if (document.getElementById('WorkCenterCity').value) {
+                        var cityVal = document.getElementById('WorkCenterCity').value;
+                        //document.getElementById('WorkCenterCity').value = "";
+                        setCity(cityVal);
+                    }
+                }
+                else {
+                    $('#lstCity').fadeIn();
+                    $('#lstCity').trigger("chosen:updated");
+                }
+            }
+        });
+    }
+
+    function getPinList() {
+
+        var CityId = "";
+        if (document.getElementById('lstCity').value) {
+            CityId = document.getElementById('lstCity').value;
+        }
+        else {
+            return;
+        }
+        var lPin = $('select[id$=lstPin]');
+        lPin.empty();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetWorkCenterPin", "ManufacturingStages")",//"BranchAddEdit.aspx/GetPin",
+            data: { CityCode: CityId },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (msg) {
+                lPin.empty();
+                var list = msg;
+                var listItems = [];
+                if (list.length > 0) {
+
+                    for (var i = 0; i < list.length; i++) {
+                        var id = '';
+                        var name = '';
+                        id = list[i].split('|')[1];
+                        name = list[i].split('|')[0];
+
+                        listItems.push('<option value="' +
+                        id + '">' + name
+                        + '</option>');
+                    }
+
+                    $(lPin).append(listItems.join(''));
+
+                    $('#lstPin').fadeIn();
+                    $('#lstPin').trigger("chosen:updated");
+                    if (document.getElementById('WorkCenterPin').value) {
+                        setPin(document.getElementById('WorkCenterPin').value);
+                    }
+
+                }
+                else {
+                    $('#lstPin').fadeIn();
+                    $('#lstPin').trigger("chosen:updated");
+                }
+            }
+        });
+    }
+
+    $(function () {
+        //populateCountry();
+        populateBranch();
+
+        $('#WorkCenterCode').focus();
+
+        PopulateDataWorkCenter();
+
+        document.onkeyup = function (e) {
+
+            if (event.keyCode == 88 && event.altKey == true) { //  && myModal.GetVisible() == true
+                WCEntrySave('Exit');
+            }
+            if (event.keyCode == 83 && event.altKey == true) { //  && myModal.GetVisible() == true
+                WCEntrySave('New');
+            }
+        }
+    });
+
+    function PopulateDataWorkCenter() {
+        var WorkCenterID = $('#WorkCenterID').val();
+        if (WorkCenterID > 0) {
+            $('#btnSaveandNew').hide();
+            //var WorkCenterBranch = $('#WorkCenterBranch').val();
+            //$('#lstCountry').val(WorkCenterCountry);
+            //onCountryChange();
+            //var WorkCenterState = $('#WorkCenterState').val();
+            //$('#lstState').val(WorkCenterState);
+        }
+    }
+
+    function getPinWiseData() {
+        var lstPin = $('#lstPin').val();
+        if ((lstPin.length > 5) && (lstPin.length <= 20)) {
+            GetAddressByPin();
+        }
+        else {
+
+            $('#WorkCenterPin').val('');
+            $('#lstCountry').val('');
+            $('#WorkCenterCountry').val('');
+            $('#lstState').val('');
+            $('#WorkCenterState').val('');
+            $('#lstCity').val('');
+            $('#WorkCenterCity').val('');
+        }
+
+    }
+
+    function GetAddressByPin() {
+
+        var detailsByPin = $('#lstPin').val().trim();
+        if (detailsByPin != '') {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetAddressByPin", "ManufacturingStages")",//"Services/BillingShipping.asmx/CustomAddressByPin",
+                data: JSON.stringify({ PinCode: detailsByPin }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                   
+                    if (msg.length > 0) {
+
+                        var obj = msg[0];
+                        $('#WorkCenterPin').val(obj.PinId);
+                        $('#lstCountry').val(obj.CountryName);
+                        $('#WorkCenterCountry').val(obj.CountryId);
+                        $('#lstState').val(obj.StateName);
+                        $('#WorkCenterState').val(obj.StateId);
+                        $('#lstCity').val(obj.CityName);
+                        $('#WorkCenterCity').val(obj.CityId);
+                        
+                    }
+                    else {
+
+                        $('#WorkCenterPin').val('');
+                        $('#lstCountry').val('');
+                        $('#WorkCenterCountry').val('');
+                        $('#lstState').val('');
+                        $('#WorkCenterState').val('');
+                        $('#lstCity').val('');
+                        $('#WorkCenterCity').val('');
+                    }
+                }
+            });
+        }
+        else {
+
+            $('#WorkCenterPin').val('');
+            $('#lstCountry').val('');
+            $('#WorkCenterCountry').val('');
+            $('#lstState').val('');
+            $('#WorkCenterState').val('');
+            $('#lstCity').val('');
+            $('#WorkCenterCity').val('');
+        }
+
+    }
+
+</script>
+
+@*<div class="panel-heading clearfix">
+        <div class="panel-title clearfix pull-left" id="myDiv">
+            <h3 class="pull-left">
+                <label>Work Center</label>
+            </h3>
+
+        </div>
+        <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("WorkCenterList", "WorkCenter")"><i class="fa fa-times"></i></a></div>
+
+    </div>*@
+@*<div id="ApprovalCross" class="crossBtn form-box-cross"><a href="@Url.Action("WorkCenterList", "WorkCenter")"><i class="fa fa-times"></i></a></div>*@
+
+
+
+<div class="workOverlay"></div>
+<div class="form-box w70">
+    <div class="form-box-header">
+        Stages
+        <div id="ApprovalCross" class="pull-right"><a href="@Url.Action("StagesList", "ManufacturingStages")" class="btn-workClose"><i class="fa fa-times"></i></a></div>
+    </div>
+    <div class="form-box-content">
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Code <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.WorkCenterCode, new { @class = "form-control input-sm", @maxlength = "50" })
+                    <span id="EWorkCenterCode" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Description <span style="color:red">*</span></label>
+                <div class="relative">
+                    @Html.TextBoxFor(m => m.WorkCenterDescription, new { @class = "form-control input-sm", @maxlength = "100" })
+                    <span id="EWorkCenterDescription" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Branch </label>
+                <div class="relative">
+                    <select id="ddl_Branch" class="form-control input-sm"></select>
+                    @Html.HiddenFor(x => x.WorkCenterBranch)
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="col-sm-4">
+                <label>Select Process </label>
+                <div class="relative">
+                    <select id="ddl_Branch" class="form-control input-sm"></select>
+                    @Html.HiddenFor(x => x.WorkCenterBranch)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <label>Remarks </label>
+                <div class="relative">
+                    @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h5>Stage Hierarchy </h5>
+                <div class="relative">
+                    <table class="gridTable">
+                        <thead>
+                            <tr>
+                                <th>No. </th>
+                                <th>Code</th>
+                                <th>Description</th>
+                                <th>Process</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>&nbsp; </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp; </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-box-footer">
+        @if (ViewBag.View != 1) 
+        { 
+            <button class="inline-block addResourceBtn  mRight5" id="btnSaveandNew" onclick="WCEntrySave('New');"><div class="addEdcircleBtn" id=""><i class="fa fa-floppy-o"></i></div><span><u>S</u>ave and New</span></button>
+            <button class="inline-block addResourceBtn themeColor " onclick="WCEntrySave('Exit');"><div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div><span>Save and E<u>x</u>it</span></button>
+        }
+    </div>
+</div>
+
+
+@Html.HiddenFor(x => x.WorkCenterID)
+<input type="hidden" value="@Url.Action("StagesList", "ManufacturingStages")" id="hdnWCListPage" />
