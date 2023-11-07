@@ -823,6 +823,12 @@
     <Content Include="Views\ProductionIssue\_ProductionOrderProductList.cshtml" />
     <Content Include="Views\ProductionIssue\_PartialMRPNO.cshtml" />
     <Content Include="Views\ProductionIssue\_PartialPreViewLineItem.cshtml" />
+    <Content Include="Views\ManufacturingProcessMaster\ProcessEntry.cshtml" />
+    <Content Include="Views\ManufacturingProcessMaster\ProcessList.cshtml" />
+    <Content Include="Views\ManufacturingProcessMaster\_WorkCenterDataList.cshtml" />
+    <Content Include="Views\ManufacturingStages\StagesEntry.cshtml" />
+    <Content Include="Views\ManufacturingStages\StagesList.cshtml" />
+    <Content Include="Views\ManufacturingStages\_WorkCenterDataList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
