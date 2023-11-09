@@ -1,6 +1,7 @@
 ﻿//==========================================================Revision History ============================================================================================
-//    1.0   Priti   V2.0.36  17-01-2023   0025582:Error while creating Purchase Order by Tagging Indent.
-//    2.0	Priti   V2.0.39	 10-07-2023   0026534:Net amount calculation is wrong in Purchase Order while using Inclusive tax & tagging an Indent.
+//    1.0   Priti       V2.0.36     17-01-2023   0025582:Error while creating Purchase Order by Tagging Indent.
+//    2.0	Priti       V2.0.39	    10-07-2023   0026534:Net amount calculation is wrong in Purchase Order while using Inclusive tax & tagging an Indent.
+//    3.0   Sanchita    V2.0.41     09-11-2023   26989: While making Purchase Order if user try to Select Indent/Quotation this msg has been showing "Customer Required"
 //========================================== End Revision History =======================================================================================================--%>
 
 function fn_PopOpen()
@@ -89,7 +90,10 @@ function selectValueForRadioBtn() {
         return;
     }
     if (key == null || key == "") {
-        jAlert("Customer required !", 'Alert Dialog: [Quoation]', function (r) {
+        // Rev 3.0
+        //jAlert("Customer required !", 'Alert Dialog: [Quoation]', function (r) {
+        jAlert("Vendor required !", 'Alert Dialog: [Quoation]', function (r) {
+            // End of Rev 3.0
             if (r == true) {
                 ctxtVendorName.Focus();
                // gridquotationLookup.SetEnabled(false);
@@ -5380,7 +5384,10 @@ function disp_prompt(name) {
         page.GetTabByName('General').SetEnabled(false);
         var custID = GetObjectID('hdnCustomerId').value;
         if (custID == null && custID == '') {
-            jAlert('Please select a customer');
+            // Rev 3.0
+            //jAlert('Please select a customer');
+            jAlert('Please select a vendor');
+            // End of Rev 3.0
             page.SetActiveTabIndex(0);
             return;
         }
