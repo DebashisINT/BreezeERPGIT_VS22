@@ -1,7 +1,7 @@
 ﻿//========================================================== Revision History ============================================================================================
 //   1.0   Priti        V2.0.36     02-02-2023      0025253: listing view upgradation required of Journals of Accounts & Finance
-//   2.0   Sanchita     V2.0.43     21-09-2023      26831 : Data Freeze is not working properly for Journal
-//   3.0   Sanchita     V2.0.43     09-11-2023      While Saving Journal Voucher getting an error in Peekay Local DB. Mantis: 26977 
+//   2.0   Sanchita     V2.0.41     21-09-2023      26831 : Data Freeze is not working properly for Journal
+//   3.0   Sanchita     V2.0.41     09-11-2023      While Saving Journal Voucher getting an error in Peekay Local DB. Mantis: 26977 
 //========================================== End Revision History =======================================================================================================
 
 
