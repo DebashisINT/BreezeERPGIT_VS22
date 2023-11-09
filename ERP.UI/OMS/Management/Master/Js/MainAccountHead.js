@@ -1,4 +1,6 @@
-﻿
+﻿//====================================================Revision History =========================================================================
+//1.0   V2.0.41 	Priti	09-11-2023	0026978:The mapping/unmapping of the HSN/SAC code to be restricted in Account Head, once there is transaction exists
+//====================================================End Revision History=====================================================================
 
 function OnMoreInfoClick(id) {
     location.href = "MainAccountAddEdit.aspx?id=" + id;
@@ -1127,6 +1129,11 @@ function MappingLedgerSaveClick() {
                         jAlert("Saved Successfully.", "Alert");
                         //jAlert('Please enter unique short name');
                     }
+                    //Rev 1.0
+                    else {
+                        jAlert("Account Head already used in transaction.The mapping/unmapping of the HSN/SAC code is not allowed.", "Alert");
+                    }
+                    //Rev 1.0 end
                 }
             });
         }
