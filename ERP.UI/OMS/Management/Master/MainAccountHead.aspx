@@ -7,7 +7,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     Inherits="ERP.OMS.Management.Master.management_master_MainAccountHead" CodeBehind="MainAccountHead.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="Js/MainAccountHead.js?v=1.0.0.1"></script>
+    <script src="Js/MainAccountHead.js?v=2.0"></script>
     <script>
         function BankCashType(obj) {
             var actype = ASPxComboBox1.GetText();
