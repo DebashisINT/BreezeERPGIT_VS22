@@ -2319,7 +2319,7 @@ namespace ERP.OMS.Management.Activities
                     string strQuoteNumber = "";
                     // End of Rev 1.0
 
-                    // Rev 1.0 [parameter "SchemeID" and "ref strInvoiceNumber" added]
+                    // Rev 1.0 [parameter "SchemeID" and "ref strQuoteNumber" added]
                     ModifyQuatation(MainQuotationID, strSchemeType, UniqueQuotation, strQuoteDate, strQuoteExpiry, strCustomer, strContactName,ProjId,Docdate,
                                     Reference, strBranch, strAgents, strCurrency, strRate, strTaxType, strTaxCode, tempQuotation, addrDesc, TaxDetailTable,
                                     tempWarehousedt, tempTaxDetailsdt, tempBillAddress, approveStatus, ActionType,
@@ -2753,7 +2753,7 @@ namespace ERP.OMS.Management.Activities
             }
         }
 
-        // Rev 1.0 [ parameter "string strSchemeID" added ]
+        // Rev 1.0 [ parameter "string strSchemeID" and "ref string strQuoteNumber" added ]
         public void ModifyQuatation(string QuotationID, string strSchemeType, string strQuoteNo, string strQuoteDate, string strQuoteExpiry, string strCustomer, string strContactName,Int64 ProjId,string Docdate,
                                     string Reference, string strBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode, DataTable Quotationdt,DataTable addrDesc,
                                     DataTable TaxDetailTable, DataTable Warehousedt, DataTable QuotationTaxdt, DataTable BillAddressdt, string approveStatus, string ActionType,

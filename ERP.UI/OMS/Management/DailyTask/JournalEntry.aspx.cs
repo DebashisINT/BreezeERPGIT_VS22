@@ -1,6 +1,7 @@
 ﻿//========================================================== Revision History ============================================================================================
 //   1.0   Priti        V2.0.36     02-02-2023      0025253: listing view upgradation required of Journals of Accounts & Finance
-//   2.0   Sanchita     V2.0.43     21-09-2023      26831 : Data Freeze is not working properly for Journal    
+//   2.0   Sanchita     V2.0.43     21-09-2023      26831 : Data Freeze is not working properly for Journal
+//   3.0   Sanchita     V2.0.43     09-11-2023      While Saving Journal Voucher getting an error in Peekay Local DB. Mantis: 26977 
 //========================================== End Revision History =======================================================================================================
 
 
@@ -1573,6 +1574,9 @@ namespace ERP.OMS.Management.DailyTask
             string ValidateSubAccount = "";
             string Action = Convert.ToString(hdnMode.Value);
             DataTable Journaldt = new DataTable();
+            // Rev 3.0
+            string SchemeID = "";
+            // End of Rev 3.0
             // Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911
             if (Action == "0")
             {
@@ -1791,7 +1795,10 @@ namespace ERP.OMS.Management.DailyTask
 
             //Rev Work start: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911
             //string validate = checkNMakeJVCode(Convert.ToString(txtBillNo.Text), Convert.ToInt32(CmbScheme.SelectedValue));
-            string validate = checkNMakeJVCode(Convert.ToString(txtBillNo.Text), Convert.ToInt32(hdnSchemeVal.Value));
+            // Rev 3.0
+            //string validate = checkNMakeJVCode(Convert.ToString(txtBillNo.Text), Convert.ToInt32(hdnSchemeVal.Value));
+            SchemeID = Convert.ToString(Convert.ToInt32(hdnSchemeVal.Value));
+            // End of Rev 3.0
             //Rev Work close: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911
             //foreach (DataRow dr in Journaldt.Rows)
             //{
@@ -1830,12 +1837,14 @@ namespace ERP.OMS.Management.DailyTask
             //}
 
 
-
-            if (validate == "outrange" || validate == "duplicate" || validate == "HasError")
-            {
-                grid.JSProperties["cpSaveSuccessOrFail"] = validate;
-            }
-            else if (ValidateSubAccount == "Subaccountmandatory")
+            // Rev 3.0
+            //if (validate == "outrange" || validate == "duplicate" || validate == "HasError")
+            //{
+            //    grid.JSProperties["cpSaveSuccessOrFail"] = validate;
+            //}
+            //else if (ValidateSubAccount == "Subaccountmandatory")
+            if (ValidateSubAccount == "Subaccountmandatory")
+                // End of Rev 3.0
             {
                 grid.JSProperties["cpSaveSuccessOrFail"] = ValidateSubAccount;
             }
@@ -1970,7 +1979,14 @@ namespace ERP.OMS.Management.DailyTask
                 Journaldt.AcceptChanges();
                 if (Journaldt.Rows.Count > 0)
                 {
-                    if (ModifyJournal(Action, JournalID, JVNumStr, strFinYear, strCompanyID, strBranchID, JournalDate, strSegmentID, strCurrency, IBRef, MainNarration, strUserID, Journaldt, Supplystate, TaxOption, SupplyStateId, IsRCM, ProjId, Overheadcost) == true)
+                    // Rev 3.0
+                    string strJournalNumber = "";
+                    // End of Rev 3.0
+
+                    // Rev 3.0 [parameter "SchemeID" and "ref strJournalNumber" added]
+                    if (ModifyJournal(Action, JournalID, JVNumStr, strFinYear, strCompanyID, strBranchID, JournalDate, strSegmentID, strCurrency, IBRef, 
+                        MainNarration, strUserID, Journaldt, Supplystate, TaxOption, SupplyStateId, IsRCM, ProjId, Overheadcost
+                        ,SchemeID , ref strJournalNumber) == true)
                     {
                         Session["VoucherNumber"] = null;
                         Session["VoucherIBRef"] = null;
@@ -2037,9 +2053,12 @@ namespace ERP.OMS.Management.DailyTask
                 Grid.DataBind();
             }
         }
+
+        // Rev 3.0 [ parameter "string strSchemeID" and "ref string strJournalNumber" added ]
         public bool ModifyJournal(string ActionType, string JournalID, string BillNo, string FinYear, string CompanyID, string BranchID, string JournalDate, string SegmentID,
-                                   string CurrencyID, string IBRef, string Narration, string UserID, DataTable JournalDetails, string SupplyState, string TaxOption, string SupplyStateId, bool IsRCM, Int64 ProjId
-                                    , DataTable Overheadcost)
+                                   string CurrencyID, string IBRef, string Narration, string UserID, DataTable JournalDetails, string SupplyState, string TaxOption, 
+                                   string SupplyStateId, bool IsRCM, Int64 ProjId
+                                    , DataTable Overheadcost, string strSchemeID, ref string strJournalNumber)
         {
             //try
             //{
@@ -2108,11 +2127,20 @@ namespace ERP.OMS.Management.DailyTask
                 cmd.Parameters.AddWithValue("@Project_Id", ProjId);
                 // End of Rev Sayantani
                 cmd.Parameters.AddWithValue("@Overheadcost_Ids", Overheadcost);
+                // Rev 3.0
+                cmd.Parameters.AddWithValue("@SchemeID", strSchemeID);
+                cmd.Parameters.Add("@ReturnJournalNumber", SqlDbType.VarChar, 50);
+                cmd.Parameters["@ReturnJournalNumber"].Direction = ParameterDirection.Output;
+                // End of Rev 3.0
 
                 cmd.CommandTimeout = 0;
                 SqlDataAdapter Adap = new SqlDataAdapter();
                 Adap.SelectCommand = cmd;
                 Adap.Fill(dsInst);
+                // Rev 3.0
+                strJournalNumber = Convert.ToString(cmd.Parameters["@ReturnJournalNumber"].Value.ToString());
+                grid.JSProperties["cpVouvherNo"] = strJournalNumber;
+                // End of Rev Sachita
                 cmd.Dispose();
                 con.Dispose();
 
@@ -2157,9 +2185,13 @@ namespace ERP.OMS.Management.DailyTask
             //    return false;
             //}
         }
+
+        // Rev 3.0 [ parameter "string strSchemeID" and "strJournalNumber" added ]
         public bool ModifyJournalTDS(string ActionType, string JournalID, string BillNo, string FinYear, string CompanyID, string BranchID, string JournalDate, string SegmentID,
                                    string CurrencyID, string IBRef, string Narration, string UserID, DataTable JournalDetails, string SupplyState, string TaxOption, string SupplyStateId, bool IsRCM, Int64 ProjId,
-                                    string tdsAmount, string tdsCode, DataTable Overheadcost, bool IsSalary = false, bool isTdsConsideration = false, bool NILRateTDS = false)
+                                   string tdsAmount, string tdsCode, DataTable Overheadcost,
+                                   string strSchemeID, ref string strJournalNumber,
+                                   bool IsSalary = false, bool isTdsConsideration = false, bool NILRateTDS = false)
         {
             try
             {
@@ -2226,11 +2258,20 @@ namespace ERP.OMS.Management.DailyTask
                 //Nil Rate TDS add Tanmoy 01-12-2020
                 cmd.Parameters.AddWithValue("@NILRateTDS", NILRateTDS);
                 //Nil Rate TDS add Tanmoy 01-12-2020
+                // Rev 3.0
+                cmd.Parameters.AddWithValue("@SchemeID", strSchemeID);
+                cmd.Parameters.Add("@ReturnJournalNumber", SqlDbType.VarChar, 50);
+                cmd.Parameters["@ReturnJournalNumber"].Direction = ParameterDirection.Output;
+                // End of Rev 3.0
 
                 cmd.CommandTimeout = 0;
                 SqlDataAdapter Adap = new SqlDataAdapter();
                 Adap.SelectCommand = cmd;
                 Adap.Fill(dsInst);
+                // Rev 3.0
+                strJournalNumber = Convert.ToString(cmd.Parameters["@ReturnJournalNumber"].Value.ToString());
+                gridTDS.JSProperties["cpVouvherNo"] = strJournalNumber;
+                // End of Rev Sachita
                 cmd.Dispose();
                 con.Dispose();
 
@@ -3413,7 +3454,9 @@ namespace ERP.OMS.Management.DailyTask
             string ValidateSubAccount = "";
             string Action = Convert.ToString(hdnMode.Value);
             DataTable Journaldt = new DataTable();
-
+            // Rev 3.0
+            string SchemeID = "";
+            // End of Rev 3.0
 
             if (Action == "0")
             {
@@ -3613,12 +3656,17 @@ namespace ERP.OMS.Management.DailyTask
             //    }
             //}
 
-            string validate = checkNMakeJVCode(Convert.ToString(txtBillNoTDS.Text), Convert.ToInt32(CmbSchemeTDS.SelectedValue));
-            if (validate == "outrange" || validate == "duplicate" || validate == "HasError")
-            {
-                gridTDS.JSProperties["cpSaveSuccessOrFail"] = validate;
-            }
-            else if (ValidateSubAccount == "Subaccountmandatory")
+            // Rev 3.0
+            //string validate = checkNMakeJVCode(Convert.ToString(txtBillNoTDS.Text), Convert.ToInt32(CmbSchemeTDS.SelectedValue));
+            //if (validate == "outrange" || validate == "duplicate" || validate == "HasError")
+            //{
+            //    gridTDS.JSProperties["cpSaveSuccessOrFail"] = validate;
+            //}
+            //else if (ValidateSubAccount == "Subaccountmandatory")
+            SchemeID = Convert.ToString(CmbSchemeTDS.SelectedValue);
+
+            if (ValidateSubAccount == "Subaccountmandatory")
+            // End of Rev 3.0
             {
                 gridTDS.JSProperties["cpSaveSuccessOrFail"] = ValidateSubAccount;
             }
@@ -3751,7 +3799,17 @@ namespace ERP.OMS.Management.DailyTask
 
                 if (Journaldt.Rows.Count > 0)
                 {
-                    if (ModifyJournalTDS(Action, JournalID, JVNumStr, strFinYear, strCompanyID, strBranchID, JournalDate, strSegmentID, strCurrency, IBRef, MainNarration, strUserID, Journaldt, Supplystate, TaxOption, SupplyStateId, IsRCM, ProjId, txtTDSAmount.Text, tdsSection, Overheadcost, chkIsSalary.Checked, isTdsConsideration, NILRateTDS) == true)
+                    // Rev 3.0
+                    string strJournalNumber = "";
+                    // End of Rev 3.0
+
+                    // Rev 3.0 [parameter "SchemeID" and "ref strJournalNumber" added]
+                    if (ModifyJournalTDS(Action, JournalID, JVNumStr, strFinYear, strCompanyID, strBranchID, JournalDate, strSegmentID, strCurrency, IBRef, 
+                        MainNarration, strUserID, Journaldt, Supplystate, TaxOption, SupplyStateId, IsRCM, ProjId, txtTDSAmount.Text, tdsSection, Overheadcost,
+                        SchemeID, ref strJournalNumber,
+                        chkIsSalary.Checked, isTdsConsideration, NILRateTDS
+                        
+                        ) == true)
                     {
                         Session["VoucherNumber"] = null;
                         Session["VoucherIBRef"] = null;
