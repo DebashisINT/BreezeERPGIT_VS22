@@ -4,6 +4,7 @@
    3.0	 Pallab   V2.0.38	  27/04/2023	 0025920: Sales Invoice module design modification 
    4.0   Sanchita V2.0.39     25-07-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
                                              Mantis : 26609   
+   5.0   Sanchita V2.0.41     10/11/2023     26996: Sales Invoice Print when IRN not generated will take place based in System Settings - "Is Print Invoice Without IRN?"
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoiceList" 
@@ -440,11 +441,17 @@
         function onPrintJv(id, TransDate) {
             var ActiveEInvoice = $('#hdnActiveEInvoice').val();
             // if (ActiveEInvoice == "1") {
-            if (ActiveEInvoice == "2") {//0023893:ONLY SALES INVOICE MODULE WILL ALLOW PRINT WITHOUT IRN//For not enter in this loop
+            // Rev 5.0
+            //if (ActiveEInvoice == "2") {//0023893:ONLY SALES INVOICE MODULE WILL ALLOW PRINT WITHOUT IRN//For not enter in this loop
+            if (ActiveEInvoice == "1") {//0023893:ONLY SALES INVOICE MODULE WILL ALLOW PRINT WITHOUT IRN//For not enter in this loop
+            // End of Rev 5.0
                 // if ((new Date(TransDate)) >= (new Date("01-01-2021"))) {
                 var dateParts = TransDate.split("-");
 
-                if ((new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])) >= (new Date("01-01-2021"))) {
+                // Rev 5.0
+                //if ((new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])) >= (new Date("01-01-2021"))) {
+                if ((new Date(TransDate)) >= (new Date("01-01-2021"))) {
+                    // End of Rev 5.0
                     $.ajax({
                         type: "POST",
                         url: "SalesInvoiceList.aspx/GetEditablePermissionFromEInvoice",
