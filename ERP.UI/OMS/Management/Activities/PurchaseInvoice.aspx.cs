@@ -4,6 +4,7 @@
  *                                                  Session["MultiUOMData"] has been renamed to Session["MultiUOMDataPI"]
  * Rev 2.0   Priti      V2.0.40     25-10-2023      Global level round off is not coming while tagging GRN into the Invoice. 
  *                                                  Mantis: 0026898
+ * Rev 3.0   Sanchita   V2.0.41     10-11-2023      While adding an item to an existing Purchase Invoice getting an error. Mantis :26975                                                 
  * *****************************************************************************************/
 using System;
 using System.Configuration;
@@ -3959,6 +3960,12 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
                     //}
 
                     DataRow thisRow;
+                    // Rev 3.0
+                    if (DetailsId == "" || DetailsId == null )
+                    {
+                        DetailsId = SrlNo;
+                    }
+                    // End of Rev 3.0
 
                     if (MultiUOMSaveData.Rows.Count > 0)
                     {
@@ -4966,15 +4973,32 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
 
                     // Rev Mantis Issue 24061 [  "Balance_Amount" columns added in Rows.Add]
                     // Mantis Issue 24429 [ "InvoiceDetails_AltQuantity" and "InvoiceDetails_AltUOM" added ]
-                    PurchaseInvoicedt.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, PurchasePrice, Discount, DiscountAmt,
+                    // Rev 3.0
+                    if( PurchaseInvoicedt.Columns.Contains("invtype")){
+                        PurchaseInvoicedt.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, PurchasePrice, Discount, DiscountAmt,
                         Amount, TaxAmount, TotalAmount, "I", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
-                        Balance_Amount, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
-                    if (Request.QueryString["key"] == "ADD")
-                    {
-                        PurchaseAddDetail.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOMAdd, Warehouse, StockQuantity, StockUOMAddName, PurchasePrice, Discount, DiscountAmt,
-                          Amount, TaxAmount, TotalAmount, "I", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
-                          Balance_Amount, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                        Balance_Amount, ddlInventory.SelectedValue, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                        if (Request.QueryString["key"] == "ADD")
+                        {
+                            PurchaseAddDetail.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOMAdd, Warehouse, StockQuantity, StockUOMAddName, PurchasePrice, Discount, DiscountAmt,
+                              Amount, TaxAmount, TotalAmount, "I", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
+                              Balance_Amount, ddlInventory.SelectedValue, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                        }
                     }
+                    else {
+                        // End of Rev 3.0
+                        PurchaseInvoicedt.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, PurchasePrice, Discount, DiscountAmt,
+                            Amount, TaxAmount, TotalAmount, "I", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
+                            Balance_Amount, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                        if (Request.QueryString["key"] == "ADD")
+                        {
+                            PurchaseAddDetail.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOMAdd, Warehouse, StockQuantity, StockUOMAddName, PurchasePrice, Discount, DiscountAmt,
+                              Amount, TaxAmount, TotalAmount, "I", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
+                              Balance_Amount, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                        }
+                    // Rev 3.0
+                    }
+                    // End of Rev 3.0
                     if (IsComponentProduct == "Y")
                     {
                         if (hdfIsComp.Value == "C")
@@ -5163,19 +5187,38 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
 
                             // Rev Mantis Issue 24061 [ "Balance_Amount" columns added in Rows.Add ]
                             // Mantis Issue 24429 [ "InvoiceDetails_AltQuantity" and "InvoiceDetails_AltUOM" added ]
-                            PurchaseInvoicedt.Rows.Add(SrlNo, OrderDetails_Id, ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM,
+                            // Rev 3.0
+                            if (PurchaseInvoicedt.Columns.Contains("invtype"))
+                            {
+                                PurchaseInvoicedt.Rows.Add(SrlNo, OrderDetails_Id, ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM,
+                                PurchasePrice, Discount, DiscountAmt, Amount, TaxAmount, TotalAmount, "U", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
+                                Balance_Amount, ddlInventory.SelectedValue, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                               
+                                if (Request.QueryString["key"] == "ADD")
+                                {
+                                    PurchaseAddDetail.Rows.Add(SrlNo, OrderDetails_Id, ProductDetails, Description, Quantity, UOMAdd, Warehouse, StockQuantity, StockUOMAddName,
+                                       PurchasePrice, Discount, DiscountAmt, Amount, TaxAmount, TotalAmount, "U", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
+                                        Balance_Amount, ddlInventory.SelectedValue, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                                }
+                            }
+                            else
+                            {
+                                // End of Rev 3.0
+                                PurchaseInvoicedt.Rows.Add(SrlNo, OrderDetails_Id, ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM,
                                 PurchasePrice, Discount, DiscountAmt, Amount, TaxAmount, TotalAmount, "U", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
                                  Balance_Amount, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
-                            // Mantis Issue End 24429
-                            //Chinmoy added 27-06-2019
-                            if (Request.QueryString["key"] == "ADD")
-                            {
-                                PurchaseAddDetail.Rows.Add(SrlNo, OrderDetails_Id, ProductDetails, Description, Quantity, UOMAdd, Warehouse, StockQuantity, StockUOMAddName,
-                                   PurchasePrice, Discount, DiscountAmt, Amount, TaxAmount, TotalAmount, "U", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
-                                    Balance_Amount, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                                // Mantis Issue End 24429
+                                //Chinmoy added 27-06-2019
+                                if (Request.QueryString["key"] == "ADD")
+                                {
+                                    PurchaseAddDetail.Rows.Add(SrlNo, OrderDetails_Id, ProductDetails, Description, Quantity, UOMAdd, Warehouse, StockQuantity, StockUOMAddName,
+                                       PurchasePrice, Discount, DiscountAmt, Amount, TaxAmount, TotalAmount, "U", ProductName, taggingID, ComponentDetailID, taggingNo, TotalQty, BalanceQty, IsComponentProduct, DetailsId, Remarks, UOMNAME,
+                                        Balance_Amount, InvoiceDetails_AltQuantity, InvoiceDetails_AltUOM);
+                                }
+                                //End
+                                // Rev 3.0
                             }
-                            //End
-
+                            // End of Rev 3.0
                             if (IsComponentProduct == "Y")
                             {
                                 if (hdfIsComp.Value == "C")
