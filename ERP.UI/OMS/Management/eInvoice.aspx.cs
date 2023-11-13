@@ -2,7 +2,7 @@
 // 1.0   v2.0.37	Priti	13-03-2023	0025686:Eway Bill Cancel not working for Transit Sales Invoice & Credit Note
 // 2.0   v2.0.38	Priti	18-04-2023	0025725:If an Eway Bill or IRN is cancelled from the Portal directly need to update the ERP tables accordingly next time the Document is
 // 3.0   v2.0.40	Priti	10-10-2023	0026890:Error generating IRN
-
+// 4.0   v2.0.41	Priti	10-11-2023	0026981:Need to Restrict IRN Cancellation for Sales Return(Credit Note) if the Credit Note is Adjusted
 #endregion//====================================================End Revision History=====================================================================
 
 
@@ -290,7 +290,10 @@ namespace ERP.OMS.Management
          }       
 
         [WebMethod]
-        public static object CancelIRN(string irn, string type, string cancelReason, string cancelRemarks)
+        //Rev 4.0
+        //public static object CancelIRN(string irn, string type, string cancelReason, string cancelRemarks)
+        public static object CancelIRN(string irn, string type, string cancelReason, string cancelRemarks,string InvoiceId)
+        //Rev 4.0 End
         {
 
 
@@ -318,38 +321,155 @@ namespace ERP.OMS.Management
                 string IRN_API_GSTIN = Convert.ToString(dt.Rows[0]["branch_GSTIN"]);
 
 
-
-
-
-
-                authtokensOutput authObj = new authtokensOutput();
-                if (DateTime.Now > EinvoiceToken.Expiry)
+                //Rev 4.0
+                string SRIDISExistsInvoice = "0";
+                DataTable SRIDISExistsdt = GetCHECKAdjustment(InvoiceId, "CHECKSALESINVOICE");
+                if (SRIDISExistsdt.Rows.Count > 0)
                 {
+                    SRIDISExistsInvoice = Convert.ToString(SRIDISExistsdt.Rows[0]["ISEXIST"]);
+                }
+                if (SRIDISExistsInvoice != "0")
+                {
+                    output = "The Document is Adjusted, Please delete the adjustment and then Proceed with IRN Cancellation";
+                }
+                //Rev 4.0 End
+
+                else
+                {
+                    authtokensOutput authObj = new authtokensOutput();
+                    if (DateTime.Now > EinvoiceToken.Expiry)
+                    {
+                        try
+                        {
+                            using (HttpClient client = new HttpClient())
+                            {
+                                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                                                   SecurityProtocolType.Tls11 |
+                                                   SecurityProtocolType.Tls12;
+                                authtokensInput objI = new authtokensInput(IrnUser, IrnPassword);
+                                var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
+                                var stringContent = new StringContent(json);
+                                var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+                                var response = client.PostAsync(IrnBaseURL, stringContent).Result;
+
+                                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                                {
+                                    var jsonString = response;
+                                    var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
+                                    authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
+                                    EinvoiceToken.token = authObj.data.token;
+                                    long unixDate = authObj.data.expiry;
+                                    DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                                    DateTime date = start.AddMilliseconds(unixDate).ToLocalTime();
+
+                                    EinvoiceToken.Expiry = date;
+                                }
+                            }
+                        }
+                        catch (AggregateException err)
+                        {
+                            DBEngine objDB = new DBEngine();
+                            string id = Convert.ToString(objDB.GetDataTable("SELECT Invoice_ID FROM TBL_TRANS_SALESINVOICE WHERE Irn='" + irn + "'").Rows[0][0]);
+                            objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_CANCEL'");
+
+                            foreach (var errInner in err.InnerExceptions)
+                            {
+                                objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','0','" + err.Message + "')");
+                            }
+                            output = "Error occurs while IRN Cancellation.";
+                        }
+                    }
                     try
                     {
-                        using (HttpClient client = new HttpClient())
+                        IRN objIRN = new IRN();
+                        using (var client = new HttpClient())
                         {
                             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                                               SecurityProtocolType.Tls11 |
-                                               SecurityProtocolType.Tls12;
-                            authtokensInput objI = new authtokensInput(IrnUser, IrnPassword);
-                            var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
+                            SecurityProtocolType.Tls11 |
+                            SecurityProtocolType.Tls12;
+                            client.DefaultRequestHeaders.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            var json = JsonConvert.SerializeObject(objCancelDetails, Formatting.Indented);
                             var stringContent = new StringContent(json);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
                             var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                            var response = client.PostAsync(IrnBaseURL, stringContent).Result;
+                            // var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
+                            var response = client.PostAsync(IrnCancelUrl, stringContent).Result;
 
                             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                             {
-                                var jsonString = response;
-                                var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                                authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
-                                EinvoiceToken.token = authObj.data.token;
-                                long unixDate = authObj.data.expiry;
-                                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                                DateTime date = start.AddMilliseconds(unixDate).ToLocalTime();
+                                var jsonString = response.Content.ReadAsStringAsync().Result;
+                                objIRN = response.Content.ReadAsAsync<IRN>().Result;
 
-                                EinvoiceToken.Expiry = date;
+                                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                                {
+                                    // Deserialization from JSON  
+                                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelIRNOutput));
+                                    CancelIRNOutput objIRNDetails = (CancelIRNOutput)deserializer.ReadObject(ms);
+                                    DBEngine objDb = new DBEngine();
+                                    objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET IsIRNCancelled=1,IRN_Cancell_Date='" + objIRNDetails.CancelDate + "' WHERE Irn='" + objIRNDetails.Irn + "'");
+                                    string id = Convert.ToString(objDb.GetDataTable("select invoice_id from TBL_TRANS_SALESINVOICE WHERE Irn='" + objIRNDetails.Irn + "'").Rows[0][0]);
+                                    objDb.GetDataTable("EXEC PRC_CANCELIRNSI " + id + "");
+                                    output = "IRN Cancelled successfully.";
+                                }
+
+
+
                             }
+                            else
+                            {
+                                EinvoiceError err = new EinvoiceError();
+                                var jsonString = response.Content.ReadAsStringAsync().Result;
+                                // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
+                                err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                                DBEngine objDB = new DBEngine();
+                                string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_SALESINVOICE WHERE Irn='" + irn + "'").Rows[0][0]);
+
+                                objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' and ERROR_TYPE='IRN_CANCEL'");
+                                if (err.error.type != "ClientRequest")
+                                {
+                                    foreach (errorlog item in err.error.args.irp_error.details)
+                                    {
+                                        //Rev 2.0
+                                        if (item.ErrorCode == "9999")
+                                        {
+                                            DBEngine objDb = new DBEngine();
+                                            objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET IsIRNCancelled=1,IRN_Cancell_Date='" + DateTime.Now.ToString("MM/dd/yyyy H:mm") + "' WHERE Irn='" + objCancelDetails.Irn + "'");
+                                            objDb.GetDataTable("EXEC PRC_CANCELIRNSI " + id + "");
+                                            output = "IRN Cancelled successfully.";
+
+                                        }
+                                        //Rev 2.0 End
+                                        else
+                                        {
+                                            objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+                                            output = "Error occurs while IRN Cancellation.";
+
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    ClientEinvoiceError cErr = new ClientEinvoiceError();
+                                    cErr = JsonConvert.DeserializeObject<ClientEinvoiceError>(response.Content.ReadAsStringAsync().Result);
+                                    foreach (string item in cErr.error.args.errors)
+                                    {
+                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','" + "0" + "','" + item + "')");
+                                    }
+
+                                    output = "Error occurs while IRN Cancellation.";
+
+                                }
+
+
+                            }
+
+
                         }
                     }
                     catch (AggregateException err)
@@ -365,118 +485,16 @@ namespace ERP.OMS.Management
                         output = "Error occurs while IRN Cancellation.";
                     }
                 }
-                try
-                {
-                    IRN objIRN = new IRN();
-                    using (var client = new HttpClient())
-                    {
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                        SecurityProtocolType.Tls11 |
-                        SecurityProtocolType.Tls12;
-                        client.DefaultRequestHeaders.Clear();
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var json = JsonConvert.SerializeObject(objCancelDetails, Formatting.Indented);
-                        var stringContent = new StringContent(json);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
-                        var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                        // var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
-                        var response = client.PostAsync(IrnCancelUrl, stringContent).Result;
-
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var jsonString = response.Content.ReadAsStringAsync().Result;
-                            objIRN = response.Content.ReadAsAsync<IRN>().Result;
-
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
-                            {
-                                // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelIRNOutput));
-                                CancelIRNOutput objIRNDetails = (CancelIRNOutput)deserializer.ReadObject(ms);
-                                DBEngine objDb = new DBEngine();
-                                objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET IsIRNCancelled=1,IRN_Cancell_Date='" + objIRNDetails.CancelDate + "' WHERE Irn='" + objIRNDetails.Irn + "'");
-                                string id = Convert.ToString(objDb.GetDataTable("select invoice_id from TBL_TRANS_SALESINVOICE WHERE Irn='" + objIRNDetails.Irn + "'").Rows[0][0]);
-                                objDb.GetDataTable("EXEC PRC_CANCELIRNSI " + id + "");
-                                output = "IRN Cancelled successfully.";
-                            }
-
-
-
-                        }
-                        else
-                        {
-                            EinvoiceError err = new EinvoiceError();
-                            var jsonString = response.Content.ReadAsStringAsync().Result;
-                            // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                            err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-                            DBEngine objDB = new DBEngine();
-                            string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_SALESINVOICE WHERE Irn='" + irn + "'").Rows[0][0]);
-
-                            objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' and ERROR_TYPE='IRN_CANCEL'");
-                            if (err.error.type != "ClientRequest")
-                            {
-                                foreach (errorlog item in err.error.args.irp_error.details)
-                                {
-                                    //Rev 2.0
-                                    if (item.ErrorCode == "9999")
-                                    {
-                                        DBEngine objDb = new DBEngine();
-                                        objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET IsIRNCancelled=1,IRN_Cancell_Date='" + DateTime.Now.ToString("MM/dd/yyyy H:mm") + "' WHERE Irn='" + objCancelDetails.Irn + "'");
-                                        objDb.GetDataTable("EXEC PRC_CANCELIRNSI " + id + "");
-                                        output = "IRN Cancelled successfully.";
-
-                                    }
-                                    //Rev 2.0 End
-                                    else
-                                    {
-                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
-                                        output = "Error occurs while IRN Cancellation.";
-
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                ClientEinvoiceError cErr = new ClientEinvoiceError();
-                                cErr = JsonConvert.DeserializeObject<ClientEinvoiceError>(response.Content.ReadAsStringAsync().Result);
-                                foreach (string item in cErr.error.args.errors)
-                                {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','" + "0" + "','" + item + "')");
-                                }
-
-                                output = "Error occurs while IRN Cancellation.";
-
-                            }
-
-
-                        }
-
-
-                    }
-                }
-                catch (AggregateException err)
-                {
-                    DBEngine objDB = new DBEngine();
-                    string id = Convert.ToString(objDB.GetDataTable("SELECT Invoice_ID FROM TBL_TRANS_SALESINVOICE WHERE Irn='" + irn + "'").Rows[0][0]);
-                    objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_CANCEL'");
-
-                    foreach (var errInner in err.InnerExceptions)
-                    {
-                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_CANCEL','0','" + err.Message + "')");
-                    }
-                    output = "Error occurs while IRN Cancellation.";
-                }
             }
 
             return output;
         }
 
         [WebMethod]
-        public static object CancelIRNTSI(string irn, string type, string cancelReason, string cancelRemarks)
+        //Rev 4.0
+        //public static object CancelIRNTSI(string irn, string type, string cancelReason, string cancelRemarks)
+        public static object CancelIRNTSI(string irn, string type, string cancelReason, string cancelRemarks,string InvoiceId) 
+        //Rev 4.0 End
         {
 
 
@@ -503,33 +521,141 @@ namespace ERP.OMS.Management
                 string IRN_API_Password = Convert.ToString(dt.Rows[0]["EInvoice_Password"]);
                 string IRN_API_GSTIN = Convert.ToString(dt.Rows[0]["branch_GSTIN"]);
 
-                authtokensOutput authObj = new authtokensOutput();
-                if (DateTime.Now > EinvoiceToken.Expiry)
+                //Rev 4.0
+                string SRIDISExistsInvoice = "0";
+                DataTable SRIDISExistsdt = GetCHECKAdjustment(InvoiceId, "CHECKTRANSITSALESINVOICE");
+                if (SRIDISExistsdt.Rows.Count > 0)
                 {
+                    SRIDISExistsInvoice = Convert.ToString(SRIDISExistsdt.Rows[0]["ISEXIST"]);
+                }
+                if (SRIDISExistsInvoice != "0")
+                {
+                    output = "The Document is Adjusted, Please delete the adjustment and then Proceed with IRN Cancellation";
+                }
+                //Rev 4.0 End
+
+                else
+                {
+
+                    authtokensOutput authObj = new authtokensOutput();
+                    if (DateTime.Now > EinvoiceToken.Expiry)
+                    {
+                        try
+                        {
+                            using (HttpClient client = new HttpClient())
+                            {
+                                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                                                   SecurityProtocolType.Tls11 |
+                                                   SecurityProtocolType.Tls12;
+                                authtokensInput objI = new authtokensInput(IrnUser, IrnPassword);
+                                var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
+                                var stringContent = new StringContent(json);
+                                var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+                                var response = client.PostAsync(IrnBaseURL, stringContent).Result;
+
+                                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                                {
+                                    var jsonString = response;
+                                    var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
+                                    authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
+                                    EinvoiceToken.token = authObj.data.token;
+                                    long unixDate = authObj.data.expiry;
+                                    DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                                    DateTime date = start.AddMilliseconds(unixDate).ToLocalTime();
+                                    EinvoiceToken.Expiry = date;
+                                }
+                            }
+                        }
+                        catch (AggregateException err)
+                        {
+                            DBEngine objDB = new DBEngine();
+                            string id = Convert.ToString(objDB.GetDataTable("SELECT Invoice_ID FROM TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + irn + "'").Rows[0][0]);
+                            objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='TSI' AND ERROR_TYPE='IRN_CANCEL'");
+
+                            foreach (var errInner in err.InnerExceptions)
+                            {
+                                objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','TSI','IRN_CANCEL','0','" + err.Message + "')");
+                            }
+                            output = "Error occurs while IRN Cancellation.";
+                        }
+                    }
                     try
                     {
-                        using (HttpClient client = new HttpClient())
+                        IRN objIRN = new IRN();
+                        using (var client = new HttpClient())
                         {
                             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                                               SecurityProtocolType.Tls11 |
-                                               SecurityProtocolType.Tls12;
-                            authtokensInput objI = new authtokensInput(IrnUser, IrnPassword);
-                            var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
+                            SecurityProtocolType.Tls11 |
+                            SecurityProtocolType.Tls12;
+                            client.DefaultRequestHeaders.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            var json = JsonConvert.SerializeObject(objCancelDetails, Formatting.Indented);
                             var stringContent = new StringContent(json);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
                             var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                            var response = client.PostAsync(IrnBaseURL, stringContent).Result;
+                            // var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
+                            var response = client.PostAsync(IrnCancelUrl, stringContent).Result;
 
                             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                             {
-                                var jsonString = response;
-                                var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                                authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
-                                EinvoiceToken.token = authObj.data.token;
-                                long unixDate = authObj.data.expiry;
-                                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                                DateTime date = start.AddMilliseconds(unixDate).ToLocalTime();
-                                EinvoiceToken.Expiry = date;
+                                var jsonString = response.Content.ReadAsStringAsync().Result;
+                                objIRN = response.Content.ReadAsAsync<IRN>().Result;
+
+                                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                                {
+                                    // Deserialization from JSON  
+                                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelIRNOutput));
+                                    CancelIRNOutput objIRNDetails = (CancelIRNOutput)deserializer.ReadObject(ms);
+                                    DBEngine objDb = new DBEngine();
+                                    objDb.GetDataTable("update TBL_TRANS_TRANSITSALESINVOICE SET IsIRNCancelled=1,IRN_Cancell_Date='" + objIRNDetails.CancelDate + "' WHERE Irn='" + objIRNDetails.Irn + "'");
+
+                                    string id = Convert.ToString(objDb.GetDataTable("select invoice_id from TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + objIRNDetails.Irn + "'").Rows[0][0]);
+                                    objDb.GetDataTable("EXEC PRC_CANCELIRNTSI " + id + "");
+
+
+                                    output = "IRN Cancelled successfully.";
+                                }
+
+
+
                             }
+                            else
+                            {
+                                EinvoiceError err = new EinvoiceError();
+                                var jsonString = response.Content.ReadAsStringAsync().Result;
+                                // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
+                                err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                                DBEngine objDB = new DBEngine();
+                                string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + irn + "'").Rows[0][0]);
+
+                                objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='TSI' and ERROR_TYPE='IRN_CANCEL'");
+                                if (err.error.type != "ClientRequest")
+                                {
+                                    foreach (errorlog item in err.error.args.irp_error.details)
+                                    {
+                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','TSI','IRN_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+                                    }
+                                }
+                                else
+                                {
+                                    ClientEinvoiceError cErr = new ClientEinvoiceError();
+                                    cErr = JsonConvert.DeserializeObject<ClientEinvoiceError>(response.Content.ReadAsStringAsync().Result);
+                                    foreach (string item in cErr.error.args.errors)
+                                    {
+                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','TSI','IRN_CANCEL','" + "0" + "','" + item + "')");
+                                    }
+                                }
+
+                                output = "Error occurs while IRN Cancellation.";
+
+                            }
+
+
                         }
                     }
                     catch (AggregateException err)
@@ -545,107 +671,18 @@ namespace ERP.OMS.Management
                         output = "Error occurs while IRN Cancellation.";
                     }
                 }
-                try
-                {
-                    IRN objIRN = new IRN();
-                    using (var client = new HttpClient())
-                    {
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                        SecurityProtocolType.Tls11 |
-                        SecurityProtocolType.Tls12;
-                        client.DefaultRequestHeaders.Clear();
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var json = JsonConvert.SerializeObject(objCancelDetails, Formatting.Indented);
-                        var stringContent = new StringContent(json);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID",IrnOrgId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
-                        var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                        // var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
-                        var response = client.PostAsync(IrnCancelUrl, stringContent).Result;
-
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var jsonString = response.Content.ReadAsStringAsync().Result;
-                            objIRN = response.Content.ReadAsAsync<IRN>().Result;
-
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
-                            {
-                                // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelIRNOutput));
-                                CancelIRNOutput objIRNDetails = (CancelIRNOutput)deserializer.ReadObject(ms);
-                                DBEngine objDb = new DBEngine();
-                                objDb.GetDataTable("update TBL_TRANS_TRANSITSALESINVOICE SET IsIRNCancelled=1,IRN_Cancell_Date='" + objIRNDetails.CancelDate + "' WHERE Irn='" + objIRNDetails.Irn + "'");
-
-                                string id = Convert.ToString(objDb.GetDataTable("select invoice_id from TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + objIRNDetails.Irn + "'").Rows[0][0]);
-                                objDb.GetDataTable("EXEC PRC_CANCELIRNTSI " + id + "");
-
-
-                                output = "IRN Cancelled successfully.";
-                            }
-
-
-
-                        }
-                        else
-                        {
-                            EinvoiceError err = new EinvoiceError();
-                            var jsonString = response.Content.ReadAsStringAsync().Result;
-                            // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                            err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-                            DBEngine objDB = new DBEngine();
-                            string id = Convert.ToString(objDB.GetDataTable("SELECT INVOICE_ID FROM TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + irn + "'").Rows[0][0]);
-
-                            objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='TSI' and ERROR_TYPE='IRN_CANCEL'");
-                            if (err.error.type != "ClientRequest")
-                            {
-                                foreach (errorlog item in err.error.args.irp_error.details)
-                                {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','TSI','IRN_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
-                                }
-                            }
-                            else
-                            {
-                                ClientEinvoiceError cErr = new ClientEinvoiceError();
-                                cErr = JsonConvert.DeserializeObject<ClientEinvoiceError>(response.Content.ReadAsStringAsync().Result);
-                                foreach (string item in cErr.error.args.errors)
-                                {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','TSI','IRN_CANCEL','" + "0" + "','" + item + "')");
-                                }
-                            }
-
-                            output = "Error occurs while IRN Cancellation.";
-
-                        }
-
-
-                    }
-                }
-                catch (AggregateException err)
-                {
-                    DBEngine objDB = new DBEngine();
-                    string id = Convert.ToString(objDB.GetDataTable("SELECT Invoice_ID FROM TBL_TRANS_TRANSITSALESINVOICE WHERE Irn='" + irn + "'").Rows[0][0]);
-                    objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='TSI' AND ERROR_TYPE='IRN_CANCEL'");
-
-                    foreach (var errInner in err.InnerExceptions)
-                    {
-                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','TSI','IRN_CANCEL','0','" + err.Message + "')");
-                    }
-                    output = "Error occurs while IRN Cancellation.";
-                }
             }
 
             return output;
         }
 
         [WebMethod]
-        public static object CancelIRNSR(string irn, string type, string cancelReason, string cancelRemarks)
+
+        //Rev 4.0 
+        //public static object CancelIRNSR(string irn, string type, string cancelReason, string cancelRemarks)
+        public static object CancelIRNSR(string irn, string type, string cancelReason, string cancelRemarks,string SRId)
+        //Rev 4.0 End
         {
-
-
             string output = "";
 
             if (type == "SILineSR")
@@ -665,44 +702,141 @@ namespace ERP.OMS.Management
 
                 DBEngine objDBEngineCredential = new DBEngine();
                 string Branch_id = Convert.ToString(objDBEngineCredential.GetDataTable("SELECT RETURN_BranchId FROM TBL_TRANS_SALESRETURN WHERE Irn='" + irn + "'").Rows[0][0]); ;
+                
                 DataTable dt = objDBEngineCredential.GetDataTable("select EwayBill_Userid,EwayBill_Password,EwayBill_GSTIN,EInvoice_UserId,EInvoice_Password,branch_GSTIN from tbl_master_branch where branch_id='" + Branch_id + "'");
                 string IRN_API_UserId = Convert.ToString(dt.Rows[0]["EInvoice_UserId"]);
                 string IRN_API_Password = Convert.ToString(dt.Rows[0]["EInvoice_Password"]);
                 string IRN_API_GSTIN = Convert.ToString(dt.Rows[0]["branch_GSTIN"]);
 
-
-                authtokensOutput authObj = new authtokensOutput();
-                if (DateTime.Now > EinvoiceToken.Expiry)
+                //Rev 4.0
+                string SRIDISExistsInvoice = "0";
+                DataTable SRIDISExistsdt = GetCHECKAdjustment(SRId, "CHECKCREDITNOTE");
+                if (SRIDISExistsdt.Rows.Count > 0)
                 {
-                    try
+                    SRIDISExistsInvoice = Convert.ToString(SRIDISExistsdt.Rows[0]["ISEXIST"]);
+                }
+                if (SRIDISExistsInvoice != "0")
+                {
+                    output = "The Document is Adjusted, Please delete the adjustment and then Proceed with IRN Cancellation";
+                }                
+                //Rev 4.0 End
+                else
+                {
+                    authtokensOutput authObj = new authtokensOutput();
+                    if (DateTime.Now > EinvoiceToken.Expiry)
                     {
-                        using (HttpClient client = new HttpClient())
+                        try
                         {
-                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                                               SecurityProtocolType.Tls11 |
-                                               SecurityProtocolType.Tls12;
-                            authtokensInput objI = new authtokensInput(IrnUser, IrnPassword);
-                            var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
-                            var stringContent = new StringContent(json);
-                            var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                            var response = client.PostAsync(IrnBaseURL, stringContent).Result;
-
-                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            using (HttpClient client = new HttpClient())
                             {
-                                var jsonString = response;
-                                var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                                authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
-                                EinvoiceToken.token = authObj.data.token;
-                                long unixDate = authObj.data.expiry;
-                                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                                DateTime date = start.AddMilliseconds(unixDate).ToLocalTime();
+                                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                                                   SecurityProtocolType.Tls11 |
+                                                   SecurityProtocolType.Tls12;
+                                authtokensInput objI = new authtokensInput(IrnUser, IrnPassword);
+                                var json = JsonConvert.SerializeObject(objI, Formatting.Indented);
+                                var stringContent = new StringContent(json);
+                                var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+                                var response = client.PostAsync(IrnBaseURL, stringContent).Result;
 
-                                EinvoiceToken.Expiry = date;
+                                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                                {
+                                    var jsonString = response;
+                                    var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
+                                    authObj = response.Content.ReadAsAsync<authtokensOutput>().Result;
+                                    EinvoiceToken.token = authObj.data.token;
+                                    long unixDate = authObj.data.expiry;
+                                    DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                                    DateTime date = start.AddMilliseconds(unixDate).ToLocalTime();
 
+                                    EinvoiceToken.Expiry = date;
+
+                                }
                             }
+                        }
+
+                        catch (AggregateException err)
+                        {
+                            DBEngine objDB = new DBEngine();
+                            string id = Convert.ToString(objDB.GetDataTable("SELECT RETURN_ID FROM TBL_TRANS_SALESRETURN WHERE Irn='" + irn + "'").Rows[0][0]);
+                            objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SR' AND ERROR_TYPE='IRN_CANCEL'");
+
+                            foreach (var errInner in err.InnerExceptions)
+                            {
+                                objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SR','IRN_CANCEL','0','" + err.Message + "')");
+                            }
+                            output = "Error occurs while IRN Cancellation.";
                         }
                     }
 
+                    try
+                    {
+                        IRN objIRN = new IRN();
+                        using (var client = new HttpClient())
+                        {
+                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+                            SecurityProtocolType.Tls11 |
+                            SecurityProtocolType.Tls12;
+                            client.DefaultRequestHeaders.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            var json = JsonConvert.SerializeObject(objCancelDetails, Formatting.Indented);
+                            var stringContent = new StringContent(json);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
+                            client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                            var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+                            // var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
+                            var response = client.PostAsync(IrnCancelUrl, stringContent).Result;
+
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                var jsonString = response.Content.ReadAsStringAsync().Result;
+                                objIRN = response.Content.ReadAsAsync<IRN>().Result;
+                                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                                {
+                                    // Deserialization from JSON  
+                                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelIRNOutput));
+                                    CancelIRNOutput objIRNDetails = (CancelIRNOutput)deserializer.ReadObject(ms);
+                                    DBEngine objDb = new DBEngine();
+                                    objDb.GetDataTable("update TBL_TRANS_SALESRETURN SET IsIRNCancelled=1,IRN_Cancell_Date='" + objIRNDetails.CancelDate + "' WHERE Irn='" + objIRNDetails.Irn + "'");
+
+                                    string id = Convert.ToString(objDb.GetDataTable("select return_id from TBL_TRANS_SALESreturn WHERE Irn='" + objIRNDetails.Irn + "'").Rows[0][0]);
+                                    objDb.GetDataTable("EXEC PRC_CANCELIRNSR " + id + "");
+                                    output = "IRN Cancelled successfully.";
+                                }
+                            }
+                            else
+                            {
+                                EinvoiceError err = new EinvoiceError();
+                                var jsonString = response.Content.ReadAsStringAsync().Result;
+                                // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
+                                err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                                DBEngine objDB = new DBEngine();
+                                string id = Convert.ToString(objDB.GetDataTable("SELECT RETURN_ID FROM TBL_TRANS_SALESRETURN WHERE Irn='" + irn + "'").Rows[0][0]);
+
+                                objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SR' and ERROR_TYPE='IRN_CANCEL'");
+                                if (err.error.type != "ClientRequest")
+                                {
+                                    foreach (errorlog item in err.error.args.irp_error.details)
+                                    {
+                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SR','IRN_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+                                    }
+                                }
+                                else
+                                {
+                                    ClientEinvoiceError cErr = new ClientEinvoiceError();
+                                    cErr = JsonConvert.DeserializeObject<ClientEinvoiceError>(response.Content.ReadAsStringAsync().Result);
+                                    foreach (string item in cErr.error.args.errors)
+                                    {
+                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SR','IRN_CANCEL','" + "0" + "','" + item + "')");
+                                    }
+                                }
+                                output = "Error occurs while IRN Cancellation.";
+                            }
+                        }
+                    }
                     catch (AggregateException err)
                     {
                         DBEngine objDB = new DBEngine();
@@ -715,101 +849,20 @@ namespace ERP.OMS.Management
                         }
                         output = "Error occurs while IRN Cancellation.";
                     }
-                }
-
-                try
-                {
-                    IRN objIRN = new IRN();
-                    using (var client = new HttpClient())
-                    {
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
-                        SecurityProtocolType.Tls11 |
-                        SecurityProtocolType.Tls12;
-                        client.DefaultRequestHeaders.Clear();
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var json = JsonConvert.SerializeObject(objCancelDetails, Formatting.Indented);
-                        var stringContent = new StringContent(json);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-USER-TOKEN", EinvoiceToken.token);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-ORG-ID", IrnOrgId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
-                        var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                        // var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
-                        var response = client.PostAsync(IrnCancelUrl, stringContent).Result;
-
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var jsonString = response.Content.ReadAsStringAsync().Result;
-                            objIRN = response.Content.ReadAsAsync<IRN>().Result;
-
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
-                            {
-                                // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelIRNOutput));
-                                CancelIRNOutput objIRNDetails = (CancelIRNOutput)deserializer.ReadObject(ms);
-                                DBEngine objDb = new DBEngine();
-                                objDb.GetDataTable("update TBL_TRANS_SALESRETURN SET IsIRNCancelled=1,IRN_Cancell_Date='" + objIRNDetails.CancelDate + "' WHERE Irn='" + objIRNDetails.Irn + "'");
-
-                                string id = Convert.ToString(objDb.GetDataTable("select return_id from TBL_TRANS_SALESreturn WHERE Irn='" + objIRNDetails.Irn + "'").Rows[0][0]);
-                                objDb.GetDataTable("EXEC PRC_CANCELIRNSR " + id + "");
-
-
-                                output = "IRN Cancelled successfully.";
-                            }
-
-
-
-                        }
-                        else
-                        {
-                            EinvoiceError err = new EinvoiceError();
-                            var jsonString = response.Content.ReadAsStringAsync().Result;
-                            // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                            err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-                            DBEngine objDB = new DBEngine();
-                            string id = Convert.ToString(objDB.GetDataTable("SELECT RETURN_ID FROM TBL_TRANS_SALESRETURN WHERE Irn='" + irn + "'").Rows[0][0]);
-
-                            objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SR' and ERROR_TYPE='IRN_CANCEL'");
-                            if (err.error.type != "ClientRequest")
-                            {
-                                foreach (errorlog item in err.error.args.irp_error.details)
-                                {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SR','IRN_CANCEL','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
-                                }
-                            }
-                            else
-                            {
-                                ClientEinvoiceError cErr = new ClientEinvoiceError();
-                                cErr = JsonConvert.DeserializeObject<ClientEinvoiceError>(response.Content.ReadAsStringAsync().Result);
-                                foreach (string item in cErr.error.args.errors)
-                                {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SR','IRN_CANCEL','" + "0" + "','" + item + "')");
-                                }
-                            }
-                            output = "Error occurs while IRN Cancellation.";
-                        }
-
-
-                    }
-                }
-                catch (AggregateException err)
-                {
-                    DBEngine objDB = new DBEngine();
-                    string id = Convert.ToString(objDB.GetDataTable("SELECT RETURN_ID FROM TBL_TRANS_SALESRETURN WHERE Irn='" + irn + "'").Rows[0][0]);
-                    objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SR' AND ERROR_TYPE='IRN_CANCEL'");
-
-                    foreach (var errInner in err.InnerExceptions)
-                    {
-                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SR','IRN_CANCEL','0','" + err.Message + "')");
-                    }
-                    output = "Error occurs while IRN Cancellation.";
-                }
+                }               
             }
 
             return output;
         }
+        //REV 4.0
+        public static DataTable GetCHECKAdjustment(string DOCID, string actiontype)
+        {
+            ProcedureExecute proc = new ProcedureExecute("PRC_EInvoiceDetails");
+            proc.AddVarcharPara("@Action", 100, actiontype);
+            proc.AddIntegerPara("@DOC_ID",Convert.ToInt32(DOCID));          
+            return proc.GetTable();
+        }
+        //REV 4.0 END
 
         //[WebMethod]
         //public static object CancelIRN(string irn, string type, string cancelReason, string cancelRemarks)

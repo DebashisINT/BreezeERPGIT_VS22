@@ -1,5 +1,6 @@
 ﻿//====================================================Revision History =========================================================================
 //1.0   v2.0.37	Priti	13-03-2023	0025686:Eway Bill Cancel not working for Transit Sales Invoice & Credit Note
+//2.0   v2.0.41	Priti	10-11-2023	0026981:Need to Restrict IRN Cancellation for Sales Return(Credit Note) if the Credit Note is Adjusted
 //====================================================End Revision History=====================================================================
 
 
@@ -600,9 +601,12 @@ function DoownLoadJson(id) {
 
 }
 
-function CancelIRN(irn) {
+function CancelIRN(irn, id) {
     $("#hdnCancelIRNType").val("SILine");
     $("#hdnCancelIRNNo").val(irn);
+    //Rev 2.0
+    $("#hdnInvoiceId").val(id);
+    //Rev 2.0 End
     $("#modal1").modal('show');
 }
 
@@ -682,11 +686,13 @@ function CancelBulkIRN() {
 }
 
 
-function CancelIRNSR(irn) {
+function CancelIRNSR(irn,id) {
 
     $("#hdnCancelIRNType").val("SILineSR");
     $("#hdnCancelIRNNo").val(irn);
-
+    //Rev 2.0
+    $("#hdnInvoiceId").val(id);
+    //Rev 2.0 End
     $("#modal1").modal('show');
 
 }
@@ -799,11 +805,13 @@ function DoownLoadJsonSR(id) {
 }
 
 
-function CancelIRNTSI(irn) {
+function CancelIRNTSI(irn,id) {
 
     $("#hdnCancelIRNType").val("SILineTSI");
     $("#hdnCancelIRNNo").val(irn);
-
+    //Rev 2.0
+    $("#hdnInvoiceId").val(id);
+    //Rev 2.0 End
     $("#modal1").modal('show');
 
 }
@@ -867,7 +875,9 @@ function CancelIRNSubmit() {
         otherdet.type = $("#hdnCancelIRNType").val();
         otherdet.cancelReason = $("#ddlCancelReason").val();
         otherdet.cancelRemarks = $("#txtCancelRemarks").val();
-
+        //Rev 2.0
+        otherdet.InvoiceId = $("#hdnInvoiceId").val();
+        //Rev 2.0  End
 
 
         $.ajax({
@@ -895,7 +905,9 @@ function CancelIRNSubmit() {
         otherdet.type = $("#hdnCancelIRNType").val();
         otherdet.cancelReason = $("#ddlCancelReason").val();
         otherdet.cancelRemarks = $("#txtCancelRemarks").val();
-
+        //Rev 2.0
+        otherdet.InvoiceId = $("#hdnInvoiceId").val();
+        //Rev 2.0  End
 
 
         $.ajax({
@@ -920,8 +932,9 @@ function CancelIRNSubmit() {
         otherdet.type = $("#hdnCancelIRNType").val();
         otherdet.cancelReason = $("#ddlCancelReason").val();
         otherdet.cancelRemarks = $("#txtCancelRemarks").val();
-
-
+        //Rev 2.0
+        otherdet.SRId = $("#hdnInvoiceId").val();
+        //Rev 2.0  End
 
         $.ajax({
             type: "POST",
