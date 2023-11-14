@@ -6857,6 +6857,8 @@ namespace ERP.OMS.Management.Activities
             }
             return sum;
         }
+
+        //Rev 2.0
         protected void cgridTax_CustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e)
         {
             string retMsg = "";
@@ -7676,7 +7678,7 @@ namespace ERP.OMS.Management.Activities
         //    }
         //}
 
-
+        //Rev 2.0 End
 
         public string createJsonForDetails(DataTable lstTaxDetails)
         {
