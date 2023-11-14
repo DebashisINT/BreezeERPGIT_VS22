@@ -888,13 +888,13 @@ namespace ERP.OMS.Management.Activities
         protected global::DevExpress.Web.ASPxPopupControl ASPXPopupControl1;
 
         /// <summary>
-        /// BillingShippingControl control.
+        /// Purchase_BillingShipping control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::ERP.OMS.Management.Activities.UserControls.BillingShippingControl BillingShippingControl;
+        protected global::ERP.OMS.Management.Activities.UserControls.Purchase_BillingShipping Purchase_BillingShipping;
 
         /// <summary>
         /// hfTermsConditionDocType control.
@@ -2443,5 +2443,14 @@ namespace ERP.OMS.Management.Activities
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnQty;
+
+        /// <summary>
+        /// hdnEntityType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnEntityType;
     }
 }

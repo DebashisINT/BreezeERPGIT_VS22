@@ -51,7 +51,7 @@ CallServerToloadtax = function () {
 }
 
 caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, HSNCode, Amount, AmountAfterDiscount, inclsOrExclsv, ShippingState, branchId, entitytype, date, qty, Module) {
-    debugger;
+   
     var GrosstotalAmount = Amount;
     var NettotalAmount = AmountAfterDiscount;
     var shippingStateCode = FindStateCodeByStateID(ShippingState);

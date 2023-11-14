@@ -1,6 +1,7 @@
 ﻿//=======================================================Revision History =====================================================
 //    1.0   Priti       V2.0.39     01-08-2023      0026641: Tax amount is not calculating for the Purchase Return for partial qty
-//    2.0   rev 2.0    V2.0.40     06-10-2023      0026946: Base Quantity does not converting according to the Alt. Quantity in Purchase Return entry screen
+//    2.0   rev 2.0     V2.0.40     06-10-2023      0026946: Base Quantity does not converting according to the Alt. Quantity in Purchase Return entry screen
+//    3.0   Priti       V2.0.41     13-11-2023      0026641: Tax amount is not calculating for the Purchase Return for partial qty
 //=========================================================End Revision History===================================================
 
 
@@ -3281,6 +3282,54 @@ function DiscountTextChange(s, e) {
     if (parseFloat(_TotalAmount) != parseFloat(ProductGetTotalAmount)) {
         grid.GetEditor('TaxAmount').SetValue(0);
         ctaxUpdatePanel.PerformCallback('DelQtybySl~' + grid.GetEditor("SrlNo").GetValue());
+
+
+        //Rev 3.0
+        var incluexclutype = ''
+        var taxtype = cddl_AmountAre.GetValue();
+        if (taxtype == '1') {
+            incluexclutype = 'E'
+        }
+        else if (taxtype == '2') {
+            incluexclutype = 'I'
+        }
+
+        var CompareStateCode;
+       // if (cddlPosGstInvoice.GetValue() == "S") {
+            CompareStateCode = GeteShippingStateID();
+        //}
+       // else {
+            CompareStateCode = GetBillingStateID();
+      //  }
+        //var checkval = cchk_reversemechenism.GetChecked();
+        //if (!checkval) {
+            if ($('#hdnADDEditMode').val() != 'Edit') {
+                var schemabranchid = $('#ddl_numberingScheme').val();
+                if (schemabranchid != '0') {
+                    var schemabranch = $('#ddl_numberingScheme').val().split('~')[1];
+                   
+                    caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"), SpliteDetails[17], Amount, amountAfterDiscount, incluexclutype, CompareStateCode, schemabranch, $("#hdnEntityType").val(), tstartdate.GetDate(), QuantityValue, 'P')
+
+
+                }
+            }
+            else if ($('#hdnADDEditMode').val() == 'Edit') {
+                var schemabranchid = $('#ddl_Branch').val();
+                if (schemabranchid != '0') {
+                    var schemabranch = schemabranchid;
+                    
+                    caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"), SpliteDetails[17], Amount, amountAfterDiscount, incluexclutype, CompareStateCode, schemabranch, $("#hdnEntityType").val(), tstartdate.GetDate(), QuantityValue, 'P')
+
+
+                }
+            }
+
+       // }
+
+
+
+
+
     }
 
     
@@ -4171,6 +4220,7 @@ function OnTaxEndCallback(s, e) {
         if (gridTax.cpJsonChargeData != "") {
             chargejsonTax = JSON.parse(gridTax.cpJsonChargeData);
             gridTax.cpJsonChargeData = null;
+            SetChargesRunningTotal();
         }
     }
 
@@ -4183,7 +4233,7 @@ function OnTaxEndCallback(s, e) {
         }
     }
 
-    SetChargesRunningTotal();
+   
     ShowTaxPopUp("IN");
 }
 
@@ -4246,44 +4296,47 @@ function PercentageTextChange(s, e) {
 //Set Running Total for Charges And Tax 
 function SetChargesRunningTotal() {
     var runningTot = parseFloat(ctxtProductNetAmount.GetValue());
-    for (var i = 0; i < chargejsonTax.length; i++) {
-        gridTax.batchEditApi.StartEdit(i, 3);
-        if (chargejsonTax[i].applicableOn == "R") {
-            gridTax.GetEditor("calCulatedOn").SetValue(runningTot);
-            var totLength = gridTax.GetEditor("TaxName").GetText().length;
-            var taxNameWithSign = gridTax.GetEditor("Percentage").GetText();
-            var sign = gridTax.GetEditor("TaxName").GetText().substring(totLength - 3);
-            var ProdAmt = parseFloat(gridTax.GetEditor("calCulatedOn").GetValue());
-            var Amount = gridTax.GetEditor("calCulatedOn").GetValue();
-            var GlobalTaxAmt = 0;
+    if (chargejsonTax != "undefined") {
+        for (var i = 0; i < chargejsonTax.length; i++) {
+            gridTax.batchEditApi.StartEdit(i, 3);
+            if (chargejsonTax[i].applicableOn == "R") {
+                gridTax.GetEditor("calCulatedOn").SetValue(runningTot);
+                var totLength = gridTax.GetEditor("TaxName").GetText().length;
+                var taxNameWithSign = gridTax.GetEditor("Percentage").GetText();
+                var sign = gridTax.GetEditor("TaxName").GetText().substring(totLength - 3);
+                var ProdAmt = parseFloat(gridTax.GetEditor("calCulatedOn").GetValue());
+                var Amount = gridTax.GetEditor("calCulatedOn").GetValue();
+                var GlobalTaxAmt = 0;
 
-            var Percentage = gridTax.GetEditor("Percentage").GetText();
-            var totLength = gridTax.GetEditor("TaxName").GetText().length;
-            var sign = gridTax.GetEditor("TaxName").GetText().substring(totLength - 3);
-            Sum = ((parseFloat(Amount) * parseFloat(Percentage)) / 100);
+                var Percentage = gridTax.GetEditor("Percentage").GetText();
+                var totLength = gridTax.GetEditor("TaxName").GetText().length;
+                var sign = gridTax.GetEditor("TaxName").GetText().substring(totLength - 3);
+                Sum = ((parseFloat(Amount) * parseFloat(Percentage)) / 100);
 
-            if (sign == '(+)') {
-                GlobalTaxAmt = parseFloat(gridTax.GetEditor("Amount").GetValue());
-                gridTax.GetEditor("Amount").SetValue(Sum);
-                ctxtQuoteTaxTotalAmt.SetValue(parseFloat(ctxtQuoteTaxTotalAmt.GetValue()) + parseFloat(Sum) - GlobalTaxAmt);
-                ctxtTotalAmount.SetValue(parseFloat(Amount) + parseFloat(ctxtQuoteTaxTotalAmt.GetValue()));
-                GlobalTaxAmt = 0;
+                if (sign == '(+)') {
+                    GlobalTaxAmt = parseFloat(gridTax.GetEditor("Amount").GetValue());
+                    gridTax.GetEditor("Amount").SetValue(Sum);
+                    ctxtQuoteTaxTotalAmt.SetValue(parseFloat(ctxtQuoteTaxTotalAmt.GetValue()) + parseFloat(Sum) - GlobalTaxAmt);
+                    ctxtTotalAmount.SetValue(parseFloat(Amount) + parseFloat(ctxtQuoteTaxTotalAmt.GetValue()));
+                    GlobalTaxAmt = 0;
+                }
+                else {
+                    GlobalTaxAmt = parseFloat(gridTax.GetEditor("Amount").GetValue());
+                    gridTax.GetEditor("Amount").SetValue(Sum);
+                    ctxtQuoteTaxTotalAmt.SetValue(parseFloat(ctxtQuoteTaxTotalAmt.GetValue()) - parseFloat(Sum) + GlobalTaxAmt);
+                    ctxtTotalAmount.SetValue(parseFloat(Amount) + parseFloat(ctxtQuoteTaxTotalAmt.GetValue()));
+                    GlobalTaxAmt = 0;
+                }
+
+                SetOtherChargeTaxValueOnRespectiveRow(0, Sum, gridTax.GetEditor("TaxName").GetText());
+
+
             }
-            else {
-                GlobalTaxAmt = parseFloat(gridTax.GetEditor("Amount").GetValue());
-                gridTax.GetEditor("Amount").SetValue(Sum);
-                ctxtQuoteTaxTotalAmt.SetValue(parseFloat(ctxtQuoteTaxTotalAmt.GetValue()) - parseFloat(Sum) + GlobalTaxAmt);
-                ctxtTotalAmount.SetValue(parseFloat(Amount) + parseFloat(ctxtQuoteTaxTotalAmt.GetValue()));
-                GlobalTaxAmt = 0;
-            }
-
-            SetOtherChargeTaxValueOnRespectiveRow(0, Sum, gridTax.GetEditor("TaxName").GetText());
-
-
+            runningTot = runningTot + parseFloat(gridTax.GetEditor("Amount").GetValue());
+            gridTax.batchEditApi.EndEdit();
         }
-        runningTot = runningTot + parseFloat(gridTax.GetEditor("Amount").GetValue());
-        gridTax.batchEditApi.EndEdit();
     }
+   
 }
 
 /////////////////// QuotationTaxAmountTextChange By Sam on 23022017
