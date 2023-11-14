@@ -2,6 +2,7 @@
  Rev 1.0      Sanchita   V2.0.39   22-09-2023    GST is showing Zero in the TAX Window whereas GST in the Grid calculated. 
                                                  Session["MultiUOMData"] has been renamed to Session["MultiUOMDataPRET"]
                                                  Mantis: 26843
+ Rev 2.0      Priti      V2.0.41   13-11-2023    0026641: Tax amount is not calculating for the Purchase Return for partial qty
 *******************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -27,6 +28,7 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using ERP.OMS.Tax_Details.ClassFile;
 using ERP.Models;
+using ERP.OMS.Management.Activities.UserControls;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -129,7 +131,7 @@ namespace ERP.OMS.Management.Activities
                 else if (MultiUOMSelection.ToUpper().Trim() == "NO")
                 {
                     hddnMultiUOMSelection.Value = "0";
-                   
+
                     grid.Columns[7].Width = 0;
                     // Rev  Mantis Issue 24428
                     grid.Columns[8].Width = 0;
@@ -140,7 +142,7 @@ namespace ERP.OMS.Management.Activities
             }
 
 
-          
+
             string BackDatedEntryPurchaseReturn = ComBL.GetSystemSettingsResult("BackDatedEntryPurchaseReturn");
             if (!String.IsNullOrEmpty(BackDatedEntryPurchaseReturn))
             {
@@ -159,8 +161,8 @@ namespace ERP.OMS.Management.Activities
             if (!IsPostBack)
             {
                 bindHierarchy();
-                ddlHierarchy.Enabled = false;               
-                ddl_AmountAre.ClientEnabled = false;               
+                ddlHierarchy.Enabled = false;
+                ddl_AmountAre.ClientEnabled = false;
                 #region New Tax Block
 
                 string ItemLevelTaxDetails = string.Empty; string HSNCodewisetaxSchemid = string.Empty; string BranchWiseStateTax = string.Empty; string StateCodeWiseStateIDTax = string.Empty;
@@ -434,8 +436,8 @@ namespace ERP.OMS.Management.Activities
                         //ASPxButton2.Enabled = false;
                         Session["PRWS_TaxDetails"] = null;
                         CreateDataTaxTable();
-                        lblHeadTitle.Text = "Add Purchase Return";                        
-                        ddl_AmountAre.Value = "1";                          
+                        lblHeadTitle.Text = "Add Purchase Return";
+                        ddl_AmountAre.Value = "1";
                         ddl_VatGstCst.SelectedIndex = 0;
                         ddl_VatGstCst.ClientEnabled = false;
                     }
@@ -706,7 +708,7 @@ namespace ERP.OMS.Management.Activities
                         myDataColumn.Unique = true;
                         MultiUOMSaveData.Columns.Add(myDataColumn);
                     }
-                     // Mantis Issue 24428
+                    // Mantis Issue 24428
                     DataRow thisRow;
                     if (MultiUOMSaveData.Rows.Count > 0)
                     {
@@ -887,9 +889,9 @@ namespace ERP.OMS.Management.Activities
                 string AltUOMKeyValue = e.Parameters.Split('~')[7];
                 string AltUOMKeyqnty = e.Parameters.Split('~')[5];
                 string muid = e.Parameters.Split('~')[13];
-                
+
                 string SrlNo = "0";
-                
+
 
 
                 DataTable MultiUOMSaveData = new DataTable();
@@ -901,15 +903,15 @@ namespace ERP.OMS.Management.Activities
                     DataRow[] MultiUoMresult = dt.Select("MultiUOMSR ='" + muid + "'");
                     foreach (DataRow item in MultiUoMresult)
                     {
-                       
+
                         SrlNo = Convert.ToString(item["SrlNo"]);
-                       
+
                     }
                 }
 
 
                 //string SrlNo = Convert.ToString(e.Parameters.Split('~')[1]);
-               
+
                 string Quantity = Convert.ToString(e.Parameters.Split('~')[2]);
                 string UOM = Convert.ToString(e.Parameters.Split('~')[3]);
                 string AltUOM = Convert.ToString(e.Parameters.Split('~')[4]);
@@ -925,7 +927,7 @@ namespace ERP.OMS.Management.Activities
                 string AltRate = Convert.ToString(e.Parameters.Split('~')[11]);
                 string UpdateRow = Convert.ToString(e.Parameters.Split('~')[12]);
                 // End of Mantis Issue 24428
-                
+
                 DataRow[] MultiUoMresultResult = dt.Select("SrlNo ='" + SrlNo + "' and  MultiUOMSR <>'" + muid + "'");
 
                 foreach (DataRow item in MultiUoMresultResult)
@@ -956,9 +958,9 @@ namespace ERP.OMS.Management.Activities
                         DataRow[] MultiUoMresult = dt.Select("MultiUOMSR ='" + muid + "'");
                         foreach (DataRow item in MultiUoMresult)
                         {
-                            
+
                             SrlNo = Convert.ToString(item["SrlNo"]);
-                           
+
                             item.Table.Rows.Remove(item);
                             break;
 
@@ -966,7 +968,7 @@ namespace ERP.OMS.Management.Activities
                     }
                     dt.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow, muid);
                 }
-               
+
                 // End of Mantis Issue 24428
                 Session["MultiUOMDataPRET"] = dt;
 
@@ -981,7 +983,7 @@ namespace ERP.OMS.Management.Activities
                     // dvData.RowFilter = "SrlNo = '" + SrlNo + "'";
 
                     dvData.RowFilter = "SrlNo = '" + SrlNo + "'";
-                   
+
 
                     grid_MultiUOM.DataSource = dvData;
                     grid_MultiUOM.DataBind();
@@ -1375,7 +1377,7 @@ namespace ERP.OMS.Management.Activities
                 string InvoiceCreatedFromDoc = Convert.ToString(PurchaseReturnEditdt.Rows[0]["ReturnCreatedFromDoc"]);
                 string InvoiceCreatedFromDoc_Ids = Convert.ToString(PurchaseReturnEditdt.Rows[0]["ReturnCreatedFromDoc_Ids"]);
                 string InvoiceCreatedFromDocDate = Convert.ToString(PurchaseReturnEditdt.Rows[0]["ReturnCreatedFromDocDate"]);
-                string DueDate = Convert.ToString(PurchaseReturnEditdt.Rows[0]["DueDate"]);
+                //string DueDate = Convert.ToString(PurchaseReturnEditdt.Rows[0]["DueDate"]);
                 string BR_Id = Convert.ToString(PurchaseReturnEditdt.Rows[0]["BR_Id"]);
 
                 lookup_Project.GridView.Selection.SelectRowByKey(Convert.ToInt64(PurchaseReturnEditdt.Rows[0]["Proj_Id"]));
@@ -1384,7 +1386,7 @@ namespace ERP.OMS.Management.Activities
                 if (dt2.Rows.Count > 0)
                 {
                     ddlHierarchy.SelectedValue = Convert.ToString(dt2.Rows[0]["Hierarchy_ID"]);
-                }         
+                }
 
                 string refCreditNoteNo = Convert.ToString(PurchaseReturnEditdt.Rows[0]["Return_RefCreditNoteNo"]);
                 string refCreditNoteDt = Convert.ToString(PurchaseReturnEditdt.Rows[0]["Return_RefCreditNoteDate"]);
@@ -1401,7 +1403,7 @@ namespace ERP.OMS.Management.Activities
 
                 //if (InvoiceCreatedFromDoc != "") rdl_SaleInvoice.SelectedValue = InvoiceCreatedFromDoc;
                 txt_InvoiceDate.Text = InvoiceCreatedFromDocDate;
-                dt_SaleInvoiceDue.Date = Convert.ToDateTime(DueDate);
+               // dt_SaleInvoiceDue.Date = Convert.ToDateTime(DueDate);
 
 
                 PopulateRequestByBranchId(Branch_Id);
@@ -2379,9 +2381,9 @@ namespace ERP.OMS.Management.Activities
 
                     // Rev  Manis 24428
                     //Quotationdt.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, SalePrice, Discount, Amount, TaxAmount, TotalAmount, "I", ProductName, ComponentID, PurchaseInvoiceDetail_ComponentDetailID, ComponentNumber, TotalQty, BalanceQty, IsComponentProduct, ProductDisID, Product, DetailsId, ReturnDetails_InlineRemarks);
-                    Quotationdt.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, SalePrice, Discount, Amount, TaxAmount, TotalAmount, "I", ProductName, ComponentID, PurchaseInvoiceDetail_ComponentDetailID, ComponentNumber, TotalQty, BalanceQty, IsComponentProduct, ProductDisID, Product, DetailsId, ReturnDetails_InlineRemarks, Order_AltQuantity,Order_AltUOM);
+                    Quotationdt.Rows.Add(SrlNo, "0", ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, SalePrice, Discount, Amount, TaxAmount, TotalAmount, "I", ProductName, ComponentID, PurchaseInvoiceDetail_ComponentDetailID, ComponentNumber, TotalQty, BalanceQty, IsComponentProduct, ProductDisID, Product, DetailsId, ReturnDetails_InlineRemarks, Order_AltQuantity, Order_AltUOM);
                     // End Manis 24428
-                
+
                 }
             }
 
@@ -2494,7 +2496,7 @@ namespace ERP.OMS.Management.Activities
                             //Quotationdt.Rows.Add(SrlNo, QuotationID, ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, SalePrice, Discount, Amount, TaxAmount, TotalAmount, "U", ProductName, ComponentID, PurchaseInvoiceDetail_ComponentDetailID, ComponentNumber, TotalQty, BalanceQty, IsComponentProduct, ProductDisID, Product, DetailsId, ReturnDetails_InlineRemarks);
                             Quotationdt.Rows.Add(SrlNo, QuotationID, ProductDetails, Description, Quantity, UOM, Warehouse, StockQuantity, StockUOM, SalePrice, Discount, Amount, TaxAmount, TotalAmount, "U", ProductName, ComponentID, PurchaseInvoiceDetail_ComponentDetailID, ComponentNumber, TotalQty, BalanceQty, IsComponentProduct, ProductDisID, Product, DetailsId, ReturnDetails_InlineRemarks, Order_AltQuantity, Order_AltUOM);
                             // End  Manis 24428
-                        
+
                         }
                     }
                 }
@@ -2523,7 +2525,7 @@ namespace ERP.OMS.Management.Activities
 
                 if (QuotationID.Contains("~") != true)
                 {
-                    Quotationdt.Rows.Add("0", QuotationID, "0", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "D", "", "", "0", "0", "0", "0", "0", "0", "0","0","");
+                    Quotationdt.Rows.Add("0", QuotationID, "0", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "D", "", "", "0", "0", "0", "0", "0", "0", "0", "0", "");
                 }
             }
 
@@ -2713,7 +2715,7 @@ namespace ERP.OMS.Management.Activities
                     //MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "DetailsId");
                     MultiUOMDetails = MultiUOM.DefaultView.ToTable(false, "SrlNo", "Quantity", "UOM", "AltUOM", "AltQuantity", "UomId", "AltUomId", "ProductId", "DetailsId", "BaseRate", "AltRate", "UpdateRow");
                     // End of Mantis Issue 24428
-                
+
                 }
                 else
                 {
@@ -2778,10 +2780,11 @@ namespace ERP.OMS.Management.Activities
                 // DataTable Of Billing Address
                 #region ##### Added By : Samrat Roy -- to get BillingShipping user control data
                 DataTable tempBillAddress = new DataTable();
-                tempBillAddress = BillingShippingControl.SaveBillingShippingControlData();
+                //Rev 2.0
+                //tempBillAddress = BillingShippingControl.SaveBillingShippingControlData();
 
-
-
+                tempBillAddress = Purchase_BillingShipping.GetBillingShippingTable();
+                //Rev 2.0 End
 
                 #region #### Old_Process ####
                 ////// DataTable Of Billing Address
@@ -2875,19 +2878,19 @@ namespace ERP.OMS.Management.Activities
                         decimal strProductQuantity = Convert.ToDecimal(dr["Quantity"]);
                         decimal strUOMQuantity = 0;
 
-                        if (StockUOM !="0")
-                        { 
-                        GetQuantityBaseOnProductforDetailsId(strDetailsId, ref strUOMQuantity);
+                        if (StockUOM != "0")
+                        {
+                            GetQuantityBaseOnProductforDetailsId(strDetailsId, ref strUOMQuantity);
 
 
-                          //Rev 24428
-                           DataTable dtb = new DataTable();
-                           dtb = (DataTable)Session["MultiUOMDataPRET"];
-                           //if (Session["MultiUOMDataPRET"] != null)
-                           //{
-                           if (dtb.Rows.Count > 0)
-                           { 
-                              
+                            //Rev 24428
+                            DataTable dtb = new DataTable();
+                            dtb = (DataTable)Session["MultiUOMDataPRET"];
+                            //if (Session["MultiUOMDataPRET"] != null)
+                            //{
+                            if (dtb.Rows.Count > 0)
+                            {
+
                                 // Mantis Issue 24428
                                 //if (strUOMQuantity != null)
                                 //{
@@ -2900,10 +2903,10 @@ namespace ERP.OMS.Management.Activities
                                 //}
                                 // End of Mantis Issue 24428
                             }
-                           //else if (Session["MultiUOMDataPRET"] == null)
-                           //{
-                           else if (dtb.Rows.Count < 1)
-                           {
+                            //else if (Session["MultiUOMDataPRET"] == null)
+                            //{
+                            else if (dtb.Rows.Count < 1)
+                            {
                                 validate = "checkMultiUOMData";
                                 grid.JSProperties["cpcheckMultiUOMData"] = strSrlNo;
                                 break;
@@ -3033,7 +3036,10 @@ namespace ERP.OMS.Management.Activities
                             DataTable TaxForExceptionCheck = new DataTable();
 
                             string ShippingStateForException = "";
-                            string sCode = BillingShippingControl.GetShippingStateCode(Request.QueryString["key"]);
+                            //Rev 2.0
+                            //string sCode = BillingShippingControl.GetShippingStateCode(Request.QueryString["key"]);
+                            string sCode = Purchase_BillingShipping.GeteShippingStateCode();
+                            //Rev 2.0 End
                             ShippingStateForException = sCode;
                             if (ShippingStateForException.Trim() != "")
                             {
@@ -3083,7 +3089,7 @@ namespace ERP.OMS.Management.Activities
                 }
 
 
-                if (validate == "outrange" || validate == "duplicate" || validate == "checkWarehouse" || validate == "duplicateProduct" || validate == "nullAmount" || validate == "nullQuantity" || validate == "transporteMandatory" || validate == "checkAddress" || validate == "checkMultiUOMData"|| validate == "checkAcurateTaxAmount")
+                if (validate == "outrange" || validate == "duplicate" || validate == "checkWarehouse" || validate == "duplicateProduct" || validate == "nullAmount" || validate == "nullQuantity" || validate == "transporteMandatory" || validate == "checkAddress" || validate == "checkMultiUOMData" || validate == "checkAcurateTaxAmount")
                 {
                     grid.JSProperties["cpSaveSuccessOrFail"] = validate;
                 }
@@ -3592,13 +3598,13 @@ namespace ERP.OMS.Management.Activities
                 if (Quote_Nos != "$")
                 {
                     DataTable dt_QuotationDetails = new DataTable();
-                    DataTable MultiUOMDet = new DataTable(); 
+                    DataTable MultiUOMDet = new DataTable();
                     string RequestNo = Convert.ToString(cmbRequest.Value);
                     DataTable ComponentTable = new DataTable();
-                    DataSet drQuote=new DataSet();
+                    DataSet drQuote = new DataSet();
                     if (RequestNo != "")
                     {
-                       // Rev Mantis Issue 24429
+                        // Rev Mantis Issue 24429
                         //dt_QuotationDetails = objPurchaseReturnBL.GetIndentDetailsForPSGridBindByRequest(InvoiceDetails_Id, "", InvoiceDetails_Id, companyId, fin_year, RequestNo);
                         dt_QuotationDetails = objPurchaseReturnBL.GetIndentDetailsForPSGridBindByRequest_New(InvoiceDetails_Id, "", InvoiceDetails_Id, companyId, fin_year, RequestNo);
                         // End of Rev Mantis Issue 24429
@@ -3610,7 +3616,7 @@ namespace ERP.OMS.Management.Activities
                     else
                     {
                         string IdKey = Convert.ToString(Request.QueryString["key"]);
-                       // Rev Mantis Issue 24429
+                        // Rev Mantis Issue 24429
                         //if (!string.IsNullOrEmpty(IdKey))
                         //{
                         //    if (IdKey != "ADD")
@@ -3656,7 +3662,7 @@ namespace ERP.OMS.Management.Activities
                         }
                         // End of Rev Mantis Issue 24429
                         // Session["OrderDetails"] = null;
-                        if (drQuote.Tables[2] != null && drQuote.Tables[2].Rows.Count>0)
+                        if (drQuote.Tables[2] != null && drQuote.Tables[2].Rows.Count > 0)
                         {
                             DataTable additionaldesc = drQuote.Tables[2];
                             Session["ProjectadditionRemarks"] = GetProjectPReturnInfo(additionaldesc, IdKey);
@@ -3728,7 +3734,7 @@ namespace ERP.OMS.Management.Activities
                                   string Reference, string Narration, string strBranch, string strStockOutBranch, string strAgents, string strCurrency, string strRate, string strTaxType, string strTaxCode,
                                   string strInvoiceComponent, string strInvoiceComponentDate, string strCashBank, string strDueDate,
                                   DataTable Productdt, DataTable addrDesc, DataTable TaxDetailTable, DataTable Warehousedt, DataTable SalesReturnTaxdt, DataTable BillAddressdt, string approveStatus, string ActionType, string StrBr,
-                                  ref int strIsComplete, ref int strInvoiceID, string ReasonforReturn, string refCreditNoteNo, string refCreditNoteDate, DataTable PurchaseReturnPackingDetailsdt, DataTable MultiUOMDetails,Int64 ProjId)
+                                  ref int strIsComplete, ref int strInvoiceID, string ReasonforReturn, string refCreditNoteNo, string refCreditNoteDate, DataTable PurchaseReturnPackingDetailsdt, DataTable MultiUOMDetails, Int64 ProjId)
         {
             try
             {
@@ -3786,7 +3792,11 @@ namespace ERP.OMS.Management.Activities
                     }
                 }
                 cmd.Parameters.AddWithValue("@CashBank", strCashBank);
-                cmd.Parameters.AddWithValue("@DueDate", Convert.ToDateTime(strDueDate));
+                //if (strDueDate != null && strDueDate != "")
+                //{
+                //    cmd.Parameters.AddWithValue("@DueDate", Convert.ToDateTime(strDueDate));
+                //}
+                    
                 cmd.Parameters.AddWithValue("@Currency", strCurrency);
                 cmd.Parameters.AddWithValue("@Rate", strRate);
                 cmd.Parameters.AddWithValue("@TaxType", strTaxType);
@@ -4005,7 +4015,10 @@ namespace ERP.OMS.Management.Activities
                     string ShippingState = "";
 
                     #region ##### Added By : Samrat Roy -- For BillingShippingUserControl ######
-                    string sstateCode = BillingShippingControl.GetShippingStateCode(Request.QueryString["key"]);
+                    //Rev 2.0
+                    //string sstateCode = BillingShippingControl.GetShippingStateCode(Request.QueryString["key"]);
+                    string sstateCode = Purchase_BillingShipping.GeteShippingStateCode();
+                    //Rev 2.0 End
                     ShippingState = sstateCode;
                     if (ShippingState.Trim() != "")
                     {
@@ -4940,7 +4953,7 @@ namespace ERP.OMS.Management.Activities
 
                                 row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["AltQuantity"] = (oldAltQuantity + Convert.ToDecimal(AltQty));
-                               // row["AltUOM"] = AltUOM;
+                                // row["AltUOM"] = AltUOM;
                                 row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
                             }
@@ -4991,7 +5004,7 @@ namespace ERP.OMS.Management.Activities
 
                                     row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                     row["AltQuantity"] = (oldAltQuantity + Convert.ToDecimal(AltQty));
-                                   // row["AltUOM"] = AltUOM;
+                                    // row["AltUOM"] = AltUOM;
                                     row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                     row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
                                 }
@@ -5027,7 +5040,7 @@ namespace ERP.OMS.Management.Activities
 
                                 row["Quantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["AltQuantity"] = (oldQuantity + Convert.ToDecimal(AltQty));
-                               // row["AltUOM"] = AltUOM;
+                                // row["AltUOM"] = AltUOM;
                                 row["TotalQuantity"] = (oldQuantity + Convert.ToDecimal(Qty));
                                 row["SalesQuantity"] = (oldQuantity + Convert.ToDecimal(Qty)) + " " + Sales_UOM_Name;
                             }
@@ -6880,11 +6893,200 @@ namespace ERP.OMS.Management.Activities
 
                 Session["PRWS_FinalTaxRecord"] = TaxRecord;
             }
-            else
+            else   // First Time When you Click on Item Level Tax Button 
             {
                 #region fetch All data For Tax
 
+                DataTable taxDetail = new DataTable();
                 DataTable MainTaxDataTable = (DataTable)Session["PRWS_FinalTaxRecord"];
+                // DataTable databaseReturnTable = (DataTable)Session["QuotationTaxDetails"];
+
+                //if (Convert.ToInt32(e.Parameters.Split('~')[1]) == 1)
+                //    taxDetail = oDBEngine.GetDataTable("select TaxRates_ID as Taxes_ID,TaxRatesSchemeName as Taxes_Name,TaxCalculateMethods,tm.Taxes_Name as taxCodeName,tm.Taxes_ApplicableOn as 'ApplicableOn',isnull((select TaxRatesSchemeName from Config_TaxRates where TaxRates_ID=tm.Taxes_OtherTax),'')  as dependOn from Master_taxes tm inner join Config_TaxRates ct on tm.Taxes_ID=ct.TaxRates_TaxCode where tm.TaxTypeCode not in('G','V','C') and tm.TaxItemlevel='Y'");
+                //else if (Convert.ToInt32(e.Parameters.Split('~')[1]) == 2)
+                //taxDetail = oDBEngine.GetDataTable("select TaxRates_ID as Taxes_ID,TaxRatesSchemeName as Taxes_Name,TaxCalculateMethods,tm.Taxes_Name as taxCodeName,tm.Taxes_ApplicableOn as 'ApplicableOn',isnull((select TaxRatesSchemeName from Config_TaxRates where TaxRates_ID=tm.Taxes_OtherTax),'')  as dependOn from Master_taxes tm inner join Config_TaxRates ct on tm.Taxes_ID=ct.TaxRates_TaxCode where tm.TaxTypeCode not in('G','V','C') and tm.TaxItemlevel='Y'");
+
+                if (Convert.ToString(ddl_AmountAre.Value).Trim() != "4")
+                {
+                    //ProcedureExecute proc = new ProcedureExecute("prc_PurchaseOrderDetailsList");
+                    //proc.AddVarcharPara("@Action", 500, "LoadOtherTaxDetails");
+                    //proc.AddVarcharPara("@S_quoteDate", 10, dt_PLQuote.Date.ToString("yyyy-MM-dd"));
+                    //proc.AddVarcharPara("@ProductsID", 10, Convert.ToString(setCurrentProdCode.Value));
+                    //taxDetail = proc.GetTable();
+
+                    ProcedureExecute proc = new ProcedureExecute("prc_TaxExceptionFind");
+                    proc.AddVarcharPara("@Action", 500, "PO");
+                    proc.AddVarcharPara("@ProductID", 10, Convert.ToString(setCurrentProdCode.Value));
+                    proc.AddVarcharPara("@ENTITY_ID", 100, hdnCustomerId.Value);
+                    proc.AddVarcharPara("@Date", 10, dt_PLQuote.Date.ToString("yyyy-MM-dd"));
+                    proc.AddVarcharPara("@Amount", 100, HdProdGrossAmt.Value);
+                    proc.AddVarcharPara("@Qty", 100, hdnQty.Value);
+                    taxDetail = proc.GetTable();
+
+
+                }
+                else
+                {
+                    ProcedureExecute proc = new ProcedureExecute("prc_PurchaseOrderDetailsList");
+                    proc.AddVarcharPara("@Action", 500, "LoadImportTaxDetails");
+                    proc.AddVarcharPara("@S_quoteDate", 10, dt_PLQuote.Date.ToString("yyyy-MM-dd"));
+                    taxDetail = proc.GetTable();
+
+                }
+
+                //Get Company Gstin 09032017
+                string CompInternalId = Convert.ToString(Session["LastCompany"]);
+                string[] compGstin = oDBEngine.GetFieldValue1("tbl_master_company", "cmp_gstin", "cmp_internalid='" + CompInternalId + "'", 1);
+
+                //Get BranchStateCode
+                string BrancgStateCode = "", BranchGSTIN = "";
+                DataTable BranchTable = oDBEngine.GetDataTable("select StateCode,branch_GSTIN   from tbl_master_branch branch inner join tbl_master_state st on branch.branch_state=st.id where branch_id=" + Convert.ToString(ddl_Branch.SelectedValue));
+                if (BranchTable != null)
+                {
+                    BrancgStateCode = Convert.ToString(BranchTable.Rows[0][0]);
+                    BranchGSTIN = Convert.ToString(BranchTable.Rows[0][1]);
+                    if (BranchGSTIN.Trim() != "")
+                    {
+                        BrancgStateCode = BranchGSTIN.Substring(0, 2);
+                    }
+                }
+
+                if (BranchGSTIN.Trim() == "")
+                {
+                    BrancgStateCode = compGstin[0].Substring(0, 2);
+                }
+
+
+
+                string VendorState = "";
+
+
+                ProcedureExecute GetVendorGstin = new ProcedureExecute("prc_GstTaxDetails");
+                GetVendorGstin.AddVarcharPara("@Action", 500, "GetVendorGSTINByBranch");
+                GetVendorGstin.AddVarcharPara("@branchId", 10, Convert.ToString(ddl_Branch.SelectedValue));
+                GetVendorGstin.AddVarcharPara("@entityId", 10, Convert.ToString(hdnCustomerId.Value));
+                //GetVendorGstin.AddVarcharPara("@entityId", 10, Convert.ToString(CustomerComboBox.Value));
+                DataTable VendorGstin = GetVendorGstin.GetTable();
+
+                if (VendorGstin.Rows.Count > 0)
+                {
+                    if (Convert.ToString(VendorGstin.Rows[0][0]).Trim() != "")
+                    {
+                        VendorState = Convert.ToString(VendorGstin.Rows[0][0]).Substring(0, 2);
+                    }
+                    //Rev Bapi
+                    else
+                    {
+
+                        DataTable GetVendorRateNew = oDBEngine.GetDataTable("SELECT top 1 add_state FROM tbl_master_contact CNT INNER JOIN tbl_master_address AD ON AD.add_cntId=cnt.cnt_internalId    where cnt_internalId='" + Convert.ToString(hdnCustomerId.Value) + "'");
+
+
+
+
+                        VendorState = Convert.ToString(GetVendorRateNew.Rows[0][0]);
+                    }
+
+
+                    //End Rev Bapi
+
+                }
+
+
+                #endregion
+
+                if (Convert.ToString(ddl_AmountAre.Value).Trim() != "4")
+                {
+                    if (VendorState.Trim() != "" && BrancgStateCode != "")
+                    {
+
+                        if (BrancgStateCode == VendorState)
+                        {
+                            //Check if the state is in union territories then only UTGST will apply
+                            //   Chandigarh     Andaman and Nicobar Islands    DADRA & NAGAR HAVELI    DAMAN & DIU    Lakshadweep              PONDICHERRY
+                            if (VendorState == "4" || VendorState == "26" || VendorState == "25" || VendorState == "35" || VendorState == "31" || VendorState == "34")
+                            {
+                                foreach (DataRow dr in taxDetail.Rows)
+                                {
+                                    if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
+                                    {
+                                        dr.Delete();
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                foreach (DataRow dr in taxDetail.Rows)
+                                {
+                                    if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "UTGST")
+                                    {
+                                        dr.Delete();
+                                    }
+                                }
+                            }
+                            taxDetail.AcceptChanges();
+                        }
+                        else
+                        {
+                            foreach (DataRow dr in taxDetail.Rows)
+                            {
+                                if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "UTGST")
+                                {
+                                    dr.Delete();
+                                }
+                            }
+                            taxDetail.AcceptChanges();
+
+                        }
+
+
+                    }
+
+                    //If Company GSTIN is blank then Delete All CGST,UGST,IGST,CGST
+                    if ((compGstin[0].Trim() == "" && BranchGSTIN == "") || VendorState == "")
+                    {
+                        foreach (DataRow dr in taxDetail.Rows)
+                        {
+                            if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "UTGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST")
+                            {
+                                dr.Delete();
+                            }
+                        }
+                        taxDetail.AcceptChanges();
+                    }
+
+                }
+                else
+                {
+                    foreach (DataRow dr in taxDetail.Rows)
+                    {
+                        if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "UTGST")
+                        {
+                            dr.Delete();
+                        }
+                    }
+                    taxDetail.AcceptChanges();
+
+                }
+                ////Check If any TaxScheme Set Against that Product Then update there rate 22-03-2017 and rate
+                //string[] schemeIDViaProdID = oDBEngine.GetFieldValue1("master_sproducts", "isnull(sProduct_TaxSchemeSale,0)sProduct_TaxSchemeSale", "sProducts_ID='" + Convert.ToString(setCurrentProdCode.Value) + "'", 1);
+                ////&& schemeIDViaProdID[0] != ""
+                //if (schemeIDViaProdID.Length > 0)
+                //{
+
+                //    if (taxDetail.Select("Taxes_ID='" + schemeIDViaProdID[0] + "'").Length > 0)
+                //    {
+                //        foreach (DataRow dr in taxDetail.Rows)
+                //        {
+                //            if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "UTGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST")
+                //            {
+                //                if (Convert.ToString(dr["Taxes_ID"]).Trim() != schemeIDViaProdID[0].Trim())
+                //                    dr["TaxRates_Rate"] = 0;
+                //            }
+                //        }
+                //    }
+                //}
+
 
 
                 int slNo = Convert.ToInt32(HdSerialNo.Value);
@@ -6893,214 +7095,225 @@ namespace ERP.OMS.Management.Activities
                 decimal ProdGrossAmt = Convert.ToDecimal(HdProdGrossAmt.Value);
                 decimal ProdNetAmt = Convert.ToDecimal(HdProdNetAmt.Value);
 
+
+
                 List<TaxDetails> TaxDetailsDetails = new List<TaxDetails>();
 
                 //Debjyoti 09032017
-                decimal totalParcentage = 0;               
+                decimal totalParcentage = 0;
+                foreach (DataRow dr in taxDetail.Rows)
+                {
+                    if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
+                    {
+                        totalParcentage += Convert.ToDecimal(dr["TaxRates_Rate"]);
+                    }
+                    else if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST")
+                    {
+                        totalParcentage += Convert.ToDecimal(dr["TaxRates_Rate"]);
+                    }
+                }
 
-                DataTable ReturnTaxDetailsTable = new DataTable();
+
 
                 if (e.Parameters.Split('~')[0] == "New")
                 {
-                    foreach (DataRow dr in MainTaxDataTable.Rows)
+                    foreach (DataRow dr in taxDetail.Rows)
                     {
-                        if (Convert.ToString(dr["SlNo"]) == Convert.ToString(slNo))
+                        TaxDetails obj = new TaxDetails();
+                        obj.Taxes_ID = Convert.ToInt32(dr["Taxes_ID"]);
+                        obj.taxCodeName = Convert.ToString(dr["taxCodeName"]);
+                        obj.TaxField = Convert.ToString(dr["TaxRates_Rate"]);
+                        obj.Amount = 0.0;
+
+                        #region set calculated on
+                        //Check Tax Applicable on and set to calculated on
+                        if (Convert.ToString(dr["ApplicableOn"]) == "G")
                         {
-                            if (Convert.ToString(dr["TaxCode"]) == "0")
-                                continue;
-
-                            ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_Details");
-                            proc.AddVarcharPara("@Action", 500, "GetTaxDetailsForReturn");
-                            proc.AddVarcharPara("@TaxId", 500, Convert.ToString(dr["TaxCode"]));
-                            ReturnTaxDetailsTable = proc.GetTable();
-
-                            TaxDetails obj = new TaxDetails();
-                            obj.Taxes_ID = Convert.ToInt32(dr["TaxCode"]);
-                            obj.taxCodeName = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]);
-                            obj.TaxField = Convert.ToString(dr["Percentage"]);
-                            obj.Amount = 0.0;
-
-                            #region set calculated on
-                            //Check Tax Applicable on and set to calculated on
-                            if (Convert.ToString(dr["ApplicableOn"]) == "G")
-                            {
-                                obj.calCulatedOn = ProdGrossAmt;
-                            }
-                            else if (Convert.ToString(dr["ApplicableOn"]) == "N")
-                            {
-                                obj.calCulatedOn = ProdNetAmt;
-                            }
-                            else
-                            {
-                                obj.calCulatedOn = 0;
-                            }
-                            //End Here
-                            #endregion
-
-
-
-                            if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxCalculateMethods"]) == "A")
-                            {
-                                obj.Taxes_Name = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]) + "(+)";
-
-                            }
-                            else
-                            {
-                                obj.Taxes_Name = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]) + "(-)";
-                            }
-
-                            obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
-
-
-
-
-                            DataRow[] filtr = MainTaxDataTable.Select("TaxCode ='" + obj.Taxes_ID + "' and slNo=" + Convert.ToString(slNo));
-                            if (filtr.Length > 0)
-                            {
-                                obj.Amount = Convert.ToDouble(filtr[0]["Amount"]);
-                                if (obj.Taxes_ID == 0)
-                                {
-                                    //   obj.TaxField = GetTaxName(Convert.ToInt32(Convert.ToString(filtr[0]["AltTaxCode"])));
-                                    aspxGridTax.JSProperties["cpComboCode"] = Convert.ToString(filtr[0]["AltTaxCode"]);
-                                }
-                                else
-                                    obj.TaxField = Convert.ToString(filtr[0]["Percentage"]);
-                            }
-
-                            TaxDetailsDetails.Add(obj);
+                            obj.calCulatedOn = ProdGrossAmt;
                         }
+                        else if (Convert.ToString(dr["ApplicableOn"]) == "N")
+                        {
+                            obj.calCulatedOn = ProdNetAmt;
+                        }
+                        else
+                        {
+                            obj.calCulatedOn = 0;
+                        }
+                        //End Here
+                        #endregion
+
+                        //Debjyoti 09032017
+                        if (Convert.ToString(ddl_AmountAre.Value) == "2")
+                        {
+                            if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
+                            {
+                                if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
+                                {
+                                    decimal finalCalCulatedOn = 0;
+                                    decimal backProcessRate = (1 + (totalParcentage / 100));
+                                    finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
+
+                                    // Code Commented by Sam to Round upto 2 decimal on 19122017 Section Start
+                                    obj.calCulatedOn = Math.Round(finalCalCulatedOn, 2);
+                                    obj.calCulatedOn = finalCalCulatedOn;
+
+                                    // Code Commented by Sam to Round upto 2 decimal on 19122017 Section End
+
+                                }
+                            }
+                        }
+
+                        if (Convert.ToString(dr["TaxCalculateMethods"]) == "A")
+                        {
+                            obj.Taxes_Name = Convert.ToString(dr["Taxes_Name"]) + "(+)";
+
+                        }
+                        else
+                        {
+                            obj.Taxes_Name = Convert.ToString(dr["Taxes_Name"]) + "(-)";
+                        }
+
+
+                        // Code Commented by Sam to Round upto 2 decimal on 19122017 Section Start
+                        obj.Amount = Math.Round(Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100)), 2);
+                        //obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+
+                        // Code Commented by Sam to Round upto 2 decimal on 19122017 Section End
+
+
+                        DataRow[] filtr = MainTaxDataTable.Select("TaxCode ='" + obj.Taxes_ID + "' and slNo=" + Convert.ToString(slNo));
+                        if (filtr.Length > 0)
+                        {
+                            obj.Amount = Convert.ToDouble(filtr[0]["Amount"]);
+                            if (obj.Taxes_ID == 0)
+                            {
+                                //   obj.TaxField = GetTaxName(Convert.ToInt32(Convert.ToString(filtr[0]["AltTaxCode"])));
+                                aspxGridTax.JSProperties["cpComboCode"] = Convert.ToString(filtr[0]["AltTaxCode"]);
+                            }
+                            else
+                                obj.TaxField = Convert.ToString(filtr[0]["Percentage"]);
+                        }
+
+                        TaxDetailsDetails.Add(obj);
                     }
                 }
                 else
                 {
-                    aspxGridTax.JSProperties["cpTaxOkFocus"] = "TaxFocus";
                     string keyValue = e.Parameters.Split('~')[0];
 
                     DataTable TaxRecord = (DataTable)Session["PRWS_FinalTaxRecord"];
 
 
-
-
-
-
-
-
-                    foreach (DataRow dr in TaxRecord.Rows)
+                    foreach (DataRow dr in taxDetail.Rows)
                     {
+                        TaxDetails obj = new TaxDetails();
+                        obj.Taxes_ID = Convert.ToInt32(dr["Taxes_ID"]);
+                        obj.taxCodeName = Convert.ToString(dr["taxCodeName"]);
 
-                        if (Convert.ToString(dr["SlNo"]) == Convert.ToString(slNo))
+                        if (Convert.ToString(dr["TaxCalculateMethods"]) == "A")
+                            obj.Taxes_Name = Convert.ToString(dr["Taxes_Name"]) + "(+)";
+                        else
+                            obj.Taxes_Name = Convert.ToString(dr["Taxes_Name"]) + "(-)";
+                        obj.TaxField = Convert.ToString(dr["TaxRates_Rate"]);
+                        obj.Amount = 0.0;
+
+                        #region set calculated on
+                        //Check Tax Applicable on and set to calculated on
+                        if (Convert.ToString(dr["ApplicableOn"]) == "G")
                         {
-                            if (Convert.ToString(dr["TaxCode"]) == "0")
-                                continue;
+                            obj.calCulatedOn = ProdGrossAmt;
+                        }
+                        else if (Convert.ToString(dr["ApplicableOn"]) == "N")
+                        {
+                            obj.calCulatedOn = ProdNetAmt;
+                        }
+                        else
+                        {
+                            obj.calCulatedOn = 0;
+                        }
+                        //End Here
+                        #endregion
 
-                            ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_Details");
-                            proc.AddVarcharPara("@Action", 500, "GetTaxDetailsForReturn");
-                            proc.AddVarcharPara("@TaxId", 500, Convert.ToString(dr["TaxCode"]));
-                            ReturnTaxDetailsTable = proc.GetTable();
-
-
-
-                            TaxDetails obj = new TaxDetails();
-                            obj.Taxes_ID = Convert.ToInt32(dr["TaxCode"]);
-                            obj.taxCodeName = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]);
-
-                            if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxCalculateMethods"]) == "A")
-                                obj.Taxes_Name = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]) + "(+)";
-                            else
-                                obj.Taxes_Name = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]) + "(-)";
-                            obj.TaxField = "";
-                            obj.Amount = 0.0;
-
-                            #region set calculated on
-                            //Check Tax Applicable on and set to calculated on
-                            if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["ApplicableOn"]) == "G")
+                        //Debjyoti 09032017
+                        if (Convert.ToString(ddl_AmountAre.Value) == "2")
+                        {
+                            if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
                             {
-                                obj.calCulatedOn = ProdGrossAmt;
-                            }
-                            else if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["ApplicableOn"]) == "N")
-                            {
-                                obj.calCulatedOn = ProdNetAmt;
-                            }
-                            else
-                            {
-                                obj.calCulatedOn = 0;
-                            }
-                            //End Here
-                            #endregion
-
-                            //Debjyoti 09032017
-                            if (Convert.ToString(ddl_AmountAre.Value) == "2")
-                            {
-                                if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
+                                if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
                                 {
-                                    if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxTypeCode"]).Trim() == "SGST")
-                                    {
-                                        //Rev work start 02.08.2022 mantise no:24947
-                                        totalParcentage = Convert.ToDecimal(ReturnTaxDetailsTable.Rows[0]["TaxRates_Rate"]);
-                                        //Rev work close 02.08.2022 mantise no:24947
-                                        decimal finalCalCulatedOn = 0;
-                                        decimal backProcessRate = (1 + (totalParcentage / 100));
-                                        finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
-                                        //kaushik  7-8-2017
-                                        obj.calCulatedOn = Math.Round(finalCalCulatedOn, 2);
-
-                                        //kaushik  7-8-2017
-                                    }
+                                    decimal finalCalCulatedOn = 0;
+                                    decimal backProcessRate = (1 + (totalParcentage / 100));
+                                    finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
+                                    obj.calCulatedOn = finalCalCulatedOn;
                                 }
                             }
-
-                            // Rev 1.0
-                            if (Convert.ToDecimal(ReturnTaxDetailsTable.Rows[0]["TaxRates_Rate"]) != 0)
+                        }
+                        else if (Convert.ToString(ddl_AmountAre.Value) == "1")
+                        {
+                            if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
                             {
-                                obj.TaxField = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxRates_Rate"]);
-                                obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+                                if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
+                                {
+                                    decimal finalCalCulatedOn = 0;
+                                    decimal backProcessRate = ((totalParcentage / 100));
+                                    //finalCalCulatedOn = obj.calCulatedOn * backProcessRate;
+                                    //obj.calCulatedOn = finalCalCulatedOn;
+                                    obj.Amount = Convert.ToDouble(finalCalCulatedOn);
+                                }
                             }
-                            // End of Rev 1.0
+                        }
 
-                            DataRow[] filtronexsisting1 = TaxRecord.Select("TaxCode=" + obj.Taxes_ID + " and SlNo=" + Convert.ToString(slNo));
-                            if (filtronexsisting1.Length > 0)
+                        // Rev 1.0
+                        if (Convert.ToDecimal(dr["TaxRates_Rate"]) != 0)
+                        {
+                            obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+                        }
+                        // End of Rev 1.0
+
+                        DataRow[] filtronexsisting1 = TaxRecord.Select("TaxCode=" + obj.Taxes_ID + " and SlNo=" + Convert.ToString(slNo));
+                        if (filtronexsisting1.Length > 0)
+                        {
+                            if (obj.Taxes_ID == 0)
                             {
-                                if (obj.Taxes_ID == 0)
-                                {
-                                    obj.TaxField = "0";
-                                }
-                                else
-                                {
-                                    obj.TaxField = Convert.ToString(filtronexsisting1[0]["Percentage"]);
-                                }
-
-                                
-                                    obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
-                                
-                                //obj.Amount = Convert.ToDouble(filtronexsisting1[0]["Amount"]);
+                                obj.TaxField = "0";
                             }
                             else
                             {
-
-
-
-                                DataRow[] filtronexsisting = TaxRecord.Select("TaxCode=" + obj.Taxes_ID + " and SlNo=" + Convert.ToString(slNo));
-                                if (filtronexsisting.Length > 0)
-                                {
-                                    DataRow taxRecordNewRow = TaxRecord.NewRow();
-                                    taxRecordNewRow["SlNo"] = slNo;
-                                    taxRecordNewRow["TaxCode"] = obj.Taxes_ID;
-                                    taxRecordNewRow["AltTaxCode"] = "0";
-                                    taxRecordNewRow["Percentage"] = 0.0;
-                                    taxRecordNewRow["Amount"] = "0";
-
-                                    TaxRecord.Rows.Add(taxRecordNewRow);
-                                }
-
+                                obj.TaxField = Convert.ToString(filtronexsisting1[0]["Percentage"]);
                             }
-                            TaxDetailsDetails.Add(obj);
-
-                            //      DataRow[] filtrIndex = databaseReturnTable.Select("ProductTax_ProductId ='" + keyValue + "' and ProductTax_QuoteId=" + Session["QuotationID"] + " and ProductTax_TaxTypeId=0");
-                            DataRow[] filtrIndex = TaxRecord.Select("SlNo=" + Convert.ToString(slNo) + " and TaxCode=0");
-                            if (filtrIndex.Length > 0)
+                            if(Convert.ToDouble(filtronexsisting1[0]["Amount"])==0)
                             {
-                                aspxGridTax.JSProperties["cpComboCode"] = Convert.ToString(filtrIndex[0]["AltTaxCode"]);
+
                             }
+                            else
+                            {
+                                obj.Amount = Convert.ToDouble(filtronexsisting1[0]["Amount"]);
+                            }
+                            
+                        }
+                        else
+                        {
+                            DataRow[] filtronexsisting = TaxRecord.Select("TaxCode=" + obj.Taxes_ID + " and SlNo=" + Convert.ToString(slNo));
+                            if (filtronexsisting.Length > 0)
+                            {
+                                DataRow taxRecordNewRow = TaxRecord.NewRow();
+                                taxRecordNewRow["SlNo"] = slNo;
+                                taxRecordNewRow["TaxCode"] = obj.Taxes_ID;
+                                taxRecordNewRow["AltTaxCode"] = "0";
+                                taxRecordNewRow["Percentage"] = 0.0;
+                                taxRecordNewRow["Amount"] = "0";
+
+                                TaxRecord.Rows.Add(taxRecordNewRow);
+                            }
+
+                        }
+                        TaxDetailsDetails.Add(obj);
+
+                        //      DataRow[] filtrIndex = databaseReturnTable.Select("ProductTax_ProductId ='" + keyValue + "' and ProductTax_QuoteId=" + Session["QuotationID"] + " and ProductTax_TaxTypeId=0");
+                        DataRow[] filtrIndex = TaxRecord.Select("SlNo=" + Convert.ToString(slNo) + " and TaxCode=0");
+                        if (filtrIndex.Length > 0)
+                        {
+                            aspxGridTax.JSProperties["cpComboCode"] = Convert.ToString(filtrIndex[0]["AltTaxCode"]);
                         }
                     }
                     Session["PRWS_FinalTaxRecord"] = TaxRecord;
@@ -7114,28 +7327,6 @@ namespace ERP.OMS.Management.Activities
                     aspxGridTax.JSProperties["cpComboCode"] = Convert.ToString(finalFiltrIndex[0]["AltTaxCode"]);
                 }
 
-
-                DataRow[] SlRow = MainTaxDataTable.Select("SlNo=" + slNo.ToString());
-                DataTable taxDetail = new DataTable();
-                if (SlRow.Length > 0)
-                {
-                    string listOfTaxrates = "";
-                    taxDetail = SlRow.CopyToDataTable();
-                    foreach (DataRow dr in taxDetail.Rows)
-                    {
-                        listOfTaxrates = listOfTaxrates + "," + Convert.ToString(dr["TaxCode"]);
-                    }
-                    listOfTaxrates = listOfTaxrates.TrimStart(',');
-
-                    ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_Details");
-                    proc.AddVarcharPara("@Action", 500, "GetTaxDetailsForReturnById");
-                    proc.AddVarcharPara("@TaxRatesList", 4000, listOfTaxrates);
-                    taxDetail = proc.GetTable();
-
-
-
-                }
-
                 aspxGridTax.JSProperties["cpJsonData"] = createJsonForDetails(taxDetail);
 
                 retMsg = Convert.ToString(GetTotalTaxAmount(TaxDetailsDetails));
@@ -7144,10 +7335,347 @@ namespace ERP.OMS.Management.Activities
                 TaxDetailsDetails = setCalculatedOn(TaxDetailsDetails, taxDetail);
                 aspxGridTax.DataSource = TaxDetailsDetails;
                 aspxGridTax.DataBind();
-
-                #endregion
             }
         }
+        //protected void cgridTax_CustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e)
+        //{
+        //    string retMsg = "";
+        //    if (e.Parameters.Split('~')[0] == "SaveGST")
+        //    {
+        //        DataTable TaxRecord = (DataTable)Session["PRWS_FinalTaxRecord"];
+        //        int slNo = Convert.ToInt32(HdSerialNo.Value);
+        //        //For GST/CST/VAT
+        //        if (cmbGstCstVat.Value != null)
+        //        {
+
+        //            DataRow[] finalRow = TaxRecord.Select("SlNo=" + Convert.ToString(slNo) + " and TaxCode='0'");
+        //            if (finalRow.Length > 0)
+        //            {
+        //                finalRow[0]["Percentage"] = Convert.ToString(cmbGstCstVat.Value).Split('~')[1];
+        //                finalRow[0]["Amount"] = txtGstCstVat.Text;
+        //                finalRow[0]["AltTaxCode"] = Convert.ToString(cmbGstCstVat.Value).Split('~')[0];
+
+        //            }
+        //            else
+        //            {
+        //                DataRow newRowGST = TaxRecord.NewRow();
+        //                newRowGST["slNo"] = slNo;
+        //                newRowGST["Percentage"] = Convert.ToString(cmbGstCstVat.Value).Split('~')[1];
+        //                newRowGST["TaxCode"] = "0";
+        //                newRowGST["AltTaxCode"] = Convert.ToString(cmbGstCstVat.Value).Split('~')[0];
+        //                newRowGST["Amount"] = txtGstCstVat.Text;
+        //                TaxRecord.Rows.Add(newRowGST);
+        //            }
+        //        }
+        //        //End Here
+
+        //        aspxGridTax.JSProperties["cpUpdated"] = "";
+
+        //        Session["PRWS_FinalTaxRecord"] = TaxRecord;
+        //    }
+        //    else
+        //    {
+        //        #region fetch All data For Tax
+
+        //        DataTable MainTaxDataTable = (DataTable)Session["PRWS_FinalTaxRecord"];
+
+
+        //        int slNo = Convert.ToInt32(HdSerialNo.Value);
+
+        //        //Get Gross Amount and Net Amount 
+        //        decimal ProdGrossAmt = Convert.ToDecimal(HdProdGrossAmt.Value);
+        //        decimal ProdNetAmt = Convert.ToDecimal(HdProdNetAmt.Value);
+
+        //        List<TaxDetails> TaxDetailsDetails = new List<TaxDetails>();
+
+        //        //Debjyoti 09032017
+        //        decimal totalParcentage = 0;
+
+        //        DataTable ReturnTaxDetailsTable = new DataTable();
+        //        //if (Convert.ToString(ddl_AmountAre.Value).Trim() != "4")
+        //        //{
+        //        //    //ProcedureExecute proc = new ProcedureExecute("prc_PurchaseOrderDetailsList");
+        //        //    //proc.AddVarcharPara("@Action", 500, "LoadOtherTaxDetails");
+        //        //    //proc.AddVarcharPara("@S_quoteDate", 10, dt_PLQuote.Date.ToString("yyyy-MM-dd"));
+        //        //    //proc.AddVarcharPara("@ProductsID", 10, Convert.ToString(setCurrentProdCode.Value));
+        //        //    //taxDetail = proc.GetTable();
+
+        //        //    ProcedureExecute proc = new ProcedureExecute("prc_TaxExceptionFind");
+        //        //    proc.AddVarcharPara("@Action", 500, "PO");
+        //        //    proc.AddVarcharPara("@ProductID", 10, Convert.ToString(setCurrentProdCode.Value));
+        //        //    proc.AddVarcharPara("@ENTITY_ID", 100, hdnCustomerId.Value);
+        //        //    proc.AddVarcharPara("@Date", 10, dt_PLQuote.Date.ToString("yyyy-MM-dd"));
+        //        //    proc.AddVarcharPara("@Amount", 100, HdProdGrossAmt.Value);
+        //        //    proc.AddVarcharPara("@Qty", 100, hdnQty.Value);
+        //        //    ReturnTaxDetailsTable = proc.GetTable();
+
+
+        //        //}
+        //        //else
+        //        //{
+        //        //    ProcedureExecute proc = new ProcedureExecute("prc_PurchaseOrderDetailsList");
+        //        //    proc.AddVarcharPara("@Action", 500, "LoadImportTaxDetails");
+        //        //    proc.AddVarcharPara("@S_quoteDate", 10, dt_PLQuote.Date.ToString("yyyy-MM-dd"));
+        //        //    ReturnTaxDetailsTable = proc.GetTable();
+
+        //        //}
+
+        //        //foreach (DataRow dr in ReturnTaxDetailsTable.Rows)
+        //        //{
+        //        //    if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(dr["TaxTypeCode"]).Trim() == "SGST")
+        //        //    {
+        //        //        totalParcentage += Convert.ToDecimal(dr["TaxRates_Rate"]);
+        //        //    }
+        //        //    else if (Convert.ToString(dr["TaxTypeCode"]).Trim() == "IGST")
+        //        //    {
+        //        //        totalParcentage += Convert.ToDecimal(dr["TaxRates_Rate"]);
+        //        //    }
+        //        //}
+
+
+        //        if (e.Parameters.Split('~')[0] == "New")
+        //        {
+        //            foreach (DataRow dr in MainTaxDataTable.Rows)
+        //            {
+        //                if (Convert.ToString(dr["SlNo"]) == Convert.ToString(slNo))
+        //                {
+        //                    if (Convert.ToString(dr["TaxCode"]) == "0")
+        //                        continue;
+
+        //                    ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_Details");
+        //                    proc.AddVarcharPara("@Action", 500, "GetTaxDetailsForReturn");
+        //                    proc.AddVarcharPara("@TaxId", 500, Convert.ToString(dr["TaxCode"]));
+        //                    ReturnTaxDetailsTable = proc.GetTable();
+
+        //                    TaxDetails obj = new TaxDetails();
+        //                    obj.Taxes_ID = Convert.ToInt32(dr["TaxCode"]);
+        //                    obj.taxCodeName = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]);
+        //                    obj.TaxField = Convert.ToString(dr["Percentage"]);
+        //                    obj.Amount = 0.0;
+
+        //                    #region set calculated on
+        //                    //Check Tax Applicable on and set to calculated on
+        //                    if (Convert.ToString(dr["ApplicableOn"]) == "G")
+        //                    {
+        //                        obj.calCulatedOn = ProdGrossAmt;
+        //                    }
+        //                    else if (Convert.ToString(dr["ApplicableOn"]) == "N")
+        //                    {
+        //                        obj.calCulatedOn = ProdNetAmt;
+        //                    }
+        //                    else
+        //                    {
+        //                        obj.calCulatedOn = 0;
+        //                    }
+        //                    //End Here
+        //                    #endregion
+
+
+
+        //                    if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxCalculateMethods"]) == "A")
+        //                    {
+        //                        obj.Taxes_Name = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]) + "(+)";
+
+        //                    }
+        //                    else
+        //                    {
+        //                        obj.Taxes_Name = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]) + "(-)";
+        //                    }
+
+        //                    obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+
+
+
+
+        //                    DataRow[] filtr = MainTaxDataTable.Select("TaxCode ='" + obj.Taxes_ID + "' and slNo=" + Convert.ToString(slNo));
+        //                    if (filtr.Length > 0)
+        //                    {
+        //                        obj.Amount = Convert.ToDouble(filtr[0]["Amount"]);
+        //                        if (obj.Taxes_ID == 0)
+        //                        {
+        //                            //   obj.TaxField = GetTaxName(Convert.ToInt32(Convert.ToString(filtr[0]["AltTaxCode"])));
+        //                            aspxGridTax.JSProperties["cpComboCode"] = Convert.ToString(filtr[0]["AltTaxCode"]);
+        //                        }
+        //                        else
+        //                            obj.TaxField = Convert.ToString(filtr[0]["Percentage"]);
+        //                    }
+
+        //                    TaxDetailsDetails.Add(obj);
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            aspxGridTax.JSProperties["cpTaxOkFocus"] = "TaxFocus";
+        //            string keyValue = e.Parameters.Split('~')[0];
+
+        //            DataTable TaxRecord = (DataTable)Session["PRWS_FinalTaxRecord"];
+
+
+        //            foreach (DataRow dr in TaxRecord.Rows)
+        //            {
+
+        //                if (Convert.ToString(dr["SlNo"]) == Convert.ToString(slNo))
+        //                {
+        //                    if (Convert.ToString(dr["TaxCode"]) == "0")
+        //                        continue;
+
+        //                    ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_Details");
+        //                    proc.AddVarcharPara("@Action", 500, "GetTaxDetailsForReturn");
+        //                    proc.AddVarcharPara("@TaxId", 500, Convert.ToString(dr["TaxCode"]));
+        //                    ReturnTaxDetailsTable = proc.GetTable();
+
+
+
+        //                    TaxDetails obj = new TaxDetails();
+        //                    obj.Taxes_ID = Convert.ToInt32(dr["TaxCode"]);
+        //                    obj.taxCodeName = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]);
+
+        //                    if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxCalculateMethods"]) == "A")
+        //                        obj.Taxes_Name = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]) + "(+)";
+        //                    else
+        //                        obj.Taxes_Name = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["Taxes_Name"]) + "(-)";
+        //                    obj.TaxField = "";
+        //                    obj.Amount = 0.0;
+
+        //                    #region set calculated on
+        //                    //Check Tax Applicable on and set to calculated on
+        //                    if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["ApplicableOn"]) == "G")
+        //                    {
+        //                        obj.calCulatedOn = ProdGrossAmt;
+        //                    }
+        //                    else if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["ApplicableOn"]) == "N")
+        //                    {
+        //                        obj.calCulatedOn = ProdNetAmt;
+        //                    }
+        //                    else
+        //                    {
+        //                        obj.calCulatedOn = 0;
+        //                    }
+        //                    //End Here
+        //                    #endregion
+
+        //                    //Debjyoti 09032017
+        //                    if (Convert.ToString(ddl_AmountAre.Value) == "2")
+        //                    {
+        //                        if (Convert.ToString(ddl_VatGstCst.Value) == "0~0~X")
+        //                        {
+        //                            if (Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxTypeCode"]).Trim() == "IGST" || Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxTypeCode"]).Trim() == "CGST" || Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxTypeCode"]).Trim() == "SGST")
+        //                            {
+        //                                //Rev work start 02.08.2022 mantise no:24947
+        //                                totalParcentage = Convert.ToDecimal(ReturnTaxDetailsTable.Rows[0]["TaxRates_Rate"]);
+        //                                //Rev work close 02.08.2022 mantise no:24947
+        //                                decimal finalCalCulatedOn = 0;
+        //                                decimal backProcessRate = (1 + (totalParcentage / 100));
+        //                                finalCalCulatedOn = obj.calCulatedOn / backProcessRate;
+        //                                //kaushik  7-8-2017
+        //                                obj.calCulatedOn = Math.Round(finalCalCulatedOn, 2);
+
+        //                                //kaushik  7-8-2017
+        //                            }
+        //                        }
+        //                    }
+
+        //                    // Rev 1.0
+        //                    if (Convert.ToDecimal(ReturnTaxDetailsTable.Rows[0]["TaxRates_Rate"]) != 0)
+        //                    {
+        //                        obj.TaxField = Convert.ToString(ReturnTaxDetailsTable.Rows[0]["TaxRates_Rate"]);
+        //                        obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+        //                    }
+        //                    // End of Rev 1.0
+
+        //                    DataRow[] filtronexsisting1 = TaxRecord.Select("TaxCode=" + obj.Taxes_ID + " and SlNo=" + Convert.ToString(slNo));
+        //                    if (filtronexsisting1.Length > 0)
+        //                    {
+        //                        if (obj.Taxes_ID == 0)
+        //                        {
+        //                            obj.TaxField = "0";
+        //                        }
+        //                        else
+        //                        {
+        //                            obj.TaxField = Convert.ToString(filtronexsisting1[0]["Percentage"]);
+        //                        }
+
+
+        //                        obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+
+        //                        //obj.Amount = Convert.ToDouble(filtronexsisting1[0]["Amount"]);
+        //                    }
+        //                    else
+        //                    {
+
+
+
+        //                        DataRow[] filtronexsisting = TaxRecord.Select("TaxCode=" + obj.Taxes_ID + " and SlNo=" + Convert.ToString(slNo));
+        //                        if (filtronexsisting.Length > 0)
+        //                        {
+        //                            DataRow taxRecordNewRow = TaxRecord.NewRow();
+        //                            taxRecordNewRow["SlNo"] = slNo;
+        //                            taxRecordNewRow["TaxCode"] = obj.Taxes_ID;
+        //                            taxRecordNewRow["AltTaxCode"] = "0";
+        //                            taxRecordNewRow["Percentage"] = 0.0;
+        //                            taxRecordNewRow["Amount"] = "0";
+
+        //                            TaxRecord.Rows.Add(taxRecordNewRow);
+        //                        }
+
+        //                    }
+        //                    TaxDetailsDetails.Add(obj);
+
+        //                    //      DataRow[] filtrIndex = databaseReturnTable.Select("ProductTax_ProductId ='" + keyValue + "' and ProductTax_QuoteId=" + Session["QuotationID"] + " and ProductTax_TaxTypeId=0");
+        //                    DataRow[] filtrIndex = TaxRecord.Select("SlNo=" + Convert.ToString(slNo) + " and TaxCode=0");
+        //                    if (filtrIndex.Length > 0)
+        //                    {
+        //                        aspxGridTax.JSProperties["cpComboCode"] = Convert.ToString(filtrIndex[0]["AltTaxCode"]);
+        //                    }
+        //                }
+        //            }
+        //            Session["PRWS_FinalTaxRecord"] = TaxRecord;
+
+        //        }
+        //        //New Changes 170217
+        //        //GstCode should fetch everytime
+        //        DataRow[] finalFiltrIndex = MainTaxDataTable.Select("SlNo=" + Convert.ToString(slNo) + " and TaxCode=0");
+        //        if (finalFiltrIndex.Length > 0)
+        //        {
+        //            aspxGridTax.JSProperties["cpComboCode"] = Convert.ToString(finalFiltrIndex[0]["AltTaxCode"]);
+        //        }
+
+
+        //        DataRow[] SlRow = MainTaxDataTable.Select("SlNo=" + slNo.ToString());
+        //        DataTable taxDetail = new DataTable();
+        //        if (SlRow.Length > 0)
+        //        {
+        //            string listOfTaxrates = "";
+        //            taxDetail = SlRow.CopyToDataTable();
+        //            foreach (DataRow dr in taxDetail.Rows)
+        //            {
+        //                listOfTaxrates = listOfTaxrates + "," + Convert.ToString(dr["TaxCode"]);
+        //            }
+        //            listOfTaxrates = listOfTaxrates.TrimStart(',');
+
+        //            ProcedureExecute proc = new ProcedureExecute("prc_CRMSalesReturn_Details");
+        //            proc.AddVarcharPara("@Action", 500, "GetTaxDetailsForReturnById");
+        //            proc.AddVarcharPara("@TaxRatesList", 4000, listOfTaxrates);
+        //            taxDetail = proc.GetTable();
+
+
+
+        //        }
+
+        //        aspxGridTax.JSProperties["cpJsonData"] = createJsonForDetails(taxDetail);
+
+        //        retMsg = Convert.ToString(GetTotalTaxAmount(TaxDetailsDetails));
+        //        aspxGridTax.JSProperties["cpUpdated"] = "ok~" + retMsg;
+
+        //        TaxDetailsDetails = setCalculatedOn(TaxDetailsDetails, taxDetail);
+        //        aspxGridTax.DataSource = TaxDetailsDetails;
+        //        aspxGridTax.DataBind();
+
+        //        #endregion
+        //    }
+        //}
+
 
 
         public string createJsonForDetails(DataTable lstTaxDetails)
@@ -7767,7 +8295,7 @@ namespace ERP.OMS.Management.Activities
                 ddl_AmountAre.TextField = "taxGrp_Description";
                 ddl_AmountAre.ValueField = "taxGrp_Id";
                 ddl_AmountAre.DataSource = dst.Tables[4];
-                ddl_AmountAre.DataBind();              
+                ddl_AmountAre.DataBind();
             }
             #endregion TaxGroupType DropDown Start
 
@@ -8046,11 +8574,20 @@ namespace ERP.OMS.Management.Activities
 
                 string ShippingState = "";
                 #region ##### Added By : Samrat Roy -- For BillingShippingUserControl ######
-                string sstateCode = BillingShippingControl.GetShippingStateCode(Request.QueryString["key"]);
+                string sstateCode = Purchase_BillingShipping.GeteShippingStateCode();
                 ShippingState = sstateCode;
-                if (ShippingState.Trim() != "")
+                if (ShippingState.Trim() != "" && ShippingState.Trim() != null)
                 {
-                    ShippingState = ShippingState.Substring(ShippingState.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
+                    //ShippingState = ShippingState.Substring(ShippingState.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
+                    if (ShippingState.Length > 2)
+                    {
+                        ShippingState = ShippingState.Substring(ShippingState.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
+                    }
+                    else
+                    {
+
+                    }
+
                 }
                 #region ##### Old Code -- BillingShipping ######
                 ////if (chkBilling.Checked)
@@ -9021,7 +9558,7 @@ namespace ERP.OMS.Management.Activities
             string strSplitCommand = e.Parameter.Split('~')[0];
             if (strSplitCommand == "BindComponentDate")
             {
-                string Invoice_No = Convert.ToString(e.Parameter.Split('~')[1]);               
+                string Invoice_No = Convert.ToString(e.Parameter.Split('~')[1]);
                 DataTable dt_QuotationDetails = objPurchaseReturnBL.GetPurchaseInvoiceDate(Invoice_No);
 
                 if (dt_QuotationDetails != null && dt_QuotationDetails.Rows.Count > 0)
@@ -9077,7 +9614,7 @@ namespace ERP.OMS.Management.Activities
                                 if (dt_txtDetails.Tables[0] != null && dt_txtDetails.Tables[0].Rows.Count > 0)
                                 {
                                     amtare = Convert.ToString(dt_txtDetails.Tables[0].Rows[0]["amtare"]);
-                                    taxcode = Convert.ToString(dt_txtDetails.Tables[0].Rows[0]["Tax_Code"]);         
+                                    taxcode = Convert.ToString(dt_txtDetails.Tables[0].Rows[0]["Tax_Code"]);
                                 }
                                 grid_Products.JSProperties["cppartydetail"] = amtare + "~" + taxcode;
                                 //Rev work start 24.06.2022 mantise no:24947
@@ -9301,9 +9838,9 @@ namespace ERP.OMS.Management.Activities
                        Convert.ToString(dt.Rows[i]["ProductName"]),
                        Convert.ToString(dt.Rows[i]["DetailsId"]),
                        Convert.ToString(dt.Rows[i]["ReturnDetails_InlineRemarks"]),
-                             // Mantis Issue 24429
+                              // Mantis Issue 24429
                               Convert.ToString(dt.Rows[i]["Order_AltQuantity"]), Convert.ToString(dt.Rows[i]["Order_AltUOM"])
-                              //Rev End Bapi
+                               //Rev End Bapi
                                );
             }
 
@@ -9509,7 +10046,7 @@ namespace ERP.OMS.Management.Activities
                 Hierarchy_ID = "0";
                 return Hierarchy_ID;
             }
-        }      
+        }
         public void bindHierarchy()
         {
             DataTable hierarchydt = oDBEngine.GetDataTable("select 0 as ID ,'Select' as H_Name union select ID,H_Name from V_HIERARCHY");
