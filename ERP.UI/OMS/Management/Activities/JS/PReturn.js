@@ -3299,7 +3299,7 @@ function DiscountTextChange(s, e) {
             CompareStateCode = GeteShippingStateID();
         //}
        // else {
-            CompareStateCode = GetBillingStateID();
+            //CompareStateCode = GetBillingStateID();
       //  }
         //var checkval = cchk_reversemechenism.GetChecked();
         //if (!checkval) {
