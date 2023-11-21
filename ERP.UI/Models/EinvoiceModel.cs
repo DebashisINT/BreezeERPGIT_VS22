@@ -1,5 +1,7 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0   v2.0.40	Priti	10-10-2023	0026890:Error generating IRN
+// 2.0   v2.0.41	Priti	20-11-2023	0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
+
 #endregion//====================================================End Revision History=====================================================================
 
 using Newtonsoft.Json;
@@ -388,6 +390,7 @@ namespace ERP.Models
 
     }
 
+    //Rev 2.0
     public class IRNV3
     {
         public string status { get; set; }
@@ -409,6 +412,7 @@ namespace ERP.Models
         public string Desc { get; set; }
 
     }
+    //Rev 2.0 End
     public class IRN
     {        
         public string data { get; set; }
@@ -419,7 +423,7 @@ namespace ERP.Models
     {
         public TaskModel data { get; set; }
     }
-
+    //Rev 2.0
     public class IRNDetails
     {
         public string AckNo { get; set; }
@@ -433,10 +437,10 @@ namespace ERP.Models
         public string EwbValidTill { get; set; }
         public string Remarks { get; set; }
         public string CancelDate { get; set; }
-
+        public string transporterId { get; set; }
 
     }
-
+    //Rev 2.0 End
 
     public class CancelIRNOutput
     {

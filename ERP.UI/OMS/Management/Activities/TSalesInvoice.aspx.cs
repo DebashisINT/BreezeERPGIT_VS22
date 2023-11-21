@@ -1,5 +1,7 @@
-﻿ #region//====================================================Revision History=========================================================================
+﻿#region//====================================================Revision History=========================================================================
 // 1.0  Priti   V2.0.38    15-06-2023    0026345: Transit Sales Invoice is generating duplicate Invoice
+// 2.0  Priti V2.0.41     20-11-2023	0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
+ 
 #endregion//====================================================End Revision History=====================================================================
 
 using System;
@@ -3769,7 +3771,10 @@ namespace ERP.OMS.Management.Activities
 
                 try
                 {
-                    IRN objIRN = new IRN();
+                    //Rev 9.0
+                    IRNV3 objIRN = new IRNV3();
+                    //IRN objIRN = new IRN();
+                    //Rev 9.0 End
                     using (var client = new HttpClient())
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
@@ -3784,39 +3789,62 @@ namespace ERP.OMS.Management.Activities
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        //Rev 2.0
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "vay");
+                        //Rev 2.0 End
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                        var response = client.PostAsync("https://solo.enriched-api.vayana.com/basic/einv/v1.0/nic/eicore/v1.03/Invoice", stringContent).Result;
+                       
+                        var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
+                        // var response = client.PostAsync("https://solo.enriched-api.vayana.com/basic/einv/v1.0/nic/eicore/v1.03/Invoice", stringContent).Result;
+                        
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             var jsonString = response.Content.ReadAsStringAsync().Result;
-                            objIRN = response.Content.ReadAsAsync<IRN>().Result;
+                            //Rev 2.0
+                            objIRN = JsonConvert.DeserializeObject<IRNV3>(jsonString);
 
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            if (Convert.ToString(objIRN.data.Irn) != "")
                             {
-                                // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(IRNDetails));
-                                IRNDetails objIRNDetails = (IRNDetails)deserializer.ReadObject(ms);
-
                                 DBEngine objDb = new DBEngine();
-                                objDb.GetDataTable("update TBL_TRANS_TRANSITSALESINVOICE SET AckNo='" + objIRNDetails.AckNo + "',AckDt='" + objIRNDetails.AckDt + "',Irn='" + objIRNDetails.Irn + "',SignedInvoice='" + objIRNDetails.SignedInvoice + "',SignedQRCode='" + objIRNDetails.SignedQRCode + "',Status='" + objIRNDetails.Status + "' where invoice_id='" + id.ToString() + "'");
+                                objDb.GetDataTable("update TBL_TRANS_TRANSITSALESINVOICE SET AckNo='" + objIRN.data.AckNo + "',AckDt='" + objIRN.data.AckDt + "',Irn='" + objIRN.data.Irn + "',SignedInvoice='" + objIRN.data.SignedInvoice + "',SignedQRCode='" + objIRN.data.SignedQRCode + "',Status='" + objIRN.data.Status + "' where invoice_id='" + id.ToString() + "'");
                                 grid.JSProperties["cpSucessIRN"] = "Yes";
-                                grid.JSProperties["cpSucessIRNNumber"] = objIRNDetails.Irn;
+                                grid.JSProperties["cpSucessIRNNumber"] = objIRN.data.Irn;
                             }
+
+                            //objIRN = response.Content.ReadAsAsync<IRN>().Result;
+                            //using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //{
+                            //    // Deserialization from JSON  
+                            //    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(IRNDetails));
+                            //    IRNDetails objIRNDetails = (IRNDetails)deserializer.ReadObject(ms);
+
+                            //    DBEngine objDb = new DBEngine();
+                            //    objDb.GetDataTable("update TBL_TRANS_TRANSITSALESINVOICE SET AckNo='" + objIRNDetails.AckNo + "',AckDt='" + objIRNDetails.AckDt + "',Irn='" + objIRNDetails.Irn + "',SignedInvoice='" + objIRNDetails.SignedInvoice + "',SignedQRCode='" + objIRNDetails.SignedQRCode + "',Status='" + objIRNDetails.Status + "' where invoice_id='" + id.ToString() + "'");
+                            //    grid.JSProperties["cpSucessIRN"] = "Yes";
+                            //    grid.JSProperties["cpSucessIRNNumber"] = objIRNDetails.Irn;
+                            //}
+                            //Rev 2.0 end
                         }
                         else
                         {
-                            EinvoiceError err = new EinvoiceError();
+                            //Rev 2.0 
+                            EinvoiceErrorV3 err = new EinvoiceErrorV3();
                             var jsonString = response.Content.ReadAsStringAsync().Result;
-                            // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                            err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                            err = JsonConvert.DeserializeObject<EinvoiceErrorV3>(jsonString);
 
+                            //EinvoiceError err = new EinvoiceError();
+                            //err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                            //Rev 2.0 end
 
                             DBEngine objDB = new DBEngine();
                             objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='TSI' and ERROR_TYPE='IRN_GEN'");
                             if (err.error.type != "ClientRequest")
                             {
-                                foreach (errorlog item in err.error.args.irp_error.details)
+                                //Rev 2.0 
+                                //foreach (errorlog item in err.error.args.irp_error.details)
+                                foreach (errorlog item in err.error.args.details)
+                                //Rev 2.0 end
                                 {
                                     objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','TSI','IRN_GEN','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
                                 }
