@@ -9812,6 +9812,8 @@ namespace ERP.OMS.Management
             string IrnGenerationUrl = ConfigurationManager.AppSettings["IrnGenerationUrl"];
             string IrnEwaybillDownloadUrl = ConfigurationManager.AppSettings["IrnEwaybillDownloadUrl"];
             string IrnEwaybilCancellUrl = ConfigurationManager.AppSettings["IrnEwaybilCancellUrl"];
+            //Rev
+            string IrnUpdateEwayBillTransporter = ConfigurationManager.AppSettings["IrnUpdateEwayBillTransporter"];
 
             #region cancel e way bill
             if (e.Parameters.Split('~')[0] == "CancelEwayBill")
@@ -10224,7 +10226,10 @@ namespace ERP.OMS.Management
 
                 try
                 {
-                    IRN objIRN = new IRN();
+                    //Rev 5.0
+                    IRNV3 objIRN = new IRNV3();
+                    //IRN objIRN = new IRN();
+                    //Rev 5.0 End
                     using (var client = new HttpClient())
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
@@ -10239,47 +10244,69 @@ namespace ERP.OMS.Management
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //Rev  5.0
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "vay");
+                        //Rev  5.0 End
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                        //var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
-                        var response = client.PostAsync("https://live.enriched-api.vayana.com/basic/ewb/v1.0/v1.03/update-part-b", stringContent).Result;
-
+                        //Rev  5.0
+                        var response = client.PostAsync(IrnUpdateEwayBillTransporter, stringContent).Result;
+                        //var response = client.PostAsync("https://live.enriched-api.vayana.com/basic/ewb/v1.0/v1.03/update-part-b", stringContent).Result;
+                        //Rev  5.0 End
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             var jsonString = response.Content.ReadAsStringAsync().Result;
-                            objIRN = response.Content.ReadAsAsync<IRN>().Result;
-
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //Rev  5.0
+                            objIRN = JsonConvert.DeserializeObject<IRNV3>(jsonString);
+                            if (Convert.ToString(objIRN.status) == "1")
                             {
-                                // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelEwayBillOutput));
-                                CancelEwayBillOutput objIRNDetails = (CancelEwayBillOutput)deserializer.ReadObject(ms);
-
                                 DBEngine objDb = new DBEngine();
-
-
-                                objDb.GetDataTable("INSERT INTO EWAYBILL_CANCELHOSTORY(DOC_ID,DOC_TYPE,EWAYBILL_NO,CANCEL_DATE) VALUES ('" + ID + "','SI','" + objIRNDetails.ewayBillNo + "','" + objIRNDetails.cancelDate + "')");
-
-                                //  objDb.GetDataTable("update TBL_TRANS_SALESINVOICE EWayBillNumber=NULL,ISEWAYBILLCANCEL=1 SET  where EWayBillNumber='" + objUpdateEwayBillTransporter.ewbNo + "'");
-                                //grid.JSProperties["cpSucessIRN"] = "Yes";
+                                objDb.GetDataTable("update TBL_TRANS_SALESINVOICE set FinalTransporter_GSTIN='" + objIRN.data.transporterId + "' where EWayBillNumber='" + objUpdateEwayBillTransporter.ewbNo + "'");
                                 success = success + "," + objUpdateEwayBillTransporter.ewbNo;
                             }
+
+                            //objIRN = response.Content.ReadAsAsync<IRN>().Result;
+
+                            //using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //{
+                            //    // Deserialization from JSON  
+                            //    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CancelEwayBillOutput));
+                            //    CancelEwayBillOutput objIRNDetails = (CancelEwayBillOutput)deserializer.ReadObject(ms);
+
+                            //    DBEngine objDb = new DBEngine();
+
+
+                            //    objDb.GetDataTable("INSERT INTO EWAYBILL_CANCELHOSTORY(DOC_ID,DOC_TYPE,EWAYBILL_NO,CANCEL_DATE) VALUES ('" + ID + "','SI','" + objIRNDetails.ewayBillNo + "','" + objIRNDetails.cancelDate + "')");
+
+                            //    //  objDb.GetDataTable("update TBL_TRANS_SALESINVOICE EWayBillNumber=NULL,ISEWAYBILLCANCEL=1 SET  where EWayBillNumber='" + objUpdateEwayBillTransporter.ewbNo + "'");
+                            //    //grid.JSProperties["cpSucessIRN"] = "Yes";
+                            //    success = success + "," + objUpdateEwayBillTransporter.ewbNo;
+                            //}
+                            //Rev  5.0 End
                         }
                         else
                         {
-
-                            EinvoiceError err = new EinvoiceError();
+                            //REV 5.0
+                            EinvoiceErrorV3 err = new EinvoiceErrorV3();
+                            //EinvoiceError err = new EinvoiceError();
+                            //REV 5.0 END
                             var jsonString = response.Content.ReadAsStringAsync().Result;
                             // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                            err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-
+                            //REV 5.0
+                            err = JsonConvert.DeserializeObject<EinvoiceErrorV3>(jsonString);
+                            //err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                            //REV 5.0 END
                             error = error + "," + objUpdateEwayBillTransporter.ewbNo;
 
                             objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='EWAYBILL_UPDATETR'");
 
                             if (err.error.type != "ClientRequest")
                             {
-                                foreach (errorlog item in err.error.args.irp_error.details)
+
+                                //REV 5.0
+                                foreach (errorlog item in err.error.args.details)
+                                //foreach (errorlog item in err.error.args.irp_error.details)
+                                //REV 5.0 END
                                 {
                                     objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','EWAYBILL_UPDATETR','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
                                 }
@@ -10385,7 +10412,8 @@ namespace ERP.OMS.Management
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "vay");
                         var response = client.GetAsync(IrnEwaybillDownloadUrl + eWaybillNumber).Result;
                         //var file = client.GetStreamAsync("https://live.enriched-api.vayana.com/enriched/tasks/v1.0/download/" + objIRN.data.task_id).Result;
                         //var response = await client.GetAsync(uri);

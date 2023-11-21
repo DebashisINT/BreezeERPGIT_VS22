@@ -1582,12 +1582,12 @@
                         $('#hdnStkMsg').val(1);
                         $('#WarehouseDetailsModal').modal('hide');
 
-                        var serialCriteria = [{ Field: "Product_SrlNo", Values: "" + ("0") + "" }];
+                        var serialCriteria = [{ Field: "Product_SrlNo", Values: "" + ("1") + "" }];
                         var tempStockOfProductFresh = flexFilter(StockOfProduct, serialCriteria);
                         if (tempStockOfProductFresh.length > 0) {
                             $('#hdnWarehouseDataFresh').val("1");
                         }
-                        var serialCriteria1 = [{ Field: "Product_SrlNo", Values: "" + ("1") + "" }];
+                        var serialCriteria1 = [{ Field: "Product_SrlNo", Values: "" + ("0") + "" }];
                         var tempStockOfProductReject = flexFilter(StockOfProduct, serialCriteria1);
                         if (tempStockOfProductReject.length > 0) {
                             $('#hdnWarehouseDataReject').val("2");
