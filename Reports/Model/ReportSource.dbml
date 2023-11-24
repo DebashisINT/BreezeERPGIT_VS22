@@ -1901,85 +1901,6 @@
       <Column Name="PROJ_ACTUALENDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.LISTINGOFMASTER_REPORT" Member="LISTINGOFMASTER_REPORTs">
-    <Type Name="LISTINGOFMASTER_REPORT">
-      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="REPORTTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SLNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="LISTID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="CODE" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
-      <Column Name="Unique_Code" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Branch_Id" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Column Name="Branch_DESCRIPTION" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="credit_Days" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="credit_limit" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Map_Ledger" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="GSTIN_NO" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Column Name="GST_Registered" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="PanCrdNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="AdharCrdNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="BILLING_ADDRESS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Billing_Pincode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="BILLING_MOBILE_NUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="BILLING_ALTERNATE_NUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Billing_EmailId" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="SHIPPING_ADDRESS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="SHIPPING_Pincode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SHIPPING_MOBILE_NUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="SHIPPING_ALTERNATE_NUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Shipping_EmailId" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="sProducts_Description" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="sProduct_IsInventory" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="Is_ServiceItem" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="sProducts_Type" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
-      <Column Name="sProduct_Stockvaluation" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="ProductClass_Code" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="sProduct_Status" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="sProducts_HsnCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="sProducts_serviceTax" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
-      <Column Name="FurtheranceToBusiness" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="sProducts_TradingLotUnit" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="sProduct_SalePrice" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="sProduct_MinSalePrice" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="sProducts_QuoteLotUnit" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="sProduct_PurPrice" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="sProduct_MRP" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="sProduct_StockUOM" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="sInv_MainAccount" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="sRet_MainAccount" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="pInv_MainAccount" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="pRet_MainAccount" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="TDSTCS_Code" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
-      <Column Name="sProduct_IsCapitalGoods" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="PRODALT_NAME" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="PRODINCLUDEINSTKVAL" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="PRODUCT_COLOR" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="PRODUCT_SIZE" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="PRODCOMPONENTS" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="PRODBRAND" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PRODUCT_SERIES" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="PRODSURFACE" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="PRODLEAD_TIME" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="PRODWEIGHT" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODSUBCAT" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="PRODLENGTH" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODWIDTH" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODTHIKNESS" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODCOVERAGE_AREA" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODVOLUME" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODMIN_LEVEL" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODMAX_LEVEL" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODREORDER_LEVEL" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODREORDER_QTY" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="PRODNEGATIVE_STK" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="ADDED_BY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="ADDED_ON" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="EDITED_BY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="EDITED_ON" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.PARTYWISEAGEINGSUMDET_REPORT" Member="PARTYWISEAGEINGSUMDET_REPORTs">
     <Type Name="PARTYWISEAGEINGSUMDET_REPORT">
       <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -4321,6 +4242,87 @@
       <Column Name="PR_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
       <Column Name="CL_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
       <Column Name="CL_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LISTINGOFMASTER_REPORT" Member="LISTINGOFMASTER_REPORTs">
+    <Type Name="LISTINGOFMASTER_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="REPORTTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SLNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="LISTID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CODE" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="Unique_Code" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Branch_Id" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="Branch_DESCRIPTION" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="credit_Days" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="credit_limit" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Map_Ledger" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="GSTIN_NO" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="GST_Registered" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PanCrdNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="AdharCrdNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="BILLING_ADDRESS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Billing_Pincode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="BILLING_MOBILE_NUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="BILLING_ALTERNATE_NUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Billing_EmailId" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="SHIPPING_ADDRESS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SHIPPING_Pincode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SHIPPING_MOBILE_NUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SHIPPING_ALTERNATE_NUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Shipping_EmailId" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sProducts_Description" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="sProduct_IsInventory" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="Is_ServiceItem" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="sProducts_Type" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Column Name="sProduct_Stockvaluation" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="ProductClass_Code" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sProduct_Status" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="sProducts_HsnCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="sProducts_serviceTax" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="FurtheranceToBusiness" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="sProducts_TradingLotUnit" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sProduct_SalePrice" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="sProduct_MinSalePrice" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="sProducts_QuoteLotUnit" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sProduct_PurPrice" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="sProduct_MRP" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="sProduct_StockUOM" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sInv_MainAccount" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sRet_MainAccount" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="pInv_MainAccount" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="pRet_MainAccount" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TDSTCS_Code" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="sProduct_IsCapitalGoods" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="PRODALT_NAME" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PRODINCLUDEINSTKVAL" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="PRODUCT_COLOR" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="PRODUCT_SIZE" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="PRODCOMPONENTS" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="PRODBRAND" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PRODUCT_SERIES" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PRODSURFACE" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PRODLEAD_TIME" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="PRODWEIGHT" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODSUBCAT" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PRODLENGTH" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODWIDTH" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODTHIKNESS" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODCOVERAGE_AREA" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODVOLUME" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODMIN_LEVEL" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODMAX_LEVEL" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODREORDER_LEVEL" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODREORDER_QTY" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="PRODNEGATIVE_STK" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="ADDED_BY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="ADDED_ON" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="EDITED_BY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="EDITED_ON" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="BCONTACTPERSON" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SCONTACTPERSON" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.PRC_PARTYWISEAGEINSUMGDET_REPORT" Method="PRC_PARTYWISEAGEINSUMGDET_REPORT" IsComposable="true">
