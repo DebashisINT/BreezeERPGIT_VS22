@@ -1,7 +1,8 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History =====================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                13-03-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                24-11-2023        2.0.40           Debashis            26902 : Contact Person name is required to show in the listing of Customer.
+====================================================== Revision History =====================================================================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ListingOfMaster_Customer.aspx.cs" Inherits="Reports.Reports.GridReports.ListingOfMaster_Customer" %>
 
@@ -916,20 +917,27 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn Caption="Shipping Address" FieldName="SHIPPING_ADDRESS" Width="320px"
-                                    VisibleIndex="16" >
+                                <%--Rev 2.0 Mantis: 0026902--%>
+                                <dxe:GridViewDataTextColumn Caption="Billing Contact Person" FieldName="BCONTACTPERSON" Width="140px" VisibleIndex="16" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true">
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 2.0 Mantis: 0026902--%>
 
-                                <dxe:GridViewDataTextColumn Caption="Ship. Pin" FieldName="SHIPPING_Pincode" Width="100px"
+                                 <dxe:GridViewDataTextColumn Caption="Shipping Address" FieldName="SHIPPING_ADDRESS" Width="320px"
                                     VisibleIndex="17" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true">
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Ship. Mob#" FieldName="SHIPPING_MOBILE_NUMBER" Width="130px"
+                                <dxe:GridViewDataTextColumn Caption="Ship. Pin" FieldName="SHIPPING_Pincode" Width="100px"
                                     VisibleIndex="18" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                                    </CellStyle>
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn Caption="Ship. Mob#" FieldName="SHIPPING_MOBILE_NUMBER" Width="130px"
+                                    VisibleIndex="19" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true">
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
@@ -941,30 +949,37 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 </dxe:GridViewDataTextColumn>--%>
 
                                  <dxe:GridViewDataTextColumn Caption="Shipping Email" FieldName="Shipping_EmailId" Width="110px"
-                                    VisibleIndex="19" >
+                                    VisibleIndex="20" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true">
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
+
+                                <%--Rev 2.0 Mantis: 0026902--%>
+                                <dxe:GridViewDataTextColumn Caption="Shipping Contact Person" FieldName="SCONTACTPERSON" Width="150px" VisibleIndex="21" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                                    </CellStyle>
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 2.0 Mantis: 0026902--%>
                                
-                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="ADDED_BY" Width="90px" VisibleIndex="20" >
+                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="ADDED_BY" Width="90px" VisibleIndex="22" >
                                     <CellStyle HorizontalAlign="Left"  Wrap="true">
                                     </CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Entered On" FieldName="ADDED_ON" Width="130px" VisibleIndex="21" >
+                                <dxe:GridViewDataTextColumn Caption="Entered On" FieldName="ADDED_ON" Width="130px" VisibleIndex="23" >
                                     <CellStyle HorizontalAlign="Left"  Wrap="true">
                                     </CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Modified By" FieldName="EDITED_BY" Width="90px" VisibleIndex="22" >
+                                <dxe:GridViewDataTextColumn Caption="Modified By" FieldName="EDITED_BY" Width="90px" VisibleIndex="24" >
                                     <CellStyle HorizontalAlign="Left"  Wrap="true">
                                     </CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Modified On" FieldName="EDITED_ON" Width="130px" VisibleIndex="23" >
+                                <dxe:GridViewDataTextColumn Caption="Modified On" FieldName="EDITED_ON" Width="130px" VisibleIndex="25" >
                                     <CellStyle HorizontalAlign="Left"  Wrap="true">
                                     </CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
