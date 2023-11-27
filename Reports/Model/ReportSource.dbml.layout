@@ -794,12 +794,6 @@
         <elementListCompartment Id="26795499-a526-4ae3-bf71-34fbaf205407" absoluteBounds="11.64, 10.96, 1.9700000000000002, 9.4798583984375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="23404340-59ee-4e90-9c18-3d15f51848b9" isExpanded="false" absoluteBounds="5, 11.75, 2, 0.45">
-      <DataClassMoniker Name="/ReportSourceDataContext/BRANCHWHWISESTOCKDETSUM_REPORT" />
-      <nestedChildShapes>
-        <elementListCompartment Id="4c785864-380e-472c-a3b0-347d5269226f" absoluteBounds="5.015, 12.21, 1.9700000000000002, 9.0952555338541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="45b553b9-6246-413d-a4a8-0adbbab186c2" isExpanded="false" absoluteBounds="7.25, 14.875, 2, 0.45">
       <DataClassMoniker Name="/ReportSourceDataContext/PHYSICALSTOCKVSSTOCKAVAILABILITY_REPORT" />
       <nestedChildShapes>
@@ -882,6 +876,12 @@
       <DataClassMoniker Name="/ReportSourceDataContext/LISTINGOFMASTER_REPORT" />
       <nestedChildShapes>
         <elementListCompartment Id="afae890e-31d0-43f5-9c69-34a546f3ee68" absoluteBounds="5.015, 3.46, 1.9700000000000002, 15.056599934895832" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="92b563dc-2ac6-4a54-86a7-453f63c4363d" isExpanded="false" absoluteBounds="5, 11.75, 2, 0.45">
+      <DataClassMoniker Name="/ReportSourceDataContext/BRANCHWHWISESTOCKDETSUM_REPORT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ce6884ec-efed-4c81-b69b-c13e0a96670e" absoluteBounds="5.015, 12.21, 1.9700000000000002, 9.4798583984375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

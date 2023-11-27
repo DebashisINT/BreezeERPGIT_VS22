@@ -1,7 +1,9 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History ===============================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                13-03-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                27-11-2023        2.0.40           Debashis            0027032 : New Coloumn Branch Req No and Branch Req Date required in Branch 
+                                                                                    Warehouse Wise Stock Detail Report.
+====================================================== Revision History ===============================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BranchWHWiseDetail.aspx.cs" Inherits="Reports.Reports.GridReports.BranchWHWiseDetail" %>
 
@@ -1579,48 +1581,60 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="OP_QTY" Width="90px" Caption="Opening Qty." VisibleIndex="24" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <%--Rev 2.0 Mantis: 0027032--%>
+                                <dxe:GridViewDataTextColumn FieldName="BRANCHREQNO" Width="130px" Caption="Branch Req. No." VisibleIndex="24">
+                                    <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn FieldName="BRANCHREQDATE" Width="110px" Caption="Branch Req. Date" VisibleIndex="25">
+                                    <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 2.0 Mantis: 0027032--%>
+
+                                <dxe:GridViewDataTextColumn FieldName="OP_QTY" Width="90px" Caption="Opening Qty." VisibleIndex="26" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="OP_ALTQTY" Width="100px" Caption="Opening Alt. Qty." VisibleIndex="25" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="OP_ALTQTY" Width="100px" Caption="Opening Alt. Qty." VisibleIndex="27" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="IN_QTY" Width="90px" Caption="Received Qty." VisibleIndex="26" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="IN_QTY" Width="90px" Caption="Received Qty." VisibleIndex="28" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="ALTIN_QTY" Width="90px" Caption="Recd. Alt. Qty." VisibleIndex="27" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="ALTIN_QTY" Width="90px" Caption="Recd. Alt. Qty." VisibleIndex="29" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="OUT_QTY" Width="90px" Caption="Delivered Qty." VisibleIndex="28" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="OUT_QTY" Width="90px" Caption="Delivered Qty." VisibleIndex="30" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="ALTOUT_QTY" Width="90px" Caption="Delv. Alt. Qty." VisibleIndex="29" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="ALTOUT_QTY" Width="90px" Caption="Delv. Alt. Qty." VisibleIndex="31" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BALQTY" Width="90px" Caption="Balance Qty." VisibleIndex="30" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="BALQTY" Width="90px" Caption="Balance Qty." VisibleIndex="32" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BALALTQTY" Width="100px" Caption="Balance Alt. Qty." VisibleIndex="31" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="BALALTQTY" Width="100px" Caption="Balance Alt. Qty." VisibleIndex="33" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
