@@ -1,8 +1,9 @@
-﻿//*********************************************************************************************************
+﻿//********************************************************************************************************************************************
 //  Rev 1.0      Sanchita      V2.0.40   17-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project / Site
 //                                                       Mantis: 26871
-//  Rev 2.0      Sanchita      V2.0.40   18-10-2023  Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
-// **********************************************************************************************************
+//  Rev 2.0      Sanchita      V2.0.40   18-10-2023      Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
+//  Rev 3.0      Priti         V2.0.41   27-11-2023      Transporter  Details are not showing in the Sales Invoice in the View Mode. Mantis: 0027045
+// ********************************************************************************************************************************************
 var warehousrdet
 var Details;
 var Txdel;
@@ -33,7 +34,9 @@ var AnotherDetails = {};
 var Termsdetails = {};
 // Rev 2.0
 var OtherConditiondetails = {};
-
+//Rev 3.0
+var otherDetails = {};
+//Rev 3.0 End
 function ShowHideOtherCondition() {
     debugger;
     OtherConditiondetails.InvoiceId = $("#hdnInvoiceId").val();
@@ -353,7 +356,7 @@ function OpenSetTCS()
 function StockDetails(InvoiceId, Details_Id)
 {
     debugger;
-    var otherDetails = {};
+    
     otherDetails.InvoiceId = InvoiceId;
     otherDetails.Details_Id = Details_Id;
     $.ajax({
