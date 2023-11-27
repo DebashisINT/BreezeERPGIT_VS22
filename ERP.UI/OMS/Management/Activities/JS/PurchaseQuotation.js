@@ -1,4 +1,8 @@
-﻿//<%--Use for set focus on UOM after press ok on UOM--%> 
+﻿/*************************************************************************************************************************************
+ * Rev 1.0      Sanchita    V2.0.41      27/11/2023     While making Purchase Order if user try to Select Indent/Quotation 
+ *                                                      this msg has been showing "Customer Required". Mantis : 26989
+ ***************************************************************************************************************************/
+//<%--Use for set focus on UOM after press ok on UOM--%> 
       
            $(function () {
                $('#UOMModal').on('hide.bs.modal', function () {
@@ -5569,7 +5573,10 @@ function selectValue() {
     var type = ($("[id$='rdl_Salesquotation']").find(":checked").val() != null) ? $("[id$='rdl_Salesquotation']").find(":checked").val() : "";
 
     if (key == null || key == "") {
-        jAlert("Customer required !", 'Alert Dialog: [Quoation]', function (r) {
+        // Rev 1.0
+        //jAlert("Customer required !", 'Alert Dialog: [Quoation]', function (r) {
+        jAlert("Vendor required !", 'Alert Dialog: [Quoation]', function (r) {
+            // End of Rev 1.0
             if (r == true) {
                 ctxtCustName.Focus();
                 gridquotationLookup.SetEnabled(false);
