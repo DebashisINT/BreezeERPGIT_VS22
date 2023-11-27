@@ -1,7 +1,7 @@
 ﻿//<% --==========================================================Revision History ============================================================================================
-//    1.0   Priti   V2.0.36   19- 01 - 2023    	0025313: Views to be converted to Procedures in the Listing Page of Transaction / Return - Sales / Sale Return - Manual
-//    2.0   Priti   V2.0.36   17-02-2023     Afer Listing view upgradation delete data show in list issue solved.
-
+//    1.0   Priti       V2.0.36     19- 01 - 2023    	0025313: Views to be converted to Procedures in the Listing Page of Transaction / Return - Sales / Sale Return - Manual
+//    2.0   Priti       V2.0.36     17-02-2023          Afer Listing view upgradation delete data show in list issue solved.
+//    3.0   Sanchita    V2.0.41     27-11-2023          27025: Wrong Message firing while try to take the Print of Manual Sales Return
 //========================================== End Revision History =======================================================================================================--%>
 var ReturnId = 0;
 function onPrintJv(id) {
@@ -26,7 +26,10 @@ function onPrintJv(id) {
                     $('#btnOK').focus();
                 }
                 else {
-                    jAlert("IRN generated can not print.");
+                    // Rev 3.0
+                    //jAlert("IRN generated can not print.");
+                    jAlert("IRN Not generated can not print.");
+                    // End of Rev 3.0
                 }
             }
         });

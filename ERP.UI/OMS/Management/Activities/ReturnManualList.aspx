@@ -1,7 +1,6 @@
 ﻿<%--==========================================================Revision History ============================================================================================   
  1.0   Priti     V2.0.36    19-01-2023    	0025313: Views to be converted to Procedures in the Listing Page of Transaction / Return-Sales / Sale Return-Manual
  2.0   Pallab    V2.0.37    12-04-2023     	0026009: Sale Return Manual module design modification & check in small device 
- 3.0   Sanchita  V2.0.41    27-11-2023      27025: Wrong Message firing while try to take the Print of Manual Sales Return.     
 ========================================== End Revision History =======================================================================================================--%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReturnManualList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.ReturnManualList" %>
 
@@ -60,10 +59,7 @@
                             }
                         }
                         else {
-                            // Rev 3.0
-                            //jAlert("IRN generated can not edit.");
-                            jAlert("IRN Not generated can not print.");
-                            // End of Rev 3.0
+                            jAlert("IRN generated can not edit.");
                         }
                     }
                 });
