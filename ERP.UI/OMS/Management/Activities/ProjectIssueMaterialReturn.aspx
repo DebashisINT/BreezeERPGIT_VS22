@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectIssueMaterialReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectIssueMaterialReturn" %>
+﻿<%--=======================================================Revision History=========================================================================
+ 1.0     Sanchita    V2.0.41  14-11-2023     	0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+=========================================================End Revision History========================================================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectIssueMaterialReturn.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectIssueMaterialReturn" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -17,6 +21,14 @@
     <script src="JS/ProjectIssueMaterialReturn.js?v=3.3"></script>
     
     <script>
+        // Rev 1.0
+        function SetLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= cPLSalesChallanDate.GetDate()) && (cPLSalesChallanDate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+            }
+        }
+        // End of Rev 1.0
+
         $(document).ready(function () {
             var setting = document.getElementById("hdnShowUOMConversionInEntry").value;
             if (setting == 1) {
@@ -1424,8 +1436,9 @@ function OnTaxEndCallback(s, e) {
 
                                                 <asp:Label ID="lbl_SaleInvoiceDt" runat="server" Text="Posting Date"></asp:Label>
                                                 <span style="color: red">*</span>
+                                                <%--Rev 1.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ]--%>
                                                 <dxe:ASPxDateEdit ID="dt_PLQuote" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="tstartdate" TabIndex="3" Width="100%">
-                                                    <ClientSideEvents DateChanged="DateCheck" Init="dateInit" />
+                                                    <ClientSideEvents DateChanged="DateCheck" Init="dateInit" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" />
                                                     <ClientSideEvents GotFocus="function(s,e){tstartdate.ShowDropDown();}"></ClientSideEvents>
                                                     <ButtonStyle Width="13px">
                                                     </ButtonStyle>
@@ -2813,6 +2826,18 @@ function OnTaxEndCallback(s, e) {
                 <asp:HiddenField runat="server" ID="hdnQty" />
                 <asp:HiddenField ID="hdnADDEditMode" runat="server" />
                 <asp:HiddenField ID="hdnProjectMandatory" runat="server" />
+                <%--Rev 1.0--%>
+                <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+                <asp:HiddenField ID="hdnLockToDate" runat="server" />
+                <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+                <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+                <asp:HiddenField ID="hdnValAfterLock" runat="server" />
+                <asp:HiddenField ID="hdnValAfterLockMSG" runat="server" />
+                <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+                <asp:HiddenField ID="hdnLockToDateedit" runat="server" /> 
+                <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+                <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+                <%--End of Rev 1.0--%>
             </div>
 
             <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">

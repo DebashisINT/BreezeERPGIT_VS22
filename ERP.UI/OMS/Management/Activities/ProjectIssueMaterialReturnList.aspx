@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectIssueMaterialReturnList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectIssueMaterialReturnList" %>
+﻿<%--=======================================================Revision History=========================================================================
+ 1.0     Sanchita    V2.0.41  14-11-2023     	0026953: Data Freeze Required for Project Purchase Return Manual, Material Issue & Material Received
+=========================================================End Revision History========================================================================--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectIssueMaterialReturnList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectIssueMaterialReturnList" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -904,6 +908,10 @@
             </ContentCollection>
         </dxe:ASPxPopupControl>
     </div>
+     <%--Rev 1.0--%>
+    <div id="spnEditLock" runat="server" style="display:none; color:red;text-align:center"></div>
+    <div id="spnDeleteLock" runat="server" style="display:none; color:red;text-align:center"></div>
+    <%--End of Rev 1.0--%>
     <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdSalesReturn" runat="server" KeyFieldName="SrlNo" AutoGenerateColumns="False"
             Width="100%" ClientInstanceName="cGrdSalesReturn" OnCustomCallback="GrdSalesReturn_CustomCallback" SettingsBehavior-AllowFocusedRow="true"
@@ -1110,6 +1118,17 @@
         <asp:HiddenField ID="hfToDate" runat="server" />
         <asp:HiddenField ID="hfBranchID" runat="server" />
         <asp:HiddenField ID="hddnSalesReturnID" runat="server" />
+         <%--Rev 1.0--%>
+        <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+        <asp:HiddenField ID="hdnLockToDate" runat="server" />
+        <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+   
+        <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateedit" runat="server" /> 
+        <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+        <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+        <%--End of Rev 1.0--%>
     </div>
     <dxe:ASPxPopupControl ID="Popup_EWayBill" runat="server" ClientInstanceName="cPopup_EWayBill"
         Width="400px" HeaderText="Update E-Way Bill" PopupHorizontalAlign="WindowCenter"

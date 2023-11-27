@@ -2887,6 +2887,15 @@ function SaveExit_ButtonClick() {
     // Quote no validation Start
     // var QuoteNo = ctxt_PLQuoteNo.GetText();
 
+    // Rev 1.0
+    AddContraLockStatus(tstartdate.GetDate());
+    if ($("#hdnValAfterLock").val() == "-9") {
+        jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        LoadingPanel.Hide();
+        flag = false;
+    }
+    // End of Rev 1.0
+
     var QuoteNo = $('#<%=txt_PLQuoteNo.ClientID %>').val();
     QuoteNo = QuoteNo.trim();
     if (QuoteNo == '' || QuoteNo == null) {
