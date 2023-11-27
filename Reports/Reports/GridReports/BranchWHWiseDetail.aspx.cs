@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=============================================================================================================================
+//1.0   v2 .0.32    Debashis    26/08/2022  'Project' selection required in reports [As like Purchase GRN Register].Refer: 0025145
+//2.0   v2 .0.40    Debashis    27/11/2023  New Coloumn Branch Req No and Branch Req Date required in Branch Warehouse Wise Stock Detail Report.Refer: 0027032
+#endregion =======================Revision History==========================================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -22,6 +26,7 @@ using DevExpress.Export;
 using System.Drawing;
 using Reports.Model;
 using DataAccessLayer;
+using Org.BouncyCastle.Ocsp;
 
 namespace Reports.Reports.GridReports
 {
@@ -54,7 +59,7 @@ namespace Reports.Reports.GridReports
         {
             rights = new UserRightsForPage();
             rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/GridReports/BranchWHWiseDetail.aspx");
-            //Rev Debashis 0025145
+            //Rev 1.0 0025145
             string ProjectSelectInEntryModule = cbl.GetSystemSettingsResult("ProjectSelectInEntryModule");
             if (!String.IsNullOrEmpty(ProjectSelectInEntryModule))
             {
@@ -74,12 +79,12 @@ namespace Reports.Reports.GridReports
                     hdnProjectSelection.Value = "0";
                 }
             }
-            //End of Rev Debashis 0025145
+            //End of Rev 1.0 0025145
             if (!IsPostBack)
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 DataTable dtProjectSelection = new DataTable();
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
                 Session["chk_branwhdettotal"] = 0;
                 string GridHeader = "";
                 BusinessLogicLayer.Reports GridHeaderDet = new BusinessLogicLayer.Reports();
@@ -109,7 +114,7 @@ namespace Reports.Reports.GridReports
                 ASPxToDate.Text = dtTo.ToString("dd-MM-yyyy");
                 ASPxFromDate.Value = DateTime.Now;
                 ASPxToDate.Value = DateTime.Now;
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[7].Visible = false;
                 ////ShowGrid.Columns[13].Visible = false;
                 ////ShowGrid.Columns[15].Visible = false;
@@ -130,7 +135,7 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[25].Visible = false;
                 //ShowGrid.Columns[27].Visible = false;
                 //ShowGrid.Columns[29].Visible = false;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
 
                 dtFrom = Convert.ToDateTime(ASPxFromDate.Date);
                 dtTo = Convert.ToDateTime(ASPxToDate.Date);
@@ -142,10 +147,10 @@ namespace Reports.Reports.GridReports
                 BranchHoOffice();
                 Session["BranchNames"] = null;
 
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 dtProjectSelection = oDBEngine.GetDataTable("select Variable_Value from Config_SystemSettings where Variable_Name='ReportsProjectSelection'");
                 hdnProjectSelectionInReport.Value = dtProjectSelection.Rows[0][0].ToString();
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
             else
             {
@@ -224,10 +229,13 @@ namespace Reports.Reports.GridReports
             {
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
                 con.Open();
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //string selectQuery = "SELECT BRANCHDESC,WHDESC,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
-                string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
-                //End of Rev Debashis 0025145
+                //Rev 2.0 Mantis: 0027032
+                //string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
+                string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,BRANCHREQNO,BRANCHREQDATE,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
+                //End of Rev 2.0 Mantis: 0027032
+                //End of Rev 1.0 0025145
                 SqlDataAdapter myCommand = new SqlDataAdapter(selectQuery, con);
 
                 // Create and fill a DataSet.
@@ -238,17 +246,17 @@ namespace Reports.Reports.GridReports
                 myCommand.Dispose();
                 con.Dispose();
                 Session["exportbranwhstockdetdataset"] = ds;
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 string ProjectSelectInEntryModule = cbl.GetSystemSettingsResult("ProjectSelectInEntryModule");
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
 
                 dtExport = ds.Tables[0].Copy();
                 dtExport.Clear();                
                 dtExport.Columns.Add(new DataColumn("Unit", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Warehouse", typeof(string)));
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 dtExport.Columns.Add(new DataColumn("Project Name", typeof(string)));
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
                 dtExport.Columns.Add(new DataColumn("Item Code", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Item Name", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Class", typeof(string)));
@@ -269,6 +277,10 @@ namespace Reports.Reports.GridReports
                 dtExport.Columns.Add(new DataColumn("Employee Name", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Technician Name", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Serial No.", typeof(string)));
+                //Rev 2.0 Mantis: 0027032
+                dtExport.Columns.Add(new DataColumn("Branch Req. No.", typeof(string)));
+                dtExport.Columns.Add(new DataColumn("Branch Req. Date", typeof(string)));
+                //End of Rev 2.0 Mantis: 0027032
                 dtExport.Columns.Add(new DataColumn("Opening Qty.", typeof(decimal)));
                 dtExport.Columns.Add(new DataColumn("Opening Alt. Qty.", typeof(decimal)));
                 dtExport.Columns.Add(new DataColumn("Received Qty.", typeof(decimal)));
@@ -284,9 +296,9 @@ namespace Reports.Reports.GridReports
 
                     row2["Unit"] = dr1["BRANCHDESC"];
                     row2["Warehouse"] = dr1["WHDESC"];
-                    //Rev Debashis 0025145
+                    //Rev 1.0 0025145
                     row2["Project Name"] = dr1["PROJ_NAME"];
-                    //End of Rev Debashis 0025145
+                    //End of Rev 1.0 0025145
                     row2["Item Code"] = dr1["PRODCODE"];
                     row2["Item Name"] = dr1["PRODDESC"];
                     row2["Class"] = dr1["CLASSDESC"];
@@ -307,6 +319,10 @@ namespace Reports.Reports.GridReports
                     row2["Employee Name"] = dr1["EMPNAME"];
                     row2["Technician Name"] = dr1["TECHNAME"];
                     row2["Serial No."] = dr1["SERIALNO"];
+                    //Rev 2.0 Mantis: 0027032
+                    row2["Branch Req. No."] = dr1["BRANCHREQNO"];
+                    row2["Branch Req. Date"] = dr1["BRANCHREQDATE"];
+                    //End of Rev 2.0 Mantis: 0027032
                     row2["Opening Qty."] = dr1["OP_QTY"];
                     row2["Opening Alt. Qty."] = dr1["OP_ALTQTY"];
                     row2["Received Qty."] = dr1["IN_QTY"];
@@ -319,10 +335,10 @@ namespace Reports.Reports.GridReports
                     dtExport.Rows.Add(row2);
                 }
 
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                     dtExport.Columns.Remove("Project Name");
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
 
                 if (chkAltQtyUOM.Checked==false)
                 {
@@ -358,9 +374,9 @@ namespace Reports.Reports.GridReports
 
                 dtExport.Columns.Remove("BRANCHDESC");
                 dtExport.Columns.Remove("WHDESC");
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 dtExport.Columns.Remove("PROJ_NAME");
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
                 dtExport.Columns.Remove("PRODCODE");
                 dtExport.Columns.Remove("PRODDESC");
                 dtExport.Columns.Remove("CLASSDESC");
@@ -381,6 +397,10 @@ namespace Reports.Reports.GridReports
                 dtExport.Columns.Remove("EMPNAME");
                 dtExport.Columns.Remove("TECHNAME");
                 dtExport.Columns.Remove("SERIALNO");
+                //Rev 2.0 Mantis: 0027032
+                dtExport.Columns.Remove("BRANCHREQNO");
+                dtExport.Columns.Remove("BRANCHREQDATE");
+                //End of Rev 2.0 Mantis: 0027032
                 dtExport.Columns.Remove("OP_QTY");
                 dtExport.Columns.Remove("OP_ALTQTY");
                 dtExport.Columns.Remove("IN_QTY");
@@ -509,7 +529,7 @@ namespace Reports.Reports.GridReports
             }
             WH_ID = WHID.TrimStart(',');
 
-            //Rev Debashis 0025145
+            //Rev 1.0 0025145
             string PROJECT_ID = "";
             string Projects = "";
             List<object> ProjectList = lookup_project.GridView.GetSelectedFieldValues("ID");
@@ -518,7 +538,7 @@ namespace Reports.Reports.GridReports
                 Projects += "," + Project;
             }
             PROJECT_ID = Projects.TrimStart(',');
-            //End of Rev Debashis 0025145
+            //End of Rev 1.0 0025145
 
             string BRANCH_NAME = "";
             string BranchNameComponent = "";
@@ -566,9 +586,9 @@ namespace Reports.Reports.GridReports
                 proc.AddPara("@SHOWEMPLOYEE", (chkEmp.Checked) ? "1" : "0");
                 proc.AddPara("@SHOWTECHNICIAN", (chkTechnician.Checked) ? "1" : "0");
                 proc.AddPara("@SHOWSERIAL", (chkSerial.Checked) ? "1" : "0");
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 proc.AddPara("@PROJECT_ID", PROJECT_ID);
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
                 proc.AddPara("@REPORTTYPE", "Details");
                 proc.AddPara("@USERID", Convert.ToInt32(Session["userid"]));
 
@@ -839,7 +859,7 @@ namespace Reports.Reports.GridReports
 
             if(chkAltQtyUOM.Checked==true)
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[7].Visible = true;
                 ////ShowGrid.Columns[13].Visible = true;
                 ////ShowGrid.Columns[15].Visible = true;
@@ -857,16 +877,23 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[25].Visible = true;
                 //ShowGrid.Columns[27].Visible = true;
                 //ShowGrid.Columns[29].Visible = true;
+                //Rev 2.0 Mantis: 0027032
+                //ShowGrid.Columns[8].Visible = true;
+                //ShowGrid.Columns[24].Visible = true;
+                //ShowGrid.Columns[26].Visible = true;
+                //ShowGrid.Columns[28].Visible = true;
+                //ShowGrid.Columns[30].Visible = true;
                 ShowGrid.Columns[8].Visible = true;
-                ShowGrid.Columns[24].Visible = true;
                 ShowGrid.Columns[26].Visible = true;
                 ShowGrid.Columns[28].Visible = true;
                 ShowGrid.Columns[30].Visible = true;
-                //End of Rev Debashis 0025145
+                ShowGrid.Columns[32].Visible = true;
+                //End of Rev 2.0 Mantis: 0027032
+                //End of Rev 1.0 0025145
             }
             else
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[7].Visible = false;
                 ////ShowGrid.Columns[13].Visible = false;
                 ////ShowGrid.Columns[15].Visible = false;
@@ -884,112 +911,119 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[25].Visible = false;
                 //ShowGrid.Columns[27].Visible = false;
                 //ShowGrid.Columns[29].Visible = false;
+                //Rev 2.0 Mantis: 0027032
+                //ShowGrid.Columns[8].Visible = false;
+                //ShowGrid.Columns[24].Visible = false;
+                //ShowGrid.Columns[26].Visible = false;
+                //ShowGrid.Columns[28].Visible = false;
+                //ShowGrid.Columns[30].Visible = false;
                 ShowGrid.Columns[8].Visible = false;
-                ShowGrid.Columns[24].Visible = false;
                 ShowGrid.Columns[26].Visible = false;
                 ShowGrid.Columns[28].Visible = false;
                 ShowGrid.Columns[30].Visible = false;
-                //End of Rev Debashis 0025145
+                ShowGrid.Columns[32].Visible = false;
+                //End of Rev 2.0 Mantis: 0027032
+                //End of Rev 1.0 0025145
             }
 
-            if(chkEntity.Checked==true)
+            if (chkEntity.Checked==true)
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[13].Visible = true;
                 //ShowGrid.Columns[14].Visible = true;
                 ShowGrid.Columns[14].Visible = true;
                 ShowGrid.Columns[15].Visible = true;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
             else
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[13].Visible = false;
                 //ShowGrid.Columns[14].Visible = false;
                 ShowGrid.Columns[14].Visible = false;
                 ShowGrid.Columns[15].Visible = false;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
 
             if(chkParty.Checked==true)
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[16].Visible = true;
                 ShowGrid.Columns[17].Visible = true;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
             else
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[16].Visible = false;
                 ShowGrid.Columns[17].Visible = false;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
 
             if(chkPartyInvNoDt.Checked==true)
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[17].Visible = true;
                 //ShowGrid.Columns[18].Visible = true;
                 ShowGrid.Columns[18].Visible = true;
                 ShowGrid.Columns[19].Visible = true;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
             else
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[17].Visible = false;
                 //ShowGrid.Columns[18].Visible = false;
                 ShowGrid.Columns[18].Visible = false;
                 ShowGrid.Columns[19].Visible = false;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
 
             if(chkEmp.Checked==true)
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[19].Visible = true;
                 ShowGrid.Columns[20].Visible = true;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
             else
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[19].Visible = false;
                 ShowGrid.Columns[20].Visible = false;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
 
             if(chkTechnician.Checked==true)
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[20].Visible = true;
                 ShowGrid.Columns[21].Visible = true;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
             else
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[20].Visible = false;
                 ShowGrid.Columns[21].Visible = false;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
 
             if (chkSerial.Checked == true)
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[21].Visible = true;
                 ShowGrid.Columns[22].Visible = true;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
             else
             {
-                //Rev Debashis 0025145
+                //Rev 1.0 0025145
                 //ShowGrid.Columns[21].Visible = false;
                 ShowGrid.Columns[22].Visible = false;
-                //End of Rev Debashis 0025145
+                //End of Rev 1.0 0025145
             }
-            //Rev Debashis 0025145
+            //Rev 1.0 0025145
             string ProjectSelectInEntryModule = cbl.GetSystemSettingsResult("ProjectSelectInEntryModule");
             if (ProjectSelectInEntryModule.ToUpper().Trim() == "YES")
             {
@@ -999,10 +1033,10 @@ namespace Reports.Reports.GridReports
             {
                 ShowGrid.Columns[2].Visible = false;
             }
-            //End of Rev Debashis 0025145
+            //End of Rev 1.0 0025145
         }
         #endregion
-        //Rev Debashis 0025145
+        //Rev 1.0 0025145
         protected void Project_Callback(object source, DevExpress.Web.CallbackEventArgsBase e)
         {
             if (e.Parameter.Split('~')[0] == "BindProjectGrid")
@@ -1048,6 +1082,6 @@ namespace Reports.Reports.GridReports
                 lookup_project.DataSource = (DataTable)Session["ProjectData"];
             }
         }
-        //End of Rev Debashis 0025145
+        //End of Rev 1.0 0025145
     }
 }
