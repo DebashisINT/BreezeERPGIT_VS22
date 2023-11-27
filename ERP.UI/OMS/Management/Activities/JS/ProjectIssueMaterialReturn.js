@@ -1,4 +1,9 @@
-﻿$(function () {
+﻿//=======================================================Revision History =========================================================================
+//1.0     Sanchita    V2.0.41  14-11-2023     	0026953: Data Freeze Required for Project Purchase Return Manual, Material Issue & Material Received
+//=========================================================End Revision History========================================================================--%>
+
+
+$(function () {
     $('#UOMModal').on('hide.bs.modal', function () {
         grid.batchEditApi.StartEdit(globalRowIndex, 6);
     });
@@ -1450,6 +1455,28 @@ function ProductsCombo_SelectedIndexChanged(s, e) {
     deleteTax('DelProdbySl', grid.GetEditor("SrlNo").GetValue(), "")
 }
 
+// Rev 1.0
+function AddContraLockStatus(LockDate) {
+    $.ajax({
+        type: "POST",
+        url: "ProjectIssueMaterialReturn.aspx/GetAddLock",
+        data: JSON.stringify({ LockDate: LockDate }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+            var currentRate = msg.d;
+            if (currentRate != null && currentRate == "-9") {
+                $("#hdnValAfterLock").val("-9");
+            }
+            else {
+                $("#hdnValAfterLock").val("1");
+            }
+
+        }
+    });
+}
+// End of Rev 1.0
 
 function Save_ButtonClick() {
     grid.AddNewRow();
@@ -1457,6 +1484,15 @@ function Save_ButtonClick() {
     flag = true;
     grid.batchEditApi.EndEdit();
     // Quote no validation Start
+    // Rev 1.0
+    AddContraLockStatus(cPLSalesChallanDate.GetDate());
+    if ($("#hdnValAfterLock").val() == "-9") {
+        jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        LoadingPanel.Hide();
+        flag = false;
+    }
+    // End of Rev 1.0
+
     var ReasonforRet = $('#txtReasonforChange').val();
     ReasonforRet = ReasonforRet.trim();
     if (ReasonforRet == '' || ReasonforRet == null) {
@@ -1650,6 +1686,14 @@ function SaveExit_ButtonClick() {
     LoadingPanel.Show();
     flag = true;
     grid.batchEditApi.EndEdit();
+    // Rev 1.0
+    AddContraLockStatus(cPLSalesChallanDate.GetDate());
+    if ($("#hdnValAfterLock").val() == "-9") {
+        jAlert("DATA is Freezed between   " + $("#hdnLockFromDateCon").val() + " to " + $("#hdnLockToDateCon").val() + " for Add.");
+        LoadingPanel.Hide();
+        flag = false;
+    }
+    // End of Rev 1.0
     // Quote no validation Start
     var ReasonforRet = $('#txtReasonforChange').val();
     ReasonforRet = ReasonforRet.trim();
