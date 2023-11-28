@@ -1,4 +1,7 @@
-﻿@using System.Web.UI.WebControls
+﻿@*================================================== Revision History =============================================
+1.0   Priti    V2.0.41      28-11-2023    	0026963: The Price & Amount should be calculated for the Finished Stock in Quality Control.
+====================================================== Revision History =============================================*@
+@using System.Web.UI.WebControls
 @using DevExpress.Web.Mvc
 @using DevExpress.Web
 @model Manufacturing.Models.ViewModel.QualityControlViewModel
@@ -26,7 +29,7 @@
             $("#DivReceiptDate").addClass("hidden");
             $("#DivIssueNo").addClass("hidden");
             $("#lblIssueDate").removeClass("hidden");
-            
+
         }
         else {
             $("#PONo").addClass("hidden");
@@ -249,7 +252,7 @@
             $('#PartNoName').val(PartNoName);
             $('#DesignNo').val(DEsign);
             $('#ItemRevNo').val(ItemRev_No);
-            
+
             if (Proj_Code == '&nbsp;') {
                 $('#Proj_Code').val('');
             }
@@ -264,14 +267,14 @@
                 $('#Hierarchy').val(Hierarchy);
             }
 
-           
+
             $('#ProductionIssueNo').val(ProductionIssueNo);
 
             if ('@ViewBag.WorkOrderModuleSkipped' == "No") {
                 $('#WorkOrderNo').val(WorkOrderNo);
             }
             $('#ProductionIssueID').val(ProductionIssueID);
-            
+
             $('#BOMNo').val(BOMNo);
             $('#RevNo').val(RevNo);
 
@@ -287,7 +290,7 @@
             $('#strRemarks').val(strRemarks);
             $('#ProductionReceiptID').val(key);
 
-           
+
 
             WorkCenterGridLookup.SetTextWithoutApply(WorkCenterCode);
 
@@ -403,7 +406,10 @@
         var FGQty = $('#FGQty').val();
         var FreshQuantity = $('#FreshQuantity').val();
         var RejectedQuantity = $('#RejectedQuantity').val();
-
+        //Rev 1.0     
+        var FGPrice = $('#FGPrice').val();
+        var TotalAmount = $('#TotalAmount').val();
+        //Rev 1.0 End
         if (order_schemaid == "0") {
             $('#EddlSchema').show();
             isprocess = 0;
@@ -489,7 +495,10 @@
             obj.DocType = DocType;
             obj.ProductionIssueID = ProductionIssueID;
 
-
+            //Rev 1.0  
+            obj.FGPrice = FGPrice;
+            obj.TotalAmount = TotalAmount;           
+            //Rev 1.0 End
 
             $.ajax({
                 type: "POST",
@@ -678,7 +687,7 @@
                     <span id="EReceiptNo" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
                 </div>
             </div>
-            <div class=" col-sm-2" >
+            <div class=" col-sm-2">
                 <label id="DivReceiptDate">Prod. Receipt Date <span style="color:red">*</span></label>
                 <label id="lblIssueDate">Issue Date <span style="color:red">*</span></label>
                 <div class="relative">
@@ -798,7 +807,7 @@
             <div class=" col-sm-2">
                 <label class="">Fresh Qty</label>
                 <div class="relative">
-                    @Html.TextBoxFor(m => m.FreshQuantity, new { @class = "form-control decimalCheck",@onchange = "ChkDataDigitCount(this);" })
+                    @Html.TextBoxFor(m => m.FreshQuantity, new { @class = "form-control decimalCheck", @onchange = "ChkDataDigitCount(this);" })
 
                     <span id="EFreshQuantity" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
                 </div>
@@ -807,7 +816,7 @@
             <div class=" col-sm-2">
                 <label class="">Rejected Qty</label>
                 <div class="relative">
-                    @Html.TextBoxFor(m => m.RejectedQuantity, new { @class = "form-control decimalCheck" ,@onchange = "ChkDataDigitCount(this);" })
+                    @Html.TextBoxFor(m => m.RejectedQuantity, new { @class = "form-control decimalCheck", @onchange = "ChkDataDigitCount(this);" })
 
                     <span id="ERejectedQuantity" class="customerno pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
                 </div>
@@ -850,7 +859,7 @@
             </div>
 
         </div>
-        <div class="row">         
+        <div class="row">
             <div class=" col-sm-2">
                 <label class="mtop10">Part No:</label>
                 <div class="relative">
@@ -891,7 +900,7 @@
                 <div class="addEdcircleBtn" id=""><i class="fa fa-reply"></i></div>
                 <span>Save and Exit</span>
             </div>
-    }
+        }
 
     </div>
 
