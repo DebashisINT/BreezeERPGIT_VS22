@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 32.625, 21.5" name="ERPDataClasses">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 32.625, 22" name="ERPDataClasses">
   <DataContextMoniker Name="/ERPDataClassesDataContext" />
   <nestedChildShapes>
     <classShape Id="42b8dce0-9bc6-4a34-82ff-c3e9bb571e8e" isExpanded="false" absoluteBounds="2.875, 7.875, 2, 0.45">
@@ -770,12 +770,6 @@
         <elementListCompartment Id="ec3c057b-97d2-4457-b30c-123ba009b9bc" absoluteBounds="21.64, 2.46, 1.9700000000000002, 8.1337483723958321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="27772bdd-0d18-494e-b52c-04c12c2d3c61" isExpanded="false" absoluteBounds="8.25, 12.625, 2, 0.45">
-      <DataClassMoniker Name="/ERPDataClassesDataContext/v_ProjectInvoiceList" />
-      <nestedChildShapes>
-        <elementListCompartment Id="3a7151f3-a1fa-486d-a5b4-8ece1b64725a" absoluteBounds="8.265, 13.085, 1.9700000000000002, 8.1337483723958321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="af8a2a76-2fa5-4496-8e42-083a2e444219" isExpanded="false" absoluteBounds="5.25, 17.375, 2, 0.45">
       <DataClassMoniker Name="/ERPDataClassesDataContext/V_SCHEDULELIST" />
       <nestedChildShapes>
@@ -1260,6 +1254,12 @@
       <DataClassMoniker Name="/ERPDataClassesDataContext/v_ProjectIssueMaterialReturnList" />
       <nestedChildShapes>
         <elementListCompartment Id="272e19f0-af31-4fb1-9177-a17c86d797f6" absoluteBounds="8.14, 21.21, 1.9700000000000002, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fcdf2205-1d3a-48bb-8538-69e4354277fb" isExpanded="false" absoluteBounds="0.625, 21.25, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/v_ProjectInvoiceList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="09069001-dc93-42be-9674-c37a0da36f28" absoluteBounds="0.64000000000000012, 21.71, 1.9700000000000002, 8.5183512369791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

@@ -1313,11 +1313,11 @@ else {
                             <% if (rights.CanEdit)
                                { %>
                             <%--Rev 2.0 [style='<%#Eval("Editlock")%>' and <%#Eval("Deletelock")%> added for Edit and Delete respectively ] --%>
-                            <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>')" class="" style='<%#Eval("isLastEntry")%>; <%#Eval("Editlock")%>' title="">
+                            <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>')" class="" style='<%#Eval("Editlock")%>' title="">
                                 <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a><%} %>
                             <% if (rights.CanDelete)
                                { %>
-                            <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" style='<%#Eval("isLastEntry")%>; <%#Eval("Deletelock")%>' title="">
+                            <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" style='<%#Eval("Deletelock")%>' title="">
                                 <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a><%} %>
                             <%-- <a href="javascript:void(0);" onclick="OnClickCopy('<%# Container.KeyValue %>')" class="pad" title="Copy ">
                             <i class="fa fa-copy"></i></a>--%>
