@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER          CHANGES
 1.0                04-09-2023        V2.0.39           Priti              25216: Db_Cr mismatch in Project Purchase & Sales Invoice
+2.0                28-09-2023        V2.0.41           Sanchita           Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
 ====================================================== Revision History =============================================--%>
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoice" %>
 
@@ -2205,6 +2206,14 @@ Rev Number         DATE              VERSION          DEVELOPER          CHANGES
                 grid.cpinsert = null;
                 jAlert("UDF is set as Mandatory. Please enter values.", "Alert", function () { OpenUdf(); });
             }
+            // Rev 2.0
+            else if (grid.cpSaveSuccessOrFail == "AddLock") {
+                OnAddNewClick_AtSaveTime();
+                grid.cpSaveSuccessOrFail = null;
+                jAlert('DATA is Freezed between ' + grid.cpAddLockStatus);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            // End of Rev 2.0
             else if (grid.cpSaveSuccessOrFail == "TCMandatory") {
                 OnAddNewClick_AtSaveTime();
                 grid.cpSaveSuccessOrFail = null;
@@ -5845,6 +5854,14 @@ function fn_Edit(keyValue) {
         }
     </script>
     <script>
+        // Rev 2.0
+        function SetLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= tstartdate.GetDate()) && (tstartdate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                jAlert("DATA is Freezed between  " + $("#hdnDatafrom").val() + " to " + $("#hdnDatato").val());
+            }
+        }
+        // End of Rev 2.0
+
         function CustomerButnClick(s, e) {
             $('#CustModel').modal('show');
         }
@@ -6415,10 +6432,11 @@ function fn_Edit(keyValue) {
                                             <div class="col-md-2 lblmTop8">
                                                 <dxe:ASPxLabel ID="lbl_SaleInvoiceDt" runat="server" Text="Posting Date">
                                                 </dxe:ASPxLabel>
+                                                <%--Rev 2.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ] --%>
                                                 <dxe:ASPxDateEdit ID="dt_PLQuote" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="tstartdate" TabIndex="3" Width="100%" UseMaskBehavior="True">
                                                     <ButtonStyle Width="13px">
                                                     </ButtonStyle>
-                                                    <ClientSideEvents DateChanged="function(s, e) {DateCheck();}" GotFocus="function(s,e){tstartdate.ShowDropDown();}" />
+                                                    <ClientSideEvents DateChanged="function(s, e) {DateCheck();}" GotFocus="function(s,e){tstartdate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" />
                                                 </dxe:ASPxDateEdit>
                                             </div>
                                             <div class="col-md-2 lblmTop8">
@@ -6974,6 +6992,14 @@ function fn_Edit(keyValue) {
                                             <asp:HiddenField runat="server" ID="hdnUCProjTermsCon" Value="SI" />
                                             <asp:HiddenField runat="server" ID="hdnProjPageStat" />
                                             <asp:HiddenField runat="server" ID="hdnEditIdForTerms" />
+                                            <%--Rev 2.0--%>
+                                            <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+                                            <asp:HiddenField ID="hdnLockToDate" runat="server" />
+                                            <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+                                            <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+                                            <asp:HiddenField ID="hdnDatafrom" runat="server" />
+                                            <asp:HiddenField ID="hdnDatato" runat="server" />
+                                            <%--End of Rev 2.0--%>
                                             <%-- onclick=""--%>
                                             <%--<a href="javascript:void(0);" id="btnAddNew" runat="server" class="btn btn-primary"><span>[A]ttachment(s)</span></a>--%>
                                             <%--<dxe:ASPxButton ID="ASPxButton4" ClientInstanceName="cbtn_SaveRecords" runat="server" AccessKey="X" AutoPostBack="False" Text="[A]ttachment(s)" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1">

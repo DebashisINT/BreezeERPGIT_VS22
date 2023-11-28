@@ -96,6 +96,24 @@ namespace ERP.OMS.Management.Activities
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl span1;
 
         /// <summary>
+        /// spnEditLock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spnEditLock;
+
+        /// <summary>
+        /// spnDeleteLock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spnDeleteLock;
+
+        /// <summary>
         /// GrdQuotation control.
         /// </summary>
         /// <remarks>
@@ -355,6 +373,42 @@ namespace ERP.OMS.Management.Activities
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hddnSalesInvoiceID;
+
+        /// <summary>
+        /// hdnLockFromDateedit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLockFromDateedit;
+
+        /// <summary>
+        /// hdnLockToDateedit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLockToDateedit;
+
+        /// <summary>
+        /// hdnLockFromDatedelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLockFromDatedelete;
+
+        /// <summary>
+        /// hdnLockToDatedelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLockToDatedelete;
 
         /// <summary>
         /// Popup_EWayBill control.

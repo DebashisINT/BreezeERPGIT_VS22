@@ -1,6 +1,7 @@
 ﻿<%--**********************************************************************************************************************
 Rev 1.0      Sanchita    V2.0.39     18/09/2023      Update Transporter Action required in Project Mgmt../ Sales Invoice
- *                                                      Mantis : 26806
+                                                     Mantis : 26806
+Rev 2.0     Sanchita    V2.0.41     28-11-2023       Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
  **********************************************************************************************************************--%>
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoiceList" EnableEventValidation="false" %>
 
@@ -1077,6 +1078,10 @@ else {
              </dxe:PanelContent>
          </PanelCollection>
      </dxe:ASPxCallbackPanel>--%>
+    <%--Rev 2.0--%>
+    <div id="spnEditLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <div id="spnDeleteLock" runat="server" style="display: none; color: red; text-align: center"></div>
+    <%--End of Rev 2.0--%>
     <div class="GridViewArea relative">
         <dxe:ASPxGridView ID="GrdQuotation" runat="server" KeyFieldName="Invoice_Id" AutoGenerateColumns="False" SettingsBehavior-AllowFocusedRow="true"
             Width="100%" ClientInstanceName="cGrdQuotation" OnCustomCallback="GrdQuotation_CustomCallback"
@@ -1307,11 +1312,12 @@ else {
                             <% } %>
                             <% if (rights.CanEdit)
                                { %>
-                            <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>')" class="" title="">
+                            <%--Rev 2.0 [style='<%#Eval("Editlock")%>' and <%#Eval("Deletelock")%> added for Edit and Delete respectively ] --%>
+                            <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>')" class="" style='<%#Eval("isLastEntry")%>; <%#Eval("Editlock")%>' title="">
                                 <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a><%} %>
                             <% if (rights.CanDelete)
                                { %>
-                            <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" title="">
+                            <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" style='<%#Eval("isLastEntry")%>; <%#Eval("Deletelock")%>' title="">
                                 <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a><%} %>
                             <%-- <a href="javascript:void(0);" onclick="OnClickCopy('<%# Container.KeyValue %>')" class="pad" title="Copy ">
                             <i class="fa fa-copy"></i></a>--%>
@@ -1720,6 +1726,13 @@ else {
         <%--Rev 1.0--%>
         <asp:HiddenField ID="hddnSalesInvoiceID" runat="server" />
         <%--End of Rev 1.0--%>
+        <%--Rev 2.0--%>
+        <asp:HiddenField ID="hdnLockFromDateedit" runat="server" />
+        <asp:HiddenField ID="hdnLockToDateedit" runat="server" />
+
+        <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
+        <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
+        <%--End of Rev 2.0--%>
     </div>
     <dxe:ASPxPopupControl ID="Popup_EWayBill" runat="server" ClientInstanceName="cPopup_EWayBill"
         Width="400px" HeaderText="Update E-Way Bill" PopupHorizontalAlign="WindowCenter"
