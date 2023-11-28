@@ -1,4 +1,7 @@
-﻿using DataAccessLayer;
+﻿//================================================== Revision History =============================================
+//1.0   Priti V2.0.41      28-11-2023    	0026963: The Price & Amount should be calculated for the Finished Stock in Quality Control.
+//====================================================== Revision History =============================================
+using DataAccessLayer;
 using Manufacturing.Models.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -44,6 +47,10 @@ namespace Manufacturing.Models
             proc.AddPara("@Rejected_Qty", obj.RejectedQuantity);
             proc.AddPara("@UserID", obj.UserID);
             proc.AddVarcharPara("@DocType", 100, obj.DocType);
+            //Rev 1.0
+            proc.AddPara("@FGPrice", obj.FGPrice);
+            proc.AddPara("@TotalAmount", obj.TotalAmount);
+            //Rev 1.0 End
             ds = proc.GetTable();
             return ds;
         }
