@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*************************************************************************************************************************************************
+ *  Rev 1.0     Sanchita    V2.0.41     28-11-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -194,6 +197,19 @@ namespace ERP.OMS.Management.Activities
             {
                 hdnBackdateddate.Value = Convert.ToString(Backdateddate.Rows[0]["Datecount"]);
             }
+
+            // Rev 1.0
+            DataTable dtposTime = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) Data_Fromdate,convert(varchar(10),Lock_Todate,105) Data_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Add' and Module_Id=70");
+
+            if (dtposTime != null && dtposTime.Rows.Count > 0)
+            {
+                hdnLockFromDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Fromdate"]);
+                hdnLockToDate.Value = Convert.ToString(dtposTime.Rows[0]["LockCon_Todate"]);
+                hdnDatafrom.Value = Convert.ToString(dtposTime.Rows[0]["Data_Fromdate"]);
+                hdnDatato.Value = Convert.ToString(dtposTime.Rows[0]["Data_Todate"]);
+            }
+            // End of Rev 1.0
+
             if (!IsPostBack)
             {
 
@@ -5044,7 +5060,17 @@ namespace ERP.OMS.Management.Activities
                       // End of Rec Sanchita
                       ));
                     //18-03-2019
-                    if (id != 0 && id !=-12)
+
+                        // Rev 1.0
+                    if (id == -9)
+                    {
+                        DataTable dtLock = new DataTable();
+                        dtLock = GetAddLockStatus();
+                        grid.JSProperties["cpSaveSuccessOrFail"] = "AddLock";
+                        grid.JSProperties["cpAddLockStatus"] = (Convert.ToString(dtLock.Rows[0]["Lock_Fromdate"]) + " to " + Convert.ToString(dtLock.Rows[0]["Lock_Todate"]));
+                    }
+                    // End of Rev 1.0
+                    else if (id != 0 && id !=-12)
                     {
 
                         // -----------------------Remove Session Section Start------------------
@@ -5189,6 +5215,7 @@ namespace ERP.OMS.Management.Activities
                             grid.JSProperties["cpSaveSuccessOrFail"] = "EmptyProject";
                         }
                     }
+                    
 
                     //Udf Add mode
                     if (Convert.ToInt64(strInvoiceID) > 0)
@@ -5218,6 +5245,19 @@ namespace ERP.OMS.Management.Activities
             }
 
         }
+
+        // Rev 1.0
+        public DataTable GetAddLockStatus()
+        {
+            DataTable dt = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("prc_ProjectPurchaseInvoice_AddEdit");
+            proc.AddVarcharPara("@Action", 500, "GetAddLockForProjectPurchaseInvoice");
+
+            dt = proc.GetTable();
+            return dt;
+
+        }
+        // End of Rev 1.0
 
         //18-03-2019
         //public bool ModifyQuatation(string PurchaseInvoiceID, string strSchemeType, string strQuoteNo, string strQuoteDate, string strQuoteExpiry, string strCustomer, string strContactName,

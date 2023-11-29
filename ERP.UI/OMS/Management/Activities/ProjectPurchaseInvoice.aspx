@@ -1,4 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPurchaseInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseInvoice" %>
+﻿<%--/*************************************************************************************************************************************************
+ *  Rev 1.0     Sanchita    V2.0.41     28-11-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/--%>
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPurchaseInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseInvoice" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -652,7 +656,13 @@
 
 
 
-
+        // Rev 1.0
+        function SetLostFocusonDemand(e) {
+            if ((new Date($("#hdnLockFromDate").val()) <= cPLQuoteDate.GetDate()) && (cPLQuoteDate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
+                jAlert("DATA is Freezed between  " + $("#hdnDatafrom").val() + " to " + $("#hdnDatato").val());
+            }
+        }
+        // End of Rev 1.0
 
 
         function SizeUOMChange() {
@@ -6866,6 +6876,13 @@ else {
                 grid.batchEditApi.StartEdit(0, 2);
                 jAlert('Can Not Add More Quotation Number as Quotation Scheme Exausted.<br />Update The Scheme and Try Again');
             }
+            // Rev 1.0
+            else if (grid.cpSaveSuccessOrFail == "AddLock") {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('DATA is Freezed between ' + grid.cpAddLockStatus);
+            }
+            // End of Rev 1.0
             else if (grid.cpSaveSuccessOrFail == "AddressProblem") {
                 cbtn_SaveRecords.SetEnabled(true);
                 page.tabs[1].SetEnabled(true);
@@ -9716,10 +9733,11 @@ function ddl_AmountAre_valueChange() {
                                         </dxe:ASPxLabel>
                                         <span style="color: red;">*</span>
 
+                                        <%--Rev 1.0 [ LostFocus="function(s, e) { SetLostFocusonDemand(e)}" added ] --%>
                                         <dxe:ASPxDateEdit ID="dt_PLQuote" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cPLQuoteDate" Width="100%">
                                             <ButtonStyle Width="13px">
                                             </ButtonStyle>
-                                            <ClientSideEvents DateChanged="function(s, e) { DateCheck()}" GotFocus="function(s,e){cPLQuoteDate.ShowDropDown();}" />
+                                            <ClientSideEvents DateChanged="function(s, e) { DateCheck()}" GotFocus="function(s,e){cPLQuoteDate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" />
                                         </dxe:ASPxDateEdit>
                                         <span id="MandatoryDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
 
@@ -11884,6 +11902,14 @@ function ddl_AmountAre_valueChange() {
         <asp:HiddenField runat="server" ID="hdnShowUOMConversionInEntry" />
     </div>
     <%--End of Rev 1.0 Subhra 15-03-2019--%>
+    <%--Rev 1.0--%>
+    <asp:HiddenField ID="hdnLockFromDate" runat="server" />
+    <asp:HiddenField ID="hdnLockToDate" runat="server" />
+    <asp:HiddenField ID="hdnLockFromDateCon" runat="server" />
+    <asp:HiddenField ID="hdnLockToDateCon" runat="server" />
+    <asp:HiddenField ID="hdnDatafrom" runat="server" />
+    <asp:HiddenField ID="hdnDatato" runat="server" />
+    <%--End of Rev 1.0--%>
 
     <asp:HiddenField ID="hdnManual" runat="server" Value="" />
     <asp:HiddenField ID="hdnAuto" runat="server" Value="" />
