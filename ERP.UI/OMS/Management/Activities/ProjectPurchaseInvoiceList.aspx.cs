@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*************************************************************************************************************************************************
+ *  Rev 1.0     Sanchita    V2.0.41     28-11-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *************************************************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -184,6 +187,26 @@ namespace ERP.OMS.Management.Activities
                 }
             }
 
+            // Rev 1.0
+            DataTable dtposTimeEdit = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) Dataedit_Fromdate,convert(varchar(10),Lock_Todate,105) Dataedit_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Edit' and Module_Id=70");
+            DataTable dtposTimeDelete = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) Datadelete_Fromdate,convert(varchar(10),Lock_Todate,105) Datadelete_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Delete' and Module_Id=70");
+            if (dtposTimeEdit != null && dtposTimeEdit.Rows.Count > 0)
+            {
+                hdnLockFromDateedit.Value = Convert.ToString(dtposTimeEdit.Rows[0]["Dataedit_Fromdate"]);
+                hdnLockToDateedit.Value = Convert.ToString(dtposTimeEdit.Rows[0]["Dataedit_Todate"]);
+
+                spnEditLock.Style.Add("Display", "block");
+                spnEditLock.InnerText = "DATA is Freezed between   " + hdnLockFromDateedit.Value + " to " + hdnLockToDateedit.Value + " for Edit .";
+            }
+            if (dtposTimeDelete != null && dtposTimeDelete.Rows.Count > 0)
+            {
+                spnDeleteLock.Style.Add("Display", "block");
+                hdnLockFromDatedelete.Value = Convert.ToString(dtposTimeDelete.Rows[0]["Datadelete_Fromdate"]);
+                hdnLockToDatedelete.Value = Convert.ToString(dtposTimeDelete.Rows[0]["Datadelete_Todate"]);
+                spnDeleteLock.InnerText = spnEditLock.InnerText + "DATA is Freezed between    " + hdnLockFromDatedelete.Value + " to " + hdnLockToDatedelete.Value + " for Delete.";
+                spnEditLock.InnerText = "";
+            }
+            // End of Rev 1.0
 
             if (!IsPostBack)
             {

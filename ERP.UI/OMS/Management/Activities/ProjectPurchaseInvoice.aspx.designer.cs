@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERP.OMS.Management.Activities {
-    
-    
-    public partial class ProjectPurchaseInvoice {
-        
+namespace ERP.OMS.Management.Activities
+{
+
+
+    public partial class ProjectPurchaseInvoice
+    {
+
         /// <summary>
         /// lblHeading control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblHeading;
-        
+
         /// <summary>
         /// pageheaderContent control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pageheaderContent;
-        
+
         /// <summary>
         /// divContactPhone control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divContactPhone;
-        
+
         /// <summary>
         /// lblContactPhone control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblContactPhone;
-        
+
         /// <summary>
         /// divOutstanding control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOutstanding;
-        
+
         /// <summary>
         /// lblOutstanding control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblOutstanding;
-        
+
         /// <summary>
         /// lblAvailableStkPro control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAvailableStkPro;
-        
+
         /// <summary>
         /// lblPackingStk control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPackingStk;
-        
+
         /// <summary>
         /// divGSTN control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divGSTN;
-        
+
         /// <summary>
         /// lblGSTIN control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblGSTIN;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// lblProduct control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblProduct;
-        
+
         /// <summary>
         /// lblStkQty control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblStkQty;
-        
+
         /// <summary>
         /// lblStkUOM control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblStkUOM;
-        
+
         /// <summary>
         /// ApprovalCross control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ApprovalCross;
-        
+
         /// <summary>
         /// crossdiv control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl crossdiv;
-        
+
         /// <summary>
         /// ASPxPageControl1 control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPageControl ASPxPageControl1;
-        
+
         /// <summary>
         /// Label12 control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label12;
-        
+
         /// <summary>
         /// ddlInventory control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlInventory;
-        
+
         /// <summary>
         /// divNumberingScheme control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNumberingScheme;
-        
+
         /// <summary>
         /// lbl_NumberingScheme control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_NumberingScheme;
-        
+
         /// <summary>
         /// ddl_numberingScheme control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_numberingScheme;
-        
+
         /// <summary>
         /// lbl_PIQuoteNo control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_PIQuoteNo;
-        
+
         /// <summary>
         /// txtVoucherNo control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtVoucherNo;
-        
+
         /// <summary>
         /// ASPxLabel2 control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel2;
-        
+
         /// <summary>
         /// dt_PLQuote control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dt_PLQuote;
-        
+
         /// <summary>
         /// lbl_Branch control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_Branch;
-        
+
         /// <summary>
         /// ddl_Branch control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_Branch;
-        
+
         /// <summary>
         /// lbl_Refference control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_Refference;
-        
+
         /// <summary>
         /// txt_Refference control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_Refference;
-        
+
         /// <summary>
         /// lbl_Customer control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_Customer;
-        
+
         /// <summary>
         /// openlink control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl openlink;
-        
+
         /// <summary>
         /// txtVendorName control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit txtVendorName;
-        
+
         /// <summary>
         /// vendorPanel control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel vendorPanel;
-        
+
         /// <summary>
         /// partyInvoicepanel control.
         /// </summary>
@@ -326,7 +328,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel partyInvoicepanel;
-        
+
         /// <summary>
         /// lbl_partyInvNo control.
         /// </summary>
@@ -335,7 +337,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_partyInvNo;
-        
+
         /// <summary>
         /// txt_partyInvNo control.
         /// </summary>
@@ -344,7 +346,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_partyInvNo;
-        
+
         /// <summary>
         /// lbl_partyInvDt control.
         /// </summary>
@@ -353,7 +355,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_partyInvDt;
-        
+
         /// <summary>
         /// dt_partyInvDt control.
         /// </summary>
@@ -362,7 +364,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dt_partyInvDt;
-        
+
         /// <summary>
         /// lbl_ContactPerson control.
         /// </summary>
@@ -371,7 +373,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_ContactPerson;
-        
+
         /// <summary>
         /// cmbContactPerson control.
         /// </summary>
@@ -380,7 +382,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbContactPerson;
-        
+
         /// <summary>
         /// rdl_PurchaseInvoice control.
         /// </summary>
@@ -389,7 +391,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rdl_PurchaseInvoice;
-        
+
         /// <summary>
         /// ComponentQuotationPanel control.
         /// </summary>
@@ -398,7 +400,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel ComponentQuotationPanel;
-        
+
         /// <summary>
         /// lookup_quotation control.
         /// </summary>
@@ -407,7 +409,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridLookup lookup_quotation;
-        
+
         /// <summary>
         /// ASPxProductsPopup control.
         /// </summary>
@@ -416,7 +418,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl ASPxProductsPopup;
-        
+
         /// <summary>
         /// divselectunselect control.
         /// </summary>
@@ -425,7 +427,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divselectunselect;
-        
+
         /// <summary>
         /// grid_Products control.
         /// </summary>
@@ -434,7 +436,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView grid_Products;
-        
+
         /// <summary>
         /// hdnPartyInvoiceList control.
         /// </summary>
@@ -443,7 +445,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnPartyInvoiceList;
-        
+
         /// <summary>
         /// Button2 control.
         /// </summary>
@@ -452,7 +454,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton Button2;
-        
+
         /// <summary>
         /// rdldate control.
         /// </summary>
@@ -461,7 +463,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl rdldate;
-        
+
         /// <summary>
         /// lbl_InvoiceNO control.
         /// </summary>
@@ -470,7 +472,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_InvoiceNO;
-        
+
         /// <summary>
         /// dt_Quotation control.
         /// </summary>
@@ -479,7 +481,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox dt_Quotation;
-        
+
         /// <summary>
         /// ASPxLabel1 control.
         /// </summary>
@@ -488,7 +490,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel1;
-        
+
         /// <summary>
         /// ddl_cashBank control.
         /// </summary>
@@ -497,7 +499,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddl_cashBank;
-        
+
         /// <summary>
         /// lbl_Currency control.
         /// </summary>
@@ -506,7 +508,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_Currency;
-        
+
         /// <summary>
         /// ddl_Currency control.
         /// </summary>
@@ -515,7 +517,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_Currency;
-        
+
         /// <summary>
         /// lbl_Rate control.
         /// </summary>
@@ -524,7 +526,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_Rate;
-        
+
         /// <summary>
         /// txt_Rate control.
         /// </summary>
@@ -533,7 +535,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_Rate;
-        
+
         /// <summary>
         /// chk_reversemechenism control.
         /// </summary>
@@ -542,7 +544,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCheckBox chk_reversemechenism;
-        
+
         /// <summary>
         /// ASPxLabel3 control.
         /// </summary>
@@ -551,7 +553,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel3;
-        
+
         /// <summary>
         /// divTdsScheme control.
         /// </summary>
@@ -560,7 +562,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTdsScheme;
-        
+
         /// <summary>
         /// ASPxLabel4 control.
         /// </summary>
@@ -569,7 +571,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel4;
-        
+
         /// <summary>
         /// ddl_TdsScheme control.
         /// </summary>
@@ -578,7 +580,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddl_TdsScheme;
-        
+
         /// <summary>
         /// chkNILRateTDS control.
         /// </summary>
@@ -587,7 +589,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkNILRateTDS;
-        
+
         /// <summary>
         /// lbl_AmountAre control.
         /// </summary>
@@ -596,7 +598,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lbl_AmountAre;
-        
+
         /// <summary>
         /// ddl_AmountAre control.
         /// </summary>
@@ -605,7 +607,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddl_AmountAre;
-        
+
         /// <summary>
         /// lblVatGstCst control.
         /// </summary>
@@ -614,7 +616,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblVatGstCst;
-        
+
         /// <summary>
         /// ddl_VatGstCst control.
         /// </summary>
@@ -623,7 +625,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddl_VatGstCst;
-        
+
         /// <summary>
         /// ASPxLabel12 control.
         /// </summary>
@@ -632,7 +634,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel12;
-        
+
         /// <summary>
         /// txtEWayBillNumber control.
         /// </summary>
@@ -641,7 +643,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEWayBillNumber;
-        
+
         /// <summary>
         /// ASPxLabel9 control.
         /// </summary>
@@ -650,7 +652,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel9;
-        
+
         /// <summary>
         /// txtRemarks control.
         /// </summary>
@@ -659,7 +661,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRemarks;
-        
+
         /// <summary>
         /// ASPxLabel10 control.
         /// </summary>
@@ -668,7 +670,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel10;
-        
+
         /// <summary>
         /// ddl_vendortype control.
         /// </summary>
@@ -677,7 +679,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddl_vendortype;
-        
+
         /// <summary>
         /// ASPxLabel11 control.
         /// </summary>
@@ -686,7 +688,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel11;
-        
+
         /// <summary>
         /// dt_EntryDate control.
         /// </summary>
@@ -695,7 +697,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dt_EntryDate;
-        
+
         /// <summary>
         /// ASPxLabel13 control.
         /// </summary>
@@ -704,7 +706,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel13;
-        
+
         /// <summary>
         /// ddlPosGstInvoice control.
         /// </summary>
@@ -713,7 +715,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddlPosGstInvoice;
-        
+
         /// <summary>
         /// lblProject control.
         /// </summary>
@@ -722,7 +724,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProject;
-        
+
         /// <summary>
         /// lookup_Project control.
         /// </summary>
@@ -731,7 +733,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridLookup lookup_Project;
-        
+
         /// <summary>
         /// EntityServerModeDataPInvoice control.
         /// </summary>
@@ -740,7 +742,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Data.Linq.LinqServerModeDataSource EntityServerModeDataPInvoice;
-        
+
         /// <summary>
         /// lblHierarchy control.
         /// </summary>
@@ -749,7 +751,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblHierarchy;
-        
+
         /// <summary>
         /// ddlHierarchy control.
         /// </summary>
@@ -758,7 +760,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlHierarchy;
-        
+
         /// <summary>
         /// grid control.
         /// </summary>
@@ -767,7 +769,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView grid;
-        
+
         /// <summary>
         /// CustomDelete control.
         /// </summary>
@@ -776,7 +778,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.GridViewCommandColumnCustomButton CustomDelete;
-        
+
         /// <summary>
         /// addlDesc control.
         /// </summary>
@@ -785,7 +787,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.GridViewCommandColumnCustomButton addlDesc;
-        
+
         /// <summary>
         /// CustomWarehouse control.
         /// </summary>
@@ -794,7 +796,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.GridViewCommandColumnCustomButton CustomWarehouse;
-        
+
         /// <summary>
         /// CustomAddNewRow control.
         /// </summary>
@@ -803,7 +805,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.GridViewCommandColumnCustomButton CustomAddNewRow;
-        
+
         /// <summary>
         /// txt_Charges control.
         /// </summary>
@@ -812,7 +814,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txt_Charges;
-        
+
         /// <summary>
         /// txt_cInvValue control.
         /// </summary>
@@ -821,7 +823,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txt_cInvValue;
-        
+
         /// <summary>
         /// bnrLblTotalQty control.
         /// </summary>
@@ -830,7 +832,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel bnrLblTotalQty;
-        
+
         /// <summary>
         /// txt_TotalQty control.
         /// </summary>
@@ -839,7 +841,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txt_TotalQty;
-        
+
         /// <summary>
         /// bnrLblTaxableAmt control.
         /// </summary>
@@ -848,7 +850,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel bnrLblTaxableAmt;
-        
+
         /// <summary>
         /// txt_TaxableAmtval control.
         /// </summary>
@@ -857,7 +859,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txt_TaxableAmtval;
-        
+
         /// <summary>
         /// bnrLblTaxAmt control.
         /// </summary>
@@ -866,7 +868,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel bnrLblTaxAmt;
-        
+
         /// <summary>
         /// txt_TaxAmtval control.
         /// </summary>
@@ -875,7 +877,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txt_TaxAmtval;
-        
+
         /// <summary>
         /// bnrLblOtherTaxAmt control.
         /// </summary>
@@ -884,7 +886,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel bnrLblOtherTaxAmt;
-        
+
         /// <summary>
         /// txt_OtherTaxAmtval control.
         /// </summary>
@@ -893,7 +895,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txt_OtherTaxAmtval;
-        
+
         /// <summary>
         /// bnrLblInvVal control.
         /// </summary>
@@ -902,7 +904,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel bnrLblInvVal;
-        
+
         /// <summary>
         /// txt_TotalAmt control.
         /// </summary>
@@ -911,7 +913,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txt_TotalAmt;
-        
+
         /// <summary>
         /// lbl_quotestatusmsg control.
         /// </summary>
@@ -920,7 +922,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_quotestatusmsg;
-        
+
         /// <summary>
         /// btn_SaveRecords control.
         /// </summary>
@@ -929,7 +931,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btn_SaveRecords;
-        
+
         /// <summary>
         /// ASPxButton1 control.
         /// </summary>
@@ -938,7 +940,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton1;
-        
+
         /// <summary>
         /// btnSaveUdf control.
         /// </summary>
@@ -947,7 +949,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnSaveUdf;
-        
+
         /// <summary>
         /// ASPxButton3 control.
         /// </summary>
@@ -956,7 +958,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton3;
-        
+
         /// <summary>
         /// ASPxButton2 control.
         /// </summary>
@@ -965,7 +967,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton2;
-        
+
         /// <summary>
         /// divTCS control.
         /// </summary>
@@ -974,7 +976,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTCS;
-        
+
         /// <summary>
         /// ASPxButton10 control.
         /// </summary>
@@ -983,7 +985,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton10;
-        
+
         /// <summary>
         /// ASPxButton11 control.
         /// </summary>
@@ -992,7 +994,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton11;
-        
+
         /// <summary>
         /// hfControlData control.
         /// </summary>
@@ -1001,7 +1003,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfControlData;
-        
+
         /// <summary>
         /// hdnPBTaggedYorN control.
         /// </summary>
@@ -1010,7 +1012,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnPBTaggedYorN;
-        
+
         /// <summary>
         /// hdnTaxDeleteByShippingStateMismatch control.
         /// </summary>
@@ -1019,7 +1021,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnTaxDeleteByShippingStateMismatch;
-        
+
         /// <summary>
         /// hdnRCMChecked control.
         /// </summary>
@@ -1028,7 +1030,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnRCMChecked;
-        
+
         /// <summary>
         /// VehicleDetailsControl control.
         /// </summary>
@@ -1037,7 +1039,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::ERP.OMS.Management.Activities.UserControls.VehicleDetailsControl VehicleDetailsControl;
-        
+
         /// <summary>
         /// TermsConditionsControl control.
         /// </summary>
@@ -1046,7 +1048,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::ERP.OMS.Management.Activities.UserControls.TermsConditionsControl TermsConditionsControl;
-        
+
         /// <summary>
         /// dvSOTC control.
         /// </summary>
@@ -1055,7 +1057,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvSOTC;
-        
+
         /// <summary>
         /// ProjectTermsConditionsControl control.
         /// </summary>
@@ -1064,7 +1066,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::ERP.OMS.Management.Activities.UserControls.ProjectTermsConditions ProjectTermsConditionsControl;
-        
+
         /// <summary>
         /// UOMConversionControl control.
         /// </summary>
@@ -1073,7 +1075,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::ERP.OMS.Management.Activities.UserControls.UOMConversion UOMConversionControl;
-        
+
         /// <summary>
         /// hdnProjectSOTC control.
         /// </summary>
@@ -1082,7 +1084,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnProjectSOTC;
-        
+
         /// <summary>
         /// hfTermsConditionData control.
         /// </summary>
@@ -1091,7 +1093,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfTermsConditionData;
-        
+
         /// <summary>
         /// hfTermsConditionDocType control.
         /// </summary>
@@ -1100,7 +1102,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfTermsConditionDocType;
-        
+
         /// <summary>
         /// hdnVendorImport control.
         /// </summary>
@@ -1109,7 +1111,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnVendorImport;
-        
+
         /// <summary>
         /// hdnPBAutoPrint control.
         /// </summary>
@@ -1118,7 +1120,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnPBAutoPrint;
-        
+
         /// <summary>
         /// hdnNoofCopies control.
         /// </summary>
@@ -1127,7 +1129,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnNoofCopies;
-        
+
         /// <summary>
         /// hdnTaggedVender control.
         /// </summary>
@@ -1136,7 +1138,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnTaggedVender;
-        
+
         /// <summary>
         /// hdnTaggedVendorName control.
         /// </summary>
@@ -1145,7 +1147,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnTaggedVendorName;
-        
+
         /// <summary>
         /// hdnTDSShoworNot control.
         /// </summary>
@@ -1154,7 +1156,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnTDSShoworNot;
-        
+
         /// <summary>
         /// chkmail control.
         /// </summary>
@@ -1163,7 +1165,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkmail;
-        
+
         /// <summary>
         /// Purchase_BillingShipping control.
         /// </summary>
@@ -1172,7 +1174,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::ERP.OMS.Management.Activities.UserControls.Purchase_BillingShipping Purchase_BillingShipping;
-        
+
         /// <summary>
         /// aspxTaxpopUp control.
         /// </summary>
@@ -1181,7 +1183,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl aspxTaxpopUp;
-        
+
         /// <summary>
         /// setCurrentProdCode control.
         /// </summary>
@@ -1190,7 +1192,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField setCurrentProdCode;
-        
+
         /// <summary>
         /// HdSerialNo control.
         /// </summary>
@@ -1199,7 +1201,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HdSerialNo;
-        
+
         /// <summary>
         /// hdnInvWiseSlno control.
         /// </summary>
@@ -1208,7 +1210,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnInvWiseSlno;
-        
+
         /// <summary>
         /// HdProdGrossAmt control.
         /// </summary>
@@ -1217,7 +1219,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HdProdGrossAmt;
-        
+
         /// <summary>
         /// HdProdNetAmt control.
         /// </summary>
@@ -1226,7 +1228,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HdProdNetAmt;
-        
+
         /// <summary>
         /// hdnDeleteSrlNo control.
         /// </summary>
@@ -1235,7 +1237,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnDeleteSrlNo;
-        
+
         /// <summary>
         /// hdnADDEditMode control.
         /// </summary>
@@ -1244,7 +1246,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnADDEditMode;
-        
+
         /// <summary>
         /// ASPxLabel5 control.
         /// </summary>
@@ -1253,7 +1255,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel5;
-        
+
         /// <summary>
         /// lblTaxProdGrossAmt control.
         /// </summary>
@@ -1262,7 +1264,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblTaxProdGrossAmt;
-        
+
         /// <summary>
         /// lblGstForGross control.
         /// </summary>
@@ -1271,7 +1273,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblGstForGross;
-        
+
         /// <summary>
         /// lblTaxDiscount control.
         /// </summary>
@@ -1280,7 +1282,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblTaxDiscount;
-        
+
         /// <summary>
         /// ASPxLabel6 control.
         /// </summary>
@@ -1289,7 +1291,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel6;
-        
+
         /// <summary>
         /// lblProdNetAmt control.
         /// </summary>
@@ -1298,7 +1300,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblProdNetAmt;
-        
+
         /// <summary>
         /// lblGstForNet control.
         /// </summary>
@@ -1307,7 +1309,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblGstForNet;
-        
+
         /// <summary>
         /// txtprodBasicAmt control.
         /// </summary>
@@ -1316,7 +1318,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtprodBasicAmt;
-        
+
         /// <summary>
         /// aspxGridTax control.
         /// </summary>
@@ -1325,7 +1327,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView aspxGridTax;
-        
+
         /// <summary>
         /// cmbGstCstVat control.
         /// </summary>
@@ -1334,7 +1336,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbGstCstVat;
-        
+
         /// <summary>
         /// txtGstCstVat control.
         /// </summary>
@@ -1343,7 +1345,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtGstCstVat;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -1352,7 +1354,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton Button1;
-        
+
         /// <summary>
         /// Button3 control.
         /// </summary>
@@ -1361,7 +1363,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton Button3;
-        
+
         /// <summary>
         /// txtTaxTotAmt control.
         /// </summary>
@@ -1370,7 +1372,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTaxTotAmt;
-        
+
         /// <summary>
         /// taxUpdatePanel control.
         /// </summary>
@@ -1379,7 +1381,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel taxUpdatePanel;
-        
+
         /// <summary>
         /// Popup_Taxes control.
         /// </summary>
@@ -1388,7 +1390,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl Popup_Taxes;
-        
+
         /// <summary>
         /// ASPxLabel7 control.
         /// </summary>
@@ -1397,7 +1399,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel7;
-        
+
         /// <summary>
         /// txtProductAmount control.
         /// </summary>
@@ -1406,7 +1408,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txtProductAmount;
-        
+
         /// <summary>
         /// lblChargesGSTforGross control.
         /// </summary>
@@ -1415,7 +1417,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblChargesGSTforGross;
-        
+
         /// <summary>
         /// txtProductDiscount control.
         /// </summary>
@@ -1424,7 +1426,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txtProductDiscount;
-        
+
         /// <summary>
         /// txtProductTaxAmount control.
         /// </summary>
@@ -1433,7 +1435,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txtProductTaxAmount;
-        
+
         /// <summary>
         /// ASPxLabel8 control.
         /// </summary>
@@ -1442,7 +1444,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel ASPxLabel8;
-        
+
         /// <summary>
         /// txtProductNetAmount control.
         /// </summary>
@@ -1451,7 +1453,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel txtProductNetAmount;
-        
+
         /// <summary>
         /// lblChargesGSTforNet control.
         /// </summary>
@@ -1460,7 +1462,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLabel lblChargesGSTforNet;
-        
+
         /// <summary>
         /// gridTax control.
         /// </summary>
@@ -1469,7 +1471,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView gridTax;
-        
+
         /// <summary>
         /// cmbGstCstVatcharge control.
         /// </summary>
@@ -1478,7 +1480,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbGstCstVatcharge;
-        
+
         /// <summary>
         /// txtGstCstVatCharge control.
         /// </summary>
@@ -1487,7 +1489,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtGstCstVatCharge;
-        
+
         /// <summary>
         /// btn_SaveTax control.
         /// </summary>
@@ -1496,7 +1498,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btn_SaveTax;
-        
+
         /// <summary>
         /// ASPxButton4 control.
         /// </summary>
@@ -1505,7 +1507,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton4;
-        
+
         /// <summary>
         /// txtQuoteTaxTotalAmt control.
         /// </summary>
@@ -1514,7 +1516,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtQuoteTaxTotalAmt;
-        
+
         /// <summary>
         /// txtTotalAmount control.
         /// </summary>
@@ -1523,7 +1525,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTotalAmount;
-        
+
         /// <summary>
         /// ASPxPopupControl3 control.
         /// </summary>
@@ -1532,7 +1534,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl ASPxPopupControl3;
-        
+
         /// <summary>
         /// lblbranchName control.
         /// </summary>
@@ -1541,7 +1543,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblbranchName;
-        
+
         /// <summary>
         /// lblpro control.
         /// </summary>
@@ -1550,7 +1552,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblpro;
-        
+
         /// <summary>
         /// lblAvailableStk control.
         /// </summary>
@@ -1559,7 +1561,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAvailableStk;
-        
+
         /// <summary>
         /// lblopeningstock control.
         /// </summary>
@@ -1568,7 +1570,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblopeningstock;
-        
+
         /// <summary>
         /// CmbWarehouse control.
         /// </summary>
@@ -1577,7 +1579,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbWarehouse;
-        
+
         /// <summary>
         /// txtqnty control.
         /// </summary>
@@ -1586,7 +1588,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtqnty;
-        
+
         /// <summary>
         /// txtbatch control.
         /// </summary>
@@ -1595,7 +1597,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtbatch;
-        
+
         /// <summary>
         /// batchqnty control.
         /// </summary>
@@ -1604,7 +1606,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox batchqnty;
-        
+
         /// <summary>
         /// txtmkgdate control.
         /// </summary>
@@ -1613,7 +1615,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit txtmkgdate;
-        
+
         /// <summary>
         /// txtexpirdate control.
         /// </summary>
@@ -1622,7 +1624,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit txtexpirdate;
-        
+
         /// <summary>
         /// ASPxTextBox1 control.
         /// </summary>
@@ -1631,7 +1633,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox ASPxTextBox1;
-        
+
         /// <summary>
         /// ASPxButton5 control.
         /// </summary>
@@ -1640,7 +1642,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton5;
-        
+
         /// <summary>
         /// ASPxButton6 control.
         /// </summary>
@@ -1649,7 +1651,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton6;
-        
+
         /// <summary>
         /// GrdWarehousePC control.
         /// </summary>
@@ -1658,7 +1660,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView GrdWarehousePC;
-        
+
         /// <summary>
         /// ASPxButton7 control.
         /// </summary>
@@ -1667,7 +1669,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton ASPxButton7;
-        
+
         /// <summary>
         /// hdfProductIDPC control.
         /// </summary>
@@ -1676,7 +1678,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfProductIDPC;
-        
+
         /// <summary>
         /// hdfstockidPC control.
         /// </summary>
@@ -1685,7 +1687,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfstockidPC;
-        
+
         /// <summary>
         /// hdfopeningstockPC control.
         /// </summary>
@@ -1694,7 +1696,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfopeningstockPC;
-        
+
         /// <summary>
         /// hdbranchIDPC control.
         /// </summary>
@@ -1703,7 +1705,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdbranchIDPC;
-        
+
         /// <summary>
         /// hdnselectedbranch control.
         /// </summary>
@@ -1712,7 +1714,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnselectedbranch;
-        
+
         /// <summary>
         /// HdChargeProdAmt control.
         /// </summary>
@@ -1721,7 +1723,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HdChargeProdAmt;
-        
+
         /// <summary>
         /// HdChargeProdNetAmt control.
         /// </summary>
@@ -1730,7 +1732,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HdChargeProdNetAmt;
-        
+
         /// <summary>
         /// hdnProductQuantity control.
         /// </summary>
@@ -1739,7 +1741,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnProductQuantity;
-        
+
         /// <summary>
         /// hdniswarehouse control.
         /// </summary>
@@ -1748,7 +1750,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdniswarehouse;
-        
+
         /// <summary>
         /// hdnisbatch control.
         /// </summary>
@@ -1757,7 +1759,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnisbatch;
-        
+
         /// <summary>
         /// hdnisserial control.
         /// </summary>
@@ -1766,7 +1768,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnisserial;
-        
+
         /// <summary>
         /// hdndefaultID control.
         /// </summary>
@@ -1775,7 +1777,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdndefaultID;
-        
+
         /// <summary>
         /// hdnoldrowcount control.
         /// </summary>
@@ -1784,7 +1786,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnoldrowcount;
-        
+
         /// <summary>
         /// hdntotalqntyPC control.
         /// </summary>
@@ -1793,7 +1795,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdntotalqntyPC;
-        
+
         /// <summary>
         /// wbsqtychecking control.
         /// </summary>
@@ -1802,7 +1804,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField wbsqtychecking;
-        
+
         /// <summary>
         /// hdnoldwarehousname control.
         /// </summary>
@@ -1811,7 +1813,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnoldwarehousname;
-        
+
         /// <summary>
         /// hdnoldbatchno control.
         /// </summary>
@@ -1820,7 +1822,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnoldbatchno;
-        
+
         /// <summary>
         /// hidencountforserial control.
         /// </summary>
@@ -1829,7 +1831,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidencountforserial;
-        
+
         /// <summary>
         /// hdnbatchchanged control.
         /// </summary>
@@ -1838,7 +1840,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnbatchchanged;
-        
+
         /// <summary>
         /// hdnrate control.
         /// </summary>
@@ -1847,7 +1849,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnrate;
-        
+
         /// <summary>
         /// hdnvalue control.
         /// </summary>
@@ -1856,7 +1858,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnvalue;
-        
+
         /// <summary>
         /// hdnstrUOM control.
         /// </summary>
@@ -1865,7 +1867,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnstrUOM;
-        
+
         /// <summary>
         /// hdnenterdopenqnty control.
         /// </summary>
@@ -1874,7 +1876,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnenterdopenqnty;
-        
+
         /// <summary>
         /// hdnnewenterqntity control.
         /// </summary>
@@ -1883,7 +1885,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnnewenterqntity;
-        
+
         /// <summary>
         /// hdnisoldupdate control.
         /// </summary>
@@ -1892,7 +1894,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnisoldupdate;
-        
+
         /// <summary>
         /// hdncurrentslno control.
         /// </summary>
@@ -1901,7 +1903,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdncurrentslno;
-        
+
         /// <summary>
         /// oldopeningqntity control.
         /// </summary>
@@ -1910,7 +1912,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField oldopeningqntity;
-        
+
         /// <summary>
         /// hdnisedited control.
         /// </summary>
@@ -1919,7 +1921,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnisedited;
-        
+
         /// <summary>
         /// hdnisnewupdate control.
         /// </summary>
@@ -1928,7 +1930,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnisnewupdate;
-        
+
         /// <summary>
         /// hdnisviewqntityhas control.
         /// </summary>
@@ -1937,7 +1939,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnisviewqntityhas;
-        
+
         /// <summary>
         /// hdndeleteqnity control.
         /// </summary>
@@ -1946,7 +1948,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdndeleteqnity;
-        
+
         /// <summary>
         /// hdnisolddeleted control.
         /// </summary>
@@ -1955,7 +1957,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnisolddeleted;
-        
+
         /// <summary>
         /// hdnEntityType control.
         /// </summary>
@@ -1964,7 +1966,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnEntityType;
-        
+
         /// <summary>
         /// hdnQty control.
         /// </summary>
@@ -1973,7 +1975,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnQty;
-        
+
         /// <summary>
         /// hdnpcslno control.
         /// </summary>
@@ -1982,7 +1984,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnpcslno;
-        
+
         /// <summary>
         /// hdfLookupCustomer control.
         /// </summary>
@@ -1991,7 +1993,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfLookupCustomer;
-        
+
         /// <summary>
         /// hdfIsDelete control.
         /// </summary>
@@ -2000,7 +2002,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfIsDelete;
-        
+
         /// <summary>
         /// hdfIsComp control.
         /// </summary>
@@ -2009,7 +2011,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfIsComp;
-        
+
         /// <summary>
         /// hdnPageStatus control.
         /// </summary>
@@ -2018,7 +2020,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnPageStatus;
-        
+
         /// <summary>
         /// hdfProductID control.
         /// </summary>
@@ -2027,7 +2029,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfProductID;
-        
+
         /// <summary>
         /// hdfProductType control.
         /// </summary>
@@ -2036,7 +2038,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfProductType;
-        
+
         /// <summary>
         /// hdfProductSerialID control.
         /// </summary>
@@ -2045,7 +2047,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfProductSerialID;
-        
+
         /// <summary>
         /// hdnRefreshType control.
         /// </summary>
@@ -2054,7 +2056,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnRefreshType;
-        
+
         /// <summary>
         /// hdnCustomerId control.
         /// </summary>
@@ -2063,7 +2065,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnCustomerId;
-        
+
         /// <summary>
         /// hdnProjectSelectInEntryModule control.
         /// </summary>
@@ -2072,7 +2074,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnProjectSelectInEntryModule;
-        
+
         /// <summary>
         /// hdinvetorttype control.
         /// </summary>
@@ -2081,7 +2083,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdinvetorttype;
-        
+
         /// <summary>
         /// ASPXPopupControl control.
         /// </summary>
@@ -2090,7 +2092,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl ASPXPopupControl;
-        
+
         /// <summary>
         /// IsUdfpresent control.
         /// </summary>
@@ -2099,7 +2101,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField IsUdfpresent;
-        
+
         /// <summary>
         /// Keyval_internalId control.
         /// </summary>
@@ -2108,7 +2110,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField Keyval_internalId;
-        
+
         /// <summary>
         /// ProductpopUp control.
         /// </summary>
@@ -2117,7 +2119,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl ProductpopUp;
-        
+
         /// <summary>
         /// productPanel control.
         /// </summary>
@@ -2126,7 +2128,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel productPanel;
-        
+
         /// <summary>
         /// productLookUp control.
         /// </summary>
@@ -2135,7 +2137,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox productLookUp;
-        
+
         /// <summary>
         /// acpAvailableStock control.
         /// </summary>
@@ -2144,7 +2146,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel acpAvailableStock;
-        
+
         /// <summary>
         /// acpContactPersonPhone control.
         /// </summary>
@@ -2153,7 +2155,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel acpContactPersonPhone;
-        
+
         /// <summary>
         /// hdngridvselectedrowno control.
         /// </summary>
@@ -2162,7 +2164,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdngridvselectedrowno;
-        
+
         /// <summary>
         /// SqlSchematype control.
         /// </summary>
@@ -2171,7 +2173,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlSchematype;
-        
+
         /// <summary>
         /// acbpCrpUdf control.
         /// </summary>
@@ -2180,7 +2182,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel acbpCrpUdf;
-        
+
         /// <summary>
         /// inventorypopup control.
         /// </summary>
@@ -2189,7 +2191,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl inventorypopup;
-        
+
         /// <summary>
         /// hdn_tdsedit control.
         /// </summary>
@@ -2198,7 +2200,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdn_tdsedit;
-        
+
         /// <summary>
         /// lbltdsBranch control.
         /// </summary>
@@ -2207,7 +2209,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbltdsBranch;
-        
+
         /// <summary>
         /// chk_TDSEditable control.
         /// </summary>
@@ -2216,7 +2218,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCheckBox chk_TDSEditable;
-        
+
         /// <summary>
         /// ddl_month control.
         /// </summary>
@@ -2225,7 +2227,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddl_month;
-        
+
         /// <summary>
         /// txt_proamt control.
         /// </summary>
@@ -2234,7 +2236,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_proamt;
-        
+
         /// <summary>
         /// gridinventory control.
         /// </summary>
@@ -2243,7 +2245,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView gridinventory;
-        
+
         /// <summary>
         /// btn_noninventoryOk control.
         /// </summary>
@@ -2252,7 +2254,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btn_noninventoryOk;
-        
+
         /// <summary>
         /// txt_totalnoninventoryproductamt control.
         /// </summary>
@@ -2261,7 +2263,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txt_totalnoninventoryproductamt;
-        
+
         /// <summary>
         /// hdntdschecking control.
         /// </summary>
@@ -2270,7 +2272,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdntdschecking;
-        
+
         /// <summary>
         /// ApplicableAmtPopup control.
         /// </summary>
@@ -2279,7 +2281,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel ApplicableAmtPopup;
-        
+
         /// <summary>
         /// HDItemLevelTaxDetails control.
         /// </summary>
@@ -2288,7 +2290,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HDItemLevelTaxDetails;
-        
+
         /// <summary>
         /// HDHSNCodewisetaxSchemid control.
         /// </summary>
@@ -2297,7 +2299,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HDHSNCodewisetaxSchemid;
-        
+
         /// <summary>
         /// HDBranchWiseStateTax control.
         /// </summary>
@@ -2306,7 +2308,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HDBranchWiseStateTax;
-        
+
         /// <summary>
         /// HDStateCodeWiseStateIDTax control.
         /// </summary>
@@ -2315,7 +2317,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HDStateCodeWiseStateIDTax;
-        
+
         /// <summary>
         /// hdnConvertionOverideVisible control.
         /// </summary>
@@ -2324,7 +2326,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnConvertionOverideVisible;
-        
+
         /// <summary>
         /// hdnShowUOMConversionInEntry control.
         /// </summary>
@@ -2333,7 +2335,61 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnShowUOMConversionInEntry;
-        
+
+        /// <summary>
+        /// hdnLockFromDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLockFromDate;
+
+        /// <summary>
+        /// hdnLockToDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLockToDate;
+
+        /// <summary>
+        /// hdnLockFromDateCon control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLockFromDateCon;
+
+        /// <summary>
+        /// hdnLockToDateCon control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnLockToDateCon;
+
+        /// <summary>
+        /// hdnDatafrom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnDatafrom;
+
+        /// <summary>
+        /// hdnDatato control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnDatato;
+
         /// <summary>
         /// hdnManual control.
         /// </summary>
@@ -2342,7 +2398,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnManual;
-        
+
         /// <summary>
         /// hdnAuto control.
         /// </summary>
@@ -2351,7 +2407,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnAuto;
-        
+
         /// <summary>
         /// GlobalEvents control.
         /// </summary>
@@ -2360,7 +2416,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGlobalEvents GlobalEvents;
-        
+
         /// <summary>
         /// LoadingPanel control.
         /// </summary>
@@ -2369,7 +2425,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxLoadingPanel LoadingPanel;
-        
+
         /// <summary>
         /// VendorDataSource control.
         /// </summary>
@@ -2378,7 +2434,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource VendorDataSource;
-        
+
         /// <summary>
         /// DirectAddCustPopup control.
         /// </summary>
@@ -2387,7 +2443,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl DirectAddCustPopup;
-        
+
         /// <summary>
         /// Popup_NoofCopies control.
         /// </summary>
@@ -2396,7 +2452,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl Popup_NoofCopies;
-        
+
         /// <summary>
         /// ddlnoofcopies control.
         /// </summary>
@@ -2405,7 +2461,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlnoofcopies;
-        
+
         /// <summary>
         /// hdn_party_inv_no control.
         /// </summary>
@@ -2414,7 +2470,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdn_party_inv_no;
-        
+
         /// <summary>
         /// hidIsLigherContactPage control.
         /// </summary>
@@ -2423,7 +2479,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidIsLigherContactPage;
-        
+
         /// <summary>
         /// Popup_Empcitys control.
         /// </summary>
@@ -2432,7 +2488,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl Popup_Empcitys;
-        
+
         /// <summary>
         /// txtPro_Code control.
         /// </summary>
@@ -2441,7 +2497,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtPro_Code;
-        
+
         /// <summary>
         /// txtPro_Name control.
         /// </summary>
@@ -2450,7 +2506,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtPro_Name;
-        
+
         /// <summary>
         /// Label2 control.
         /// </summary>
@@ -2459,7 +2515,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
-        
+
         /// <summary>
         /// cmbIsInventory control.
         /// </summary>
@@ -2468,7 +2524,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbIsInventory;
-        
+
         /// <summary>
         /// Label22 control.
         /// </summary>
@@ -2477,7 +2533,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label22;
-        
+
         /// <summary>
         /// cmbServiceItem control.
         /// </summary>
@@ -2486,7 +2542,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbServiceItem;
-        
+
         /// <summary>
         /// Label14 control.
         /// </summary>
@@ -2495,7 +2551,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label14;
-        
+
         /// <summary>
         /// cmbIsCapitalGoods control.
         /// </summary>
@@ -2504,7 +2560,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbIsCapitalGoods;
-        
+
         /// <summary>
         /// Label24 control.
         /// </summary>
@@ -2513,7 +2569,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label24;
-        
+
         /// <summary>
         /// txtPro_Printname control.
         /// </summary>
@@ -2522,7 +2578,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtPro_Printname;
-        
+
         /// <summary>
         /// LblDecs control.
         /// </summary>
@@ -2531,7 +2587,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblDecs;
-        
+
         /// <summary>
         /// txtPro_Description control.
         /// </summary>
@@ -2540,7 +2596,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxMemo txtPro_Description;
-        
+
         /// <summary>
         /// ProdImage control.
         /// </summary>
@@ -2549,7 +2605,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxImage ProdImage;
-        
+
         /// <summary>
         /// ASPxUploadControl1 control.
         /// </summary>
@@ -2558,7 +2614,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxUploadControl ASPxUploadControl1;
-        
+
         /// <summary>
         /// btnUpload control.
         /// </summary>
@@ -2567,7 +2623,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnUpload;
-        
+
         /// <summary>
         /// fileName control.
         /// </summary>
@@ -2576,7 +2632,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField fileName;
-        
+
         /// <summary>
         /// LblPCcode control.
         /// </summary>
@@ -2585,7 +2641,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblPCcode;
-        
+
         /// <summary>
         /// CmbProClassCode control.
         /// </summary>
@@ -2594,7 +2650,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbProClassCode;
-        
+
         /// <summary>
         /// Label3 control.
         /// </summary>
@@ -2603,7 +2659,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label3;
-        
+
         /// <summary>
         /// CmbStatus control.
         /// </summary>
@@ -2612,7 +2668,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbStatus;
-        
+
         /// <summary>
         /// Label7 control.
         /// </summary>
@@ -2621,7 +2677,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label7;
-        
+
         /// <summary>
         /// txtHsnCode control.
         /// </summary>
@@ -2630,7 +2686,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtHsnCode;
-        
+
         /// <summary>
         /// SetHSnPanel control.
         /// </summary>
@@ -2639,7 +2695,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel SetHSnPanel;
-        
+
         /// <summary>
         /// HsnLookUp control.
         /// </summary>
@@ -2648,7 +2704,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridLookup HsnLookUp;
-        
+
         /// <summary>
         /// Label21 control.
         /// </summary>
@@ -2657,7 +2713,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label21;
-        
+
         /// <summary>
         /// chkFurtherance control.
         /// </summary>
@@ -2666,7 +2722,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCheckBox chkFurtherance;
-        
+
         /// <summary>
         /// LblQCurrency control.
         /// </summary>
@@ -2675,7 +2731,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblQCurrency;
-        
+
         /// <summary>
         /// CmbQuoteCurrency control.
         /// </summary>
@@ -2684,7 +2740,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbQuoteCurrency;
-        
+
         /// <summary>
         /// txtQuoteLot control.
         /// </summary>
@@ -2693,7 +2749,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtQuoteLot;
-        
+
         /// <summary>
         /// CmbQuoteLotUnit control.
         /// </summary>
@@ -2702,7 +2758,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbQuoteLotUnit;
-        
+
         /// <summary>
         /// txtTradingLot control.
         /// </summary>
@@ -2711,7 +2767,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTradingLot;
-        
+
         /// <summary>
         /// CmbTradingLotUnits control.
         /// </summary>
@@ -2720,7 +2776,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbTradingLotUnits;
-        
+
         /// <summary>
         /// txtSalePrice control.
         /// </summary>
@@ -2729,7 +2785,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtSalePrice;
-        
+
         /// <summary>
         /// txtMinSalePrice control.
         /// </summary>
@@ -2738,7 +2794,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtMinSalePrice;
-        
+
         /// <summary>
         /// txtMrp control.
         /// </summary>
@@ -2747,7 +2803,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtMrp;
-        
+
         /// <summary>
         /// txtDeliveryLot control.
         /// </summary>
@@ -2756,7 +2812,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtDeliveryLot;
-        
+
         /// <summary>
         /// CmbDeliveryLotUnit control.
         /// </summary>
@@ -2765,7 +2821,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbDeliveryLotUnit;
-        
+
         /// <summary>
         /// txtPurPrice control.
         /// </summary>
@@ -2774,7 +2830,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtPurPrice;
-        
+
         /// <summary>
         /// txtMinLvl control.
         /// </summary>
@@ -2783,7 +2839,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtMinLvl;
-        
+
         /// <summary>
         /// txtMaxLvl control.
         /// </summary>
@@ -2792,7 +2848,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtMaxLvl;
-        
+
         /// <summary>
         /// Label5 control.
         /// </summary>
@@ -2801,7 +2857,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label5;
-        
+
         /// <summary>
         /// txtReorderLvl control.
         /// </summary>
@@ -2810,7 +2866,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtReorderLvl;
-        
+
         /// <summary>
         /// Label23 control.
         /// </summary>
@@ -2819,7 +2875,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label23;
-        
+
         /// <summary>
         /// txtReorderQty control.
         /// </summary>
@@ -2828,7 +2884,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtReorderQty;
-        
+
         /// <summary>
         /// Label6 control.
         /// </summary>
@@ -2837,7 +2893,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label6;
-        
+
         /// <summary>
         /// cmbNegativeStk control.
         /// </summary>
@@ -2846,7 +2902,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbNegativeStk;
-        
+
         /// <summary>
         /// LblType control.
         /// </summary>
@@ -2855,7 +2911,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblType;
-        
+
         /// <summary>
         /// CmbProType control.
         /// </summary>
@@ -2864,7 +2920,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbProType;
-        
+
         /// <summary>
         /// Label4 control.
         /// </summary>
@@ -2873,7 +2929,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label4;
-        
+
         /// <summary>
         /// CmbStockValuation control.
         /// </summary>
@@ -2882,7 +2938,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbStockValuation;
-        
+
         /// <summary>
         /// cmbStockUom control.
         /// </summary>
@@ -2891,7 +2947,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbStockUom;
-        
+
         /// <summary>
         /// Label17 control.
         /// </summary>
@@ -2900,7 +2956,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label17;
-        
+
         /// <summary>
         /// SIMainAccount control.
         /// </summary>
@@ -2909,7 +2965,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit SIMainAccount;
-        
+
         /// <summary>
         /// Label18 control.
         /// </summary>
@@ -2918,7 +2974,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label18;
-        
+
         /// <summary>
         /// SRMainAccount control.
         /// </summary>
@@ -2927,7 +2983,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit SRMainAccount;
-        
+
         /// <summary>
         /// Label19 control.
         /// </summary>
@@ -2936,7 +2992,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label19;
-        
+
         /// <summary>
         /// PIMainAccount control.
         /// </summary>
@@ -2945,7 +3001,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit PIMainAccount;
-        
+
         /// <summary>
         /// Label20 control.
         /// </summary>
@@ -2954,7 +3010,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label20;
-        
+
         /// <summary>
         /// PRMainAccount control.
         /// </summary>
@@ -2963,7 +3019,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit PRMainAccount;
-        
+
         /// <summary>
         /// txtNseCode control.
         /// </summary>
@@ -2972,7 +3028,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtNseCode;
-        
+
         /// <summary>
         /// txtBseCode control.
         /// </summary>
@@ -2981,7 +3037,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtBseCode;
-        
+
         /// <summary>
         /// txtMcxCode control.
         /// </summary>
@@ -2990,7 +3046,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtMcxCode;
-        
+
         /// <summary>
         /// txtMcsxCode control.
         /// </summary>
@@ -2999,7 +3055,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtMcsxCode;
-        
+
         /// <summary>
         /// txtNcdexCode control.
         /// </summary>
@@ -3008,7 +3064,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtNcdexCode;
-        
+
         /// <summary>
         /// txtCdslCode control.
         /// </summary>
@@ -3017,7 +3073,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtCdslCode;
-        
+
         /// <summary>
         /// txtNsdlCode control.
         /// </summary>
@@ -3026,7 +3082,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtNsdlCode;
-        
+
         /// <summary>
         /// txtNdmlCode control.
         /// </summary>
@@ -3035,7 +3091,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtNdmlCode;
-        
+
         /// <summary>
         /// txtCvlCode control.
         /// </summary>
@@ -3044,7 +3100,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtCvlCode;
-        
+
         /// <summary>
         /// txtDotexCode control.
         /// </summary>
@@ -3053,7 +3109,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtDotexCode;
-        
+
         /// <summary>
         /// btnSave_citys control.
         /// </summary>
@@ -3062,7 +3118,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnSave_citys;
-        
+
         /// <summary>
         /// btnCancel_citys control.
         /// </summary>
@@ -3071,7 +3127,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnCancel_citys;
-        
+
         /// <summary>
         /// btnUdf control.
         /// </summary>
@@ -3080,7 +3136,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUdf;
-        
+
         /// <summary>
         /// MainAccountModelSI control.
         /// </summary>
@@ -3089,7 +3145,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl MainAccountModelSI;
-        
+
         /// <summary>
         /// PopupControlContentControl1 control.
         /// </summary>
@@ -3098,7 +3154,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.PopupControlContentControl PopupControlContentControl1;
-        
+
         /// <summary>
         /// hdnSIMainAccount control.
         /// </summary>
@@ -3107,7 +3163,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnSIMainAccount;
-        
+
         /// <summary>
         /// MainAccountModelSR control.
         /// </summary>
@@ -3116,7 +3172,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl MainAccountModelSR;
-        
+
         /// <summary>
         /// PopupControlContentControl2 control.
         /// </summary>
@@ -3125,7 +3181,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.PopupControlContentControl PopupControlContentControl2;
-        
+
         /// <summary>
         /// hdnSRMainAccount control.
         /// </summary>
@@ -3134,7 +3190,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnSRMainAccount;
-        
+
         /// <summary>
         /// MainAccountModelPI control.
         /// </summary>
@@ -3143,7 +3199,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl MainAccountModelPI;
-        
+
         /// <summary>
         /// PopupControlContentControl3 control.
         /// </summary>
@@ -3152,7 +3208,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.PopupControlContentControl PopupControlContentControl3;
-        
+
         /// <summary>
         /// hdnPIMainAccount control.
         /// </summary>
@@ -3161,7 +3217,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnPIMainAccount;
-        
+
         /// <summary>
         /// MainAccountModelPR control.
         /// </summary>
@@ -3170,7 +3226,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl MainAccountModelPR;
-        
+
         /// <summary>
         /// PopupControlContentControl4 control.
         /// </summary>
@@ -3179,7 +3235,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.PopupControlContentControl PopupControlContentControl4;
-        
+
         /// <summary>
         /// hdnPRMainAccount control.
         /// </summary>
@@ -3188,7 +3244,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnPRMainAccount;
-        
+
         /// <summary>
         /// HiddenField_status control.
         /// </summary>
@@ -3197,7 +3253,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HiddenField_status;
-        
+
         /// <summary>
         /// AspxDirectCustomerViewPopup control.
         /// </summary>
@@ -3206,7 +3262,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl AspxDirectCustomerViewPopup;
-        
+
         /// <summary>
         /// ProductDataSource control.
         /// </summary>
@@ -3215,7 +3271,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource ProductDataSource;
-        
+
         /// <summary>
         /// HsnDataSource control.
         /// </summary>
@@ -3224,7 +3280,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource HsnDataSource;
-        
+
         /// <summary>
         /// tdstcs control.
         /// </summary>
@@ -3233,7 +3289,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource tdstcs;
-        
+
         /// <summary>
         /// SqlClassSource control.
         /// </summary>
@@ -3242,7 +3298,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlClassSource;
-        
+
         /// <summary>
         /// SqlHSNDataSource control.
         /// </summary>
@@ -3251,7 +3307,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlHSNDataSource;
-        
+
         /// <summary>
         /// productAttributePopUp control.
         /// </summary>
@@ -3260,7 +3316,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl productAttributePopUp;
-        
+
         /// <summary>
         /// LblProductColor control.
         /// </summary>
@@ -3269,7 +3325,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblProductColor;
-        
+
         /// <summary>
         /// CmbProductColor control.
         /// </summary>
@@ -3278,7 +3334,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbProductColor;
-        
+
         /// <summary>
         /// rdblappColor control.
         /// </summary>
@@ -3287,7 +3343,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxRadioButtonList rdblappColor;
-        
+
         /// <summary>
         /// LblProductSize control.
         /// </summary>
@@ -3296,7 +3352,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblProductSize;
-        
+
         /// <summary>
         /// CmbProductSize control.
         /// </summary>
@@ -3305,7 +3361,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbProductSize;
-        
+
         /// <summary>
         /// rdblapp control.
         /// </summary>
@@ -3314,7 +3370,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxRadioButtonList rdblapp;
-        
+
         /// <summary>
         /// divProductMasterComponentMandatory control.
         /// </summary>
@@ -3323,7 +3379,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProductMasterComponentMandatory;
-        
+
         /// <summary>
         /// chkIsMandatory control.
         /// </summary>
@@ -3332,7 +3388,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCheckBox chkIsMandatory;
-        
+
         /// <summary>
         /// ComponentPanel control.
         /// </summary>
@@ -3341,7 +3397,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel ComponentPanel;
-        
+
         /// <summary>
         /// GridLookup control.
         /// </summary>
@@ -3350,7 +3406,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridLookup GridLookup;
-        
+
         /// <summary>
         /// divPosInstallation control.
         /// </summary>
@@ -3359,7 +3415,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPosInstallation;
-        
+
         /// <summary>
         /// Label8 control.
         /// </summary>
@@ -3368,7 +3424,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label8;
-        
+
         /// <summary>
         /// aspxInstallation control.
         /// </summary>
@@ -3377,7 +3433,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox aspxInstallation;
-        
+
         /// <summary>
         /// Label13 control.
         /// </summary>
@@ -3386,7 +3442,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label13;
-        
+
         /// <summary>
         /// cmbBrand control.
         /// </summary>
@@ -3395,7 +3451,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbBrand;
-        
+
         /// <summary>
         /// divPosOldUnit control.
         /// </summary>
@@ -3404,7 +3460,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPosOldUnit;
-        
+
         /// <summary>
         /// Label16 control.
         /// </summary>
@@ -3413,7 +3469,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label16;
-        
+
         /// <summary>
         /// cmbOldUnit control.
         /// </summary>
@@ -3422,7 +3478,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbOldUnit;
-        
+
         /// <summary>
         /// txtSeries control.
         /// </summary>
@@ -3431,7 +3487,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtSeries;
-        
+
         /// <summary>
         /// txtFinish control.
         /// </summary>
@@ -3440,7 +3496,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtFinish;
-        
+
         /// <summary>
         /// txtLeadtime control.
         /// </summary>
@@ -3449,7 +3505,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtLeadtime;
-        
+
         /// <summary>
         /// txtWeight control.
         /// </summary>
@@ -3458,7 +3514,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtWeight;
-        
+
         /// <summary>
         /// txtSubCat control.
         /// </summary>
@@ -3467,7 +3523,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtSubCat;
-        
+
         /// <summary>
         /// txtHeight control.
         /// </summary>
@@ -3476,7 +3532,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtHeight;
-        
+
         /// <summary>
         /// txtWidth control.
         /// </summary>
@@ -3485,7 +3541,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtWidth;
-        
+
         /// <summary>
         /// txtThickness control.
         /// </summary>
@@ -3494,7 +3550,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtThickness;
-        
+
         /// <summary>
         /// ddlSize control.
         /// </summary>
@@ -3503,7 +3559,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox ddlSize;
-        
+
         /// <summary>
         /// SizeUOM control.
         /// </summary>
@@ -3512,7 +3568,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect SizeUOM;
-        
+
         /// <summary>
         /// txtCoverage control.
         /// </summary>
@@ -3521,7 +3577,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtCoverage;
-        
+
         /// <summary>
         /// dvCovg control.
         /// </summary>
@@ -3530,7 +3586,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvCovg;
-        
+
         /// <summary>
         /// txtVolumn control.
         /// </summary>
@@ -3539,7 +3595,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtVolumn;
-        
+
         /// <summary>
         /// dvvolume control.
         /// </summary>
@@ -3548,7 +3604,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvvolume;
-        
+
         /// <summary>
         /// ASPxPopupControl2 control.
         /// </summary>
@@ -3557,7 +3613,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl ASPxPopupControl2;
-        
+
         /// <summary>
         /// txtPackingQty control.
         /// </summary>
@@ -3566,7 +3622,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtPackingQty;
-        
+
         /// <summary>
         /// txtpackingSaleUom control.
         /// </summary>
@@ -3575,7 +3631,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtpackingSaleUom;
-        
+
         /// <summary>
         /// txtpacking control.
         /// </summary>
@@ -3584,7 +3640,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtpacking;
-        
+
         /// <summary>
         /// cmbPackingUomPro control.
         /// </summary>
@@ -3593,7 +3649,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmbPackingUomPro;
-        
+
         /// <summary>
         /// chkOverideConvertion control.
         /// </summary>
@@ -3602,7 +3658,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCheckBox chkOverideConvertion;
-        
+
         /// <summary>
         /// BarCodePopUp control.
         /// </summary>
@@ -3611,7 +3667,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl BarCodePopUp;
-        
+
         /// <summary>
         /// lblBarCodeType control.
         /// </summary>
@@ -3620,7 +3676,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblBarCodeType;
-        
+
         /// <summary>
         /// CmbBarCodeType control.
         /// </summary>
@@ -3629,7 +3685,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbBarCodeType;
-        
+
         /// <summary>
         /// lblBarcodeNo control.
         /// </summary>
@@ -3638,7 +3694,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblBarcodeNo;
-        
+
         /// <summary>
         /// txtBarCodeNo control.
         /// </summary>
@@ -3647,7 +3703,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtBarCodeNo;
-        
+
         /// <summary>
         /// LblGlobalCode control.
         /// </summary>
@@ -3656,7 +3712,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblGlobalCode;
-        
+
         /// <summary>
         /// txtGlobalCode control.
         /// </summary>
@@ -3665,7 +3721,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtGlobalCode;
-        
+
         /// <summary>
         /// gridPro control.
         /// </summary>
@@ -3674,7 +3730,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel gridPro;
-        
+
         /// <summary>
         /// TaxCodePopup control.
         /// </summary>
@@ -3683,7 +3739,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl TaxCodePopup;
-        
+
         /// <summary>
         /// Label9 control.
         /// </summary>
@@ -3692,7 +3748,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label9;
-        
+
         /// <summary>
         /// CmbTaxCodeSale control.
         /// </summary>
@@ -3701,7 +3757,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbTaxCodeSale;
-        
+
         /// <summary>
         /// Label10 control.
         /// </summary>
@@ -3710,7 +3766,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label10;
-        
+
         /// <summary>
         /// CmbTaxCodePur control.
         /// </summary>
@@ -3719,7 +3775,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbTaxCodePur;
-        
+
         /// <summary>
         /// Label11 control.
         /// </summary>
@@ -3728,7 +3784,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label11;
-        
+
         /// <summary>
         /// ChkAutoApply control.
         /// </summary>
@@ -3737,7 +3793,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCheckBox ChkAutoApply;
-        
+
         /// <summary>
         /// Label15 control.
         /// </summary>
@@ -3746,7 +3802,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label15;
-        
+
         /// <summary>
         /// CmbTaxScheme control.
         /// </summary>
@@ -3755,7 +3811,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox CmbTaxScheme;
-        
+
         /// <summary>
         /// ASPxPopupControl1 control.
         /// </summary>
@@ -3764,7 +3820,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl ASPxPopupControl1;
-        
+
         /// <summary>
         /// Label25 control.
         /// </summary>
@@ -3773,7 +3829,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label25;
-        
+
         /// <summary>
         /// AspxServiceTax control.
         /// </summary>
@@ -3782,7 +3838,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox AspxServiceTax;
-        
+
         /// <summary>
         /// tdsPopup control.
         /// </summary>
@@ -3791,7 +3847,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl tdsPopup;
-        
+
         /// <summary>
         /// Label26 control.
         /// </summary>
@@ -3800,7 +3856,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label26;
-        
+
         /// <summary>
         /// cmb_tdstcs control.
         /// </summary>
@@ -3809,7 +3865,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox cmb_tdstcs;
-        
+
         /// <summary>
         /// hiddenedit control.
         /// </summary>
@@ -3818,7 +3874,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenedit;
-        
+
         /// <summary>
         /// hdnPartialSettings control.
         /// </summary>
@@ -3827,7 +3883,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnPartialSettings;
-        
+
         /// <summary>
         /// callback_InlineRemarks control.
         /// </summary>
@@ -3836,7 +3892,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxCallbackPanel callback_InlineRemarks;
-        
+
         /// <summary>
         /// Popup_InlineRemarks control.
         /// </summary>
@@ -3845,7 +3901,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxPopupControl Popup_InlineRemarks;
-        
+
         /// <summary>
         /// lblInlineRemarks control.
         /// </summary>
@@ -3854,7 +3910,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInlineRemarks;
-        
+
         /// <summary>
         /// txtInlineRemarks control.
         /// </summary>
@@ -3863,7 +3919,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtInlineRemarks;
-        
+
         /// <summary>
         /// btnSaveInlineRemarks control.
         /// </summary>
@@ -3872,7 +3928,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButton btnSaveInlineRemarks;
-        
+
         /// <summary>
         /// crtxtName control.
         /// </summary>
@@ -3881,7 +3937,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox crtxtName;
-        
+
         /// <summary>
         /// ctxtTotAmount control.
         /// </summary>
@@ -3890,7 +3946,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox ctxtTotAmount;
-        
+
         /// <summary>
         /// crtxtRetPercentage control.
         /// </summary>
@@ -3899,7 +3955,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox crtxtRetPercentage;
-        
+
         /// <summary>
         /// crtxtRetAmount control.
         /// </summary>
@@ -3908,7 +3964,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox crtxtRetAmount;
-        
+
         /// <summary>
         /// dtDueDate control.
         /// </summary>
@@ -3917,7 +3973,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxDateEdit dtDueDate;
-        
+
         /// <summary>
         /// btnGL control.
         /// </summary>
@@ -3926,7 +3982,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit btnGL;
-        
+
         /// <summary>
         /// crtxtRemarks control.
         /// </summary>
@@ -3935,7 +3991,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxMemo crtxtRemarks;
-        
+
         /// <summary>
         /// txtTCSSection control.
         /// </summary>
@@ -3944,7 +4000,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox txtTCSSection;
-        
+
         /// <summary>
         /// txtTCSapplAmount control.
         /// </summary>
@@ -3953,7 +4009,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTCSapplAmount;
-        
+
         /// <summary>
         /// txtTCSpercentage control.
         /// </summary>
@@ -3962,7 +4018,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTCSpercentage;
-        
+
         /// <summary>
         /// txtTCSAmount control.
         /// </summary>
@@ -3971,7 +4027,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTCSAmount;
-        
+
         /// <summary>
         /// txtTDSSection control.
         /// </summary>
@@ -3980,7 +4036,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxComboBox txtTDSSection;
-        
+
         /// <summary>
         /// txtTDSapplAmount control.
         /// </summary>
@@ -3989,7 +4045,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTDSapplAmount;
-        
+
         /// <summary>
         /// txtTDSpercentage control.
         /// </summary>
@@ -3998,7 +4054,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTDSpercentage;
-        
+
         /// <summary>
         /// txtTDSAmount control.
         /// </summary>
@@ -4007,7 +4063,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtTDSAmount;
-        
+
         /// <summary>
         /// GridTDSdocs control.
         /// </summary>
@@ -4016,7 +4072,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView GridTDSdocs;
-        
+
         /// <summary>
         /// tcsDatasource control.
         /// </summary>
@@ -4025,7 +4081,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource tcsDatasource;
-        
+
         /// <summary>
         /// tdsDatasource control.
         /// </summary>
@@ -4034,7 +4090,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource tdsDatasource;
-        
+
         /// <summary>
         /// hdnROMainAc control.
         /// </summary>
@@ -4043,7 +4099,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnROMainAc;
-        
+
         /// <summary>
         /// hdnProjectMandatory control.
         /// </summary>
@@ -4052,7 +4108,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnProjectMandatory;
-        
+
         /// <summary>
         /// hdnAllowDuplicatePartyInvoiceNo control.
         /// </summary>
@@ -4061,7 +4117,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnAllowDuplicatePartyInvoiceNo;
-        
+
         /// <summary>
         /// hdnBackdateddate control.
         /// </summary>
@@ -4070,7 +4126,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnBackdateddate;
-        
+
         /// <summary>
         /// hdnTagDateForbackdated control.
         /// </summary>
@@ -4079,7 +4135,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnTagDateForbackdated;
-        
+
         /// <summary>
         /// hdnSettingsShowRetention control.
         /// </summary>
@@ -4088,7 +4144,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnSettingsShowRetention;
-        
+
         /// <summary>
         /// hdnAlertRetention control.
         /// </summary>
@@ -4097,7 +4153,7 @@ namespace ERP.OMS.Management.Activities {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnAlertRetention;
-        
+
         /// <summary>
         /// hdnPurchaseOrderItemNegative control.
         /// </summary>
