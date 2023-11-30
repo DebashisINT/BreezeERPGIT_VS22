@@ -1,6 +1,8 @@
-﻿//<% --========================================================== Revision History ============================================================================================
+﻿//========================================================== Revision History ============================================================================================
 // 1.0   Priti V2.0.36   19-01-2023    	0025313: Views to be converted to Procedures in the Listing Page of Transaction / Return-Sales / Sale Return-Manual
+// 2.0   Priti V2.0.41   28/11/2023        0027028: Customer code column is required in the listing module of Sales entry
 //========================================== End Revision History =======================================================================================================--%>
+
 using System;
 using System.Configuration;
 using System.Data;
@@ -56,18 +58,29 @@ namespace ERP.OMS.Management.Activities
             hdnActiveEInvoice.Value = objmaster.GetSettings("ActiveEInvoice");
             if (hdnActiveEInvoice.Value == "0")
             {
-                GrdSalesReturn.Columns[9].Visible = false;
+                //Rev 2.0
+                //GrdSalesReturn.Columns[9].Visible = false;
+                //GrdSalesReturn.Columns[10].Visible = false;
+                //GrdSalesReturn.Columns[11].Visible = false;
+                //GrdSalesReturn.Columns[12].Visible = false;
                 GrdSalesReturn.Columns[10].Visible = false;
                 GrdSalesReturn.Columns[11].Visible = false;
                 GrdSalesReturn.Columns[12].Visible = false;
+                GrdSalesReturn.Columns[13].Visible = false;
+                //Rev 2.0 End
             }
             else if (hdnActiveEInvoice.Value == "1")
             {
-                GrdSalesReturn.Columns[9].Visible = true;
+                //Rev 2.0
+                //GrdSalesReturn.Columns[9].Visible = true;
+                //GrdSalesReturn.Columns[10].Visible = true;
+                //GrdSalesReturn.Columns[11].Visible = true;
+                //GrdSalesReturn.Columns[12].Visible = true;
                 GrdSalesReturn.Columns[10].Visible = true;
                 GrdSalesReturn.Columns[11].Visible = true;
                 GrdSalesReturn.Columns[12].Visible = true;
-
+                GrdSalesReturn.Columns[13].Visible = true;
+                //Rev 2.0 End
             }
             String finyear = "";
             finyear = Convert.ToString(Session["LastFinYear"]).Trim();
@@ -115,14 +128,17 @@ namespace ERP.OMS.Management.Activities
                 {
                     if (ProjectSelectInEntryModule == "Yes")
                     {
+                        //Rev 2.0
+                        //GrdSalesReturn.Columns[13].Visible = true;
                         GrdSalesReturn.Columns[13].Visible = true;
-
-
+                        //Rev 2.0 End
                     }
                     else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                     {
+                        //Rev 2.0
+                        //GrdSalesReturn.Columns[13].Visible = false;
                         GrdSalesReturn.Columns[13].Visible = false;
-
+                        //Rev 2.0 End
                     }
                 }
 

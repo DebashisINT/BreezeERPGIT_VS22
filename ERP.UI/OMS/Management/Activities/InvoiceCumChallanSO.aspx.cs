@@ -1,4 +1,9 @@
-﻿using BusinessLogicLayer;
+﻿//========================================================== Revision History ============================================================================================
+// 1.0   Priti V2.0.41   28/11/2023        0027028: Customer code column is required in the listing module of Sales entry
+//========================================== End Revision History =======================================================================================================--%>
+
+
+using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using EntityLayer.CommonELS;
@@ -47,12 +52,17 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ProjectSelectInEntryModule == "Yes")
                 {
-                    GrdOrder.Columns[4].Visible = true;
-
+                    //Rev 1.0
+                    //GrdOrder.Columns[4].Visible = true;
+                    GrdOrder.Columns[5].Visible = true;
+                    //Rev 1.0 end
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
-                    GrdOrder.Columns[4].Visible = false;
+                    //Rev 1.0
+                    //GrdOrder.Columns[4].Visible = false;
+                    GrdOrder.Columns[5].Visible = false;
+                    //Rev 1.0 end
                 }
             }
 
@@ -80,16 +90,26 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ApproveSettingsSalesOrder == "Yes")
                 {
-                    GrdOrder.Columns[12].Visible = true;
+                    //Rev 1.0
+                    //GrdOrder.Columns[12].Visible = true;
+                    //GrdOrder.Columns[13].Visible = true;
+                    //GrdOrder.Columns[14].Visible = true;
                     GrdOrder.Columns[13].Visible = true;
                     GrdOrder.Columns[14].Visible = true;
+                    GrdOrder.Columns[15].Visible = true;
+                    //Rev 1.0 End
                     isApprove = true;
                 }
                 else if (ApproveSettingsSalesOrder.ToUpper().Trim() == "NO")
                 {
-                    GrdOrder.Columns[12].Visible = false;
+                    //Rev 1.0
+                    //GrdOrder.Columns[12].Visible = false;
+                    //GrdOrder.Columns[13].Visible = false;
+                    //GrdOrder.Columns[14].Visible = false;
                     GrdOrder.Columns[13].Visible = false;
                     GrdOrder.Columns[14].Visible = false;
+                    GrdOrder.Columns[15].Visible = false;
+                    //Rev 1.0 End
                     isApprove = false;
                 }
             }

@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                10-04-2023        2.0.37           Pallab              25959: Invoice cum Challan with SO module design modification
+1.0                10-04-2023        V2.0.37           Pallab              25959: Invoice cum Challan with SO module design modification
+2.0                28/11/2023        V2.0.41          Priti               0027028: Customer code column is required in the listing module of Sales entry
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="InvoiceCumChallanSO.aspx.cs" Inherits="ERP.OMS.Management.Activities.InvoiceCumChallanSO" %>
@@ -1023,33 +1024,41 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
+                     <%--Rev  2.0--%>
+                      <dxe:GridViewDataTextColumn Caption="Customer Code" FieldName="CustomerCode" Width="160px"
+                      VisibleIndex="3">
+                      <CellStyle CssClass="gridcellleft" Wrap="true">
+                      </CellStyle>
+                      <Settings AutoFilterCondition="Contains" />
+                     </dxe:GridViewDataTextColumn>
+                    <%-- Rev  2.0 End--%>
                     <dxe:GridViewDataTextColumn Caption="Customer" FieldName="CustomerName"
-                        VisibleIndex="3" Width="300px" Settings-ShowFilterRowMenu="True">
+                        VisibleIndex="4" Width="300px" Settings-ShowFilterRowMenu="True">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Unit" FieldName="BranchName"
-                        VisibleIndex="4" Width="250px" Settings-ShowFilterRowMenu="True">
+                        VisibleIndex="5" Width="250px" Settings-ShowFilterRowMenu="True">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Project Name" FieldName="Proj_Name"
-                        VisibleIndex="5" Width="250px" Settings-ShowFilterRowMenu="True" Settings-AllowAutoFilter="True">
+                        VisibleIndex="6" Width="250px" Settings-ShowFilterRowMenu="True" Settings-AllowAutoFilter="True">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="True" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Amount" FieldName="Amount"
-                        VisibleIndex="6" Width="100" Settings-ShowFilterRowMenu="True">
+                        VisibleIndex="7" Width="100" Settings-ShowFilterRowMenu="True">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                     </dxe:GridViewDataTextColumn>
 
-                    <dxe:GridViewDataTextColumn FieldName="InvoiceNo" Caption="Invoice Details" VisibleIndex="7" Width="150px">
+                    <dxe:GridViewDataTextColumn FieldName="InvoiceNo" Caption="Invoice Details" VisibleIndex="8" Width="150px">
                         <DataItemTemplate>
                             <a href="javascript:void(0);" onclick="OnAddEditClick(this,'Show~'+'<%# Eval("Order_Id") %>'+'~'+'<%# Eval("InvoiceNo") %>')" style='<%#Eval("MultipleStatus")%>'>
                                 <dxe:ASPxLabel ID="ASPxTextBox2" runat="server" Text='See Invoice'
@@ -1086,31 +1095,31 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                     </dxe:GridViewDataTextColumn>--%>
                     <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="EnteredBy"
-                        VisibleIndex="8" Width="80">
+                        VisibleIndex="9" Width="80">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Last Modified On" FieldName="LastModifiedOn"
-                        VisibleIndex="9" Width="70">
+                        VisibleIndex="10" Width="70">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Updated By" FieldName="UpdatedBy"
-                        VisibleIndex="10" Width="80">
+                        VisibleIndex="11" Width="80">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Created From" FieldName="CreatedFrom"
-                        VisibleIndex="11" Width="120">
+                        VisibleIndex="12" Width="120">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Status" FieldName="Doc_status"
-                        VisibleIndex="12" Width="120">
+                        VisibleIndex="13" Width="120">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
@@ -1141,24 +1150,24 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>--%>
                     <dxe:GridViewDataTextColumn Caption="Revision No." FieldName="SO_RevisionNo" Width="120"
-                        VisibleIndex="13">
+                        VisibleIndex="14">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Revision date" FieldName="SO_RevisionDate"
-                        VisibleIndex="14" Width="100">
+                        VisibleIndex="15" Width="100">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
                     <dxe:GridViewDataTextColumn Caption="Approval Status" FieldName="SO_ApproveStatus" Width="150"
-                        VisibleIndex="15">
+                        VisibleIndex="16">
                         <CellStyle CssClass="gridcellleft" Wrap="true">
                         </CellStyle>
                         <Settings AllowAutoFilterTextInputTimer="False" />
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="ReadyforInvoice" Caption="Stage" VisibleIndex="16" Width="150px">
+                    <dxe:GridViewDataTextColumn FieldName="ReadyforInvoice" Caption="Stage" VisibleIndex="17" Width="150px">
                         <DataItemTemplate>
                             <a href="javascript:void(0);" onclick="OnViewReadyforInvoice('<%# Eval("Order_Id") %>')">
                                 <dxe:ASPxLabel ID="ASPxTextBox2" runat="server" Text='<%# Eval("ReadyforInvoice")%>'

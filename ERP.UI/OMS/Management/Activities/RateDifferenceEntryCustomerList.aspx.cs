@@ -57,17 +57,17 @@ namespace ERP.OMS.Management.Activities
             hdnActiveEInvoice.Value = objmaster.GetSettings("ActiveEInvoice");
             if (hdnActiveEInvoice.Value == "0")
             {
-                GrdSalesReturn.Columns[9].Visible = false;
                 GrdSalesReturn.Columns[10].Visible = false;
                 GrdSalesReturn.Columns[11].Visible = false;
                 GrdSalesReturn.Columns[12].Visible = false;
+                GrdSalesReturn.Columns[13].Visible = false;
             }
             else if (hdnActiveEInvoice.Value == "1")
             {
-                GrdSalesReturn.Columns[9].Visible = true;
                 GrdSalesReturn.Columns[10].Visible = true;
                 GrdSalesReturn.Columns[11].Visible = true;
                 GrdSalesReturn.Columns[12].Visible = true;
+                GrdSalesReturn.Columns[13].Visible = true;
             }
             String finyear = "";
             finyear = Convert.ToString(Session["LastFinYear"]).Trim();
@@ -92,13 +92,13 @@ namespace ERP.OMS.Management.Activities
                 if (ProjectSelectInEntryModule == "Yes")
                 {
 
-                    GrdSalesReturn.Columns[5].Width = 160;
+                    GrdSalesReturn.Columns[6].Width = 160;
 
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
 
-                    GrdSalesReturn.Columns[5].Width = 0;
+                    GrdSalesReturn.Columns[6].Width = 0;
                 }
             }
 

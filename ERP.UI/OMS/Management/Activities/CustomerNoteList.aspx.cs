@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿//========================================================== Revision History ============================================================================================
+// 1.0   Priti V2.0.41   28/11/2023        0027028: Customer code column is required in the listing module of Sales entry
+//========================================== End Revision History =======================================================================================================--%>
+
+using BusinessLogicLayer;
 using DevExpress.Web;
 using EntityLayer.CommonELS;
 using ERP.Models;
@@ -30,14 +34,17 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ProjectSelectInEntryModule == "Yes")
                 {
-                    GvJvSearch.Columns[18].Visible = true;
-
-
+                    //Rev 1.0
+                    //GvJvSearch.Columns[18].Visible = true;
+                    GvJvSearch.Columns[19].Visible = true;
+                    //Rev 1.0 End
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
-                    GvJvSearch.Columns[18].Visible = false;
-
+                    //Rev 1.0
+                    //GvJvSearch.Columns[18].Visible = false;
+                    GvJvSearch.Columns[19].Visible = false;
+                    //Rev 1.0 End
                 }
             }
           

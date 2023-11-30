@@ -5,6 +5,8 @@
    4.0   Sanchita V2.0.39     25-07-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
                                              Mantis : 26609   
    5.0   Sanchita V2.0.41     10/11/2023     26996: Sales Invoice Print when IRN not generated will take place based in System Settings - "Is Print Invoice Without IRN?"
+   6.0   Priti    V2.0.41     28/11/2023      0027028: Customer code column is required in the listing module of Sales entry
+
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoiceList" 
@@ -1269,29 +1271,29 @@
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
+                 <%--Rev  6.0--%>
+                  <dxe:GridViewDataTextColumn Caption="Customer Code" FieldName="CustomerCode" Width="160px"
+                  VisibleIndex="9">
+                  <CellStyle CssClass="gridcellleft" Wrap="true">
+                  </CellStyle>
+                  <Settings AutoFilterCondition="Contains" />
+                 </dxe:GridViewDataTextColumn>
+                <%-- Rev  6.0 End--%>
                 <dxe:GridViewDataTextColumn Caption="Customer" FieldName="CustomerName" Width="150px"
-                    VisibleIndex="9">
+                    VisibleIndex="10">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
                 <dxe:GridViewDataTextColumn Caption="Project Name" FieldName="Proj_Name" Width="150px"
-                    VisibleIndex="10" Settings-AllowAutoFilter="True">
+                    VisibleIndex="11" Settings-AllowAutoFilter="True">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="true" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
                 <dxe:GridViewDataTextColumn Caption="Gross Amount" FieldName="GrossAmount"
-                    VisibleIndex="11" Width="130px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Tax & Charges" FieldName="ChargesAmount"
                     VisibleIndex="12" Width="130px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
@@ -1299,7 +1301,7 @@
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Net Amount" FieldName="NetAmount"
+                <dxe:GridViewDataTextColumn Caption="Tax & Charges" FieldName="ChargesAmount"
                     VisibleIndex="13" Width="130px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
@@ -1307,7 +1309,7 @@
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Amount Received" FieldName="AmountReceived"
+                <dxe:GridViewDataTextColumn Caption="Net Amount" FieldName="NetAmount"
                     VisibleIndex="14" Width="130px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
@@ -1315,7 +1317,7 @@
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Balance Amount" FieldName="BalanceAmount"
+                <dxe:GridViewDataTextColumn Caption="Amount Received" FieldName="AmountReceived"
                     VisibleIndex="15" Width="130px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
@@ -1323,71 +1325,79 @@
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
+                <dxe:GridViewDataTextColumn Caption="Balance Amount" FieldName="BalanceAmount"
+                    VisibleIndex="16" Width="130px">
+                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                    </CellStyle>
+                    <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
+                    <Settings AllowAutoFilterTextInputTimer="False" />
+                    <Settings AutoFilterCondition="Contains" />
+                </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn Caption="Place of Supply[GST]" FieldName="PosState" VisibleIndex="16" Width="130px">
+                <dxe:GridViewDataTextColumn Caption="Place of Supply[GST]" FieldName="PosState" VisibleIndex="17" Width="130px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="E-Way Bill No" FieldName="EWayBillNumber" VisibleIndex="17" Width="100px">
+                <dxe:GridViewDataTextColumn Caption="E-Way Bill No" FieldName="EWayBillNumber" VisibleIndex="18" Width="100px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="IRN ?" FieldName="IsIRN" VisibleIndex="18" Width="100px">
+                <dxe:GridViewDataTextColumn Caption="IRN ?" FieldName="IsIRN" VisibleIndex="19" Width="100px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="IRN" FieldName="IRN" VisibleIndex="19" Width="200px">
+                <dxe:GridViewDataTextColumn Caption="IRN" FieldName="IRN" VisibleIndex="20" Width="200px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Ack No" FieldName="AckNo" VisibleIndex="20" Width="200px">
+                <dxe:GridViewDataTextColumn Caption="Ack No" FieldName="AckNo" VisibleIndex="21" Width="200px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Ack Date" FieldName="AckDt" VisibleIndex="21" Width="100px">
+                <dxe:GridViewDataTextColumn Caption="Ack Date" FieldName="AckDt" VisibleIndex="22" Width="100px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Remarks" FieldName="Remarks" VisibleIndex="22" Width="100px">
+                <dxe:GridViewDataTextColumn Caption="Remarks" FieldName="Remarks" VisibleIndex="23" Width="100px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
                 <dxe:GridViewDataTextColumn Caption="Created By" FieldName="EnteredByName"
-                    VisibleIndex="23" Width="100px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Updated By" FieldName="ModifiedByName"
                     VisibleIndex="24" Width="100px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Updated On" FieldName="ModifiedDate"
-                    VisibleIndex="25" Width="150px">
+                <dxe:GridViewDataTextColumn Caption="Updated By" FieldName="ModifiedByName"
+                    VisibleIndex="25" Width="100px">
                     <CellStyle CssClass="gridcellleft" Wrap="true">
                     </CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="26" Width="0">
+                <dxe:GridViewDataTextColumn Caption="Updated On" FieldName="ModifiedDate"
+                    VisibleIndex="26" Width="150px">
+                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                    </CellStyle>
+                    <Settings AllowAutoFilterTextInputTimer="False" />
+                    <Settings AutoFilterCondition="Contains" />
+                </dxe:GridViewDataTextColumn>
+                <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="27" Width="0">
                     <DataItemTemplate>
                         <div class='floatedBtnArea'>
                             <% if (rights.CanView)
