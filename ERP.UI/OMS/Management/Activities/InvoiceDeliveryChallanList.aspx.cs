@@ -1,4 +1,9 @@
-﻿using System;
+﻿//========================================================== Revision History ============================================================================================
+// 1.0   Priti V2.0.41   28/11/2023        0027028: Customer code column is required in the listing module of Sales entry
+//========================================== End Revision History =======================================================================================================--%>
+
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -45,14 +50,18 @@ namespace ERP.OMS.Management.Activities
             {
                 if (ProjectSelectInEntryModule == "Yes")
                 {
-                    GrdQuotation.Columns[10].Visible = true;
-
+                    //REV 1.0
+                    //GrdQuotation.Columns[10].Visible = true;
+                    GrdQuotation.Columns[11].Visible = true;
+                    //REV 1.0 End
 
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
-                    GrdQuotation.Columns[10].Visible = false;
-
+                    //REV 1.0
+                    //GrdQuotation.Columns[10].Visible = false;
+                    GrdQuotation.Columns[11].Visible = false;
+                    //REV 1.0 End
                 }
             }
 
@@ -62,12 +71,17 @@ namespace ERP.OMS.Management.Activities
 
             if (hdnActiveEInvoice.Value == "0")
             {
-                GrdQuotation.Columns[19].Visible = false;
+                //Rev 1.0
+                //GrdQuotation.Columns[19].Visible = false;
+                GrdQuotation.Columns[20].Visible = false;
+                //Rev 1.0 End
             }
             else if (hdnActiveEInvoice.Value == "1")
             {
-                GrdQuotation.Columns[19].Visible = true;
-
+                //Rev 1.0
+                //GrdQuotation.Columns[19].Visible = true;
+                GrdQuotation.Columns[20].Visible = true;
+                //Rev 1.0 End
             }
 
             DataTable dtposTimeEdit = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Edit' and Module_Id=11");

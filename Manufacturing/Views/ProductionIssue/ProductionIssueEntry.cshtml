@@ -1,13 +1,15 @@
 ﻿`@*====================================================Revision History=========================================================================
-    1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
-    2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
-    3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
-    4.0  Priti   V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
-    5.0  Pallab  V2.0.38    31-05-2023  0026266: Issue for Production "Production Order No." dropdown issue fix
-    6.0  Priti   V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
-    7.0  Priti   V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
-    8.0  Priti   V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
-    9.0  Priti   V2.0.39    16-08-2023  0026683: In the Warehouse details of Issue for Production, Available Qty tab required to check the stock.
+        1.0  Priti   V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+        2.0  Priti   V2.0.37    29-03-2023  0025765:The Item Selection is slow and also not working properly in Issue for Production
+        3.0  Priti   V2.0.39    25-04-2023  0025852:After selecting all products(pagination wise all products ) in Issue for Production, only few products are coming in the Grid
+        4.0  Priti   V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
+        5.0  Pallab  V2.0.38    31-05-2023  0026266: Issue for Production "Production Order No." dropdown issue fix
+        6.0  Priti   V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+        7.0  Priti   V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
+        8.0  Priti   V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
+        9.0  Priti   V2.0.39    16-08-2023  0026683: In the Warehouse details of Issue for Production, Available Qty tab required to check the stock.
+        10.0  Priti   V2.0.41   30-11-2023  0027016: Issue for Production is showing a message that product is going to negative while the product has sufficient qty
+
     ====================================================End Revision History=====================================================================*@
 
 
@@ -671,7 +673,7 @@
         var AvlStk = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'AvlStk');
         var NegStock = gridProductionBOMProductList.batchEditApi.GetCellValue(globalrowindex, 'Product_NegativeStock');
         gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '1', '');
-       
+
         if (parseFloat(Qty) > parseFloat(AvlStk)) {
 
             if (NegStock.trim() == 'W') {
@@ -685,7 +687,7 @@
                         }
                     }
                     else {
-                        gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '0', '');                       
+                        gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '0', '');
                         gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat("0.0000").toFixed(4));
                         Qty = "0.0000";
                         var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
@@ -697,7 +699,7 @@
                 });
             }
             else if (NegStock.trim() == 'B') {
-                gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '0', '');                
+                gridProductionBOMProductList.batchEditApi.SetCellValue(globalrowindex, 'StkMsg', '0', '');
                 jAlert('Product is going negative can not proceed');
                 gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 5);
                 gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat("0.0000").toFixed(4));
@@ -1400,64 +1402,64 @@
         //    jAlert("Please enter all stock warehouse details to process.");
         //    return false;
         //}
+        //Rev 10.0
+        //for (var i = 0; i < visiablerow; i++) {
+        //    gridProductionBOMProductList.batchEditApi.EndEdit();
+        //    var Price = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Price');
+        //    var Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
+        //    var AvlStk = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'AvlStk');
+        //    var NegStock = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Product_NegativeStock');
+        //    var StkMsg = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'StkMsg');
 
-        for (var i = 0; i < visiablerow; i++) {
-            gridProductionBOMProductList.batchEditApi.EndEdit();
-            var Price = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Price');
-            var Qty = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductQty');
-            var AvlStk = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'AvlStk');
-            var NegStock = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'Product_NegativeStock');
-            var StkMsg = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'StkMsg');
+        //    var ProductName = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductName');
 
-            var ProductName = gridProductionBOMProductList.batchEditApi.GetCellValue(i, 'ProductName');
+        //    if (StkMsg == "0") {
+        //        if (parseFloat(Qty) > parseFloat(AvlStk)) {
+        //            if (NegStock.trim() == 'W') {
+        //                requireddata = 1;
+        //                jConfirm('Product "' + ProductName + '" is going negative do you want to proceed?', 'Confirmation Dialog', function (r) {
+        //                    if (r == true) {
+        //                        requireddata = 0;
+        //                        gridProductionBOMProductList.batchEditApi.EndEdit();
+        //                        gridProductionBOMProductList.batchEditApi.SetCellValue(i, 'StkMsg', '1', '');
+        //                        //gridProductionBOMProductList.GetEditor('StkMsg').SetText("1");
+        //                    }
+        //                    else {
+        //                        gridProductionBOMProductList.batchEditApi.SetCellValue(i, 'StkMsg', '0', '');
+        //                        //gridProductionBOMProductList.GetEditor('StkMsg').SetText("0");
+        //                        gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat("0.0000").toFixed(4));
+        //                        Qty = "0.0000";
+        //                        var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
 
-            if (StkMsg == "0") {
-                if (parseFloat(Qty) > parseFloat(AvlStk)) {
-                    if (NegStock.trim() == 'W') {
-                        requireddata = 1;
-                        jConfirm('Product "' + ProductName + '" is going negative do you want to proceed?', 'Confirmation Dialog', function (r) {
-                            if (r == true) {
-                                requireddata = 0;
-                                gridProductionBOMProductList.batchEditApi.EndEdit();
-                                gridProductionBOMProductList.batchEditApi.SetCellValue(i, 'StkMsg', '1', '');
-                                //gridProductionBOMProductList.GetEditor('StkMsg').SetText("1");
-                            }
-                            else {
-                                gridProductionBOMProductList.batchEditApi.SetCellValue(i, 'StkMsg', '0', '');
-                                //gridProductionBOMProductList.GetEditor('StkMsg').SetText("0");
-                                gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat("0.0000").toFixed(4));
-                                Qty = "0.0000";
-                                var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
-
-                                gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 7);
-                                gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
-                                BOMGridSetTotalAmount("", "");
-
-
-                            }
-
-                        });
-                        return false;
-                    }
-                    else if (NegStock.trim() == 'B') {
-                        requireddata = 1;
-                        gridProductionBOMProductList.batchEditApi.SetCellValue(i, 'StkMsg', '0', '');
-                        //gridProductionBOMProductList.GetEditor('StkMsg').SetText("0");
-                        jAlert('Product "' + ProductName + '" is going negative can not proceed');
-                        gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat("0.0000").toFixed(4));
-                        Qty = "0.0000";
-                        var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
-
-                        gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 7);
-                        gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
-                        BOMGridSetTotalAmount("", "");
-
-                    } return false;
-                }
-            }
-        }
+        //                        gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 7);
+        //                        gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
+        //                        BOMGridSetTotalAmount("", "");
 
 
+        //                    }
+
+        //                });
+        //                return false;
+        //            }
+        //            else if (NegStock.trim() == 'B') {
+        //                requireddata = 1;
+        //                gridProductionBOMProductList.batchEditApi.SetCellValue(i, 'StkMsg', '0', '');
+        //                //gridProductionBOMProductList.GetEditor('StkMsg').SetText("0");
+        //                jAlert('Product "' + ProductName + '" is going negative can not proceed');
+        //                gridProductionBOMProductList.GetEditor('ProductQty').SetText(parseFloat("0.0000").toFixed(4));
+        //                Qty = "0.0000";
+        //                var amount = parseFloat((parseFloat(Qty).toFixed(4)) * (parseFloat(Price).toFixed(2))).toFixed(2);
+
+        //                gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex, 7);
+        //                gridProductionBOMProductList.GetEditor('Amount').SetText(amount);
+        //                BOMGridSetTotalAmount("", "");
+
+        //            } return false;
+        //        }
+        //    }
+        //}
+
+        //Rev 10.0 End
 
 
         if (visiablerow > 0) {
@@ -1631,7 +1633,7 @@
                 }
             });
 
-            $('#lblProductNameWH').text(ProductName);           
+            $('#lblProductNameWH').text(ProductName);
             $('#txt_SalesAmount').text(QuantityValue);
             $('#txt_SalesUOM').text(UOM);
             $('#txt_StockAmount').text(QuantityValue);
@@ -1972,14 +1974,14 @@
                 }
             }
         }
-        
+
 
        //Rev 9.0
         if (parseFloat(Qty, 4) > parseFloat(AVAILsTOCK, 4)) {
             jAlert("Entered Quantity is more than Available Stock ");
             return;
         }
-      
+
 
         if (Batch != "") {
             var totalProductQtyBatch = 0;
@@ -2044,7 +2046,7 @@
         }
 
 
-       
+
 
     }
 
@@ -2320,7 +2322,7 @@
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("getWarehouseBatchwisestock", "ProductionIssue")",           
+            url: "@Url.Action("getWarehouseBatchwisestock", "ProductionIssue")",
             data: JSON.stringify({ sl: sl, strProductID: productid, branch: branch, WarehouseID: warehouse, BatchID: Batch }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -2818,7 +2820,7 @@
     </h3>
     <div id="ApprovalCross" class="crossBtn"><a href="@Url.Action("ProductionIssueList", "ProductionIssue")"><i class="fa fa-times"></i></a></div>
     @*REV 8.0*@
-    <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images"  runat="server">
+    <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images" runat="server">
         <div class="Top clearfix">
             <ul>
                 <li>

@@ -1,5 +1,7 @@
 ﻿//====================================================Revision History=====================================================
 //1.0   Priti  V2.0.39     12-09-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+//2.0   Priti  V2.0.41     28/11/2023      0027028: Customer code column is required in the listing module of Sales entry
+
 //====================================================End Revision History=====================================================================
 
 
@@ -51,15 +53,21 @@ namespace ERP.OMS.Management.Activities
                 if (ProjectSelectInEntryModule == "Yes")
                 {
                     //Rev 1.0
-                   // GrdQuotation.Columns[10].Visible = true;
-                    GrdQuotation.Columns[11].Visible = true;
+                    // GrdQuotation.Columns[10].Visible = true;
+                    //Rev 2.0
+                   // GrdQuotation.Columns[11].Visible = true;
+                    GrdQuotation.Columns[12].Visible = true;
+                    //Rev 2.0 End
                     //Rev 1.0 End
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
                     //Rev 1.0
-                   // GrdQuotation.Columns[10].Visible = false;
-                    GrdQuotation.Columns[11].Visible = false;
+                    // GrdQuotation.Columns[10].Visible = false;
+                    //Rev 2.0
+                    //GrdQuotation.Columns[11].Visible = false;
+                    GrdQuotation.Columns[12].Visible = false;
+                    //Rev 2.0 End
                     //Rev 1.0 End
                 }
             }
@@ -68,19 +76,31 @@ namespace ERP.OMS.Management.Activities
             
                 if (hdnActiveEInvoice.Value == "0")
                 {
-                    GrdQuotation.Columns[18].Visible = false;
-                    GrdQuotation.Columns[19].Visible = false;
-                    GrdQuotation.Columns[20].Visible = false;
-                    GrdQuotation.Columns[21].Visible = false;
-                }
-                else if (hdnActiveEInvoice.Value == "1")
+                //Rev 2.0
+                //GrdQuotation.Columns[18].Visible = false;
+                //GrdQuotation.Columns[19].Visible = false;
+                //GrdQuotation.Columns[20].Visible = false;
+                //GrdQuotation.Columns[21].Visible = false;
+                GrdQuotation.Columns[19].Visible = false;
+                GrdQuotation.Columns[20].Visible = false;
+                GrdQuotation.Columns[21].Visible = false;
+                GrdQuotation.Columns[22].Visible = false;
+                //Rev 2.0 End
+            }
+            else if (hdnActiveEInvoice.Value == "1")
                 {
-                    GrdQuotation.Columns[18].Visible = true;
-                    GrdQuotation.Columns[19].Visible = true;
-                    GrdQuotation.Columns[20].Visible = true;
-                    GrdQuotation.Columns[21].Visible = true;
-                }
-            
+                //Rev 2.0
+                //GrdQuotation.Columns[18].Visible = true;
+                //GrdQuotation.Columns[19].Visible = true;
+                //GrdQuotation.Columns[20].Visible = true;
+                //GrdQuotation.Columns[21].Visible = true;
+                GrdQuotation.Columns[19].Visible = true;
+                GrdQuotation.Columns[20].Visible = true;
+                GrdQuotation.Columns[21].Visible = true;
+                GrdQuotation.Columns[22].Visible = true;
+                //Rev 2.0 End
+            }
+
 
             DataTable dtposTimeEdit = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Edit' and Module_Id=11");
             DataTable dtposTimeDelete = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(10),Lock_Fromdate,105) LockCon_Fromdate,convert(varchar(10),Lock_Todate,105) LockCon_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Delete' and Module_Id=11");

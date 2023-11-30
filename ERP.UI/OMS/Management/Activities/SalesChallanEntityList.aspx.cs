@@ -1,5 +1,7 @@
 ﻿//====================================================Revision History=====================================================
-//1.0   Priti  V2.0.39     12-09-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+//1.0   Priti   V2.0.39     12-09-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+//2.0   Priti   V2.0.41     28/11/2023     0027028: Customer code column is required in the listing module of Sales entry
+
 //====================================================End Revision History=====================================================================
 
 using System;
@@ -53,14 +55,20 @@ namespace ERP.OMS.Management.Activities
                     {
                         //Rev 1.0
                         //GrdOrder.Columns[11].Visible = true;
-                        GrdOrder.Columns[9].Visible = true;
+                        //Rev 2.0
+                        //GrdOrder.Columns[9].Visible = true;
+                        GrdOrder.Columns[10].Visible = true;
+                        //Rev 2.0 End
                         //Rev 1.0 end
                     }
                     else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                     {
                         //Rev 1.0
                         //GrdOrder.Columns[11].Visible = false;
-                        GrdOrder.Columns[9].Visible = false;
+                        //Rev 2.0
+                        //GrdOrder.Columns[9].Visible = false;
+                        GrdOrder.Columns[10].Visible = false;
+                        //Rev 2.0 End
                         //Rev 1.0 end
                     }
                 }
