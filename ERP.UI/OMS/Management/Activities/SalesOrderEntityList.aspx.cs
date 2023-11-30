@@ -2,7 +2,7 @@
 // 1.0  Priti       V2.0.36                     Change Approval Realted Dev Express Table Bind to HTML table 
 // 2.0	Sanchita	V2.0.39		10/07/2023		Need to export Sales Order Amount column in the excel format. Refer: 26533
 // 3.0  Priti       V2.0.39     12-09-2023      Attachment icon will be shown against the document number if there is any attachment - Sales Challan
-
+// 4.0  Priti       V2.0.41     28/11/2023      0027028: Customer code column is required in the listing module of Sales entry
 //====================================================End Revision History=====================================================================
 
 
@@ -62,15 +62,21 @@ namespace ERP.OMS.Management.Activities
                 if (ProjectSelectInEntryModule == "Yes")
                 {
                     //Rev 3.0
-                   // GrdOrder.Columns[4].Visible = true;
-                    GrdOrder.Columns[5].Visible = true;
+                    // GrdOrder.Columns[4].Visible = true;
+                    //Rev 4.0
+                    //GrdOrder.Columns[5].Visible = true;
+                    GrdOrder.Columns[6].Visible = true;
+                    //Rev 4.0 End
                     //Rev 3.0 End
                 }
                 else if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                 {
                     //Rev 3.0
-                   // GrdOrder.Columns[4].Visible = false;
-                    GrdOrder.Columns[5].Visible = false;
+                    // GrdOrder.Columns[4].Visible = false;
+                    //Rev 4.0
+                   // GrdOrder.Columns[5].Visible = false;
+                    GrdOrder.Columns[6].Visible = false;
+                    //Rev 4.0 End
                     //Rev 3.0 End
                 }
             }
@@ -83,9 +89,14 @@ namespace ERP.OMS.Management.Activities
                     //GrdOrder.Columns[17].Visible = true;
                     //GrdOrder.Columns[18].Visible = true;
                     //GrdOrder.Columns[19].Visible = true;
-                    GrdOrder.Columns[18].Visible = true;
+                    //Rev 4.0
+                    //GrdOrder.Columns[18].Visible = true;
+                    //GrdOrder.Columns[19].Visible = true;
+                    //GrdOrder.Columns[20].Visible = true;
                     GrdOrder.Columns[19].Visible = true;
                     GrdOrder.Columns[20].Visible = true;
+                    GrdOrder.Columns[21].Visible = true;
+                    //Rev 4.0 End
                     // End of Rev 3.0
                     isApprove = true;
                 }
@@ -95,9 +106,14 @@ namespace ERP.OMS.Management.Activities
                     //GrdOrder.Columns[17].Visible = false;
                     //GrdOrder.Columns[18].Visible = false;
                     //GrdOrder.Columns[19].Visible = false;
-                    GrdOrder.Columns[18].Visible = false;
+                    //Rev 4.0
+                    //GrdOrder.Columns[18].Visible = false;
+                    //GrdOrder.Columns[19].Visible = false;
+                    //GrdOrder.Columns[20].Visible = false;
                     GrdOrder.Columns[19].Visible = false;
                     GrdOrder.Columns[20].Visible = false;
+                    GrdOrder.Columns[21].Visible = false;
+                    //Rev 4.0 End
                     // End of Rev 3.0
                     isApprove = false;
 
