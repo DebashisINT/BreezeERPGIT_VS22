@@ -1,6 +1,9 @@
 <%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                15-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+2.0                01-12-2023        2.0.41           Sanchita            The Deductee Type in the Customer Master is becoming 
+                                                                          Blank while editing and is also allowed to Save with the Blank Value.
+                                                                          Mantis: 27054  
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/Erp.Master" AutoEventWireup="True"
@@ -1922,8 +1925,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         ret = false;
                     }
                 }
-
-
+                
                 if (($("#hdnAutoNumStg").val() == "1") && ($("#hdnTransactionType").val() == "CL") && (mode == "ADD")) {
 
                     if ($("#ddl_numberingScheme").val() == "0") {
@@ -2002,10 +2004,19 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 if ($("#hdnActiveEInvoice").val() == "1") {
                     if (txtbox == "Select") {
                         jAlert("Please Select Transaction Category.");
-
+                        // Rev 2.0
+                        validateFlag = false;
+                        // End of Rev 2.0
                         ret = false;
                     }
                 }
+                // Rev 2.0
+                if (validateFlag==true && caspxDeducteesNew.GetValue() == null || caspxDeducteesNew.GetValue() == "") {
+                    jAlert("Deductee Type cannot ne blank.");
+                    ret = false;
+                    validateFlag = false;
+                }
+                // End of Rev 2.0
 
                 <%--if (cApplicableFrom.GetDate() === null && $("#<%=hddnApplicationMode.ClientID%>").val() === "E" && GSTINOldval.trim() !== finalGST.trim()) {
                     if (isregisteredCheck == "1") {
