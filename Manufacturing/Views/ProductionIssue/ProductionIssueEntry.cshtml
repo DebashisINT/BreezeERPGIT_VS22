@@ -9,7 +9,7 @@
         8.0  Priti   V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
         9.0  Priti   V2.0.39    16-08-2023  0026683: In the Warehouse details of Issue for Production, Available Qty tab required to check the stock.
         10.0  Priti   V2.0.41   30-11-2023  0027016: Issue for Production is showing a message that product is going to negative while the product has sufficient qty
-
+        11.0  Priti   V2.0.41   01-12-2023  0027072: During the Issue for Production, Batch activated product is saving without providing batch info in warehouse details.
     ====================================================End Revision History=====================================================================*@
 
 
@@ -1937,8 +1937,11 @@
         }
 
         if (StockType == "B" || StockType == "BS" || StockType == "WBS" || StockType == "WB") {
-            if (Batch == "") {
-                $("#rfvBatch").css("display", "block");
+            //Rev 11.0
+            if (Batch == "" || Batch == "0") {
+             //Rev 11.0 End
+                //$("#rfvBatch").css("display", "block");
+                jAlert("Please Select Batch");
                 return false;
             }
             else {
@@ -2101,7 +2104,7 @@
         }
 
         if (StockType == "B" || StockType == "BS" || StockType == "WBS" || StockType == "WB") {
-            if (Batch == "") {
+            if (Batch == "0") {
                 $("#rfvBatch").css("display", "block");
                 return false;
             }
@@ -3264,7 +3267,7 @@
                                 <div class="Left_Content" style="">
                                     <select id="ddlBatch" class="form-control" onchange="UpdateSerialNo()"></select>
                                     @*<input type="text" id="ddlBatch" placeholder="Batch" />*@
-                                    <span id="spnCmbBatch" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
+                                    <span id="rfvBatch" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
                                 </div>
 
                             </div>
