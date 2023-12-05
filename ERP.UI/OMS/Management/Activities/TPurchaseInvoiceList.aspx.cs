@@ -1,4 +1,7 @@
-﻿using System;
+﻿/**********************************************************************************************************************************
+ 1.0      04-12-2023        V2.0.41       Priti         0027044: Feature to enable to edit Party Invoice Number and Party Invoice date in Transit Purchase Invoice
+***********************************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -20,6 +23,7 @@ using System.IO;
 using ERP.OMS.ViewState_class;
 using ERP.Models;
 using System.Linq;
+using static ERP.OMS.Management.Activities.PurchaseInvoicelist;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -1144,5 +1148,47 @@ namespace ERP.OMS.Management.Activities
             public String Vehicle_No { get; set; }
             public String Vehicle_type { get; set; }
         }
+        //Rev 1.0
+        [WebMethod]
+        public static object EditPartyInvDate(string DocID)
+        {
+            List<PartyInv> OBjpartyinv = new List<PartyInv>();
+            SalesInvoiceBL objSalesInvoiceBL = new SalesInvoiceBL();
+            DataTable dt = new DataTable();
+            dt = objSalesInvoiceBL.EditPartyInvDT(DocID, "TransitPurchaseInvoicePartyInvDate");
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                OBjpartyinv = (from DataRow dr in dt.Rows
+                               select new PartyInv()
+                               {
+                                   PartyInvoiceNo = Convert.ToString(dr["PartyInvoiceNo"]),
+                                   PartyInvoiceDate = Convert.ToString(dr["PartyInvoiceDate"])
+                               }).ToList();
+            }
+            return OBjpartyinv;
+        }
+        [WebMethod]
+        public static string UpdatePartyINVDt(string InvoiceID, string PartyInvoiceNo, string PartyInvoiceDate)
+        {            
+            int PartyInvdt = 0;
+            PartyInvdt = UpdatePartyINV(InvoiceID, PartyInvoiceNo, PartyInvoiceDate);
+            return Convert.ToString(PartyInvdt);
+
+        }
+        public static int UpdatePartyINV(string InvoiceID, string PartyInvValue, string PartyInvDate)
+        {
+            int i;
+            int rtrnvalue = 0;
+            ProcedureExecute proc = new ProcedureExecute("prc_UpdatePartyInvNoDate");
+            proc.AddVarcharPara("@Action", 100, "UpdateTransitPurchaseInvoicePartyINvDT");
+            proc.AddBigIntegerPara("@DocId", Convert.ToInt32(InvoiceID));
+            proc.AddPara("@PartyInvoiceNo", PartyInvValue);
+            proc.AddVarcharPara("@PartyInvoiceDate", 50, PartyInvDate);
+            proc.AddVarcharPara("@ReturnValue", 50, "0", QueryParameterDirection.Output);
+            i = proc.RunActionQuery();
+            rtrnvalue = Convert.ToInt32(proc.GetParaValue("@ReturnValue"));
+            return rtrnvalue;
+        }
+        //Rev 1.0 End
     }
 }

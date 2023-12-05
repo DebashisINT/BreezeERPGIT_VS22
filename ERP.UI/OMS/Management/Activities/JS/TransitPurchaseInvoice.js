@@ -1,4 +1,8 @@
-﻿var isFirstTime = true;
+﻿/**********************************************************************************************************************************
+ 1.0      30-05-2023        2.0.38        Sanchita      ERP - Listing Views - Purchase Invoice. refer: 26250
+ 2.0      04-12-2023        V2.0.41       Priti         0027044: Feature to enable to edit Party Invoice Number and Party Invoice date in Transit Purchase Invoice
+***********************************************************************************************************************************/
+var isFirstTime = true;
 
 // Purchase Invoice Section Start
 updateTPBGridByDate = function () {
@@ -267,3 +271,65 @@ AllControlInitilize = function (s, e) {
 //    var keyValue = cInvoiceGrid.GetRowKey(currentRow);
 //    cCallbackPanel.PerformCallback('InvoiceEdit~' + keyValue);
 //}
+
+/*Rev 2.0*/
+function OnPartyInvClick(id) {    
+    ctxtPartyInvNo.SetText('');
+    $.ajax({
+        type: "POST",
+        url: "TPurchaseInvoicelist.aspx/EditPartyInvDate",
+        data: JSON.stringify({ DocID: id }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+            var status = msg.d[0];
+            console.log(msg);
+            if (status != "") {
+                console.log(status);
+                ctxtPartyInvNo.SetText(status.PartyInvoiceNo);
+                var dob = new Date(status.PartyInvoiceDate);
+                cdt_PartyInv.SetDate(dob);
+            }
+        }
+    });
+    $('#hddnInvoiceID').val(id);
+    cPopup_PartyINV.Show();
+    ctxtPartyInvNo.Focus();
+}
+function CancelPartyInv_save() {
+    cPopup_PartyINV.Hide();
+}
+function CallPartyInv_save() {
+    if (cdt_PartyInv.GetValue() == "" && cdt_PartyInv.GetValue() == null) {
+        var PartyInvDate = "1990-01-01";
+    }
+    else {
+        var PartyInvDate = GetEWayBillDateFormat(new Date(cdt_PartyInv.GetValue()));
+    }
+    var InvoiceID = $("#hddnInvoiceID").val();
+    var PartyInvValue = ctxtPartyInvNo.GetText();
+    $.ajax({
+        type: "POST",
+        url: "TPurchaseInvoicelist.aspx/UpdatePartyINVDt",
+        data: JSON.stringify({
+            InvoiceID: InvoiceID, PartyInvoiceNo: PartyInvValue, PartyInvoiceDate: PartyInvDate
+        }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+            var status = msg.d;
+            if (status == "1") {
+                jAlert("Party Invoice Number Updated successfully.");
+                cPopup_PartyINV.Hide();
+                cgrid.Refresh();
+            }
+            else if (status == "-10") {
+                jAlert("Data not Updated.");
+                cPopup_PartyINV.Hide();
+            }
+        }
+    });
+}
+/*Rev 2.0 End*/ 

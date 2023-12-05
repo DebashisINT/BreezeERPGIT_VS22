@@ -1,5 +1,7 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   16-05-2023      26140: Transit Purchase Invoice module design modification & check in small device
+    2.0   Priti     V2.0.41   04-12-2023      0027044: Feature to enable to edit Party Invoice Number and Party Invoice date in Transit Purchase Invoice
+
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Title="Transit Purchase Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
@@ -464,7 +466,7 @@
             }, 200);
         }
     </script>
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
             if ($('body').hasClass('mini-navbar')) {
@@ -494,43 +496,38 @@
 
     <%--Rev 1.0--%>
     <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
-    
+
     <style>
-        select
-        {
+        select {
             z-index: 0;
         }
 
         #GrdQuotation {
             max-width: 99% !important;
         }
+
         #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PlQuoteExpiry {
             position: relative;
             z-index: 1;
             background: transparent;
         }
 
-        select
-        {
+        select {
             -webkit-appearance: auto;
         }
 
-        .calendar-icon
-        {
+        .calendar-icon {
             right: 20px;
         }
 
-        .panel-title h3
-        {
+        .panel-title h3 {
             padding-top: 0px !important;
         }
 
-        .fakeInput
-        {
-                min-height: 30px;
-    border-radius: 4px;
+        .fakeInput {
+            min-height: 30px;
+            border-radius: 4px;
         }
-        
     </style>
     <%--Rev end 1.0--%>
 </asp:Content>
@@ -541,266 +538,274 @@
     <%--Rev 1.0: "outer-div-main" class add --%>
     <div class="outer-div-main clearfix">
         <div class="panel-heading">
-        <div class="panel-title">
-            <h3>Transit Purchase Invoice</h3>
+            <div class="panel-title">
+                <h3>Transit Purchase Invoice</h3>
+            </div>
         </div>
-    </div>
         <%--Code Added by Sam For Filteration Section Start--%>
         <table class="padTab pull-right">
-        <tr>
-            <td>From Date</td>
-            <%--Rev 1.0: "for-cust-icon" class add --%>
-            <td class="for-cust-icon">
-                <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" OnInit="FormDate_Init" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
-                    <ButtonStyle Width="13px">
-                    </ButtonStyle>
-                </dxe:ASPxDateEdit>
-                <%--Rev 1.0--%>
-                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                <%--Rev end 1.0--%>
-            </td>
-            <td>To Date
-            </td>
-            <%--Rev 1.0: "for-cust-icon" class add --%>
-            <td class="for-cust-icon">
-                <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" OnInit="toDate_Init" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
-                    <ButtonStyle Width="13px">
-                    </ButtonStyle>
-                </dxe:ASPxDateEdit>
-                <%--Rev 1.0--%>
-                <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                <%--Rev end 1.0--%>
-            </td>
-            <td>Unit</td>
-            <td>
-                <dxe:ASPxComboBox ID="cmbBranchfilter" runat="server" ClientInstanceName="ccmbBranchfilter" Width="100%">
-                </dxe:ASPxComboBox>
-            </td>
-            <td>
-                <input type="button" value="Show" class="btn btn-primary" onclick="updateTPBGridByDate()" />
-            </td>
+            <tr>
+                <td>From Date</td>
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td class="for-cust-icon">
+                    <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" OnInit="FormDate_Init" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
+                        <ButtonStyle Width="13px">
+                        </ButtonStyle>
+                    </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon" />
+                    <%--Rev end 1.0--%>
+                </td>
+                <td>To Date
+                </td>
+                <%--Rev 1.0: "for-cust-icon" class add --%>
+                <td class="for-cust-icon">
+                    <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" OnInit="toDate_Init" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
+                        <ButtonStyle Width="13px">
+                        </ButtonStyle>
+                    </dxe:ASPxDateEdit>
+                    <%--Rev 1.0--%>
+                    <img src="/assests/images/calendar-icon.png" class="calendar-icon" />
+                    <%--Rev end 1.0--%>
+                </td>
+                <td>Unit</td>
+                <td>
+                    <dxe:ASPxComboBox ID="cmbBranchfilter" runat="server" ClientInstanceName="ccmbBranchfilter" Width="100%">
+                    </dxe:ASPxComboBox>
+                </td>
+                <td>
+                    <input type="button" value="Show" class="btn btn-primary" onclick="updateTPBGridByDate()" />
+                </td>
 
-        </tr>
+            </tr>
 
-    </table>
+        </table>
         <%--Code Added by Sam For Filteration Section Start--%>
         <div class="form_main">
-        <div class="clearfix">
-            <% if (rights.CanAdd)
-               { %>
-            <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success"><span class="btn-icon"><i class="fa fa-plus" ></i></span><span><u>A</u>dd New</span> </a><%} %>
+            <div class="clearfix">
+                <% if (rights.CanAdd)
+                    { %>
+                <a href="javascript:void(0);" onclick="OnAddButtonClick()" class="btn btn-success"><span class="btn-icon"><i class="fa fa-plus"></i></span><span><u>A</u>dd New</span> </a><%} %>
 
-            <%--<dxe:ASPxButton ID="btn_Approval" runat="server" class="btn btn-primary" Text="Pending Approval" ClientInstanceName="cbtn_Approval">
+                <%--<dxe:ASPxButton ID="btn_Approval" runat="server" class="btn btn-primary" Text="Pending Approval" ClientInstanceName="cbtn_Approval">
                 <ClientSideEvents Click="function (s, e) {OpenPopUPApprovalStatus();}" />
             </dxe:ASPxButton>--%>
-            <% if (rights.CanExport)
-               { %>
-            <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
-                <asp:ListItem Value="0">Export to</asp:ListItem>
-                <asp:ListItem Value="1">PDF</asp:ListItem>
-                <asp:ListItem Value="2">XLS</asp:ListItem>
-                <asp:ListItem Value="3">RTF</asp:ListItem>
-                <asp:ListItem Value="4">CSV</asp:ListItem>
-            </asp:DropDownList>
-            <% } %>
-            <span id="spanStatus" runat="server">
-                <a href="javascript:void(0);" onclick="OpenPopUPUserWiseQuotaion()" class="btn btn-primary">
-                    <span>My Purchase Invoice Status</span>
-                    <%--<asp:Label ID="Label1" runat="server" Text=""></asp:Label>--%>                   
-                </a>
-            </span>
-            <span id="divPendingWaiting" runat="server">
-                <a href="javascript:void(0);" onclick="OpenPopUPApprovalStatus()" class="btn btn-primary">
-                    <span>Approval Waiting</span>
-                    <asp:Label ID="lblWaiting" runat="server" Text=""></asp:Label>
-                </a>
-                <i class="fa fa-reply blink" style="font-size: 20px; margin-right: 10px;" aria-hidden="true"></i>
+                <% if (rights.CanExport)
+                    { %>
+                <asp:DropDownList ID="drdExport" runat="server" CssClass="btn btn-primary" OnSelectedIndexChanged="cmbExport_SelectedIndexChanged" AutoPostBack="true" OnChange="if(!AvailableExportOption()){return false;}">
+                    <asp:ListItem Value="0">Export to</asp:ListItem>
+                    <asp:ListItem Value="1">PDF</asp:ListItem>
+                    <asp:ListItem Value="2">XLS</asp:ListItem>
+                    <asp:ListItem Value="3">RTF</asp:ListItem>
+                    <asp:ListItem Value="4">CSV</asp:ListItem>
+                </asp:DropDownList>
+                <% } %>
+                <span id="spanStatus" runat="server">
+                    <a href="javascript:void(0);" onclick="OpenPopUPUserWiseQuotaion()" class="btn btn-primary">
+                        <span>My Purchase Invoice Status</span>
+                        <%--<asp:Label ID="Label1" runat="server" Text=""></asp:Label>--%>                   
+                    </a>
+                </span>
+                <span id="divPendingWaiting" runat="server">
+                    <a href="javascript:void(0);" onclick="OpenPopUPApprovalStatus()" class="btn btn-primary">
+                        <span>Approval Waiting</span>
+                        <asp:Label ID="lblWaiting" runat="server" Text=""></asp:Label>
+                    </a>
+                    <i class="fa fa-reply blink" style="font-size: 20px; margin-right: 10px;" aria-hidden="true"></i>
 
-            </span>
+                </span>
 
+            </div>
         </div>
-    </div>
         <div class="GridViewArea relative">
-        <dxe:ASPxGridView ID="GrdQuotation" runat="server" KeyFieldName="Invoice_Id" AutoGenerateColumns="False"
-            Settings-HorizontalScrollBarMode="Visible" OnPageIndexChanged="GrdQuotation_PageIndexChanged"
-            Width="100%" ClientInstanceName="cgrid" OnCustomCallback="GrdQuotation_CustomCallback" Settings-VerticalScrollableHeight="300"
-            Settings-VerticalScrollBarMode="Visible" OnDataBinding="GrdQuotation_DataBinding"
-            OnSummaryDisplayText="GrdQuotation_SummaryDisplayText"
-            SettingsBehavior-AllowFocusedRow="true" DataSourceID="EntityServerModeDataSource" SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false">
-            <%-- SettingsCookies-Enabled="true" SettingsCookies-StorePaging="true" SettingsCookies-StoreFiltering="true" 
+            <dxe:ASPxGridView ID="GrdQuotation" runat="server" KeyFieldName="Invoice_Id" AutoGenerateColumns="False"
+                Settings-HorizontalScrollBarMode="Visible" OnPageIndexChanged="GrdQuotation_PageIndexChanged"
+                Width="100%" ClientInstanceName="cgrid" OnCustomCallback="GrdQuotation_CustomCallback" Settings-VerticalScrollableHeight="300"
+                Settings-VerticalScrollBarMode="Visible" OnDataBinding="GrdQuotation_DataBinding"
+                OnSummaryDisplayText="GrdQuotation_SummaryDisplayText"
+                SettingsBehavior-AllowFocusedRow="true" DataSourceID="EntityServerModeDataSource" SettingsDataSecurity-AllowEdit="false" SettingsDataSecurity-AllowInsert="false" SettingsDataSecurity-AllowDelete="false">
+                <%-- SettingsCookies-Enabled="true" SettingsCookies-StorePaging="true" SettingsCookies-StoreFiltering="true" 
               SettingsCookies-StoreGroupingAndSorting="true"--%>
-            <SettingsSearchPanel Visible="True" Delay="5000" />
-            <Columns>
-                <dxe:GridViewDataTextColumn FieldName="Invoice_Id" Visible="false" SortOrder="Descending" VisibleIndex="0">
-                    <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Document No." FieldName="InvoiceNumber" VisibleIndex="1" Width="130px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
+                <SettingsSearchPanel Visible="True" Delay="5000" />
+                <Columns>
+                    <dxe:GridViewDataTextColumn FieldName="Invoice_Id" Visible="false" SortOrder="Descending" VisibleIndex="0">
+                        <CellStyle Wrap="False" CssClass="gridcellleft"></CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Document No." FieldName="InvoiceNumber" VisibleIndex="1" Width="130px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn Caption="Posting Date" FieldName="InvoiceDt" VisibleIndex="2" Width="90px" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Vendor" FieldName="VendorName" VisibleIndex="3" Width="300px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Unit" FieldName="branch" VisibleIndex="4" Width="170px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Posting Date" FieldName="InvoiceDt" VisibleIndex="2" Width="90px" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Vendor" FieldName="VendorName" VisibleIndex="3" Width="300px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Unit" FieldName="branch" VisibleIndex="4" Width="170px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn Caption="Purchase Order No" FieldName="ChallanNumber" VisibleIndex="5" Width="130px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-
-
-                <dxe:GridViewDataTextColumn Caption="Purchase Order Date" FieldName="ChallanDate" VisibleIndex="6" Width="130px" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-
-                <dxe:GridViewDataTextColumn Caption="Party Invoice No" FieldName="PartyInvoiceNo" VisibleIndex="7" Width="110px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Party Invoice Date" FieldName="PartyInvoiceDate" VisibleIndex="8" Width="120px" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-
-                <dxe:GridViewDataTextColumn Caption="Party (Ship To)" FieldName="Shiptoparty" VisibleIndex="9" Width="180px" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="E-Way Bill No." FieldName="EWayBillNumber" VisibleIndex="10" Width="100px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn Caption="Place of Supply[GST]" FieldName="PlaceOfSupply" VisibleIndex="11" Width="120px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-
-                <dxe:GridViewDataTextColumn Caption="Entered by" FieldName="CreatedBY" VisibleIndex="12" Width="80px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Purchase Order No" FieldName="ChallanNumber" VisibleIndex="5" Width="130px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
 
 
-                <dxe:GridViewDataTextColumn Caption="Entered On" FieldName="CreatedDate" Width="80px" VisibleIndex="13">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Purchase Order Date" FieldName="ChallanDate" VisibleIndex="6" Width="130px" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn Caption="Updated by" FieldName="UpdatedBy" VisibleIndex="14" Width="80px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Party Invoice No" FieldName="PartyInvoiceNo" VisibleIndex="7" Width="110px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Party Invoice Date" FieldName="PartyInvoiceDate" VisibleIndex="8" Width="120px" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn Caption="Updated On" FieldName="updatedOn" Width="80px" VisibleIndex="15" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Party (Ship To)" FieldName="Shiptoparty" VisibleIndex="9" Width="180px" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="E-Way Bill No." FieldName="EWayBillNumber" VisibleIndex="10" Width="100px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Place of Supply[GST]" FieldName="PlaceOfSupply" VisibleIndex="11" Width="120px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn Caption="Amount" FieldName="TotalAmount" VisibleIndex="16" Width="100px">
-                    <CellStyle CssClass="gridcellleft" Wrap="true">
-                    </CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn Caption="Entered by" FieldName="CreatedBY" VisibleIndex="12" Width="80px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
 
-                <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="17" Width="0">
-                    <DataItemTemplate>
-                        <div class='floatedBtnArea'>
-                            <% if (rights.CanView)
-                               { %>
-                            <a href="javascript:void(0);" onclick="OnViewClick('<%# Container.KeyValue %>')" class="" title="">
-                                <span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>
-                            <% } %>
-                            <% if (rights.CanEdit)
-                               { %>
-                            <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>')" class="" title="">
-                                <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a><%} %>
-                            <% if (rights.CanDelete)
-                               { %>
-                            <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" title="">
-                                <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a><%} %>
-                            <% if (rights.CanView)
-                               { %>
-                            <a href="javascript:void(0);" onclick="OnclickViewAttachment('<%# Container.KeyValue %>')" class="" title="">
-                               <span class='ico ColorSix'><i class='fa fa-paperclip'></i></span><span class='hidden-xs'>Add/View Attachment</span>
-                            </a><%} %>
-                            <a href="javascript:void(0);" onclick="OnEWayBillClick('<%# Container.KeyValue %>','<%#Eval("EWayBillNumber") %>','<%#Eval("EWayBillDate") %>','<%#Eval("EWayBillValue") %>')" class="" title="">
-                                <span class='ico ColorFour'><i class='fa fa-file-text-o'></i></span><span class='hidden-xs'>Update E-Way Bill</span>
-                                 <% if (rights.CanPrint)
-                                   { %>
-                                 <a href="javascript:void(0);" onclick="onPrintJv('<%# Container.KeyValue %>')" class="" title="">
-                                <span class='ico ColorSeven'><i class='fa fa-print'></i></span><span class='hidden-xs'>Print</span>
-                            </a><%} %>
-                        </div>
-                    </DataItemTemplate>
-                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
-                    <CellStyle HorizontalAlign="Center"></CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <HeaderTemplate><span></span></HeaderTemplate>
-                    <EditFormSettings Visible="False"></EditFormSettings>
-                </dxe:GridViewDataTextColumn>
-                
 
-            </Columns>
+                    <dxe:GridViewDataTextColumn Caption="Entered On" FieldName="CreatedDate" Width="80px" VisibleIndex="13">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
 
-            <SettingsContextMenu Enabled="true"></SettingsContextMenu>
-            <TotalSummary>
-                <dxe:ASPxSummaryItem FieldName="TotalAmount" SummaryType="Sum" />
-            </TotalSummary>
-            <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" BeginCallback="BeginCallback" RowClick="gridRowclick" />
-            <SettingsPager PageSize="10">
-                <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,20,50,100,150,200" />
-            </SettingsPager>
-            <Settings ShowFooter="true" ShowGroupFooter="VisibleIfExpanded" ShowGroupPanel="True" ShowStatusBar="Hidden" ShowHorizontalScrollBar="False" ShowFilterRow="true" ShowFilterRowMenu="true" />
-            <SettingsLoadingPanel Text="Please Wait..." />
-        </dxe:ASPxGridView>
-        <dx:LinqServerModeDataSource ID="EntityServerModeDataSource" runat="server" OnSelecting="EntityServerModeDataSource_Selecting"
-            ContextTypeName="ERPDataClassesDataContext" TableName="v_TransitPBList" />
-        <asp:HiddenField ID="hiddenedit" runat="server" />
-    </div>
+                    <dxe:GridViewDataTextColumn Caption="Updated by" FieldName="UpdatedBy" VisibleIndex="14" Width="80px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+
+                    <dxe:GridViewDataTextColumn Caption="Updated On" FieldName="updatedOn" Width="80px" VisibleIndex="15" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+
+                    <dxe:GridViewDataTextColumn Caption="Amount" FieldName="TotalAmount" VisibleIndex="16" Width="100px">
+                        <CellStyle CssClass="gridcellleft" Wrap="true">
+                        </CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
+                        <Settings AutoFilterCondition="Contains" />
+                    </dxe:GridViewDataTextColumn>
+
+                    <dxe:GridViewDataTextColumn HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="center" VisibleIndex="17" Width="0">
+                        <DataItemTemplate>
+                            <div class='floatedBtnArea'>
+                                <% if (rights.CanView)
+                                    { %>
+                                <a href="javascript:void(0);" onclick="OnViewClick('<%# Container.KeyValue %>')" class="" title="">
+                                    <span class='ico ColorFive'><i class='fa fa-eye'></i></span><span class='hidden-xs'>View</span></a>
+                                <% } %>
+                                <% if (rights.CanEdit)
+                                    { %>
+                                <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>')" class="" title="">
+                                    <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a><%} %>
+                                <% if (rights.CanDelete)
+                                    { %>
+                                <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" title="">
+                                    <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a><%} %>
+                                <% if (rights.CanView)
+                                    { %>
+                                <a href="javascript:void(0);" onclick="OnclickViewAttachment('<%# Container.KeyValue %>')" class="" title="">
+                                    <span class='ico ColorSix'><i class='fa fa-paperclip'></i></span><span class='hidden-xs'>Add/View Attachment</span>
+                                </a><%} %>
+                                <a href="javascript:void(0);" onclick="OnEWayBillClick('<%# Container.KeyValue %>','<%#Eval("EWayBillNumber") %>','<%#Eval("EWayBillDate") %>','<%#Eval("EWayBillValue") %>')" class="" title="">
+                                    <span class='ico ColorFour'><i class='fa fa-file-text-o'></i></span><span class='hidden-xs'>Update E-Way Bill</span>
+                                    <% if (rights.CanPrint)
+                                        { %>
+                                    <a href="javascript:void(0);" onclick="onPrintJv('<%# Container.KeyValue %>')" class="" title="">
+                                        <span class='ico ColorSeven'><i class='fa fa-print'></i></span><span class='hidden-xs'>Print</span>
+                                    </a><%} %>
+                                    <%--Rev 2.0--%>
+                                    <% if (rights.UpdatePartyInvNoDT)
+                                        { %>
+                                    <a href="javascript:void(0);" onclick="OnPartyInvClick('<%# Container.KeyValue %>')"
+                                        class="" title="">
+                                        <span class='ico ColorSeven'><i class='fa fa-file-text-o'></i></span><span class='hidden-xs'>Update Party Invoice No. and Date</span></a>
+                                    <% } %>
+                                    <%--Rev 2.0 End--%>
+                            </div>
+                        </DataItemTemplate>
+                        <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                        <CellStyle HorizontalAlign="Center"></CellStyle>
+                        <Settings AllowAutoFilterTextInputTimer="False" />
+                        <HeaderTemplate><span></span></HeaderTemplate>
+                        <EditFormSettings Visible="False"></EditFormSettings>
+                    </dxe:GridViewDataTextColumn>
+
+
+                </Columns>
+
+                <SettingsContextMenu Enabled="true"></SettingsContextMenu>
+                <TotalSummary>
+                    <dxe:ASPxSummaryItem FieldName="TotalAmount" SummaryType="Sum" />
+                </TotalSummary>
+                <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" BeginCallback="BeginCallback" RowClick="gridRowclick" />
+                <SettingsPager PageSize="10">
+                    <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="10,20,50,100,150,200" />
+                </SettingsPager>
+                <Settings ShowFooter="true" ShowGroupFooter="VisibleIfExpanded" ShowGroupPanel="True" ShowStatusBar="Hidden" ShowHorizontalScrollBar="False" ShowFilterRow="true" ShowFilterRowMenu="true" />
+                <SettingsLoadingPanel Text="Please Wait..." />
+            </dxe:ASPxGridView>
+            <dx:LinqServerModeDataSource ID="EntityServerModeDataSource" runat="server" OnSelecting="EntityServerModeDataSource_Selecting"
+                ContextTypeName="ERPDataClassesDataContext" TableName="v_TransitPBList" />
+            <asp:HiddenField ID="hiddenedit" runat="server" />
+        </div>
     </div>
     <div style="display: none">
         <dxe:ASPxGridViewExporter ID="exporter" GridViewID="GrdQuotation" runat="server" Landscape="true" PaperKind="A3" PageHeader-Font-Size="Larger" PageHeader-Font-Bold="true">
@@ -830,7 +835,7 @@
                                 <dxe:ASPxCheckBox ID="selectTriplicate" Text="Triplicate For Supplier" runat="server" ToolTip="Select Triplicate"
                                     ClientInstanceName="CselectTriplicate">
                                 </dxe:ASPxCheckBox>
-                               
+
                                 <dxe:ASPxComboBox ID="CmbDesignName" ClientInstanceName="cCmbDesignName" runat="server" ValueType="System.String" Width="100%" EnableSynchronization="True">
                                 </dxe:ASPxComboBox>
 
@@ -1157,8 +1162,10 @@ popup.Hide();
                     <table style="width: 100%; margin: 0 auto; margin-top: 5px;">
 
                         <tr>
-                           <label> <dxe:ASPxLabel ID="ASPxLabel12" runat="server" Text="E-Way Bill Number">
-                            </dxe:ASPxLabel></label>
+                            <label>
+                                <dxe:ASPxLabel ID="ASPxLabel12" runat="server" Text="E-Way Bill Number">
+                                </dxe:ASPxLabel>
+                            </label>
 
                             <dxe:ASPxTextBox ID="txtEWayBillNumber" MaxLength="12" ClientInstanceName="ctxtEWayBillNumber"
                                 runat="server" Width="100%">
@@ -1169,20 +1176,24 @@ popup.Hide();
 
                         <tr>
                             <td>
-                                <label style="margin-top:6px"><dxe:ASPxLabel ID="ASPxLabel1" runat="server" Text="E-Way Bill Date">
-                                </dxe:ASPxLabel></label>
+                                <label style="margin-top: 6px">
+                                    <dxe:ASPxLabel ID="ASPxLabel1" runat="server" Text="E-Way Bill Date">
+                                    </dxe:ASPxLabel>
+                                </label>
                                 <dxe:ASPxDateEdit ID="dt_EWayBill" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cdt_EWayBill" Width="100%" UseMaskBehavior="True">
                                     <ButtonStyle Width="13px">
                                     </ButtonStyle>
                                 </dxe:ASPxDateEdit>
                             </td>
-                            
+
 
                         </tr>
                         <tr>
                             <td>
-                                <label style="margin-top:6px"><dxe:ASPxLabel ID="ASPxLabel2" runat="server" Text="E-Way Bill Value">
-                                </dxe:ASPxLabel></label>
+                                <label style="margin-top: 6px">
+                                    <dxe:ASPxLabel ID="ASPxLabel2" runat="server" Text="E-Way Bill Value">
+                                    </dxe:ASPxLabel>
+                                </label>
                                 <dxe:ASPxTextBox ID="txtEWayBillValue" ClientInstanceName="ctxtEWayBillValue"
                                     runat="server" Width="100%">
                                     <MaskSettings Mask="<0..999999999>.<0..99>" AllowMouseWheel="false" />
@@ -1190,7 +1201,7 @@ popup.Hide();
                                 </dxe:ASPxTextBox>
                             </td>
                         </tr>
-                         <%-- add extra column --%>
+                        <%-- add extra column --%>
                         <tr>
                             <td>
                                 <label style="margin-top: 6px">
@@ -1306,4 +1317,51 @@ popup.Hide();
 
 
     </dxe:ASPxPopupControl>
+
+
+    <%--Rev 2.0--%>
+      <dxe:ASPxPopupControl ID="Popup_PartyINV" runat="server" ClientInstanceName="cPopup_PartyINV"
+      Width="400px" HeaderText="Update Party Invoice No. and Date" PopupHorizontalAlign="WindowCenter"
+      BackColor="white" Height="150px" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+      Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
+      <ContentCollection>
+          <dxe:PopupControlContentControl runat="server">
+              <div class="Top clearfix">
+                  <table style="width: 100%; margin: 0 auto; margin-top: 5px;">
+                      <tr>
+                          <td>
+                              <label>
+                                  <dxe:ASPxLabel ID="ASPxLabel11" runat="server" Text="Party Invoice No">
+                                  </dxe:ASPxLabel>
+                              </label>
+
+                              <dxe:ASPxTextBox ID="txtPartyInvNo" ClientInstanceName="ctxtPartyInvNo"
+                                  runat="server" Width="100%">                                  
+                                  <ValidationSettings RequiredField-IsRequired="false" ErrorDisplayMode="None"></ValidationSettings>
+                              </dxe:ASPxTextBox>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <label style="margin-top: 6px;">
+                                  <dxe:ASPxLabel ID="ASPxLabel13" runat="server" Text="Party Invoice Date">
+                                  </dxe:ASPxLabel>
+                              </label>
+                              <dxe:ASPxDateEdit ID="dt_PartyInv" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cdt_PartyInv" Width="100%" >
+                                  <ButtonStyle Width="13px">
+                                  </ButtonStyle>
+                              </dxe:ASPxDateEdit>
+                          </td>
+                      </tr> 
+                  </table>
+                  <div style="margin-top: 10px;">
+                      <input id="btnPartyInvSave" class="btn btn-primary" onclick="CallPartyInv_save()" type="button" value="Save" />
+                      <input id="btnPartyInvCancel" class="btn btn-danger" onclick="CancelPartyInv_save()" type="button" value="Cancel" />
+                  </div>
+              </div>
+          </dxe:PopupControlContentControl>
+      </ContentCollection>
+      <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+  </dxe:ASPxPopupControl>
+    <%--Rev 2.0 End--%>
 </asp:Content>
