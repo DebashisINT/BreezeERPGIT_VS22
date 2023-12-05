@@ -1798,6 +1798,7 @@ namespace ERP.OMS.Management.DailyTask
             // Rev 3.0
             //string validate = checkNMakeJVCode(Convert.ToString(txtBillNo.Text), Convert.ToInt32(hdnSchemeVal.Value));
             SchemeID = Convert.ToString(Convert.ToInt32(hdnSchemeVal.Value));
+            JVNumStr = Convert.ToString(txtBillNo.Text);
             // End of Rev 3.0
             //Rev Work close: Copy Feature required for Journal Vouchers Date:-27.05.2022 Mantise no:24911
             //foreach (DataRow dr in Journaldt.Rows)
@@ -3664,6 +3665,7 @@ namespace ERP.OMS.Management.DailyTask
             //}
             //else if (ValidateSubAccount == "Subaccountmandatory")
             SchemeID = Convert.ToString(CmbSchemeTDS.SelectedValue);
+            JVNumStr = Convert.ToString(txtBillNoTDS.Text);
 
             if (ValidateSubAccount == "Subaccountmandatory")
             // End of Rev 3.0
