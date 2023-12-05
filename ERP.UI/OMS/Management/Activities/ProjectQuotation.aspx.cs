@@ -1977,6 +1977,7 @@ namespace ERP.OMS.Management.Activities
                     // Rev 1.0
                     //validate = checkNMakeJVCode(strQuoteNo, Convert.ToInt32(SchemeList[0]));
                     SchemeID = Convert.ToString(SchemeList[0]);
+                    UniqueQuotation = strQuoteNo;
                     // End of Rev 1.0
                 }
 
