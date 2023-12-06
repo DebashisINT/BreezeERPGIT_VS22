@@ -11,6 +11,9 @@
                                                     Mantis: 26924
 * Rev 7.0       Priti         V2.0.40   19-10-2023  Edit and Save a Quotation updating the Revision Date
                                                     Mantis: 0026936
+* Rev 8.0       Priti         V2.0.41   05-12-2023  Please allow Duplicate Product in Proforma Invoice/Quotation Entry
+                                                    Mantis: 0027046
+
  ***************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -2955,11 +2958,12 @@ namespace ERP.OMS.Management.Activities
                .Where(gr => gr.Count() > 1)
                .Select(g => g.Key);
 
-                foreach (var d in duplicateRecords)
-                {
-                    validate = "duplicateProduct";
-                }
-
+                //Rev 8.0
+                //foreach (var d in duplicateRecords)
+                //{
+                //    validate = "duplicateProduct";
+                //}
+                //Rev 8.0 End
                 if (ddlInventory.SelectedValue != "N")
                 {
                     foreach (DataRow dr in tempQuotation.Rows)
