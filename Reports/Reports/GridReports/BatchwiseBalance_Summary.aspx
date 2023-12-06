@@ -1,7 +1,9 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History =====================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                10-03-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                06-12-2023        2.0.40           Debashis            27087 : While checking the Batch wise balance Detail or Summary report in Amiamo,
+                                                                          it is showing nothing.Now it has been taken care of.
+====================================================== Revision History =====================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BatchwiseBalance_Summary.aspx.cs" Inherits="Reports.Reports.GridReports.BatchwiseBalance_Summary" %>
 
@@ -1152,7 +1154,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <dxe:PopupControlContentControl runat="server">
             </dxe:PopupControlContentControl>
         </ContentCollection>
-        <ClientSideEvents CloseUp="BudgetAfterHide" />
+        <%--Rev 2.0 Mantis: 0027087--%>
+        <%--<ClientSideEvents CloseUp="BudgetAfterHide" />--%>
+        <%--End of Rev 2.0 Mantis: 0027087--%>
     </dxe:ASPxPopupControl>
 
      <!--Product Modal -->
